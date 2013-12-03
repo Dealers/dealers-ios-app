@@ -1,0 +1,83 @@
+//
+//  AppDelegate.m
+//  GooglePlaces
+//
+//  Created by van Lint Jason on 28/04/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
+
+#import "AppDelegate.h"
+@implementation AppDelegate
+
+@synthesize window = _window;
+@synthesize savedphoto;
+@synthesize globalstorelabel;
+@synthesize globaltitlelabel;
+@synthesize photoid;
+@synthesize Animate_first;
+@synthesize FavButtonDidPress;
+@synthesize didaddphoto,UserID;
+@synthesize TITLEMARRAY;
+@synthesize DESCRIPTIONMARRAY;
+@synthesize STOREMARRAY;
+@synthesize PRICEMARRAY;
+@synthesize DISCOUNTMARRAY;
+@synthesize EXPIREMARRAY;
+@synthesize LIKEMARRAY;
+@synthesize COMMENTMARRAY;
+@synthesize CLIENTMARRAY;
+@synthesize PHOTOIDMARRAY;
+@synthesize CATEGORYARRAY;
+@synthesize SIGNARRAY;
+@synthesize DEALIDARRAY,USERSIDSARRAY,PHOTOIDMARRAYCONVERT,FAVARRAY,AfterAddDeal,imageforviewdeal;
+
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    return YES;
+}
+							
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    savedphoto = [[UIImageView alloc]init];
+    savedphoto2 = [[UIImageView alloc]init];
+    savedphoto3 = [[UIImageView alloc]init];
+    savedphoto4 = [[UIImageView alloc]init];
+    imageforviewdeal = [[UIImageView alloc]init];
+
+    globaltitlelabel = [[UITextField alloc]init];
+    globalstorelabel = [[UITextField alloc]init];
+    photoid = [[NSString alloc]init];
+    Animate_first= [[NSString alloc]init];
+    Animate_first= [[NSString alloc]init];
+    FavButtonDidPress= [[NSString alloc]init];
+    didaddphoto = [[NSString alloc]init];
+    UserID = [[NSString alloc]init];
+    AfterAddDeal = [[NSString alloc]init];
+    
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+@end
