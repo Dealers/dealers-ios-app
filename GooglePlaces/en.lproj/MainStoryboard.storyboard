@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="ZXa-ud-UfS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="RlD-7e-ftu">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -920,59 +920,58 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal (final)_Deal background &amp; Shadow.png" id="hSg-EH-OtZ">
-                                                    <rect key="frame" x="0.0" y="3" width="320" height="200"/>
+                                                    <rect key="frame" x="1" y="4" width="318" height="199"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="q9N-3N-FPu">
-                                                    <rect key="frame" x="10" y="7" width="300" height="155"/>
+                                                    <rect key="frame" x="10" y="8" width="300" height="155"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Add Deal (Final)_Taken Photo shade.png" id="YIT-4q-f7r">
-                                                    <rect key="frame" x="10" y="89" width="300" height="77"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Title &amp; Store shade.png" id="YIT-4q-f7r">
+                                                    <rect key="frame" x="10" y="85" width="300" height="78"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vIc-iG-wDx">
-                                                    <rect key="frame" x="75" y="171" width="47" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vIc-iG-wDx">
+                                                    <rect key="frame" x="247" y="169" width="53" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" red="1" green="0.22798813868613138" blue="0.18809876824817517" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="0.22798813870000001" blue="0.18809876819999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mqq-F5-SpX">
-                                                    <rect key="frame" x="19" y="171" width="47" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mqq-F5-SpX">
+                                                    <rect key="frame" x="197" y="169" width="53" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" red="0.31880132299270075" green="0.80962020985401462" blue="0.28281820255474455" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="0.31880132300000003" green="0.80962020990000005" blue="0.28281820260000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal_Likes icon@2X.png" id="aPG-wC-ZhY">
-                                                    <rect key="frame" x="228" y="173" width="19" height="17"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Likes icon.png" id="aPG-wC-ZhY">
+                                                    <rect key="frame" x="277" y="126" width="11" height="12"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zC4-Be-4Rh">
-                                                    <rect key="frame" x="249" y="171" width="21" height="21"/>
+                                                    <rect key="frame" x="290" y="117" width="21" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.77734375" green="0.77147011861313863" blue="0.78803604014598538" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="0.77734375" green="0.77147011860000003" blue="0.78803604009999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal_Comments icon@2X.png" id="9zm-nx-R0U">
-                                                    <rect key="frame" x="270" y="172" width="17" height="19"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Comments icon.png" id="9zm-nx-R0U">
+                                                    <rect key="frame" x="277" y="144" width="11" height="12"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PQs-Bg-LeL">
-                                                    <rect key="frame" x="289" y="171" width="21" height="21"/>
+                                                    <rect key="frame" x="289" y="135" width="21" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.77734375" green="0.77147011861313863" blue="0.78803604014598538" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="0.77734375" green="0.77147011860000003" blue="0.78803604009999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Local icon@2X.png" id="YZW-NH-NOW">
-                                                    <rect key="frame" x="19" y="131" width="18" height="23"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal (final)_Local icon.png" id="YZW-NH-NOW">
+                                                    <rect key="frame" x="18" y="170" width="13" height="16"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dzd-CE-GhO">
-                                                    <rect key="frame" x="20" y="103" width="280" height="29"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" id="dzd-CE-GhO">
+                                                    <rect key="frame" x="18" y="119" width="249" height="41"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HhG-AC-U3R">
-                                                    <rect key="frame" x="43" y="132" width="140" height="24"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                                    <color key="textColor" red="0.92941182851791382" green="0.73333334922790527" blue="0.93725496530532837" alpha="1" colorSpace="deviceRGB"/>
+                                                    <rect key="frame" x="35" y="167" width="175" height="24"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                                     <color key="highlightedColor" red="0.77734375" green="0.77147011860000003" blue="0.78803604009999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                             </subviews>
@@ -993,7 +992,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" id="szk-Wa-yil">
-                                <rect key="frame" x="0.0" y="45" width="320" height="365"/>
+                                <rect key="frame" x="540" y="45" width="320" height="365"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -2881,7 +2880,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Add Deal (Final)_Take Photo! button (selected).png" width="60" height="60"/>
         <image name="Add Deal (Final)_Take Photo! button.png" width="45" height="45"/>
         <image name="Add Deal (Final)_Take Pic From Library button.png" width="29" height="29"/>
-        <image name="Add Deal (Final)_Taken Photo shade.png" width="300" height="68"/>
         <image name="Add Deal (Final)_Title &amp; More Details box.png" width="301" height="38"/>
         <image name="Add Deal (Final)_Trash button.png" width="30" height="30"/>
         <image name="Add Deal (Final)_Twitter switch.png" width="40" height="40"/>
@@ -2918,20 +2916,21 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Add Deal_Specific Hour button.png" width="35" height="35"/>
         <image name="Add Deal_Twitter Switch background.png" width="70" height="34"/>
         <image name="More list No TabBar_screenshot (4).jpg" width="1333" height="2000"/>
+        <image name="My Feed+View Deal (final)_Comments icon.png" width="11" height="12"/>
         <image name="My Feed+View Deal (final)_Deal background &amp; Shadow.png" width="320" height="200"/>
+        <image name="My Feed+View Deal (final)_Likes icon.png" width="12" height="11"/>
+        <image name="My Feed+View Deal (final)_Local icon.png" width="12" height="15"/>
+        <image name="My Feed+View Deal (final)_Title &amp; Store shade.png" width="300" height="78"/>
         <image name="My Feed+View Deal_Add Deal button (selected)@2X.png" width="125" height="112"/>
         <image name="My Feed+View Deal_Add Deal button@2X.png" width="125" height="112"/>
         <image name="My Feed+View Deal_Additional Description icon@2X.png" width="53" height="53"/>
         <image name="My Feed+View Deal_Category icon@2X.png" width="53" height="53"/>
         <image name="My Feed+View Deal_Comment button@2X.png" width="81" height="81"/>
         <image name="My Feed+View Deal_Commenter Profile frame@2X.png" width="85" height="85"/>
-        <image name="My Feed+View Deal_Comments icon@2X.png" width="34" height="38"/>
         <image name="My Feed+View Deal_Expiration Date icon@2X.png" width="52" height="53"/>
         <image name="My Feed+View Deal_Explore button (selected)@2X.png" width="63" height="63"/>
         <image name="My Feed+View Deal_Explore button@2X.png" width="63" height="63"/>
         <image name="My Feed+View Deal_Like button@2X.png" width="81" height="81"/>
-        <image name="My Feed+View Deal_Likes icon@2X.png" width="38" height="35"/>
-        <image name="My Feed+View Deal_Local icon@2X.png" width="37" height="46"/>
         <image name="My Feed+View Deal_More button (selected)@2X.png" width="63" height="63"/>
         <image name="My Feed+View Deal_More button@2X.png" width="63" height="63"/>
         <image name="My Feed+View Deal_My Feed button(selected)@2X.png" width="63" height="63"/>
