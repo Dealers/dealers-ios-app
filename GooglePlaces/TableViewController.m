@@ -20,7 +20,7 @@
 @synthesize arrayforicons;
 @synthesize iconsarray;
 @synthesize iconsarrayfiltered;
-@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton;
+@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,DoneButton,BlackCoverImage;
 
 
 -(void) BackgroundMethod {
@@ -180,12 +180,15 @@
 - (void)viewDidLoad
 {
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.SearchBar setDelegate:self];
+    SearchBar.backgroundImage = [UIImage imageNamed:@"Explore_Search bar"];
     
     [self performSelector:@selector(Loadingafterdealy) withObject:nil afterDelay:0.5];
     self.tableviewgoogle.dataSource = self;
     self.tableviewgoogle.delegate = self;
     RemovemapButton.hidden=YES;
-
+    BlackCoverImage.hidden=YES;
+    
   //  [mapView setZoomEnabled:YES];
     
     mapView.showsUserLocation = YES;
@@ -314,13 +317,13 @@
     CGRect cropRect = CGRectMake(0, 0, 320, 460);
     [UIView animateWithDuration:0.3 animations:^{mapView.frame=cropRect;}];
     CGRect frame = self.tableviewgoogle.frame;
-    frame.origin.y = frame.origin.y + 300;
+    frame.origin.y = frame.origin.y + 256;
     [UIView animateWithDuration:0.3 animations:^{self.tableviewgoogle.frame = frame;}];
     CGRect frame2 = Shadow1.frame;
-    frame2.origin.y = frame2.origin.y + 300;
+    frame2.origin.y = frame2.origin.y + 256;
     [UIView animateWithDuration:0.3 animations:^{Shadow1.frame = frame2;}];
     CGRect frame3 = Shadow2.frame;
-    frame3.origin.y = frame3.origin.y + 300;
+    frame3.origin.y = frame3.origin.y + 256;
     [UIView animateWithDuration:0.3 animations:^{Shadow2.frame = frame3;}];
 
 }
@@ -328,21 +331,32 @@
 -(IBAction) RemovemapButtonAction:(id)sender {
     ButtonCoverforMap.hidden=NO;
     RemovemapButton.hidden=YES;
-    CGRect cropRect = CGRectMake(0, 36, 320, 124);
+    CGRect cropRect = CGRectMake(0, 85, 320, 124);
     [UIView animateWithDuration:0.3 animations:^{mapView.frame=cropRect;}];
     CGRect frame = self.tableviewgoogle.frame;
-    frame.origin.y = frame.origin.y - 300;
+    frame.origin.y = frame.origin.y - 256;
     [UIView animateWithDuration:0.3 animations:^{self.tableviewgoogle.frame = frame;}];
     CGRect frame2 = Shadow1.frame;
-    frame2.origin.y = frame2.origin.y - 300;
+    frame2.origin.y = frame2.origin.y - 256;
     [UIView animateWithDuration:0.3 animations:^{Shadow1.frame = frame2;}];
     CGRect frame3 = Shadow2.frame;
-    frame3.origin.y = frame3.origin.y - 300;
+    frame3.origin.y = frame3.origin.y - 256;
     [UIView animateWithDuration:0.3 animations:^{Shadow2.frame = frame3;}];
 
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    BlackCoverImage.hidden=NO;
+    [UIView animateWithDuration:0.3 animations:^{DoneButton.center = CGPointMake(285, 225);}];
+    [UIView animateWithDuration:0.3 animations:^{NavBarImage.center = CGPointMake(160, 225);}];
+}
 
+-(void) DoneButtonAction:(id)sender {
+    BlackCoverImage.hidden=YES;
+    [UIView animateWithDuration:0.3 animations:^{DoneButton.center = CGPointMake(285, 600);}];
+    [UIView animateWithDuration:0.3 animations:^{NavBarImage.center = CGPointMake(160, 600);}];
+    [SearchBar resignFirstResponder];
+}
 
 - (void)viewDidUnload {
     [super viewDidUnload];
