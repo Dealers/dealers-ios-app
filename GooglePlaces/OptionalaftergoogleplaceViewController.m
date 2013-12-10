@@ -151,7 +151,7 @@
 
 - (void)viewDidLoad
 {
-    [self initializeCamera];
+    //[self initializeCamera];
 
     [scroll setContentSize:((CGSizeMake(320, 700)))];
     [scroll setScrollEnabled:YES];
