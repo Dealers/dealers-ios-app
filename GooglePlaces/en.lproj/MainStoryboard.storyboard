@@ -15,7 +15,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="71" sectionHeaderHeight="22" sectionFooterHeight="22" id="nR9-Vr-DbC">
-                                <rect key="frame" x="0.0" y="161" width="320" height="299"/>
+                                <rect key="frame" x="0.0" y="211" width="320" height="299"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -65,7 +65,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" id="ZiZ-i4-bFF">
-                                <rect key="frame" x="0.0" y="160" width="320" height="300"/>
+                                <rect key="frame" x="0.0" y="210" width="320" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="cCW-tF-dhs">
@@ -76,23 +76,47 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="E0o-yq-MeP">
-                                <rect key="frame" x="0.0" y="36" width="320" height="124"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="124"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </mapView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal_Black Transparent screen.png" id="2Rg-Ip-EDo">
+                                <rect key="frame" x="-6" y="-9" width="332" height="487"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleToFill" image="Add Deal_Shade_new.png" id="2Vx-Ov-R6E">
-                                <rect key="frame" x="0.0" y="138" width="320" height="22"/>
+                                <rect key="frame" x="0.0" y="188" width="320" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal_Shade_new.png" id="zuc-OM-0sX">
-                                <rect key="frame" x="0.0" y="138" width="320" height="22"/>
+                                <rect key="frame" x="0.0" y="188" width="320" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Navigation Bar.png" id="0NM-zR-rQz">
                                 <rect key="frame" x="0.0" y="0.0" width="321" height="53"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal_Options bar.png" id="JmI-Fe-BkX">
+                                <rect key="frame" x="0.0" y="700" width="320" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XiI-YX-eWa" userLabel="Button done">
+                                <rect key="frame" x="259" y="707" width="63" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="Add Deal_Done button.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="Add Deal_Done button (selected).png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="DoneButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="YmP-ru-bQ8"/>
+                                    <action selector="DoneButtonAction:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="e0D-Mm-qWL"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Fc2-Kb-jYN" userLabel="Button resize map">
-                                <rect key="frame" x="0.0" y="42" width="320" height="118"/>
+                                <rect key="frame" x="0.0" y="91" width="320" height="118"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal">
@@ -133,11 +157,11 @@
                                 <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" barStyle="black" placeholder="No there? Type store here" backgroundImage="Add Deal (Final)_-Not There- box.png" scopeBarBackgroundImage="Add Deal_Location fill-box.png" id="U4o-rW-sgd">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="No there? Type store here" id="U4o-rW-sgd">
                                 <rect key="frame" x="0.0" y="42" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <color key="barTintColor" red="0.76862745099999996" green="0.7725490196" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DV5-QH-swA" userLabel="Button - removemap">
                                 <rect key="frame" x="139" y="418" width="42" height="42"/>
@@ -159,11 +183,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="Oa0-ut-7fm"/>
                     <connections>
+                        <outlet property="BlackCoverImage" destination="2Rg-Ip-EDo" id="Juo-t4-JPI"/>
                         <outlet property="ButtonCoverforMap" destination="Fc2-Kb-jYN" id="RIe-BH-A1P"/>
                         <outlet property="CoveView" destination="ZiZ-i4-bFF" id="aVo-WA-eU8"/>
+                        <outlet property="DoneButton" destination="XiI-YX-eWa" id="QE9-Hb-anb"/>
                         <outlet property="LoadingImage" destination="cCW-tF-dhs" id="d4b-3U-HX8"/>
+                        <outlet property="NavBarImage" destination="JmI-Fe-BkX" id="0zU-So-ZUd"/>
                         <outlet property="RemovemapButton" destination="DV5-QH-swA" id="xIr-EK-gD7"/>
                         <outlet property="ReturnButton" destination="6EU-dr-uxx" id="3eD-m0-CDN"/>
+                        <outlet property="SearchBar" destination="U4o-rW-sgd" id="rDO-TJ-45C"/>
                         <outlet property="Shadow1" destination="2Vx-Ov-R6E" id="pRy-o1-OWq"/>
                         <outlet property="Shadow2" destination="zuc-OM-0sX" id="ntg-iT-8E9"/>
                         <outlet property="mapView" destination="E0o-yq-MeP" id="ybR-wg-1lT"/>
@@ -183,7 +211,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ewO-MU-VCw">
-                                <rect key="frame" x="-1" y="45" width="320" height="415"/>
+                                <rect key="frame" x="0.0" y="47" width="320" height="413"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="bXF-oQ-uFG" userLabel="View - More">
@@ -277,8 +305,8 @@
                                             </button>
                                         </subviews>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PZ8-ql-Ydj">
-                                        <rect key="frame" x="15" y="639" width="289" height="43"/>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PZ8-ql-Ydj" userLabel="Button adddeal">
+                                        <rect key="frame" x="15" y="394" width="289" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="Add Deal_Add The Deal button.png">
@@ -312,13 +340,6 @@
                                         <rect key="frame" x="0.0" y="105" width="320" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" id="cYi-UE-JbF" userLabel="View streaming cam">
-                                        <rect key="frame" x="10" y="138" width="300" height="155"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" id="FwQ-Vd-cRA" userLabel="Image View snapcam">
-                                        <rect key="frame" x="10" y="137" width="300" height="155"/>
-                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal (Final)_Title &amp; More Details box.png" id="W3g-eY-Ekx">
                                         <rect key="frame" x="10" y="302" width="301" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -344,21 +365,6 @@
                                         <rect key="frame" x="283" y="357" width="17" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4U5-xK-uMx">
-                                        <rect key="frame" x="136" y="243" width="45" height="45"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="Add Deal (Final)_Take Photo! button.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted" image="Add Deal (Final)_Take Photo! button (selected).png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="snapImage:" destination="MRq-IL-cvi" eventType="touchUpInside" id="d3D-cd-D6E"/>
-                                        </connections>
-                                    </button>
                                     <view contentMode="scaleToFill" id="hZ4-xi-Qrt" userLabel="View social network">
                                         <rect key="frame" x="1" y="570" width="320" height="67"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -464,81 +470,123 @@
                                             </button>
                                         </subviews>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pGI-EA-OBh">
-                                        <rect key="frame" x="14" y="141" width="25" height="25"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7Y9-9t-kzh" userLabel="Button - more">
+                                        <rect key="frame" x="12" y="346" width="296" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="Add Deal (Final)_Exit Camera Mode button.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
                                         <connections>
-                                            <action selector="ExitCameraButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="b0c-MN-JvO"/>
+                                            <action selector="MoreButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="r7b-vs-LL7"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hBP-Le-995">
-                                        <rect key="frame" x="277" y="141" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="Add Deal (Final)_Rotate Camera button.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="RotateCamButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="gzj-0v-Jqi"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CPG-Cc-F2A">
-                                        <rect key="frame" x="275" y="258" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="Add Deal (Final)_Add Another Photo button.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="AddAnotherPicButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="9KC-Kp-UCw"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fO8-Dl-sod">
-                                        <rect key="frame" x="14" y="259" width="29" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="Add Deal (Final)_Take Pic From Library button.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="PicFromLibButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="uLj-KJ-rcm"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nas-Hy-R1U">
-                                        <rect key="frame" x="11" y="229" width="31" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="Add Deal (Final)_Trash button.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="TrashButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="nVe-fL-sMo"/>
-                                        </connections>
-                                    </button>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Xpv-ce-HRr" userLabel="Scroll View - camera">
+                                        <rect key="frame" x="-1" y="137" width="320" height="155"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Uploading-the-Deal Graphic.png" id="11O-Yw-JUv">
+                                                <rect key="frame" x="316" y="14" width="240" height="128"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <view contentMode="scaleToFill" id="cYi-UE-JbF" userLabel="View streaming cam">
+                                                <rect key="frame" x="10" y="0.0" width="300" height="155"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            </view>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" id="FwQ-Vd-cRA" userLabel="Image View snapcam">
+                                                <rect key="frame" x="10" y="0.0" width="300" height="155"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pGI-EA-OBh" userLabel="Button exitcam">
+                                                <rect key="frame" x="13" y="25" width="25" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="Add Deal (Final)_Exit Camera Mode button.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="ExitCameraButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="b0c-MN-JvO"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hBP-Le-995" userLabel="Button rotate">
+                                                <rect key="frame" x="280" y="0.0" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="Add Deal (Final)_Rotate Camera button.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="RotateCamButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="gzj-0v-Jqi"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CPG-Cc-F2A" userLabel="Button add another photo">
+                                                <rect key="frame" x="11" y="0.0" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="Add Deal (Final)_Add Another Photo button.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="AddAnotherPicButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="9KC-Kp-UCw"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fO8-Dl-sod" userLabel="Button pic from lib">
+                                                <rect key="frame" x="281" y="125" width="29" height="29"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="Add Deal (Final)_Take Pic From Library button.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="PicFromLibButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="uLj-KJ-rcm"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nas-Hy-R1U" userLabel="Button trash">
+                                                <rect key="frame" x="10" y="125" width="31" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="Add Deal (Final)_Trash button.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="TrashButtonAction:" destination="MRq-IL-cvi" eventType="touchUpInside" id="nVe-fL-sMo"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4U5-xK-uMx" userLabel="Button snap">
+                                                <rect key="frame" x="138" y="110" width="45" height="45"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="Add Deal (Final)_Take Photo! button.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted" image="Add Deal (Final)_Take Photo! button (selected).png">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="snapImage:" destination="MRq-IL-cvi" eventType="touchUpInside" id="d3D-cd-D6E"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </scrollView>
                                 </subviews>
                             </scrollView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Navigation Bar@2X.png" id="fAP-vX-fnN">
@@ -550,7 +598,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Uploading-the-Deal Graphic.png" id="kLl-zd-lzB">
-                                <rect key="frame" x="27" y="56" width="265" height="345"/>
+                                <rect key="frame" x="28" y="56" width="265" height="345"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="QCV-fO-nGv" userLabel="Image View loading">
@@ -848,6 +896,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" id="wNJ-ZU-T3p"/>
                     <connections>
                         <outlet property="AddAnotherPicButton" destination="CPG-Cc-F2A" id="gQo-c0-BHs"/>
+                        <outlet property="AddDealButton" destination="PZ8-ql-Ydj" id="evz-UA-yMQ"/>
                         <outlet property="CategoryNavBar" destination="Qeh-tO-bCN" id="HSI-3g-yhj"/>
                         <outlet property="CategoryPicker" destination="66o-Nw-AoX" id="EOl-Xc-VgP"/>
                         <outlet property="ChagrtoDate" destination="vcK-1x-Onz" id="yj2-yp-Qz5"/>
@@ -863,6 +912,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="ExitCameraButton" destination="pGI-EA-OBh" id="0EY-VB-zFq"/>
                         <outlet property="LoadingDeal" destination="kLl-zd-lzB" id="W42-ih-Yki"/>
                         <outlet property="LoadingImage" destination="QCV-fO-nGv" id="p5l-IL-Ea9"/>
+                        <outlet property="MoreView" destination="bXF-oQ-uFG" id="qov-ML-utU"/>
                         <outlet property="PersentButton" destination="MhL-9b-5Nv" id="Gv8-hh-UpU"/>
                         <outlet property="PersentButtonFull" destination="7Uf-ql-E4J" id="gcI-iU-rKE"/>
                         <outlet property="PicFromLibButton" destination="fO8-Dl-sod" id="mHL-CE-ci4"/>
@@ -873,6 +923,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="RotateCamButton" destination="hBP-Le-995" id="amh-0E-KgR"/>
                         <outlet property="ShekelButton" destination="dK2-oX-vuk" id="Y4m-KI-wVr"/>
                         <outlet property="ShekelButtonFull" destination="iUf-Cr-1zo" id="yzA-2o-nxh"/>
+                        <outlet property="SocialView" destination="hZ4-xi-Qrt" id="0Vc-wR-mVi"/>
                         <outlet property="TrashButton" destination="nas-Hy-R1U" id="3Ib-N4-tld"/>
                         <outlet property="captureImage" destination="FwQ-Vd-cRA" id="jNi-U1-kHo"/>
                         <outlet property="categorylabel" destination="bnv-Ry-n3v" id="EY5-Qd-9df"/>
@@ -889,6 +940,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="mapView" destination="Re1-84-LJU" id="XDV-TF-Wek"/>
                         <outlet property="pricelabel" destination="Rfm-Uk-BoM" id="Xs0-3Z-h8f"/>
                         <outlet property="scroll" destination="ewO-MU-VCw" id="wOa-ab-Dyd"/>
+                        <outlet property="scrollcamera" destination="Xpv-ce-HRr" id="3lM-PQ-CEL"/>
                         <outlet property="titlelabel" destination="Gvf-d3-MQ8" id="UFo-5C-p2F"/>
                         <outlet property="twiiticon" destination="Mjz-n9-pLz" id="61V-p8-dvu"/>
                         <outlet property="twittafter" destination="wnQ-ty-Nge" id="rMC-S1-yzJ"/>
@@ -1754,7 +1806,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <viewController storyboardIdentifier="main" id="Ey2-rh-183" customClass="MainViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rUp-F9-RRi">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="459.99999999999994"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="044-8X-zCA">
@@ -1769,7 +1821,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Shopping Bag.png" id="sAQ-s1-Vch">
-                                        <rect key="frame" x="103" y="146.99999999999997" width="188" height="226"/>
+                                        <rect key="frame" x="103" y="146.99999999999994" width="188" height="226"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="5f8-2O-h9l">
@@ -1797,7 +1849,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="Gf5-bJ-meZ">
-                                        <rect key="frame" x="84" y="292" width="61" height="61"/>
+                                        <rect key="frame" x="84" y="291.99999999999994" width="61" height="61"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="Registration_Email button.png">
@@ -1812,14 +1864,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="41" y="425" width="216" height="21"/>
+                                        <rect key="frame" x="41" y="424.99999999999994" width="216" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY">
-                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999993"/>
+                                        <rect key="frame" x="24" y="409" width="274" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -1834,14 +1886,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="224" y="425" width="96" height="21"/>
+                                        <rect key="frame" x="224" y="424.99999999999994" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Oys-9T-E7g">
-                                        <rect key="frame" x="1" y="-19" width="320" height="481"/>
+                                        <rect key="frame" x="1" y="-19" width="320" height="480.99999999999994"/>
                                         <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
@@ -2898,7 +2950,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         </scene>
     </scenes>
     <resources>
-        <image name="Add Deal (Final)_-Not There- box.png" width="320" height="47"/>
         <image name="Add Deal (Final)_Add Another Photo button.png" width="30" height="30"/>
         <image name="Add Deal (Final)_Exit Camera Mode button.png" width="25" height="25"/>
         <image name="Add Deal (Final)_Facebook switch.png" width="40" height="40"/>
@@ -2931,7 +2982,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Add Deal_Done button.png" width="62" height="26"/>
         <image name="Add Deal_Facebook Switch background.png" width="70" height="34"/>
         <image name="Add Deal_Groups Switch background.png" width="70" height="34"/>
-        <image name="Add Deal_Location fill-box.png" width="252" height="28"/>
         <image name="Add Deal_Optionals fill-box.png" width="287" height="184"/>
         <image name="Add Deal_Options bar.png" width="320" height="40"/>
         <image name="Add Deal_Other Social Networks field.png" width="287" height="51"/>

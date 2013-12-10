@@ -16,7 +16,7 @@
 #define kGOOGLE_API_KEY @"AIzaSyCcDzlxbL52wI4wT_2y3iKqhrdCCo9WuUY"
 
 
-@interface TableViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,MKMapViewDelegate, CLLocationManagerDelegate>
+@interface TableViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate>
 {
     CLLocationManager *locationManager;
     NSString *imageName;
@@ -58,6 +58,11 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
+@property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
 
+@property (weak, nonatomic) IBOutlet UIButton *DoneButton;
+- (IBAction)DoneButtonAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *NavBarImage;
+@property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;
 
 @end

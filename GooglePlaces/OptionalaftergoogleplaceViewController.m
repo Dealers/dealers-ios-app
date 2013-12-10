@@ -39,7 +39,7 @@
 @synthesize scroll;
 @synthesize CategoryNavBar;
 @synthesize CategoryPicker;
-@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton;
+@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera;
 
 
 -(void) BackgroundMethod {
@@ -151,10 +151,18 @@
 
 - (void)viewDidLoad
 {
+    Flag = true;
+    updown_moreoption = true;
+    MoreView.alpha=0.0;
+    SocialView.alpha=0.0;
+    
     [self initializeCamera];
 
-    [scroll setContentSize:((CGSizeMake(320, 700)))];
+    [self ReduceScroll];
+    [self EnlargeCameraScroll];
     [scroll setScrollEnabled:YES];
+    [scrollcamera setScrollEnabled:YES];
+
     TrashButton.hidden=YES;
     AddAnotherPicButton.hidden=YES;
     FrontCamera = NO;
@@ -408,8 +416,8 @@
     [descriptionlabel resignFirstResponder];
     [titlelabel resignFirstResponder];
 
-    [scroll setContentSize:((CGSizeMake(320, 960)))];
-
+    [self EnlargeScroll]; //960
+    
     [UIView animateWithDuration:0.5 animations:^{DatePicker.center = CGPointMake(160, 352);}];
     [UIView animateWithDuration:0.5 animations:^{DateNavBar.center = CGPointMake(160, 222);}];
     [UIView animateWithDuration:0.5 animations:^{ChagrtoTime.center = CGPointMake(20, 222);}];
@@ -445,8 +453,8 @@
     [titlelabel resignFirstResponder];
     [discountlabel resignFirstResponder];
     [descriptionlabel resignFirstResponder];
-    [scroll setContentSize:((CGSizeMake(320, 960)))];
-
+    [self EnlargeScroll]; //960?
+    
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 290);}];
 
     [UIView animateWithDuration:0.2 animations:^{PriceNavBar.center = CGPointMake(160, 700);}];
@@ -472,9 +480,8 @@
 }
 
 - (IBAction)Cateory_DoneButtonAction:(id)sender {
-    [scroll setContentSize:((CGSizeMake(320, 700)))];
-
-    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
+    [self EnlargeScroll];
+   // [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
     [UIView animateWithDuration:0.5 animations:^{CategoryPicker.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.5 animations:^{CategoryNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{DatePicker.center = CGPointMake(160, 700);}];
@@ -490,7 +497,7 @@
 
 
 -(BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
-    [scroll setContentSize:((CGSizeMake(320, 960)))];
+    [self EnlargeScroll];
 
     if (textField.tag==1) {
         [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 350);}];
@@ -540,6 +547,7 @@
     }
     
     if (textField.tag==4) {
+
         [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 290);}];
 
         DollarButtonFull.hidden=YES;
@@ -582,6 +590,11 @@
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
+    
+    if (updown_moreoption) {
+        [self ReduceScroll];
+    } else [self EnlargeScroll];
+    
     [scroll setScrollEnabled:YES];
     [pricelabel resignFirstResponder];
     [discountlabel resignFirstResponder];
@@ -606,9 +619,7 @@
     [UIView animateWithDuration:0.2 animations:^{PersentButtonFull.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{DoneButton.center = CGPointMake(285, 700);}];
 
-    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
-    [scroll setContentSize:((CGSizeMake(320, 700)))];
-
+   // [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
     return YES;
     }
 
@@ -648,9 +659,9 @@
     [discountlabel resignFirstResponder];
     [descriptionlabel resignFirstResponder];
     [titlelabel resignFirstResponder];
-    [scroll setContentSize:((CGSizeMake(320, 700)))];
-
-    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
+    [self EnlargeScroll];
+    
+    //[UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
     [UIView animateWithDuration:0.5 animations:^{DatePicker.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.5 animations:^{DateNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.5 animations:^{ChagrtoDate.center = CGPointMake(50, 700);}];
@@ -735,12 +746,15 @@
 }
 
 -(void) DoneButtonAction:(id)sender {
+    if (updown_moreoption) {
+        [self ReduceScroll];
+    } else [self EnlargeScroll];
+
     [pricelabel resignFirstResponder];
     [discountlabel resignFirstResponder];
     [descriptionlabel resignFirstResponder];
     [titlelabel resignFirstResponder];
-    [scroll setContentSize:((CGSizeMake(320, 700)))];
-
+    
     [UIView animateWithDuration:0.2 animations:^{PriceNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{DollarButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{ShekelButton.center = CGPointMake(53, 700);}];
@@ -759,7 +773,7 @@
     [UIView animateWithDuration:0.5 animations:^{ChangetodateFull.center = CGPointMake(50, 700);}];
     [UIView animateWithDuration:0.2 animations:^{DoneButton.center = CGPointMake(285, 700);}];
     
-    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
+  //  [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
     
 }
 
@@ -775,9 +789,12 @@
 	[self.imagePreview.layer addSublayer:captureVideoPreviewLayer];
 	
     UIView *view = [self imagePreview];
+    CALayer* maskLayer = [CALayer layer];
+    maskLayer.contents = (__bridge id)[[UIImage imageNamed:@"My Feed+View Deal (final)_Deal Pic mask.png"] CGImage];
+    view.layer.mask = maskLayer;
+
     CALayer *viewLayer = [view layer];
     [viewLayer setMasksToBounds:YES];
-    
     CGRect bounds = [view bounds];
     [captureVideoPreviewLayer setFrame:bounds];
     
@@ -911,6 +928,8 @@
 
 -(void) TrashButtonAction:(id)sender {
     
+    
+    
 }
 
 -(void) AddAnotherPicButtonAction:(id)sender{
@@ -919,10 +938,66 @@
 
 -(void) RotateCamButtonAction:(id)sender {
     
+    if (Flag) {
+        FrontCamera = YES;
+        Flag = false;
+        [self initializeCamera];
+    }
+    else {
+        FrontCamera = NO;
+        Flag = true;
+        [self initializeCamera];
+    }
 }
 
 -(void) PicFromLibButtonAction:(id)sender {
     
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.allowsEditing=YES;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    captureImage.image = [ info objectForKey:UIImagePickerControllerEditedImage];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self processImage:captureImage.image];
+}
+
+
+-(void) MoreButtonAction:(id)sender {
+    
+    if (updown_moreoption) {
+        [self EnlargeScroll];
+        [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 300);}];
+        [UIView animateWithDuration:0.1 animations:^{self.MoreView.alpha=1.0;}];
+        [UIView animateWithDuration:0.1 animations:^{self.SocialView.alpha=1.0;}];
+        CGRect frame = AddDealButton.frame;
+        frame.origin.y = frame.origin.y + 245;
+        [UIView animateWithDuration:0.1 animations:^{AddDealButton.frame = frame;}];
+        updown_moreoption = false;
+    } else {
+        [self ReduceScroll];
+        [UIView animateWithDuration:0.1 animations:^{self.MoreView.alpha=0.0;}];
+        [UIView animateWithDuration:0.1 animations:^{self.SocialView.alpha=0.0;}];
+        CGRect frame = AddDealButton.frame;
+        frame.origin.y = frame.origin.y - 245;
+        [UIView animateWithDuration:0.1 animations:^{AddDealButton.frame = frame;}];
+        updown_moreoption = true;
+
+    }
+}
+
+-(void) EnlargeCameraScroll {
+    [scrollcamera setContentSize:((CGSizeMake(700, 155)))];
+}
+
+-(void) EnlargeScroll {
+    [scroll setContentSize:((CGSizeMake(320, 700)))];
+}
+
+-(void) ReduceScroll {
+    [scroll setContentSize:((CGSizeMake(320, 460)))];
 }
 
 

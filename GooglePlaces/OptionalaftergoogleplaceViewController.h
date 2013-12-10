@@ -17,8 +17,10 @@
     NSString *dealphotoid;
     NSString *timeorday;
     NSString *sign;
+    BOOL Flag;
     BOOL FrontCamera;
     BOOL haveImage;
+    BOOL updown_moreoption;
     CLLocationManager *locationManager;
     CLLocationCoordinate2D currentCentre;
 
@@ -35,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *expirationlabel;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionlabel;
 - (IBAction)adddealbutton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *AddDealButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *groupbefore;
 @property (weak, nonatomic) IBOutlet UIImageView *groupafter;
@@ -66,6 +69,8 @@
 - (IBAction)Cateory_DoneButtonAction:(id)sender;
 - (IBAction)ExpireButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIScrollView *scroll;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollcamera;
+
 @property (strong, nonatomic) NSMutableArray *list;
 @property (weak, nonatomic) IBOutlet UIImageView *PriceNavBar;
 - (IBAction)DollarButtonAction:(id)sender;
@@ -120,5 +125,8 @@
 - (IBAction)AddAnotherPicButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *TrashButton;
 - (IBAction)TrashButtonAction:(id)sender;
+- (IBAction)MoreButtonAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *MoreView;
+@property (weak, nonatomic) IBOutlet UIView *SocialView;
 
 @end
