@@ -1884,7 +1884,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY">
-                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999986"/>
+                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999993"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -1899,7 +1899,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="224" y="424.99999999999994" width="96" height="21"/>
+                                        <rect key="frame" x="224" y="425" width="96" height="21.000000000000011"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
