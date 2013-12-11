@@ -314,7 +314,7 @@
 -(IBAction) ResizemapButtonAction:(id)sender {
     ButtonCoverforMap.hidden=YES;
     RemovemapButton.hidden=NO;
-    CGRect cropRect = CGRectMake(0, 0, 320, 460);
+    CGRect cropRect = CGRectMake(0, 44, 320, 460);
     [UIView animateWithDuration:0.3 animations:^{mapView.frame=cropRect;}];
     CGRect frame = self.tableviewgoogle.frame;
     frame.origin.y = frame.origin.y + 256;

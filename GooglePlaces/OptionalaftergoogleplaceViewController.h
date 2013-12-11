@@ -17,13 +17,14 @@
     NSString *dealphotoid;
     NSString *timeorday;
     NSString *sign;
+    int numofpics;
+    int currentpage;
     BOOL Flag;
     BOOL FrontCamera;
     BOOL haveImage;
     BOOL updown_moreoption;
     CLLocationManager *locationManager;
     CLLocationCoordinate2D currentCentre;
-
 
 
 }
@@ -112,7 +113,13 @@
 @property(nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property (weak, nonatomic) IBOutlet UIView *imagePreview;
 - (IBAction)snapImage:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *captureImage_temp;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage;
+@property (weak, nonatomic) IBOutlet UIImageView *captureImage2;
+@property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
+@property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;
+
+
 @property (retain, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UIButton *ExitCameraButton;
@@ -128,5 +135,6 @@
 - (IBAction)MoreButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *MoreView;
 @property (weak, nonatomic) IBOutlet UIView *SocialView;
+@property (weak, nonatomic) IBOutlet UIButton *SnapButton;
 
 @end
