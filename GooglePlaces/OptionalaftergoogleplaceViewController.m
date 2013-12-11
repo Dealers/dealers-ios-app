@@ -157,7 +157,7 @@
     SocialView.alpha=0.0;
     currentpage=0;
     BlackCoverImage.hidden=YES;
-    [self initializeCamera];
+   // [self initializeCamera];
 
     [self ReduceScroll];
     [self EnlargeCameraScroll];
@@ -848,7 +848,7 @@
 }
 
 -(void) CameraMode {
-    [self initializeCamera];
+    //[self initializeCamera];
     BlackCoverImage.hidden=YES;
     captureImage.hidden = YES;
     imagePreview.hidden = NO;
