@@ -39,7 +39,7 @@
 @synthesize scroll;
 @synthesize CategoryNavBar;
 @synthesize CategoryPicker;
-@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera;
+@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera,SnapButton, captureImage2,captureImage3,captureImage_temp,BlackCoverImage;
 
 
 -(void) BackgroundMethod {
@@ -155,8 +155,9 @@
     updown_moreoption = true;
     MoreView.alpha=0.0;
     SocialView.alpha=0.0;
-    
-    [self initializeCamera];
+    currentpage=0;
+    BlackCoverImage.hidden=YES;
+   // [self initializeCamera];
 
     [self ReduceScroll];
     [self EnlargeCameraScroll];
@@ -202,8 +203,6 @@
     [self.titlelabel setDelegate:self];
     [self.titlelabel setReturnKeyType:UIReturnKeyDone];
     [self.titlelabel addTarget:self action:@selector(titlelabel) forControlEvents:UIControlEventEditingDidEndOnExit];
- //   [titlelabel addTarget:self action:@selector(change:) forControlEvents:UIControlEventEditingChanged];
-
     [self.categorylabel setDelegate:self];
     [self.categorylabel setReturnKeyType:UIReturnKeyDone];
     [self.categorylabel addTarget:self action:@selector(categorylabel) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -222,7 +221,7 @@
     
     list = [[NSMutableArray alloc] initWithObjects:@"Amusement & Entertainment",@"amusement_park",@"aquarium",@"bowling_alley",@"movie_theater",@"museum",@"casino",@"movie_rental",@"night_club",@"spa",@"zoo",@"Art",@"art_gallery",@"Automotive",@"car_dealer",@"car_rental",@"car_repair",@"car_wash",@"Beauty & Personal Care",@"beauty_salon",@"hair_care",@"health",@"physiotherapist",@"book_store",@"Books & Magazines",@"library",@"Electronics",@"electronics_store",@"clothing_store",@"department_store",@"Fashion",@"shoe_store",@"bakery",@"convenience_shop",@"Food & Groceries",@"food",@"grocery_or_supermarket",@"liquor_store",@"meal_delivery",@"meal_takeaway",@"pharmacy",@"florist",@"furniture_store",@"hardware_store",@"Home & Furniture",@"home_goods_store",@"laundry",@"locksmith",@"painter",@"Jewelry & Watches",@"jewelry_store",@"Pets",@"pets_store",@"veterinary_care",@"general_contractor",@"Real Estate",@"real_estate_agency",@"bars",@"cafÈ",@"restaurant",@"Restaurants & Bars",@"bicycle_store",@"gym",@"Sports & Outdoor",@"airport",@"lodging",@"Travel",@"travel_agency",@"bank",@"finance",@"insurance_agency",@"Other",@"store", nil];
     
-    
+    [scrollcamera setScrollEnabled:NO];
     mapView.showsUserLocation = YES;
     mapView.zoomEnabled = NO;
     mapView.mapType = MKMapTypeStandard;
@@ -789,10 +788,6 @@
 	[self.imagePreview.layer addSublayer:captureVideoPreviewLayer];
 	
     UIView *view = [self imagePreview];
-    CALayer* maskLayer = [CALayer layer];
-    maskLayer.contents = (__bridge id)[[UIImage imageNamed:@"My Feed+View Deal (final)_Deal Pic mask.png"] CGImage];
-    view.layer.mask = maskLayer;
-
     CALayer *viewLayer = [view layer];
     [viewLayer setMasksToBounds:YES];
     CGRect bounds = [view bounds];
@@ -848,18 +843,39 @@
 
 
 - (IBAction)snapImage:(id)sender {
-    if (!haveImage) {
-        captureImage.image = nil; //remove old image from view
-        captureImage.hidden = NO; //show the captured image view
-        imagePreview.hidden = YES; //hide the live video feed
-        [self capImage];
-    }
-    else {
-        captureImage.hidden = YES;
-        imagePreview.hidden = NO;
-        haveImage = NO;
-    }
+    [self capImage];
+    [self ImageslideMode];
 }
+
+-(void) CameraMode {
+    //[self initializeCamera];
+    BlackCoverImage.hidden=YES;
+    captureImage.hidden = YES;
+    imagePreview.hidden = NO;
+    RotateCamButton.hidden=NO;
+    TrashButton.hidden=YES;
+    AddAnotherPicButton.hidden=YES;
+    PicFromLibButton.hidden=NO;
+    SnapButton.hidden=NO;
+    ExitCameraButton.hidden=NO;
+    [scrollcamera setScrollEnabled:NO];
+    [scrollcamera setContentSize:((CGSizeMake(320, 155)))];
+}
+
+-(void) ImageslideMode {
+    BlackCoverImage.hidden=NO;
+    currentpage=0;
+    ExitCameraButton.hidden=YES;
+    captureImage.hidden = NO; //show the captured image view
+    imagePreview.hidden = YES; //hide the live video feed
+    RotateCamButton.hidden=YES;
+    SnapButton.hidden=YES;
+    TrashButton.hidden=NO;
+    AddAnotherPicButton.hidden=NO;
+    PicFromLibButton.hidden=YES;
+    [self EnlargeCameraScroll];
+    }
+
 
 - (void) capImage { //method to capture image from AVCaptureSession video feed
     AVCaptureConnection *videoConnection = nil;
@@ -892,18 +908,26 @@
 - (void) processImage:(UIImage *)image { //process captured image, crop, resize and rotate
     haveImage = YES;
     
-        UIGraphicsBeginImageContext(CGSizeMake(320, 226));
-        [image drawInRect: CGRectMake(0, 0, 320, 226)];
+        UIGraphicsBeginImageContext(CGSizeMake(320, 155));
+        [image drawInRect: CGRectMake(0, 0, 320, 155)];
         UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        
         CGRect cropRect = CGRectMake(0, 0, 300, 155);
         CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
-        
+    
+    if (numofpics==0) {
         [captureImage setImage:[UIImage imageWithCGImage:imageRef]];
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.didaddphoto=@"yes";
-
+    }
+    if (numofpics==1) {
+        [captureImage2 setImage:[UIImage imageWithCGImage:imageRef]];
+    }
+    if (numofpics==2) {
+        [captureImage3 setImage:[UIImage imageWithCGImage:imageRef]];
+    }
+    numofpics++;
+    [self EnlargeCameraScroll];
+        AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+        app.didaddphoto=@"yes";
         CGImageRelease(imageRef);
 }
 
@@ -923,17 +947,51 @@
 }
 
 -(void) ExitCameraButtonAction:(id)sender {
-
+    if (numofpics>0) {
+        [self ImageslideMode];
+    }
 }
 
 -(void) TrashButtonAction:(id)sender {
     
-    
-    
+    NSLog(@"page=%d",currentpage);
+    if (currentpage==0) {
+        if (numofpics==1) {
+            captureImage.image=nil;
+        }
+        if (numofpics==2) {
+            captureImage.image=captureImage2.image;
+            captureImage2.image=nil;
+        }
+        if (numofpics==3) {
+            captureImage.image=captureImage2.image;
+            captureImage2.image=captureImage3.image;
+            captureImage3.image=nil;
+        }
+    }
+    if (currentpage==1) {
+        if (numofpics==2) {
+            captureImage2.image=nil;
+        }
+        if (numofpics==3) {
+            captureImage2.image=captureImage3.image;
+            captureImage3.image=nil;
+        }
+    }
+    if (currentpage==3) {
+        if (numofpics==3) {
+            captureImage3.image=nil;
+        }
+    }
+    numofpics--;
+    [self ImageslideMode];
+    if (numofpics==0) {
+        [self CameraMode];
+    }
 }
 
 -(void) AddAnotherPicButtonAction:(id)sender{
-    
+    [self CameraMode];
 }
 
 -(void) RotateCamButtonAction:(id)sender {
@@ -951,17 +1009,29 @@
 }
 
 -(void) PicFromLibButtonAction:(id)sender {
-    
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.allowsEditing=YES;
     [self presentViewController:picker animated:YES completion:nil];
 }
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    captureImage.image = [ info objectForKey:UIImagePickerControllerEditedImage];
+    if (numofpics==0) {
+        captureImage.image=[info objectForKey:UIImagePickerControllerEditedImage];
+    }
+    if (numofpics==1) {
+        captureImage2.image=[info objectForKey:UIImagePickerControllerEditedImage];
+    }
+    if (numofpics==2) {
+        captureImage3.image=[info objectForKey:UIImagePickerControllerEditedImage];
+    }
+    numofpics++;
+    NSLog(@"numofpicafterlib %d",numofpics);
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self processImage:captureImage.image];
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    app.didaddphoto=@"yes";
+    [self ImageslideMode];
 }
 
 
@@ -989,7 +1059,15 @@
 }
 
 -(void) EnlargeCameraScroll {
-    [scrollcamera setContentSize:((CGSizeMake(700, 155)))];
+    if (numofpics>=2) {
+        [scrollcamera setContentSize:((CGSizeMake(320*numofpics, 155)))];
+        [scrollcamera setScrollEnabled:YES];
+    } else
+    {
+        [scrollcamera setScrollEnabled:NO];
+        [scrollcamera setContentSize:((CGSizeMake(320, 155)))];
+    }
+
 }
 
 -(void) EnlargeScroll {
@@ -1000,5 +1078,9 @@
     [scroll setContentSize:((CGSizeMake(320, 460)))];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+    CGFloat pageWidth = scrollcamera.frame.size.width;
+    currentpage = floor((scrollcamera.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+}
 
 @end
