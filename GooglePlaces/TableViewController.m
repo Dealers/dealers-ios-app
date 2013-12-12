@@ -20,7 +20,7 @@
 @synthesize arrayforicons;
 @synthesize iconsarray;
 @synthesize iconsarrayfiltered;
-@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,DoneButton,BlackCoverImage;
+@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,DoneButton,BlackCoverImage,ScrollView;
 
 
 -(void) BackgroundMethod {
@@ -140,7 +140,11 @@
         LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
     
     [self performSelector:@selector(coverviewhidden) withObject:nil afterDelay:0.5];
-    
+    [ScrollView setContentSize:((CGSizeMake(320, 118+([array count]*70))))];
+    self.tableviewgoogle.frame = CGRectMake(0, 119, 320, ([array count]*70+15));
+    [self.tableviewgoogle setScrollEnabled:NO];
+    NSLog(@"%d",[array count]);
+
 }
 
 -(void) coverviewhidden {
@@ -213,10 +217,12 @@
     location.longitude = locationManager.location.coordinate.longitude;
     region.span = span;
     region.center = location;
+    
     [mapView setRegion:region animated:YES];
 
     [self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
 
+    [ScrollView setScrollEnabled:YES];
 
     [super viewDidLoad];
 }
@@ -314,7 +320,7 @@
 -(IBAction) ResizemapButtonAction:(id)sender {
     ButtonCoverforMap.hidden=YES;
     RemovemapButton.hidden=NO;
-    CGRect cropRect = CGRectMake(0, 44, 320, 460);
+    CGRect cropRect = CGRectMake(0, 0, 320, 374);
     [UIView animateWithDuration:0.3 animations:^{mapView.frame=cropRect;}];
     CGRect frame = self.tableviewgoogle.frame;
     frame.origin.y = frame.origin.y + 256;
@@ -331,7 +337,7 @@
 -(IBAction) RemovemapButtonAction:(id)sender {
     ButtonCoverforMap.hidden=NO;
     RemovemapButton.hidden=YES;
-    CGRect cropRect = CGRectMake(0, 85, 320, 124);
+    CGRect cropRect = CGRectMake(0, -90, 320, 284);
     [UIView animateWithDuration:0.3 animations:^{mapView.frame=cropRect;}];
     CGRect frame = self.tableviewgoogle.frame;
     frame.origin.y = frame.origin.y - 256;
@@ -360,5 +366,19 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat y = scrollView.contentOffset.y;
+    [UIView animateWithDuration:0.0 animations:^{mapView.center = CGPointMake(160,58+(y/2));}];
+    if (y==0) {
+        CGRect cropRect = CGRectMake(0, -90, 320, 284);
+        [UIView animateWithDuration:0.0 animations:^{mapView.frame=cropRect;}];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableviewgoogle deselectRowAtIndexPath:indexPath animated:YES];
 }
 @end

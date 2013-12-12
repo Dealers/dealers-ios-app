@@ -26,6 +26,8 @@
     
 }
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableviewgoogle;
 @property (retain, nonatomic) NSMutableArray *array;
 @property (retain, nonatomic) NSMutableArray *arraySort;
