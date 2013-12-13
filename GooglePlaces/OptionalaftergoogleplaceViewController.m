@@ -154,10 +154,9 @@
     Flag = true;
     updown_moreoption = true;
     MoreView.alpha=0.0;
-    SocialView.alpha=0.0;
     currentpage=0;
     BlackCoverImage.hidden=YES;
-    [self initializeCamera];
+    //[self initializeCamera];
 
     [self ReduceScroll];
     [self EnlargeCameraScroll];
@@ -547,7 +546,7 @@
     
     if (textField.tag==4) {
 
-        [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 290);}];
+        [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 100);}];
 
         DollarButtonFull.hidden=YES;
         DollarButton.hidden=YES;
@@ -848,7 +847,7 @@
 }
 
 -(void) CameraMode {
-    [self initializeCamera];
+    //[self initializeCamera];
     BlackCoverImage.hidden=YES;
     captureImage.hidden = YES;
     imagePreview.hidden = NO;
@@ -1039,9 +1038,8 @@
     
     if (updown_moreoption) {
         [self EnlargeScroll];
-        [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 300);}];
+        [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 220);}];
         [UIView animateWithDuration:0.1 animations:^{self.MoreView.alpha=1.0;}];
-        [UIView animateWithDuration:0.1 animations:^{self.SocialView.alpha=1.0;}];
         CGRect frame = AddDealButton.frame;
         frame.origin.y = frame.origin.y + 245;
         [UIView animateWithDuration:0.1 animations:^{AddDealButton.frame = frame;}];
@@ -1049,7 +1047,6 @@
     } else {
         [self ReduceScroll];
         [UIView animateWithDuration:0.1 animations:^{self.MoreView.alpha=0.0;}];
-        [UIView animateWithDuration:0.1 animations:^{self.SocialView.alpha=0.0;}];
         CGRect frame = AddDealButton.frame;
         frame.origin.y = frame.origin.y - 245;
         [UIView animateWithDuration:0.1 animations:^{AddDealButton.frame = frame;}];
