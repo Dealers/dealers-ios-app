@@ -40,15 +40,6 @@
 - (IBAction)adddealbutton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *AddDealButton;
 
-@property (weak, nonatomic) IBOutlet UIImageView *groupbefore;
-@property (weak, nonatomic) IBOutlet UIImageView *groupafter;
-@property (weak, nonatomic) IBOutlet UIImageView *facebookbefore;
-@property (weak, nonatomic) IBOutlet UIImageView *facebookafter;
-@property (weak, nonatomic) IBOutlet UIImageView *twittbefore;
-@property (weak, nonatomic) IBOutlet UIImageView *twittafter;
-@property (weak, nonatomic) IBOutlet UIImageView *whatsappbefore;
-@property (weak, nonatomic) IBOutlet UIImageView *whatsappafter;
-
 @property (weak, nonatomic) IBOutlet UIButton *groupicon;
 @property (weak, nonatomic) IBOutlet UIButton *facebookicon;
 @property (weak, nonatomic) IBOutlet UIButton *twiiticon;
@@ -113,10 +104,10 @@
 @property(nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property (weak, nonatomic) IBOutlet UIView *imagePreview;
 - (IBAction)snapImage:(id)sender;
-@property (weak, nonatomic) IBOutlet UIImageView *captureImage_temp;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage2;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
+@property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
 @property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;
 
 

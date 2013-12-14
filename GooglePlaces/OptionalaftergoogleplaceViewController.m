@@ -22,24 +22,19 @@
 @synthesize discountlabel;
 @synthesize expirationlabel;
 @synthesize descriptionlabel;
-@synthesize facebookafter;
-@synthesize facebookbefore;
 @synthesize facebookicon;
 @synthesize twiiticon;
-@synthesize twittafter;
-@synthesize twittbefore;
-@synthesize groupafter;
-@synthesize groupbefore;
 @synthesize groupicon;
 @synthesize facebook;
 @synthesize twitter;
-@synthesize whatsapp,whatsappafter,whatsappbefore,whatsappicon;
+@synthesize whatsapp;
+@synthesize whatsappicon;
 @synthesize group;
 @synthesize list;
 @synthesize scroll;
 @synthesize CategoryNavBar;
 @synthesize CategoryPicker;
-@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera,SnapButton, captureImage2,captureImage3,captureImage_temp,BlackCoverImage;
+@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera,SnapButton, captureImage2,captureImage3,captureImage4,BlackCoverImage;
 
 
 -(void) BackgroundMethod {
@@ -177,12 +172,6 @@
     whatsapp = @"a";
     group = @"a";
     twitter = @"a";
-    groupbefore.alpha=1.0;
-    facebookbefore.alpha=1.0;
-    twittbefore.alpha=1.0;
-    groupafter.alpha=0.0;
-    facebookafter.alpha=0.0;
-    twittafter.alpha=0.0;
     descriptionlabel.tag=1;
     pricelabel.tag=2;
     discountlabel.tag=3;
@@ -289,63 +278,35 @@
 
 - (IBAction)groupbutton:(id)sender {
     if ([group isEqual:@"a"]){
-        [UIView animateWithDuration:0.3 animations:^{groupafter.alpha=1.0;}];
-        [UIView animateWithDuration:0.3 animations:^{groupbefore.alpha=0.0;}];
+        [groupicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Groups button (selected).png"] forState:UIControlStateNormal];
         group=@"b";
-        
-        CGRect frame = groupicon.frame;
-        frame.origin.x = frame.origin.x + 19;
-        [UIView animateWithDuration:0.3 animations:^{groupicon.frame = frame;}];
-
     }
     else {
-        [UIView animateWithDuration:0.3 animations:^{groupafter.alpha=0.0;}];
-        [UIView animateWithDuration:0.3 animations:^{groupbefore.alpha=1.0;}];
-        CGRect frame = groupicon.frame;
-        frame.origin.x = frame.origin.x - 19;
-        [UIView animateWithDuration:0.3 animations:^{groupicon.frame = frame;}];
+        [groupicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Groups button.png"] forState:UIControlStateNormal];
         group=@"a";
     }
 }
 
 - (IBAction)whatsappbutton:(id)sender {
     if ([whatsapp isEqual:@"a"]){
-        [UIView animateWithDuration:0.3 animations:^{whatsappafter.alpha=1.0;}];
-        [UIView animateWithDuration:0.3 animations:^{whatsappbefore.alpha=0.0;}];
+        [whatsappicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via WhatsApp button (selected).png"] forState:UIControlStateNormal];
         whatsapp=@"b";
-        
-        CGRect frame = whatsappicon.frame;
-        frame.origin.x = frame.origin.x + 19;
-        [UIView animateWithDuration:0.3 animations:^{whatsappicon.frame = frame;}];
-        
-    }
+        }
     else {
-        [UIView animateWithDuration:0.3 animations:^{whatsappafter.alpha=0.0;}];
-        [UIView animateWithDuration:0.3 animations:^{whatsappbefore.alpha=1.0;}];
-        CGRect frame = whatsappicon.frame;
-        frame.origin.x = frame.origin.x - 19;
-        [UIView animateWithDuration:0.3 animations:^{whatsappicon.frame = frame;}];
+        [whatsappicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via WhatsApp button.png"] forState:UIControlStateNormal];
         whatsapp=@"a";
     }
 }
 - (IBAction)facebookbutton:(id)sender {
     
     if ([facebook isEqual:@"a"]){
-        [UIView animateWithDuration:0.3 animations:^{facebookafter.alpha=1.0;}];
-        [UIView animateWithDuration:0.3 animations:^{facebookbefore.alpha=0.0;}];
-        CGRect frame = facebookicon.frame;
-        frame.origin.x = frame.origin.x + 19;
-        [UIView animateWithDuration:0.3 animations:^{facebookicon.frame = frame;}];
+        [facebookicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Facebook button (selected).png"] forState:UIControlStateNormal];
         facebook=@"b";
     }
     
     else {
         
-        [UIView animateWithDuration:0.3 animations:^{facebookafter.alpha=0.0;}];
-        [UIView animateWithDuration:0.3 animations:^{facebookbefore.alpha=1.0;}];
-        CGRect frame = facebookicon.frame;
-        frame.origin.x = frame.origin.x - 19;
-        [UIView animateWithDuration:0.3 animations:^{facebookicon.frame = frame;}];
+        [facebookicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Facebook button.png"] forState:UIControlStateNormal];
         facebook=@"a";
     }
 }
@@ -353,21 +314,12 @@
 - (IBAction)twittbutton:(id)sender {
     
     if ([twitter isEqual:@"a"]){
-        [UIView animateWithDuration:0.3 animations:^{twittafter.alpha=1.0;}];
-        [UIView animateWithDuration:0.3 animations:^{twittbefore.alpha=0.0;}];
-        CGRect frame = twiiticon.frame;
-        frame.origin.x = frame.origin.x + 19;
-        [UIView animateWithDuration:0.3 animations:^{twiiticon.frame = frame;}];
+        [twiiticon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Twitter button (selected).png"] forState:UIControlStateNormal];
         twitter=@"b";
     }
     
     else {
-        
-        [UIView animateWithDuration:0.3 animations:^{twittafter.alpha=0.0;}];
-        [UIView animateWithDuration:0.3 animations:^{twittbefore.alpha=1.0;}];
-        CGRect frame = twiiticon.frame;
-        frame.origin.x = frame.origin.x - 19;
-        [UIView animateWithDuration:0.3 animations:^{twiiticon.frame = frame;}];
+        [twiiticon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Twitter button.png"] forState:UIControlStateNormal];
         twitter=@"a";
     }
 }
@@ -442,10 +394,6 @@
     
 
 }
-
-
-
-
 - (IBAction)CateoryButtonAction:(id)sender {
     [pricelabel resignFirstResponder];
     [titlelabel resignFirstResponder];
@@ -869,9 +817,11 @@
     imagePreview.hidden = YES; //hide the live video feed
     RotateCamButton.hidden=YES;
     SnapButton.hidden=YES;
-    TrashButton.hidden=NO;
-    AddAnotherPicButton.hidden=NO;
     PicFromLibButton.hidden=YES;
+    TrashButton.hidden=NO;
+    if (numofpics == 4) {
+        AddAnotherPicButton.hidden=YES;
+    } else AddAnotherPicButton.hidden=NO;
     [self EnlargeCameraScroll];
     }
 
@@ -923,7 +873,11 @@
     if (numofpics==2) {
         [captureImage3 setImage:[UIImage imageWithCGImage:imageRef]];
     }
+    if (numofpics==3) {
+        [captureImage4 setImage:[UIImage imageWithCGImage:imageRef]];
+    }
     numofpics++;
+    [self oreder];
     [self EnlargeCameraScroll];
         AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
         app.didaddphoto=@"yes";
@@ -967,6 +921,13 @@
             captureImage2.image=captureImage3.image;
             captureImage3.image=nil;
         }
+        if (numofpics==4) {
+            captureImage.image=captureImage2.image;
+            captureImage2.image=captureImage3.image;
+            captureImage3.image=captureImage4.image;
+            captureImage4.image=nil;
+        }
+
     }
     if (currentpage==1) {
         if (numofpics==2) {
@@ -976,12 +937,26 @@
             captureImage2.image=captureImage3.image;
             captureImage3.image=nil;
         }
-    }
-    if (currentpage==3) {
-        if (numofpics==3) {
-            captureImage3.image=nil;
+        if (numofpics==4) {
+            captureImage2.image=captureImage3.image;
+            captureImage3.image=captureImage4.image;
+            captureImage4.image=nil;
         }
     }
+    
+    if (currentpage==2) {
+        if (numofpics==3) {
+            captureImage3.image=nil;
+        } else{
+        captureImage3.image=captureImage4.image;
+        captureImage4.image=nil;
+        }
+    }
+
+    if (currentpage==3) {
+        captureImage4.image=nil;
+    }
+
     numofpics--;
     [self ImageslideMode];
     if (numofpics==0) {
@@ -1025,7 +1000,11 @@
     if (numofpics==2) {
         captureImage3.image=[info objectForKey:UIImagePickerControllerEditedImage];
     }
+    if (numofpics==3) {
+        captureImage4.image=[info objectForKey:UIImagePickerControllerEditedImage];
+    }
     numofpics++;
+    [self oreder];
     NSLog(@"numofpicafterlib %d",numofpics);
     [self dismissViewControllerAnimated:YES completion:nil];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
@@ -1041,15 +1020,21 @@
         [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 220);}];
         [UIView animateWithDuration:0.1 animations:^{self.MoreView.alpha=1.0;}];
         CGRect frame = AddDealButton.frame;
-        frame.origin.y = frame.origin.y + 245;
+        frame.origin.y = frame.origin.y + 200;
         [UIView animateWithDuration:0.1 animations:^{AddDealButton.frame = frame;}];
+        CGRect frame2 = SocialView.frame;
+        frame2.origin.y = frame2.origin.y + 200;
+        [UIView animateWithDuration:0.1 animations:^{SocialView.frame = frame2;}];
         updown_moreoption = false;
     } else {
         [self ReduceScroll];
         [UIView animateWithDuration:0.1 animations:^{self.MoreView.alpha=0.0;}];
         CGRect frame = AddDealButton.frame;
-        frame.origin.y = frame.origin.y - 245;
+        frame.origin.y = frame.origin.y - 200;
         [UIView animateWithDuration:0.1 animations:^{AddDealButton.frame = frame;}];
+        CGRect frame2 = SocialView.frame;
+        frame2.origin.y = frame2.origin.y - 200;
+        [UIView animateWithDuration:0.1 animations:^{SocialView.frame = frame2;}];
         updown_moreoption = true;
 
     }
@@ -1068,16 +1053,41 @@
 }
 
 -(void) EnlargeScroll {
-    [scroll setContentSize:((CGSizeMake(320, 700)))];
+    [scroll setContentSize:((CGSizeMake(320, 720)))];
 }
 
 -(void) ReduceScroll {
-    [scroll setContentSize:((CGSizeMake(320, 460)))];
+    [scroll setContentSize:((CGSizeMake(320, 500)))];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     CGFloat pageWidth = scrollcamera.frame.size.width;
     currentpage = floor((scrollcamera.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    NSLog(@"page=%d",currentpage);
+
 }
 
+-(void) oreder {
+    NSLog(@"order and num=%d",numofpics);
+    UIImageView *captureImage_temp = [[UIImageView alloc]init];
+    captureImage_temp.image=nil;
+    if (numofpics==2) {
+        captureImage_temp.image=captureImage2.image;
+        captureImage2.image=captureImage.image;
+        captureImage.image=captureImage_temp.image;
+    }
+    if (numofpics==3) {
+        captureImage_temp.image=captureImage3.image;
+        captureImage3.image=captureImage2.image;
+        captureImage2.image=captureImage.image;
+        captureImage.image=captureImage_temp.image;
+    }
+    if (numofpics==4) {
+        captureImage_temp.image=captureImage4.image;
+        captureImage4.image=captureImage3.image;
+        captureImage3.image=captureImage2.image;
+        captureImage2.image=captureImage.image;
+        captureImage.image=captureImage_temp.image;
+    }
+}
 @end
