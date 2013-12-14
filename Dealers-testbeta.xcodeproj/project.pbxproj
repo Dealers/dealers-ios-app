@@ -299,18 +299,14 @@
 		B06F8121181676AF0032CE68 /* zoo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06F80D7181676AD0032CE68 /* zoo@2x.png */; };
 		B079F21F1843D31A00E0C186 /* Add Deal_Done button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F21D1843D31A00E0C186 /* Add Deal_Done button@2x.png */; };
 		B079F2201843D31A00E0C186 /* Add Deal_Done button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F21E1843D31A00E0C186 /* Add Deal_Done button (selected)@2x.png */; };
-		B079F2951845DDFA00E0C186 /* Add Deal (Final)_-Not There- box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2731845DDFA00E0C186 /* Add Deal (Final)_-Not There- box@2x.png */; };
 		B079F2961845DDFA00E0C186 /* Add Deal (Final)_Add Another Photo button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2741845DDFA00E0C186 /* Add Deal (Final)_Add Another Photo button@2x.png */; };
 		B079F2971845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2751845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button (selected)@2x.png */; };
 		B079F2981845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2761845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button@2x.png */; };
 		B079F2991845DDFA00E0C186 /* Add Deal (Final)_Camera Window mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2771845DDFA00E0C186 /* Add Deal (Final)_Camera Window mask@2x.png */; };
-		B079F29A1845DDFA00E0C186 /* Add Deal (Final)_Deal Location icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2781845DDFA00E0C186 /* Add Deal (Final)_Deal Location icon@2x.png */; };
 		B079F29C1845DDFA00E0C186 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27A1845DDFA00E0C186 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png */; };
 		B079F29D1845DDFA00E0C186 /* Add Deal (Final)_Facebook switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27B1845DDFA00E0C186 /* Add Deal (Final)_Facebook switch@2x.png */; };
 		B079F29E1845DDFA00E0C186 /* Add Deal (Final)_Groups Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27C1845DDFA00E0C186 /* Add Deal (Final)_Groups Switch background(selected)@2x.png */; };
 		B079F29F1845DDFA00E0C186 /* Add Deal (Final)_Groups switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27D1845DDFA00E0C186 /* Add Deal (Final)_Groups switch@2x.png */; };
-		B079F2A01845DDFA00E0C186 /* Add Deal (Final)_Local button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27E1845DDFA00E0C186 /* Add Deal (Final)_Local button (selected)@2x.png */; };
-		B079F2A11845DDFA00E0C186 /* Add Deal (Final)_Local button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27F1845DDFA00E0C186 /* Add Deal (Final)_Local button@2x.png */; };
 		B079F2A21845DDFA00E0C186 /* Add Deal (Final)_Minimize Map button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2801845DDFA00E0C186 /* Add Deal (Final)_Minimize Map button (selected)@2x.png */; };
 		B079F2A31845DDFA00E0C186 /* Add Deal (Final)_Minimize Map button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2811845DDFA00E0C186 /* Add Deal (Final)_Minimize Map button@2x.png */; };
 		B079F2A41845DDFA00E0C186 /* Add Deal (Final)_More Details background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2821845DDFA00E0C186 /* Add Deal (Final)_More Details background(selected)@2x.png */; };
@@ -318,8 +314,6 @@
 		B079F2A61845DDFA00E0C186 /* Add Deal (Final)_Online button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2841845DDFA00E0C186 /* Add Deal (Final)_Online button@2x.png */; };
 		B079F2A71845DDFA00E0C186 /* Add Deal (Final)_Other Social Networks box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2851845DDFA00E0C186 /* Add Deal (Final)_Other Social Networks box@2x.png */; };
 		B079F2A81845DDFA00E0C186 /* Add Deal (Final)_Photo mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2861845DDFA00E0C186 /* Add Deal (Final)_Photo mask@2x.png */; };
-		B079F2AA1845DDFA00E0C186 /* Add Deal (Final)_Show Details Arrow icon(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2881845DDFA00E0C186 /* Add Deal (Final)_Show Details Arrow icon(selected)@2x.png */; };
-		B079F2AB1845DDFA00E0C186 /* Add Deal (Final)_Show Details Arrow icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2891845DDFA00E0C186 /* Add Deal (Final)_Show Details Arrow icon@2x.png */; };
 		B079F2AC1845DDFA00E0C186 /* Add Deal (Final)_Social Network Switch background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F28A1845DDFA00E0C186 /* Add Deal (Final)_Social Network Switch background@2x.png */; };
 		B079F2AD1845DDFA00E0C186 /* Add Deal (Final)_Take Photo! button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F28B1845DDFA00E0C186 /* Add Deal (Final)_Take Photo! button (selected)@2x.png */; };
 		B079F2AE1845DDFA00E0C186 /* Add Deal (Final)_Take Photo! button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F28C1845DDFA00E0C186 /* Add Deal (Final)_Take Photo! button@2x.png */; };
@@ -330,7 +324,6 @@
 		B079F2B51845DDFA00E0C186 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2931845DDFA00E0C186 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png */; };
 		B079F2B61845DDFA00E0C186 /* Add Deal (Final)_Whatsapp switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2941845DDFA00E0C186 /* Add Deal (Final)_Whatsapp switch@2x.png */; };
 		B079F2B81846230A00E0C186 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B079F2B71846230800E0C186 /* AVFoundation.framework */; };
-		B079F2BB1846585A00E0C186 /* My Feed+View Deal (final)_Deal background & Shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2B91846584F00E0C186 /* My Feed+View Deal (final)_Deal background & Shadow@2x.png */; };
 		B079F2BC1846585A00E0C186 /* My Feed+View Deal (final)_Deal Pic mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2BA1846585400E0C186 /* My Feed+View Deal (final)_Deal Pic mask@2x.png */; };
 		B079F2BE18465C2F00E0C186 /* Add Deal (Final)_Taken Photo shade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2BD18465C2C00E0C186 /* Add Deal (Final)_Taken Photo shade@2x.png */; };
 		B079F2C01847C0CE00E0C186 /* beta.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2BF1847C0CE00E0C186 /* beta.png */; };
@@ -2039,21 +2032,17 @@
 				B079F21F1843D31A00E0C186 /* Add Deal_Done button@2x.png in Resources */,
 				B079F2201843D31A00E0C186 /* Add Deal_Done button (selected)@2x.png in Resources */,
 				C873D3A71851040700B913CD /* My Feed+View Deal_Category (final) icon@2X.png in Resources */,
-				B079F2951845DDFA00E0C186 /* Add Deal (Final)_-Not There- box@2x.png in Resources */,
 				C873D39F1851040700B913CD /* My Feed+View Deal (final)_Report button@2x.png in Resources */,
 				B079F2961845DDFA00E0C186 /* Add Deal (Final)_Add Another Photo button@2x.png in Resources */,
 				B079F2971845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button (selected)@2x.png in Resources */,
 				B079F2981845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button@2x.png in Resources */,
 				C8D2E472185B781D00398873 /* Add Deal (Final)_Share via Groups button (pushed)@2x.png in Resources */,
 				B079F2991845DDFA00E0C186 /* Add Deal (Final)_Camera Window mask@2x.png in Resources */,
-				B079F29A1845DDFA00E0C186 /* Add Deal (Final)_Deal Location icon@2x.png in Resources */,
 				B079F29C1845DDFA00E0C186 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png in Resources */,
 				C8D2E46A185B781D00398873 /* Add Deal (Final)_Online button@2x.png in Resources */,
 				B079F29D1845DDFA00E0C186 /* Add Deal (Final)_Facebook switch@2x.png in Resources */,
 				B079F29E1845DDFA00E0C186 /* Add Deal (Final)_Groups Switch background(selected)@2x.png in Resources */,
 				B079F29F1845DDFA00E0C186 /* Add Deal (Final)_Groups switch@2x.png in Resources */,
-				B079F2A01845DDFA00E0C186 /* Add Deal (Final)_Local button (selected)@2x.png in Resources */,
-				B079F2A11845DDFA00E0C186 /* Add Deal (Final)_Local button@2x.png in Resources */,
 				B079F2A21845DDFA00E0C186 /* Add Deal (Final)_Minimize Map button (selected)@2x.png in Resources */,
 				B079F2A31845DDFA00E0C186 /* Add Deal (Final)_Minimize Map button@2x.png in Resources */,
 				B079F2A41845DDFA00E0C186 /* Add Deal (Final)_More Details background(selected)@2x.png in Resources */,
@@ -2061,8 +2050,6 @@
 				B079F2A61845DDFA00E0C186 /* Add Deal (Final)_Online button@2x.png in Resources */,
 				B079F2A71845DDFA00E0C186 /* Add Deal (Final)_Other Social Networks box@2x.png in Resources */,
 				B079F2A81845DDFA00E0C186 /* Add Deal (Final)_Photo mask@2x.png in Resources */,
-				B079F2AA1845DDFA00E0C186 /* Add Deal (Final)_Show Details Arrow icon(selected)@2x.png in Resources */,
-				B079F2AB1845DDFA00E0C186 /* Add Deal (Final)_Show Details Arrow icon@2x.png in Resources */,
 				B079F2AC1845DDFA00E0C186 /* Add Deal (Final)_Social Network Switch background@2x.png in Resources */,
 				B079F2AD1845DDFA00E0C186 /* Add Deal (Final)_Take Photo! button (selected)@2x.png in Resources */,
 				B079F2AE1845DDFA00E0C186 /* Add Deal (Final)_Take Photo! button@2x.png in Resources */,
@@ -2075,7 +2062,6 @@
 				C873D3A51851040700B913CD /* My Feed+View Deal Icons-NEW.rar in Resources */,
 				B079F2B51845DDFA00E0C186 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png in Resources */,
 				B079F2B61845DDFA00E0C186 /* Add Deal (Final)_Whatsapp switch@2x.png in Resources */,
-				B079F2BB1846585A00E0C186 /* My Feed+View Deal (final)_Deal background & Shadow@2x.png in Resources */,
 				C8D2E467185B781D00398873 /* Add Deal (Final)_More Details button (selected)@2x.png in Resources */,
 				B079F2BC1846585A00E0C186 /* My Feed+View Deal (final)_Deal Pic mask@2x.png in Resources */,
 				C8D2E45D185B781D00398873 /* Add Deal (Final)_Facebook switch@2x.png in Resources */,

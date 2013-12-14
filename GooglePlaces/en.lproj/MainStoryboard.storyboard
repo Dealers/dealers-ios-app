@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="iJA-Ix-JTl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="ZXa-ud-UfS">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <development version="4600" identifier="xcode"/>
@@ -1073,7 +1073,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Shopping Bag.png" id="sAQ-s1-Vch">
-                                        <rect key="frame" x="103" y="146.99999999999991" width="188" height="226"/>
+                                        <rect key="frame" x="103" y="146.99999999999994" width="188" height="226"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="5f8-2O-h9l">
@@ -1116,7 +1116,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="41" y="425" width="216" height="20.999999999999904"/>
+                                        <rect key="frame" x="41" y="425" width="216" height="20.999999999999911"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
@@ -1138,7 +1138,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="224" y="425" width="96" height="20.999999999999904"/>
+                                        <rect key="frame" x="224" y="424.99999999999994" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -2497,16 +2497,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="delegate" destination="iJA-Ix-JTl" id="zdV-M3-mKM"/>
                                         </connections>
                                     </scrollView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal (Final)_Taken Photo shade.png" id="8BC-Hw-NJB">
                                         <rect key="frame" x="10" y="87" width="300" height="76"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Add Deal (Final)_Camera Frame.png" id="yAV-6p-JqB">
-                                        <rect key="frame" x="0.0" y="3" width="320" height="165"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="C80-Yn-0Ii" userLabel="Button add another photo">
@@ -2539,7 +2537,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.50980392156862742" green="0.50980392156862742" blue="0.50980392156862742" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Navigation Bar@2X.png" id="Eeh-vO-hme">
                                 <rect key="frame" x="0.0" y="0.0" width="321" height="53"/>
@@ -2907,7 +2904,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Add Deal (Final)_Add Another Photo button.png" width="30" height="30"/>
         <image name="Add Deal (Final)_Add the Deal button (selected).png" width="301" height="44"/>
         <image name="Add Deal (Final)_Add the Deal button.png" width="301" height="44"/>
-        <image name="Add Deal (Final)_Camera Frame.png" width="320" height="165"/>
         <image name="Add Deal (Final)_Exit Camera Mode button.png" width="29" height="29"/>
         <image name="Add Deal (Final)_Local button (selected).png" width="76" height="76"/>
         <image name="Add Deal (Final)_Local button.png" width="76" height="76"/>

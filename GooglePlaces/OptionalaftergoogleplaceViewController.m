@@ -151,21 +151,21 @@
     MoreView.alpha=0.0;
     currentpage=0;
     BlackCoverImage.hidden=YES;
-    //[self initializeCamera];
+    [self initializeCamera];
 
     [self ReduceScroll];
     [self EnlargeCameraScroll];
     [scroll setScrollEnabled:YES];
     [scrollcamera setScrollEnabled:YES];
-
+    [scrollcamera setBackgroundColor:[UIColor blackColor]];    
     TrashButton.hidden=YES;
     AddAnotherPicButton.hidden=YES;
     FrontCamera = NO;
     captureImage.hidden = YES;
     LoadingDeal.hidden=YES;
     [super viewDidLoad];
-    UIColor *colorOne = [UIColor colorWithRed:(242/255.0) green:(242/255.0) blue:(242/255.0) alpha:1.0];
-    self.scroll.backgroundColor=colorOne;
+    //UIColor *colorOne = [UIColor colorWithRed:(242/255.0) green:(242/255.0) blue:(242/255.0) alpha:1.0];
+    //self.scroll.backgroundColor=colorOne;
 
     sign=@"1";
     facebook = @"a";
@@ -795,7 +795,7 @@
 }
 
 -(void) CameraMode {
-    //[self initializeCamera];
+    [self initializeCamera];
     BlackCoverImage.hidden=YES;
     captureImage.hidden = YES;
     imagePreview.hidden = NO;
