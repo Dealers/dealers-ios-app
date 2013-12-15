@@ -9,6 +9,8 @@
 #import "TableViewController.h"
 #import "googleCell2.h"
 #import "ResaftergoogleplaceViewController.h"
+#import "StoreSearchCell.h"
+
 @interface TableViewController ()
 
 @end
@@ -20,7 +22,7 @@
 @synthesize arrayforicons;
 @synthesize iconsarray;
 @synthesize iconsarrayfiltered;
-@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,DoneButton,BlackCoverImage,ScrollView;
+@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,DoneButton,BlackCoverImage,ScrollView,StoreSearchTableview,StoreSearcLocationhArray,StoreSearchArray;
 
 
 -(void) BackgroundMethod {
@@ -143,7 +145,6 @@
     [ScrollView setContentSize:((CGSizeMake(320, 118+([array count]*70))))];
     self.tableviewgoogle.frame = CGRectMake(0, 119, 320, ([array count]*70+15));
     [self.tableviewgoogle setScrollEnabled:NO];
-    NSLog(@"%d",[array count]);
 
 }
 
@@ -192,7 +193,7 @@
     self.tableviewgoogle.delegate = self;
     RemovemapButton.hidden=YES;
     BlackCoverImage.hidden=YES;
-    
+    self.StoreSearchTableview.hidden=YES;
   //  [mapView setZoomEnabled:YES];
     
     mapView.showsUserLocation = YES;
@@ -249,15 +250,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (tableView==self.tableviewgoogle) {
     if ([array count] == 0) {
         return 0;
     }
     return [array count];
-
+    } else return [StoreSearchArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    googleCell2 *Cell=nil;
+    if (tableView==self.tableviewgoogle) {
     static NSString *CellIdentifier = @"Cell_google";
     
     googleCell2 *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -276,8 +280,28 @@
     Cell.lastlabel.text = distance;
     UIImageView *temp=[arrayforicons objectAtIndex:(indexPath.row)];
     Cell.googlepic.image =temp.image;
+        return Cell;
+
     }
-    return Cell;
+    } else {
+        StoreSearchTableview.hidden=NO;
+        static NSString *CellIdentifier = @"StoreSearch";
+        StoreSearchCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (!Cell) {
+            Cell = [[StoreSearchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+        if (Cell.selected==TRUE) {
+        }
+        
+        if ([StoreSearchArray count]>0){
+            Cell.StoreNameLabel.text = [StoreSearchArray objectAtIndex:indexPath.row];
+            Cell.StoreLocationLabel.text = [StoreSearcLocationhArray objectAtIndex:indexPath.row];
+            return Cell;
+        }
+    }
+return Cell;
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -293,6 +317,16 @@
         string = [array objectAtIndex:indexpath.row];
         [[segue destinationViewController] setSegstore:string];
     }
+    
+    if ([[segue identifier] isEqualToString:@"StoreSearchSeg"]) {
+        NSString *string=nil;
+        NSIndexPath *indexpath = nil;
+        
+        indexpath = [self.StoreSearchTableview indexPathForSelectedRow];
+        string = [StoreSearchArray objectAtIndex:indexpath.row];
+        [[segue destinationViewController] setSegstore:string];
+    }
+
 }
 
 - (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation {
@@ -351,16 +385,76 @@
 
 }
 
+-(void) StoreSearchMethod:(NSString*) searchText{
+    
+    StoreSearchArray = [[NSMutableArray alloc]init];
+    StoreSearcLocationhArray = [[NSMutableArray alloc]init];
+    
+    NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=100000&v=20131120&query=%@",locationManager.location.coordinate.latitude, locationManager.location.coordinate.longitude,searchText];
+    NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+    NSData *data = [NSData dataWithContentsOfURL: googleRequestURL];
+    NSError* error;
+    if (data!=nil) {
+        NSDictionary* json = [NSJSONSerialization
+                              JSONObjectWithData:data
+                              
+                              options:kNilOptions
+                              error:&error];
+        NSDictionary *responseData = json[@"response"];
+        NSArray *venues = responseData[@"venues"];
+        array=[[NSMutableArray alloc] init];
+        for (int i=0; i<[venues count]; i++)
+        {
+            NSDictionary *responseData3 = [venues objectAtIndex:i];
+            NSString *name=[responseData3 objectForKey:@"name"];
+            NSString *vicinity=[[responseData3 objectForKey:@"location"]objectForKey:@"address"];
+            if (name==nil) {
+                name=@"";
+            }
+            if (vicinity==nil) {
+                vicinity=@"Unknow";
+            }
+            [self.StoreSearchArray addObject:name];
+            [self.StoreSearcLocationhArray addObject:vicinity];
+        }
+    }
+[self.StoreSearchTableview reloadData];
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     BlackCoverImage.hidden=NO;
+    self.tableviewgoogle.hidden=YES;
+    [self.mapView setZoomEnabled:NO];
+    [self.ScrollView setScrollEnabled:NO];
     [UIView animateWithDuration:0.3 animations:^{DoneButton.center = CGPointMake(285, 225);}];
     [UIView animateWithDuration:0.3 animations:^{NavBarImage.center = CGPointMake(160, 225);}];
+    
+    if (searchText.length==0) {
+        StoreSearchArray = [[NSMutableArray alloc]init];
+        StoreSearcLocationhArray = [[NSMutableArray alloc]init];
+        [self.StoreSearchTableview reloadData];
+
+    } else {
+        [self performSelectorInBackground:@selector(StoreSearchMethod:) withObject:searchText];
+    }
 }
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+    }
+}
+
 
 -(void) DoneButtonAction:(id)sender {
     BlackCoverImage.hidden=YES;
     [UIView animateWithDuration:0.3 animations:^{DoneButton.center = CGPointMake(285, 600);}];
     [UIView animateWithDuration:0.3 animations:^{NavBarImage.center = CGPointMake(160, 600);}];
+    StoreSearchTableview.hidden=YES;
+    self.tableviewgoogle.hidden=NO;
+    [self.mapView setZoomEnabled:YES];
+    [self.ScrollView setScrollEnabled:YES];
+
     [SearchBar resignFirstResponder];
 }
 
@@ -369,11 +463,13 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView==self.ScrollView) {
     CGFloat y = scrollView.contentOffset.y;
     [UIView animateWithDuration:0.0 animations:^{mapView.center = CGPointMake(160,58+(y/2));}];
     if (y==0) {
         CGRect cropRect = CGRectMake(0, -90, 320, 284);
         [UIView animateWithDuration:0.0 animations:^{mapView.frame=cropRect;}];
+    }
     }
 }
 
@@ -381,4 +477,6 @@
 {
     [self.tableviewgoogle deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+
 @end

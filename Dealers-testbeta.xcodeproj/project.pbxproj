@@ -178,6 +178,7 @@
 		B034B9EA1806C77D00625392 /* My Feed+View Deal_Likes icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9E61806C77800625392 /* My Feed+View Deal_Likes icon@2X.png */; };
 		B034B9EB1806C77D00625392 /* My Feed+View Deal_Local icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9E71806C77900625392 /* My Feed+View Deal_Local icon@2X.png */; };
 		B034B9EC1806C77D00625392 /* My Feed+View Deal_Online icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9E81806C77B00625392 /* My Feed+View Deal_Online icon@2X.png */; };
+		B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */; };
 		B055C71717FE806900FBDFCC /* Explore_Amusment & Entertainment icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C6FF17FE7D3B00FBDFCC /* Explore_Amusment & Entertainment icon@2x.png */; };
 		B055C71817FE806900FBDFCC /* Explore_Art icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C70017FE7D5100FBDFCC /* Explore_Art icon@2x.png */; };
 		B055C71917FE806900FBDFCC /* Explore_Automotive icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C70117FE7D7700FBDFCC /* Explore_Automotive icon@2x.png */; };
@@ -664,6 +665,8 @@
 		B034B9E61806C77800625392 /* My Feed+View Deal_Likes icon@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "My Feed+View Deal_Likes icon@2X.png"; path = "../My Feed+View Deal_Likes icon@2X.png"; sourceTree = "<group>"; };
 		B034B9E71806C77900625392 /* My Feed+View Deal_Local icon@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "My Feed+View Deal_Local icon@2X.png"; path = "../My Feed+View Deal_Local icon@2X.png"; sourceTree = "<group>"; };
 		B034B9E81806C77B00625392 /* My Feed+View Deal_Online icon@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "My Feed+View Deal_Online icon@2X.png"; path = "../My Feed+View Deal_Online icon@2X.png"; sourceTree = "<group>"; };
+		B04B7C9D185DB3DE00F06472 /* StoreSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreSearchCell.h; sourceTree = "<group>"; };
+		B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreSearchCell.m; sourceTree = "<group>"; };
 		B055C6FF17FE7D3B00FBDFCC /* Explore_Amusment & Entertainment icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore_Amusment & Entertainment icon@2x.png"; sourceTree = "<group>"; };
 		B055C70017FE7D5100FBDFCC /* Explore_Art icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore_Art icon@2x.png"; sourceTree = "<group>"; };
 		B055C70117FE7D7700FBDFCC /* Explore_Automotive icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore_Automotive icon@2x.png"; sourceTree = "<group>"; };
@@ -1063,6 +1066,8 @@
 				B0930C0917F40311004EB3CA /* CustomcellforviewdealCell.h */,
 				B0930C0A17F40311004EB3CA /* CustomcellforviewdealCell.m */,
 				B055C73217FE87F600FBDFCC /* ExploreCell.h */,
+				B04B7C9D185DB3DE00F06472 /* StoreSearchCell.h */,
+				B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */,
 				B055C73317FE880900FBDFCC /* ExploreCell.m */,
 				56849790154C00BF001601A2 /* AppDelegate.h */,
 				56849791154C00BF001601A2 /* AppDelegate.m */,
@@ -2086,6 +2091,7 @@
 				B05B0C2E17F323FF0062634C /* OptionalViewController.m in Sources */,
 				B05B0C3117F378660062634C /* ResaftergoogleplaceViewController.m in Sources */,
 				B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */,
+				B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */,
 				B0930C0217F38D86004EB3CA /* ViewalldealsViewController.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */,

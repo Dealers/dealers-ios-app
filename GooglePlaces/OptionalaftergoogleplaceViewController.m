@@ -1090,4 +1090,6 @@
         captureImage.image=captureImage_temp.image;
     }
 }
+
+
 @end

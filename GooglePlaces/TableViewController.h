@@ -23,12 +23,15 @@
     BOOL firstLaunch;
     CLLocationCoordinate2D currentCentre;
     int currenDist;
-    
+    BOOL filtered;
+
 }
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableviewgoogle;
+@property (weak, nonatomic) IBOutlet UITableView *StoreSearchTableview;
+
 @property (retain, nonatomic) NSMutableArray *array;
 @property (retain, nonatomic) NSMutableArray *arraySort;
 
@@ -43,6 +46,8 @@
 
 @property (retain, nonatomic) NSMutableArray *iconsarrayfiltered;
 @property (retain, nonatomic) NSMutableArray *iconsarrayfilteredSort;
+@property (retain, nonatomic) NSMutableArray *StoreSearchArray;
+@property (retain, nonatomic) NSMutableArray *StoreSearcLocationhArray;
 
 //@property (retain, nonatomic) NSMutableArray *places;
 //@property (retain, nonatomic) NSMutableArray *temparray;

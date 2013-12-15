@@ -128,4 +128,5 @@
 @property (weak, nonatomic) IBOutlet UIView *SocialView;
 @property (weak, nonatomic) IBOutlet UIButton *SnapButton;
 
+@property (strong, nonatomic) NSMutableArray *StoreSearchArray;
 @end
