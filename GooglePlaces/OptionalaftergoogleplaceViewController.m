@@ -937,7 +937,7 @@
 - (void) processImage:(UIImage *)image { //process captured image, crop, resize and rotate
     haveImage = YES;
     
-    CGSize itemSize = CGSizeMake(310,365); // give any size you want to give
+    CGSize itemSize = CGSizeMake(300,365); // give any size you want to give
     UIGraphicsBeginImageContext(itemSize);
     CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
     [image drawInRect:imageRect];
