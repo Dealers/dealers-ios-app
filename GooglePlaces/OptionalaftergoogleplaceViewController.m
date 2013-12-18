@@ -150,7 +150,7 @@
     updown_moreoption = true;
     currentpage=0;
     BlackCoverImage.hidden=YES;
-    //[self initializeCamera];
+    [self initializeCamera];
 
     [self ReduceScroll];
     [self EnlargeCameraScroll];
@@ -888,6 +888,8 @@
 
 -(void) ImageslideMode {
     [session stopRunning];
+    SnapButton.alpha=0.0;
+    SnapButton2.alpha=0.0;
     BlackCoverImage.hidden=NO;
     currentpage=0;
     ExitCameraButton.hidden=YES;
@@ -935,12 +937,14 @@
 - (void) processImage:(UIImage *)image { //process captured image, crop, resize and rotate
     haveImage = YES;
     
-    CGSize itemSize = CGSizeMake(300,155); // give any size you want to give
+    CGSize itemSize = CGSizeMake(310,365); // give any size you want to give
     UIGraphicsBeginImageContext(itemSize);
     CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
     [image drawInRect:imageRect];
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    
+
 /*
         UIGraphicsBeginImageContext(CGSizeMake(320, 155));
         [image drawInRect: CGRectMake(0, 0, 320, 155)];
