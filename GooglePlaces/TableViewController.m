@@ -130,22 +130,27 @@
     
 -(void) MainMethod:(NSArray*) pass {
     
+    if (([array count]==0)) {
+        [self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
+    }
+    
     if ([array count]>0) {
     array = [pass objectAtIndex:0];
     arrayforlocation = [pass objectAtIndex:2];
     arrayforicons = [pass objectAtIndex:1];
     distancearray = [pass objectAtIndex:3];
     [self.tableviewgoogle reloadData];
-    }
+    
     
     [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(1,1);
         LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
     
-    [self performSelector:@selector(coverviewhidden) withObject:nil afterDelay:0.5];
+        [self performSelector:@selector(coverviewhidden) withObject:nil afterDelay:0.5];
+    
     [ScrollView setContentSize:((CGSizeMake(320, 118+([array count]*70))))];
     self.tableviewgoogle.frame = CGRectMake(0, 119, 320, ([array count]*70+15));
     [self.tableviewgoogle setScrollEnabled:NO];
-
+    }
 }
 
 -(void) coverviewhidden {
@@ -224,7 +229,7 @@
     [self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
 
     [ScrollView setScrollEnabled:YES];
-
+    counter=1;
     [super viewDidLoad];
 }
 
@@ -477,6 +482,13 @@ return Cell;
 {
     [self.tableviewgoogle deselectRowAtIndexPath:indexPath animated:YES];
 }
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    //no done
+    //black cover 50 fade 0.3
+    //i empty delete table
+    //search key = new uiview with table search. if back, return.
+    NSLog(@"here");
+}// called when text starts editing
 
 
 @end

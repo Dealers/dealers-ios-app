@@ -1014,17 +1014,13 @@
 			isa = PBXGroup;
 			children = (
 				B079F2BF1847C0CE00E0C186 /* beta.png */,
-				B079F2B71846230800E0C186 /* AVFoundation.framework */,
 				B06F808C1813D9510032CE68 /* Launch App Icons (Flat)_iPhone.png */,
 				B06F808A1813D9420032CE68 /* Launch App Icons (Flat)_iPhone (high resolution).png */,
 				B034B8B2180475D500625392 /* Default@2x.png */,
-				B024374A17F47D9000FB24CC /* QuartzCore.framework */,
 				B02436DF17F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png */,
 				B02436DD17F423CD00FB24CC /* Launch App Icons_iPhone.png */,
 				B02436CF17F421F000FB24CC /* Default-568h@2x.png */,
-				568497A0154C0116001601A2 /* CoreLocation.framework */,
-				5684979E154C010C001601A2 /* MapKit.framework */,
-				56849787154C00BF001601A2 /* GooglePlaces */,
+				56849787154C00BF001601A2 /* Dealers */,
 				56849780154C00BF001601A2 /* Frameworks */,
 				5684977E154C00BF001601A2 /* Products */,
 				C873D3711851040700B913CD /* My Feed+View Deal-New */,
@@ -1043,6 +1039,10 @@
 		56849780154C00BF001601A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B079F2B71846230800E0C186 /* AVFoundation.framework */,
+				B024374A17F47D9000FB24CC /* QuartzCore.framework */,
+				568497A0154C0116001601A2 /* CoreLocation.framework */,
+				5684979E154C010C001601A2 /* MapKit.framework */,
 				56849781154C00BF001601A2 /* UIKit.framework */,
 				56849783154C00BF001601A2 /* Foundation.framework */,
 				56849785154C00BF001601A2 /* CoreGraphics.framework */,
@@ -1050,7 +1050,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		56849787154C00BF001601A2 /* GooglePlaces */ = {
+		56849787154C00BF001601A2 /* Dealers */ = {
 			isa = PBXGroup;
 			children = (
 				B034B9DF1805CB3D00625392 /* Check.png */,
@@ -1099,6 +1099,7 @@
 				56849797154C00BF001601A2 /* ViewController.m */,
 				56849788154C00BF001601A2 /* Supporting Files */,
 			);
+			name = Dealers;
 			path = GooglePlaces;
 			sourceTree = "<group>";
 		};

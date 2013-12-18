@@ -25,6 +25,7 @@
     BOOL updown_moreoption;
     CLLocationManager *locationManager;
     CLLocationCoordinate2D currentCentre;
+    AVCaptureSession *session;
 
 
 }
@@ -37,6 +38,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *discountlabel;
 @property (weak, nonatomic) IBOutlet UITextField *expirationlabel;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionlabel;
+@property (weak, nonatomic) IBOutlet UITextView *DescriptionTextView;
+
 - (IBAction)adddealbutton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *AddDealButton;
 
@@ -53,6 +56,8 @@
 @property (weak, nonatomic) NSString *group;
 @property (weak, nonatomic) NSString *facebook;
 @property (weak, nonatomic) NSString *twitter;
+@property (weak, nonatomic) NSString *morebutton;
+
 - (IBAction)twittbutton:(id)sender;
 //- (IBAction)whatappButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIPickerView *CategoryPicker;
@@ -127,6 +132,11 @@
 @property (weak, nonatomic) IBOutlet UIView *MoreView;
 @property (weak, nonatomic) IBOutlet UIView *SocialView;
 @property (weak, nonatomic) IBOutlet UIButton *SnapButton;
+@property (weak, nonatomic) IBOutlet UIButton *SnapButton2;
 
 @property (strong, nonatomic) NSMutableArray *StoreSearchArray;
+@property (weak, nonatomic) IBOutlet UIButton *MoreButtonButton;
+@property (weak, nonatomic) IBOutlet UIView *GrayCoverView;
+@property (weak, nonatomic) IBOutlet UIView *FlashView;
+
 @end

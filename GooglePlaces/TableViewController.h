@@ -24,8 +24,9 @@
     CLLocationCoordinate2D currentCentre;
     int currenDist;
     BOOL filtered;
-
+    int counter;
 }
+
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
 
