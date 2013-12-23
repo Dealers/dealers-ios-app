@@ -22,7 +22,7 @@
 @synthesize arrayforicons;
 @synthesize iconsarray;
 @synthesize iconsarrayfiltered;
-@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,DoneButton,BlackCoverImage,ScrollView,StoreSearchTableview,StoreSearcLocationhArray,StoreSearchArray;
+@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,BlackCoverImage,ScrollView,StoreSearchTableview,StoreSearcLocationhArray,StoreSearchArray,CloseTableViewButton,LargeTableView,MainView,BackButtonRemovemapButton;
 
 
 -(void) BackgroundMethod {
@@ -205,8 +205,9 @@
     mapView.mapType = MKMapTypeStandard;
     mapView.delegate = self;
    // [self.view addSubview:mapView];
-
-    
+    CloseTableViewButton.hidden=YES;
+    LargeTableView.hidden=YES;
+    BackButtonRemovemapButton.hidden=YES;
     iconsarray = [[NSMutableArray alloc]initWithObjects:@"store.png",@"amusement_park.png",@"aquarium.png",@"bowling_alley.png",@"casino.png",@"movie_rental.png",@"movie_theater.png",@"museum.png",@"night_club.png",@"zoo.png",@"spa.png",@"art_gallery.png",@"museum.png",@"car_dealer.png",@"car_rental.png",@"car_repair.png",@"car_wash.png",@"beauty_salon.png",@"hair_care.png",@"health.png",@"physiotherapy.png",@"spa.png",@"book_store.png",@"library.png",@"electronics_store.png",@"clothing_store.png",@"department_store.png",@"shoe_store.png",@"shopping_mall.png",@"bakery.png",@"convenience_store.png",@"food.png",@"grocery_or_supermarket.png",@"liquor_store.png",@"meal_delivery.png",@"meal_takeaway.png",@"pharmacy.png",@"florist.png",@"furniture_store.png",@"hardware_store.png",@"home_goods_store.png",@"locksmith.png",@"painter.png",@"laundry.png",@"jewelry_store.png",@"pet_store.png",@"veterinary_care.png",@"general_contractor.png",@"real_estate_agency.png",@"bars.png",@"cafe.png",@"restaurant.png",@"bicycle_store.png",@"gym.png",@"airport.png",@"lodging.png",@"travel_agency.png",@"bank.png",@"finance.png",@"insurance_agency.png",@"bar.png",nil];
     
     locationManager = [[CLLocationManager alloc] init];
@@ -423,23 +424,28 @@ return Cell;
             [self.StoreSearcLocationhArray addObject:vicinity];
         }
     }
-[self.StoreSearchTableview reloadData];
+    
+    [self performSelectorOnMainThread:@selector(LoadStoresTableView) withObject:nil waitUntilDone:NO];
+
+}
+
+-(void) LoadStoresTableView {
+    if (SearchTextSize) {
+        [self.StoreSearchTableview reloadData];
+    }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    BlackCoverImage.hidden=NO;
-    self.tableviewgoogle.hidden=YES;
-    [self.mapView setZoomEnabled:NO];
-    [self.ScrollView setScrollEnabled:NO];
-    [UIView animateWithDuration:0.3 animations:^{DoneButton.center = CGPointMake(285, 225);}];
-    [UIView animateWithDuration:0.3 animations:^{NavBarImage.center = CGPointMake(160, 225);}];
-    
     if (searchText.length==0) {
+        SearchTextSize=0;
+        CloseTableViewButton.hidden=NO;
         StoreSearchArray = [[NSMutableArray alloc]init];
         StoreSearcLocationhArray = [[NSMutableArray alloc]init];
-        [self.StoreSearchTableview reloadData];
-
+        StoreSearchTableview.hidden=YES;
     } else {
+        SearchTextSize=1;
+        CloseTableViewButton.hidden=YES;
+        StoreSearchTableview.hidden=NO;
         [self performSelectorInBackground:@selector(StoreSearchMethod:) withObject:searchText];
     }
 }
@@ -448,19 +454,6 @@ return Cell;
 {
     if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
     }
-}
-
-
--(void) DoneButtonAction:(id)sender {
-    BlackCoverImage.hidden=YES;
-    [UIView animateWithDuration:0.3 animations:^{DoneButton.center = CGPointMake(285, 600);}];
-    [UIView animateWithDuration:0.3 animations:^{NavBarImage.center = CGPointMake(160, 600);}];
-    StoreSearchTableview.hidden=YES;
-    self.tableviewgoogle.hidden=NO;
-    [self.mapView setZoomEnabled:YES];
-    [self.ScrollView setScrollEnabled:YES];
-
-    [SearchBar resignFirstResponder];
 }
 
 - (void)viewDidUnload {
@@ -483,12 +476,50 @@ return Cell;
     [self.tableviewgoogle deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
-    //no done
-    //black cover 50 fade 0.3
-    //i empty delete table
-    //search key = new uiview with table search. if back, return.
-    NSLog(@"here");
+    CloseTableViewButton.hidden=NO;
+    self.tableviewgoogle.hidden=YES;
+    Shadow1.hidden=YES;
+    Shadow2.hidden=YES;
+    [self.mapView setZoomEnabled:NO];
+    [self.ScrollView setScrollEnabled:NO];
 }// called when text starts editing
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    ReturnButton.hidden=YES;
+    ReturnButtonFull.hidden=YES;
+    BackButtonRemovemapButton.hidden=NO;
+    NSLog(@"clicked");
+    LargeTableView.hidden=NO;
+    StoreSearchTableview.frame = CGRectMake(0, 0, 320, 371);
+    [self.LargeTableView addSubview:StoreSearchTableview];
+    [SearchBar resignFirstResponder];
 
+}
+-(void) CloseTableViewAction:(id)sender {
+    StoreSearchTableview.hidden=YES;
+    CloseTableViewButton.hidden=YES;
+    self.tableviewgoogle.hidden=NO;
+    Shadow1.hidden=NO;
+    Shadow2.hidden=NO;
+    [self.mapView setZoomEnabled:YES];
+    [self.ScrollView setScrollEnabled:YES];
+    [SearchBar resignFirstResponder];
+}
+
+-(void) BackButtonRemovemapAction:(id)sender {
+    ReturnButton.hidden=NO;
+    ReturnButtonFull.hidden=NO;
+    BackButtonRemovemapButton.hidden=YES;
+    StoreSearchTableview.hidden=YES;
+    CloseTableViewButton.hidden=YES;
+    self.tableviewgoogle.hidden=NO;
+    Shadow1.hidden=NO;
+    Shadow2.hidden=NO;
+    [self.mapView setZoomEnabled:YES];
+    [self.ScrollView setScrollEnabled:YES];
+    [SearchBar resignFirstResponder];
+    LargeTableView.hidden=YES;
+    StoreSearchTableview.frame = CGRectMake(0, 88, 320, 170);
+    [self.MainView addSubview:StoreSearchTableview];
+}
 @end

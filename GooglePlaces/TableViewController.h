@@ -25,6 +25,7 @@
     int currenDist;
     BOOL filtered;
     int counter;
+    int SearchTextSize;
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
@@ -67,10 +68,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
 @property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
-
-@property (weak, nonatomic) IBOutlet UIButton *DoneButton;
-- (IBAction)DoneButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *NavBarImage;
 @property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;
+
+- (IBAction)CloseTableViewAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *CloseTableViewButton;
+@property (weak, nonatomic) IBOutlet UIView *LargeTableView;
+@property (weak, nonatomic) IBOutlet UIView *MainView;
+
+- (IBAction)BackButtonRemovemapAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *BackButtonRemovemapButton;
 
 @end

@@ -22,8 +22,8 @@
                                         <rect key="frame" x="0.0" y="-85" width="320" height="285"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </mapView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="71" sectionHeaderHeight="22" sectionFooterHeight="22" id="nR9-Vr-DbC">
-                                        <rect key="frame" x="0.0" y="113" width="320" height="261"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="71" sectionHeaderHeight="22" sectionFooterHeight="22" id="nR9-Vr-DbC" userLabel="Table View - places">
+                                        <rect key="frame" x="0.0" y="120" width="320" height="254"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
@@ -72,16 +72,12 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <view contentMode="scaleToFill" id="ZiZ-i4-bFF">
+                                    <view contentMode="scaleToFill" id="ZiZ-i4-bFF" userLabel="View - loading">
                                         <rect key="frame" x="0.0" y="120" width="320" height="254"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="cCW-tF-dhs">
-                                                <rect key="frame" x="145" y="89" width="30" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal_Black Transparent screen.png" id="2Rg-Ip-EDo" userLabel="Image Black Transparent screen.png">
-                                                <rect key="frame" x="-6" y="-175" width="332" height="488"/>
+                                                <rect key="frame" x="145" y="117" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </imageView>
                                         </subviews>
@@ -158,6 +154,10 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="barTintColor" red="0.76862745099999996" green="0.7725490196" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
                                 <connections>
                                     <outlet property="delegate" destination="XKf-Bu-Ol1" id="hch-yH-UZg"/>
                                 </connections>
@@ -166,23 +166,19 @@
                                 <rect key="frame" x="0.0" y="0.0" width="321" height="53"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal_Options bar.png" id="JmI-Fe-BkX">
-                                <rect key="frame" x="0.0" y="700" width="320" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XiI-YX-eWa" userLabel="Button done">
-                                <rect key="frame" x="259" y="707" width="63" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="B6d-pj-E6O" userLabel="Button - backfromtable">
+                                <rect key="frame" x="6" y="7" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="Add Deal_Done button.png">
+                                <state key="normal" title="back" image="Registration_Back button.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="highlighted" image="Add Deal_Done button (selected).png">
+                                <state key="highlighted" image="Registration_Back button (selected).png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="DoneButtonAction:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="e0D-Mm-qWL"/>
+                                    <action selector="BackButtonRemovemapAction:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="2K6-Cx-Npn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6EU-dr-uxx">
@@ -227,17 +223,34 @@
                                     <action selector="RemovemapButtonAction:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="NUH-ME-jog"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CWn-sJ-CKk" userLabel="Button - CloseSearch">
+                                <rect key="frame" x="0.0" y="86" width="320" height="374"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="CloseTableViewAction:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="42Q-hD-X8f"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="XNZ-el-j6T" userLabel="View - large table">
+                                <rect key="frame" x="1" y="89" width="320" height="371"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Oa0-ut-7fm"/>
                     <connections>
-                        <outlet property="BlackCoverImage" destination="2Rg-Ip-EDo" id="Juo-t4-JPI"/>
+                        <outlet property="BackButtonRemovemapButton" destination="B6d-pj-E6O" id="Lds-Ye-Kxh"/>
                         <outlet property="ButtonCoverforMap" destination="Fc2-Kb-jYN" id="RIe-BH-A1P"/>
+                        <outlet property="CloseTableViewButton" destination="CWn-sJ-CKk" id="NUb-hn-PQt"/>
                         <outlet property="CoveView" destination="ZiZ-i4-bFF" id="aVo-WA-eU8"/>
-                        <outlet property="DoneButton" destination="XiI-YX-eWa" id="QE9-Hb-anb"/>
+                        <outlet property="LargeTableView" destination="XNZ-el-j6T" id="VvA-5j-GHp"/>
                         <outlet property="LoadingImage" destination="cCW-tF-dhs" id="d4b-3U-HX8"/>
-                        <outlet property="NavBarImage" destination="JmI-Fe-BkX" id="0zU-So-ZUd"/>
+                        <outlet property="MainView" destination="0hs-HF-awq" id="b0D-wm-qsq"/>
                         <outlet property="RemovemapButton" destination="DV5-QH-swA" id="xIr-EK-gD7"/>
                         <outlet property="ReturnButton" destination="6EU-dr-uxx" id="3eD-m0-CDN"/>
                         <outlet property="ScrollView" destination="i2k-NE-Qm2" id="wLY-rE-r9K"/>
@@ -1115,7 +1128,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Shopping Bag.png" id="sAQ-s1-Vch">
-                                        <rect key="frame" x="103" y="146.99999999999994" width="188" height="226"/>
+                                        <rect key="frame" x="103" y="147" width="188" height="226"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="5f8-2O-h9l">
@@ -1143,7 +1156,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="Gf5-bJ-meZ">
-                                        <rect key="frame" x="84" y="291.99999999999994" width="61" height="61"/>
+                                        <rect key="frame" x="84" y="292" width="61" height="61"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="Registration_Email button.png">
@@ -1158,14 +1171,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="41" y="424.99999999999994" width="216" height="21"/>
+                                        <rect key="frame" x="41" y="425" width="216" height="20.999999999999954"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY">
-                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999986"/>
+                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999929"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -1187,7 +1200,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Oys-9T-E7g">
-                                        <rect key="frame" x="1" y="-19" width="320" height="480.99999999999994"/>
+                                        <rect key="frame" x="1" y="-19" width="320" height="481"/>
                                         <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>

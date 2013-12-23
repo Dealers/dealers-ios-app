@@ -5,10 +5,11 @@
 //  Created by itzik berrebi on 9/25/13.
 //
 //
-
+#import <Social/Social.h>
 #import "OptionalaftergoogleplaceViewController.h"
 #import "AppDelegate.h"
 #import "ViewalldealsViewController.h"
+
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
 
 @interface OptionalaftergoogleplaceViewController ()
@@ -318,8 +319,30 @@
     if ([facebook isEqual:@"a"]){
         [facebookicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Facebook button (selected).png"] forState:UIControlStateNormal];
         facebook=@"b";
+
+      //  if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+            SLComposeViewController *facebookview = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+            NSString *post = @"try my new app";
+            [facebookview setInitialText:post];
+            //[facebookview addImage:[UIImage imageNamed:@"Launch App Icons_iPhone.png"]];
+            [self presentViewController:facebookview animated:YES completion:Nil];
+            
+            SLComposeViewControllerCompletionHandler completion = ^(SLComposeViewControllerResult result) {
+                switch (result) {
+                    case SLComposeViewControllerResultDone:
+                        NSLog(@"poasted!");
+                        break;
+                    case SLComposeViewControllerResultCancelled:
+                        NSLog(@"cancelled!");
+                        break;
+                    default:
+                        break;
+                }
+                [facebookview dismissViewControllerAnimated:YES completion:nil];
+            };
+            facebookview.completionHandler = completion;
+        //}
     }
-    
     else {
         
         [facebookicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Facebook button.png"] forState:UIControlStateNormal];
