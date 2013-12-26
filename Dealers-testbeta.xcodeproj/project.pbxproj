@@ -35,6 +35,20 @@
 		B024374B17F47D9000FB24CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B024374A17F47D9000FB24CC /* QuartzCore.framework */; };
 		B024374D17F47F5400FB24CC /* mask.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B024374C17F47F5300FB24CC /* mask.PNG */; };
 		B024374F17F47FE900FB24CC /* itzik.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B024374E17F47FE900FB24CC /* itzik.jpg */; };
+		B02747FF186B291B005A52F0 /* PLCameraSheetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */; };
+		B0274800186B291B005A52F0 /* PLCameraSheetButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747EF186B291B005A52F0 /* PLCameraSheetButton@2x.png */; };
+		B0274801186B291B005A52F0 /* PLCameraSheetButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747F0186B291B005A52F0 /* PLCameraSheetButtonPressed.png */; };
+		B0274802186B291B005A52F0 /* PLCameraSheetButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747F1186B291B005A52F0 /* PLCameraSheetButtonPressed@2x.png */; };
+		B0274803186B291B005A52F0 /* PLCameraSheetDoneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747F2186B291B005A52F0 /* PLCameraSheetDoneButton.png */; };
+		B0274804186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747F3186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png */; };
+		B0274805186B291B005A52F0 /* PLCameraSheetDoneButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747F4186B291B005A52F0 /* PLCameraSheetDoneButtonPressed.png */; };
+		B0274806186B291B005A52F0 /* PLCameraSheetDoneButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747F5186B291B005A52F0 /* PLCameraSheetDoneButtonPressed@2x.png */; };
+		B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0274809186B2A2B005A52F0 /* GKCropBorderView.m */; };
+		B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B027480B186B2A2B005A52F0 /* GKImageCropOverlayView.m */; };
+		B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = B027480D186B2A2B005A52F0 /* GKImageCropView.m */; };
+		B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B027480F186B2A2B005A52F0 /* GKImageCropViewController.m */; };
+		B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B0274811186B2A2B005A52F0 /* GKImagePicker.m */; };
+		B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */; };
 		B034B8B6180476AC00625392 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B034B8B5180476AC00625392 /* main.m */; };
 		B034B8F61804777F00625392 /* Add Deal_Add Another Photo button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B8B81804777A00625392 /* Add Deal_Add Another Photo button (selected)@2x.png */; };
 		B034B8F71804777F00625392 /* Add Deal_Add Another Photo button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B8B91804777A00625392 /* Add Deal_Add Another Photo button@2x.png */; };
@@ -690,6 +704,26 @@
 		B024374A17F47D9000FB24CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B024374C17F47F5300FB24CC /* mask.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.PNG; sourceTree = "<group>"; };
 		B024374E17F47FE900FB24CC /* itzik.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = itzik.jpg; sourceTree = "<group>"; };
+		B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetButton.png; sourceTree = "<group>"; };
+		B02747EF186B291B005A52F0 /* PLCameraSheetButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetButton@2x.png"; sourceTree = "<group>"; };
+		B02747F0186B291B005A52F0 /* PLCameraSheetButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetButtonPressed.png; sourceTree = "<group>"; };
+		B02747F1186B291B005A52F0 /* PLCameraSheetButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetButtonPressed@2x.png"; sourceTree = "<group>"; };
+		B02747F2186B291B005A52F0 /* PLCameraSheetDoneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetDoneButton.png; sourceTree = "<group>"; };
+		B02747F3186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetDoneButton@2x.png"; sourceTree = "<group>"; };
+		B02747F4186B291B005A52F0 /* PLCameraSheetDoneButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetDoneButtonPressed.png; sourceTree = "<group>"; };
+		B02747F5186B291B005A52F0 /* PLCameraSheetDoneButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetDoneButtonPressed@2x.png"; sourceTree = "<group>"; };
+		B0274808186B2A2B005A52F0 /* GKCropBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKCropBorderView.h; sourceTree = "<group>"; };
+		B0274809186B2A2B005A52F0 /* GKCropBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKCropBorderView.m; sourceTree = "<group>"; };
+		B027480A186B2A2B005A52F0 /* GKImageCropOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageCropOverlayView.h; sourceTree = "<group>"; };
+		B027480B186B2A2B005A52F0 /* GKImageCropOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImageCropOverlayView.m; sourceTree = "<group>"; };
+		B027480C186B2A2B005A52F0 /* GKImageCropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageCropView.h; sourceTree = "<group>"; };
+		B027480D186B2A2B005A52F0 /* GKImageCropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImageCropView.m; sourceTree = "<group>"; };
+		B027480E186B2A2B005A52F0 /* GKImageCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImageCropViewController.h; sourceTree = "<group>"; };
+		B027480F186B2A2B005A52F0 /* GKImageCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImageCropViewController.m; sourceTree = "<group>"; };
+		B0274810186B2A2B005A52F0 /* GKImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKImagePicker.h; sourceTree = "<group>"; };
+		B0274811186B2A2B005A52F0 /* GKImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImagePicker.m; sourceTree = "<group>"; };
+		B0274812186B2A2B005A52F0 /* GKResizeableCropOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKResizeableCropOverlayView.h; sourceTree = "<group>"; };
+		B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKResizeableCropOverlayView.m; sourceTree = "<group>"; };
 		B034B8B2180475D500625392 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B034B8B41804765500625392 /* DB2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DB2-Prefix.pch"; sourceTree = "<group>"; };
 		B034B8B5180476AC00625392 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1354,6 +1388,8 @@
 		56849772154C00BF001601A2 = {
 			isa = PBXGroup;
 			children = (
+				B0274807186B2A2B005A52F0 /* GKClasses */,
+				B02747ED186B291B005A52F0 /* GKImages */,
 				B079F2BF1847C0CE00E0C186 /* beta.png */,
 				B06F808C1813D9510032CE68 /* Launch App Icons (Flat)_iPhone.png */,
 				B06F808A1813D9420032CE68 /* Launch App Icons (Flat)_iPhone (high resolution).png */,
@@ -1657,6 +1693,40 @@
 				B034B9651804780B00625392 /* My Feed+View Deal_Unpresented Pic icon@2X.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B02747ED186B291B005A52F0 /* GKImages */ = {
+			isa = PBXGroup;
+			children = (
+				B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */,
+				B02747EF186B291B005A52F0 /* PLCameraSheetButton@2x.png */,
+				B02747F0186B291B005A52F0 /* PLCameraSheetButtonPressed.png */,
+				B02747F1186B291B005A52F0 /* PLCameraSheetButtonPressed@2x.png */,
+				B02747F2186B291B005A52F0 /* PLCameraSheetDoneButton.png */,
+				B02747F3186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png */,
+				B02747F4186B291B005A52F0 /* PLCameraSheetDoneButtonPressed.png */,
+				B02747F5186B291B005A52F0 /* PLCameraSheetDoneButtonPressed@2x.png */,
+			);
+			path = GKImages;
+			sourceTree = "<group>";
+		};
+		B0274807186B2A2B005A52F0 /* GKClasses */ = {
+			isa = PBXGroup;
+			children = (
+				B0274808186B2A2B005A52F0 /* GKCropBorderView.h */,
+				B0274809186B2A2B005A52F0 /* GKCropBorderView.m */,
+				B027480A186B2A2B005A52F0 /* GKImageCropOverlayView.h */,
+				B027480B186B2A2B005A52F0 /* GKImageCropOverlayView.m */,
+				B027480C186B2A2B005A52F0 /* GKImageCropView.h */,
+				B027480D186B2A2B005A52F0 /* GKImageCropView.m */,
+				B027480E186B2A2B005A52F0 /* GKImageCropViewController.h */,
+				B027480F186B2A2B005A52F0 /* GKImageCropViewController.m */,
+				B0274810186B2A2B005A52F0 /* GKImagePicker.h */,
+				B0274811186B2A2B005A52F0 /* GKImagePicker.m */,
+				B0274812186B2A2B005A52F0 /* GKResizeableCropOverlayView.h */,
+				B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */,
+			);
+			path = GKClasses;
 			sourceTree = "<group>";
 		};
 		B06F80711813B0400032CE68 /* New Group */ = {
@@ -2316,6 +2386,7 @@
 				C8D2E469185B781D00398873 /* Add Deal (Final)_Online button (selected)@2x.png in Resources */,
 				B055C72517FE806900FBDFCC /* Explore_Other icon@2x.png in Resources */,
 				C83EAE5F18690AC40084E0E1 /* Fashion_Fashion@2x.png in Resources */,
+				B0274801186B291B005A52F0 /* PLCameraSheetButtonPressed.png in Resources */,
 				B055C72617FE806900FBDFCC /* Explore_Pets icon@2x.png in Resources */,
 				B055C72717FE806900FBDFCC /* Explore_Real Estate icon@2x.png in Resources */,
 				C83EAE6818690AC40084E0E1 /* Food & Groceries_butcher@2x.png in Resources */,
@@ -2431,6 +2502,7 @@
 				C83EAEFF18690AC40084E0E1 /* Restaurants & Bars_hot_dog@2x.png in Resources */,
 				C873D39E1851040700B913CD /* My Feed+View Deal (final)_Report button (selected)@2x.png in Resources */,
 				B034B92F1804777F00625392 /* Add Deal_URL & Search bar@2x.png in Resources */,
+				B0274803186B291B005A52F0 /* PLCameraSheetDoneButton.png in Resources */,
 				C8D2E46C185B781D00398873 /* Add Deal (Final)_Other Social Networks boxes@2x.png in Resources */,
 				B034B9301804777F00625392 /* Add Deal_URL & Search fill-box@2x.png in Resources */,
 				B034B9311804777F00625392 /* Add Deal_Yes button (selected)@2x.png in Resources */,
@@ -2545,6 +2617,7 @@
 				C8D2E486185B781D00398873 /* Add Deal (Final)_Trash button@2x.png in Resources */,
 				B034B9C41804788900625392 /* Registration_Log In Top Title@2x.png in Resources */,
 				C83EAE7F18690AC40084E0E1 /* Music_music@2x.png in Resources */,
+				B0274800186B291B005A52F0 /* PLCameraSheetButton@2x.png in Resources */,
 				B034B9C51804788900625392 /* Registration_Name icon@2x.png in Resources */,
 				B034B9C71804788900625392 /* Registration_Password icon@2x.png in Resources */,
 				B034B9C81804788900625392 /* Registration_Profile Pic Frame@2x.png in Resources */,
@@ -2555,6 +2628,7 @@
 				C83EAE7E18690AC40084E0E1 /* Kids & Babies_toys@2x.png in Resources */,
 				C83EAE4818690AC40084E0E1 /* Entertainment @ Events_dance_studio@2x.png in Resources */,
 				B034B9CC1804788900625392 /* Registration_Sign In button (selected)@2x.png in Resources */,
+				B02747FF186B291B005A52F0 /* PLCameraSheetButton.png in Resources */,
 				C83EAF1C18690AC40084E0E1 /* Sports & Outdoor_stadium@2x.png in Resources */,
 				B034B9CD1804788900625392 /* Registration_Sign In button@2x.png in Resources */,
 				B034B9CE1804788900625392 /* Registration_Sign In Fill Boxes@2x.png in Resources */,
@@ -2566,6 +2640,7 @@
 				C83EAEE718690AC40084E0E1 /* Other_health@2x.png in Resources */,
 				B034B9DE1805536A00625392 /* Default@2x.png in Resources */,
 				C8D2E484185B781D00398873 /* Add Deal (Final)_Title & More Details box@2x.png in Resources */,
+				B0274802186B291B005A52F0 /* PLCameraSheetButtonPressed@2x.png in Resources */,
 				C8D2E47F185B781D00398873 /* Add Deal (Final)_Social Network Switch background@2x.png in Resources */,
 				C84E9140185BF4360016A5D2 /* Add Deal (Final)_More Details button (pushed)@2x.png in Resources */,
 				B034B9E01805CB4200625392 /* Check.png in Resources */,
@@ -2603,6 +2678,7 @@
 				B0D6546018111EA4000DB9AF /* Add Deal_Shekel button (pushed)@2x.png in Resources */,
 				C83EAF2018690AC40084E0E1 /* Sports & Outdoor_volleyball@2x.png in Resources */,
 				C8D2E465185B781D00398873 /* Add Deal (Final)_More Details boxes@2x.png in Resources */,
+				B0274806186B291B005A52F0 /* PLCameraSheetDoneButtonPressed@2x.png in Resources */,
 				C83EAF1018690AC40084E0E1 /* Sports & Outdoor_golf@2x.png in Resources */,
 				B0D6546118111EA4000DB9AF /* Add Deal_Shekel button (selected)@2x.png in Resources */,
 				B0D6546218111EA4000DB9AF /* Add Deal_Shekel button@2x.png in Resources */,
@@ -2758,6 +2834,7 @@
 				B012D94A182AA178006288CA /* Profile No TabBar_screenshot 1 (4).jpg in Resources */,
 				B0C7FB4B183375F900B3B740 /* loading@2x.png in Resources */,
 				B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */,
+				B0274804186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png in Resources */,
 				C873D3991851040700B913CD /* My Feed+View Deal (final)_Likes icon@2x.png in Resources */,
 				B0C7FB4D183375F900B3B740 /* loading10@2x.png in Resources */,
 				C83EAE3E18690AC40084E0E1 /* Electronics_electronics_store@2x.png in Resources */,
@@ -2830,6 +2907,7 @@
 				C83EAF1518690AC40084E0E1 /* Sports & Outdoor_rec@2x.png in Resources */,
 				C873D3A71851040700B913CD /* My Feed+View Deal_Category (final) icon@2X.png in Resources */,
 				C873D39F1851040700B913CD /* My Feed+View Deal (final)_Report button@2x.png in Resources */,
+				B0274805186B291B005A52F0 /* PLCameraSheetDoneButtonPressed.png in Resources */,
 				B079F2961845DDFA00E0C186 /* Add Deal (Final)_Add Another Photo button@2x.png in Resources */,
 				C83EAF0318690AC40084E0E1 /* Restaurants & Bars_pizza@2x.png in Resources */,
 				C83EAF1118690AC40084E0E1 /* Sports & Outdoor_gym@2x.png in Resources */,
@@ -2898,6 +2976,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
 				56849798154C00BF001601A2 /* ViewController.m in Sources */,
 				B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */,
@@ -2906,19 +2985,24 @@
 				B05B0C3117F378660062634C /* ResaftergoogleplaceViewController.m in Sources */,
 				B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */,
 				B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */,
+				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
 				B0930C0217F38D86004EB3CA /* ViewalldealsViewController.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,
 				B0930C1117F40BA8004EB3CA /* SignupViewController.m in Sources */,
+				B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */,
 				B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */,
+				B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */,
 				B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */,
+				B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */,
 				B055C73417FE882700FBDFCC /* ExploreCell.m in Sources */,
 				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
 				B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */,
 				B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */,
 				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
+				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

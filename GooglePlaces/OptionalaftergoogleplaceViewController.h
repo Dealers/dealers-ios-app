@@ -10,9 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MapKit/MapKit.h>
+#import "GKImagePicker.h"
 
-
-@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIActionSheetDelegate,UINavigationBarDelegate,UINavigationControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
+@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIActionSheetDelegate,UINavigationBarDelegate,UINavigationControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate,GKImagePickerDelegate>
 {
     NSString *dealphotoid;
     NSString *timeorday;
@@ -138,5 +138,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *MoreButtonButton;
 @property (weak, nonatomic) IBOutlet UIView *GrayCoverView;
 @property (weak, nonatomic) IBOutlet UIView *FlashView;
+@property (nonatomic, strong) GKImagePicker *imagePicker;
+@property (nonatomic, strong) UIPopoverController *popoverController;
 
 @end

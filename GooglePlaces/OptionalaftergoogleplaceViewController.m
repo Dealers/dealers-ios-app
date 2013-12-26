@@ -35,7 +35,7 @@
 @synthesize scroll;
 @synthesize CategoryNavBar;
 @synthesize CategoryPicker;
-@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera,SnapButton, captureImage2,captureImage3,captureImage4,BlackCoverImage,morebutton,MoreButtonButton,GrayCoverView,FlashView,SnapButton2,DescriptionTextView;
+@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera,SnapButton, captureImage2,captureImage3,captureImage4,BlackCoverImage,morebutton,MoreButtonButton,GrayCoverView,FlashView,SnapButton2,DescriptionTextView,imagePicker,popoverController;
 
 
 -(void) BackgroundMethod {
@@ -151,7 +151,7 @@
     updown_moreoption = true;
     currentpage=0;
     BlackCoverImage.hidden=YES;
-    [self initializeCamera];
+   //[self initializeCamera];
 
     [self ReduceScroll];
     [self EnlargeCameraScroll];
@@ -893,7 +893,7 @@
 }
 
 -(void) CameraMode {
-    [self initializeCamera];
+    //[self initializeCamera];
     BlackCoverImage.hidden=YES;
     captureImage.hidden = YES;
     imagePreview.hidden = NO;
@@ -959,13 +959,36 @@
 
 - (void) processImage:(UIImage *)image { //process captured image, crop, resize and rotate
     haveImage = YES;
+    CGSize size3 = [image size];
+
+    CGRect rect = CGRectMake(0,0,320,(size3.height*320)/size3.width);
+    UIGraphicsBeginImageContext( rect.size );
+    [image drawInRect:rect];
+    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    NSData *imageData = UIImagePNGRepresentation(picture1);
+    UIImage *imgLarge=[UIImage imageWithData:imageData];
+    CGSize size = [imgLarge size];
+
+    // Create rectangle that represents a cropped image
+    // from the middle of the existing image
+    CGRect rect2 = CGRectMake(2,(size.height / 3)-10,310,155);
     
-    CGSize itemSize = CGSizeMake(300,365); // give any size you want to give
+    // Create bitmap image from original image data,
+    // using rectangle to specify desired crop area
+    CGImageRef imageRef = CGImageCreateWithImageInRect([imgLarge CGImage], rect2);
+    UIImage *img = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+
+    
+    
+    
+   /* CGSize itemSize = CGSizeMake(300,365); // give any size you want to give
     UIGraphicsBeginImageContext(itemSize);
     CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
     [image drawInRect:imageRect];
     image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIGraphicsEndImageContext();*/
     
 
 /*
@@ -978,19 +1001,19 @@
     */
     if (numofpics==0) {
         //[captureImage setImage:[UIImage imageWithCGImage:imageRef]];
-        captureImage.image=image;
+        captureImage.image=img;
     }
     if (numofpics==1) {
         //[captureImage2 setImage:[UIImage imageWithCGImage:imageRef]];
-        captureImage2.image=image;
+        captureImage2.image=img;
     }
     if (numofpics==2) {
         //[captureImage3 setImage:[UIImage imageWithCGImage:imageRef]];
-        captureImage3.image=image;
+        captureImage3.image=img;
     }
     if (numofpics==3) {
         //[captureImage4 setImage:[UIImage imageWithCGImage:imageRef]];
-        captureImage4.image=image;
+        captureImage4.image=img;
     }
     numofpics++;
     [self oreder];
@@ -1100,14 +1123,23 @@
 }
 
 -(void) PicFromLibButtonAction:(id)sender {
+    
+    self.imagePicker = [[GKImagePicker alloc] init];
+  //  self.imagePicker.cropSize = CGSizeMake(310,155);
+   self.imagePicker.delegate = self;
+    
+    [self presentViewController:self.imagePicker.imagePickerController animated:YES completion:nil];
+
+    /*
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.allowsEditing=YES;
-    [self presentViewController:picker animated:YES completion:nil];
+    [self presentViewController:picker animated:YES completion:nil];*/
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    NSLog(@"here/n/n/n");
     if (numofpics==0) {
         captureImage.image=[info objectForKey:UIImagePickerControllerEditedImage];
     }
@@ -1228,5 +1260,26 @@
     }
 }
 
-
+- (void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image{
+    NSLog(@"here/n/n/n");
+    if (numofpics==0) {
+        captureImage.image=image;
+    }
+    if (numofpics==1) {
+        captureImage2.image=image;
+    }
+    if (numofpics==2) {
+        captureImage3.image=image;
+    }
+    if (numofpics==3) {
+        captureImage4.image=image;
+    }
+    numofpics++;
+    [self oreder];
+    NSLog(@"numofpicafterlib %d",numofpics);
+    [self dismissViewControllerAnimated:YES completion:nil];
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    app.didaddphoto=@"yes";
+    [self ImageslideMode];
+}
 @end
