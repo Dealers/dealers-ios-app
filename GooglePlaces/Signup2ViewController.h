@@ -26,8 +26,8 @@
 
 - (IBAction)SingupButton:(id)sender;
 - (IBAction)AddphotoButton:(id)sender;
-- (IBAction)DateButton;
-- (IBAction)Showuidate;
+- (IBAction)HideDatePicker;
+- (IBAction)ShowDatePicker;
 
 @property (weak, nonatomic) IBOutlet UIImageView *ImageAdded;
 @property (weak, nonatomic) IBOutlet UIImageView *ImageFrame;

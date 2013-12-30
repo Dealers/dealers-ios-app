@@ -35,7 +35,7 @@
 @synthesize scroll;
 @synthesize CategoryNavBar;
 @synthesize CategoryPicker;
-@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera,SnapButton, captureImage2,captureImage3,captureImage4,BlackCoverImage,morebutton,MoreButtonButton,GrayCoverView,FlashView,SnapButton2,DescriptionTextView,imagePicker,popoverController;
+@synthesize PriceNavBar,DollarButton,ShekelButton,DatePicker,DateNavBar,ChagrtoDate,ChagrtoTime,ChangetodateFull,ChangetotimeFull,DollarButtonFull,ShekelButtonFull,PoundButtonFull,PoundButton,PersentButton,PersentButtonFull,LoadingDeal,ReturnButtonFull,ReturnButton,Coverblack,LoadingImage,DoneButton,imagePreview,captureImage,stillImageOutput,titlelabel,mapView,TrashButton,AddAnotherPicButton,PicFromLibButton,RotateCamButton,ExitCameraButton,MoreView,AddDealButton,SocialView,scrollcamera,SnapButton, captureImage2,captureImage3,captureImage4,BlackCoverImage,morebutton,MoreButtonButton,GrayCoverView,FlashView,SnapButton2,DescriptionTextView,imagePicker,popoverController,PageControl;
 
 
 -(void) BackgroundMethod {
@@ -147,11 +147,12 @@
 
 - (void)viewDidLoad
 {
+    PageControl.hidden=YES;
     Flag = true;
     updown_moreoption = true;
     currentpage=0;
     BlackCoverImage.hidden=YES;
-   //[self initializeCamera];
+  // [self initializeCamera];
 
     [self ReduceScroll];
     [self EnlargeCameraScroll];
@@ -883,17 +884,20 @@
 
 - (IBAction)snapImage:(id)sender {
     [UIView animateWithDuration:0.1 animations:^{self.FlashView.alpha=1.0;}];
-    [UIView animateWithDuration:1.0 animations:^{self.FlashView.alpha=1.0;}];
-    [UIView animateWithDuration:1.2 animations:^{self.FlashView.alpha=0.0;}];
-    
     [UIView animateWithDuration:0.2 animations:^{self.SnapButton2.alpha=1.0;}];
     [UIView animateWithDuration:0.2 animations:^{self.SnapButton.alpha=0.0;}];
-
     [self capImage];
+    [self performSelector:@selector(Flash) withObject:nil afterDelay:2];
+
+}
+
+-(void) Flash {
+    [UIView animateWithDuration:1.0 animations:^{self.FlashView.alpha=0.0;}];
 }
 
 -(void) CameraMode {
     //[self initializeCamera];
+    PageControl.hidden=YES;
     BlackCoverImage.hidden=YES;
     captureImage.hidden = YES;
     imagePreview.hidden = NO;
@@ -910,6 +914,8 @@
 }
 
 -(void) ImageslideMode {
+    PageControl.hidden=NO;
+    PageControl.numberOfPages=numofpics;
     [session stopRunning];
     SnapButton.alpha=0.0;
     SnapButton2.alpha=0.0;
@@ -1100,7 +1106,7 @@
     numofpics--;
     [self ImageslideMode];
     if (numofpics==0) {
-        [self CameraMode];
+    [self CameraMode];
     }
 }
 
@@ -1232,6 +1238,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     CGFloat pageWidth = scrollcamera.frame.size.width;
     currentpage = floor((scrollcamera.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    PageControl.currentPage=currentpage;
     NSLog(@"page=%d",currentpage);
 
 }

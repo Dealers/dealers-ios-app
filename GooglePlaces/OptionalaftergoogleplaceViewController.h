@@ -140,5 +140,6 @@
 @property (weak, nonatomic) IBOutlet UIView *FlashView;
 @property (nonatomic, strong) GKImagePicker *imagePicker;
 @property (nonatomic, strong) UIPopoverController *popoverController;
+@property (weak, nonatomic) IBOutlet UIPageControl *PageControl;
 
 @end

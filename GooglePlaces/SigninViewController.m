@@ -10,7 +10,7 @@
 #import "ViewalldealsViewController.h"
 #import "MainViewController.h"
 #import "AppDelegate.h"
-
+#import "Functions.h"
 @interface SigninViewController ()
 
 @end
@@ -19,12 +19,9 @@
 
 @synthesize EmailText;
 @synthesize PasswordText;
-@synthesize PASSWORDMARRAY;
 @synthesize Signinbutton,ReturnButton,ReturnButtonFull,LoadingImage;
 
 -(void) BackgroundMethod {
-    NSLog(@"backgroud");
-    
     NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS", nil];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
@@ -150,34 +147,29 @@
     }
     app.AfterAddDeal=@"aftersign";
     [self performSelectorOnMainThread:@selector(MainMethod) withObject:nil waitUntilDone:NO];
-    
 }
 
 -(void) MainMethod {
-    
     ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
     [self.navigationController pushViewController:controller animated:YES];
-
-    
 }
 
-- (void)viewDidLoad
-{
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-
+-(void) initialize {
     ReturnButtonFull.alpha=0.0;
-
+    EmailText.text=[[NSUserDefaults standardUserDefaults] stringForKey:@"Email"];
+    PasswordText.text=[[NSUserDefaults standardUserDefaults] stringForKey:@"Password"];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.EmailText setDelegate:self];
     [self.EmailText setReturnKeyType:UIReturnKeyDone];
     [self.EmailText addTarget:self action:@selector(EmailText) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [super viewDidLoad];
-    
     [self.PasswordText setDelegate:self];
     [self.PasswordText setReturnKeyType:UIReturnKeyDone];
     [self.PasswordText addTarget:self action:@selector(PasswordText) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
+}
+- (void)viewDidLoad
+{
+    [self initialize];
     [super viewDidLoad];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -186,31 +178,51 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)SinginButton:(id)sender {
+-(NSString*)CheckIfUserExist {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-
-    NSUserDefaults *savedemail = [NSUserDefaults standardUserDefaults];
-    NSUserDefaults *savedpassword = [NSUserDefaults standardUserDefaults];
-    
-  
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getuserphp.php?var1=%@&var2=%@",PasswordText.text,EmailText.text];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-
     NSArray *dataarray = [DataResult componentsSeparatedByString:@" "];
     DataResult = [dataarray objectAtIndex:0];
     if ([dataarray count]>1) {
         app.UserID = [dataarray objectAtIndex:1];;
-
     }
-    NSLog(@"%@", app.UserID);
+    return DataResult;
+}
 
-    
-   // NSArray *DataArray = [DataResult componentsSeparatedByString:@"///"];
-   // NSArray *reversed = [[DataArray reverseObjectEnumerator] allObjects];
-   // PASSWORDMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    
+-(void) StartLoading {
+    [UIView animateWithDuration:0.2 animations:^{Signinbutton.alpha=0.0; Signinbutton.transform =CGAffineTransformMakeScale(1,1);
+        LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
+    LoadingImage.animationImages = [NSArray arrayWithObjects:
+                                    [UIImage imageNamed:@"Loadingwhite.png"],
+                                    [UIImage imageNamed:@"Loading5white.png"],
+                                    [UIImage imageNamed:@"Loading10white.png"],
+                                    [UIImage imageNamed:@"Loading15white.png"],
+                                    [UIImage imageNamed:@"Loading20white.png"],
+                                    [UIImage imageNamed:@"Loading25white.png"],
+                                    [UIImage imageNamed:@"Loading30white.png"],
+                                    [UIImage imageNamed:@"Loading35white.png"],
+                                    [UIImage imageNamed:@"Loading40white.png"],
+                                    [UIImage imageNamed:@"Loading45white.png"],
+                                    [UIImage imageNamed:@"Loading50white.png"],
+                                    [UIImage imageNamed:@"Loading55white.png"],
+                                    [UIImage imageNamed:@"Loading60white.png"],
+                                    [UIImage imageNamed:@"Loading65white.png"],
+                                    [UIImage imageNamed:@"Loading70white.png"],
+                                    [UIImage imageNamed:@"Loading75white.png"],
+                                    [UIImage imageNamed:@"Loading80white.png"],
+                                    [UIImage imageNamed:@"Loading85white.png"],
+                                    nil];
+    LoadingImage.animationDuration = 0.3;
+    [LoadingImage startAnimating];
+    [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
+        LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
+}
+
+- (IBAction)SinginButton:(id)sender {
+
+    NSString *DataResult = [self CheckIfUserExist];
 
     if (([EmailText.text isEqual:@""]) || ([EmailText.text isEqual:@"Email"])) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter Email" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
@@ -221,58 +233,25 @@
     } else if ([DataResult isEqualToString:@"Pass"]) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Your Password is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
-    } else if ([DataResult isEqualToString:@"ok"]){
-        [savedemail setObject:EmailText.text forKey:@"savedemail"];
-        [savedpassword setObject:PasswordText.text forKey:@"savedpassword"];
+    } else if ([DataResult isEqualToString:@"ok"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:EmailText.text forKey:@"Email"];
+        [[NSUserDefaults standardUserDefaults] setObject:PasswordText.text forKey:@"Password"];
         [EmailText resignFirstResponder];
         [PasswordText resignFirstResponder];
-
-        [UIView animateWithDuration:0.2 animations:^{Signinbutton.alpha=0.0; Signinbutton.transform =CGAffineTransformMakeScale(1,1);
-            LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
-
-        LoadingImage.animationImages = [NSArray arrayWithObjects:
-                                        [UIImage imageNamed:@"Loadingwhite.png"],
-                                        [UIImage imageNamed:@"Loading5white.png"],
-                                        [UIImage imageNamed:@"Loading10white.png"],
-                                        [UIImage imageNamed:@"Loading15white.png"],
-                                        [UIImage imageNamed:@"Loading20white.png"],
-                                        [UIImage imageNamed:@"Loading25white.png"],
-                                        [UIImage imageNamed:@"Loading30white.png"],
-                                        [UIImage imageNamed:@"Loading35white.png"],
-                                        [UIImage imageNamed:@"Loading40white.png"],
-                                        [UIImage imageNamed:@"Loading45white.png"],
-                                        [UIImage imageNamed:@"Loading50white.png"],
-                                        [UIImage imageNamed:@"Loading55white.png"],
-                                        [UIImage imageNamed:@"Loading60white.png"],
-                                        [UIImage imageNamed:@"Loading65white.png"],
-                                        [UIImage imageNamed:@"Loading70white.png"],
-                                        [UIImage imageNamed:@"Loading75white.png"],
-                                        [UIImage imageNamed:@"Loading80white.png"],
-                                        [UIImage imageNamed:@"Loading85white.png"],
-                                        nil];
-        LoadingImage.animationDuration = 0.3;
-        [LoadingImage startAnimating];
-        [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
-            LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
+        [self StartLoading];
         [self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
-
-
-    
     } else {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Your Email is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
-
     }
-    
-
-    
-   }
+}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [EmailText resignFirstResponder];
     [PasswordText resignFirstResponder];
 }
+
 - (IBAction)ReturnButtonAction:(id)sender {
     ReturnButtonFull.alpha=1.0;
     ReturnButton.alpha=0.0;

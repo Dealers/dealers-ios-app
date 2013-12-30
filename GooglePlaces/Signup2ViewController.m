@@ -9,6 +9,7 @@
 #import "Signup2ViewController.h"
 #import "ViewalldealsViewController.h"
 #import "AppDelegate.h"
+#import "Functions.h"
 
 @interface Signup2ViewController ()
 
@@ -32,8 +33,7 @@
     
     NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS", nil];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
-    
+
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:0]];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
@@ -196,21 +196,16 @@
 }
 
 -(void) MainMethod {
-    
     ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
     [self.navigationController pushViewController:controller animated:YES];
-    
-    
 }
 
-- (void)viewDidLoad
-{
+-(void) initialize {
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     ReturnButtonFull.alpha=0.0;
+    ImageFrame.hidden = YES;
     [scroll setScrollEnabled:NO];
     [scroll setContentSize:((CGSizeMake(320, 460)))];
-
-    ImageFrame.hidden = YES;
     [self.Fullname setDelegate:self];
     [self.Fullname setReturnKeyType:UIReturnKeyDone];
     [self.Fullname addTarget:self action:@selector(Fullname) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -227,10 +222,13 @@
     [self.Genger setReturnKeyType:UIReturnKeyDone];
     [self.Genger addTarget:self action:@selector(Genger) forControlEvents:UIControlEventEditingDidEndOnExit];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow) name:UIKeyboardWillShowNotification object:nil];
-    
     list = [[NSMutableArray alloc] initWithObjects:@"Gender",@"Male",@"Female", nil];
+
+}
+
+- (void)viewDidLoad {
+    [self initialize];
     [super viewDidLoad];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -239,20 +237,41 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)StartLoading {
+    [UIView animateWithDuration:0.2 animations:^{SignupButton.alpha=0.0; SignupButton.transform =CGAffineTransformMakeScale(1,1);
+        LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
+    
+    LoadingImage.animationImages = [NSArray arrayWithObjects:
+                                    [UIImage imageNamed:@"Loadingwhite.png"],
+                                    [UIImage imageNamed:@"Loading5white.png"],
+                                    [UIImage imageNamed:@"Loading10white.png"],
+                                    [UIImage imageNamed:@"Loading15white.png"],
+                                    [UIImage imageNamed:@"Loading20white.png"],
+                                    [UIImage imageNamed:@"Loading25white.png"],
+                                    [UIImage imageNamed:@"Loading30white.png"],
+                                    [UIImage imageNamed:@"Loading35white.png"],
+                                    [UIImage imageNamed:@"Loading40white.png"],
+                                    [UIImage imageNamed:@"Loading45white.png"],
+                                    [UIImage imageNamed:@"Loading50white.png"],
+                                    [UIImage imageNamed:@"Loading55white.png"],
+                                    [UIImage imageNamed:@"Loading60white.png"],
+                                    [UIImage imageNamed:@"Loading65white.png"],
+                                    [UIImage imageNamed:@"Loading70white.png"],
+                                    [UIImage imageNamed:@"Loading75white.png"],
+                                    [UIImage imageNamed:@"Loading80white.png"],
+                                    [UIImage imageNamed:@"Loading85white.png"],
+                                    nil];
+    LoadingImage.animationDuration = 0.3;
+    [LoadingImage startAnimating];
+    [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
+        LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
+}
 - (IBAction)SingupButton:(id)sender{
-    
-    NSString *user_email=Email.text;
-    NSString *user_password=Password.text;
-    [[NSUserDefaults standardUserDefaults] setObject:user_email forKey:@"user_email"];
-    [[NSUserDefaults standardUserDefaults] setObject:user_password forKey:@"user_password"];
-    
     
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/registercheck.php?var1=%@",Email.text];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    NSLog(@"email=%@\n",Email.text);
-    NSLog(@"data=%@\n",DataResult);
-    
+
     if (([Email.text isEqual:@""]) || ([Email.text isEqual:@"Email"])) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter an Email Address" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
@@ -275,44 +294,12 @@
         [alert show];
     }
     else {
-        
-        [UIView animateWithDuration:0.2 animations:^{SignupButton.alpha=0.0; SignupButton.transform =CGAffineTransformMakeScale(1,1);
-            LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
-        
-        LoadingImage.animationImages = [NSArray arrayWithObjects:
-                                        [UIImage imageNamed:@"Loadingwhite.png"],
-                                        [UIImage imageNamed:@"Loading5white.png"],
-                                        [UIImage imageNamed:@"Loading10white.png"],
-                                        [UIImage imageNamed:@"Loading15white.png"],
-                                        [UIImage imageNamed:@"Loading20white.png"],
-                                        [UIImage imageNamed:@"Loading25white.png"],
-                                        [UIImage imageNamed:@"Loading30white.png"],
-                                        [UIImage imageNamed:@"Loading35white.png"],
-                                        [UIImage imageNamed:@"Loading40white.png"],
-                                        [UIImage imageNamed:@"Loading45white.png"],
-                                        [UIImage imageNamed:@"Loading50white.png"],
-                                        [UIImage imageNamed:@"Loading55white.png"],
-                                        [UIImage imageNamed:@"Loading60white.png"],
-                                        [UIImage imageNamed:@"Loading65white.png"],
-                                        [UIImage imageNamed:@"Loading70white.png"],
-                                        [UIImage imageNamed:@"Loading75white.png"],
-                                        [UIImage imageNamed:@"Loading80white.png"],
-                                        [UIImage imageNamed:@"Loading85white.png"],
-                                        nil];
-        LoadingImage.animationDuration = 0.3;
-        [LoadingImage startAnimating];
-        [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
-            LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
+        [self StartLoading];
         [self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
-
     }
-    
-    
 }
 
-
 - (IBAction)AddphotoButton:(id)sender {
-    
     UIActionSheet *alert;
     if (ImageAdded.image == nil) {
         alert = [[UIActionSheet alloc]
@@ -323,8 +310,7 @@
                                 otherButtonTitles:@"Camera", @"Library", nil];
 
     } else {
-    
-    alert = [[UIActionSheet alloc]
+        alert = [[UIActionSheet alloc]
                             initWithTitle:@"Please Choose"
                             delegate:self
                             cancelButtonTitle:@"Cancel"
@@ -332,16 +318,9 @@
                             otherButtonTitles:@"Camera", @"Library", nil];
     }
     [alert showInView:self.view];
-    
 }
 
-
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
-    
-    ImageAdded.image = [ info objectForKey:UIImagePickerControllerEditedImage];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+-(void)MaskImage {
     CALayer *mask = [CALayer layer];
     mask.contents=(id)[[UIImage imageNamed:@"Registration_Profile Pic Mask.png"]CGImage];
     mask.frame = CGRectMake(0, 0, 100, 100);
@@ -349,57 +328,58 @@
     ImageAdded.layer.masksToBounds = YES;
     addphotobutton.hidden=YES;
     ImageFrame.hidden=NO;
-    didaddphoto = @"yes";
-
-    
- 
-   
-    }
-
--(void) Showuidate {
-    [scroll setContentSize:((CGSizeMake(320, 650)))];
-
-    [scroll setScrollEnabled:YES];
-
-    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 140);}];
-    [Fullname resignFirstResponder];
-    [Email resignFirstResponder];
-    [Password resignFirstResponder];
-
-    [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, 352);}];
-    [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, 222);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 590);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, 546);}];
-
 }
 
--(void) DateButton {
-    [scroll setScrollEnabled:NO];
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    ImageAdded.image = [ info objectForKey:UIImagePickerControllerEditedImage];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self MaskImage];
+    didaddphoto = @"yes"; //אולי לשנות לבוליאן בהמשך
+}
 
-    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
+-(void)CleanScreen:(NSString*)string {
+    
+    [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 590);}];
+    [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, 546);}];
     [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, 590);}];
     [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, 546);}];
+    [scroll setScrollEnabled:NO];
+
+    if (![string isEqualToString:@"text"]) {
+        [Fullname resignFirstResponder];
+        [Email resignFirstResponder];
+        [Password resignFirstResponder];
+    }
+}
+
+-(void) ShowDatePicker {
+    [self CleanScreen:@"DatePicker"];
+    [scroll setContentSize:((CGSizeMake(320, 650)))];
+    [scroll setScrollEnabled:YES];
+    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 140);}];
+    [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, 352);}];
+    [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, 222);}];
+}
+
+-(void) HideDatePicker {
+    [self CleanScreen:@"DatePicker"];
+    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
     NSDate *select = [datepick date];
     NSString *selecteddate = [[NSString alloc]initWithFormat:@"%@",select];
     NSArray *datearray = [selecteddate componentsSeparatedByString:@" "];
-   
     NSString *first = [datearray objectAtIndex:0];
     NSArray *reversedate = [first componentsSeparatedByString:@"-"];
-  
     NSString *day = [reversedate objectAtIndex:2];
     NSString *mounth = [reversedate objectAtIndex:1];
     NSString *year = [reversedate objectAtIndex:0];
     NSString *space = @"-";
-
     NSString *date = [[NSString alloc] initWithString:day];
     date = [date stringByAppendingString:space];
     date = [date stringByAppendingString:mounth];
     date = [date stringByAppendingString:space];
     date = [date stringByAppendingString:year];
-
     Datebirth.text=date;
     self.optional_date.hidden=YES;
-    
 }
 
 -(void) keyboardWillShow {
@@ -408,54 +388,33 @@
 -(void) keyboardWillHide {
 }
 
-
 -(BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
-    
+    [self CleanScreen:@"text"];
     [scroll setScrollEnabled:YES ];
     [scroll setContentSize:((CGSizeMake(320, 650)))];
-
-
-    [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, 590);}];
-    [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, 546);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 590);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, 546);}];
-
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 110);}];
     return YES;
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     [scroll setScrollEnabled:NO];
-    
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
-
     return YES;
-
-
-    
-
 }
+
 - (void)viewDidUnload {
     [self setAddphotobutton:nil];
     [self setAddphotobutton:nil];
     [super viewDidUnload];
 }
+
 - (IBAction)GenderButton:(id)sender {
-    
+    [self CleanScreen:@"GenderPicker"];
     [scroll setContentSize:((CGSizeMake(320, 650)))];
-
-    [Fullname resignFirstResponder];
-    [Email resignFirstResponder];
-    [Password resignFirstResponder];
-
-    [scroll setScrollEnabled:YES];
-
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 140);}];
     [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 352);}];
     [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, 222);}];
-    [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, 590);}];
-    [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, 546);}];
-
+    [scroll setScrollEnabled:YES];
 }
 
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -505,15 +464,12 @@
         }
     
 }
+
 - (IBAction)GenderDoneButton:(id)sender {
-    
+    [self CleanScreen:@"GenderPicker"];
     [scroll setScrollEnabled:NO];
-
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 590);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, 546);}];
 }
-
 
 - (IBAction)ReturnButtonAction:(id)sender {
     ReturnButtonFull.alpha=1.0;
@@ -521,9 +477,6 @@
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-  //  [self.navigationController popViewControllerAnimated:YES];
-
-    
 }
 
 - (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component
