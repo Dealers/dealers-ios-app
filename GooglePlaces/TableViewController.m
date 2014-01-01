@@ -10,6 +10,7 @@
 #import "googleCell2.h"
 #import "ResaftergoogleplaceViewController.h"
 #import "StoreSearchCell.h"
+#import "Functions.h"
 
 @interface TableViewController ()
 
@@ -26,6 +27,7 @@
 
 
 -(void) BackgroundMethod {
+    Functions *func = [[Functions alloc]init];
     NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=3000&v=20131120",locationManager.location.coordinate.latitude, locationManager.location.coordinate.longitude];
     
     NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
@@ -49,24 +51,14 @@
     
     for (int i=0; i<[venues count]; i++)
     {
+        NSString *CategoryID = [[NSString alloc]init];
         NSDictionary *responseData3 = [venues objectAtIndex:i];
         NSString *name=[responseData3 objectForKey:@"name"];
         NSString *vicinity=[[responseData3 objectForKey:@"location"]objectForKey:@"address"];
         NSString *distance=[[responseData3 objectForKey:@"location"]objectForKey:@"distance"];
-        
         NSArray *a=responseData3[@"categories"];
         UIImageView *tempimage = [[UIImageView alloc]init];
-        
-        if ([a count]>0) {
-            NSDictionary *iconarraytemp=[responseData3[@"categories"] objectAtIndex:0];
-            NSString *icon=iconarraytemp[@"icon"][@"prefix"];
-            NSString *iconwithsuffix=[icon stringByAppendingString:@"bg_32"];
-            iconwithsuffix=[iconwithsuffix stringByAppendingString:@".png"];
-            iconwithsuffix=[iconwithsuffix stringByReplacingOccurrencesOfString:@"ss1.4sqi.net" withString:@"foursquare.com"];
-            tempimage.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:iconwithsuffix]]];
-        } else tempimage.image =[UIImage imageNamed:@"store@2x.png"];
-
-        
+      
         if (name==nil) {
             name=@"";
         }
@@ -76,11 +68,28 @@
         if (distance==nil) {
             distance=@"";
         }
-        
-        [array addObject:name];
-        [arrayforlocation addObject:vicinity];
-        [arrayforicons addObject:tempimage];
-        [distancearray addObject:distance];
+
+        if ([a count]>0) {
+            NSDictionary *iconarraytemp=[responseData3[@"categories"] objectAtIndex:0];
+           /* NSString *icon=iconarraytemp[@"icon"][@"prefix"];
+            NSString *iconwithsuffix=[icon stringByAppendingString:@"bg_32"];
+            iconwithsuffix=[iconwithsuffix stringByAppendingString:@".png"];
+            iconwithsuffix=[iconwithsuffix stringByReplacingOccurrencesOfString:@"ss1.4sqi.net" withString:@"foursquare.com"];
+            tempimage.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:iconwithsuffix]]];*/
+            CategoryID =iconarraytemp[@"id"];
+            if ([func CheckIfCategoryExist:CategoryID]) {
+                NSString *ImageName=[func ConnectOldCategoryToNewCategory:CategoryID];
+                if (ImageName==NULL) {
+                    tempimage.image =[UIImage imageNamed:@"store.png"];
+                } else
+                tempimage.image =[UIImage imageNamed:[NSString stringWithFormat:@"%@",ImageName]];
+                [array addObject:name];
+                [arrayforlocation addObject:vicinity];
+                [arrayforicons addObject:tempimage];
+                [distancearray addObject:distance];
+
+            }
+        }
     }
     
     arraySort=[[NSMutableArray alloc]init];
@@ -122,7 +131,7 @@
         [distancearraySort addObject:[distancearray objectAtIndex:j]];
     }
     }
-    
+
     NSArray *passagru=[[NSArray alloc]initWithObjects:arraySort,iconsarrayfilteredSort,arrayforlocationSort,distancearraySort, nil];
     [self performSelectorOnMainThread:@selector(MainMethod:) withObject:passagru waitUntilDone:NO];
 
@@ -140,7 +149,6 @@
     arrayforicons = [pass objectAtIndex:1];
     distancearray = [pass objectAtIndex:3];
     [self.tableviewgoogle reloadData];
-    
     
     [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(1,1);
         LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];

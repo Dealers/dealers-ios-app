@@ -10,4 +10,7 @@
 
 @interface Functions : NSObject
 -(NSString*) StringToHex : (NSString*) string;
+-(void) funconbackground;
+-(BOOL)CheckIfCategoryExist:(NSString*) string;
+-(NSString*)ConnectOldCategoryToNewCategory:(NSString*) string;
 @end

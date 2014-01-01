@@ -21,6 +21,7 @@
 @synthesize PasswordText;
 @synthesize Signinbutton,ReturnButton,ReturnButtonFull,LoadingImage;
 
+/*
 -(void) BackgroundMethod {
     NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS", nil];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
@@ -147,7 +148,7 @@
     }
     app.AfterAddDeal=@"aftersign";
     [self performSelectorOnMainThread:@selector(MainMethod) withObject:nil waitUntilDone:NO];
-}
+}*/
 
 -(void) MainMethod {
     ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
@@ -239,7 +240,16 @@
         [EmailText resignFirstResponder];
         [PasswordText resignFirstResponder];
         [self StartLoading];
-        [self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
+        //[self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
+        
+        Functions *func = [[Functions alloc]init];
+        dispatch_queue_t queue = dispatch_queue_create("com.sample", 0);
+        dispatch_queue_t main = dispatch_get_main_queue();
+        dispatch_async(queue,
+                       ^{
+                           [func funconbackground];
+                           dispatch_async(main, ^{ [self MainMethod]; });
+                       });    
     } else {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Your Email is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];

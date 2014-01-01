@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+{
+    BOOL LikeOrUnlike;
+}
 
 @property (strong,nonatomic) NSString *titlefromseg;
 @property (strong,nonatomic) NSString *storefromseg;
@@ -58,5 +61,26 @@
 - (IBAction)LocalButtonAction:(id)sender;
 - (IBAction)OnlineButtonAction:(id)sender;
 - (IBAction)UNLockButtonAction:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIImageView *TitleIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *StoreIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *CategoryIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *PriceIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *ExpireIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *DescriptionIcon;
+
+@property (weak, nonatomic) IBOutlet UIView *SecondView;
+
+@property (weak, nonatomic) IBOutlet UIButton *LikeButton;
+- (IBAction)LikeButtonAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *CommentButton;
+- (IBAction)CommentButtonAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *ShareButton;
+- (IBAction)ShareButtonAction:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIImageView *captureImage;
+@property (weak, nonatomic) IBOutlet UIImageView *captureImage2;
+@property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
+@property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
 
 @end
