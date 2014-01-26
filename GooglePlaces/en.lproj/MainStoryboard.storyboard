@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="ZXa-ud-UfS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="ZXa-ud-UfS">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <development version="4600" identifier="xcode"/>
@@ -289,53 +289,53 @@
                                                     <rect key="frame" x="3" y="4" width="315" height="199"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="q9N-3N-FPu">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="q9N-3N-FPu" userLabel="Image View - Deal Pic">
                                                     <rect key="frame" x="10" y="8" width="300" height="155"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Title &amp; Store shade.png" id="YIT-4q-f7r">
+                                                <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Title &amp; Store shade.png" id="YIT-4q-f7r" userLabel="Image View - Shade">
                                                     <rect key="frame" x="10" y="85" width="300" height="78"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vIc-iG-wDx">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vIc-iG-wDx" userLabel="Label - Discount">
                                                     <rect key="frame" x="247" y="169" width="53" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" red="1" green="0.22798813868613138" blue="0.18809876824817517" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="0.22798813870000001" blue="0.18809876819999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mqq-F5-SpX">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mqq-F5-SpX" userLabel="Label - Price">
                                                     <rect key="frame" x="197" y="169" width="53" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" red="0.31880132299270075" green="0.80962020985401462" blue="0.28281820255474455" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="0.31880132300000003" green="0.80962020990000005" blue="0.28281820260000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Likes icon.png" id="aPG-wC-ZhY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Likes icon.png" id="aPG-wC-ZhY" userLabel="Image View - Like icon">
                                                     <rect key="frame" x="274" y="124" width="13" height="12"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zC4-Be-4Rh">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zC4-Be-4Rh" userLabel="Label - Like counter">
                                                     <rect key="frame" x="290" y="119" width="21" height="21"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" red="0.77734375" green="0.77147011860000003" blue="0.78803604009999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Comments icon.png" id="9zm-nx-R0U">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Comments icon.png" id="9zm-nx-R0U" userLabel="Image View - Comment icon">
                                                     <rect key="frame" x="274" y="143" width="12" height="14"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PQs-Bg-LeL">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PQs-Bg-LeL" userLabel="Label - Comment counter">
                                                     <rect key="frame" x="290" y="139" width="21" height="21"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" red="0.77734375" green="0.77147011860000003" blue="0.78803604009999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal (final)_Local icon.png" id="YZW-NH-NOW">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal (final)_Local icon.png" id="YZW-NH-NOW" userLabel="Image View - Local icon">
                                                     <rect key="frame" x="18" y="170" width="13" height="16"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" id="dzd-CE-GhO">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" id="dzd-CE-GhO" userLabel="Label - Deal Title">
                                                     <rect key="frame" x="18" y="119" width="249" height="41"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HhG-AC-U3R">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HhG-AC-U3R" userLabel="Label - Deal Store">
                                                     <rect key="frame" x="35" y="167" width="175" height="24"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                                     <color key="highlightedColor" red="0.77734375" green="0.77147011860000003" blue="0.78803604009999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -358,20 +358,20 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" id="szk-Wa-yil">
+                            <view contentMode="scaleToFill" id="szk-Wa-yil" userLabel="View - Load up white screen">
                                 <rect key="frame" x="0.0" y="45" width="320" height="365"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Navigation Bar@2X.png" id="2LN-wr-mme">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Navigation Bar@2X.png" id="2LN-wr-mme" userLabel="Image View - Nav Bar">
                                 <rect key="frame" x="1" y="0.0" width="320" height="53"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Tab Bar@2X.png" id="U9o-Le-YAj">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Tab Bar@2X.png" id="U9o-Le-YAj" userLabel="Image View - Tab Bar">
                                 <rect key="frame" x="0.0" y="411" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eWF-M9-pj2">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eWF-M9-pj2" userLabel="Button - Add Deal">
                                 <rect key="frame" x="129" y="405" width="62" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -386,19 +386,19 @@
                                     <action selector="Adddeal:" destination="RlD-7e-ftu" eventType="touchUpInside" id="JBJ-Gi-NGt"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_More button@2X.png" id="uKZ-NY-2Kq">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_More button@2X.png" id="uKZ-NY-2Kq" userLabel="Image View - More button">
                                 <rect key="frame" x="276" y="415" width="29" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Profile button@2X.png" id="TuH-nl-GJU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Profile button@2X.png" id="TuH-nl-GJU" userLabel="Image View - Profile button">
                                 <rect key="frame" x="218" y="416" width="29" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Explore button@2X.png" id="q17-ET-ggv">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Explore button@2X.png" id="q17-ET-ggv" userLabel="Image View - Explore button">
                                 <rect key="frame" x="74" y="416" width="29" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_My Feed button(selected)@2X.png" id="x0f-3G-gtY">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_My Feed button(selected)@2X.png" id="x0f-3G-gtY" userLabel="Image View - My Feed button">
                                 <rect key="frame" x="19" y="416" width="29" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -487,7 +487,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Log In Top Title.png" id="BR6-Zn-z4B">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Log In Top Title.png" id="BR6-Zn-z4B" userLabel="Image View - Dealers logo">
                                 <rect key="frame" x="103" y="8" width="114" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -1149,6 +1149,98 @@
             </objects>
             <point key="canvasLocation" x="-1227" y="359"/>
         </scene>
+        <!--Where is the Deal Online-->
+        <scene sceneID="E1x-WL-RX1">
+            <objects>
+                <viewController id="AHD-dt-8t9" userLabel="Where is the Deal Online" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9aO-dk-PXM">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="My Feed+View Deal_Tab Bar@2X.png" id="eVd-gm-Sof" userLabel="Tab Bar">
+                                <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search or type an adress" translucent="NO" backgroundImage="Add Deal (Final)_Browser bar.png" id="KkJ-Dv-aD8" userLabel="URL bar">
+                                <rect key="frame" x="44" y="0.0" width="276" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                                <connections>
+                                    <outlet property="delegate" destination="AHD-dt-8t9" id="UyP-vw-PXV"/>
+                                </connections>
+                            </searchBar>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" paginationMode="topToBottom" id="L24-GR-cqc">
+                                <rect key="frame" x="0.0" y="44" width="320" height="372"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2Vk-zu-47H" userLabel="Cancel button">
+                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button" image="Add Deal (Final)_Browser Cancel button.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SvQ-rB-LFa" userLabel="Deal it! button">
+                                <rect key="frame" x="245" y="424" width="65" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button" image="Add Deal (Final)_Deal It! button.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="Add Deal (Final)_Deal It! button (highlighted).png"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LoS-Q0-86h" userLabel="Forward button">
+                                <rect key="frame" x="54" y="416" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button" image="Add Deal (Final)_Browser Forward button.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="Add Deal (Final)_Browser Forward button (highlighted).png"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ukw-4n-Ky9" userLabel="Back button">
+                                <rect key="frame" x="0.0" y="416" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button" image="Add Deal (Final)_Browser Back button.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="Add Deal (Final)_Browser Back button (highlighted).png"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="i39-Ub-FaO" id="Igm-Nc-z62"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FmC-At-GVb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="i39-Ub-FaO">
+                    <connections>
+                        <outlet property="delegate" destination="AHD-dt-8t9" id="JWS-c9-iMk"/>
+                        <outlet property="searchBar" destination="KkJ-Dv-aD8" id="IOS-lb-ipN"/>
+                        <outlet property="searchContentsController" destination="AHD-dt-8t9" id="A7I-fm-dDH"/>
+                        <outlet property="searchResultsDataSource" destination="AHD-dt-8t9" id="Jab-Wq-kKT"/>
+                        <outlet property="searchResultsDelegate" destination="AHD-dt-8t9" id="m5Z-74-mfJ"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="-681" y="699"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="DTm-VP-FvN">
             <objects>
@@ -1169,7 +1261,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Shopping Bag.png" id="sAQ-s1-Vch">
-                                        <rect key="frame" x="103" y="146.99999999999994" width="188" height="226"/>
+                                        <rect key="frame" x="103" y="147" width="188" height="226"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="5f8-2O-h9l">
@@ -1197,7 +1289,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="Gf5-bJ-meZ">
-                                        <rect key="frame" x="84" y="291.99999999999994" width="61" height="61"/>
+                                        <rect key="frame" x="84" y="292" width="61" height="61"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="Registration_Email button.png">
@@ -1212,14 +1304,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="41" y="425" width="216" height="20.999999999999911"/>
+                                        <rect key="frame" x="41" y="425.00000311221407" width="216" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY">
-                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999986"/>
+                                        <rect key="frame" x="24" y="409" width="274" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -1234,14 +1326,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="224" y="424.99999999999994" width="96" height="21"/>
+                                        <rect key="frame" x="224" y="425.00000311221407" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Oys-9T-E7g">
-                                        <rect key="frame" x="1" y="-19" width="320" height="480.99999999999994"/>
+                                        <rect key="frame" x="1" y="-19" width="320" height="481"/>
                                         <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
@@ -2474,7 +2566,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal (Final)_Title box.png" id="NTC-h4-zlv">
-                                        <rect key="frame" x="10" y="183" width="301" height="68"/>
+                                        <rect key="frame" x="10" y="183" width="300" height="68"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="What is the deal..?" minimumFontSize="15" id="eUR-Bz-V6H" userLabel="Text Field - for title">
@@ -2485,7 +2577,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Xju-mt-HXT" userLabel="Button - more">
-                                        <rect key="frame" x="10" y="271" width="301" height="39"/>
+                                        <rect key="frame" x="10" y="271" width="300" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="Add Deal (Final)_More Details button.png">
@@ -2674,7 +2766,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <outlet property="delegate" destination="iJA-Ix-JTl" id="zdV-M3-mKM"/>
                                         </connections>
                                     </scrollView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal (Final)_Taken Photo shade.png" id="8BC-Hw-NJB">
+                                    <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" image="Add Deal (Final)_Taken Photo shade.png" id="8BC-Hw-NJB">
                                         <rect key="frame" x="10" y="87" width="300" height="76"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -2707,10 +2799,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <action selector="TrashButtonAction:" destination="iJA-Ix-JTl" eventType="touchUpInside" id="d1k-DM-bLN"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Add Deal (Final)_Camera Frame.png" id="IE4-Kg-soQ">
-                                        <rect key="frame" x="0.0" y="3" width="320" height="165"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="f5Q-2q-p6B">
                                         <rect key="frame" x="141" y="129" width="38" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2720,6 +2808,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Add Deal (Final)_Camera Frame.png" id="IE4-Kg-soQ" userLabel="Image View - Camera Frame">
+                                        <rect key="frame" x="0.0" y="3" width="320" height="165"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                             </scrollView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Navigation Bar@2X.png" id="Eeh-vO-hme">
@@ -3093,7 +3185,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Add Deal (Final)_Add Another Photo button.png" width="30" height="30"/>
         <image name="Add Deal (Final)_Add the Deal button (selected).png" width="301" height="44"/>
         <image name="Add Deal (Final)_Add the Deal button.png" width="301" height="44"/>
+        <image name="Add Deal (Final)_Browser Back button (highlighted).png" width="44" height="44"/>
+        <image name="Add Deal (Final)_Browser Back button.png" width="44" height="44"/>
+        <image name="Add Deal (Final)_Browser Cancel button.png" width="44" height="44"/>
+        <image name="Add Deal (Final)_Browser Forward button (highlighted).png" width="44" height="44"/>
+        <image name="Add Deal (Final)_Browser Forward button.png" width="44" height="44"/>
+        <image name="Add Deal (Final)_Browser bar.png" width="320" height="44"/>
         <image name="Add Deal (Final)_Camera Frame.png" width="320" height="165"/>
+        <image name="Add Deal (Final)_Deal It! button (highlighted).png" width="65" height="27"/>
+        <image name="Add Deal (Final)_Deal It! button.png" width="65" height="27"/>
         <image name="Add Deal (Final)_Exit Camera Mode button.png" width="29" height="29"/>
         <image name="Add Deal (Final)_Local button (selected).png" width="76" height="76"/>
         <image name="Add Deal (Final)_Local button.png" width="76" height="76"/>
