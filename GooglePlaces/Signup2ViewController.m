@@ -24,7 +24,6 @@
 @synthesize Datebirth;
 @synthesize Genger;
 @synthesize ImageAdded;
-@synthesize PASSWORDMARRAY;
 @synthesize addphotobutton;
 @synthesize datepick,NavBar,ImageFrame,scroll,GenderNavBar,GenderPicker,ReturnButton,list,ReturnButtonFull,LoadingImage,PurpImage,SignupButton;
 
@@ -196,6 +195,7 @@
 }
 
 -(void) MainMethod {
+    list=Nil;
     ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
     [self.navigationController pushViewController:controller animated:YES];
 }

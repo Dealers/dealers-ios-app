@@ -26,7 +26,7 @@
     CLLocationManager *locationManager;
     CLLocationCoordinate2D currentCentre;
     AVCaptureSession *session;
-
+    NSString *segcategorey;
 
 }
 @property (strong,nonatomic) NSString *segstore;

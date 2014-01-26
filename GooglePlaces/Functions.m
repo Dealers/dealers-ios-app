@@ -21,12 +21,10 @@
     for(NSString * toRemove in [NSArray arrayWithObjects:@"<", @">", @" ", nil])
         hexStr = [hexStr stringByReplacingOccurrencesOfString:toRemove withString:@""];
     
-    NSLog(@"%@", hexStr);
     return hexStr;
 }
 
 - (void) funconbackground {
-    NSLog(@"back");
     NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS", nil];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
@@ -219,7 +217,7 @@
                       @"Art_photography_lab.png",@"4eb1bdde3b7b55596b4a7490",
                       @"Art_art_museum.png",@"4bf58dd8d48988d166941735",
                       @"Beauty & Personal Care_cosmetics.png",@"4bf58dd8d48988d10c951735",
-                      @"Beauty & Personal Care_drug_store/pharmacy.png",@"4bf58dd8d48988d10f951735",
+                      @"Beauty & Personal Care_drug_store-pharmacy.png",@"4bf58dd8d48988d10f951735",
                       @"Beauty & Personal Care_beauty_salon.png",@"4f04aa0c2fb6e1c99f3db0b8",
                       @"Beauty & Personal Care_beauty_salon.png",@"4bf58dd8d48988d110951735",
                       @"Beauty & Personal Care_tanning_salon.png",@"4d1cf8421a97d635ce361c31",
@@ -607,7 +605,7 @@
                          @"Art_photography_lab.png",@"4eb1bdde3b7b55596b4a7490",
                          @"Art_art_museum.png",@"4bf58dd8d48988d166941735",
                          @"Beauty & Personal Care_cosmetics.png",@"4bf58dd8d48988d10c951735",
-                         @"Beauty & Personal Care_drug_store/pharmacy.png",@"4bf58dd8d48988d10f951735",
+                         @"Beauty & Personal Care_drug_store-pharmacy.png",@"4bf58dd8d48988d10f951735",
                          @"Beauty & Personal Care_beauty_salon.png",@"4f04aa0c2fb6e1c99f3db0b8",
                          @"Beauty & Personal Care_beauty_salon.png",@"4bf58dd8d48988d110951735",
                          @"Beauty & Personal Care_tanning_salon.png",@"4d1cf8421a97d635ce361c31",
@@ -925,7 +923,6 @@
 
                          nil];
     NSString *CategoryPicture = [dic objectForKey:[NSString stringWithFormat:@"%@",string]];
-    NSLog(@"%@",[dic allKeys]);
     return CategoryPicture;
 }
 

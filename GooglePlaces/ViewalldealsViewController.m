@@ -203,12 +203,22 @@
     [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(1,1);
     LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
     
+    for (int i=0; i<[TITLEMARRAY count]; i++) {
+        NSString *title=[TITLEMARRAY objectAtIndex:i];
+        NSString *store=[STOREMARRAY objectAtIndex:i];
+        NSString *description=[DESCRIPTIONMARRAY objectAtIndex:i];
+        NSString *category=[CATEGORYARRAY objectAtIndex:i];
+        category = [category stringByReplacingOccurrencesOfString:@"q9j" withString:@" & "];
+        title = [title stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+        store = [store stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+        description = [description stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+        [TITLEMARRAY replaceObjectAtIndex:i withObject:title];
+        [STOREMARRAY replaceObjectAtIndex:i withObject:store];
+        [CATEGORYARRAY replaceObjectAtIndex:i withObject:category];
+        [DESCRIPTIONMARRAY replaceObjectAtIndex:i withObject:description];
+    }
+    
     [self performSelector:@selector(coverviewhidden) withObject:nil afterDelay:0.5];
-    
-    
-    NSLog(@"pics=%d",[PHOTOIDMARRAYCONVERT count]);
-    NSLog(@"tile=%d",[TITLEMARRAY count]);
-    
     
 }
 
@@ -264,6 +274,22 @@
     DEALIDARRAY = [pass objectAtIndex:12];
     USERSIDSARRAY = [pass objectAtIndex:13];
     FAVARRAY = [pass objectAtIndex:14];
+    
+    for (int i=0; i<[TITLEMARRAY count]; i++) {
+        NSString *title=[TITLEMARRAY objectAtIndex:i];
+        NSString *store=[STOREMARRAY objectAtIndex:i];
+        NSString *description=[DESCRIPTIONMARRAY objectAtIndex:i];
+        NSString *category=[CATEGORYARRAY objectAtIndex:i];
+        category = [category stringByReplacingOccurrencesOfString:@"q9j" withString:@" & "];
+        title = [title stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+        store = [store stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+        description = [description stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+        [TITLEMARRAY replaceObjectAtIndex:i withObject:title];
+        [STOREMARRAY replaceObjectAtIndex:i withObject:store];
+        [CATEGORYARRAY replaceObjectAtIndex:i withObject:category];
+        [DESCRIPTIONMARRAY replaceObjectAtIndex:i withObject:description];
+    }
+
     [self.myTableView reloadData];
     
     [self performSelector:@selector(coverviewhidden) withObject:nil afterDelay:0];
@@ -271,6 +297,8 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"%d",[self.navigationController.viewControllers count]);
+
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     button2.alpha=0.0;
     BlueButtonsView.alpha=0.0;
@@ -279,7 +307,8 @@
     [defaults setObject:field.text forKey:@"name"];
 
     [super viewDidLoad];
-    
+    myTableView.backgroundView=Nil;
+    [myTableView setBackgroundColor:[UIColor colorWithRed:(230/255.0) green:(230/255.0) blue:(230/255.0) alpha:1.0]];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     //[self performSelector:@selector(Loadingafterdealy) withObject:nil afterDelay:0.5];
 
@@ -487,7 +516,6 @@
         //[[segue destinationViewController] setPhotoidfromseg:string];
         string = self.CATEGORYARRAY[(indexpath.row)+1];
         [[segue destinationViewController] setCategoryfromseg:string];
-
     
     }
     
@@ -510,8 +538,10 @@
 
 -(void) AddDealFunction {
     TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
+    
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navi animated:NO completion:nil];
+    //UINavigationController * navigationController = self.navigationController;
+    [self.navigationController presentViewController:navi animated:NO completion:nil];
     
     BlueButtonsView.alpha=0.0;
     LockTableButton.alpha=0.0;

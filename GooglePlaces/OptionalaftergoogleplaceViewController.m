@@ -9,6 +9,7 @@
 #import "OptionalaftergoogleplaceViewController.h"
 #import "AppDelegate.h"
 #import "ViewalldealsViewController.h"
+#import "TableViewController.h"
 
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
 
@@ -44,7 +45,7 @@
     if ([app.didaddphoto isEqualToString:@"yes"]) {
         dealphoto=app.savedphoto;
         
-        NSData *imagedata = UIImageJPEGRepresentation(captureImage.image, 10);
+        NSData *imagedata = UIImageJPEGRepresentation(captureImage.image, 2);
         NSString *urlString = @"http://www.dealers.co.il/uploadphpFile.php";
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -83,7 +84,15 @@
 
     app.AfterAddDeal = @"yes";
     
-    
+    app.CategoryName = [app.CategoryName stringByReplacingOccurrencesOfString:@" & " withString:@"q9j"];
+    titlelabel.text = [titlelabel.text stringByReplacingOccurrencesOfString:@"&" withString:@"q9j"];
+    self.segstore = [self.segstore stringByReplacingOccurrencesOfString:@"&" withString:@"q9j"];
+    descriptionlabel.text = [descriptionlabel.text stringByReplacingOccurrencesOfString:@"&" withString:@"q9j"];
+    NSLog(@"tile=%@",titlelabel.text);
+    NSLog(@"tile=%@",app.CategoryName);
+    NSLog(@"tile=%@",self.segstore);
+    NSLog(@"tile=%@",descriptionlabel.text);
+
     NSString *newString;
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/dealphpFile.php?Title='"];
     newString = [strURL stringByAppendingString:titlelabel.text];
@@ -107,7 +116,7 @@
     newString = [newString stringByAppendingString:dealphotoid];
     newString = [newString stringByAppendingString:@"'"];
     newString = [newString stringByAppendingString:@"&Category='"];
-    newString = [newString stringByAppendingString:categorylabel.text];
+    newString = [newString stringByAppendingString:app.CategoryName];
     newString = [newString stringByAppendingString:@"'"];
     newString = [newString stringByAppendingString:@"&Sign='"];
     newString = [newString stringByAppendingString:sign];
@@ -117,6 +126,7 @@
     newString = [newString stringByAppendingString:@"'"];
     strURL = newString;
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"strURL=%@",strURL);
 
     // to execute php code
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
@@ -129,30 +139,73 @@
 }
 
 -(void) MainMethod {
-    
     [self performSelector:@selector(DoneFunc) withObject:nil afterDelay:3];
     
     
 }
 
+-(void) DeallocMemory {
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+app.savedphoto=NULL;
+app.imageforviewdeal=NULL;
+app.globaltitlelabel=NULL;
+app.globalstorelabel=NULL;
+app.photoid=NULL;
+app.FavButtonDidPress=NULL;
+app.didaddphoto=NULL;
+app.TITLEMARRAY=NULL;
+app.DESCRIPTIONMARRAY=NULL;
+app.STOREMARRAY=NULL;
+app.PRICEMARRAY=NULL;
+app.DISCOUNTMARRAY=NULL;
+app. EXPIREMARRAY=NULL;
+app.LIKEMARRAY=NULL;
+app.COMMENTMARRAY=NULL;
+app.CLIENTMARRAY=NULL;
+app.PHOTOIDMARRAY=NULL;
+app.PHOTOIDMARRAYCONVERT=NULL;
+app.FAVARRAY=NULL;
+app.CATEGORYARRAY=NULL;
+app.SIGNARRAY=NULL;
+app.DEALIDARRAY=NULL;
+app.USERSIDSARRAY=NULL;
+app.CategoryName=NULL;
+    app=NULL;
+}
 -(void) DoneFunc {
-    ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
+    [self DeallocMemory];
+    TableViewController *vc=[[TableViewController alloc]init];
+    [vc DeallocMemory];
+    
+   /* ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
     
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navi animated:YES completion:nil];
+    
+    [self presentViewController:navi animated:YES completion:nil];*/
 
+    UINavigationController * navigationController = self.navigationController;
+    //ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
+    [navigationController popToRootViewControllerAnimated:NO];
+    //[navigationController presentViewController:controller animated:YES completion:nil];
     
 }
 
+-(void) initialize {
+    titlelabel.text=@"";
+    expirationlabel.text=@"";
+    descriptionlabel.text=@"";
+    categorylabel.text=@"";
+}
 
 - (void)viewDidLoad
 {
+    [self initialize];
     PageControl.hidden=YES;
     Flag = true;
     updown_moreoption = true;
     currentpage=0;
     BlackCoverImage.hidden=YES;
-  // [self initializeCamera];
+   // [self initializeCamera];
 
     [self ReduceScroll];
     [self EnlargeCameraScroll];
@@ -235,7 +288,9 @@
     region.span = span;
     region.center = location;
     [mapView setRegion:region animated:YES];
-
+    
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    categorylabel.text=app.CategoryName;
 }
 
 - (void)didReceiveMemoryWarning
@@ -896,7 +951,7 @@
 }
 
 -(void) CameraMode {
-    //[self initializeCamera];
+    [self initializeCamera];
     PageControl.hidden=YES;
     BlackCoverImage.hidden=YES;
     captureImage.hidden = YES;

@@ -45,6 +45,7 @@
 @property (nonatomic, strong) NSMutableArray *DEALIDARRAY;
 @property (nonatomic, strong) NSMutableArray *USERSIDSARRAY;
 @property (strong, nonatomic)  NSString *AfterAddDeal;
+@property (strong, nonatomic)  NSString *CategoryName;
 
 
 

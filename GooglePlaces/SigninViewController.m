@@ -151,8 +151,11 @@
 }*/
 
 -(void) MainMethod {
+    UINavigationController * navigationController = self.navigationController;
     ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
-    [self.navigationController pushViewController:controller animated:YES];
+    [navigationController popToRootViewControllerAnimated:NO];
+    [navigationController pushViewController:controller animated:YES];
+
 }
 
 -(void) initialize {
@@ -269,6 +272,9 @@
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
     [self.navigationController popViewControllerAnimated:YES];
     
+}
+- (void)viewDidUnload {
+    [super viewDidUnload];
 }
 
 @end

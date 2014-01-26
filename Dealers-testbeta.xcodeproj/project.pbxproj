@@ -346,6 +346,7 @@
 		B079F2BE18465C2F00E0C186 /* Add Deal (Final)_Taken Photo shade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2BD18465C2C00E0C186 /* Add Deal (Final)_Taken Photo shade@2x.png */; };
 		B079F2C01847C0CE00E0C186 /* beta.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2BF1847C0CE00E0C186 /* beta.png */; };
 		B0862126186FF1450017099E /* Functions.m in Sources */ = {isa = PBXBuildFile; fileRef = B0862125186FF1450017099E /* Functions.m */; };
+		B08A3668187B3C82005B72D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B08A3667187B3C82005B72D8 /* Images.xcassets */; };
 		B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */; };
 		B0930C0217F38D86004EB3CA /* ViewalldealsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0117F38D86004EB3CA /* ViewalldealsViewController.m */; };
 		B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */; };
@@ -1064,6 +1065,7 @@
 		B079F2BF1847C0CE00E0C186 /* beta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beta.png; sourceTree = "<group>"; };
 		B0862124186FF1450017099E /* Functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Functions.h; sourceTree = "<group>"; };
 		B0862125186FF1450017099E /* Functions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Functions.m; sourceTree = "<group>"; };
+		B08A3667187B3C82005B72D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Dealers-test/Images.xcassets"; sourceTree = "<group>"; };
 		B0930BFA17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionalaftergoogleplaceViewController.h; sourceTree = "<group>"; };
 		B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionalaftergoogleplaceViewController.m; sourceTree = "<group>"; };
 		B0930C0017F38D86004EB3CA /* ViewalldealsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewalldealsViewController.h; sourceTree = "<group>"; };
@@ -1444,6 +1446,7 @@
 		56849772154C00BF001601A2 = {
 			isa = PBXGroup;
 			children = (
+				B08A3667187B3C82005B72D8 /* Images.xcassets */,
 				B0274807186B2A2B005A52F0 /* GKClasses */,
 				B02747ED186B291B005A52F0 /* GKImages */,
 				B079F2BF1847C0CE00E0C186 /* beta.png */,
@@ -3038,6 +3041,7 @@
 				B079F29E1845DDFA00E0C186 /* Add Deal (Final)_Groups Switch background(selected)@2x.png in Resources */,
 				C8BFD9CF18723016007E7E07 /* Profile_Master Dealer@2x.png in Resources */,
 				B079F29F1845DDFA00E0C186 /* Add Deal (Final)_Groups switch@2x.png in Resources */,
+				B08A3668187B3C82005B72D8 /* Images.xcassets in Resources */,
 				B079F2A21845DDFA00E0C186 /* Add Deal (Final)_Minimize Map button (selected)@2x.png in Resources */,
 				C83EAE4718690AC40084E0E1 /* Entertainment @ Events_conference@2x.png in Resources */,
 				B079F2A31845DDFA00E0C186 /* Add Deal (Final)_Minimize Map button@2x.png in Resources */,
@@ -3219,6 +3223,8 @@
 		5684979C154C00BF001601A2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
@@ -3242,6 +3248,8 @@
 		5684979D154C00BF001601A2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
