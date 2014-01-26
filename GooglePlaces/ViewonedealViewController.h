@@ -37,7 +37,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *pricelabel;
 @property (weak, nonatomic) IBOutlet UILabel *discountlabel;
 @property (weak, nonatomic) IBOutlet UILabel *expirelabel;
-@property (weak, nonatomic) IBOutlet UITextView *descriptiontext;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionlabel;
 @property (weak, nonatomic) IBOutlet UILabel *likelabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentlabel;
 

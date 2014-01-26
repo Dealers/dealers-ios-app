@@ -11,6 +11,7 @@
 #import "ResaftergoogleplaceViewController.h"
 #import "StoreSearchCell.h"
 #import "Functions.h"
+#import "AppDelegate.h"
 
 @interface TableViewController ()
 
@@ -23,12 +24,12 @@
 @synthesize arrayforicons;
 @synthesize iconsarray;
 @synthesize iconsarrayfiltered;
-@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,BlackCoverImage,ScrollView,StoreSearchTableview,StoreSearcLocationhArray,StoreSearchArray,CloseTableViewButton,LargeTableView,MainView,BackButtonRemovemapButton;
+@synthesize distancearray,Shadow1,Shadow2,ButtonCoverforMap,arrayforlocationSort,arraySort,iconsarrayfilteredSort,distancearraySort,distancearrayMin,CoveView,LoadingImage,ReturnButton,ReturnButtonFull,RemovemapButton,SearchBar,NavBarImage,BlackCoverImage,ScrollView,StoreSearchTableview,StoreSearcLocationhArray,StoreSearchArray,CloseTableViewButton,LargeTableView,MainView,BackButtonRemovemapButton,CategoriesArray,CategoriesArraySort;
 
 
 -(void) BackgroundMethod {
     Functions *func = [[Functions alloc]init];
-    NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=3000&v=20131120",locationManager.location.coordinate.latitude, locationManager.location.coordinate.longitude];
+    NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=3000&v=20140101",locationManager.location.coordinate.latitude, locationManager.location.coordinate.longitude];
     
     NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
     
@@ -48,7 +49,7 @@
     arrayforlocation=[[NSMutableArray alloc]init];
     arrayforicons=[[NSMutableArray alloc]init];
     distancearray=[[NSMutableArray alloc]init];
-    
+    CategoriesArray=[[NSMutableArray alloc]init];
     for (int i=0; i<[venues count]; i++)
     {
         NSString *CategoryID = [[NSString alloc]init];
@@ -79,15 +80,17 @@
             CategoryID =iconarraytemp[@"id"];
             if ([func CheckIfCategoryExist:CategoryID]) {
                 NSString *ImageName=[func ConnectOldCategoryToNewCategory:CategoryID];
-                if (ImageName==NULL) {
-                    tempimage.image =[UIImage imageNamed:@"store.png"];
-                } else
+                if (ImageName!=NULL) {
                 tempimage.image =[UIImage imageNamed:[NSString stringWithFormat:@"%@",ImageName]];
+                NSArray *CategoryNameArray = [ImageName componentsSeparatedByString:@"_"];
+                NSString *CategoryName=[CategoryNameArray objectAtIndex:0];
+                CategoryName = [CategoryName stringByReplacingOccurrencesOfString:@"@" withString:@"&"];
                 [array addObject:name];
-                [arrayforlocation addObject:vicinity];
+                [arrayforlocation addObject:CategoryName]; //vicinity
+                [CategoriesArray addObject:CategoryName];
                 [arrayforicons addObject:tempimage];
                 [distancearray addObject:distance];
-
+                }
             }
         }
     }
@@ -97,7 +100,7 @@
     iconsarrayfilteredSort=[[NSMutableArray alloc]init];
     distancearraySort=[[NSMutableArray alloc]init];
     distancearrayMin=[[NSMutableArray alloc]initWithArray:distancearray];
-    
+    CategoriesArraySort=[[NSMutableArray alloc]init];
     for (int i=0; i<[array count]; i++){
      
         NSString *objcet = @"22000";
@@ -129,10 +132,11 @@
         [arrayforlocationSort addObject:[arrayforlocation objectAtIndex:j]];
         [iconsarrayfilteredSort addObject:[arrayforicons objectAtIndex:j]];
         [distancearraySort addObject:[distancearray objectAtIndex:j]];
+        [CategoriesArraySort addObject:[CategoriesArray objectAtIndex:j]];
     }
     }
 
-    NSArray *passagru=[[NSArray alloc]initWithObjects:arraySort,iconsarrayfilteredSort,arrayforlocationSort,distancearraySort, nil];
+    NSArray *passagru=[[NSArray alloc]initWithObjects:arraySort,iconsarrayfilteredSort,arrayforlocationSort,distancearraySort,CategoriesArraySort, nil];
     [self performSelectorOnMainThread:@selector(MainMethod:) withObject:passagru waitUntilDone:NO];
 
 }
@@ -148,6 +152,7 @@
     arrayforlocation = [pass objectAtIndex:2];
     arrayforicons = [pass objectAtIndex:1];
     distancearray = [pass objectAtIndex:3];
+    CategoriesArray = [pass objectAtIndex:4];
     [self.tableviewgoogle reloadData];
     
     [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(1,1);
@@ -197,6 +202,7 @@
 }
 - (void)viewDidLoad
 {
+    NSLog(@"%d",[self.navigationController.viewControllers count]);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.SearchBar setDelegate:self];
     SearchBar.backgroundImage = [UIImage imageNamed:@"Explore_Search bar"];
@@ -264,6 +270,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+
     if (tableView==self.tableviewgoogle) {
     if ([array count] == 0) {
         return 0;
@@ -323,13 +330,18 @@ return Cell;
 {
     
     if ([[segue identifier] isEqualToString:@"googleseg"]) {
+        AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
         NSString *string=nil;
+        NSString *string2=nil;
+
         NSIndexPath *indexpath = nil;
         
         indexpath = [self.tableviewgoogle indexPathForSelectedRow];
 
         string = [array objectAtIndex:indexpath.row];
+        string2 = [CategoriesArray objectAtIndex:indexpath.row];
         [[segue destinationViewController] setSegstore:string];
+        app.CategoryName=string2;
     }
     
     if ([[segue identifier] isEqualToString:@"StoreSearchSeg"]) {
@@ -361,8 +373,7 @@ return Cell;
     ReturnButton.alpha=0.0;
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(IBAction) ResizemapButtonAction:(id)sender {
@@ -482,6 +493,8 @@ return Cell;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableviewgoogle deselectRowAtIndexPath:indexPath animated:YES];
+    [self DeallocMemory];
+
 }
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     CloseTableViewButton.hidden=NO;
@@ -496,7 +509,6 @@ return Cell;
     ReturnButton.hidden=YES;
     ReturnButtonFull.hidden=YES;
     BackButtonRemovemapButton.hidden=NO;
-    NSLog(@"clicked");
     LargeTableView.hidden=NO;
     StoreSearchTableview.frame = CGRectMake(0, 0, 320, 371);
     [self.LargeTableView addSubview:StoreSearchTableview];
@@ -530,4 +542,24 @@ return Cell;
     StoreSearchTableview.frame = CGRectMake(0, 88, 320, 170);
     [self.MainView addSubview:StoreSearchTableview];
 }
+
+-(void) DeallocMemory {
+    mapView=nil;
+    array=nil;
+    arraySort=nil;
+    arrayforlocation=nil;
+    arrayforlocationSort=nil;
+    CategoriesArray=nil;
+    CategoriesArraySort=nil;
+    arrayforicons=nil;
+    iconsarray=nil;
+    distancearray=nil;
+    distancearraySort=nil;
+    distancearrayMin=nil;
+    iconsarrayfiltered=nil;
+    iconsarrayfilteredSort=nil;
+    StoreSearchArray=nil;
+    StoreSearcLocationhArray=nil;
+}
+
 @end

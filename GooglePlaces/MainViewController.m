@@ -84,8 +84,8 @@
 
 -(IBAction)EmailimageButton:(id)sender{
     Signup2ViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"Signup2ViewController"];
-    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navi animated:YES completion:nil];
+    //UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 
 -(IBAction)SigninButton:(id)sender{

@@ -27,7 +27,7 @@
 @synthesize pricelabel;
 @synthesize discountlabel;
 @synthesize expirelabel;
-@synthesize descriptiontext;
+@synthesize descriptionlabel;
 @synthesize likelabel;
 @synthesize commentlabel;
 @synthesize productimage;
@@ -36,8 +36,6 @@
 
 -(void) LocateIconsInPlace {
     
-    [scroll setScrollEnabled:YES ];
-    [scroll setContentSize:((CGSizeMake(320, 600)))];
     CALayer *mask = [CALayer layer];
     mask.contents=(id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
     mask.frame = CGRectMake(0, 0, 70, 70);
@@ -56,14 +54,12 @@
     pricelabel.center = CGPointMake(86,314);
     discountlabel.center = CGPointMake(160,314);
     expirelabel.center = CGPointMake(178,352);
-    descriptiontext.center = CGPointMake(178,394);
-
-    CGRect rect = descriptiontext.frame;
-    rect.size.height = descriptiontext.contentSize.height;
-    descriptiontext.frame = rect;
-
+    descriptionlabel.center = CGPointMake(178,384);
+    descriptionlabel.numberOfLines=0;
+    [descriptionlabel sizeToFit];
+    
     CGSize textSize = [[pricelabel text] sizeWithFont:[pricelabel font]];
-    CGFloat strikeWidth = textSize.width;
+    CGFloat pricelabelWidth = textSize.width;
     
     if (([pricelabel.text isEqualToString:@"0"])&&(![discountlabel.text isEqualToString:@"0"])) {
         pricelabel.hidden=YES;
@@ -78,36 +74,36 @@
     }
 
 
-    if ((pricelabel.text==NULL)&&([discountlabel.text isEqualToString:@"0"])&&(expirelabel.text!=NULL)&&[descriptiontext.text length]>0)
+    if (([pricelabel.text isEqualToString:@"0"])&&([discountlabel.text isEqualToString:@"0"])&&(expirelabel.text!=NULL)&&[descriptionlabel.text length]>0)
     {
         self.ExpireIcon.center = CGPointMake(28,315);
         self.DescriptionIcon.center = CGPointMake(28,351);
         expirelabel.center = CGPointMake(178,314);
-        descriptiontext.center = CGPointMake(178,352);
+        descriptionlabel.center = CGPointMake(178,352);
         self.PriceIcon.hidden=YES;
         
-        int DescriptionMaxY=CGRectGetMaxY(descriptiontext.frame);
+        int DescriptionMaxY=CGRectGetMaxY(descriptionlabel.frame);
         CGRect frame = self.SecondView.frame;
         frame.origin.y = 7+DescriptionMaxY;
         self.SecondView.frame = frame;
     }
     
-    if ((pricelabel.text==NULL)&&([discountlabel.text isEqualToString:@"0"])&&(expirelabel.text!=NULL)&&[descriptiontext.text length]>0)
+    if (([pricelabel.text isEqualToString:@"0"])&&([discountlabel.text isEqualToString:@"0"])&&(expirelabel.text!=NULL)&&[descriptionlabel.text length]>0)
     {
         self.ExpireIcon.center = CGPointMake(28,315);
         self.DescriptionIcon.center = CGPointMake(28,351);
         expirelabel.center = CGPointMake(178,314);
-        descriptiontext.center = CGPointMake(178,352);
+        descriptionlabel.center = CGPointMake(178,352);
         self.PriceIcon.hidden=YES;
         
-        int DescriptionMaxY=CGRectGetMaxY(descriptiontext.frame);
+        int DescriptionMaxY=CGRectGetMaxY(descriptionlabel.frame);
         CGRect frame = self.SecondView.frame;
         frame.origin.y = 7+DescriptionMaxY;
         self.SecondView.frame = frame;
     }
 
     
-    if (([pricelabel.text isEqualToString:@"0"])&&([discountlabel.text isEqualToString:@"0"])&&(expirelabel.text!=NULL)&&[descriptiontext.text length]==0)
+    if (([pricelabel.text isEqualToString:@"0"])&&([discountlabel.text isEqualToString:@"0"])&&(expirelabel.text!=NULL)&&[descriptionlabel.text length]==0)
     {
         self.ExpireIcon.center = CGPointMake(28,315);
         expirelabel.center = CGPointMake(178,314);
@@ -119,28 +115,28 @@
 
     }
     
-    if (([pricelabel.text isEqualToString:@"0"])&&([discountlabel.text isEqualToString:@"0"])&&(expirelabel.text==NULL)&&[descriptiontext.text length]==0)
+    if (([pricelabel.text isEqualToString:@"0"])&&([discountlabel.text isEqualToString:@"0"])&&(expirelabel.text==NULL)&&[descriptionlabel.text length]==0)
     {
         self.PriceIcon.hidden=YES;
         self.ExpireIcon.hidden = YES;
-        self.descriptiontext.hidden = YES;
+        self.descriptionlabel.hidden = YES;
         CGRect frame = self.SecondView.frame;
         frame.origin.y = 294;
         self.SecondView.frame = frame;
 
     }
-    if (((![pricelabel.text isEqualToString:@"0"])||(![discountlabel.text isEqualToString:@"0"]))&&(expirelabel.text==NULL)&&[descriptiontext.text length]>0)
+    if (((![pricelabel.text isEqualToString:@"0"])||(![discountlabel.text isEqualToString:@"0"]))&&(expirelabel.text==NULL)&&[descriptionlabel.text length]>0)
     {
         self.DescriptionIcon.center = CGPointMake(28,351);
-        descriptiontext.center = CGPointMake(178,352);
+        descriptionlabel.center = CGPointMake(178,352);
         self.ExpireIcon.hidden=YES;
-        int DescriptionMaxY=CGRectGetMaxY(descriptiontext.frame);
+        int DescriptionMaxY=CGRectGetMaxY(descriptionlabel.frame);
         CGRect frame = self.SecondView.frame;
         frame.origin.y = 7+DescriptionMaxY;
         self.SecondView.frame = frame;
 
     }
-    if (((![pricelabel.text isEqualToString:@"0"])||(![discountlabel.text isEqualToString:@"0"]))&&(expirelabel.text!=NULL)&&[descriptiontext.text length]==0)
+    if (((![pricelabel.text isEqualToString:@"0"])||(![discountlabel.text isEqualToString:@"0"]))&&(expirelabel.text!=NULL)&&[descriptionlabel.text length]==0)
     {
         self.DescriptionIcon.hidden=YES;
         CGRect frame = self.SecondView.frame;
@@ -148,6 +144,19 @@
         self.SecondView.frame = frame;
         
     }
+    if (((![pricelabel.text isEqualToString:@"0"])||(![discountlabel.text isEqualToString:@"0"]))&&(expirelabel.text!=NULL)&&[descriptionlabel.text length]>0)
+    {
+        int DescriptionMaxY=CGRectGetMaxY(descriptionlabel.frame);
+        CGRect frame = self.SecondView.frame;
+        frame.origin.y = 7+DescriptionMaxY;
+        self.SecondView.frame = frame;
+        
+    }
+
+    [scroll setScrollEnabled:YES ];
+    int BottumCoordinate=CGRectGetMaxY(self.SecondView.frame);
+    NSLog(@"%d",BottumCoordinate);
+    [scroll setContentSize:((CGSizeMake(320, BottumCoordinate)))];
 
 }
 -(void) LoadVarsFromDeal{
@@ -158,7 +167,7 @@
     pricelabel.text = self.pricefromseg;
     discountlabel.text = self.discountfromseg;
     expirelabel.text = self.expirefromseg;
-    descriptiontext.text = self.descriptionfromseg;
+    descriptionlabel.text = self.descriptionfromseg;
     likelabel.text = self.likefromseg;
     commentlabel.text = self.commentfromseg;
     self.captureImage.image=app.imageforviewdeal.image;
@@ -225,8 +234,8 @@
 
 -(void) AddDealFunction {
     TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
-    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navi animated:NO completion:nil];
+    //UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self.navigationController presentViewController:controller animated:NO completion:nil];
     BlueButtonsView.alpha=0.0;
     LockTableButton.alpha=0.0;
 }
@@ -254,6 +263,11 @@
         IntLike--;
         likelabel.text=[NSString stringWithFormat:@"%d",IntLike];
     }
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 90;
 }
 
 - (IBAction)CommentButtonAction:(id)sender {

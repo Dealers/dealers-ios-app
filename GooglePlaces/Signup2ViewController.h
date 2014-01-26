@@ -32,7 +32,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ImageAdded;
 @property (weak, nonatomic) IBOutlet UIImageView *ImageFrame;
 
-@property (nonatomic, strong) NSMutableArray *PASSWORDMARRAY;
 @property (weak, nonatomic) IBOutlet UIButton *addphotobutton;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datepick;
 @property (weak, nonatomic) IBOutlet UINavigationBar *NavBar;

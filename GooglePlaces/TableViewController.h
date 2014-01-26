@@ -27,6 +27,7 @@
     int counter;
     int SearchTextSize;
 }
+-(void) DeallocMemory;
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
@@ -39,6 +40,9 @@
 
 @property (retain, nonatomic) NSMutableArray *arrayforlocation;
 @property (retain, nonatomic) NSMutableArray *arrayforlocationSort;
+
+@property (retain, nonatomic) NSMutableArray *CategoriesArray;
+@property (retain, nonatomic) NSMutableArray *CategoriesArraySort;
 
 @property (retain, nonatomic) NSMutableArray *arrayforicons;
 @property (retain, nonatomic) NSMutableArray *iconsarray;
