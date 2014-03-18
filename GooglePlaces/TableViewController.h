@@ -9,78 +9,62 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-
-#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-
-
 #define kGOOGLE_API_KEY @"AIzaSyCcDzlxbL52wI4wT_2y3iKqhrdCCo9WuUY"
 
 
 @interface TableViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate>
 {
+    CLLocationManager *_locationManager;
     CLLocationManager *locationManager;
     NSString *imageName;
     BOOL firstLaunch;
     CLLocationCoordinate2D currentCentre;
+    CLLocationCoordinate2D lastCoords;
+    BOOL haveCoords;
     int currenDist;
     BOOL filtered;
-    int counter;
     int SearchTextSize;
 }
--(void) DeallocMemory;
 
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
+-(void) deallocMemory;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableviewgoogle;
-@property (weak, nonatomic) IBOutlet UITableView *StoreSearchTableview;
+@property (strong,nonatomic) NSString *searchTextToBackground;
 
-@property (retain, nonatomic) NSMutableArray *array;
-@property (retain, nonatomic) NSMutableArray *arraySort;
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;
 
-@property (retain, nonatomic) NSMutableArray *arrayforlocation;
-@property (retain, nonatomic) NSMutableArray *arrayforlocationSort;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *whiteCoverView;
+@property (weak, nonatomic) IBOutlet UIView *storeSearchView;
 
-@property (retain, nonatomic) NSMutableArray *CategoriesArray;
-@property (retain, nonatomic) NSMutableArray *CategoriesArraySort;
+@property (strong, nonatomic) IBOutlet UITableView *venuesTableView;
+@property (strong, nonatomic) IBOutlet UITableView *storeSearchTableView;
 
-@property (retain, nonatomic) NSMutableArray *arrayforicons;
-@property (retain, nonatomic) NSMutableArray *iconsarray;
-@property (retain, nonatomic) NSMutableArray *distancearray;
-@property (retain, nonatomic) NSMutableArray *distancearraySort;
-@property (retain, nonatomic) NSMutableArray *distancearrayMin;
+@property (strong, nonatomic) NSMutableArray *storeNameArraySort;
+@property (strong, nonatomic) NSMutableArray *storeLocationArraySort;
+@property (strong, nonatomic) NSMutableArray *storeIconArraySort;
+@property (strong, nonatomic) NSMutableArray *storeDistanceArraySort;
+@property (strong, nonatomic) NSMutableArray *storeCategoryArraySort;
+@property (strong, nonatomic) NSMutableArray *storeSearchLocationArray;
+@property (strong, nonatomic) NSMutableArray *storeSearchNameArray;
 
-@property (retain, nonatomic) NSMutableArray *iconsarrayfiltered;
-@property (retain, nonatomic) NSMutableArray *iconsarrayfilteredSort;
-@property (retain, nonatomic) NSMutableArray *StoreSearchArray;
-@property (retain, nonatomic) NSMutableArray *StoreSearcLocationhArray;
-
-//@property (retain, nonatomic) NSMutableArray *places;
-//@property (retain, nonatomic) NSMutableArray *temparray;
-
-@property (weak, nonatomic) IBOutlet UIImageView *Shadow1;
-@property (weak, nonatomic) IBOutlet UIImageView *Shadow2;
-@property (weak, nonatomic) IBOutlet UIButton *ButtonCoverforMap;
-@property (weak, nonatomic) IBOutlet UIView *CoveView;
-@property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
-@property (weak, nonatomic) IBOutlet UIButton *RemovemapButton;
-
-- (IBAction)ReturnButtonAction:(id)sender;
-- (IBAction)ResizemapButtonAction:(id)sender;
-- (IBAction)RemovemapButtonAction:(id)sender;
-
+@property (weak, nonatomic) IBOutlet UIButton *enlargeMapButton;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
-@property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
+@property (weak, nonatomic) IBOutlet UIButton *collapseMapButton;
+@property (weak, nonatomic) IBOutlet UIButton *closeStoreSearchTableButton;
+@property (weak, nonatomic) IBOutlet UIButton *closeStoreSearchViewButton;
+
+@property (weak, nonatomic) IBOutlet UIImageView *theShadow;
+@property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 @property (weak, nonatomic) IBOutlet UIImageView *NavBarImage;
 @property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;
 
-- (IBAction)CloseTableViewAction:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *CloseTableViewButton;
-@property (weak, nonatomic) IBOutlet UIView *LargeTableView;
-@property (weak, nonatomic) IBOutlet UIView *MainView;
+@property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
 
-- (IBAction)BackButtonRemovemapAction:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *BackButtonRemovemapButton;
+- (IBAction)returnButtonClicked:(id)sender;
+- (IBAction)enlargeMapButtonClicked:(id)sender;
+- (IBAction)collapseMapButtonClicked:(id)sender;
+- (IBAction)closeStoreSearchTableButtonClicked:(id)sender;
+- (IBAction)closeStoreSearchViewButtonClicked:(id)sender;
 
 @end

@@ -7,10 +7,9 @@
 //
 
 #import "SigninViewController.h"
-#import "ViewalldealsViewController.h"
-#import "MainViewController.h"
 #import "AppDelegate.h"
-#import "Functions.h"
+#import "MyFeedsViewController.h"
+
 @interface SigninViewController ()
 
 @end
@@ -21,141 +20,10 @@
 @synthesize PasswordText;
 @synthesize Signinbutton,ReturnButton,ReturnButtonFull,LoadingImage;
 
-/*
--(void) BackgroundMethod {
-    NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS", nil];
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
-    
-    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:0]];
-    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    NSArray *DataArray = [DataResult componentsSeparatedByString:@"///"];
-    NSArray *reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.TITLEMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:1]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.DESCRIPTIONMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:2]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.STOREMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:3]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.PRICEMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:4]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.DISCOUNTMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:5]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.EXPIREMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:6]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.LIKEMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:7]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.COMMENTMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:8]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.CLIENTMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:9]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *PHOTOIDMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    NSMutableArray *convert = [[NSMutableArray alloc]init];
-    
-    for (int i=0; i<[PHOTOIDMARRAY count]; i++) {
-        UIImageView *tempimage = [[UIImageView alloc]init];
-        
-        NSString *num=[PHOTOIDMARRAY objectAtIndex:i];
-        if ([num isEqualToString:@"0"]) {
-            tempimage.image =[UIImage imageNamed:@"My Feed+View Deal_NoPic icon.png"];
-        }
-        else {
-            NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[PHOTOIDMARRAY objectAtIndex:i]];
-            tempimage.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
-        }
-        [convert addObject:tempimage];
-    }
-    app.PHOTOIDMARRAYCONVERT = [[NSMutableArray alloc]initWithArray:convert];
-    
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:10]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.CATEGORYARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:11]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.SIGNARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:12]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.DEALIDARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:13]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.USERSIDSARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    app.FAVARRAY = [[NSMutableArray alloc]init];
-    for (int i=0; i<[app.TITLEMARRAY count]; i++) {
-        [app.FAVARRAY addObject:@"0"];
-    }
-    app.AfterAddDeal=@"aftersign";
-    [self performSelectorOnMainThread:@selector(MainMethod) withObject:nil waitUntilDone:NO];
-}*/
-
 -(void) MainMethod {
-    UINavigationController * navigationController = self.navigationController;
-    ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
-    [navigationController popToRootViewControllerAnimated:NO];
+    MyFeedsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
+    UINavigationController *navigationController = self.navigationController;
     [navigationController pushViewController:controller animated:YES];
-
 }
 
 -(void) initialize {
@@ -243,26 +111,12 @@
         [EmailText resignFirstResponder];
         [PasswordText resignFirstResponder];
         [self StartLoading];
-        //[self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
-        
-        Functions *func = [[Functions alloc]init];
-        dispatch_queue_t queue = dispatch_queue_create("com.sample", 0);
-        dispatch_queue_t main = dispatch_get_main_queue();
-        dispatch_async(queue,
-                       ^{
-                           [func funconbackground];
-                           dispatch_async(main, ^{ [self MainMethod]; });
-                       });    
-    } else {
+        [self performSelector:@selector(MainMethod) withObject:nil afterDelay:2];
+    }
+    else {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Your Email is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
     }
-}
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [EmailText resignFirstResponder];
-    [PasswordText resignFirstResponder];
 }
 
 - (IBAction)ReturnButtonAction:(id)sender {
@@ -273,8 +127,110 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+
+/*
+-(NSString *)FilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"DealersDB3.sql"];
+}
+
+-(void)OpenDB {
+    if (sqlite3_open([[self FilePath] UTF8String], &db) != SQLITE_OK)  {
+        sqlite3_close(db);
+        NSAssert(0, @"DB failed");
+    }else{
+        NSLog(@"db opened");
+        [self DeleteTable];
+        [self CreateTable];
+    }
+}
+
+-(void)InsertToDB: (NSString *) parameter1 withParameter: (NSString *) parameter2 withParameter: (NSString *) parameter3 withParameter: (NSString *) parameter4 withParameter: (NSString *) parameter5 withParameter: (NSString *) parameter6 withParameter: (NSString *) parameter7 withParameter: (NSString *) parameter8 withParameter: (NSString *) parameter9 withParameter: (NSString *) parameter10 withParameter: (NSString *) parameter11 withParameter: (NSString *) parameter12
+    {
+    NSString *sql = [NSString stringWithFormat:@"INSERT INTO DEALS ('TITLE', 'DESCRIPTION', 'STORE', 'DISCOUNT', 'PRICE', 'EXPIRE', 'PHOTOID', 'CATEGORY', 'SIGN', 'CLIENTID', 'LIKES', 'COMMENTS') VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",parameter1,parameter2,parameter3,parameter4,parameter5,parameter6,parameter7,parameter8,parameter9,parameter10,parameter11,parameter12];
+    char *err;
+    if (sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK) {
+        sqlite3_close(db);
+        NSAssert(0, @"insert failed");
+    }else{
+        //NSLog(@"Insert to table");
+    }
+}
+
+-(void) DeleteTable {
+    char *err;
+    const char *sql = "DELETE FROM DEALS";
+    
+    if (sqlite3_exec(db, sql, NULL, NULL, &err) != SQLITE_OK) {
+        sqlite3_close(db);
+        NSAssert(0, @"DB failed");
+    }else{
+        NSLog(@"TABLE DELETED");
+    }
+}
+
+
+-(void) CreateTable {
+    char *err;
+    const char *sql = "CREATE TABLE IF NOT EXISTS DEALS (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, STORE TEXT, DISCOUNT TEXT, PRICE TEXT, EXPIRE TEXT, PHOTOID TEXT, CATEGORY TEXT, SIGN TEXT, CLIENTID TEXT, LIKES TEXT, COMMENTS TEXT)";
+    
+    if (sqlite3_exec(db, sql, NULL, NULL, &err) != SQLITE_OK) {
+        sqlite3_close(db);
+        NSAssert(0, @"DB failed");
+    }else{
+        NSLog(@"TABLE CREATED");
+    }
+}
+
+- (void) LoadFromTable
+{
+    NSString *querySQL = [NSString stringWithFormat: @"SELECT * FROM DEALS"];
+    const char *query_stmt = [querySQL UTF8String];
+    sqlite3_stmt *statement;
+    NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+    
+    if (sqlite3_prepare_v2(db, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                NSString *name = [[NSString alloc] initWithUTF8String:
+                                  (const char *) sqlite3_column_text(statement, 0)];
+                [resultArray addObject:name];
+                NSString *department = [[NSString alloc] initWithUTF8String:
+                                        (const char *) sqlite3_column_text(statement, 1)];
+                [resultArray addObject:department];
+                NSString *year = [[NSString alloc]initWithUTF8String:
+                                  (const char *) sqlite3_column_text(statement, 2)];
+                [resultArray addObject:year];
+                
+                char *field2 = (char *) sqlite3_column_text(statement,1);
+                NSString *field2Str = [[NSString alloc] initWithUTF8String: field2];
+
+              //  [resultArray addObject:field1Str];
+                [resultArray addObject:field2Str];
+            }
+        }
+    for (int i=0; i<[resultArray count]; i++) {
+        NSLog(@"res=%@", [resultArray objectAtIndex:i]);
+    }
+    NSLog(@"load=%d",[resultArray count]);
+}*/
+
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
+
+-(void) deallocMemory {
+    [LoadingImage stopAnimating];
+    NSArray *viewsToRemove = [self.view subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
+    [self.view removeFromSuperview];
+    NSLog(@"dealloc signin");
+    self.view=nil;
+}
+
+
 
 @end

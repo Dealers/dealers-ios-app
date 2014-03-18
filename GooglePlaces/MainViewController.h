@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface MainViewController : UIViewController <UINavigationBarDelegate,UINavigationBarDelegate>
+{
+     float ScreenHeight;
+}
 
 @property (weak, nonatomic) IBOutlet UIImageView *dealershead;
 @property (weak, nonatomic) IBOutlet UIImageView *backwhite;

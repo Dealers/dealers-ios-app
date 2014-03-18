@@ -13,7 +13,6 @@
 		5684978C154C00BF001601A2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5684978A154C00BF001601A2 /* InfoPlist.strings */; };
 		56849792154C00BF001601A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56849791154C00BF001601A2 /* AppDelegate.m */; };
 		56849795154C00BF001601A2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56849793154C00BF001601A2 /* MainStoryboard.storyboard */; };
-		56849798154C00BF001601A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56849797154C00BF001601A2 /* ViewController.m */; };
 		5684979F154C010C001601A2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5684979E154C010C001601A2 /* MapKit.framework */; };
 		568497A1154C0116001601A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 568497A0154C0116001601A2 /* CoreLocation.framework */; };
 		B012D9181817D18A006288CA /* Add Deal_Main Pic frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B012D9171817D18A006288CA /* Add Deal_Main Pic frame@2x.png */; };
@@ -49,6 +48,7 @@
 		B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B027480F186B2A2B005A52F0 /* GKImageCropViewController.m */; };
 		B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B0274811186B2A2B005A52F0 /* GKImagePicker.m */; };
 		B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */; };
+		B0294C7318B0CC0900699107 /* MyFeedsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0294C7218B0CC0900699107 /* MyFeedsViewController.m */; };
 		B034B8B6180476AC00625392 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B034B8B5180476AC00625392 /* main.m */; };
 		B034B8F61804777F00625392 /* Add Deal_Add Another Photo button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B8B81804777A00625392 /* Add Deal_Add Another Photo button (selected)@2x.png */; };
 		B034B8F71804777F00625392 /* Add Deal_Add Another Photo button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B8B91804777A00625392 /* Add Deal_Add Another Photo button@2x.png */; };
@@ -225,8 +225,6 @@
 		B059C21117FF518900C445AE /* LoadingAnimation.gif in Resources */ = {isa = PBXBuildFile; fileRef = B059C21017FF518900C445AE /* LoadingAnimation.gif */; };
 		B05A46FE180E7D5600395DCC /* My Feed+View Deal_Save to Fav's Quick (pushed)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B05A46FD180E7D5100395DCC /* My Feed+View Deal_Save to Fav's Quick (pushed)@2x.png */; };
 		B05A4700180E8C8100395DCC /* Add Deal_Shade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B05A46FF180E8C7A00395DCC /* Add Deal_Shade@2x.png */; };
-		B05B0C2E17F323FF0062634C /* OptionalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05B0C2D17F323FF0062634C /* OptionalViewController.m */; };
-		B05B0C3117F378660062634C /* ResaftergoogleplaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05B0C3017F378660062634C /* ResaftergoogleplaceViewController.m */; };
 		B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B06F806B181275E30032CE68 /* BackgroundLayer.m */; };
 		B06F806F1812C3310032CE68 /* Add Deal_Pic Mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06F806D1812C3260032CE68 /* Add Deal_Pic Mask@2x.png */; };
 		B06F80701812C3310032CE68 /* Add Deal_Add Pic button_masked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06F806E1812C32B0032CE68 /* Add Deal_Add Pic button_masked@2x.png */; };
@@ -320,7 +318,6 @@
 		B079F2961845DDFA00E0C186 /* Add Deal (Final)_Add Another Photo button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2741845DDFA00E0C186 /* Add Deal (Final)_Add Another Photo button@2x.png */; };
 		B079F2971845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2751845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button (selected)@2x.png */; };
 		B079F2981845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2761845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button@2x.png */; };
-		B079F2991845DDFA00E0C186 /* Add Deal (Final)_Camera Window mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2771845DDFA00E0C186 /* Add Deal (Final)_Camera Window mask@2x.png */; };
 		B079F29C1845DDFA00E0C186 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27A1845DDFA00E0C186 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png */; };
 		B079F29D1845DDFA00E0C186 /* Add Deal (Final)_Facebook switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27B1845DDFA00E0C186 /* Add Deal (Final)_Facebook switch@2x.png */; };
 		B079F29E1845DDFA00E0C186 /* Add Deal (Final)_Groups Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F27C1845DDFA00E0C186 /* Add Deal (Final)_Groups Switch background(selected)@2x.png */; };
@@ -339,8 +336,6 @@
 		B079F2B21845DDFA00E0C186 /* Add Deal (Final)_Trash button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2901845DDFA00E0C186 /* Add Deal (Final)_Trash button@2x.png */; };
 		B079F2B31845DDFA00E0C186 /* Add Deal (Final)_Twitter Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2911845DDFA00E0C186 /* Add Deal (Final)_Twitter Switch background(selected)@2x.png */; };
 		B079F2B41845DDFA00E0C186 /* Add Deal (Final)_Twitter switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2921845DDFA00E0C186 /* Add Deal (Final)_Twitter switch@2x.png */; };
-		B079F2B51845DDFA00E0C186 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2931845DDFA00E0C186 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png */; };
-		B079F2B61845DDFA00E0C186 /* Add Deal (Final)_Whatsapp switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2941845DDFA00E0C186 /* Add Deal (Final)_Whatsapp switch@2x.png */; };
 		B079F2B81846230A00E0C186 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B079F2B71846230800E0C186 /* AVFoundation.framework */; };
 		B079F2BC1846585A00E0C186 /* My Feed+View Deal (final)_Deal Pic mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2BA1846585400E0C186 /* My Feed+View Deal (final)_Deal Pic mask@2x.png */; };
 		B079F2BE18465C2F00E0C186 /* Add Deal (Final)_Taken Photo shade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2BD18465C2C00E0C186 /* Add Deal (Final)_Taken Photo shade@2x.png */; };
@@ -348,11 +343,16 @@
 		B0862126186FF1450017099E /* Functions.m in Sources */ = {isa = PBXBuildFile; fileRef = B0862125186FF1450017099E /* Functions.m */; };
 		B08A3668187B3C82005B72D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B08A3667187B3C82005B72D8 /* Images.xcassets */; };
 		B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */; };
-		B0930C0217F38D86004EB3CA /* ViewalldealsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0117F38D86004EB3CA /* ViewalldealsViewController.m */; };
 		B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */; };
 		B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0A17F40311004EB3CA /* CustomcellforviewdealCell.m */; };
 		B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0D17F40B78004EB3CA /* SigninViewController.m */; };
 		B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C1317F40BD2004EB3CA /* MainViewController.m */; };
+		B09F2FA018B76C0B002434EF /* Profile_Deals List tab (Highlighted)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09F2F9F18B76C0B002434EF /* Profile_Deals List tab (Highlighted)@2x.png */; };
+		B09F2FA618B76C1E002434EF /* Profile_Deals List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09F2FA118B76C1E002434EF /* Profile_Deals List tab (selected)@2x.png */; };
+		B09F2FA718B76C1E002434EF /* Profile_Deals List tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09F2FA218B76C1E002434EF /* Profile_Deals List tab@2x.png */; };
+		B09F2FA818B76C1E002434EF /* Profile_Likes List tab (Highlighted)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09F2FA318B76C1E002434EF /* Profile_Likes List tab (Highlighted)@2x.png */; };
+		B09F2FA918B76C1E002434EF /* Profile_Likes List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09F2FA418B76C1E002434EF /* Profile_Likes List tab (selected)@2x.png */; };
+		B09F2FAA18B76C1E002434EF /* Profile_Likes List tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09F2FA518B76C1E002434EF /* Profile_Likes List tab@2x.png */; };
 		B0C7FB4B183375F900B3B740 /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB39183375F900B3B740 /* loading@2x.png */; };
 		B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3A183375F900B3B740 /* loading5@2x.png */; };
 		B0C7FB4D183375F900B3B740 /* loading10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3B183375F900B3B740 /* loading10@2x.png */; };
@@ -415,7 +415,15 @@
 		B0D6546618111EA4000DB9AF /* Add Deal_Specific Hour button (pushed)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0D6544D18111EA4000DB9AF /* Add Deal_Specific Hour button (pushed)@2x.png */; };
 		B0D6546718111EA4000DB9AF /* Add Deal_Specific Hour button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0D6544E18111EA4000DB9AF /* Add Deal_Specific Hour button (selected)@2x.png */; };
 		B0D6546818111EA4000DB9AF /* Add Deal_Specific Hour button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0D6544F18111EA4000DB9AF /* Add Deal_Specific Hour button@2x.png */; };
+		B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */; };
+		B0E0A943189C43BB00EF0641 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E0A942189C43BB00EF0641 /* libsqlite3.dylib */; };
 		B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */; };
+		B0F1BB9218B9139700AD2929 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB8E18B9139700AD2929 /* HockeySDK.framework */; };
+		B0F1BB9318B9139700AD2929 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B0F1BB9018B9139700AD2929 /* HockeySDK.xcconfig */; };
+		B0F1BB9418B9139700AD2929 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0F1BB9118B9139700AD2929 /* HockeySDKResources.bundle */; };
+		B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9518B913D700AD2929 /* CoreText.framework */; };
+		B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9718B913EC00AD2929 /* Security.framework */; };
+		B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */; };
 		C8273A2F18959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2618959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png */; };
 		C8273A3018959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2718959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png */; };
 		C8273A3118959A3300A412FC /* Add Deal (Final)_Browser bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2818959A3300A412FC /* Add Deal (Final)_Browser bar@2x.png */; };
@@ -615,7 +623,6 @@
 		C873D3A21851040700B913CD /* My Feed+View Deal (final)_Share button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D3861851040700B913CD /* My Feed+View Deal (final)_Share button@2x.png */; };
 		C873D3A31851040700B913CD /* My Feed+View Deal (final)_Title & Store shade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D3871851040700B913CD /* My Feed+View Deal (final)_Title & Store shade@2x.png */; };
 		C873D3A41851040700B913CD /* My Feed+View Deal (final)_Title icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D3881851040700B913CD /* My Feed+View Deal (final)_Title icon@2X.png */; };
-		C873D3A51851040700B913CD /* My Feed+View Deal Icons-NEW.rar in Resources */ = {isa = PBXBuildFile; fileRef = C873D3891851040700B913CD /* My Feed+View Deal Icons-NEW.rar */; };
 		C873D3A61851040700B913CD /* My Feed+View Deal_Additional Description (final) icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D38A1851040700B913CD /* My Feed+View Deal_Additional Description (final) icon@2X.png */; };
 		C873D3A71851040700B913CD /* My Feed+View Deal_Category (final) icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D38B1851040700B913CD /* My Feed+View Deal_Category (final) icon@2X.png */; };
 		C873D3A81851040700B913CD /* My Feed+View Deal_Expiration Date (final) icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D38C1851040700B913CD /* My Feed+View Deal_Expiration Date (final) icon@2X.png */; };
@@ -700,9 +707,7 @@
 		C8D2E486185B781D00398873 /* Add Deal (Final)_Trash button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E44E185B781D00398873 /* Add Deal (Final)_Trash button@2x.png */; };
 		C8D2E487185B781D00398873 /* Add Deal (Final)_Twitter Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E44F185B781D00398873 /* Add Deal (Final)_Twitter Switch background(selected)@2x.png */; };
 		C8D2E488185B781D00398873 /* Add Deal (Final)_Twitter switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E450185B781D00398873 /* Add Deal (Final)_Twitter switch@2x.png */; };
-		C8D2E489185B781D00398873 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E451185B781D00398873 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png */; };
 		C8D2E48A185B781D00398873 /* Add Deal (Final)_Whatsapp switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E452185B781D00398873 /* Add Deal (Final)_Whatsapp switch@2x.png */; };
-		C8D2E48B185B781D00398873 /* Add Deal Icons-NEW.rar in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E453185B781D00398873 /* Add Deal Icons-NEW.rar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -715,8 +720,6 @@
 		56849790154C00BF001601A2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		56849791154C00BF001601A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		56849794154C00BF001601A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		56849796154C00BF001601A2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		56849797154C00BF001601A2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5684979E154C010C001601A2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		568497A0154C0116001601A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B012D9171817D18A006288CA /* Add Deal_Main Pic frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Main Pic frame@2x.png"; sourceTree = "<group>"; };
@@ -762,6 +765,8 @@
 		B0274811186B2A2B005A52F0 /* GKImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImagePicker.m; sourceTree = "<group>"; };
 		B0274812186B2A2B005A52F0 /* GKResizeableCropOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKResizeableCropOverlayView.h; sourceTree = "<group>"; };
 		B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKResizeableCropOverlayView.m; sourceTree = "<group>"; };
+		B0294C7118B0CC0900699107 /* MyFeedsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFeedsViewController.h; sourceTree = "<group>"; };
+		B0294C7218B0CC0900699107 /* MyFeedsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFeedsViewController.m; sourceTree = "<group>"; };
 		B034B8B2180475D500625392 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B034B8B41804765500625392 /* DB2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DB2-Prefix.pch"; sourceTree = "<group>"; };
 		B034B8B5180476AC00625392 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -942,10 +947,6 @@
 		B059C21017FF518900C445AE /* LoadingAnimation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = LoadingAnimation.gif; sourceTree = "<group>"; };
 		B05A46FD180E7D5100395DCC /* My Feed+View Deal_Save to Fav's Quick (pushed)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "My Feed+View Deal_Save to Fav's Quick (pushed)@2x.png"; path = "../My Feed+View Deal_Save to Fav's Quick (pushed)@2x.png"; sourceTree = "<group>"; };
 		B05A46FF180E8C7A00395DCC /* Add Deal_Shade@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Shade@2x.png"; sourceTree = "<group>"; };
-		B05B0C2C17F323FF0062634C /* OptionalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionalViewController.h; sourceTree = "<group>"; };
-		B05B0C2D17F323FF0062634C /* OptionalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionalViewController.m; sourceTree = "<group>"; };
-		B05B0C2F17F378660062634C /* ResaftergoogleplaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResaftergoogleplaceViewController.h; sourceTree = "<group>"; };
-		B05B0C3017F378660062634C /* ResaftergoogleplaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResaftergoogleplaceViewController.m; sourceTree = "<group>"; };
 		B06F806A181275E20032CE68 /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		B06F806B181275E30032CE68 /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		B06F806D1812C3260032CE68 /* Add Deal_Pic Mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Pic Mask@2x.png"; sourceTree = "<group>"; };
@@ -1041,7 +1042,6 @@
 		B079F2741845DDFA00E0C186 /* Add Deal (Final)_Add Another Photo button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Add Another Photo button@2x.png"; sourceTree = "<group>"; };
 		B079F2751845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Add the Deal button (selected)@2x.png"; sourceTree = "<group>"; };
 		B079F2761845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Add the Deal button@2x.png"; sourceTree = "<group>"; };
-		B079F2771845DDFA00E0C186 /* Add Deal (Final)_Camera Window mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Camera Window mask@2x.png"; sourceTree = "<group>"; };
 		B079F2781845DDFA00E0C186 /* Add Deal (Final)_Deal Location icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Deal Location icon@2x.png"; sourceTree = "<group>"; };
 		B079F27A1845DDFA00E0C186 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Facebook Switch background(selected)@2x.png"; sourceTree = "<group>"; };
 		B079F27B1845DDFA00E0C186 /* Add Deal (Final)_Facebook switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Facebook switch@2x.png"; sourceTree = "<group>"; };
@@ -1065,7 +1065,6 @@
 		B079F2901845DDFA00E0C186 /* Add Deal (Final)_Trash button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Trash button@2x.png"; sourceTree = "<group>"; };
 		B079F2911845DDFA00E0C186 /* Add Deal (Final)_Twitter Switch background(selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Twitter Switch background(selected)@2x.png"; sourceTree = "<group>"; };
 		B079F2921845DDFA00E0C186 /* Add Deal (Final)_Twitter switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Twitter switch@2x.png"; sourceTree = "<group>"; };
-		B079F2931845DDFA00E0C186 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Whatsapp Switch background(selected)@2x.png"; sourceTree = "<group>"; };
 		B079F2941845DDFA00E0C186 /* Add Deal (Final)_Whatsapp switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Whatsapp switch@2x.png"; sourceTree = "<group>"; };
 		B079F2B71846230800E0C186 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B079F2B91846584F00E0C186 /* My Feed+View Deal (final)_Deal background & Shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal (final)_Deal background & Shadow@2x.png"; sourceTree = "<group>"; };
@@ -1077,8 +1076,6 @@
 		B08A3667187B3C82005B72D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Dealers-test/Images.xcassets"; sourceTree = "<group>"; };
 		B0930BFA17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionalaftergoogleplaceViewController.h; sourceTree = "<group>"; };
 		B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionalaftergoogleplaceViewController.m; sourceTree = "<group>"; };
-		B0930C0017F38D86004EB3CA /* ViewalldealsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewalldealsViewController.h; sourceTree = "<group>"; };
-		B0930C0117F38D86004EB3CA /* ViewalldealsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewalldealsViewController.m; sourceTree = "<group>"; };
 		B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewonedealViewController.h; sourceTree = "<group>"; };
 		B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewonedealViewController.m; sourceTree = "<group>"; };
 		B0930C0917F40311004EB3CA /* CustomcellforviewdealCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomcellforviewdealCell.h; path = ../CustomcellforviewdealCell.h; sourceTree = "<group>"; };
@@ -1087,6 +1084,12 @@
 		B0930C0D17F40B78004EB3CA /* SigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigninViewController.m; sourceTree = "<group>"; };
 		B0930C1217F40BD2004EB3CA /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		B0930C1317F40BD2004EB3CA /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		B09F2F9F18B76C0B002434EF /* Profile_Deals List tab (Highlighted)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab (Highlighted)@2x.png"; sourceTree = "<group>"; };
+		B09F2FA118B76C1E002434EF /* Profile_Deals List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab (selected)@2x.png"; sourceTree = "<group>"; };
+		B09F2FA218B76C1E002434EF /* Profile_Deals List tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab@2x.png"; sourceTree = "<group>"; };
+		B09F2FA318B76C1E002434EF /* Profile_Likes List tab (Highlighted)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Likes List tab (Highlighted)@2x.png"; sourceTree = "<group>"; };
+		B09F2FA418B76C1E002434EF /* Profile_Likes List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Likes List tab (selected)@2x.png"; sourceTree = "<group>"; };
+		B09F2FA518B76C1E002434EF /* Profile_Likes List tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Likes List tab@2x.png"; sourceTree = "<group>"; };
 		B0C7FB39183375F900B3B740 /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
 		B0C7FB3A183375F900B3B740 /* loading5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading5@2x.png"; sourceTree = "<group>"; };
 		B0C7FB3B183375F900B3B740 /* loading10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading10@2x.png"; sourceTree = "<group>"; };
@@ -1149,8 +1152,17 @@
 		B0D6544D18111EA4000DB9AF /* Add Deal_Specific Hour button (pushed)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Specific Hour button (pushed)@2x.png"; sourceTree = "<group>"; };
 		B0D6544E18111EA4000DB9AF /* Add Deal_Specific Hour button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Specific Hour button (selected)@2x.png"; sourceTree = "<group>"; };
 		B0D6544F18111EA4000DB9AF /* Add Deal_Specific Hour button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Specific Hour button@2x.png"; sourceTree = "<group>"; };
+		B0DBB1C418AB59BA001F8FDB /* OnlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OnlineViewController.h; path = ../OnlineViewController.h; sourceTree = "<group>"; };
+		B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OnlineViewController.m; path = ../OnlineViewController.m; sourceTree = "<group>"; };
+		B0E0A942189C43BB00EF0641 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signup2ViewController.h; sourceTree = "<group>"; };
 		B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signup2ViewController.m; sourceTree = "<group>"; };
+		B0F1BB8E18B9139700AD2929 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		B0F1BB9018B9139700AD2929 /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		B0F1BB9118B9139700AD2929 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		B0F1BB9518B913D700AD2929 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		B0F1BB9718B913EC00AD2929 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C8273A2618959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser Back button (highlighted)@2x.png"; sourceTree = "<group>"; };
 		C8273A2718959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser Back button@2x.png"; sourceTree = "<group>"; };
 		C8273A2818959A3300A412FC /* Add Deal (Final)_Browser bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser bar@2x.png"; sourceTree = "<group>"; };
@@ -1445,6 +1457,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */,
+				B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */,
+				B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */,
+				B0E0A943189C43BB00EF0641 /* libsqlite3.dylib in Frameworks */,
 				B03F6B8A18676F6C000ACC13 /* Accounts.framework in Frameworks */,
 				B03F6B8B18676F6C000ACC13 /* AdSupport.framework in Frameworks */,
 				B03F6B8C18676F6C000ACC13 /* Social.framework in Frameworks */,
@@ -1452,6 +1468,7 @@
 				B024374B17F47D9000FB24CC /* QuartzCore.framework in Frameworks */,
 				568497A1154C0116001601A2 /* CoreLocation.framework in Frameworks */,
 				5684979F154C010C001601A2 /* MapKit.framework in Frameworks */,
+				B0F1BB9218B9139700AD2929 /* HockeySDK.framework in Frameworks */,
 				56849782154C00BF001601A2 /* UIKit.framework in Frameworks */,
 				56849784154C00BF001601A2 /* Foundation.framework in Frameworks */,
 				56849786154C00BF001601A2 /* CoreGraphics.framework in Frameworks */,
@@ -1494,6 +1511,11 @@
 		56849780154C00BF001601A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */,
+				B0F1BB9718B913EC00AD2929 /* Security.framework */,
+				B0F1BB9518B913D700AD2929 /* CoreText.framework */,
+				B0F1BB8D18B9139700AD2929 /* HockeySDK.embeddedframework */,
+				B0E0A942189C43BB00EF0641 /* libsqlite3.dylib */,
 				B03F6B8718676F6C000ACC13 /* Accounts.framework */,
 				B03F6B8818676F6C000ACC13 /* AdSupport.framework */,
 				B03F6B8918676F6C000ACC13 /* Social.framework */,
@@ -1511,8 +1533,12 @@
 		56849787154C00BF001601A2 /* Dealers */ = {
 			isa = PBXGroup;
 			children = (
+				B0DBB1C418AB59BA001F8FDB /* OnlineViewController.h */,
+				B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */,
 				B034B9DF1805CB3D00625392 /* Check.png */,
 				56849793154C00BF001601A2 /* MainStoryboard.storyboard */,
+				B0294C7118B0CC0900699107 /* MyFeedsViewController.h */,
+				B0294C7218B0CC0900699107 /* MyFeedsViewController.m */,
 				B012D94E182AA320006288CA /* ProfileViewController.h */,
 				B012D94F182AA321006288CA /* ProfileViewController.m */,
 				B012D94B182AA2B1006288CA /* MoreViewController.h */,
@@ -1538,23 +1564,15 @@
 				B0862125186FF1450017099E /* Functions.m */,
 				B0930BFA17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.h */,
 				B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */,
-				B05B0C2C17F323FF0062634C /* OptionalViewController.h */,
-				B05B0C2D17F323FF0062634C /* OptionalViewController.m */,
 				B01BD1B317F0D7000010C9A4 /* googleCell2.h */,
 				B01BD1B417F0D7000010C9A4 /* googleCell2.m */,
 				B01BD1B017F0D6470010C9A4 /* TableViewController.h */,
 				B01BD1B117F0D6470010C9A4 /* TableViewController.m */,
 				B055C72F17FE877800FBDFCC /* ExploretableViewController.h */,
 				B055C73017FE878B00FBDFCC /* ExploretableViewController.m */,
-				B0930C0017F38D86004EB3CA /* ViewalldealsViewController.h */,
-				B0930C0117F38D86004EB3CA /* ViewalldealsViewController.m */,
 				B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */,
 				B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */,
 				B024374E17F47FE900FB24CC /* itzik.jpg */,
-				B05B0C2F17F378660062634C /* ResaftergoogleplaceViewController.h */,
-				B05B0C3017F378660062634C /* ResaftergoogleplaceViewController.m */,
-				56849796154C00BF001601A2 /* ViewController.h */,
-				56849797154C00BF001601A2 /* ViewController.m */,
 				56849788154C00BF001601A2 /* Supporting Files */,
 			);
 			name = Dealers;
@@ -1816,7 +1834,6 @@
 				B079F2741845DDFA00E0C186 /* Add Deal (Final)_Add Another Photo button@2x.png */,
 				B079F2751845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button (selected)@2x.png */,
 				B079F2761845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button@2x.png */,
-				B079F2771845DDFA00E0C186 /* Add Deal (Final)_Camera Window mask@2x.png */,
 				B079F2781845DDFA00E0C186 /* Add Deal (Final)_Deal Location icon@2x.png */,
 				B079F27A1845DDFA00E0C186 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png */,
 				B079F27B1845DDFA00E0C186 /* Add Deal (Final)_Facebook switch@2x.png */,
@@ -1841,7 +1858,6 @@
 				B079F2901845DDFA00E0C186 /* Add Deal (Final)_Trash button@2x.png */,
 				B079F2911845DDFA00E0C186 /* Add Deal (Final)_Twitter Switch background(selected)@2x.png */,
 				B079F2921845DDFA00E0C186 /* Add Deal (Final)_Twitter switch@2x.png */,
-				B079F2931845DDFA00E0C186 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png */,
 				B079F2941845DDFA00E0C186 /* Add Deal (Final)_Whatsapp switch@2x.png */,
 				B079F21D1843D31A00E0C186 /* Add Deal_Done button@2x.png */,
 				B079F21E1843D31A00E0C186 /* Add Deal_Done button (selected)@2x.png */,
@@ -1970,6 +1986,25 @@
 				B012D9331828F583006288CA /* Uploading-the-Deal Graphic@2x.png */,
 			);
 			name = "New Group";
+			sourceTree = "<group>";
+		};
+		B0F1BB8D18B9139700AD2929 /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				B0F1BB8E18B9139700AD2929 /* HockeySDK.framework */,
+				B0F1BB8F18B9139700AD2929 /* Resources */,
+			);
+			name = HockeySDK.embeddedframework;
+			path = "HockeySDK-iOS/HockeySDK.embeddedframework";
+			sourceTree = "<group>";
+		};
+		B0F1BB8F18B9139700AD2929 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B0F1BB9018B9139700AD2929 /* HockeySDK.xcconfig */,
+				B0F1BB9118B9139700AD2929 /* HockeySDKResources.bundle */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		C83EACF918690AC30084E0E1 /* Categories Icons */ = {
@@ -2311,6 +2346,12 @@
 		C8BFD9A518723015007E7E07 /* Profile Icons */ = {
 			isa = PBXGroup;
 			children = (
+				B09F2FA118B76C1E002434EF /* Profile_Deals List tab (selected)@2x.png */,
+				B09F2FA218B76C1E002434EF /* Profile_Deals List tab@2x.png */,
+				B09F2FA318B76C1E002434EF /* Profile_Likes List tab (Highlighted)@2x.png */,
+				B09F2FA418B76C1E002434EF /* Profile_Likes List tab (selected)@2x.png */,
+				B09F2FA518B76C1E002434EF /* Profile_Likes List tab@2x.png */,
+				B09F2F9F18B76C0B002434EF /* Profile_Deals List tab (Highlighted)@2x.png */,
 				C8BFD9A618723015007E7E07 /* Profile_About Yourself icon@2x.png */,
 				C8BFD9A718723015007E7E07 /* Profile_Dealers@2x.png */,
 				C8BFD9A818723015007E7E07 /* Profile_Deals List button (selected)@2x.png */,
@@ -2513,6 +2554,7 @@
 				C83EAE5F18690AC40084E0E1 /* Fashion_Fashion@2x.png in Resources */,
 				B0274801186B291B005A52F0 /* PLCameraSheetButtonPressed.png in Resources */,
 				B055C72617FE806900FBDFCC /* Explore_Pets icon@2x.png in Resources */,
+				B09F2FAA18B76C1E002434EF /* Profile_Likes List tab@2x.png in Resources */,
 				B055C72717FE806900FBDFCC /* Explore_Real Estate icon@2x.png in Resources */,
 				C83EAE6818690AC40084E0E1 /* Food & Groceries_butcher@2x.png in Resources */,
 				C83EAF2718690AC40084E0E1 /* Travel_Travel@2x.png in Resources */,
@@ -2532,11 +2574,11 @@
 				C8D2E470185B781D00398873 /* Add Deal (Final)_Share via Facebook button (selected)@2x.png in Resources */,
 				B055C73617FE95CC00FBDFCC /* Explore_Music icon.png in Resources */,
 				B059C21117FF518900C445AE /* LoadingAnimation.gif in Resources */,
+				B0F1BB9318B9139700AD2929 /* HockeySDK.xcconfig in Resources */,
 				B034B8F61804777F00625392 /* Add Deal_Add Another Photo button (selected)@2x.png in Resources */,
 				C83EAEFE18690AC40084E0E1 /* Restaurants & Bars_fried_chicken@2x.png in Resources */,
 				B034B8F71804777F00625392 /* Add Deal_Add Another Photo button@2x.png in Resources */,
 				C83EAE5D18690AC40084E0E1 /* Fashion_clothing_store@2x.png in Resources */,
-				C8D2E48B185B781D00398873 /* Add Deal Icons-NEW.rar in Resources */,
 				C83EAE3518690AC40084E0E1 /* Beauty & Personal Care_drug_store-pharmacy@2x.png in Resources */,
 				B034B8F81804777F00625392 /* Add Deal_Add Deal background@2x.png in Resources */,
 				C83EAEF418690AC40084E0E1 /* Restaurants & Bars_asian_food@2x.png in Resources */,
@@ -2567,6 +2609,7 @@
 				B034B90B1804777F00625392 /* Add Deal_Fill-In Boxes (unactivated)-iPhone 5@2x.png in Resources */,
 				C8BFD9CB18723016007E7E07 /* Profile_Follow button@2x.png in Resources */,
 				C83EAF0218690AC40084E0E1 /* Restaurants & Bars_mexican@2x.png in Resources */,
+				B09F2FA818B76C1E002434EF /* Profile_Likes List tab (Highlighted)@2x.png in Resources */,
 				C873D39A1851040700B913CD /* My Feed+View Deal (final)_Local icon@2x.png in Resources */,
 				C8D2E46D185B781D00398873 /* Add Deal (Final)_Photo mask@2x.png in Resources */,
 				C8BFD9CC18723016007E7E07 /* Profile_Likes List button (selected)@2x.png in Resources */,
@@ -2721,6 +2764,7 @@
 				B034B9911804780B00625392 /* My Feed+View Deal_Send Comment button (selected)@2X.png in Resources */,
 				B034B9921804780B00625392 /* My Feed+View Deal_Send Comment button@2X.png in Resources */,
 				C83EAE4318690AC40084E0E1 /* Entertainment @ Events_arcade@2x.png in Resources */,
+				B09F2FA018B76C0B002434EF /* Profile_Deals List tab (Highlighted)@2x.png in Resources */,
 				C8D2E47D185B781D00398873 /* Add Deal (Final)_Snap button (selected)@2x.png in Resources */,
 				C83EAEF118690AC40084E0E1 /* Pets_Pets@2x.png in Resources */,
 				B034B9931804780B00625392 /* My Feed+View Deal_Share button (selected)@2X.png in Resources */,
@@ -2947,6 +2991,7 @@
 				B06F810E181676AF0032CE68 /* night_club@2x.png in Resources */,
 				C83EAF0418690AC40084E0E1 /* Restaurants & Bars_restaurant@2x.png in Resources */,
 				B06F810F181676AF0032CE68 /* Other@2x.png in Resources */,
+				B09F2FA618B76C1E002434EF /* Profile_Deals List tab (selected)@2x.png in Resources */,
 				C83EAE2E18690AC40084E0E1 /* Automotive_car_wash@2x.png in Resources */,
 				B06F8110181676AF0032CE68 /* painter@2x.png in Resources */,
 				B06F8111181676AF0032CE68 /* pets_store@2x.png in Resources */,
@@ -2967,6 +3012,7 @@
 				B06F811A181676AF0032CE68 /* shopping_mall@2x.png in Resources */,
 				B06F811B181676AF0032CE68 /* spa@2x.png in Resources */,
 				C83EAE2818690AC40084E0E1 /* Art_photography_lab@2x.png in Resources */,
+				B09F2FA718B76C1E002434EF /* Profile_Deals List tab@2x.png in Resources */,
 				B06F811C181676AF0032CE68 /* Sports_Outdoor@2x.png in Resources */,
 				C8D2E455185B781D00398873 /* Add Deal (Final)_Add Another Photo button@2x.png in Resources */,
 				C83EAE2C18690AC40084E0E1 /* Automotive_car_rental@2x.png in Resources */,
@@ -2977,6 +3023,7 @@
 				B06F8120181676AF0032CE68 /* veterinary_care@2x.png in Resources */,
 				C8BFD9C418723016007E7E07 /* Profile_Deals List button (selected)@2x.png in Resources */,
 				B06F8121181676AF0032CE68 /* zoo@2x.png in Resources */,
+				B09F2FA918B76C1E002434EF /* Profile_Likes List tab (selected)@2x.png in Resources */,
 				B012D9181817D18A006288CA /* Add Deal_Main Pic frame@2x.png in Resources */,
 				B012D91A18180D73006288CA /* Add Deal_Scondary Pic frame@2x.png in Resources */,
 				B012D9341828F583006288CA /* Uploading-the-Deal Graphic@2x.png in Resources */,
@@ -3026,7 +3073,7 @@
 				B0C7FB6F1838B78C00B3B740 /* Loading5white@2x.png in Resources */,
 				C8273A3018959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png in Resources */,
 				B0C7FB701838B78D00B3B740 /* Loading10white@2x.png in Resources */,
-				C8D2E489185B781D00398873 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png in Resources */,
+				B0F1BB9418B9139700AD2929 /* HockeySDKResources.bundle in Resources */,
 				B0C7FB711838B78D00B3B740 /* Loading15white@2x.png in Resources */,
 				B0C7FB721838B78D00B3B740 /* Loading20white@2x.png in Resources */,
 				C8D2E454185B781D00398873 /* Add Deal (Final)_-Not There- box@2x.png in Resources */,
@@ -3067,7 +3114,6 @@
 				B079F2971845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button (selected)@2x.png in Resources */,
 				B079F2981845DDFA00E0C186 /* Add Deal (Final)_Add the Deal button@2x.png in Resources */,
 				C8D2E472185B781D00398873 /* Add Deal (Final)_Share via Groups button (pushed)@2x.png in Resources */,
-				B079F2991845DDFA00E0C186 /* Add Deal (Final)_Camera Window mask@2x.png in Resources */,
 				B079F29C1845DDFA00E0C186 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png in Resources */,
 				C83EAE2918690AC40084E0E1 /* Automotive_Automotive@2x.png in Resources */,
 				C8BFD9DC18723016007E7E07 /* Profile_Update Deal button@2x.png in Resources */,
@@ -3110,9 +3156,6 @@
 				B079F2B41845DDFA00E0C186 /* Add Deal (Final)_Twitter switch@2x.png in Resources */,
 				C83EAE3318690AC40084E0E1 /* Beauty & Personal Care_beauty_salon@2x.png in Resources */,
 				C83EAE4F18690AC40084E0E1 /* Entertainment @ Events_movie_rental@2x.png in Resources */,
-				C873D3A51851040700B913CD /* My Feed+View Deal Icons-NEW.rar in Resources */,
-				B079F2B51845DDFA00E0C186 /* Add Deal (Final)_Whatsapp Switch background(selected)@2x.png in Resources */,
-				B079F2B61845DDFA00E0C186 /* Add Deal (Final)_Whatsapp switch@2x.png in Resources */,
 				C83EAEEC18690AC40084E0E1 /* Other_parking@2x.png in Resources */,
 				C8D2E467185B781D00398873 /* Add Deal (Final)_More Details button (selected)@2x.png in Resources */,
 				B079F2BC1846585A00E0C186 /* My Feed+View Deal (final)_Deal Pic mask@2x.png in Resources */,
@@ -3138,15 +3181,12 @@
 			files = (
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
-				56849798154C00BF001601A2 /* ViewController.m in Sources */,
 				B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */,
 				B01BD1B517F0D7010010C9A4 /* googleCell2.m in Sources */,
-				B05B0C2E17F323FF0062634C /* OptionalViewController.m in Sources */,
-				B05B0C3117F378660062634C /* ResaftergoogleplaceViewController.m in Sources */,
+				B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */,
 				B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */,
 				B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
-				B0930C0217F38D86004EB3CA /* ViewalldealsViewController.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,
@@ -3156,6 +3196,7 @@
 				B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */,
 				B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */,
 				B055C73417FE882700FBDFCC /* ExploreCell.m in Sources */,
+				B0294C7318B0CC0900699107 /* MyFeedsViewController.m in Sources */,
 				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
 				B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */,
@@ -3266,8 +3307,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
 				"CODE_SIGN_RESOURCE_RULES_PATH[sdk=*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
-					/Users/itzikberrebi/Desktop/dealers_beta_rep/FacebookSDK,
 					/Users/itzikberrebi/Desktop/dealers_beta_rep,
+					"/Users/itzikberrebi/Desktop/dealers_beta_rep/HockeySDK-iOS/HockeySDK.embeddedframework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
@@ -3290,8 +3331,8 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
 				FRAMEWORK_SEARCH_PATHS = (
-					/Users/itzikberrebi/Desktop/dealers_beta_rep/FacebookSDK,
 					/Users/itzikberrebi/Desktop/dealers_beta_rep,
+					"/Users/itzikberrebi/Desktop/dealers_beta_rep/HockeySDK-iOS/HockeySDK.embeddedframework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
