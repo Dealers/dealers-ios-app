@@ -210,7 +210,7 @@
     [self.cameraScrollView setContentSize:((CGSizeMake(320*numofpics, 155)))];
     [self.cameraScrollView setScrollEnabled:YES];
     NSLog(@"%@",_likeornotLabelFromMyFeeds);
-    if (_likeornotLabelFromMyFeeds) {
+    if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
         [_LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (pushed).png"] forState:UIControlStateNormal];
     }
 }
@@ -295,18 +295,39 @@
 }
 
 - (IBAction)LikeButtonAction:(id)sender {
-    if (LikeOrUnlike) {
+    
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    if ([_likeornotLabelFromMyFeeds isEqualToString:@"no"]) {
+        _likeornotLabelFromMyFeeds=@"yes";
         [self.LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (selected).png"] forState:UIControlStateNormal];
-        LikeOrUnlike=FALSE;
         int IntLike = [likelabel.text intValue];
         IntLike++;
         likelabel.text=[NSString stringWithFormat:@"%d",IntLike];
-    } else {
-        [self.LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button.png"] forState:UIControlStateNormal];
-        LikeOrUnlike=TRUE;
-        int IntLike = [likelabel.text intValue];
-        IntLike--;
-        likelabel.text=[NSString stringWithFormat:@"%d",IntLike];
+        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@&Dealid=%@",app.UserID,@"updatelikestables",_dealidLabelFromMyFeeds];
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",DataResult);
+    }
+}
+
+-(void) whoLikesTheDeal {
+    NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Dealid=%@",@"whoLikesTheDeal",_dealidLabelFromMyFeeds];
+    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+    NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+    _DealersidWhoLikesTheDealArray = [DataResult componentsSeparatedByString:@"."];
+    
+    NSInteger arraySize;
+    if (_DealersidWhoLikesTheDealArray.count>5) {
+        arraySize=5;
+    } else arraySize=_DealersidWhoLikesTheDealArray.count;
+    
+    for (int i=0; i<arraySize; i++) {
+        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/getUserData.php?Useiid=%@",_DealersidWhoLikesTheDealArray[i]];
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        NSArray *dealerData = [DataResult componentsSeparatedByString:@"///"];
+        [_DealersDataWhoLikesTheDealArray addObject:dealerData];
     }
 }
 

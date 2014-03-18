@@ -386,7 +386,8 @@
     controller.commentLabelFromMyFeeds = [self.COMMENTMARRAY objectAtIndex:(button.tag)];
     controller.signLabelFromMyFeeds = [self.SIGNARRAY objectAtIndex:(button.tag)];
     controller.photoIdLabelFromMyFeeds = [self.PHOTOIDMARRAY objectAtIndex:(button.tag)];
-    
+    controller.dealidLabelFromMyFeeds = [self.DEALIDARRAY objectAtIndex:(button.tag)];
+
     NSLog(@"%@",[self.DEALIDARRAY objectAtIndex:(button.tag)]);
     NSLog(@"%@",_dealsUserLikes);
 

@@ -20,6 +20,8 @@
     BOOL viewDidApear;
 
 }
+@property (strong,nonatomic) NSArray *DealersidWhoLikesTheDealArray;
+@property (strong,nonatomic) NSMutableArray *DealersDataWhoLikesTheDealArray;
 
 @property (strong,nonatomic) NSString *titleLabelFromMyFeeds;
 @property (strong,nonatomic) NSString *storeLabelFromMyFeeds;
@@ -34,6 +36,7 @@
 @property (strong,nonatomic) NSString *clientIdLabelFromMyFeeds;
 @property (strong,nonatomic) NSString *signLabelFromMyFeeds;
 @property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *dealidLabelFromMyFeeds;
 
 @property (strong,nonatomic) NSString *urlImage;
 
