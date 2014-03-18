@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SigninViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UINavigationBarDelegate>
+@interface SigninViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate,UINavigationBarDelegate>
+{
+    //sqlite3 *db;
+}
 
 @property (weak, nonatomic) IBOutlet UITextField *EmailText;
 @property (weak, nonatomic) IBOutlet UITextField *PasswordText;
@@ -19,5 +22,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
 @property (weak, nonatomic) IBOutlet UIImageView *PurpImage;
+
 
 @end

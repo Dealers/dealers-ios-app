@@ -4,14 +4,11 @@
 //
 //  Created by itzik berrebi on 11/6/13.
 //
-//
 
 #import "MoreViewController.h"
 #import "ViewonedealViewController.h"
-#import "ViewController.h"
 #import "ProfileViewController.h"
 #import "ExploretableViewController.h"
-#import "ViewalldealsViewController.h"
 #import "AppDelegate.h"
 #import "TableViewController.h"
 
@@ -47,8 +44,7 @@
 }
 
 - (IBAction)myfeedbutton:(id)sender{
-    ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
-    [self.navigationController pushViewController:controller animated:NO];
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 - (IBAction)morebutton:(id)sender{
     MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];

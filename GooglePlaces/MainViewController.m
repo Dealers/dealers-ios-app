@@ -28,14 +28,16 @@
     via.alpha=1.0;
     backwhite.alpha=0.0;
     dealershead.alpha=1.0;
-    dealershead.center = CGPointMake(160, 55);
-    bagimage.center = CGPointMake(218, 261);
-    facebookicon.center = CGPointMake(90, 178);
-    twittericon.center = CGPointMake(58, 256);
-    emailicon.center = CGPointMake(86, 334);
+    dealershead.center = CGPointMake(160, 55+(ScreenHeight*[self isIphone5]));
+    bagimage.center = CGPointMake(218, 261+(ScreenHeight*[self isIphone5]));
+    facebookicon.center = CGPointMake(90, 178+(ScreenHeight*[self isIphone5]));
+    twittericon.center = CGPointMake(58, 256+(ScreenHeight*[self isIphone5]));
+    emailicon.center = CGPointMake(86, 334+(ScreenHeight*[self isIphone5]));
 }
 - (void)viewDidLoad
 {
+    ScreenHeight = self.view.frame.size.height/10;
+    
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
 
@@ -46,6 +48,7 @@
         via.alpha=0.0;
         backwhite.alpha=1.0;
         dealershead.alpha=1.0;
+        dealershead.center = CGPointMake(160,200);
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(anim2) userInfo:nil repeats:NO];
     } else {
         [self ObjectInPlace];
@@ -63,10 +66,10 @@
     facebookicon.alpha=0.0;
     twittericon.alpha=0.0;
     emailicon.alpha=0.0;
-    [UIView animateWithDuration:0.5 animations:^{bagimage.center = CGPointMake(218, 261);}];
-    [UIView animateWithDuration:0.5 animations:^{facebookicon.center = CGPointMake(90, 178);}];
-    [UIView animateWithDuration:0.5 animations:^{twittericon.center = CGPointMake(58, 256);}];
-    [UIView animateWithDuration:0.5 animations:^{emailicon.center = CGPointMake(86, 334);}];
+    [UIView animateWithDuration:0.5 animations:^{bagimage.center = CGPointMake(218, 261+(ScreenHeight*[self isIphone5]));}];
+    [UIView animateWithDuration:0.5 animations:^{facebookicon.center = CGPointMake(90, 178+(ScreenHeight*[self isIphone5]));}];
+    [UIView animateWithDuration:0.5 animations:^{twittericon.center = CGPointMake(58, 256+(ScreenHeight*[self isIphone5]));}];
+    [UIView animateWithDuration:0.5 animations:^{emailicon.center = CGPointMake(86, 334+(ScreenHeight*[self isIphone5]));}];
     [UIView animateWithDuration:0.5 animations:^{bagimage.alpha=1.0;}];
     [UIView animateWithDuration:0.5 animations:^{facebookicon.alpha=1.0;}];
     [UIView animateWithDuration:0.5 animations:^{twittericon.alpha=1.0;}];
@@ -84,7 +87,6 @@
 
 -(IBAction)EmailimageButton:(id)sender{
     Signup2ViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"Signup2ViewController"];
-    //UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 
@@ -95,5 +97,21 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
+}
+
+-(int) isIphone5 {
+    if ([[UIScreen mainScreen] bounds].size.height == 568) return 1;
+    return 0;
+}
+
+-(void) deallocMemory
+{
+    NSLog(@"dealloc main");
+    NSArray *viewsToRemove = [self.view subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
+    [self.view removeFromSuperview];
+    self.view=nil;  
 }
 @end

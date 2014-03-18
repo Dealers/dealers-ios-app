@@ -7,7 +7,6 @@
 //
 
 #import "Signup2ViewController.h"
-#import "ViewalldealsViewController.h"
 #import "AppDelegate.h"
 #import "Functions.h"
 
@@ -27,6 +26,7 @@
 @synthesize addphotobutton;
 @synthesize datepick,NavBar,ImageFrame,scroll,GenderNavBar,GenderPicker,ReturnButton,list,ReturnButtonFull,LoadingImage,PurpImage,SignupButton;
 
+/*
 -(void) BackgroundMethod {
     NSLog(@"backgroud");
     
@@ -476,7 +476,8 @@
     ReturnButton.alpha=0.0;
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    //[self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -505,5 +506,5 @@
 {
     return [list objectAtIndex:row];
 }
-
+*/
 @end

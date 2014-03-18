@@ -2,17 +2,16 @@
 //  OptionalViewController.h
 //  GooglePlaces
 //
-//  Created by itzik berrebi on 9/25/13.
+//  Created by itzik berrebi on 20/3/2014.
 //
 //
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <AVFoundation/AVFoundation.h>
-#import <MapKit/MapKit.h>
 #import "GKImagePicker.h"
 
-@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIActionSheetDelegate,UINavigationBarDelegate,UINavigationControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate,GKImagePickerDelegate>
+@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,GKImagePickerDelegate>
 {
     NSString *dealphotoid;
     NSString *timeorday;
@@ -22,22 +21,27 @@
     BOOL Flag;
     BOOL FrontCamera;
     BOOL haveImage;
-    BOOL updown_moreoption;
-    CLLocationManager *locationManager;
-    CLLocationCoordinate2D currentCentre;
+    BOOL isMoreOptionViewHidden;
     AVCaptureSession *session;
     NSString *segcategorey;
 
 }
-@property (strong,nonatomic) NSString *segstore;
+@property (strong,nonatomic) NSString *storeName;
+@property (strong,nonatomic) NSString *segcategory;
+@property (strong,nonatomic) NSString *titleText;
+@property (strong,nonatomic) NSString *descriptionText;
+@property (strong,nonatomic) NSString *priceText;
+@property (strong,nonatomic) NSString *discountText;
 
+@property (weak, nonatomic) IBOutlet UILabel *whatIsTheDealLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *dealphoto;
-@property (weak, nonatomic) IBOutlet UITextField *titlelabel;
+@property (weak, nonatomic) IBOutlet UITextView *titlelabel;
+@property (weak, nonatomic) IBOutlet UILabel *countlabel;
 @property (weak, nonatomic) IBOutlet UITextField *categorylabel;
 @property (weak, nonatomic) IBOutlet UITextField *pricelabel;
 @property (weak, nonatomic) IBOutlet UITextField *discountlabel;
 @property (weak, nonatomic) IBOutlet UITextField *expirationlabel;
-@property (weak, nonatomic) IBOutlet UITextField *descriptionlabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionlabel;
 @property (weak, nonatomic) IBOutlet UITextView *DescriptionTextView;
 
 - (IBAction)adddealbutton:(id)sender;
@@ -68,7 +72,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scroll;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollcamera;
 
-@property (strong, nonatomic) NSMutableArray *list;
+@property (strong, nonatomic) NSMutableArray *categoryListArray;
 @property (weak, nonatomic) IBOutlet UIImageView *PriceNavBar;
 - (IBAction)DollarButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *DollarButton;
@@ -114,10 +118,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
 @property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;
-
-
-@property (retain, nonatomic) IBOutlet MKMapView *mapView;
-
 @property (weak, nonatomic) IBOutlet UIButton *ExitCameraButton;
 - (IBAction)ExitCameraButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *RotateCamButton;
@@ -139,7 +139,6 @@
 @property (weak, nonatomic) IBOutlet UIView *GrayCoverView;
 @property (weak, nonatomic) IBOutlet UIView *FlashView;
 @property (nonatomic, strong) GKImagePicker *imagePicker;
-@property (nonatomic, strong) UIPopoverController *popoverController;
 @property (weak, nonatomic) IBOutlet UIPageControl *PageControl;
 
 @end

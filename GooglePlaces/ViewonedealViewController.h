@@ -12,19 +12,33 @@
 @interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     BOOL LikeOrUnlike;
-}
+    int numofpics;
+    int currentpage;
+    int lowestYPoint;
+    int maxXPoint;
+    BOOL flag;
+    BOOL viewDidApear;
 
-@property (strong,nonatomic) NSString *titlefromseg;
-@property (strong,nonatomic) NSString *storefromseg;
-@property (strong,nonatomic) NSString *categoryfromseg;
-@property (strong,nonatomic) NSString *pricefromseg;
-@property (strong,nonatomic) NSString *discountfromseg;
-@property (strong,nonatomic) NSString *expirefromseg;
-@property (strong,nonatomic) NSString *descriptionfromseg;
-@property (strong,nonatomic) NSString *photoidfromseg;
-@property (strong,nonatomic) NSString *likefromseg;
-@property (strong,nonatomic) NSString *commentfromseg;
-@property (strong,nonatomic) NSString *clientfromseg;
+}
+@property (strong,nonatomic) NSArray *DealersidWhoLikesTheDealArray;
+@property (strong,nonatomic) NSMutableArray *DealersDataWhoLikesTheDealArray;
+
+@property (strong,nonatomic) NSString *titleLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *storeLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *categoryLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *priceLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *discountLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *expireLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *descriptionLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *photoIdLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *likeLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *commentLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *clientIdLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *signLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *dealidLabelFromMyFeeds;
+
+@property (strong,nonatomic) NSString *urlImage;
 
 
 
@@ -68,6 +82,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *PriceIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *ExpireIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *DescriptionIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 
 @property (weak, nonatomic) IBOutlet UIView *SecondView;
 
@@ -82,5 +97,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage2;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
+
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 
 @end

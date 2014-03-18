@@ -9,10 +9,8 @@
 #import "ExploretableViewController.h"
 #import "ExploreCell.h"
 #import "ViewonedealViewController.h"
-#import "ViewController.h"
 #import "MoreViewController.h"
 #import "ProfileViewController.h"
-#import "ViewalldealsViewController.h"
 #import "AppDelegate.h"
 #import "TableViewController.h"
 
@@ -33,6 +31,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.LockTableButton.alpha=0.0;
+    
     self.myTableView.dataSource = self;
     self.myTableView.delegate = self;
     self.SearchBar.delegate=self;
@@ -109,6 +110,14 @@
     [self.myTableView reloadData];
 }
 
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self.SearchBar resignFirstResponder];
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.SearchBar resignFirstResponder];
+}
+
 -(void) BackButton:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 
@@ -120,24 +129,26 @@
 }
 
 - (IBAction)myfeedbutton:(id)sender{
-    ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
-    [self.navigationController pushViewController:controller animated:NO];
+    //ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
+   // [self.navigationController pushViewController:controller animated:NO];
+    [self.navigationController popViewControllerAnimated:NO];
+
 }
 - (IBAction)morebutton:(id)sender{
-    MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
-    [self.navigationController pushViewController:controller animated:NO];
+  //  MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
+   // [self.navigationController pushViewController:controller animated:NO];
 }
 
 - (IBAction)profilebutton:(id)sender{
-    ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
-    [self.navigationController pushViewController:controller animated:NO];
+  //  ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
+  //  [self.navigationController pushViewController:controller animated:NO];
     
 }
 
 - (IBAction)Adddeal:(id)sender {
-    LockTableButton.alpha=1.0;
-    [UIView animateWithDuration:0.5 animations:^{BlueButtonsView.alpha=1.0;}];
-    [UIView animateWithDuration:0.5 animations:^{self.myTableView.alpha=0.3;}];
+   // LockTableButton.alpha=1.0;
+   // [UIView animateWithDuration:0.5 animations:^{BlueButtonsView.alpha=1.0;}];
+   // [UIView animateWithDuration:0.5 animations:^{self.myTableView.alpha=0.3;}];
 
 }
 
