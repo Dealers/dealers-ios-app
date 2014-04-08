@@ -28,7 +28,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "BITHockeyBaseManager.h"
+//#import "BITHockeyBaseManager.h"
 
 /**
  * Identification Types
