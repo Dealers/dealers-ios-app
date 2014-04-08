@@ -177,8 +177,8 @@
     [self displayLoadingIcon];
     self.collapseMapButton.hidden=YES;
     self.storeSearchTableView.hidden=YES;
-    self.closeStoreSearchTableButton.hidden=YES;
-    self.closeStoreSearchTableButton.alpha=0.5;
+    //self.closeStoreSearchTableButton.hidden=YES;
+    self.closeStoreSearchTableButton.alpha=0.0;
     self.storeSearchView.hidden=YES;
     self.closeStoreSearchViewButton.hidden=YES;
 }
@@ -187,16 +187,16 @@
 {
     NSArray *viewControllers = self.navigationController.viewControllers;
     int count = [viewControllers count];
-    NSLog(@"%@,%d",viewControllers,count);
-
+    NSLog(@"the vc in stack in tableview is=%@,%d",viewControllers,count);
+    didUpdateTheMap=NO;
     [self initMapView];
     [self initialize];
     [super viewDidLoad];
 }
 
 -(void)didReceiveMemoryWarning{
-    [self deallocMemory];
-    [self.navigationController popViewControllerAnimated:NO];
+   // [self deallocMemory];
+    //[self.navigationController popViewControllerAnimated:NO];
     [super didReceiveMemoryWarning];
 }
     
@@ -330,7 +330,10 @@ return Cell;
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
             // Do some computation here.
-            [self loadStoresFromFoursquare];
+            if (!didUpdateTheMap) {
+                [self loadStoresFromFoursquare];
+                didUpdateTheMap=YES;
+            }
             // Update UI after computation.
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI on the main thread.
@@ -376,7 +379,7 @@ return Cell;
     -(IBAction) enlargeMapButtonClicked:(id)sender {
         self.enlargeMapButton.hidden=YES;
         self.collapseMapButton.hidden=NO;
-        [UIView animateWithDuration:0.3 animations:^{self.mapView.frame=CGRectMake(0, 0, 320, 374);}];
+        [UIView animateWithDuration:0.3 animations:^{self.mapView.frame=CGRectMake(0, 0, 320, 480);}];
         CGRect frame = self.venuesTableView.frame;
         frame.origin.y = frame.origin.y + 600;
         [UIView animateWithDuration:0.3 animations:^{self.venuesTableView.frame = frame;}];
@@ -405,7 +408,9 @@ return Cell;
         self.storeSearchNameArray = [[NSMutableArray alloc]init];
         self.storeSearchLocationArray = [[NSMutableArray alloc]init];
         
-        NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=100000&v=20131120&query=%@",_locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude,searchText];
+        //NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=100000&v=20131120&query=%@&intent=global&limit=50",_locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude,searchText];
+
+        NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&v=20131120&query=%@&intent=global&limit=50",searchText];
         NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
         NSData *data = [NSData dataWithContentsOfURL: googleRequestURL];
         NSError* error;
@@ -422,7 +427,8 @@ return Cell;
                 NSString *storeName=[storeArrayFromVenues objectForKey:@"name"];
                 NSString *vicinity=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
                 if (storeName==nil) storeName=@"";
-                if (vicinity==nil) vicinity=@"Unknow";
+                if (vicinity==nil) continue; //vicinity=@"Unknow";
+                
                 [self.storeSearchNameArray addObject:storeName];
                 [self.storeSearchLocationArray addObject:vicinity];
             }
@@ -439,6 +445,8 @@ return Cell;
         if (searchText.length==0) {
             SearchTextSize=0;
             self.closeStoreSearchTableButton.hidden=NO;
+            [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
+
             self.storeSearchNameArray = nil;
             self.storeSearchLocationArray = nil;
             self.storeSearchTableView.hidden=YES;
@@ -467,7 +475,9 @@ return Cell;
     }
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    self.closeStoreSearchTableButton.hidden=NO;
+    [UIView animateWithDuration:3.2 animations:^{self.closeStoreSearchTableButton.alpha=0.3;
+}];
+
     return 1;
 }
     - (void)viewDidUnload {

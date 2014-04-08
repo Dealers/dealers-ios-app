@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     BOOL LikeOrUnlike;
     int numofpics;
@@ -18,10 +18,22 @@
     int maxXPoint;
     BOOL flag;
     BOOL viewDidApear;
-
+    int cellNumberInScrollView;
+    BOOL isUpdatingNow;
+    int gapDealersLikes;
+    BOOL likesView;
 }
-@property (strong,nonatomic) NSArray *DealersidWhoLikesTheDealArray;
-@property (strong,nonatomic) NSMutableArray *DealersDataWhoLikesTheDealArray;
+@property (strong,nonatomic) NSArray *DealersDataWhoLikesTheDealArray;
+
+@property (strong,nonatomic) NSMutableArray *dealersNameArray;
+@property (strong,nonatomic) NSMutableArray *dealersLocationArray;
+@property (strong,nonatomic) NSMutableArray *dealersPhotoArray;
+@property (strong,nonatomic) NSMutableArray *dealersPhotoDataArray;
+@property (strong,nonatomic) NSMutableArray *dealersidArray;
+@property (strong,nonatomic) NSMutableArray *dealsPhotosidArray;
+@property (strong,nonatomic) NSMutableArray *dealsPhotosArray;
+
+
 
 @property (strong,nonatomic) NSString *titleLabelFromMyFeeds;
 @property (strong,nonatomic) NSString *storeLabelFromMyFeeds;
@@ -39,6 +51,9 @@
 @property (strong,nonatomic) NSString *dealidLabelFromMyFeeds;
 
 @property (strong,nonatomic) NSString *urlImage;
+@property (strong,nonatomic) NSString *urlImage2;
+@property (strong,nonatomic) NSString *urlImage3;
+@property (strong,nonatomic) NSString *urlImage4;
 
 
 
@@ -54,6 +69,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionlabel;
 @property (weak, nonatomic) IBOutlet UILabel *likelabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentlabel;
+@property (weak, nonatomic) IBOutlet UILabel *dealersNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *uploadDateLabel;
 
 - (IBAction)ReturnButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
@@ -75,6 +92,7 @@
 - (IBAction)LocalButtonAction:(id)sender;
 - (IBAction)OnlineButtonAction:(id)sender;
 - (IBAction)UNLockButtonAction:(id)sender;
+- (IBAction)whoLikesTheDeal:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *TitleIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *StoreIcon;
@@ -98,7 +116,16 @@
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
 
+@property (strong, nonatomic)  UIImage *tempImage;
+@property (strong, nonatomic)  UIImage *tempImage2;
+@property (strong, nonatomic)  UIImage *tempImage3;
+@property (strong, nonatomic)  UIImage *tempImage4;
+
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
+
+@property (weak, nonatomic) IBOutlet UIView *ViewLikes;
+@property (weak, nonatomic) IBOutlet UITableView *tableViewLikes;
+
 
 @end

@@ -14,7 +14,7 @@
 #import "ExploretableViewController.h"
 #import "TableViewController.h"
 #import "OnlineViewController.h"
-#define OFFSETSHORTCELL 80
+#define OFFSETSHORTCELL 109
 #import <mach/mach.h>
 #import "OptionalaftergoogleplaceViewController.h"
 
@@ -33,7 +33,7 @@
 }
 
 - (void)didReceiveMemoryWarning
-{
+{/*
     NSLog(@"MEMORY");
     NSArray *viewsToRemove = [self.scrollView subviews];
     for (UIView *v in viewsToRemove) {
@@ -42,7 +42,7 @@
     [super didReceiveMemoryWarning];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"yes";
-    [self viewDidAppear:YES];
+    [self viewDidAppear:YES];*/
 }
 
 -(void) removeCellsFromSuperview {
@@ -99,7 +99,7 @@
     DataArray = [DataResult componentsSeparatedByString:@"///"];
     reversed = [[DataArray reverseObjectEnumerator] allObjects];
     NSMutableArray *PRICEMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
+
     FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:4]];
     URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
@@ -214,10 +214,6 @@
     self.USERSIDSARRAY = [NSMutableArray arrayWithArray:USERSIDSARRAY_temp];
     
     
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    _dealsUserLikes=DataResult;
 }
 
 -(void) dbError {
@@ -275,24 +271,34 @@
             isShortCell = YES;
         } else isShortCell = NO;
         
-        UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Deal background & Shadow.png"]];
-        [imageview setFrame:CGRectMake(0, 4+(GAP), 320, 193-(OFFSETSHORTCELL*isShortCell))];
+        UIImageView *imageview;
+        if (isShortCell) {
+            imageview=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_No Pic Deal background & Shadow.png"]];
+        } else imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Deal background & Shadow.png"]];
+        
+        [imageview setFrame:CGRectMake(2.5, 4+(GAP), 315, 199-(OFFSETSHORTCELL*isShortCell))];
 		[[self scrollView] addSubview:imageview];
 
         UIImageView *imageview2 = [[UIImageView alloc]init];
-        NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",num];
-        imageview2.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
-        [imageview2 setFrame:CGRectMake(7.5, 9+(GAP), 305, 155)];
+        //NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",num];
+        //imageview2.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
+        [imageview2 setFrame:CGRectMake(10, 10+(GAP), 300, 155)];
         CALayer *mask = [CALayer layer];
         mask.contents=(id)[[UIImage imageNamed:@"My Feed+View Deal (final)_Deal Pic mask.png"]CGImage];
-        mask.frame = CGRectMake(0, 0, 305, 155);
+        mask.frame = CGRectMake(0, 0, 300, 155);
         imageview2.layer.mask = mask;
         imageview2.layer.masksToBounds = YES;
         imageview2.tag=i;
         if (!isShortCell) [[self scrollView] addSubview:imageview2];
         
-        UIImageView *imageview3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Title & Store shade.png"]];
-        [imageview3 setFrame:CGRectMake(7.5, 86+(GAP)-(OFFSETSHORTCELL*isShortCell), 305, 78)];
+        UIImageView *imageview3;
+        if (isShortCell) {
+            imageview3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_No Pic Deal Dark background.png"]];
+            [imageview3 setFrame:CGRectMake(10, 6+(GAP), 300, 48)];
+
+        } else { imageview3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Title & Store shade.png"]];
+        [imageview3 setFrame:CGRectMake(10, 87+(GAP)-(OFFSETSHORTCELL*isShortCell), 300, 78)];
+        }
         [[self scrollView] addSubview:imageview3];
         
         UIImageView *imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Local icon.png"]];
@@ -309,32 +315,33 @@
         
         
         UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(18, 119+(GAP)-(OFFSETSHORTCELL*isShortCell), 249, 41)];
-        [label setFont:[UIFont fontWithName:@"AvenirNext-DemiBold" size:15.0]];
+        [label setFont:[UIFont fontWithName:@"Avenir-Light" size:14.0]];
         label.text=[self.TITLEMARRAY objectAtIndex:i];
         label.backgroundColor=[UIColor clearColor];
         label.textColor = [UIColor whiteColor];
+        label.numberOfLines=2;
         [[self scrollView] addSubview:label];
         
         UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(35, 167+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
-        [label2 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:15.0]];
+        [label2 setFont:[UIFont fontWithName:@"Avenir-Light" size:12.0]];
         label2.text=[self.STOREMARRAY objectAtIndex:i];
         label2.backgroundColor=[UIColor clearColor];
-        label2.textColor = [UIColor blackColor];
+        label2.textColor = [UIColor colorWithRed:(160/255.0) green:(160/255.0) blue:(165/255.0) alpha:1.0];
         [[self scrollView] addSubview:label2];
         
         UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(197, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-        [label3 setFont:[UIFont fontWithName:@"AvenirNext-DemiBold" size:13.0]];
+        [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
         label3.text=[self.PRICEMARRAY objectAtIndex:i];
         label3.backgroundColor=[UIColor clearColor];
-        label3.textColor = [UIColor colorWithRed:(81/255.0) green:(206/255.0) blue:(72/255.0) alpha:1.0];
+        label3.textColor = [UIColor blackColor];
         [label3 sizeToFit];
         [[self scrollView] addSubview:label3];
         
         UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(247, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-        [label4 setFont:[UIFont fontWithName:@"AvenirNext-DemiBold" size:13.0]];
+        [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
         label4.text=[self.DISCOUNTMARRAY objectAtIndex:i];
         label4.backgroundColor=[UIColor clearColor];
-        label4.textColor = [UIColor colorWithRed:(255/255.0) green:(58/255.0) blue:(48/255.0) alpha:1.0];
+        label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
         [label4 sizeToFit];
         [[self scrollView] addSubview:label4];
         
@@ -361,7 +368,7 @@
         [selectDealButton addTarget:self action:@selector(selectDealButtonClicked:) forControlEvents: UIControlEventTouchUpInside];
         [[self scrollView] addSubview:selectDealButton];
         
-		GAP=CGRectGetMaxY(imageview.frame) + 5;
+		GAP=CGRectGetMaxY(imageview.frame)-4;
 	}
     cellNumberInScrollView+=5;
     [[self scrollView] setContentSize:CGSizeMake(319,GAP)];
@@ -388,11 +395,17 @@
     controller.photoIdLabelFromMyFeeds = [self.PHOTOIDMARRAY objectAtIndex:(button.tag)];
     controller.dealidLabelFromMyFeeds = [self.DEALIDARRAY objectAtIndex:(button.tag)];
 
-    NSLog(@"%@",[self.DEALIDARRAY objectAtIndex:(button.tag)]);
-    NSLog(@"%@",_dealsUserLikes);
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
+    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+    NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+    _dealsUserLikes=DataResult;
 
+    NSLog(@"in myfeeds the dealid is: %@ and the deals that user likes is: %@",[self.DEALIDARRAY objectAtIndex:(button.tag)],_dealsUserLikes);
+    
     if ([_dealsUserLikes rangeOfString:[self.DEALIDARRAY objectAtIndex:(button.tag)]].location == NSNotFound) {
         controller.likeornotLabelFromMyFeeds=@"no";
+        NSLog(@"didnt find");
     } else {
         controller.likeornotLabelFromMyFeeds=@"yes";
     }
@@ -415,6 +428,7 @@
     cellNumberInScrollView=1;
     GAP=0;
 	[self orderInPositionTapBarIcons];
+    myFeedsFirstTime = YES;
 }
 
 -(void) allocArrays {
@@ -472,9 +486,6 @@
     
     [self deallocPrevViewControllers];
 
-    NSMutableArray *allViewControllers2 = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
-    NSLog(@"%@",allViewControllers2);
-
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
 
     if ([app.AfterAddDeal isEqualToString:@"yes"]) {
@@ -499,14 +510,17 @@
 }
 
 -(void) deallocPrevViewControllers {
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    id previousController = [viewControllers objectAtIndex:0];
-    if ([previousController respondsToSelector:@selector(deallocMemory)])
-        [previousController deallocMemory];
-    previousController = [viewControllers objectAtIndex:1];
-    if ([previousController respondsToSelector:@selector(deallocMemory)])
-        [previousController deallocMemory];
     
+    if (myFeedsFirstTime) {
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        id previousController = [viewControllers objectAtIndex:0];
+        if ([previousController respondsToSelector:@selector(deallocMemory)])
+            [previousController deallocMemory];
+        previousController = [viewControllers objectAtIndex:1];
+        if ([previousController respondsToSelector:@selector(deallocMemory)])
+            [previousController deallocMemory];
+        myFeedsFirstTime=NO;
+    }
 }
 - (void)viewDidLoad {
     [self initializeView];
@@ -521,6 +535,7 @@
         // Update UI after computation.
         dispatch_async(dispatch_get_main_queue(), ^{
             // Update the UI on the main thread.
+            NSLog(@"creating cells");
             [self didReachFromRegisterOrAddDeal];
         });
     });
@@ -603,8 +618,8 @@
 }
 
 -(IBAction)morebutton:(id)sender{
-   // MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
-   // [self.navigationController pushViewController:controller animated:NO];
+    MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
+    [self.navigationController pushViewController:controller animated:NO];
 }
 
 -(IBAction)profilebutton:(id)sender{

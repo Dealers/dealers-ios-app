@@ -9,6 +9,7 @@
 #import "Signup2ViewController.h"
 #import "AppDelegate.h"
 #import "Functions.h"
+#import "MyFeedsViewController.h"
 
 @interface Signup2ViewController ()
 
@@ -26,136 +27,9 @@
 @synthesize addphotobutton;
 @synthesize datepick,NavBar,ImageFrame,scroll,GenderNavBar,GenderPicker,ReturnButton,list,ReturnButtonFull,LoadingImage,PurpImage,SignupButton;
 
-/*
 -(void) BackgroundMethod {
-    NSLog(@"backgroud");
-    
-    NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS", nil];
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-
-    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:0]];
-    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    NSArray *DataArray = [DataResult componentsSeparatedByString:@"///"];
-    NSArray *reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.TITLEMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:1]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.DESCRIPTIONMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:2]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.STOREMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:3]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.PRICEMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:4]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.DISCOUNTMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:5]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.EXPIREMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:6]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.LIKEMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:7]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.COMMENTMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:8]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.CLIENTMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:9]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *PHOTOIDMARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    NSMutableArray *convert = [[NSMutableArray alloc]init];
-    
-    for (int i=0; i<[PHOTOIDMARRAY count]; i++) {
-        UIImageView *tempimage = [[UIImageView alloc]init];
-        
-        NSString *num=[PHOTOIDMARRAY objectAtIndex:i];
-        if ([num isEqualToString:@"0"]) {
-            tempimage.image =[UIImage imageNamed:@"My Feed+View Deal_NoPic icon.png"];
-        }
-        else {
-            NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[PHOTOIDMARRAY objectAtIndex:i]];
-            tempimage.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
-        }
-        [convert addObject:tempimage];
-    }
-    app.PHOTOIDMARRAYCONVERT = [[NSMutableArray alloc]initWithArray:convert];
-    
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:10]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.CATEGORYARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:11]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.SIGNARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:12]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.DEALIDARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:13]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    app.USERSIDSARRAY = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    app.FAVARRAY = [[NSMutableArray alloc]init];
-    for (int i=0; i<[app.TITLEMARRAY count]; i++) {
-        [app.FAVARRAY addObject:@"0"];
-    }
-    app.AfterAddDeal=@"aftersign";
-    
-    if ([didaddphoto isEqualToString:@"yes"]) {
-        NSData *imageData = UIImageJPEGRepresentation(ImageAdded.image, 30);
+    if (didAddPhoto) {
+        NSData *imageData = UIImageJPEGRepresentation(ImageAdded.image, 2);
         NSString *urlString = @"http://www.dealers.co.il/uploadphpFile.php";
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -177,30 +51,28 @@
         NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
         Photoid = returnString;
-        NSLog(@"%@",Photoid);
-        didaddphoto = @"no";
-        NSLog(@"loglo");
+        didAddPhoto = NO;
     }
+    
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",Fullname.text,Password.text,Email.text,Datebirth.text,Genger.text,Photoid];
+    NSLog(@"the url is= %@",strURL);
     // to execute php code
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
-    NSLog(@"the url is:%@", strURL);
     // to receive the returend value
     NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.UserID = strResult;
-    
-
-    [self performSelectorOnMainThread:@selector(MainMethod) withObject:nil waitUntilDone:NO];
-    
 }
 
 -(void) MainMethod {
-    list=Nil;
-    ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
-    [self.navigationController pushViewController:controller animated:YES];
+    list=nil;
+    MyFeedsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController pushViewController:controller animated:YES];
 }
 
--(void) initialize {
+-(void) initialize
+{
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     ReturnButtonFull.alpha=0.0;
     ImageFrame.hidden = YES;
@@ -223,10 +95,12 @@
     [self.Genger addTarget:self action:@selector(Genger) forControlEvents:UIControlEventEditingDidEndOnExit];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow) name:UIKeyboardWillShowNotification object:nil];
     list = [[NSMutableArray alloc] initWithObjects:@"Gender",@"Male",@"Female", nil];
-
+    Photoid=@"0";
+    registerAgain=NO;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [self initialize];
     [super viewDidLoad];
 }
@@ -237,7 +111,8 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)StartLoading {
+-(void)StartLoading
+{
     [UIView animateWithDuration:0.2 animations:^{SignupButton.alpha=0.0; SignupButton.transform =CGAffineTransformMakeScale(1,1);
         LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
     
@@ -266,12 +141,14 @@
     [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
         LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
 }
-- (IBAction)SingupButton:(id)sender{
+
+-(IBAction)SingupButton:(id)sender
+{
     
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/registercheck.php?var1=%@",Email.text];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-
+    
     if (([Email.text isEqual:@""]) || ([Email.text isEqual:@"Email"])) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter an Email Address" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
@@ -286,41 +163,63 @@
         [alert show];
         
     } else if (([Password.text isEqual:@""]) ||  ([Password.text isEqual:@"Password"])) {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter a Password" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-            [alert show];
-            
-        } else if ([DataResult isEqualToString:@"exist"]){
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter a Password" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        [alert show];
+        
+    } else if ([DataResult isEqualToString:@"exist"]){
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Email already exist" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
     }
     else {
+        [Fullname resignFirstResponder];
+        [Email resignFirstResponder];
+        [Password resignFirstResponder];
         [self StartLoading];
-        [self performSelectorInBackground:@selector(BackgroundMethod) withObject:nil];
+        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+        dispatch_async(queue, ^{
+            // Do some computation here.
+            [self BackgroundMethod];
+            // Update UI after computation.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI on the main thread.
+                AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+                NSLog(@"usrid=%@",app.UserID);
+                if (([app.UserID isEqualToString:@"0"])||(app.UserID==nil)||([app.UserID isEqualToString:@""])) {
+                    registerAgain=YES;
+                    [LoadingImage stopAnimating];
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                    [alert show];
+                } else
+                [self MainMethod];
+            });
+        });
     }
 }
 
-- (IBAction)AddphotoButton:(id)sender {
+- (IBAction)AddphotoButton:(id)sender
+{
     UIActionSheet *alert;
     if (ImageAdded.image == nil) {
         alert = [[UIActionSheet alloc]
-                                initWithTitle:@"Please Choose"
-                                delegate:self
-                                cancelButtonTitle:@"Cancel"
-                                destructiveButtonTitle:nil
-                                otherButtonTitles:@"Camera", @"Library", nil];
-
+                 initWithTitle:@"Please Choose"
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"Camera", @"Library", nil];
+        
     } else {
         alert = [[UIActionSheet alloc]
-                            initWithTitle:@"Please Choose"
-                            delegate:self
-                            cancelButtonTitle:@"Cancel"
-                            destructiveButtonTitle:@"Remove Photo"
-                            otherButtonTitles:@"Camera", @"Library", nil];
+                 initWithTitle:@"Please Choose"
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:@"Remove Photo"
+                 otherButtonTitles:@"Camera", @"Library", nil];
     }
     [alert showInView:self.view];
 }
 
--(void)MaskImage {
+-(void)MaskImage
+{
     CALayer *mask = [CALayer layer];
     mask.contents=(id)[[UIImage imageNamed:@"Registration_Profile Pic Mask.png"]CGImage];
     mask.frame = CGRectMake(0, 0, 100, 100);
@@ -334,17 +233,18 @@
     ImageAdded.image = [ info objectForKey:UIImagePickerControllerEditedImage];
     [self dismissViewControllerAnimated:YES completion:nil];
     [self MaskImage];
-    didaddphoto = @"yes"; //אולי לשנות לבוליאן בהמשך
+    didAddPhoto = YES;
 }
 
--(void)CleanScreen:(NSString*)string {
+-(void)CleanScreen:(NSString*)string
+{
     
     [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 590);}];
     [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, 546);}];
     [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, 590);}];
     [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, 546);}];
     [scroll setScrollEnabled:NO];
-
+    
     if (![string isEqualToString:@"text"]) {
         [Fullname resignFirstResponder];
         [Email resignFirstResponder];
@@ -402,9 +302,7 @@
     return YES;
 }
 
-- (void)viewDidUnload {
-    [self setAddphotobutton:nil];
-    [self setAddphotobutton:nil];
+-(void)viewDidUnload {
     [super viewDidUnload];
 }
 
@@ -417,9 +315,11 @@
     [scroll setScrollEnabled:YES];
 }
 
--(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+-(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
     
-    if (ImageAdded.image==NULL) {
+    if (ImageAdded.image==NULL)
+    {
         if (buttonIndex == 0) {
             
             UIImagePickerController *picker = [[UIImagePickerController alloc]init];
@@ -435,55 +335,54 @@
             picker.delegate = self;
             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             picker.allowsEditing=YES;
+            [self presentViewController:picker animated:YES completion:nil];
+        }
+    } else {
+        if (buttonIndex == 1) {
+            
+            UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+            picker.delegate = self;
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            picker.allowsEditing=YES;
+            [self presentViewController:picker animated:YES completion:nil];
+            
+        }
+        if (buttonIndex==2) {
+            
+            UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+            picker.delegate = self;
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            picker.allowsEditing=YES;
             
             [self presentViewController:picker animated:YES completion:nil];
         }
-    }else {
-    if (buttonIndex == 1) {
-
-        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-        picker.delegate = self;
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        picker.allowsEditing=YES;
-        [self presentViewController:picker animated:YES completion:nil];
-    
-    }
-    if (buttonIndex==2) {
-
-        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-        picker.delegate = self;
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        picker.allowsEditing=YES;
-
-        [self presentViewController:picker animated:YES completion:nil];
-    }
-    if (buttonIndex==0) {
-        ImageAdded.image=NULL;
-    
-    }
+        if (buttonIndex==0) {
+            ImageAdded.image=NULL;
+            didAddPhoto = NO;
         }
+    }
     
 }
 
-- (IBAction)GenderDoneButton:(id)sender {
+- (IBAction)GenderDoneButton:(id)sender
+{
     [self CleanScreen:@"GenderPicker"];
     [scroll setScrollEnabled:NO];
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
 }
 
-- (IBAction)ReturnButtonAction:(id)sender {
+- (IBAction)ReturnButtonAction:(id)sender
+{
     ReturnButtonFull.alpha=1.0;
     ReturnButton.alpha=0.0;
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
     [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
-    //[self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if ([[list objectAtIndex:row] isEqualToString:@"Gender"]) {
-        NSLog(@"GENDER");
         Genger.text=NULL;
         self.optional_gender.hidden=NO;
     } else {
@@ -506,5 +405,12 @@
 {
     return [list objectAtIndex:row];
 }
-*/
+
+- (IBAction)tapGesturePressed:(id)sender {
+    [Fullname resignFirstResponder];
+    [Email resignFirstResponder];
+    [Password resignFirstResponder];
+    [scroll setScrollEnabled:NO];
+    [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
+}
 @end

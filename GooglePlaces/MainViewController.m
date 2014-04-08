@@ -11,7 +11,7 @@
 #import "Signup2ViewController.h"
 #import "SigninViewController.h"
 
-@interface MainViewController () 
+@interface MainViewController ()
 @end
 
 @implementation MainViewController
@@ -40,7 +40,7 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-
+    
     if (([app.Animate_first isEqualToString:@"first"]) || (app.Animate_first == NULL))  {
         app.Animate_first=@"notfirst";
         signin.alpha=0.0;
@@ -53,7 +53,7 @@
     } else {
         [self ObjectInPlace];
     }
-[super viewDidLoad];
+    [super viewDidLoad];
 }
 
 -(void) anim2 {
@@ -87,7 +87,7 @@
 
 -(IBAction)EmailimageButton:(id)sender{
     Signup2ViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"Signup2ViewController"];
-    [self.navigationController presentViewController:controller animated:YES completion:nil];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 -(IBAction)SigninButton:(id)sender{
@@ -112,6 +112,6 @@
         [v removeFromSuperview];
     }
     [self.view removeFromSuperview];
-    self.view=nil;  
+    self.view=nil;
 }
 @end

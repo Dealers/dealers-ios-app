@@ -8,7 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MoreViewController : UIViewController
+@interface MoreViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (strong,nonatomic) NSArray *moreListArray;
+@property (weak, nonatomic) IBOutlet UITableView *moreTableView;
+
+
+
+
+
+
+
+
+
+
+
 
 
 - (IBAction)Adddeal:(id)sender;

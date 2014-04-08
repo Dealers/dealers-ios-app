@@ -12,6 +12,8 @@
 #import "ExploretableViewController.h"
 #import "AppDelegate.h"
 #import "TableViewController.h"
+#import "LikesCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 #define GAP 10
@@ -36,25 +38,25 @@
 
 -(void) startLoadingUploadImage {
     _loadingImage.animationImages = [NSArray arrayWithObjects:
-                                    [UIImage imageNamed:@"loading.png"],
-                                    [UIImage imageNamed:@"loading5.png"],
-                                    [UIImage imageNamed:@"loading10.png"],
-                                    [UIImage imageNamed:@"loading15.png"],
-                                    [UIImage imageNamed:@"loading20.png"],
-                                    [UIImage imageNamed:@"loading25.png"],
-                                    [UIImage imageNamed:@"loading30.png"],
-                                    [UIImage imageNamed:@"loading35.png"],
-                                    [UIImage imageNamed:@"loading40.png"],
-                                    [UIImage imageNamed:@"loading45.png"],
-                                    [UIImage imageNamed:@"loading50.png"],
-                                    [UIImage imageNamed:@"loading55.png"],
-                                    [UIImage imageNamed:@"loading60.png"],
-                                    [UIImage imageNamed:@"loading65.png"],
-                                    [UIImage imageNamed:@"loading70.png"],
-                                    [UIImage imageNamed:@"loading75.png"],
-                                    [UIImage imageNamed:@"loading80.png"],
-                                    [UIImage imageNamed:@"loading85.png"],
-                                    nil];
+                                     [UIImage imageNamed:@"loading.png"],
+                                     [UIImage imageNamed:@"loading5.png"],
+                                     [UIImage imageNamed:@"loading10.png"],
+                                     [UIImage imageNamed:@"loading15.png"],
+                                     [UIImage imageNamed:@"loading20.png"],
+                                     [UIImage imageNamed:@"loading25.png"],
+                                     [UIImage imageNamed:@"loading30.png"],
+                                     [UIImage imageNamed:@"loading35.png"],
+                                     [UIImage imageNamed:@"loading40.png"],
+                                     [UIImage imageNamed:@"loading45.png"],
+                                     [UIImage imageNamed:@"loading50.png"],
+                                     [UIImage imageNamed:@"loading55.png"],
+                                     [UIImage imageNamed:@"loading60.png"],
+                                     [UIImage imageNamed:@"loading65.png"],
+                                     [UIImage imageNamed:@"loading70.png"],
+                                     [UIImage imageNamed:@"loading75.png"],
+                                     [UIImage imageNamed:@"loading80.png"],
+                                     [UIImage imageNamed:@"loading85.png"],
+                                     nil];
     _loadingImage.animationDuration = 0.3;
     [_loadingImage startAnimating];
     [UIView animateWithDuration:0.2 animations:^{_loadingImage.alpha=1.0; _loadingImage.transform =CGAffineTransformMakeScale(0,0);
@@ -103,14 +105,14 @@
     titlelabel.frame = CGRectMake(56, 195, titlelabel.frame.size.width, titlelabel.frame.size.height);
     titlelabel.numberOfLines=0;
     [titlelabel sizeToFit];
-
+    
     lowestYPoint=(CGRectGetMaxY(self.TitleIcon.frame) > CGRectGetMaxY(titlelabel.frame)) ? CGRectGetMaxY(self.TitleIcon.frame) : CGRectGetMaxY(titlelabel.frame);
     
     self.StoreIcon.frame = CGRectMake(15, lowestYPoint + GAP, self.StoreIcon.frame.size.width, self.StoreIcon.frame.size.height);
     storelabel.frame = CGRectMake(56, lowestYPoint+1+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     
     lowestYPoint=(CGRectGetMaxY(self.StoreIcon.frame) > CGRectGetMaxY(storelabel.frame)) ? CGRectGetMaxY(self.StoreIcon.frame) : CGRectGetMaxY(storelabel.frame);
-
+    
     
     if ((![categorylabel.text isEqualToString:@""]) || (![categorylabel.text isEqualToString:@"No Category"])) {
         self.CategoryIcon.frame = CGRectMake(15, lowestYPoint + GAP, self.CategoryIcon.frame.size.width, self.CategoryIcon.frame.size.height);
@@ -146,7 +148,7 @@
         }
     }
     
-
+    
     if ((pricelabel.hidden == YES) && (discountlabel.hidden == YES)) self.PriceIcon.hidden=YES;
     
     if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"]) {
@@ -157,7 +159,7 @@
         expirelabel.hidden=YES;
         self.ExpireIcon.hidden=YES;
     }
-
+    
     
     if (!([descriptionlabel.text length]==0)) {
         descriptionlabel.numberOfLines=0;
@@ -169,20 +171,86 @@
         descriptionlabel.hidden=YES;
         self.DescriptionIcon.hidden=YES;
     }
-
+    
     [self setViewUnderDealParameters];
     [self setScrollSize];
 }
 
 -(void) loadImageFromUrl {
-    _urlImage = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",self.photoIdLabelFromMyFeeds];
+    if (numofpics!=0) {
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=bringphotos&Dealid=%@",_dealidLabelFromMyFeeds];
+        NSLog(@"%d",numofpics);
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        NSArray *DataArray = [DataResult componentsSeparatedByString:@"^"];
+        
+        if (numofpics==1) {
+            _urlImage = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",self.photoIdLabelFromMyFeeds];
+            _tempImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
+        }
+        if (numofpics==2) {
+            _urlImage = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",self.photoIdLabelFromMyFeeds];
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",DataArray[0]];
+            _tempImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
+            _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+
+        }
+        if (numofpics==3) {
+            _urlImage = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",self.photoIdLabelFromMyFeeds];
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",DataArray[0]];
+            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",DataArray[1]];
+            _tempImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
+            _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            _tempImage3=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
+
+
+        }
+        if (numofpics==4) {
+            _urlImage = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",self.photoIdLabelFromMyFeeds];
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",DataArray[0]];
+            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",DataArray[1]];
+            _urlImage4 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",DataArray[2]];
+            _tempImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
+            _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            _tempImage3=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
+            _tempImage4=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage4]]];
+
+        }
+    }
+
 }
 
 -(void) loadImage {
-    self.captureImage.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
+    if (numofpics==0) {
+        self.captureImage.image=[UIImage imageNamed:@"nodeal.jpeg"];
+    }
+    if (numofpics==1) {
+        self.captureImage.image = _tempImage;
+    }
+    if (numofpics==2) {
+        self.captureImage.image = _tempImage;
+        self.captureImage2.image = _tempImage2;
+    }
+    if (numofpics==3) {
+        self.captureImage.image = _tempImage;
+        self.captureImage2.image = _tempImage2;
+        self.captureImage3.image = _tempImage3;
+    }
+    if (numofpics==4) {
+        self.captureImage.image = _tempImage;
+        self.captureImage2.image = _tempImage2;
+        self.captureImage3.image = _tempImage3;
+        self.captureImage4.image = _tempImage4;
+    }
+    _tempImage=nil;
+    _tempImage2=nil;
+    _tempImage3=nil;
+    _tempImage4=nil;
+
     [_loadingImage stopAnimating];
     _loadingImage.hidden=YES;
 }
+
 -(void) loadVarsFromDeal{
     titlelabel.text = self.titleLabelFromMyFeeds;
     storelabel.text = self.storeLabelFromMyFeeds;
@@ -197,21 +265,53 @@
 }
 
 -(int) numOfPicturesInTheDeal {
-    return 1;
+    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=howmanyphotos&Dealid=%@",_dealidLabelFromMyFeeds];
+    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+    NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+    return [DataResult intValue];
 }
+
+-(void) dealerViewInitialize {
+    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue2", NULL);
+    dispatch_async(queue, ^{
+        // Do some computation here.
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=whodiduploadthedeal&Dealid=%@",_dealidLabelFromMyFeeds];
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        NSArray *DataArray = [DataResult componentsSeparatedByString:@"^"];
+        NSString *urlImage = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[DataArray objectAtIndex:2]];
+        // Update UI after computation.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Update the UI on the main thread.
+            _uploadDateLabel.text=[DataArray objectAtIndex:0];
+            _dealersNameLabel.text=[DataArray objectAtIndex:1];
+            self.clientimage.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlImage]]];
+        });
+    });
+
+}
+
 - (void)viewDidLoad
 {
+    if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
+        _LikeButton.enabled=NO;
+    }
     viewDidApear=YES;
+    cellNumberInScrollView=0;
+    likesView = NO;
     [super viewDidLoad];
     [self startLoadingUploadImage];
     [self loadVarsFromDeal];
     [self locateIconsInPlace];
-    self.pageControl.numberOfPages=0;//[self numOfPicturesInTheDeal];
+    [self dealerViewInitialize];
+    numofpics=[self numOfPicturesInTheDeal];
+    self.pageControl.numberOfPages=numofpics;
+    _ViewLikes.hidden=YES;
     [self.cameraScrollView setContentSize:((CGSizeMake(320*numofpics, 155)))];
     [self.cameraScrollView setScrollEnabled:YES];
-    NSLog(@"%@",_likeornotLabelFromMyFeeds);
     if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
-        [_LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (pushed).png"] forState:UIControlStateNormal];
+        NSLog(@"changing the button, %@",_likeornotLabelFromMyFeeds);
+        [_LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (selected).png"] forState:UIControlStateNormal];
     }
 }
 
@@ -241,36 +341,50 @@
 }
 
 - (IBAction)ReturnButtonAction:(id)sender {
-    ReturnButtonFull.alpha=1.0;
-    ReturnButton.alpha=0.0;
-    [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
-    [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    if (likesView) {
+        _ViewLikes.hidden=YES;
+        likesView=NO;
+    } else {
+        //AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+        //app.AfterAddDeal=@"yes";
+        ReturnButtonFull.alpha=1.0;
+        ReturnButton.alpha=0.0;
+        [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
+        [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 
 - (IBAction)myfeedbutton:(id)sender{
-    //ViewalldealsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"myfeeds"];
-    //[self.navigationController pushViewController:controller animated:NO];
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)morebutton:(id)sender{
-   // MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
-   // [self.navigationController pushViewController:controller animated:NO];
+    MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:NO];
+    [navigationController pushViewController:controller animated:NO];
 }
 
 - (IBAction)profilebutton:(id)sender{
-    //ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
-   // [self.navigationController pushViewController:controller animated:NO];
-    
+    ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:NO];
+    [navigationController pushViewController:controller animated:NO];
 }
+
 - (IBAction)explorebutton:(id)sender{
-   // ExploretableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"explore"];
-    //[self.navigationController pushViewController:controller animated:NO];
+    ExploretableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"explore"];
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:NO];
+    [navigationController pushViewController:controller animated:NO];
 }
 
 - (IBAction)Adddeal:(id)sender {
-    //LockTableButton.alpha=1.0;
-    //[UIView animateWithDuration:0.5 animations:^{BlueButtonsView.alpha=1.0;}];
+    LockTableButton.alpha=1.0;
+    [UIView animateWithDuration:0.5 animations:^{BlueButtonsView.alpha=1.0;}];
 }
 
 -(IBAction)UNLockButtonAction:(id)sender{
@@ -280,8 +394,10 @@
 
 -(void) AddDealFunction {
     TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
-    [self.navigationController presentViewController:controller animated:NO completion:nil];
-    BlueButtonsView.alpha=0.0;
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:NO];
+    [navigationController pushViewController:controller animated:NO];
+    self.BlueButtonsView.alpha=0.0;
     LockTableButton.alpha=0.0;
 }
 
@@ -299,35 +415,136 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if ([_likeornotLabelFromMyFeeds isEqualToString:@"no"]) {
+        _LikeButton.enabled=NO;
         _likeornotLabelFromMyFeeds=@"yes";
         [self.LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (selected).png"] forState:UIControlStateNormal];
         int IntLike = [likelabel.text intValue];
         IntLike++;
         likelabel.text=[NSString stringWithFormat:@"%d",IntLike];
         NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@&Dealid=%@",app.UserID,@"updatelikestables",_dealidLabelFromMyFeeds];
+        NSLog(@"url updatin after like: %@", url);
         NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",DataResult);
     }
 }
 
--(void) whoLikesTheDeal {
-    NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Dealid=%@",@"whoLikesTheDeal",_dealidLabelFromMyFeeds];
+/*-(void) hiddenWhiteCoverView {
+ [UIView animateWithDuration:0.5 animations:^{self.whiteCoverView.alpha=0.0;}];
+ [self.LoadingImage stopAnimating];
+ }*/
+
+-(void) loadDataFromDB {
+    NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Dealid=%@",@"wholikesthedeal",_dealidLabelFromMyFeeds];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    _DealersidWhoLikesTheDealArray = [DataResult componentsSeparatedByString:@"."];
+    _DealersDataWhoLikesTheDealArray = [DataResult componentsSeparatedByString:@"."];
     
-    NSInteger arraySize;
-    if (_DealersidWhoLikesTheDealArray.count>5) {
-        arraySize=5;
-    } else arraySize=_DealersidWhoLikesTheDealArray.count;
+    _dealersNameArray = [[NSMutableArray alloc]init];
+    _dealersPhotoArray = [[NSMutableArray alloc]init];
+    _dealersPhotoDataArray = [[NSMutableArray alloc]init];
+    _dealersidArray = [[NSMutableArray alloc]init];
     
-    for (int i=0; i<arraySize; i++) {
-        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/getUserData.php?Useiid=%@",_DealersidWhoLikesTheDealArray[i]];
-        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-        NSArray *dealerData = [DataResult componentsSeparatedByString:@"///"];
-        [_DealersDataWhoLikesTheDealArray addObject:dealerData];
+    
+    for (int i=0; i<([[_DealersDataWhoLikesTheDealArray copy]count]-1); i=i+3) {
+        [_dealersidArray addObject:[_DealersDataWhoLikesTheDealArray objectAtIndex:i]];
+        
+        [_dealersNameArray addObject:[_DealersDataWhoLikesTheDealArray objectAtIndex:i+1]];
+        [_dealersPhotoArray addObject:[_DealersDataWhoLikesTheDealArray objectAtIndex:i+2]];
+        [_dealersPhotoDataArray addObject:@"0"];
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (tableView==_tableViewLikes) {
+        if ([_dealersNameArray count] == 0) {
+            return 0;
+        }
+        return [_dealersNameArray count];
+    } else return [_dealersNameArray count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    LikesCell *Cell=nil;
+    if (tableView==_tableViewLikes) {
+        
+        static NSString *CellIdentifier = @"likescell";
+        Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!Cell) Cell = [[LikesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        if (indexPath.row<[_dealersNameArray count]) {
+            Cell.dealerName.text = [_dealersNameArray objectAtIndex:indexPath.row];
+        } else Cell.dealerName.text = @"Unknown";
+        
+        if ([[_dealersPhotoDataArray objectAtIndex:indexPath.row] isEqual:@"0"]) {
+            dispatch_queue_t queue = dispatch_queue_create("com.MyQueue3", NULL);
+            dispatch_async(queue, ^{
+                // Do some computation here.
+                NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealersPhotoArray objectAtIndex:indexPath.row]];
+                NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+                // Update UI after computation.
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // Update the UI on the main thread.
+                    UIImage *image = [UIImage imageWithData:URLData];
+                    [_dealersPhotoDataArray replaceObjectAtIndex:indexPath.row withObject:image];
+                    Cell.dealerImage.image = image;
+                    CALayer *mask = [CALayer layer];
+                    mask.contents=(id)[[UIImage imageNamed:@"My Feed+View Deal (final)_Deal Pic mask.png"]CGImage];
+                    mask.frame = CGRectMake(0, 0, 40, 40);
+                    Cell.dealerImage.layer.mask = mask;
+                    Cell.dealerImage.layer.masksToBounds = YES;
+                    
+                    [_tableViewLikes beginUpdates];
+                    [_tableViewLikes reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+                    [_tableViewLikes endUpdates];
+                });
+            });
+            
+        } else {
+            Cell.dealerImage.image = [_dealersPhotoDataArray objectAtIndex:indexPath.row];
+            CALayer *mask = [CALayer layer];
+            mask.contents=(id)[[UIImage imageNamed:@"My Feed+View Deal (final)_Deal Pic mask.png"]CGImage];
+            mask.frame = CGRectMake(0, 0, 40, 40);
+            Cell.dealerImage.layer.mask = mask;
+            Cell.dealerImage.layer.masksToBounds = YES;
+        }
+        
+    }
+    return Cell;
+    
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"likescell"]) {
+        NSIndexPath *indexpath = [_tableViewLikes indexPathForSelectedRow];
+        NSString *string;
+        string = [_dealersidArray objectAtIndex:indexpath.row];
+        [[segue destinationViewController] setDealerId:string];
+        [[segue destinationViewController] setDidComeFromLikesTable:@"yes"];
+        
+    }
+}
+
+
+- (IBAction)whoLikesTheDeal:(id)sender{
+    
+    if (![likelabel.text isEqualToString:@"0"]) {
+        likesView=YES;
+        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue4", NULL);
+        dispatch_async(queue, ^{
+            // Do some computation here.
+            [self loadDataFromDB];
+            // Update UI after computation.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI on the main thread.
+                _ViewLikes.hidden=NO;
+                [_tableViewLikes reloadData];
+            });
+        });
     }
 }
 
@@ -339,7 +556,7 @@
     NSArray *activityItems = @[name];
     UIActivityViewController *acv = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
     [self presentViewController:acv animated:YES completion:nil];
-
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
@@ -349,6 +566,7 @@
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
+
     self.titleLabelFromMyFeeds=nil;
     self.storeLabelFromMyFeeds=nil;
     self.categoryLabelFromMyFeeds=nil;
@@ -369,4 +587,6 @@
     self.view=nil;
     NSLog(@"dealloc viewdeal");
 }
+
+
 @end

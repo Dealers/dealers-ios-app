@@ -12,6 +12,7 @@
 {
     BOOL isShortCell;
     int GAP;
+    int gapForLikesView;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -65,10 +66,28 @@
 @property (nonatomic, strong) NSMutableArray *CATEGORYARRAY;
 @property (nonatomic, strong) NSMutableArray *SIGNARRAY;
 @property (nonatomic, strong) NSMutableArray *DEALIDARRAY;
-@property (nonatomic, strong) NSMutableArray *USERSIDSARRAY;
+@property (nonatomic, strong) NSMutableArray *uploadDateArray;
+
+@property (nonatomic, strong) NSMutableArray *titleArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *descriptionArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *storeArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *priceArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *discountArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *expireArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *likesCountArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *commentsCountArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *clientidArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *photoidArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *photoidConvertedArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *categoryArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *signArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *dealidArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *uploadDateArrayForLikesView;
 
 @property (nonatomic, weak) NSString *deals;
 @property (nonatomic, weak) NSString *likes;
 
+@property (nonatomic, strong) NSString *dealerId;
+@property (nonatomic, strong) NSString *didComeFromLikesTable;
 
 @end

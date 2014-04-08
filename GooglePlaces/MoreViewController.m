@@ -19,20 +19,11 @@
 @implementation MoreViewController
 @synthesize BlueButtonsView,OnlineButton,OnlineText,LocalButton,LocalText,LockTableButton;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftertapbar";
-
+    _moreListArray=@[@"Groups", @"Follows", @"Tutorial", @"Score"];
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -43,22 +34,59 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)myfeedbutton:(id)sender{
-    [self.navigationController popToRootViewControllerAnimated:NO];
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [_moreListArray count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.text = [_moreListArray objectAtIndex:indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:@"Check.png"];
+    
+    return cell;
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+}
+
+
+
+
+
+
+
+
+
+- (IBAction)myfeedbutton:(id)sender{
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:NO];
+}
+
 - (IBAction)morebutton:(id)sender{
-    MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
-    [self.navigationController pushViewController:controller animated:NO];
 }
 
 - (IBAction)profilebutton:(id)sender{
     ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
-    [self.navigationController pushViewController:controller animated:NO];
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:NO];
+    [navigationController pushViewController:controller animated:NO];
     
 }
 - (IBAction)explorebutton:(id)sender{
     ExploretableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"explore"];
-    [self.navigationController pushViewController:controller animated:NO];
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:NO];
+    [navigationController pushViewController:controller animated:NO];
 }
 
 - (IBAction)Adddeal:(id)sender {
@@ -73,9 +101,10 @@
 
 -(void) AddDealFunction {
     TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
-    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navi animated:NO completion:nil];
-    BlueButtonsView.alpha=0.0;
+    UINavigationController *navigationController = self.navigationController;
+    [navigationController popViewControllerAnimated:NO];
+    [navigationController pushViewController:controller animated:NO];
+    self.BlueButtonsView.alpha=0.0;
     LockTableButton.alpha=0.0;
 }
 

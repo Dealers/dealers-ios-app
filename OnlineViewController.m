@@ -37,6 +37,8 @@
 }
 - (void)didReceiveMemoryWarning
 {
+    //[self deallocOnlineView];
+    [self.navigationController popViewControllerAnimated:YES];
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -67,7 +69,9 @@
 
 - (IBAction) ReturnButton:(id)sender{
     [self deallocOnlineView];
-    [self.navigationController popViewControllerAnimated:YES];
+    UINavigationController * navigationController = self.navigationController;
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
 }
 
 -(void) deallocOnlineView {

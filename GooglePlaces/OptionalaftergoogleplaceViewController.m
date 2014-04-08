@@ -44,41 +44,74 @@
     _descriptionText = _DescriptionTextView.text;
     _descriptionText = [_descriptionText stringByReplacingOccurrencesOfString:@"&" withString:@"q9j"];
     _descriptionText = [_descriptionText stringByReplacingOccurrencesOfString:@"'" withString:@"q8j"];
-
+    
 }
 -(void) BackgroundMethod {
-
-    if (numofpics>0) {
-        
-        NSData *imagedata = UIImageJPEGRepresentation(_captureImage.image, 2);
-        NSString *urlString = @"http://www.dealers.co.il/uploadphpFile.php";
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [request setURL:[NSURL URLWithString:urlString]];
-        [request setHTTPMethod:@"POST"];
-        
-        NSString *boundary = @"---------------------------14737809831466499882746641449";
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-        [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-        
-        NSMutableData *body = [NSMutableData data];
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[@"Content-Disposition: form-data; name=\"userfile\"; filename=\".jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[NSData dataWithData:imagedata]];
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [request setHTTPBody:body];
-        
-        NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-        NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-        dealphotoid = returnString;
+    
+    NSMutableArray *photosArray=[[NSMutableArray alloc]init];
+    NSMutableArray *photosidArray=[[NSMutableArray alloc]init];
+    
+    if (numofpics==1) {
+        [photosArray addObject:_captureImage.image];
     }
-    if (numofpics==0) {
-        dealphotoid=@"0";
+    if (numofpics==2) {
+        [photosArray addObject:_captureImage.image];
+        [photosArray addObject:_captureImage2.image];
+    }
+    if (numofpics==3) {
+        [photosArray addObject:_captureImage.image];
+        [photosArray addObject:_captureImage2.image];
+        [photosArray addObject:_captureImage3.image];
+    }
+    if (numofpics==4) {
+        [photosArray addObject:_captureImage.image];
+        [photosArray addObject:_captureImage2.image];
+        [photosArray addObject:_captureImage3.image];
+        [photosArray addObject:_captureImage4.image];
+    }
+    
+    if (numofpics>0) {
+        for (int i=0; i<[photosArray count]; i++) {
+            NSData *imagedata = UIImageJPEGRepresentation([photosArray objectAtIndex:i], 1);
+            NSString *urlString = @"http://www.dealers.co.il/uploadphpFile.php";
+            
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+            [request setURL:[NSURL URLWithString:urlString]];
+            [request setHTTPMethod:@"POST"];
+            
+            NSString *boundary = @"---------------------------14737809831466499882746641449";
+            NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+            [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+            
+            NSMutableData *body = [NSMutableData data];
+            [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[@"Content-Disposition: form-data; name=\"userfile\"; filename=\".jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[NSData dataWithData:imagedata]];
+            [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [request setHTTPBody:body];
+            
+            NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+            NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+            //dealphotoid = returnString;
+            NSString *photoidFormUpload = returnString;
+            [photosidArray addObject:photoidFormUpload];
+        }
+    }
+    
+    for (int i=0; i<4; i++) {
+        [photosidArray addObject:@"0"];
     }
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal = @"yes";
+    
+    NSString *numofPhotos = [NSString stringWithFormat:@"%d",numofpics];
+
+    NSDate *localDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat =@"yyyy-MM-dd 'at' HH:mm";
+    NSString *dateString = [dateFormatter stringFromDate: localDate];
 
     NSString *newString;
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/dealphpFile.php?Title='"];
@@ -100,7 +133,19 @@
     newString = [newString stringByAppendingString:_expirationlabel.text];
     newString = [newString stringByAppendingString:@"'"];
     newString = [newString stringByAppendingString:@"&Photoid='"];
-    newString = [newString stringByAppendingString:dealphotoid];
+    newString = [newString stringByAppendingString:[photosidArray objectAtIndex:0]];
+    newString = [newString stringByAppendingString:@"'"];
+    newString = [newString stringByAppendingString:@"&Photoid2='"];
+    newString = [newString stringByAppendingString:[photosidArray objectAtIndex:1]];
+    newString = [newString stringByAppendingString:@"'"];
+    newString = [newString stringByAppendingString:@"&Photoid3='"];
+    newString = [newString stringByAppendingString:[photosidArray objectAtIndex:2]];
+    newString = [newString stringByAppendingString:@"'"];
+    newString = [newString stringByAppendingString:@"&Photoid4='"];
+    newString = [newString stringByAppendingString:[photosidArray objectAtIndex:3]];
+    newString = [newString stringByAppendingString:@"'"];
+    newString = [newString stringByAppendingString:@"&Photosnum='"];
+    newString = [newString stringByAppendingString:numofPhotos];
     newString = [newString stringByAppendingString:@"'"];
     newString = [newString stringByAppendingString:@"&Category='"];
     newString = [newString stringByAppendingString:_segcategory];
@@ -111,7 +156,12 @@
     newString = [newString stringByAppendingString:@"&Clientid='"];
     newString = [newString stringByAppendingString:app.UserID];
     newString = [newString stringByAppendingString:@"'"];
+    newString = [newString stringByAppendingString:@"&uploaddate='"];
+    newString = [newString stringByAppendingString:dateString];
+    newString = [newString stringByAppendingString:@"'"];
+
     strURL = newString;
+    NSLog(@"url uploading deal=%@",strURL);
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
     NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
@@ -150,19 +200,18 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if ([app.previousViewControllerAddDeal isEqualToString:@"foursquare"]){
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    int count = [viewControllers count];
-    NSLog(@"%@,%d",viewControllers,count);
-    id previousController = [viewControllers objectAtIndex:3];
-    if ([previousController respondsToSelector:@selector(deallocMemory)])
-        [previousController deallocMemory];
-    [self DeallocMemory];
-    UINavigationController * navigationController = self.navigationController;
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        int count = [viewControllers count];
+        NSLog(@"%@,%d",viewControllers,count);
+        id previousController = [viewControllers objectAtIndex:3];
+        if ([previousController respondsToSelector:@selector(deallocMemory)])
+            [previousController deallocMemory];
+        [self DeallocMemory];
+        UINavigationController * navigationController = self.navigationController;
         [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
     }
     else {
         NSArray *viewControllers = self.navigationController.viewControllers;
-        int count = [viewControllers count];
         id previousController = [viewControllers objectAtIndex:3];
         if ([previousController respondsToSelector:@selector(deallocOnlineView)]){
             [previousController deallocOnlineView];
@@ -179,7 +228,7 @@
 
 - (void)viewDidLoad
 {
-    [self initializeCamera];
+    //[self initializeCamera];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     NSLog(@"%@",app.previousViewControllerAddDeal);
     [self initialize];
@@ -188,7 +237,6 @@
     isMoreOptionViewHidden = true;
     currentpage=0;
     _BlackCoverImage.hidden=YES;
-    
     [self ReduceScroll];
     [self EnlargeCameraScroll];
     [_scroll setScrollEnabled:YES];
@@ -210,7 +258,7 @@
     _ChagrtoDate.alpha=0.0;
     _DollarButtonFull.alpha=1.0;
     _DollarButton.alpha=0.0;
-
+    
     _ShekelButtonFull.alpha=0.0;
     _PoundButtonFull.alpha=0.0;
     _PersentButton.alpha=0.0;
@@ -259,25 +307,25 @@
 //Showing the Loading Icon //
 -(void) startLoadingIcon {
     _LoadingImage.animationImages = [NSArray arrayWithObjects:
-                                    [UIImage imageNamed:@"loading.png"],
-                                    [UIImage imageNamed:@"loading5.png"],
-                                    [UIImage imageNamed:@"loading10.png"],
-                                    [UIImage imageNamed:@"loading15.png"],
-                                    [UIImage imageNamed:@"loading20.png"],
-                                    [UIImage imageNamed:@"loading25.png"],
-                                    [UIImage imageNamed:@"loading30.png"],
-                                    [UIImage imageNamed:@"loading35.png"],
-                                    [UIImage imageNamed:@"loading40.png"],
-                                    [UIImage imageNamed:@"loading45.png"],
-                                    [UIImage imageNamed:@"loading50.png"],
-                                    [UIImage imageNamed:@"loading55.png"],
-                                    [UIImage imageNamed:@"loading60.png"],
-                                    [UIImage imageNamed:@"loading65.png"],
-                                    [UIImage imageNamed:@"loading70.png"],
-                                    [UIImage imageNamed:@"loading75.png"],
-                                    [UIImage imageNamed:@"loading80.png"],
-                                    [UIImage imageNamed:@"loading85.png"],
-                                    nil];
+                                     [UIImage imageNamed:@"loading.png"],
+                                     [UIImage imageNamed:@"loading5.png"],
+                                     [UIImage imageNamed:@"loading10.png"],
+                                     [UIImage imageNamed:@"loading15.png"],
+                                     [UIImage imageNamed:@"loading20.png"],
+                                     [UIImage imageNamed:@"loading25.png"],
+                                     [UIImage imageNamed:@"loading30.png"],
+                                     [UIImage imageNamed:@"loading35.png"],
+                                     [UIImage imageNamed:@"loading40.png"],
+                                     [UIImage imageNamed:@"loading45.png"],
+                                     [UIImage imageNamed:@"loading50.png"],
+                                     [UIImage imageNamed:@"loading55.png"],
+                                     [UIImage imageNamed:@"loading60.png"],
+                                     [UIImage imageNamed:@"loading65.png"],
+                                     [UIImage imageNamed:@"loading70.png"],
+                                     [UIImage imageNamed:@"loading75.png"],
+                                     [UIImage imageNamed:@"loading80.png"],
+                                     [UIImage imageNamed:@"loading85.png"],
+                                     nil];
     _LoadingImage.animationDuration = 0.3;
     [_LoadingImage startAnimating];
     [UIView animateWithDuration:0.2 animations:^{_LoadingImage.alpha=1.0; _LoadingImage.transform =CGAffineTransformMakeScale(0,0);
@@ -294,7 +342,7 @@
         [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=1.0;}];
         _LoadingDeal.hidden=NO;
         [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=1.0; _LoadingDeal.transform =CGAffineTransformMakeScale(0.8,0.8);
-        _LoadingDeal.transform =CGAffineTransformMakeScale(1,1);}];
+            _LoadingDeal.transform =CGAffineTransformMakeScale(1,1);}];
         [self startLoadingIcon];
         [self removeUniqueSigns];
         
@@ -337,7 +385,7 @@
             [[UIApplication sharedApplication] openURL:whatappURL];
         }
         
-        }
+    }
     else {
         [_whatsappicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via WhatsApp button.png"] forState:UIControlStateNormal];
         _whatsapp=@"a";
@@ -348,25 +396,25 @@
     if ([_facebook isEqual:@"a"]){
         [_facebookicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Facebook button (selected).png"] forState:UIControlStateNormal];
         _facebook=@"b";
-
-            SLComposeViewController *facebookview = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-            NSString *post = @"try my new app";
-            [facebookview setInitialText:post];
-            [self presentViewController:facebookview animated:YES completion:Nil];
-            SLComposeViewControllerCompletionHandler completion = ^(SLComposeViewControllerResult result) {
-                switch (result) {
-                    case SLComposeViewControllerResultDone:
-                        NSLog(@"poasted!");
-                        break;
-                    case SLComposeViewControllerResultCancelled:
-                        NSLog(@"cancelled!");
-                        break;
-                    default:
-                        break;
-                }
-                [facebookview dismissViewControllerAnimated:YES completion:nil];
-            };
-            facebookview.completionHandler = completion;
+        
+        SLComposeViewController *facebookview = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        NSString *post = @"try my new app";
+        [facebookview setInitialText:post];
+        [self presentViewController:facebookview animated:YES completion:Nil];
+        SLComposeViewControllerCompletionHandler completion = ^(SLComposeViewControllerResult result) {
+            switch (result) {
+                case SLComposeViewControllerResultDone:
+                    NSLog(@"poasted!");
+                    break;
+                case SLComposeViewControllerResultCancelled:
+                    NSLog(@"cancelled!");
+                    break;
+                default:
+                    break;
+            }
+            [facebookview dismissViewControllerAnimated:YES completion:nil];
+        };
+        facebookview.completionHandler = completion;
     }
     else {
         [_facebookicon setImage:[UIImage imageNamed:@"Add Deal (Final)_Share via Facebook button.png"] forState:UIControlStateNormal];
@@ -411,16 +459,16 @@
 
 - (IBAction)ExpireButtonAction:(id)sender {
     [self dismissKeyBoard];
-    [self EnlargeScroll];
-    float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-216;
-    float pickerHeight = self.view.frame.size.height - _CategoryPicker.bounds.size.height/2;
+    [self EnlargeScroll:@"expire"];
+    int datepickerheight=self.view.frame.size.height - _DatePicker.bounds.size.height/2;
+    int datepickerNavigationBarHeight=self.view.frame.size.height - _DatePicker.bounds.size.height-22;
 
-    [UIView animateWithDuration:0.5 animations:^{_DatePicker.center = CGPointMake(160, pickerHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, height);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(20, height);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(50, height);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(50, height);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(20, height);}];
+    [UIView animateWithDuration:0.5 animations:^{_DatePicker.center = CGPointMake(160, datepickerheight);}];
+    [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, datepickerNavigationBarHeight);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, datepickerNavigationBarHeight);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, datepickerNavigationBarHeight);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, datepickerNavigationBarHeight);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(80, datepickerNavigationBarHeight);}];
     [UIView animateWithDuration:0.2 animations:^{_PriceNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DollarButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_ShekelButton.center = CGPointMake(53, 700);}];
@@ -438,12 +486,11 @@
 
 - (IBAction)CateoryButtonAction:(id)sender {
     [self dismissKeyBoard];
-    [self EnlargeScroll];
+    [self EnlargeScroll:@"category"];
     float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-216;
     float pickerHeight = self.view.frame.size.height - _CategoryPicker.bounds.size.height/2;
-
     [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 290);}];
-
+    
     [UIView animateWithDuration:0.2 animations:^{_PriceNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DollarButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_ShekelButton.center = CGPointMake(53, 700);}];
@@ -451,24 +498,24 @@
     [UIView animateWithDuration:0.2 animations:^{_DollarButtonFull.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_ShekelButtonFull.center = CGPointMake(53, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PoundButtonFull.center = CGPointMake(90, 700);}];
-
+    
     [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(50, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(50, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_CategoryPicker.center = CGPointMake(160, pickerHeight);}];
     [UIView animateWithDuration:0.5 animations:^{_CategoryNavBar.center = CGPointMake(160, height);}];
     [UIView animateWithDuration:0.2 animations:^{_PersentButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PersentButtonFull.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-
+    
 }
 
 - (IBAction)Cateory_DoneButtonAction:(id)sender {
-    [self EnlargeScroll];
     [self dismissKeyBoard];
+    [self ReduceScroll];
     [UIView animateWithDuration:0.5 animations:^{_CategoryPicker.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_CategoryNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
@@ -478,22 +525,21 @@
 //If the length is 0 then the PALCEHOLDER is shown//
 -(void)textViewDidEndEditing:(UITextView *)textView {
     [self dismissKeyBoard];
+    [self ReduceScroll];
+    NSLog(@"endtext");
     
     if (textView == _titlelabel) {
         if ([textView.text length]==0) {
             _whatIsTheDealLabel.hidden=NO;
-        }
+            _countlabel.hidden=YES;
+        } else _countlabel.hidden=NO;
     }
     if (textView == _DescriptionTextView) {
         if ([textView.text length]==0) {
             _descriptionlabel.hidden=NO;
         }
     }
-    
-    if (isMoreOptionViewHidden) {
-        [self ReduceScroll];
-    } else [self EnlargeScroll];
-    
+    //[UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 0);}];
     [UIView animateWithDuration:0.2 animations:^{_PriceNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DollarButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_ShekelButton.center = CGPointMake(53, 700);}];
@@ -502,40 +548,38 @@
     [UIView animateWithDuration:0.2 animations:^{_ShekelButtonFull.center = CGPointMake(53, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PoundButtonFull.center = CGPointMake(90, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(50, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(50, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PersentButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PersentButtonFull.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
-
-
+    
+    
 }
-
 //If the length is 0 then the PALCEHOLDER is hidden//
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    
+    NSLog(@"in the func text should begin");
     if (textView == _titlelabel) {
+        [self EnlargeScroll:@"title"];
         if ([textView.text length]==0) {
             _whatIsTheDealLabel.hidden=YES;
         }
         [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 150);}];
-        [self EnlargeScroll];
     }
-
+    
     if (textView == _DescriptionTextView) {
+        [self EnlargeScroll:@"description"];
         if ([textView.text length]==0) {
             _descriptionlabel.hidden=YES;
             float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-216+2;
             [UIView animateWithDuration:0.5 animations:^{_CategoryNavBar.center = CGPointMake(160, height);}];
         }
         [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 350);}];
-        [self EnlargeScroll];
     }
-
-
+    
     [UIView animateWithDuration:0.2 animations:^{_PriceNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DollarButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_ShekelButton.center = CGPointMake(53, 700);}];
@@ -545,11 +589,11 @@
     [UIView animateWithDuration:0.2 animations:^{_PoundButtonFull.center = CGPointMake(90, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_CategoryPicker.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(50, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(119, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(50, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PersentButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PersentButtonFull.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
@@ -560,9 +604,9 @@
 // CHANGE THE COUNTLABEL ACCORDING TO THE TITLABEL LENGTH//
 - (void)textViewDidChange:(UITextView *)textView {
     if (textView==_titlelabel) {
-            NSString *stringlength=[NSString stringWithString:_titlelabel.text];
-            _countlabel.text = [NSString stringWithFormat:@"%d/40",stringlength.length];
-        }
+        NSString *stringlength=[NSString stringWithString:_titlelabel.text];
+        _countlabel.text = [NSString stringWithFormat:@"%d/60",stringlength.length];
+    }
 }
 
 // FORCE THE TITLELABEL LENGHT TO BE UNDER 41 AND DEFINES ENTERKEY FOR DISMISS KEYBOARD //
@@ -574,15 +618,15 @@
             [self Cateory_DoneButtonAction:nil];
             return NO;
         }
-    return (newLength > 40) ? NO : YES;
+        return (newLength > 60) ? NO : YES;
     } else return YES;
 }
 
 //If pressed Price or Discount //
 -(BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
-    [self EnlargeScroll];
+    [self EnlargeScroll:@"price"];
     float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-216+2;
-
+    
     if ((textField == _pricelabel)||(textField == _discountlabel)) {
         [UIView animateWithDuration:0.3 animations:^{_PriceNavBar.center = CGPointMake(160, height);}];
         [UIView animateWithDuration:0.3 animations:^{_DollarButton.center = CGPointMake(18, height);}];
@@ -594,11 +638,11 @@
         [UIView animateWithDuration:0.3 animations:^{_CategoryPicker.center = CGPointMake(160, 700);}];
         [UIView animateWithDuration:0.3 animations:^{_CategoryNavBar.center = CGPointMake(160, 700);}];
         [UIView animateWithDuration:0.3 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-        [UIView animateWithDuration:0.3 animations:^{_ChagrtoTime.center = CGPointMake(20, 700);}];
-        [UIView animateWithDuration:0.3 animations:^{_ChagrtoDate.center = CGPointMake(50, 700);}];
+        [UIView animateWithDuration:0.3 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+        [UIView animateWithDuration:0.3 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
         [UIView animateWithDuration:0.3 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-        [UIView animateWithDuration:0.3 animations:^{_ChangetotimeFull.center = CGPointMake(20, 700);}];
-        [UIView animateWithDuration:0.3 animations:^{_ChangetodateFull.center = CGPointMake(50, 700);}];
+        [UIView animateWithDuration:0.3 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
+        [UIView animateWithDuration:0.3 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
         [UIView animateWithDuration:0.3 animations:^{_PersentButton.center = CGPointMake(18, height);}];
         [UIView animateWithDuration:0.3 animations:^{_PersentButtonFull.center = CGPointMake(18, height);}];
         [UIView animateWithDuration:0.3 animations:^{_DoneButton.center = CGPointMake(285, height);}];
@@ -627,17 +671,16 @@
         _PersentButtonFull.hidden=NO;
         _PersentButton.hidden=NO;
     }
-
+    
     return YES;
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     
-    if (isMoreOptionViewHidden) {
-        [self ReduceScroll];
-    } else [self EnlargeScroll];
-    [_scroll setScrollEnabled:YES];
+    NSLog(@"textFieldShouldReturn");
+
     [self dismissKeyBoard];
+    [self ReduceScroll];
     
     [UIView animateWithDuration:0.2 animations:^{_PriceNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DollarButton.center = CGPointMake(18, 700);}];
@@ -647,15 +690,15 @@
     [UIView animateWithDuration:0.2 animations:^{_ShekelButtonFull.center = CGPointMake(53, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PoundButtonFull.center = CGPointMake(90, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(50, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(50, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PersentButton.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_PersentButtonFull.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
-
+    
     return YES;
 }
 
@@ -708,23 +751,23 @@
     date = [date stringByAppendingString:year];
     date = [date stringByAppendingString:space2];
     date = [date stringByAppendingString:second];
-
+    
     return date;
 }
 
 -(IBAction)Date_DoneButtonAction:(id)sender {
     
     [self dismissKeyBoard];
-    [self EnlargeScroll];
+    [self ReduceScroll];
     
     [UIView animateWithDuration:0.5 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(50, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_ChagrtoTime.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(50, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_ChangetotimeFull.center = CGPointMake(20, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
+    [UIView animateWithDuration:0.2 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
+    [UIView animateWithDuration:0.2 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
-
+    
     NSDate *select = [_DatePicker date];
     NSString *date = [self modifyDateString:select];
     _expirationlabel.text=date;
@@ -752,7 +795,7 @@
     _ChangetodateFull.alpha=0.0;
     _ChagrtoTime.alpha=0.0;
     _ChagrtoDate.alpha=1.0;
-
+    
 }
 
 - (IBAction)ChangetodateFullAction:(id)sender {
@@ -778,9 +821,7 @@
 }
 
 -(void) DoneButtonAction:(id)sender {
-    if (isMoreOptionViewHidden) {
-        [self ReduceScroll];
-    } else [self EnlargeScroll];
+    [self ReduceScroll];
     [self dismissKeyBoard];
     
     [UIView animateWithDuration:0.2 animations:^{_PriceNavBar.center = CGPointMake(160, 700);}];
@@ -794,8 +835,8 @@
     [UIView animateWithDuration:0.2 animations:^{_PersentButtonFull.center = CGPointMake(18, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
     [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(50, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(20, 700);}];
     [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(50, 700);}];
@@ -923,7 +964,7 @@
         _AddAnotherPicButton.hidden=YES;
     } else _AddAnotherPicButton.hidden=NO;
     [self EnlargeCameraScroll];
-    }
+}
 
 - (void) capImage {
     AVCaptureConnection *videoConnection = nil;
@@ -964,18 +1005,18 @@
     NSData *imageData = UIImagePNGRepresentation(picture1);
     UIImage *imgLarge=[UIImage imageWithData:imageData];
     CGSize size = [imgLarge size];
-
+    
     // Create rectangle that represents a cropped image
     // from the middle of the existing image
     //CGRect rect2 = CGRectMake(2,(size.height / 3),310,155);
     CGRect rect2 = CGRectMake(2,135,320,155);
-
+    
     // Create bitmap image from original image data,
     // using rectangle to specify desired crop area
     CGImageRef imageRef = CGImageCreateWithImageInRect([imgLarge CGImage], rect2);
     UIImage *img = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
-
+    
     if (numofpics==0) {
         _captureImage.image=img;
     }
@@ -1002,7 +1043,7 @@
 }
 
 -(void) TrashButtonAction:(id)sender {
-//    [session stopRunning];
+    //    [session stopRunning];
     if (currentpage==0) {
         if (numofpics==1) {
             _captureImage.image=nil;
@@ -1022,7 +1063,7 @@
             _captureImage3.image=_captureImage4.image;
             _captureImage4.image=nil;
         }
-
+        
     }
     if (currentpage==1) {
         if (numofpics==2) {
@@ -1043,21 +1084,21 @@
         if (numofpics==3) {
             _captureImage3.image=nil;
         } else{
-        _captureImage3.image=_captureImage4.image;
-        _captureImage4.image=nil;
+            _captureImage3.image=_captureImage4.image;
+            _captureImage4.image=nil;
         }
     }
-
+    
     if (currentpage==3) {
         _captureImage4.image=nil;
     }
-
+    
     numofpics--;
     [self ImageslideMode];
     if (numofpics==0) {
-    [self CameraMode];
+        [self CameraMode];
     }
-   // report_memory();
+    // report_memory();
 }
 
 -(void) AddAnotherPicButtonAction:(id)sender{
@@ -1065,50 +1106,50 @@
 }
 
 -(void) RotateCamButtonAction:(id)sender {
-/*
-    if (Flag) {
-        FrontCamera = YES;
-        Flag = false;
-        [session stopRunning];
-        [self initializeCamera];
-    }
-    else {
-        FrontCamera = NO;
-        Flag = true;
-        [session stopRunning];
-        [self initializeCamera];
-    }
- */
+    
+     if (Flag) {
+     FrontCamera = YES;
+     Flag = false;
+     [session stopRunning];
+     [self initializeCamera];
+     }
+     else {
+     FrontCamera = NO;
+     Flag = true;
+     [session stopRunning];
+     [self initializeCamera];
+     }
+     
 }
 
--(void) PicFromLibButtonAction:(id)sender {
+-(void) PicFromLibButtonAction:(id)sender { /*
     _imagePicker=nil;
     _imagePicker.delegate=nil;
     _imagePicker = [[GKImagePicker alloc] init];
     _imagePicker.delegate = self;
-    [self presentViewController:_imagePicker.imagePickerController animated:YES completion:nil];
+    [self presentViewController:_imagePicker.imagePickerController animated:YES completion:nil];*/
 }
 
 /*-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSLog(@"here/n/n/n");
-    if (numofpics==0) {
-        _captureImage.image=[info objectForKey:UIImagePickerControllerEditedImage];
-    }
-    if (numofpics==1) {
-        _captureImage2.image=[info objectForKey:UIImagePickerControllerEditedImage];
-    }
-    if (numofpics==2) {
-        _captureImage3.image=[info objectForKey:UIImagePickerControllerEditedImage];
-    }
-    if (numofpics==3) {
-       _captureImage4.image=[info objectForKey:UIImagePickerControllerEditedImage];
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
-    numofpics++;
-    [self oreder];
-    NSLog(@"numofpicafterlib %d",numofpics);
-    [self ImageslideMode];
-}*/
+ NSLog(@"here/n/n/n");
+ if (numofpics==0) {
+ _captureImage.image=[info objectForKey:UIImagePickerControllerEditedImage];
+ }
+ if (numofpics==1) {
+ _captureImage2.image=[info objectForKey:UIImagePickerControllerEditedImage];
+ }
+ if (numofpics==2) {
+ _captureImage3.image=[info objectForKey:UIImagePickerControllerEditedImage];
+ }
+ if (numofpics==3) {
+ _captureImage4.image=[info objectForKey:UIImagePickerControllerEditedImage];
+ }
+ [self dismissViewControllerAnimated:YES completion:nil];
+ numofpics++;
+ [self oreder];
+ NSLog(@"numofpicafterlib %d",numofpics);
+ [self ImageslideMode];
+ }*/
 
 
 -(void) MoreButtonAction:(id)sender {
@@ -1122,15 +1163,14 @@
         [_MoreButtonButton setImage:[UIImage imageNamed:@"Add Deal (Final)_More Details button.png"] forState:UIControlStateNormal];
         _morebutton=@"a";
     }
-
+    
     
     if (isMoreOptionViewHidden) {
-        [self EnlargeScroll];
         //[UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 220);}];
         CGRect frame3 = _MoreView.frame;
         frame3.origin.y = frame3.origin.y + 190;
         [UIView animateWithDuration:0.6 animations:^{_MoreView.frame = frame3;}];
-
+        
         CGRect frame = _AddDealButton.frame;
         frame.origin.y = frame.origin.y + 200;
         [UIView animateWithDuration:0.6 animations:^{_AddDealButton.frame = frame;}];
@@ -1138,12 +1178,13 @@
         frame2.origin.y = frame2.origin.y + 200;
         [UIView animateWithDuration:0.6 animations:^{_SocialView.frame = frame2;}];
         isMoreOptionViewHidden = false;
-    } else {
         [self ReduceScroll];
+
+    } else {
         CGRect frame3 = _MoreView.frame;
         frame3.origin.y = frame3.origin.y - 190;
         [UIView animateWithDuration:0.6 animations:^{_MoreView.frame = frame3;}];
-
+        
         CGRect frame = _AddDealButton.frame;
         frame.origin.y = frame.origin.y - 200;
         [UIView animateWithDuration:0.6 animations:^{_AddDealButton.frame = frame;}];
@@ -1151,7 +1192,7 @@
         frame2.origin.y = frame2.origin.y - 200;
         [UIView animateWithDuration:0.6 animations:^{_SocialView.frame = frame2;}];
         isMoreOptionViewHidden = true;
-
+        [self ReduceScroll];
     }
 }
 
@@ -1164,31 +1205,37 @@
         [_scrollcamera setScrollEnabled:NO];
         [_scrollcamera setContentSize:((CGSizeMake(320, 155)))];
     }
-
+    
 }
 
--(void) EnlargeScroll {
-    //[scroll setContentSize:((CGSizeMake(320, 700)))];
-    
-    if (![self isIphone5]) {
-        [UIView animateWithDuration:0.6 animations:^{[_scroll setContentSize:((CGSizeMake(320, 650)))];}];
-    } else {
-        [UIView animateWithDuration:0.6 animations:^{[_scroll setContentSize:((CGSizeMake(320, 750)))];}];
-    }
+-(void) EnlargeScroll:(NSString*)object {
+    NSLog(@"enlarge");
 
+    if ([object isEqualToString:@"title"]) {
+        [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10+216)))];
+    }
+    if ([object isEqualToString:@"category"]) {
+        [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10+216+44)))];
+    }
+    if ([object isEqualToString:@"price"]) {
+        [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10+216+44)))];
+    }
+    if ([object isEqualToString:@"discount"]) {
+        [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10+216+44)))];
+    }
+    if ([object isEqualToString:@"expire"]) {
+        [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10+216+44)))];
+    }
+    if ([object isEqualToString:@"description"]) {
+        [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10+216+44)))];
+    }
 }
 
 -(void) ReduceScroll {
-    
-    if (![self isIphone5]) {
-        [UIView animateWithDuration:0.6 animations:^{[_scroll setContentSize:((CGSizeMake(320, 500)))];}];
-    } else {
-        float height = self.view.frame.size.height;
-        [UIView animateWithDuration:0.6 animations:^{[_scroll setContentSize:((CGSizeMake(320, height)))];}];
-    }
-
-     
-    //[scroll setContentSize:((CGSizeMake(320, 500)))];
+    NSLog(@"enter reduce= %f",CGRectGetMaxY(_AddDealButton.frame));
+    [UIView animateWithDuration:0.5 animations:^{
+    [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10)))];
+    }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
@@ -1268,4 +1315,17 @@
 
 
 
+- (IBAction)cancelDatePickerPressed:(id)sender {
+    
+    [self dismissKeyBoard];
+    [UIView animateWithDuration:0.5 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
+    [UIView animateWithDuration:0.2 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
+    [UIView animateWithDuration:0.2 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
+    [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
+    
+    _expirationlabel.text=NULL;
+}
 @end

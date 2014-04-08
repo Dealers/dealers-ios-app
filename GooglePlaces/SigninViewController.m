@@ -59,6 +59,7 @@
     DataResult = [dataarray objectAtIndex:0];
     if ([dataarray count]>1) {
         app.UserID = [dataarray objectAtIndex:1];;
+        NSLog(@"userid=%@",app.UserID);
     }
     return DataResult;
 }

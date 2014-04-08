@@ -24,8 +24,8 @@
     BOOL isMoreOptionViewHidden;
     AVCaptureSession *session;
     NSString *segcategorey;
-
 }
+
 @property (strong,nonatomic) NSString *storeName;
 @property (strong,nonatomic) NSString *segcategory;
 @property (strong,nonatomic) NSString *titleText;
@@ -140,5 +140,6 @@
 @property (weak, nonatomic) IBOutlet UIView *FlashView;
 @property (nonatomic, strong) GKImagePicker *imagePicker;
 @property (weak, nonatomic) IBOutlet UIPageControl *PageControl;
+- (IBAction)cancelDatePickerPressed:(id)sender;
 
 @end

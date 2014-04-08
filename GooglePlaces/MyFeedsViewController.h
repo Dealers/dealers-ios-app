@@ -15,6 +15,7 @@
     BOOL isShortCell;
     BOOL isUpdatingNow;
     int cellNumberInScrollView;
+    BOOL myFeedsFirstTime;
 }
 
 @property (weak,nonatomic) IBOutlet UIScrollView *scrollView;

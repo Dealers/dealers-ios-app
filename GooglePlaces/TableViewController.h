@@ -24,6 +24,7 @@
     int currenDist;
     BOOL filtered;
     int SearchTextSize;
+    BOOL didUpdateTheMap;
 }
 
 -(void) deallocMemory;
