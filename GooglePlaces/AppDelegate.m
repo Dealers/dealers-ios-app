@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import <HockeySDK/HockeySDK.h>
 
 @implementation AppDelegate
 
@@ -16,13 +15,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9bf973938859e1c4623484c9687871cf"];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
-
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"WebKitDiskImageCacheEnabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
     int cacheSizeMemory = 4*1024*1024; // 4MB
     int cacheSizeDisk = 32*1024*1024; // 32MB
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];

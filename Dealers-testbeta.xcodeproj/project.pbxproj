@@ -216,9 +216,6 @@
 		B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */; };
 		B0E0A943189C43BB00EF0641 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E0A942189C43BB00EF0641 /* libsqlite3.dylib */; };
 		B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */; };
-		B0F1BB9218B9139700AD2929 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB8E18B9139700AD2929 /* HockeySDK.framework */; };
-		B0F1BB9318B9139700AD2929 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B0F1BB9018B9139700AD2929 /* HockeySDK.xcconfig */; };
-		B0F1BB9418B9139700AD2929 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0F1BB9118B9139700AD2929 /* HockeySDKResources.bundle */; };
 		B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9518B913D700AD2929 /* CoreText.framework */; };
 		B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9718B913EC00AD2929 /* Security.framework */; };
 		B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */; };
@@ -744,9 +741,6 @@
 		B0E0A942189C43BB00EF0641 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signup2ViewController.h; sourceTree = "<group>"; };
 		B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signup2ViewController.m; sourceTree = "<group>"; };
-		B0F1BB8E18B9139700AD2929 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
-		B0F1BB9018B9139700AD2929 /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
-		B0F1BB9118B9139700AD2929 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		B0F1BB9518B913D700AD2929 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B0F1BB9718B913EC00AD2929 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1054,7 +1048,6 @@
 				B024374B17F47D9000FB24CC /* QuartzCore.framework in Frameworks */,
 				568497A1154C0116001601A2 /* CoreLocation.framework in Frameworks */,
 				5684979F154C010C001601A2 /* MapKit.framework in Frameworks */,
-				B0F1BB9218B9139700AD2929 /* HockeySDK.framework in Frameworks */,
 				56849782154C00BF001601A2 /* UIKit.framework in Frameworks */,
 				56849784154C00BF001601A2 /* Foundation.framework in Frameworks */,
 				56849786154C00BF001601A2 /* CoreGraphics.framework in Frameworks */,
@@ -1098,7 +1091,6 @@
 				B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */,
 				B0F1BB9718B913EC00AD2929 /* Security.framework */,
 				B0F1BB9518B913D700AD2929 /* CoreText.framework */,
-				B0F1BB8D18B9139700AD2929 /* HockeySDK.embeddedframework */,
 				B0E0A942189C43BB00EF0641 /* libsqlite3.dylib */,
 				B03F6B8718676F6C000ACC13 /* Accounts.framework */,
 				B03F6B8818676F6C000ACC13 /* AdSupport.framework */,
@@ -1207,25 +1199,6 @@
 				B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */,
 			);
 			path = GKClasses;
-			sourceTree = "<group>";
-		};
-		B0F1BB8D18B9139700AD2929 /* HockeySDK.embeddedframework */ = {
-			isa = PBXGroup;
-			children = (
-				B0F1BB8E18B9139700AD2929 /* HockeySDK.framework */,
-				B0F1BB8F18B9139700AD2929 /* Resources */,
-			);
-			name = HockeySDK.embeddedframework;
-			path = "HockeySDK-iOS/HockeySDK.embeddedframework";
-			sourceTree = "<group>";
-		};
-		B0F1BB8F18B9139700AD2929 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				B0F1BB9018B9139700AD2929 /* HockeySDK.xcconfig */,
-				B0F1BB9118B9139700AD2929 /* HockeySDKResources.bundle */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		C83EACF918690AC30084E0E1 /* Categories Icons */ = {
@@ -1994,7 +1967,6 @@
 				B055C72D17FE806900FBDFCC /* Explore_Travel icon@2x.png in Resources */,
 				C8D2E470185B781D00398873 /* Add Deal (Final)_Share via Facebook button (selected)@2x.png in Resources */,
 				B055C73617FE95CC00FBDFCC /* Explore_Music icon.png in Resources */,
-				B0F1BB9318B9139700AD2929 /* HockeySDK.xcconfig in Resources */,
 				C83EAEFE18690AC40084E0E1 /* Restaurants & Bars_fried_chicken@2x.png in Resources */,
 				C83EAE5D18690AC40084E0E1 /* Fashion_clothing_store@2x.png in Resources */,
 				C83EAE3518690AC40084E0E1 /* Beauty & Personal Care_drug_store-pharmacy@2x.png in Resources */,
@@ -2314,7 +2286,6 @@
 				B0C7FB6F1838B78C00B3B740 /* Loading5white@2x.png in Resources */,
 				C8273A3018959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png in Resources */,
 				B0C7FB701838B78D00B3B740 /* Loading10white@2x.png in Resources */,
-				B0F1BB9418B9139700AD2929 /* HockeySDKResources.bundle in Resources */,
 				B0C7FB711838B78D00B3B740 /* Loading15white@2x.png in Resources */,
 				B0C7FB721838B78D00B3B740 /* Loading20white@2x.png in Resources */,
 				C8D2E454185B781D00398873 /* Add Deal (Final)_-Not There- box@2x.png in Resources */,

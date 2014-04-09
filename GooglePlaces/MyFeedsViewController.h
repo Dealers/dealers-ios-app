@@ -12,9 +12,11 @@
 @interface MyFeedsViewController : UIViewController <UINavigationBarDelegate, UINavigationControllerDelegate, UIScrollViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 {
     int GAP;
+    int gap2;
     BOOL isShortCell;
     BOOL isUpdatingNow;
     int cellNumberInScrollView;
+    int cellsNumbersInFillWithImages;
     BOOL myFeedsFirstTime;
 }
 
@@ -25,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *ExploreButton;
 @property (weak, nonatomic) IBOutlet UIButton *ProfileButton;
 @property (weak, nonatomic) IBOutlet UIButton *MoreButton;
+
+@property (strong, nonatomic)  UIImage *image2;
 
 @property (weak, nonatomic) IBOutlet UIImageView *TapBar;
 @property (weak, nonatomic) IBOutlet UIImageView *DealersTitle;
