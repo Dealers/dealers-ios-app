@@ -279,18 +279,18 @@
         [imageview setFrame:CGRectMake(2.5, 4+(GAP), 315, 199-(OFFSETSHORTCELL*isShortCell))];
 		[[self scrollView] addSubview:imageview];
         
-        UIImageView *imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Local icon.png"]];
-        [imageview4 setFrame:CGRectMake(18, 170+(GAP)-(OFFSETSHORTCELL*isShortCell), 13, 16)];
+        UIImageView *imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_Local icon_Grey.png"]];
+        [imageview4 setFrame:CGRectMake(17, 172+(GAP)-(OFFSETSHORTCELL*isShortCell), 12, 15)];
         [[self scrollView] addSubview:imageview4];
         
-        UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(35, 167+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
-        [label2 setFont:[UIFont fontWithName:@"Avenir-Light" size:12.0]];
+        UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(33, 168+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
+        [label2 setFont:[UIFont fontWithName:@"Avenir-Light" size:13.0]];
         label2.text=[self.STOREMARRAY objectAtIndex:i];
         label2.backgroundColor=[UIColor clearColor];
-        label2.textColor = [UIColor colorWithRed:(160/255.0) green:(160/255.0) blue:(165/255.0) alpha:1.0];
+        label2.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(175/255.0) alpha:1.0];
         [[self scrollView] addSubview:label2];
         
-        UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(197, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+        UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
         [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
         label3.text=[self.PRICEMARRAY objectAtIndex:i];
         label3.backgroundColor=[UIColor clearColor];
@@ -298,7 +298,7 @@
         [label3 sizeToFit];
         [[self scrollView] addSubview:label3];
         
-        UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(247, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+        UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
         [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
         label4.text=[self.DISCOUNTMARRAY objectAtIndex:i];
         label4.backgroundColor=[UIColor clearColor];
@@ -390,23 +390,23 @@
                 
                 
                 UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(18, 119+(gap2)-(OFFSETSHORTCELL*isShortCell), 249, 41)];
-                [label setFont:[UIFont fontWithName:@"Avenir-Light" size:14.0]];
+                [label setFont:[UIFont fontWithName:@"Avenir-Roman" size:14.0]];
                 label.text=[self.TITLEMARRAY objectAtIndex:i];
                 label.backgroundColor=[UIColor clearColor];
                 label.textColor = [UIColor whiteColor];
                 label.numberOfLines=2;
                 [[self scrollView] addSubview:label];
                 
-                UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(290, 119+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
-                [label5 setFont:[UIFont fontWithName:@"Avenir-Medium" size:13.0]];
+                UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(291, 121+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
+                [label5 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
                 label5.text=[self.LIKEMARRAY objectAtIndex:i];
                 label5.backgroundColor=[UIColor clearColor];
                 label5.textColor = [UIColor whiteColor];
                 [label5 sizeToFit];
                 [[self scrollView] addSubview:label5];
                 
-                UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(290, 139+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
-                [label6 setFont:[UIFont fontWithName:@"Avenir-Medium" size:13.0]];
+                UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(291, 141+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
+                [label6 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
                 label6.text=[self.COMMENTMARRAY objectAtIndex:i];
                 label6.backgroundColor=[UIColor clearColor];
                 label6.textColor = [UIColor whiteColor];

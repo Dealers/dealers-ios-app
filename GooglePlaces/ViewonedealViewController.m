@@ -16,7 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-#define GAP 10
+#define GAP 12
 
 @interface ViewonedealViewController ()
 
@@ -66,7 +66,7 @@
 -(void) maskUserProfileImage {
     CALayer *mask = [CALayer layer];
     mask.contents=(id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
-    mask.frame = CGRectMake(0, 0, 70, 70);
+    mask.frame = CGRectMake(0, 0, 60, 60);
     clientimage.layer.mask = mask;
     clientimage.layer.masksToBounds = YES;
 }
@@ -101,35 +101,35 @@
     [self maskUserProfileImage];
     flag = NO;
     
-    self.TitleIcon.frame = CGRectMake(15, 194, self.TitleIcon.frame.size.width, self.TitleIcon.frame.size.height);
-    titlelabel.frame = CGRectMake(56, 195, titlelabel.frame.size.width, titlelabel.frame.size.height);
+    self.TitleIcon.frame = CGRectMake(10, 184, self.TitleIcon.frame.size.width, self.TitleIcon.frame.size.height);
+    titlelabel.frame = CGRectMake(50, 188, titlelabel.frame.size.width, titlelabel.frame.size.height);
     titlelabel.numberOfLines=0;
     [titlelabel sizeToFit];
     
     lowestYPoint=(CGRectGetMaxY(self.TitleIcon.frame) > CGRectGetMaxY(titlelabel.frame)) ? CGRectGetMaxY(self.TitleIcon.frame) : CGRectGetMaxY(titlelabel.frame);
     
-    self.StoreIcon.frame = CGRectMake(15, lowestYPoint + GAP, self.StoreIcon.frame.size.width, self.StoreIcon.frame.size.height);
-    storelabel.frame = CGRectMake(56, lowestYPoint+1+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
+    self.StoreIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.StoreIcon.frame.size.width, self.StoreIcon.frame.size.height);
+    storelabel.frame = CGRectMake(50, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     
     lowestYPoint=(CGRectGetMaxY(self.StoreIcon.frame) > CGRectGetMaxY(storelabel.frame)) ? CGRectGetMaxY(self.StoreIcon.frame) : CGRectGetMaxY(storelabel.frame);
     
     
     if ((![categorylabel.text isEqualToString:@""]) || (![categorylabel.text isEqualToString:@"No Category"])) {
-        self.CategoryIcon.frame = CGRectMake(15, lowestYPoint + GAP, self.CategoryIcon.frame.size.width, self.CategoryIcon.frame.size.height);
-        categorylabel.frame = CGRectMake(56, lowestYPoint+1+GAP, categorylabel.frame.size.width, categorylabel.frame.size.height);
+        self.CategoryIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.CategoryIcon.frame.size.width, self.CategoryIcon.frame.size.height);
+        categorylabel.frame = CGRectMake(50, lowestYPoint+3+GAP, categorylabel.frame.size.width, categorylabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.CategoryIcon.frame) > CGRectGetMaxY(categorylabel.frame)) ? CGRectGetMaxY(self.CategoryIcon.frame) : CGRectGetMaxY(categorylabel.frame);
     } else {
         categorylabel.hidden=YES;
         self.CategoryIcon.hidden=YES;
     }
     
-    maxXPoint=56;
+    maxXPoint=50;
     
     if (![pricelabel.text isEqualToString:@"0"]) {
         pricelabel.text = [pricelabel.text stringByAppendingString:[self currencySymbol:self.signLabelFromMyFeeds]];
         [pricelabel sizeToFit];
-        self.PriceIcon.frame = CGRectMake(15, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
-        pricelabel.frame = CGRectMake(maxXPoint, lowestYPoint+1+GAP, pricelabel.frame.size.width, pricelabel.frame.size.height);
+        self.PriceIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
+        pricelabel.frame = CGRectMake(maxXPoint, lowestYPoint+3+GAP, pricelabel.frame.size.width, pricelabel.frame.size.height);
         flag = YES;
         maxXPoint= CGRectGetMaxX (pricelabel.frame)+20;
     } else {
@@ -138,8 +138,8 @@
     
     if (![discountlabel.text isEqualToString:@"0"]) {
         discountlabel.text = [discountlabel.text stringByAppendingString:@"%"];
-        self.PriceIcon.frame = CGRectMake(15, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
-        discountlabel.frame = CGRectMake(maxXPoint, lowestYPoint+1+GAP, discountlabel.frame.size.width, discountlabel.frame.size.height);
+        self.PriceIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
+        discountlabel.frame = CGRectMake(maxXPoint, lowestYPoint+3+GAP, discountlabel.frame.size.width, discountlabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.PriceIcon.frame) > CGRectGetMaxY(discountlabel.frame)) ? CGRectGetMaxY(self.PriceIcon.frame) : CGRectGetMaxY(discountlabel.frame);
     } else {
         discountlabel.hidden=YES;
@@ -152,8 +152,8 @@
     if ((pricelabel.hidden == YES) && (discountlabel.hidden == YES)) self.PriceIcon.hidden=YES;
     
     if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"]) {
-        self.ExpireIcon.frame = CGRectMake(15, lowestYPoint + GAP, self.ExpireIcon.frame.size.width, self.ExpireIcon.frame.size.height);
-        expirelabel.frame = CGRectMake(56, lowestYPoint+1+GAP, expirelabel.frame.size.width, expirelabel.frame.size.height);
+        self.ExpireIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.ExpireIcon.frame.size.width, self.ExpireIcon.frame.size.height);
+        expirelabel.frame = CGRectMake(50, lowestYPoint+3+GAP, expirelabel.frame.size.width, expirelabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.ExpireIcon.frame) > CGRectGetMaxY(expirelabel.frame)) ? CGRectGetMaxY(self.ExpireIcon.frame) : CGRectGetMaxY(expirelabel.frame);
     } else {
         expirelabel.hidden=YES;
@@ -164,8 +164,8 @@
     if (!([descriptionlabel.text length]==0)) {
         descriptionlabel.numberOfLines=0;
         [descriptionlabel sizeToFit];
-        self.DescriptionIcon.frame = CGRectMake(15, lowestYPoint + GAP, self.DescriptionIcon.frame.size.width, self.DescriptionIcon.frame.size.height);
-        descriptionlabel.frame = CGRectMake(56, lowestYPoint+1+GAP, descriptionlabel.frame.size.width, descriptionlabel.frame.size.height);
+        self.DescriptionIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.DescriptionIcon.frame.size.width, self.DescriptionIcon.frame.size.height);
+        descriptionlabel.frame = CGRectMake(50, lowestYPoint+3+GAP, descriptionlabel.frame.size.width, descriptionlabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.DescriptionIcon.frame) > CGRectGetMaxY(descriptionlabel.frame)) ? CGRectGetMaxY(self.DescriptionIcon.frame) : CGRectGetMaxY(descriptionlabel.frame);
     } else {
         descriptionlabel.hidden=YES;
