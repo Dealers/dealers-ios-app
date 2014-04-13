@@ -303,12 +303,12 @@
             [imageview4 setFrame:CGRectMake(17, 172+(GAP)-(OFFSETSHORTCELL*isShortCell), 12, 15)];
         } else {
             imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_Online icon_Grey.png"]];
-            [imageview4 setFrame:CGRectMake(17, 172+(GAP)-(OFFSETSHORTCELL*isShortCell), 13, 13)];
+            [imageview4 setFrame:CGRectMake(17, 172+(GAP)-(OFFSETSHORTCELL*isShortCell), 15, 14)];
         }
         [[self scrollView] addSubview:imageview4];
         
-        UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(33, 168+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
-        [label2 setFont:[UIFont fontWithName:@"Avenir-Light" size:13.0]];
+        UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(34, 168+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
+        [label2 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
         label2.text=[self.STOREMARRAY objectAtIndex:i];
         label2.backgroundColor=[UIColor clearColor];
         label2.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(175/255.0) alpha:1.0];

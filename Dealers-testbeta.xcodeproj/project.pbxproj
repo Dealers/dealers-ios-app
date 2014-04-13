@@ -424,6 +424,8 @@
 		C873D3A71851040700B913CD /* My Feed+View Deal_Category (final) icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D38B1851040700B913CD /* My Feed+View Deal_Category (final) icon@2x.png */; };
 		C873D3A81851040700B913CD /* My Feed+View Deal_Expiration Date (final) icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D38C1851040700B913CD /* My Feed+View Deal_Expiration Date (final) icon@2x.png */; };
 		C873D3A91851040700B913CD /* My Feed+View Deal_Store icon (final)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D38D1851040700B913CD /* My Feed+View Deal_Store icon (final)@2x.png */; };
+		C8951AF718FAD79C00C53E9B /* Add Deal (final)_Shade.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */; };
+		C8951AF918FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */; };
 		C8BFD9C218723016007E7E07 /* Profile_About Yourself icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9A618723015007E7E07 /* Profile_About Yourself icon@2x.png */; };
 		C8BFD9C318723016007E7E07 /* Profile_Dealers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9A718723015007E7E07 /* Profile_Dealers@2x.png */; };
 		C8BFD9C418723016007E7E07 /* Profile_Deals List button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9A818723015007E7E07 /* Profile_Deals List button (selected)@2x.png */; };
@@ -951,6 +953,8 @@
 		C873D38B1851040700B913CD /* My Feed+View Deal_Category (final) icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal_Category (final) icon@2x.png"; sourceTree = "<group>"; };
 		C873D38C1851040700B913CD /* My Feed+View Deal_Expiration Date (final) icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal_Expiration Date (final) icon@2x.png"; sourceTree = "<group>"; };
 		C873D38D1851040700B913CD /* My Feed+View Deal_Store icon (final)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal_Store icon (final)@2x.png"; sourceTree = "<group>"; };
+		C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (final)_Shade.png"; sourceTree = "<group>"; };
+		C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Black Transparent screen@2x.png"; sourceTree = "<group>"; };
 		C8BFD9A618723015007E7E07 /* Profile_About Yourself icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_About Yourself icon@2x.png"; sourceTree = "<group>"; };
 		C8BFD9A718723015007E7E07 /* Profile_Dealers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Dealers@2x.png"; sourceTree = "<group>"; };
 		C8BFD9A818723015007E7E07 /* Profile_Deals List button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List button (selected)@2x.png"; sourceTree = "<group>"; };
@@ -1845,6 +1849,8 @@
 				B0D6544D18111EA4000DB9AF /* Add Deal_Specific Hour button (pushed)@2x.png */,
 				B0D6544E18111EA4000DB9AF /* Add Deal_Specific Hour button (selected)@2x.png */,
 				B0D6544F18111EA4000DB9AF /* Add Deal_Specific Hour button@2x.png */,
+				C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */,
+				C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */,
 				C8D2E453185B781D00398873 /* Add Deal Icons-NEW.rar */,
 			);
 			name = "Add Deal";
@@ -1926,6 +1932,7 @@
 				B055C71C17FE806900FBDFCC /* Explore_Electronics icon@2x.png in Resources */,
 				C8D2E456185B781D00398873 /* Add Deal (Final)_Add the Deal button (selected)@2x.png in Resources */,
 				B055C71D17FE806900FBDFCC /* Explore_Events icon@2x.png in Resources */,
+				C8951AF718FAD79C00C53E9B /* Add Deal (final)_Shade.png in Resources */,
 				C83EAEF618690AC40084E0E1 /* Restaurants & Bars_bars@2x.png in Resources */,
 				B0907D5D18F8315600ED54F2 /* nodeal.jpeg in Resources */,
 				C83EAE7418690AC40084E0E1 /* Home & Furniture_furniture_store@2x.png in Resources */,
@@ -2307,6 +2314,7 @@
 				B0C7FB7E1838B78D00B3B740 /* Loading80white@2x.png in Resources */,
 				C873D3941851040700B913CD /* My Feed+View Deal (final)_Deal background & Shadow@2x.png in Resources */,
 				B0C7FB7F1838B78D00B3B740 /* Loading85white@2x.png in Resources */,
+				C8951AF918FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png in Resources */,
 				C83EAE7818690AC40084E0E1 /* Home & Furniture_locksmith@2x.png in Resources */,
 				B0C7FB801838B78D00B3B740 /* Loadingwhite@2x.png in Resources */,
 				C83EAEF918690AC40084E0E1 /* Restaurants & Bars_burger_joint@2x.png in Resources */,

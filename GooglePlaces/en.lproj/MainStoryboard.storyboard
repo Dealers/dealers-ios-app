@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="ZXa-ud-UfS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="ZXa-ud-UfS">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <development version="4600" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Table View Controller-->
@@ -87,7 +87,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" image="My Feed+View Deal (final)_Title &amp; Store shade@2x.png" id="zuc-OM-0sX">
+                                    <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" image="Add Deal (final)_Shade.png" id="zuc-OM-0sX">
                                         <rect key="frame" x="0.0" y="98" width="320" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -240,7 +240,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" id="XNZ-el-j6T" userLabel="View - large table">
-                                <rect key="frame" x="1" y="89" width="320" height="371"/>
+                                <rect key="frame" x="0.0" y="88" width="320" height="371"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -826,10 +826,10 @@
                                     <action selector="denyClickingOnCellsButtonClicked:" destination="2p8-yL-ySm" eventType="touchUpInside" id="ev8-y9-fxi"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" id="pQE-87-4Gr" userLabel="View - Load up white screen">
+                            <view contentMode="scaleToFill" id="pQE-87-4Gr" userLabel="View - Load up grey screen">
                                 <rect key="frame" x="0.0" y="44" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Fzc-gt-JuC" userLabel="Image View loading">
                                 <rect key="frame" x="145" y="221" width="30" height="30"/>
@@ -1010,7 +1010,7 @@
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Log In Top Title.png" id="Xgo-9d-RXB" userLabel="Image View - Dealers logo">
-                                <rect key="frame" x="103" y="6" width="114" height="27"/>
+                                <rect key="frame" x="103" y="8" width="114" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -1302,14 +1302,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="41" y="425" width="216" height="21"/>
+                                        <rect key="frame" x="41" y="425.00000311221385" width="216" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY">
-                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999979"/>
+                                        <rect key="frame" x="24" y="409" width="274" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -1324,7 +1324,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="224" y="425" width="96" height="21"/>
+                                        <rect key="frame" x="224" y="425.00000311221385" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -2866,7 +2866,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Add Deal (Final)_Camera Frame.png" id="IE4-Kg-soQ" userLabel="Image View - Camera Frame">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="168"/>
+                                        <rect key="frame" x="0.0" y="3" width="320" height="165"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="RY1-3Z-YdW">
@@ -2899,7 +2899,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Add Deal_Black Transparent screen.png" id="78C-58-gnp">
-                                <rect key="frame" x="-6" y="-14" width="332" height="487"/>
+                                <rect key="frame" x="0.0" y="-14" width="320" height="493"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Uploading-the-Deal Graphic.png" id="fBi-RV-e1l">
@@ -3560,6 +3560,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Add Deal (Final)_Taken Photo shade.png" width="300" height="75"/>
         <image name="Add Deal (Final)_Title box.png" width="301" height="68"/>
         <image name="Add Deal (Final)_Trash button.png" width="30" height="30"/>
+        <image name="Add Deal (final)_Shade.png" width="640" height="44"/>
         <image name="Add Deal_Black Transparent screen.png" width="321" height="90"/>
         <image name="Add Deal_Cancel Adding button (selected).png" width="31" height="31"/>
         <image name="Add Deal_Cancel Adding button.png" width="31" height="31"/>
@@ -3593,7 +3594,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="My Feed+View Deal (final)_Report button.png" width="40" height="40"/>
         <image name="My Feed+View Deal (final)_Share button (pushed).png" width="51" height="51"/>
         <image name="My Feed+View Deal (final)_Share button.png" width="51" height="51"/>
-        <image name="My Feed+View Deal (final)_Title &amp; Store shade@2x.png" width="640" height="44"/>
         <image name="My Feed+View Deal (final)_Title icon.png" width="26" height="26"/>
         <image name="My Feed+View Deal_Add Deal button (selected)@2X.png" width="125" height="112"/>
         <image name="My Feed+View Deal_Add Deal button@2X.png" width="125" height="112"/>
