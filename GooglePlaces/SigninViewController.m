@@ -96,8 +96,12 @@
 - (IBAction)SinginButton:(id)sender {
 
     NSString *DataResult = [self CheckIfUserExist];
-
-    if (([EmailText.text isEqual:@""]) || ([EmailText.text isEqual:@"Email"])) {
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    if ([app.UserID length]<=1) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Can't Login, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        [alert show];
+    } else if (([EmailText.text isEqual:@""]) || ([EmailText.text isEqual:@"Email"])) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter Email" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
     } else if (([PasswordText.text isEqual:@"Password"]) || ([PasswordText.text isEqual:@""])) {

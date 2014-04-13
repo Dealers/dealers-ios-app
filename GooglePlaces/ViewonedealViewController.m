@@ -305,6 +305,9 @@
     [self locateIconsInPlace];
     [self dealerViewInitialize];
     numofpics=[self numOfPicturesInTheDeal];
+    if (numofpics>=2) {
+        _pageControl.hidden=NO;
+    } else _pageControl.hidden=YES;
     self.pageControl.numberOfPages=numofpics;
     _ViewLikes.hidden=YES;
     [self.cameraScrollView setContentSize:((CGSizeMake(320*numofpics, 155)))];

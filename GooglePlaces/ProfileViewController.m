@@ -72,7 +72,8 @@
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=whatdealstheuseruploaded&Userid=%@",_dealerId];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    NSArray *dataArray = [DataResult componentsSeparatedByString:@"."];
+    NSArray *dataArray = [DataResult componentsSeparatedByString:@"^"];
+    NSLog(@"DATAARRAY=%d",[dataArray count]);
     
     for (int i=0; i<([[dataArray copy]count])-1; i=i+14) {
         [TITLEMARRAY_temp addObject:[dataArray objectAtIndex:i]];
@@ -144,7 +145,7 @@
     URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     NSArray *dataArray2 = [DataResult componentsSeparatedByString:@"^"];
-    
+    NSLog(@"array=%d",[dataArray2 count]);
     for (int i=0; i<([[dataArray2 copy]count])-1; i=i+14) {
         [TITLEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i]];
         [DESCRIPTIONMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+1]];
@@ -508,10 +509,6 @@
 
 - (void)viewDidLoad
 {
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    int count = [viewControllers count];
-    NSLog(@"the vc in stack in profile is=%@,%d",viewControllers,count);
-
     [self startLoadingUploadImage];
     [self initialize];
     [self allocArrays];
@@ -523,7 +520,7 @@
         // Update UI after computation.
         dispatch_async(dispatch_get_main_queue(), ^{
             // Update the UI on the main thread.
-            [self startCreatingDealsCells];
+        [self startCreatingDealsCells];
         });
     });
     

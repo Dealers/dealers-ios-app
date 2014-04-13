@@ -35,7 +35,7 @@
     if ([_discountlabel.text length]>0) {
         _discountText=_discountlabel.text;
     }
-    _segcategory = [_segcategory stringByReplacingOccurrencesOfString:@" & " withString:@"q9j"];
+    _categorylabel.text = [_categorylabel.text stringByReplacingOccurrencesOfString:@" & " withString:@"q9j"];
     _storeName= [_storeName stringByReplacingOccurrencesOfString:@"&" withString:@"q9j"];
     _storeName= [_storeName stringByReplacingOccurrencesOfString:@"'" withString:@"q8j"];
     _titleText = _titlelabel.text;
@@ -113,6 +113,10 @@
     dateFormatter.dateFormat =@"yyyy-MM-dd 'at' HH:mm";
     NSString *dateString = [dateFormatter stringFromDate: localDate];
 
+    if ([_categorylabel.text length]==0) {
+        _categorylabel.text=@"No Category";
+    }
+    
     NSString *newString;
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/dealphpFile.php?Title='"];
     newString = [strURL stringByAppendingString:_titleText];
@@ -148,7 +152,7 @@
     newString = [newString stringByAppendingString:numofPhotos];
     newString = [newString stringByAppendingString:@"'"];
     newString = [newString stringByAppendingString:@"&Category='"];
-    newString = [newString stringByAppendingString:_segcategory];
+    newString = [newString stringByAppendingString:_categorylabel.text];
     newString = [newString stringByAppendingString:@"'"];
     newString = [newString stringByAppendingString:@"&Sign='"];
     newString = [newString stringByAppendingString:sign];
@@ -159,13 +163,15 @@
     newString = [newString stringByAppendingString:@"&uploaddate='"];
     newString = [newString stringByAppendingString:dateString];
     newString = [newString stringByAppendingString:@"'"];
+    newString = [newString stringByAppendingString:@"&onlineorlocal='"];
+    newString = [newString stringByAppendingString:app.onlineOrLocal];
+    newString = [newString stringByAppendingString:@"'"];
 
     strURL = newString;
-    NSLog(@"url uploading deal=%@",strURL);
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
-    NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
-    NSLog(@"result=%@\n",strResult);
+    resultFromDb = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
+    NSLog(@"result=%@\n",resultFromDb);
 }
 
 //Points nil all strong vars//
@@ -224,11 +230,12 @@
 -(void) initialize {
     _expirationlabel.text=@"";
     _categorylabel.text=_segcategory;
+    timeOrDate=@"date";
 }
 
 - (void)viewDidLoad
 {
-    //[self initializeCamera];
+    [self initializeCamera];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     NSLog(@"%@",app.previousViewControllerAddDeal);
     [self initialize];
@@ -353,7 +360,30 @@
             // Update UI after computation.
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI on the main thread.
+                NSLog(@"res=%@",resultFromDb);
+                if (([resultFromDb length]==0)) {
+                    [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=0.0;}];
+                    _LoadingDeal.hidden=YES;
+                    [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=0.0; _LoadingDeal.transform =CGAffineTransformMakeScale(1.0,1.0);
+                        _LoadingDeal.transform =CGAffineTransformMakeScale(0,0);}];
+                    [_LoadingImage stopAnimating];
+                    
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Could not Upload Your Deal, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                    [alert show];
+                }
+             else if ([resultFromDb rangeOfString:@"fail"].location == NSNotFound) {
                 [self waitOneSecond];
+             } else {
+                 [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=0.0;}];
+                 _LoadingDeal.hidden=YES;
+                 [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=0.0; _LoadingDeal.transform =CGAffineTransformMakeScale(1.0,1.0);
+                     _LoadingDeal.transform =CGAffineTransformMakeScale(0,0);}];
+                 [_LoadingImage stopAnimating];
+                 
+                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Could not Upload Your Deal, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                 [alert show];
+
+             }
             });
         });
     }
@@ -439,6 +469,9 @@
 - (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _categorylabel.text = [_categoryListArray objectAtIndex:row];
+    if ([_categorylabel.text isEqualToString:@"No Category"]) {
+        _categorylabel.text=nil;
+    }
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -734,6 +767,9 @@
 
 -(NSString *)modifyDateString:(NSDate *)dateFromPicker{
     
+    NSString *date;
+    
+    if ([timeOrDate isEqualToString:@"time"]) {
     NSString *selecteddate = [[NSString alloc]initWithFormat:@"%@",dateFromPicker];
     NSArray *datearray = [selecteddate componentsSeparatedByString:@" "];
     NSString *first = [datearray objectAtIndex:0];
@@ -744,14 +780,30 @@
     NSString *year = [reversedate objectAtIndex:0];
     NSString *space = @"-";
     NSString *space2 = @"   ";
-    NSString *date = [[NSString alloc] initWithString:day];
+    date = [[NSString alloc] initWithString:day];
     date = [date stringByAppendingString:space];
     date = [date stringByAppendingString:mounth];
     date = [date stringByAppendingString:space];
     date = [date stringByAppendingString:year];
     date = [date stringByAppendingString:space2];
     date = [date stringByAppendingString:second];
-    
+    } else {
+        NSString *selecteddate = [[NSString alloc]initWithFormat:@"%@",dateFromPicker];
+        NSArray *datearray = [selecteddate componentsSeparatedByString:@" "];
+        NSString *first = [datearray objectAtIndex:0];
+        NSArray *reversedate = [first componentsSeparatedByString:@"-"];
+        NSString *day = [reversedate objectAtIndex:2];
+        NSString *mounth = [reversedate objectAtIndex:1];
+        NSString *year = [reversedate objectAtIndex:0];
+        NSString *space = @"-";
+        NSString *space2 = @"   ";
+        date = [[NSString alloc] initWithString:day];
+        date = [date stringByAppendingString:space];
+        date = [date stringByAppendingString:mounth];
+        date = [date stringByAppendingString:space];
+        date = [date stringByAppendingString:year];
+        date = [date stringByAppendingString:space2];
+    }
     return date;
 }
 
@@ -774,6 +826,7 @@
 }
 
 - (IBAction)ChagrtoDateAction:(id)sender {
+    timeOrDate=@"date";
     _DatePicker.datePickerMode=UIDatePickerModeDate;
     _ChangetotimeFull.alpha=0.0;
     _ChangetodateFull.alpha=1.0;
@@ -782,6 +835,7 @@
 }
 
 - (IBAction)ChagrtoTimeAction:(id)sender {
+    timeOrDate=@"time";
     _DatePicker.datePickerMode=UIDatePickerModeDateAndTime;
     _ChangetotimeFull.alpha=1.0;
     _ChangetodateFull.alpha=0.0;
@@ -947,7 +1001,9 @@
     _imagePicker=nil;
     _imagePicker.delegate=nil;
     [self report_memory];
-    _PageControl.hidden=NO;
+    if (numofpics>=2) {
+        _PageControl.hidden=NO;
+    } else _PageControl.hidden=YES;
     _PageControl.numberOfPages=numofpics;
     _SnapButton.alpha=0.0;
     _SnapButton2.alpha=0.0;

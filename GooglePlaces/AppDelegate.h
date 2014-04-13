@@ -16,6 +16,7 @@
 @property (strong, nonatomic)  NSString *Animate_first;
 @property (strong, nonatomic)  NSString *UserID;
 @property (strong, nonatomic)  NSString *AfterAddDeal;
+@property (strong, nonatomic)  NSString *onlineOrLocal;
 @property (strong, nonatomic)  NSString *previousViewControllerAddDeal;
 
 

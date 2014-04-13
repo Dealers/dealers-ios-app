@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *TapBar;
 @property (weak, nonatomic) IBOutlet UIImageView *DealersTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
+@property (weak, nonatomic) UIImageView *loadingIconLoadNewDeals;
 @property (weak, nonatomic) IBOutlet UIImageView *exploreImage;
 @property (weak, nonatomic) IBOutlet UIImageView *moreImage;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
@@ -75,6 +76,7 @@
 @property (nonatomic, strong) NSMutableArray *SIGNARRAY;
 @property (nonatomic, strong) NSMutableArray *DEALIDARRAY;
 @property (nonatomic, strong) NSMutableArray *USERSIDSARRAY;
+@property (nonatomic, strong) NSMutableArray *onlineOrLocalArray;
 
 
 @property (strong, nonatomic) NSString *dealsUserLikes;

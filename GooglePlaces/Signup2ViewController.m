@@ -54,8 +54,17 @@
         didAddPhoto = NO;
     }
     
+    NSString *date;
+    if ([Datebirth.text length]==0) {
+        date=@"0";
+    } else date=Datebirth.text;
+
+    NSString *gender;
+    if ([Genger.text length]==0) {
+        gender=@"0";
+    } else gender=Genger.text;
+    
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",Fullname.text,Password.text,Email.text,Datebirth.text,Genger.text,Photoid];
-    NSLog(@"the url is= %@",strURL);
     // to execute php code
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
     // to receive the returend value
@@ -187,10 +196,21 @@
                 if (([app.UserID isEqualToString:@"0"])||(app.UserID==nil)||([app.UserID isEqualToString:@""])) {
                     registerAgain=YES;
                     [LoadingImage stopAnimating];
+                    SignupButton.alpha=1.0;
+                    LoadingImage.alpha=0.0;
                     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
                     [alert show];
-                } else
-                [self MainMethod];
+                } else if ([app.UserID rangeOfString:@"fail"].location == NSNotFound) {
+                    [self MainMethod];
+                } else {
+                    registerAgain=YES;
+                    [LoadingImage stopAnimating];
+                    SignupButton.alpha=1.0;
+                    LoadingImage.alpha=0.0;
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                    [alert show];
+                    
+                }
             });
         });
     }

@@ -68,9 +68,9 @@
     self.SIGNARRAY=nil;
     self.DEALIDARRAY=nil;
     self.USERSIDSARRAY=nil;
+    _onlineOrLocalArray=nil;
     
-    
-    NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS", nil];
+    NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS",@"onlineorlocal", nil];
     
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:0]];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
@@ -169,7 +169,14 @@
     DataArray = [DataResult componentsSeparatedByString:@"///"];
     reversed = [[DataArray reverseObjectEnumerator] allObjects];
     NSMutableArray *USERSIDSARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
+
+    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:14]];
+    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+    DataArray = [DataResult componentsSeparatedByString:@"///"];
+    reversed = [[DataArray reverseObjectEnumerator] allObjects];
+    NSMutableArray *onlineOrLocalArray_temp = [[NSMutableArray alloc] initWithArray:reversed];
+
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftersign";
     
@@ -212,7 +219,7 @@
     self.SIGNARRAY = [NSMutableArray arrayWithArray:SIGNARRAY_temp];
     self.DEALIDARRAY = [NSMutableArray arrayWithArray:DEALIDARRAY_temp];
     self.USERSIDSARRAY = [NSMutableArray arrayWithArray:USERSIDSARRAY_temp];
-    
+    _onlineOrLocalArray = [NSMutableArray arrayWithArray:onlineOrLocalArray_temp];
     
 }
 
@@ -227,9 +234,9 @@
     //[self report_memory];
 }
 
--(void) startLoadingUploadIcon {
+-(void) startLoadingUploadIcon:(UIImageView*)image {
     
-    self.LoadingImage.animationImages = [NSArray arrayWithObjects:
+    image.animationImages = [NSArray arrayWithObjects:
                                          [UIImage imageNamed:@"loading.png"],
                                          [UIImage imageNamed:@"loading5.png"],
                                          [UIImage imageNamed:@"loading10.png"],
@@ -249,12 +256,23 @@
                                          [UIImage imageNamed:@"loading80.png"],
                                          [UIImage imageNamed:@"loading85.png"],
                                          nil];
-    self.LoadingImage.animationDuration = 0.3;
-    [self.LoadingImage startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{self.LoadingImage.alpha=1.0; self.LoadingImage.transform =CGAffineTransformMakeScale(0,0);
-        self.LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
-    
-    
+    image.animationDuration = 0.3;
+    [image startAnimating];
+    [UIView animateWithDuration:0.2 animations:^{image.alpha=1.0; image.transform =CGAffineTransformMakeScale(0,0);
+        image.transform =CGAffineTransformMakeScale(1,1);}];
+}
+
+-(NSString *) currencySymbol : (NSString *) sign {
+    if ([sign isEqualToString:@"1"]) {
+        sign=@"₪";
+    }
+    if ([sign isEqualToString:@"2"]) {
+        sign=@"$";
+    }
+    if ([sign isEqualToString:@"3"]) {
+        sign=@"£";
+    }
+    return sign;
 }
 
 -(void) createDealsTable {
@@ -264,7 +282,7 @@
     self.ExploreButton.enabled=NO;
     
     isUpdatingNow = YES;
-    for (int i=cellNumberInScrollView; ((i<5+cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
+    for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
         NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
         
         if ([num isEqualToString:@"0"]) {
@@ -279,8 +297,14 @@
         [imageview setFrame:CGRectMake(2.5, 4+(GAP), 315, 199-(OFFSETSHORTCELL*isShortCell))];
 		[[self scrollView] addSubview:imageview];
         
-        UIImageView *imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_Local icon_Grey.png"]];
-        [imageview4 setFrame:CGRectMake(17, 172+(GAP)-(OFFSETSHORTCELL*isShortCell), 12, 15)];
+        UIImageView *imageview4;
+        if ([[_onlineOrLocalArray objectAtIndex:i] isEqualToString:@"local"]) {
+            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_Local icon_Grey.png"]];
+            [imageview4 setFrame:CGRectMake(17, 172+(GAP)-(OFFSETSHORTCELL*isShortCell), 12, 15)];
+        } else {
+            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_Online icon_Grey.png"]];
+            [imageview4 setFrame:CGRectMake(17, 172+(GAP)-(OFFSETSHORTCELL*isShortCell), 13, 13)];
+        }
         [[self scrollView] addSubview:imageview4];
         
         UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(33, 168+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
@@ -290,25 +314,51 @@
         label2.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(175/255.0) alpha:1.0];
         [[self scrollView] addSubview:label2];
         
-        UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-        [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-        label3.text=[self.PRICEMARRAY objectAtIndex:i];
-        label3.backgroundColor=[UIColor clearColor];
-        label3.textColor = [UIColor blackColor];
-        [label3 sizeToFit];
-        [[self scrollView] addSubview:label3];
-        
-        UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-        [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-        label4.text=[self.DISCOUNTMARRAY objectAtIndex:i];
-        label4.backgroundColor=[UIColor clearColor];
-        label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
-        [label4 sizeToFit];
-        [[self scrollView] addSubview:label4];
-        
+        if ((![[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&([[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
+            UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text=[self.PRICEMARRAY objectAtIndex:i];
+            label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_SIGNARRAY objectAtIndex:i]]];
+            label3.backgroundColor=[UIColor clearColor];
+            label3.textColor = [UIColor blackColor];
+            [label3 sizeToFit];
+            [[self scrollView] addSubview:label3];
+        }
+
+        if ((![[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
+            UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text=[self.PRICEMARRAY objectAtIndex:i];
+            label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_SIGNARRAY objectAtIndex:i]]];
+            label3.backgroundColor=[UIColor clearColor];
+            label3.textColor = [UIColor blackColor];
+            [label3 sizeToFit];
+            [[self scrollView] addSubview:label3];
+            
+            UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label4.text=[self.DISCOUNTMARRAY objectAtIndex:i];
+            label4.text = [label4.text stringByAppendingString:@"%"];
+            label4.backgroundColor=[UIColor clearColor];
+            label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
+            [label4 sizeToFit];
+            [[self scrollView] addSubview:label4];
+        }
+
+        if (([[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
+            UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text=[self.DISCOUNTMARRAY objectAtIndex:i];
+            label3.text = [label3.text stringByAppendingString:@"%"];
+            label3.backgroundColor=[UIColor clearColor];
+            label3.textColor = [UIColor blackColor];
+            [label3 sizeToFit];
+            [[self scrollView] addSubview:label3];
+        }
+
 		GAP=CGRectGetMaxY(imageview.frame)-4;
 	}
-    cellNumberInScrollView+=5;
+    cellNumberInScrollView+=10;
     [[self scrollView] setContentSize:CGSizeMake(319,GAP)];
     isUpdatingNow = NO;
     self.AddDealButton.enabled=YES;
@@ -339,10 +389,7 @@
         }
         // Update UI after computation.
         dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"return to main thread!" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-            [alert show];
-            
+            // Update the UI on the main thread.            
             for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
                 NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
                 if ([num isEqualToString:@"0"]||([num length]==0)) {
@@ -421,7 +468,7 @@
                 [[self scrollView] addSubview:selectDealButton];
                 gap2=CGRectGetMaxY(imageview.frame)-4;
             }
-            cellsNumbersInFillWithImages+=5;
+            cellsNumbersInFillWithImages+=10;
             isUpdatingNow = NO;
 
         });
@@ -494,6 +541,7 @@
     self.COMMENTMARRAY = [[NSMutableArray alloc]init];
     self.CLIENTMARRAY =  [[NSMutableArray alloc]init];
     self.PHOTOIDMARRAY = [[NSMutableArray alloc]init];
+    _PHOTOIDMARRAYCONVERT=nil;
     _PHOTOIDMARRAYCONVERT = [[NSMutableArray alloc]init];
     self.CATEGORYARRAY = [[NSMutableArray alloc]init];
     self.SIGNARRAY =  [[NSMutableArray alloc]init];
@@ -538,18 +586,19 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    
+
     [self deallocPrevViewControllers];
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if ([app.AfterAddDeal isEqualToString:@"yes"]) {
         app.AfterAddDeal = @"no";
-        [self startLoadingUploadIcon];
+        [self startLoadingUploadIcon:_LoadingImage];
         [self initializeView];
+        [self allocArrays];
         static NSCache *_cache = nil;
         [_cache removeAllObjects];
-        [self removeCellsFromSuperview];
+        //[self removeCellsFromSuperview];
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
             // Do some computation here.
@@ -560,7 +609,6 @@
                 [self didReachFromRegisterOrAddDeal];
             });
         });
-        
     }
 }
 
@@ -581,7 +629,7 @@
     [self initializeView];
     [self allocArrays];
     //[self setRefreshControl];
-    [self startLoadingUploadIcon];
+    [self startLoadingUploadIcon:_LoadingImage];
     [self removeCellsFromSuperview];
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
@@ -604,6 +652,8 @@
             isUpdatingNow = YES;
             [self createDealsTable];
             [self fillTheCellsWithImages];
+            
+            
         }
     }
 }
@@ -662,6 +712,7 @@
 -(void) goToAddDeal {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"foursquare";
+    app.onlineOrLocal=@"local";
     TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
     [self.navigationController pushViewController:controller animated:NO];
 }
@@ -669,6 +720,7 @@
 -(void) goToOnline {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"online";
+    app.onlineOrLocal=@"online";
     OnlineViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"OnlineView"];
     [self.navigationController pushViewController:controller animated:NO];
 }

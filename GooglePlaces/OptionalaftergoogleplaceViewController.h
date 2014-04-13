@@ -24,6 +24,8 @@
     BOOL isMoreOptionViewHidden;
     AVCaptureSession *session;
     NSString *segcategorey;
+    NSString *timeOrDate;
+    NSString *resultFromDb;
 }
 
 @property (strong,nonatomic) NSString *storeName;

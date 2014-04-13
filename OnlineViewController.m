@@ -92,10 +92,38 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"online";
     OptionalaftergoogleplaceViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"Optional"];
-    controller.storeName=@"online";
+    NSArray *dataArray = [_UrlBar.text componentsSeparatedByString:@"."];
+    if ([dataArray count]>=2) {
+        controller.storeName=[dataArray objectAtIndex:1];
+    } else controller.storeName=@"online store";
     controller.segcategory=@"Online";
     [self.navigationController pushViewController:controller animated:YES];
 
 }
 
+- (void)updateProgress:(NSTimer *)sender
+{      //if the progress view is = 100% the progress stop
+    if(_progressView.progress==1.0)
+    {
+        [timer invalidate];
+    }
+    else
+        //if the progress view is< 100% the progress increases
+        _progressView.progress+=0.05;
+}
+
+-(void)webViewDidStartLoad:(UIWebView *)webView {
+    _progressView.progress=0.0;
+    _progressView.hidden=NO;
+    NSLog(@"start loading site");
+    timer=[NSTimer scheduledTimerWithTimeInterval:0.1
+                                           target:self
+                                         selector:@selector(updateProgress:)
+                                         userInfo:_progressView
+                                          repeats:YES];
+}
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    _progressView.progress=1.0;
+    _progressView.hidden=YES;
+}
 @end
