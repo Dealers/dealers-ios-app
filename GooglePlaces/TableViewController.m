@@ -572,9 +572,9 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     if (currentVC) {
-    didUpdateTheMap=NO;
-    [self initMapView];
-    [self initialize];
+        didUpdateTheMap=NO;
+        [self initMapView];
+        [self initialize];
     }
     currentVC=1;
 }

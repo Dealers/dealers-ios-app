@@ -107,12 +107,12 @@
     app.AfterAddDeal = @"yes";
     
     NSString *numofPhotos = [NSString stringWithFormat:@"%d",numofpics];
-
+    
     NSDate *localDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     dateFormatter.dateFormat =@"yyyy-MM-dd 'at' HH:mm";
     NSString *dateString = [dateFormatter stringFromDate: localDate];
-
+    
     if ([_categorylabel.text length]==0) {
         _categorylabel.text=@"No Category";
     }
@@ -166,7 +166,7 @@
     newString = [newString stringByAppendingString:@"&onlineorlocal='"];
     newString = [newString stringByAppendingString:app.onlineOrLocal];
     newString = [newString stringByAppendingString:@"'"];
-
+    
     strURL = newString;
     NSLog(@"url=%@",strURL);
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -234,30 +234,30 @@
     timeOrDate=@"date";
     
     _loadingIconCameraImage.animationImages = [NSArray arrayWithObjects:
-                                     [UIImage imageNamed:@"loading.png"],
-                                     [UIImage imageNamed:@"loading5.png"],
-                                     [UIImage imageNamed:@"loading10.png"],
-                                     [UIImage imageNamed:@"loading15.png"],
-                                     [UIImage imageNamed:@"loading20.png"],
-                                     [UIImage imageNamed:@"loading25.png"],
-                                     [UIImage imageNamed:@"loading30.png"],
-                                     [UIImage imageNamed:@"loading35.png"],
-                                     [UIImage imageNamed:@"loading40.png"],
-                                     [UIImage imageNamed:@"loading45.png"],
-                                     [UIImage imageNamed:@"loading50.png"],
-                                     [UIImage imageNamed:@"loading55.png"],
-                                     [UIImage imageNamed:@"loading60.png"],
-                                     [UIImage imageNamed:@"loading65.png"],
-                                     [UIImage imageNamed:@"loading70.png"],
-                                     [UIImage imageNamed:@"loading75.png"],
-                                     [UIImage imageNamed:@"loading80.png"],
-                                     [UIImage imageNamed:@"loading85.png"],
-                                     nil];
+                                               [UIImage imageNamed:@"loading.png"],
+                                               [UIImage imageNamed:@"loading5.png"],
+                                               [UIImage imageNamed:@"loading10.png"],
+                                               [UIImage imageNamed:@"loading15.png"],
+                                               [UIImage imageNamed:@"loading20.png"],
+                                               [UIImage imageNamed:@"loading25.png"],
+                                               [UIImage imageNamed:@"loading30.png"],
+                                               [UIImage imageNamed:@"loading35.png"],
+                                               [UIImage imageNamed:@"loading40.png"],
+                                               [UIImage imageNamed:@"loading45.png"],
+                                               [UIImage imageNamed:@"loading50.png"],
+                                               [UIImage imageNamed:@"loading55.png"],
+                                               [UIImage imageNamed:@"loading60.png"],
+                                               [UIImage imageNamed:@"loading65.png"],
+                                               [UIImage imageNamed:@"loading70.png"],
+                                               [UIImage imageNamed:@"loading75.png"],
+                                               [UIImage imageNamed:@"loading80.png"],
+                                               [UIImage imageNamed:@"loading85.png"],
+                                               nil];
     _loadingIconCameraImage.animationDuration = 0.3;
     [_loadingIconCameraImage startAnimating];
     [UIView animateWithDuration:0.2 animations:^{_loadingIconCameraImage.alpha=1.0; _loadingIconCameraImage.transform =CGAffineTransformMakeScale(0,0);
         _loadingIconCameraImage.transform =CGAffineTransformMakeScale(1,1);}];
-
+    
 }
 
 - (void)viewDidLoad
@@ -413,19 +413,19 @@
                     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Could not Upload Your Deal, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
                     [alert show];
                 }
-             else if ([resultFromDb rangeOfString:@"fail"].location == NSNotFound) {
-                [self waitOneSecond];
-             } else {
-                 [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=0.0;}];
-                 _LoadingDeal.hidden=YES;
-                 [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=0.0; _LoadingDeal.transform =CGAffineTransformMakeScale(1.0,1.0);
-                     _LoadingDeal.transform =CGAffineTransformMakeScale(0,0);}];
-                 [_LoadingImage stopAnimating];
-                 
-                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Could not Upload Your Deal, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-                 [alert show];
-
-             }
+                else if ([resultFromDb rangeOfString:@"fail"].location == NSNotFound) {
+                    [self waitOneSecond];
+                } else {
+                    [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=0.0;}];
+                    _LoadingDeal.hidden=YES;
+                    [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=0.0; _LoadingDeal.transform =CGAffineTransformMakeScale(1.0,1.0);
+                        _LoadingDeal.transform =CGAffineTransformMakeScale(0,0);}];
+                    [_LoadingImage stopAnimating];
+                    
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Could not Upload Your Deal, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                    [alert show];
+                    
+                }
             });
         });
     }
@@ -537,7 +537,7 @@
     [self EnlargeScroll:@"expire"];
     int datepickerheight=self.view.frame.size.height - _DatePicker.bounds.size.height/2;
     int datepickerNavigationBarHeight=self.view.frame.size.height - _DatePicker.bounds.size.height-22;
-
+    
     [UIView animateWithDuration:0.5 animations:^{_DatePicker.center = CGPointMake(160, datepickerheight);}];
     [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, datepickerNavigationBarHeight);}];
     [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, datepickerNavigationBarHeight);}];
@@ -753,7 +753,7 @@
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     
     NSLog(@"textFieldShouldReturn");
-
+    
     [self dismissKeyBoard];
     [self ReduceScroll];
     
@@ -820,16 +820,16 @@
     NSString *year = [datearray objectAtIndex:1];
     NSString *space = @"-";
     NSString *space2 = @"   ";
-
+    
     
     if ([timeOrDate isEqualToString:@"time"]) {
-    date = [[NSString alloc] initWithString:day];
-    date = [date stringByAppendingString:space];
-    date = [date stringByAppendingString:mounth];
-    date = [date stringByAppendingString:space];
-    date = [date stringByAppendingString:year];
-    date = [date stringByAppendingString:space2];
-    date = [date stringByAppendingString:time];
+        date = [[NSString alloc] initWithString:day];
+        date = [date stringByAppendingString:space];
+        date = [date stringByAppendingString:mounth];
+        date = [date stringByAppendingString:space];
+        date = [date stringByAppendingString:year];
+        date = [date stringByAppendingString:space2];
+        date = [date stringByAppendingString:time];
     } else {
         date = [[NSString alloc] initWithString:day];
         date = [date stringByAppendingString:space];
@@ -1198,27 +1198,27 @@
 
 -(void) RotateCamButtonAction:(id)sender {
     
-     if (Flag) {
-     FrontCamera = YES;
-     Flag = false;
-     [session stopRunning];
-     [self initializeCamera];
-     }
-     else {
-     FrontCamera = NO;
-     Flag = true;
-     [session stopRunning];
-     [self initializeCamera];
-     }
-     
+    if (Flag) {
+        FrontCamera = YES;
+        Flag = false;
+        [session stopRunning];
+        [self initializeCamera];
+    }
+    else {
+        FrontCamera = NO;
+        Flag = true;
+        [session stopRunning];
+        [self initializeCamera];
+    }
+    
 }
 
 -(void) PicFromLibButtonAction:(id)sender { /*
-    _imagePicker=nil;
-    _imagePicker.delegate=nil;
-    _imagePicker = [[GKImagePicker alloc] init];
-    _imagePicker.delegate = self;
-    [self presentViewController:_imagePicker.imagePickerController animated:YES completion:nil];*/
+                                             _imagePicker=nil;
+                                             _imagePicker.delegate=nil;
+                                             _imagePicker = [[GKImagePicker alloc] init];
+                                             _imagePicker.delegate = self;
+                                             [self presentViewController:_imagePicker.imagePickerController animated:YES completion:nil];*/
 }
 
 /*-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -1270,7 +1270,7 @@
         [UIView animateWithDuration:0.6 animations:^{_SocialView.frame = frame2;}];
         isMoreOptionViewHidden = false;
         [self ReduceScroll];
-
+        
     } else {
         CGRect frame3 = _MoreView.frame;
         frame3.origin.y = frame3.origin.y - 190;
@@ -1301,7 +1301,7 @@
 
 -(void) EnlargeScroll:(NSString*)object {
     NSLog(@"enlarge");
-
+    
     if ([object isEqualToString:@"title"]) {
         [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10+216)))];
     }
@@ -1325,7 +1325,7 @@
 -(void) ReduceScroll {
     NSLog(@"enter reduce= %f",CGRectGetMaxY(_AddDealButton.frame));
     [UIView animateWithDuration:0.5 animations:^{
-    [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10)))];
+        [_scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(_AddDealButton.frame)+10)))];
     }];
 }
 

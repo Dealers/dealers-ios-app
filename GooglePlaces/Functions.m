@@ -786,4 +786,10 @@
     NSString *CategoryPicture = [dic objectForKey:[NSString stringWithFormat:@"%@",string]];
     return CategoryPicture;
 }
+
+-(void) trytry:(UIView *)view controller:(MyFeedsViewController*)controller {
+    NSLog(@"in func");
+   // controller.view=Nil;
+}
+
 @end

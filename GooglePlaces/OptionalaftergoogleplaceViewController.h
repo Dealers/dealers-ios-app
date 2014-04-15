@@ -143,6 +143,7 @@
 @property (nonatomic, strong) GKImagePicker *imagePicker;
 @property (weak, nonatomic) IBOutlet UIPageControl *PageControl;
 - (IBAction)cancelDatePickerPressed:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UIImageView *hideCameraImage;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingIconCameraImage;
 

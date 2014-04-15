@@ -102,7 +102,7 @@
     flag = NO;
     int offset;
     if (numofpics==0) {
-         offset=10;
+        offset=10;
     } else offset=184;
     
     self.TitleIcon.frame = CGRectMake(10, offset, self.TitleIcon.frame.size.width, self.TitleIcon.frame.size.height);
@@ -198,7 +198,7 @@
             _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",DataArray[0]];
             _tempImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
             _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
-
+            
         }
         if (numofpics==3) {
             _urlImage = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",self.photoIdLabelFromMyFeeds];
@@ -207,8 +207,8 @@
             _tempImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
             _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
             _tempImage3=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
-
-
+            
+            
         }
         if (numofpics==4) {
             _urlImage = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",self.photoIdLabelFromMyFeeds];
@@ -219,10 +219,10 @@
             _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
             _tempImage3=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
             _tempImage4=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage4]]];
-
+            
         }
     }
-
+    
 }
 
 -(void) loadImage {
@@ -251,7 +251,7 @@
     _tempImage2=nil;
     _tempImage3=nil;
     _tempImage4=nil;
-
+    
     [_loadingImage stopAnimating];
     _loadingImage.hidden=YES;
 }
@@ -293,7 +293,7 @@
             self.clientimage.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlImage]]];
         });
     });
-
+    
 }
 
 - (void)viewDidLoad
@@ -370,13 +370,13 @@
 
 - (IBAction)myfeedbutton:(id)sender{
     [self deallocMemory];
-
+    
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)morebutton:(id)sender{
     [self deallocMemory];
-
+    
     MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:NO];
@@ -385,7 +385,7 @@
 
 - (IBAction)profilebutton:(id)sender{
     [self deallocMemory];
-
+    
     ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:NO];
@@ -605,26 +605,26 @@
     NSLog(@"dealloc viewdeal");
 }
 -(void)viewDidDisappear:(BOOL)animated {
-/*
-    self.titleLabelFromMyFeeds=nil;
-    self.storeLabelFromMyFeeds=nil;
-    self.categoryLabelFromMyFeeds=nil;
-    self.priceLabelFromMyFeeds=nil;
-    self.discountLabelFromMyFeeds=nil;
-    self.expireLabelFromMyFeeds=nil;
-    self.descriptionLabelFromMyFeeds=nil;
-    self.photoIdLabelFromMyFeeds=nil;
-    self.likeLabelFromMyFeeds=nil;
-    self.commentLabelFromMyFeeds=nil;
-    self.clientIdLabelFromMyFeeds=nil;
-    self.signLabelFromMyFeeds=nil;
-    NSArray *viewsToRemove = [self.view subviews];
-    for (UIView *v in viewsToRemove) {
-        [v removeFromSuperview];
-    }
-    [self.view removeFromSuperview];
-    self.view=nil;
-    NSLog(@"dealloc viewdeal");*/
+    /*
+     self.titleLabelFromMyFeeds=nil;
+     self.storeLabelFromMyFeeds=nil;
+     self.categoryLabelFromMyFeeds=nil;
+     self.priceLabelFromMyFeeds=nil;
+     self.discountLabelFromMyFeeds=nil;
+     self.expireLabelFromMyFeeds=nil;
+     self.descriptionLabelFromMyFeeds=nil;
+     self.photoIdLabelFromMyFeeds=nil;
+     self.likeLabelFromMyFeeds=nil;
+     self.commentLabelFromMyFeeds=nil;
+     self.clientIdLabelFromMyFeeds=nil;
+     self.signLabelFromMyFeeds=nil;
+     NSArray *viewsToRemove = [self.view subviews];
+     for (UIView *v in viewsToRemove) {
+     [v removeFromSuperview];
+     }
+     [self.view removeFromSuperview];
+     self.view=nil;
+     NSLog(@"dealloc viewdeal");*/
 }
 
 

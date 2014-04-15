@@ -45,9 +45,9 @@
     app.AfterAddDeal=@"aftertapbar";
     
     types = [[NSMutableArray alloc] initWithObjects:@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
-
+    
     filteredtypes = [[NSMutableArray alloc] initWithObjects:@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
-
+    
     types_icons = [[NSMutableArray alloc] initWithObjects:@"Explore-Black_Art icon.png",@"Explore-Black_Automotive icon.png",@"Explore-Black_Beauty & Personal Care icon.png",@"Explore-Black_Books & Magazines icon.png",@"Explore-Black_Electronics icon.png",@"Explore-Black_Amusment & Entertainment icon.png",@"Explore-Black_Fashion icon.png",@"Explore-Black_Food & Groceries icon.png",@"Explore-Black_Home & Furniture icon.png",@"Explore-Black_Kids & Babies icon.png",@"Explore-Black_Music icon.png",@"Explore-Black_Pets icon.png",@"Explore-Black_Restaurants & Bars icon.png",@"Explore-Black_Sports & Outdoor icon.png",@"Explore-Black_Travel icon.png",@"Explore-Black_Other icon.png",nil];
 }
 
@@ -91,14 +91,14 @@
 
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-        NSIndexPath *indexpath = [self.myTableView indexPathForSelectedRow];
-        NSString *string;
-        
-        if (indexpath.row<[self.filteredtypes count]) {
-            string = [self.filteredtypes objectAtIndex:indexpath.row];
-            string = [string stringByReplacingOccurrencesOfString:@" & " withString:@"q9j"];
-        } else string=@"Unknown";
-       [[segue destinationViewController] setCategoryFromExplore:string];
+    NSIndexPath *indexpath = [self.myTableView indexPathForSelectedRow];
+    NSString *string;
+    
+    if (indexpath.row<[self.filteredtypes count]) {
+        string = [self.filteredtypes objectAtIndex:indexpath.row];
+        string = [string stringByReplacingOccurrencesOfString:@" & " withString:@"q9j"];
+    } else string=@"Unknown";
+    [[segue destinationViewController] setCategoryFromExplore:string];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

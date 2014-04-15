@@ -169,14 +169,14 @@
     DataArray = [DataResult componentsSeparatedByString:@"///"];
     reversed = [[DataArray reverseObjectEnumerator] allObjects];
     NSMutableArray *USERSIDSARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-
+    
     FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:14]];
     URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     DataArray = [DataResult componentsSeparatedByString:@"///"];
     reversed = [[DataArray reverseObjectEnumerator] allObjects];
     NSMutableArray *onlineOrLocalArray_temp = [[NSMutableArray alloc] initWithArray:reversed];
-
+    
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftersign";
     
@@ -230,7 +230,7 @@
         
         [PRICEMARRAY_temp replaceObjectAtIndex:i withObject:price];
     }
-
+    
     
     
     self.TITLEMARRAY = [NSMutableArray arrayWithArray:TITLEMARRAY_temp];
@@ -265,25 +265,25 @@
 -(void) startLoadingUploadIcon:(UIImageView*)image {
     
     image.animationImages = [NSArray arrayWithObjects:
-                                         [UIImage imageNamed:@"loading.png"],
-                                         [UIImage imageNamed:@"loading5.png"],
-                                         [UIImage imageNamed:@"loading10.png"],
-                                         [UIImage imageNamed:@"loading15.png"],
-                                         [UIImage imageNamed:@"loading20.png"],
-                                         [UIImage imageNamed:@"loading25.png"],
-                                         [UIImage imageNamed:@"loading30.png"],
-                                         [UIImage imageNamed:@"loading35.png"],
-                                         [UIImage imageNamed:@"loading40.png"],
-                                         [UIImage imageNamed:@"loading45.png"],
-                                         [UIImage imageNamed:@"loading50.png"],
-                                         [UIImage imageNamed:@"loading55.png"],
-                                         [UIImage imageNamed:@"loading60.png"],
-                                         [UIImage imageNamed:@"loading65.png"],
-                                         [UIImage imageNamed:@"loading70.png"],
-                                         [UIImage imageNamed:@"loading75.png"],
-                                         [UIImage imageNamed:@"loading80.png"],
-                                         [UIImage imageNamed:@"loading85.png"],
-                                         nil];
+                             [UIImage imageNamed:@"loading.png"],
+                             [UIImage imageNamed:@"loading5.png"],
+                             [UIImage imageNamed:@"loading10.png"],
+                             [UIImage imageNamed:@"loading15.png"],
+                             [UIImage imageNamed:@"loading20.png"],
+                             [UIImage imageNamed:@"loading25.png"],
+                             [UIImage imageNamed:@"loading30.png"],
+                             [UIImage imageNamed:@"loading35.png"],
+                             [UIImage imageNamed:@"loading40.png"],
+                             [UIImage imageNamed:@"loading45.png"],
+                             [UIImage imageNamed:@"loading50.png"],
+                             [UIImage imageNamed:@"loading55.png"],
+                             [UIImage imageNamed:@"loading60.png"],
+                             [UIImage imageNamed:@"loading65.png"],
+                             [UIImage imageNamed:@"loading70.png"],
+                             [UIImage imageNamed:@"loading75.png"],
+                             [UIImage imageNamed:@"loading80.png"],
+                             [UIImage imageNamed:@"loading85.png"],
+                             nil];
     image.animationDuration = 0.3;
     [image startAnimating];
     [UIView animateWithDuration:0.2 animations:^{image.alpha=1.0; image.transform =CGAffineTransformMakeScale(0,0);
@@ -353,7 +353,7 @@
             label3.textAlignment=NSTextAlignmentRight;
             [[self scrollView] addSubview:label3];
         }
-
+        
         if ((![[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
@@ -375,7 +375,7 @@
             label4.textAlignment=NSTextAlignmentRight;
             [[self scrollView] addSubview:label4];
         }
-
+        
         if (([[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
@@ -387,7 +387,7 @@
             label3.textAlignment=NSTextAlignmentRight;
             [[self scrollView] addSubview:label3];
         }
-
+        
 		GAP=CGRectGetMaxY(imageview.frame)-4;
 	}
     cellNumberInScrollView+=10;
@@ -421,7 +421,7 @@
         }
         // Update UI after computation.
         dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.            
+            // Update the UI on the main thread.
             for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
                 NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
                 if ([num isEqualToString:@"0"]||([num length]==0)) {
@@ -502,10 +502,10 @@
             }
             cellsNumbersInFillWithImages+=10;
             isUpdatingNow = NO;
-
+            
         });
     });
-
+    
 }
 
 -(void) selectDealButtonClicked:(id)sender {
@@ -618,7 +618,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-
+    
     [self deallocPrevViewControllers];
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
