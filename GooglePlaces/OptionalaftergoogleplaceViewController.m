@@ -232,11 +232,36 @@
     _expirationlabel.text=@"";
     _categorylabel.text=_segcategory;
     timeOrDate=@"date";
+    
+    _loadingIconCameraImage.animationImages = [NSArray arrayWithObjects:
+                                     [UIImage imageNamed:@"loading.png"],
+                                     [UIImage imageNamed:@"loading5.png"],
+                                     [UIImage imageNamed:@"loading10.png"],
+                                     [UIImage imageNamed:@"loading15.png"],
+                                     [UIImage imageNamed:@"loading20.png"],
+                                     [UIImage imageNamed:@"loading25.png"],
+                                     [UIImage imageNamed:@"loading30.png"],
+                                     [UIImage imageNamed:@"loading35.png"],
+                                     [UIImage imageNamed:@"loading40.png"],
+                                     [UIImage imageNamed:@"loading45.png"],
+                                     [UIImage imageNamed:@"loading50.png"],
+                                     [UIImage imageNamed:@"loading55.png"],
+                                     [UIImage imageNamed:@"loading60.png"],
+                                     [UIImage imageNamed:@"loading65.png"],
+                                     [UIImage imageNamed:@"loading70.png"],
+                                     [UIImage imageNamed:@"loading75.png"],
+                                     [UIImage imageNamed:@"loading80.png"],
+                                     [UIImage imageNamed:@"loading85.png"],
+                                     nil];
+    _loadingIconCameraImage.animationDuration = 0.3;
+    [_loadingIconCameraImage startAnimating];
+    [UIView animateWithDuration:0.2 animations:^{_loadingIconCameraImage.alpha=1.0; _loadingIconCameraImage.transform =CGAffineTransformMakeScale(0,0);
+        _loadingIconCameraImage.transform =CGAffineTransformMakeScale(1,1);}];
+
 }
 
 - (void)viewDidLoad
 {
-    [self initializeCamera];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     NSLog(@"%@",app.previousViewControllerAddDeal);
     [self initialize];
@@ -295,10 +320,16 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    [self performSelector:@selector(initializeCamera) withObject:nil afterDelay:2];
 }
 
 - (void)didReceiveMemoryWarning
 {
+    [session stopRunning];
+    static NSCache *_cache = nil;
+    [_cache removeAllObjects];
+    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='camera'"];
+    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     [self DeallocMemory];
     [self.navigationController popViewControllerAnimated:YES];
     [super didReceiveMemoryWarning];
@@ -965,6 +996,8 @@
     [session addOutput:_stillImageOutput];
     
 	[session startRunning];
+    _hideCameraImage.hidden=YES;
+    [_loadingIconCameraImage stopAnimating];
     
 }
 

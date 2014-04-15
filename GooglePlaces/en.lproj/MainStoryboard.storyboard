@@ -1302,14 +1302,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="41" y="425" width="216" height="21.000000000000018"/>
+                                        <rect key="frame" x="41" y="425" width="216" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY">
-                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999986"/>
+                                        <rect key="frame" x="24" y="409" width="274" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -1324,7 +1324,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="224" y="425" width="96" height="21.000000000000018"/>
+                                        <rect key="frame" x="224" y="425" width="96" height="21.000000000000011"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -2839,6 +2839,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                     <action selector="snapImage:" destination="iJA-Ix-JTl" eventType="touchUpInside" id="sPm-4k-gUJ"/>
                                                 </connections>
                                             </button>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="My Feed+View Deal (final)_Deal Pic mask.png" id="oed-EW-Eq4" userLabel="Image View hide camera">
+                                                <rect key="frame" x="10" y="0.0" width="300" height="155"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="My Feed+View Deal (final)_Deal Pic mask.png" id="72z-KP-IRR" userLabel="Image View loading icon">
+                                                <rect key="frame" x="145" y="64" width="30" height="30"/>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -3278,7 +3285,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="expirationlabel" destination="cbc-XJ-tjI" id="lk2-ED-oYT"/>
                         <outlet property="facebookicon" destination="NEl-mq-XQ2" id="7a5-aL-Uag"/>
                         <outlet property="groupicon" destination="I7i-XV-Ycw" id="NrA-ZE-0qw"/>
+                        <outlet property="hideCameraImage" destination="oed-EW-Eq4" id="Rsk-UX-HFY"/>
                         <outlet property="imagePreview" destination="kVl-Qt-hNe" id="WbM-G5-jso"/>
+                        <outlet property="loadingIconCameraImage" destination="72z-KP-IRR" id="gWV-eV-QaY"/>
                         <outlet property="pricelabel" destination="SNQ-EA-4cR" id="DO5-cn-Mqf"/>
                         <outlet property="scroll" destination="q0j-SW-Vno" id="m2V-6T-qEb"/>
                         <outlet property="scrollcamera" destination="Vxh-9o-Kv2" id="FSR-y7-ngH"/>
@@ -3609,6 +3618,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="My Feed+View Deal (final)_Comment button (pushed).png" width="51" height="51"/>
         <image name="My Feed+View Deal (final)_Comment button (selected).png" width="51" height="51"/>
         <image name="My Feed+View Deal (final)_Comment button.png" width="51" height="51"/>
+        <image name="My Feed+View Deal (final)_Deal Pic mask.png" width="300" height="155"/>
         <image name="My Feed+View Deal (final)_Like button (pushed).png" width="51" height="51"/>
         <image name="My Feed+View Deal (final)_Like button (selected).png" width="51" height="51"/>
         <image name="My Feed+View Deal (final)_Like button.png" width="51" height="51"/>

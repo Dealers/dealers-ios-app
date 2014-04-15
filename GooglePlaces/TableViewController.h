@@ -25,6 +25,7 @@
     BOOL filtered;
     int SearchTextSize;
     BOOL didUpdateTheMap;
+    BOOL currentVC;
 }
 
 -(void) deallocMemory;
