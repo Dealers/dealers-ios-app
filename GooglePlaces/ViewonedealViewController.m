@@ -100,9 +100,13 @@
     
     [self maskUserProfileImage];
     flag = NO;
+    int offset;
+    if (numofpics==0) {
+         offset=10;
+    } else offset=184;
     
-    self.TitleIcon.frame = CGRectMake(10, 184, self.TitleIcon.frame.size.width, self.TitleIcon.frame.size.height);
-    titlelabel.frame = CGRectMake(50, 188, titlelabel.frame.size.width, titlelabel.frame.size.height);
+    self.TitleIcon.frame = CGRectMake(10, offset, self.TitleIcon.frame.size.width, self.TitleIcon.frame.size.height);
+    titlelabel.frame = CGRectMake(50, offset+4, titlelabel.frame.size.width, titlelabel.frame.size.height);
     titlelabel.numberOfLines=0;
     [titlelabel sizeToFit];
     
@@ -151,7 +155,8 @@
     
     if ((pricelabel.hidden == YES) && (discountlabel.hidden == YES)) self.PriceIcon.hidden=YES;
     
-    if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"]) {
+    NSLog(@"expire=%@",expirelabel.text);
+    if ((![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"])&&([expirelabel.text length]>0)) {
         self.ExpireIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.ExpireIcon.frame.size.width, self.ExpireIcon.frame.size.height);
         expirelabel.frame = CGRectMake(50, lowestYPoint+3+GAP, expirelabel.frame.size.width, expirelabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.ExpireIcon.frame) > CGRectGetMaxY(expirelabel.frame)) ? CGRectGetMaxY(self.ExpireIcon.frame) : CGRectGetMaxY(expirelabel.frame);
@@ -293,6 +298,10 @@
 
 - (void)viewDidLoad
 {
+    numofpics=[self numOfPicturesInTheDeal];
+    if (numofpics==0) {
+        self.cameraScrollView.hidden=YES;
+    }
     if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
         _LikeButton.enabled=NO;
     }
@@ -304,7 +313,6 @@
     [self loadVarsFromDeal];
     [self locateIconsInPlace];
     [self dealerViewInitialize];
-    numofpics=[self numOfPicturesInTheDeal];
     if (numofpics>=2) {
         _pageControl.hidden=NO;
     } else _pageControl.hidden=YES;
@@ -361,10 +369,14 @@
 
 
 - (IBAction)myfeedbutton:(id)sender{
+    [self deallocMemory];
+
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)morebutton:(id)sender{
+    [self deallocMemory];
+
     MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:NO];
@@ -372,6 +384,8 @@
 }
 
 - (IBAction)profilebutton:(id)sender{
+    [self deallocMemory];
+
     ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:NO];
@@ -379,6 +393,7 @@
 }
 
 - (IBAction)explorebutton:(id)sender{
+    [self deallocMemory];
     ExploretableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"explore"];
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:NO];
@@ -396,6 +411,7 @@
 }
 
 -(void) AddDealFunction {
+    [self deallocMemory];
     TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:NO];
@@ -405,6 +421,7 @@
 }
 
 -(void)LocalButtonAction:(id)sender{
+    [self deallocMemory];
     [UIView animateWithDuration:0.5 animations:^{self.BlueButtonsView.alpha=0.0;}];
     [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(AddDealFunction) userInfo:nil repeats:NO];
 }
@@ -521,6 +538,10 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.tableViewLikes deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([[segue identifier] isEqualToString:@"likescell"]) {
         NSIndexPath *indexpath = [_tableViewLikes indexPathForSelectedRow];
@@ -568,8 +589,23 @@
     self.pageControl.currentPage=currentpage;
 }
 
+-(void) deallocMemory {
+    self.titleLabelFromMyFeeds=nil;
+    self.storeLabelFromMyFeeds=nil;
+    self.categoryLabelFromMyFeeds=nil;
+    self.priceLabelFromMyFeeds=nil;
+    self.discountLabelFromMyFeeds=nil;
+    self.expireLabelFromMyFeeds=nil;
+    self.descriptionLabelFromMyFeeds=nil;
+    self.photoIdLabelFromMyFeeds=nil;
+    self.likeLabelFromMyFeeds=nil;
+    self.commentLabelFromMyFeeds=nil;
+    self.clientIdLabelFromMyFeeds=nil;
+    self.signLabelFromMyFeeds=nil;
+    NSLog(@"dealloc viewdeal");
+}
 -(void)viewDidDisappear:(BOOL)animated {
-
+/*
     self.titleLabelFromMyFeeds=nil;
     self.storeLabelFromMyFeeds=nil;
     self.categoryLabelFromMyFeeds=nil;
@@ -588,7 +624,7 @@
     }
     [self.view removeFromSuperview];
     self.view=nil;
-    NSLog(@"dealloc viewdeal");
+    NSLog(@"dealloc viewdeal");*/
 }
 
 

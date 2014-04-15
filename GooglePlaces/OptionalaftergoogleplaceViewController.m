@@ -168,6 +168,7 @@
     newString = [newString stringByAppendingString:@"'"];
 
     strURL = newString;
+    NSLog(@"url=%@",strURL);
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
     resultFromDb = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
@@ -340,12 +341,22 @@
 }
 
 - (IBAction)adddealbutton:(id)sender {
+    NSLog(@"in add deal function");
+    NSString *everyThingsOK = @"no";
     [self dismissKeyBoard];
     
     if ((_titlelabel.text.length == 0)){
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter an Title" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
-    } else {
+    } else if ((_discountlabel.text.length > 0)){
+        int price = [_discountlabel.text intValue];
+        if (price>100) {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check your discount" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+            [alert show];
+        } else everyThingsOK=@"yes";
+    } else everyThingsOK=@"yes";
+    
+    if ([everyThingsOK isEqualToString:@"yes"]) {
         [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=1.0;}];
         _LoadingDeal.hidden=NO;
         [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=1.0; _LoadingDeal.transform =CGAffineTransformMakeScale(0.8,0.8);
@@ -769,34 +780,26 @@
     
     NSString *date;
     
-    if ([timeOrDate isEqualToString:@"time"]) {
-    NSString *selecteddate = [[NSString alloc]initWithFormat:@"%@",dateFromPicker];
-    NSArray *datearray = [selecteddate componentsSeparatedByString:@" "];
-    NSString *first = [datearray objectAtIndex:0];
-    NSString *second = [datearray objectAtIndex:1];
-    NSArray *reversedate = [first componentsSeparatedByString:@"-"];
-    NSString *day = [reversedate objectAtIndex:2];
-    NSString *mounth = [reversedate objectAtIndex:1];
-    NSString *year = [reversedate objectAtIndex:0];
+    NSString *newDate=[dateFromPicker descriptionWithLocale:[NSLocale systemLocale]];
+    NSArray *datearray = [newDate componentsSeparatedByString:@" "];
+    //1=year 2=mounth 3=day 4=hour
+    NSString *time = [datearray objectAtIndex:4];
+    NSString *day = [datearray objectAtIndex:3];
+    NSString *mounth = [datearray objectAtIndex:2];
+    NSString *year = [datearray objectAtIndex:1];
     NSString *space = @"-";
     NSString *space2 = @"   ";
+
+    
+    if ([timeOrDate isEqualToString:@"time"]) {
     date = [[NSString alloc] initWithString:day];
     date = [date stringByAppendingString:space];
     date = [date stringByAppendingString:mounth];
     date = [date stringByAppendingString:space];
     date = [date stringByAppendingString:year];
     date = [date stringByAppendingString:space2];
-    date = [date stringByAppendingString:second];
+    date = [date stringByAppendingString:time];
     } else {
-        NSString *selecteddate = [[NSString alloc]initWithFormat:@"%@",dateFromPicker];
-        NSArray *datearray = [selecteddate componentsSeparatedByString:@" "];
-        NSString *first = [datearray objectAtIndex:0];
-        NSArray *reversedate = [first componentsSeparatedByString:@"-"];
-        NSString *day = [reversedate objectAtIndex:2];
-        NSString *mounth = [reversedate objectAtIndex:1];
-        NSString *year = [reversedate objectAtIndex:0];
-        NSString *space = @"-";
-        NSString *space2 = @"   ";
         date = [[NSString alloc] initWithString:day];
         date = [date stringByAppendingString:space];
         date = [date stringByAppendingString:mounth];
@@ -1000,7 +1003,6 @@
     //[session stopRunning];
     _imagePicker=nil;
     _imagePicker.delegate=nil;
-    [self report_memory];
     if (numofpics>=2) {
         _PageControl.hidden=NO;
     } else _PageControl.hidden=YES;

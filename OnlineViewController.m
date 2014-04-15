@@ -96,6 +96,7 @@
     if ([dataArray count]>=2) {
         controller.storeName=[dataArray objectAtIndex:1];
     } else controller.storeName=@"online store";
+    NSLog(@"%@",controller.storeName);
     controller.segcategory=@"Online";
     [self.navigationController pushViewController:controller animated:YES];
 

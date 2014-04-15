@@ -44,9 +44,9 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftertapbar";
     
-    types = [[NSMutableArray alloc] initWithObjects:@"Amusement & Entertainment",@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Jewelry & Watches",@"Kitchen",@"Kids & Babies",@"Music",@"Pets",@"Real Estate",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other", nil];
+    types = [[NSMutableArray alloc] initWithObjects:@"Automotive",@"Art",@"Beauty & Personal Care"@"Book & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
 
-    filteredtypes = [[NSMutableArray alloc] initWithObjects:@"Amusement & Entertainment",@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Jewelry & Watches",@"Kitchen",@"Kids & Babies",@"Music",@"Pets",@"Real Estate",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other", nil];
+    filteredtypes = [[NSMutableArray alloc] initWithObjects:@"Automotive",@"Art",@"Beauty & Personal Care"@"Book & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
 
     types_icons = [[NSMutableArray alloc] initWithObjects:@"Explore_Amusment & Entertainment icon.png",@"Explore_Art icon.png",@"Explore_Automotive icon.png",@"Explore_Beauty & Personal Care icon.png",@"Explore_Books & Magazines icon.png",@"Explore_Electronics icon.png",@"Explore_Events icon.png",@"Explore_Fashion icon.png",@"Explore_Food & Groceries icon.png",@"Explore_Home & Furniture icon.png",@"Explore_Jewelry & Watches icon.png",@"Explore_Kitchen icon.png",@"Explore_Kids & Babies icon.png",@"Explore_Music icon.png",@"Explore_Pets icon.png",@"Explore_Real Estate icon.png",@"Explore_Restaurants & Bars icon.png",@"Explore_Sports & Outdoor icon.png",@"Explore_Travel icon.png",@"Explore_Other icon.png",nil];
 }

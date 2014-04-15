@@ -10,9 +10,17 @@
 
 @interface ProfileViewController : UIViewController <UINavigationControllerDelegate>
 {
-    BOOL isShortCell;
     int GAP;
-    int gapForLikesView;
+    int gap2;
+    int GAPForLikeView;
+    int gap2ForLikeView;
+    BOOL isShortCell;
+    BOOL isUpdatingNow;
+    int cellNumberInScrollView;
+    int cellsNumbersInFillWithImages;
+    int cellNumberInScrollViewForLikeView;
+    int cellsNumbersInFillWithImagesForLikeView;
+
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -31,14 +39,17 @@
 - (IBAction)dealsViewButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *likesViewButtonClicked;
 - (IBAction)likesViewButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *returnButton;
+- (IBAction)returnButtonClicked:(id)sender;
 
+@property (strong, nonatomic)  UIImage *image2;
+@property (strong, nonatomic)  UIImage *image2ForLikeView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 
 - (IBAction)Adddeal:(id)sender;
 - (IBAction)myfeedbutton:(id)sender;
 - (IBAction)morebutton:(id)sender;
-- (IBAction)profilebutton:(id)sender;
 - (IBAction)explorebutton:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIView *BlueButtonsView;
@@ -67,6 +78,7 @@
 @property (nonatomic, strong) NSMutableArray *SIGNARRAY;
 @property (nonatomic, strong) NSMutableArray *DEALIDARRAY;
 @property (nonatomic, strong) NSMutableArray *uploadDateArray;
+@property (nonatomic, strong) NSMutableArray *onlineOrLocalArray;
 
 @property (nonatomic, strong) NSMutableArray *titleArrayForLikesView;
 @property (nonatomic, strong) NSMutableArray *descriptionArrayForLikesView;
@@ -83,11 +95,20 @@
 @property (nonatomic, strong) NSMutableArray *signArrayForLikesView;
 @property (nonatomic, strong) NSMutableArray *dealidArrayForLikesView;
 @property (nonatomic, strong) NSMutableArray *uploadDateArrayForLikesView;
+@property (nonatomic, strong) NSMutableArray *onlineOrLocalArrayForLikesView;
 
 @property (nonatomic, weak) NSString *deals;
 @property (nonatomic, weak) NSString *likes;
+@property (strong, nonatomic) NSString *dealsUserLikes;
 
 @property (nonatomic, strong) NSString *dealerId;
 @property (nonatomic, strong) NSString *didComeFromLikesTable;
+@property (weak, nonatomic) IBOutlet UIButton *myFeedButton;
+@property (weak, nonatomic) IBOutlet UIImageView *myFeedIcon;
+@property (weak, nonatomic) IBOutlet UILabel *myFeedLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *profileIcon;
+@property (weak, nonatomic) IBOutlet UILabel *profileLabel;
+@property (weak, nonatomic) IBOutlet UIButton *profileBurron;
+- (IBAction)profileButtonClicked:(id)sender;
 
 @end

@@ -444,7 +444,7 @@ return Cell;
     - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
         if (searchText.length==0) {
             SearchTextSize=0;
-            self.closeStoreSearchTableButton.hidden=NO;
+            self.closeStoreSearchTableButton.alpha=0.3;
             [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
 
             self.storeSearchNameArray = nil;
@@ -455,7 +455,7 @@ return Cell;
             [self.scrollView setScrollEnabled:NO];
         } else {
             SearchTextSize=1;
-            self.closeStoreSearchTableButton.hidden=YES;
+            self.closeStoreSearchTableButton.alpha=0.0;
             self.storeSearchTableView.hidden=NO;
             _searchTextToBackground=searchText;
             
@@ -475,9 +475,7 @@ return Cell;
     }
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    [UIView animateWithDuration:3.2 animations:^{self.closeStoreSearchTableButton.alpha=0.3;
-}];
-
+    self.closeStoreSearchTableButton.alpha=0.3;
     return 1;
 }
     - (void)viewDidUnload {
@@ -514,9 +512,8 @@ return Cell;
     self.closeStoreSearchViewButton.hidden=YES;
     self.ReturnButton.hidden=NO;
     self.ReturnButtonFull.hidden=NO;
-    self.closeStoreSearchTableButton.hidden=YES;
+    self.closeStoreSearchTableButton.alpha=0.0;
     self.storeSearchTableView.hidden=YES;
-    self.closeStoreSearchTableButton.hidden=YES;
     self.venuesTableView.hidden=NO;
     self.theShadow.hidden=NO;
     [self.mapView setZoomEnabled:YES];
@@ -530,9 +527,8 @@ return Cell;
     -(void) closeStoreSearchTableButtonClicked:(id)sender {
         self.ReturnButton.hidden=NO;
         self.ReturnButtonFull.hidden=NO;
-        self.closeStoreSearchTableButton.hidden=YES;
+        self.closeStoreSearchTableButton.alpha=0.0;
         self.storeSearchTableView.hidden=YES;
-        self.closeStoreSearchTableButton.hidden=YES;
         self.venuesTableView.hidden=NO;
         self.theShadow.hidden=NO;
         [self.mapView setZoomEnabled:YES];

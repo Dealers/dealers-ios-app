@@ -22,6 +22,7 @@
     BOOL isUpdatingNow;
     int gapDealersLikes;
     BOOL likesView;
+    int offsetForIcons;
 }
 @property (strong,nonatomic) NSArray *DealersDataWhoLikesTheDealArray;
 

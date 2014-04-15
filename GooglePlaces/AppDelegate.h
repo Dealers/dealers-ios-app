@@ -18,6 +18,7 @@
 @property (strong, nonatomic)  NSString *AfterAddDeal;
 @property (strong, nonatomic)  NSString *onlineOrLocal;
 @property (strong, nonatomic)  NSString *previousViewControllerAddDeal;
+@property (strong, nonatomic)  NSString *previousViewController;
 
 
 

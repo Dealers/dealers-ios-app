@@ -35,7 +35,7 @@
     emailicon.center = CGPointMake(86, 334+(ScreenHeight*[self isIphone5]));
 }
 - (void)viewDidLoad
-{
+{    
     ScreenHeight = self.view.frame.size.height/10;
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];

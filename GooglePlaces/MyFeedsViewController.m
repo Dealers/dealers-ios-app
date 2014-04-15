@@ -204,6 +204,34 @@
         [CATEGORYARRAY_temp replaceObjectAtIndex:i withObject:category];
     }
     
+    for (int i=0; i<[[PRICEMARRAY_temp copy] count]; i++) {
+        NSString *price=[PRICEMARRAY_temp objectAtIndex:i];
+        int priceint = [price intValue];
+        if ((priceint > 1000) && (priceint < 10000))  {
+            priceint=priceint/1000;
+            price = [NSString stringWithFormat:@"%d",priceint];
+            price = [price stringByAppendingString:@"k"];
+        }
+        if ((priceint > 10000) && (priceint < 100000))  {
+            priceint=priceint/10000;
+            price = [NSString stringWithFormat:@"%d",priceint];
+            price = [price stringByAppendingString:@"k"];
+        }
+        if ((priceint > 100000) && (priceint < 1000000))  {
+            priceint=priceint/100000;
+            price = [NSString stringWithFormat:@"%d",priceint];
+            price = [price stringByAppendingString:@"k"];
+        }
+        if (priceint > 1000000) {
+            priceint=priceint/1000000;
+            price = [NSString stringWithFormat:@"%d",priceint];
+            price = [price stringByAppendingString:@"m"];
+        }
+        
+        [PRICEMARRAY_temp replaceObjectAtIndex:i withObject:price];
+    }
+
+    
     
     self.TITLEMARRAY = [NSMutableArray arrayWithArray:TITLEMARRAY_temp];
     self.DESCRIPTIONMARRAY = [NSMutableArray arrayWithArray:DESCRIPTIONMARRAY_temp];
@@ -322,6 +350,7 @@
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
+            label3.textAlignment=NSTextAlignmentRight;
             [[self scrollView] addSubview:label3];
         }
 
@@ -333,6 +362,7 @@
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
+            label3.textAlignment=NSTextAlignmentRight;
             [[self scrollView] addSubview:label3];
             
             UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
@@ -342,6 +372,7 @@
             label4.backgroundColor=[UIColor clearColor];
             label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
             [label4 sizeToFit];
+            label4.textAlignment=NSTextAlignmentRight;
             [[self scrollView] addSubview:label4];
         }
 
@@ -351,8 +382,9 @@
             label3.text=[self.DISCOUNTMARRAY objectAtIndex:i];
             label3.text = [label3.text stringByAppendingString:@"%"];
             label3.backgroundColor=[UIColor clearColor];
-            label3.textColor = [UIColor blackColor];
+            label3.textColor = [UIColor redColor];
             [label3 sizeToFit];
+            label3.textAlignment=NSTextAlignmentRight;
             [[self scrollView] addSubview:label3];
         }
 
@@ -647,7 +679,7 @@
 
 -(void)scrollViewDidScroll: (UIScrollView*)scrollView{
     int scrollOffset = scrollView.contentOffset.y + 300;
-    if ((GAP - scrollOffset) < 50) {
+    if ((GAP - scrollOffset) < 200) {
         if (!isUpdatingNow) {
             isUpdatingNow = YES;
             [self createDealsTable];
@@ -732,6 +764,7 @@
 
 -(IBAction)profilebutton:(id)sender{
     ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
+    controller.didComeFromLikesTable=@"no";
     [self.navigationController pushViewController:controller animated:NO];
     
 }
