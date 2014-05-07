@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="ZXa-ud-UfS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" initialViewController="ZXa-ud-UfS">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <development version="4600" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Table View Controller-->
@@ -369,18 +369,18 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="My Feed+View Deal - New Version_Shares View Deal icon.png" id="OHh-8t-r5g" userLabel="Image View share">
-                                                <rect key="frame" x="10" y="37" width="14" height="19"/>
+                                                <rect key="frame" x="12" y="37" width="14" height="19"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y9i-ko-RdH" userLabel="Label - likes">
-                                                <rect key="frame" x="40" y="8" width="248" height="21"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y9i-ko-RdH" userLabel="Label - likes">
+                                                <rect key="frame" x="36" y="8" width="248" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
                                                 <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ySK-PE-pHP" userLabel="Label - share">
-                                                <rect key="frame" x="40" y="36" width="248" height="21"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ySK-PE-pHP" userLabel="Label - share">
+                                                <rect key="frame" x="36" y="36" width="248" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
                                                 <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -961,14 +961,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="41" y="425" width="216" height="21.000000000000014"/>
+                                        <rect key="frame" x="41" y="425.00000311221379" width="216" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY">
-                                        <rect key="frame" x="24" y="409" width="274" height="43.999999999999986"/>
+                                        <rect key="frame" x="24" y="409" width="274" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -983,7 +983,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="224" y="425" width="96" height="21"/>
+                                        <rect key="frame" x="224" y="425.00000311221379" width="96" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -1365,7 +1365,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="b0R-M2-lb7">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="b0R-M2-lb7">
                                 <rect key="frame" x="1" y="48" width="318" height="365"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1479,30 +1479,26 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2pi-6d-bR1" userLabel="Label - User's Name">
-                                        <rect key="frame" x="10" y="102" width="300" height="21"/>
+                                        <rect key="frame" x="10" y="103" width="300" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bJ8-h6-6aN" userLabel="Rank">
-                                        <rect key="frame" x="53" y="130" width="215" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IOA-xI-Uss" userLabel="Label - Followers Count">
+                                        <rect key="frame" x="45" y="130" width="100" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IOA-xI-Uss" userLabel="Label - Followers Count">
-                                        <rect key="frame" x="58" y="160" width="100" height="15"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sOJ-4l-UiM" userLabel="Label - Following Count">
-                                        <rect key="frame" x="163" y="160" width="100" height="15"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sOJ-4l-UiM" userLabel="Label - Following Count">
+                                        <rect key="frame" x="175" y="130" width="100" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="J4N-1v-q9u" userLabel="Button - Deals List">
-                                        <rect key="frame" x="4" y="182" width="157" height="42"/>
+                                        <rect key="frame" x="4" y="155" width="157" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" image="Profile_Deals List tab (selected).png">
@@ -1515,14 +1511,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WsJ-2t-hCX" userLabel="Button - Likes List">
-                                        <rect key="frame" x="160" y="182" width="157" height="42"/>
+                                        <rect key="frame" x="160" y="155" width="157" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Button" image="Profile_Likes List tab.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="selected" image="Profile_Likes List tab (selected).png"/>
-                                        <state key="highlighted" image="Profile_Likes List tab (Highlighted).png"/>
                                         <connections>
                                             <action selector="likesViewButtonClicked:" destination="Uqk-cd-qh2" eventType="touchUpInside" id="sKP-1o-AzJ"/>
                                         </connections>
@@ -1532,16 +1527,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <autoresizingMask key="autoresizingMask"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deals" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3tB-ir-a17" userLabel="Label - Followers Count">
-                                        <rect key="frame" x="34" y="195" width="100" height="15"/>
+                                        <rect key="frame" x="34" y="171" width="100" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GUX-gh-7zM" userLabel="Label - Followers Count">
-                                        <rect key="frame" x="186" y="195" width="100" height="15"/>
+                                        <rect key="frame" x="186" y="171" width="100" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <color key="textColor" red="0.70588235294117641" green="0.70588235294117641" blue="0.72549019607843135" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1580,7 +1575,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <connections>
                         <outlet property="dealerName" destination="2pi-6d-bR1" id="91v-my-IIi"/>
                         <outlet property="dealerProfileImage" destination="D0R-tT-qFv" id="wX3-Bl-PlK"/>
-                        <outlet property="dealerRankImage" destination="bJ8-h6-6aN" id="NSg-PF-S5k"/>
                         <outlet property="dealsCountLabel" destination="3tB-ir-a17" id="hbw-OI-j0c"/>
                         <outlet property="dealsView" destination="0F0-LO-bLW" id="cJd-TZ-wml"/>
                         <outlet property="dealsViewButton" destination="J4N-1v-q9u" id="OKC-s5-Ejx"/>
@@ -2473,11 +2467,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="My Feed+View Deal_Navigation Bar@2X.png" width="641" height="106"/>
         <image name="My Feed+View Deal_Store icon (final).png" width="26" height="26"/>
         <image name="Profile_Deals List tab (Highlighted).png" width="156" height="42"/>
-        <image name="Profile_Deals List tab (selected).png" width="156" height="42"/>
-        <image name="Profile_Deals List tab.png" width="156" height="42"/>
-        <image name="Profile_Likes List tab (Highlighted).png" width="156" height="42"/>
-        <image name="Profile_Likes List tab (selected).png" width="156" height="42"/>
-        <image name="Profile_Likes List tab.png" width="156" height="42"/>
+        <image name="Profile_Deals List tab (selected).png" width="156" height="47"/>
+        <image name="Profile_Deals List tab.png" width="156" height="47"/>
+        <image name="Profile_Likes List tab (selected).png" width="156" height="48"/>
+        <image name="Profile_Likes List tab.png" width="156" height="48"/>
         <image name="Purple button.png" width="575" height="89"/>
         <image name="Registration_Add Photo button (selected).png" width="100" height="100"/>
         <image name="Registration_Add Photo button.png" width="100" height="100"/>
@@ -2512,6 +2505,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="7NX-Yc-4P8"/>
+        <segue reference="WO3-Hq-B8F"/>
     </inferredMetricsTieBreakers>
 </document>

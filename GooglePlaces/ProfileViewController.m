@@ -1238,11 +1238,10 @@
     selectDealButton9.alpha=0.0;
     [[self view] addSubview:selectDealButton9];
     
-    
     UIButton *selectDealButton7=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton7 setTitle:@"" forState:UIControlStateNormal];
     [selectDealButton7 setImage:[UIImage imageNamed:@"Add Deal (Final)_Local button.png"] forState:UIControlStateNormal];
-    selectDealButton7.frame=CGRectMake(76, ([[UIScreen mainScreen] bounds].size.height)-182,76,76);
+    selectDealButton7.frame=CGRectMake(45, ([[UIScreen mainScreen] bounds].size.height)-210,100,100);
     selectDealButton7.tag=101;
     [selectDealButton7 addTarget:self action:@selector(goToAddDeal) forControlEvents: UIControlEventTouchUpInside];
     selectDealButton7.alpha=0.0;
@@ -1251,15 +1250,15 @@
     UIButton *selectDealButton8=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton8 setTitle:@"" forState:UIControlStateNormal];
     [selectDealButton8 setImage:[UIImage imageNamed:@"Add Deal (Final)_Online button.png"] forState:UIControlStateNormal];
-    selectDealButton8.frame=CGRectMake(178, ([[UIScreen mainScreen] bounds].size.height)-182,76,76);
+    selectDealButton8.frame=CGRectMake(175, ([[UIScreen mainScreen] bounds].size.height)-210,100,100);
     selectDealButton8.tag=102;
     [selectDealButton8 addTarget:self action:@selector(goToOnline) forControlEvents: UIControlEventTouchUpInside];
     selectDealButton8.alpha=0.0;
     [[self view] addSubview:selectDealButton8];
     
-    UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(89, ([[UIScreen mainScreen] bounds].size.height)-103, 47, 21)];
+    UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(45, ([[UIScreen mainScreen] bounds].size.height)-103, 100, 16)];
     [label5 setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
-    label5.text=@"Local";
+    label5.text=@"Local Store";
     label5.backgroundColor=[UIColor clearColor];
     label5.textColor = [UIColor colorWithRed:0/255 green:122/255 blue:255/255 alpha:1.0];
     label5.textAlignment = NSTextAlignmentCenter;
@@ -1267,9 +1266,9 @@
     label5.alpha=0.0;
     [[self view] addSubview:label5];
     
-    UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(189, ([[UIScreen mainScreen] bounds].size.height)-103, 54, 21)];
+    UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(175, ([[UIScreen mainScreen] bounds].size.height)-103, 100, 16)];
     [label6 setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
-    label6.text=@"Online";
+    label6.text=@"The Web";
     label6.backgroundColor=[UIColor clearColor];
     label6.textColor = [UIColor colorWithRed:0/255 green:122/255 blue:255/255 alpha:1.0];
     label6.textAlignment = NSTextAlignmentCenter;
@@ -1277,6 +1276,15 @@
     label6.alpha=0.0;
     [[self view] addSubview:label6];
     
+    UILabel *label7=[[UILabel alloc]initWithFrame:CGRectMake(100, ([[UIScreen mainScreen] bounds].size.height)-236, 320, 16)];
+    [label7 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
+    label7.text=@"Add deal from?";
+    label7.backgroundColor=[UIColor clearColor];
+    label7.textColor = [UIColor colorWithRed:0/255 green:0/255 blue:0/255 alpha:1.0];
+    label7.textAlignment = NSTextAlignmentCenter;
+    label7.tag=105;
+    label7.alpha=0.0;
+    [[self view] addSubview:label7];
     
 }
 
@@ -1344,7 +1352,7 @@
     UILabel *label1 = (UILabel*)[self.view viewWithTag:103];
     UILabel *label2 = (UILabel*)[self.view viewWithTag:104];
     
-    [UIView animateWithDuration:0.5 animations:^{button1.alpha=0.7;
+    [UIView animateWithDuration:0.5 animations:^{button1.alpha=0.8;
         button2.alpha=1.0;
         button3.alpha=1.0;
         label1.alpha=1.0;
@@ -1360,7 +1368,7 @@
     UIButton *button2 = (UIButton*)[self.view viewWithTag:120];
     [self.view bringSubviewToFront:button1];
     [self.view bringSubviewToFront:button2];
-    button1.alpha=0.7;
+    button1.alpha=0.8;
 }
 
 -(void) removeWhiteCover {
