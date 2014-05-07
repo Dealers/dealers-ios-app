@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "GKImagePicker.h"
 
-@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,GKImagePickerDelegate>
+@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,GKImagePickerDelegate>
 {
     NSString *dealphotoid;
     NSString *timeorday;
@@ -22,12 +22,15 @@
     BOOL FrontCamera;
     BOOL haveImage;
     BOOL isMoreOptionViewHidden;
-    AVCaptureSession *session;
     NSString *segcategorey;
     NSString *timeOrDate;
     NSString *resultFromDb;
+    BOOL allocDatePicker;
+    BOOL allocCategoryPicker;
 }
+@property (strong) AVCaptureSession *captureSession;
 
+@property (strong,nonatomic) NSString *urlSite;
 @property (strong,nonatomic) NSString *storeName;
 @property (strong,nonatomic) NSString *segcategory;
 @property (strong,nonatomic) NSString *titleText;
@@ -66,7 +69,7 @@
 
 - (IBAction)twittbutton:(id)sender;
 //- (IBAction)whatappButton:(id)sender;
-@property (weak, nonatomic) IBOutlet UIPickerView *CategoryPicker;
+@property (retain, nonatomic) UIPickerView *CategoryPicker;
 @property (weak, nonatomic) IBOutlet UINavigationBar *CategoryNavBar;
 - (IBAction)CateoryButtonAction:(id)sender;
 - (IBAction)Cateory_DoneButtonAction:(id)sender;
@@ -89,7 +92,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *PersentButton;
 - (IBAction)PersentButtonAction:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIDatePicker *DatePicker;
+@property (strong, nonatomic) UIDatePicker *DatePicker;
 @property (weak, nonatomic) IBOutlet UINavigationBar *DateNavBar;
 - (IBAction)Date_DoneButtonAction:(id)sender;
 - (IBAction)ChagrtoDateAction:(id)sender;

@@ -22,43 +22,11 @@
 
 @property (weak,nonatomic) IBOutlet UIScrollView *scrollView;
 
-@property (weak, nonatomic) IBOutlet UIButton *AddDealButton;
-@property (weak, nonatomic) IBOutlet UIButton *MyFeedButton;
-@property (weak, nonatomic) IBOutlet UIButton *ExploreButton;
-@property (weak, nonatomic) IBOutlet UIButton *ProfileButton;
-@property (weak, nonatomic) IBOutlet UIButton *MoreButton;
-
 @property (strong, nonatomic)  UIImage *image2;
 
-@property (weak, nonatomic) IBOutlet UIImageView *TapBar;
 @property (weak, nonatomic) IBOutlet UIImageView *DealersTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
 @property (weak, nonatomic) UIImageView *loadingIconLoadNewDeals;
-@property (weak, nonatomic) IBOutlet UIImageView *exploreImage;
-@property (weak, nonatomic) IBOutlet UIImageView *moreImage;
-@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
-@property (weak, nonatomic) IBOutlet UIImageView *myfeedsImage;
-
-@property (weak, nonatomic) IBOutlet UIButton *denyClickingOnCellsButton;
-
-@property (weak, nonatomic) IBOutlet UILabel *OnlineText;
-@property (weak, nonatomic) IBOutlet UILabel *LocalText;
-@property (weak, nonatomic) IBOutlet UILabel *MyFeedText;
-@property (weak, nonatomic) IBOutlet UILabel *ExploreText;
-@property (weak, nonatomic) IBOutlet UILabel *ProfileText;
-@property (weak, nonatomic) IBOutlet UILabel *MoreText;
-
-@property (weak, nonatomic) IBOutlet UIView *whiteCoverView;
-@property (weak, nonatomic) IBOutlet UIView *onlineOrLocalView;
-
-
-- (IBAction)localButtonClicked:(id)sender;
-- (IBAction)onlineButtonClicked:(id)sender;
-- (IBAction)denyClickingOnCellsButtonClicked:(id)sender;
-- (IBAction)addDealButtonClicked:(id)sender;
-- (IBAction)morebutton:(id)sender;
-- (IBAction)profilebutton:(id)sender;
-- (IBAction)explorebutton:(id)sender;
 
 @property (nonatomic, strong) NSMutableArray *TITLEMARRAY;
 @property (nonatomic, strong) NSMutableArray *DESCRIPTIONMARRAY;

@@ -11,6 +11,7 @@
 @interface OnlineViewController : UIViewController <UISearchBarDelegate, UINavigationControllerDelegate,UINavigationBarDelegate,UITextFieldDelegate,UIWebViewDelegate>
 {
     NSTimer *timer;
+    BOOL currentVC;
 }
 @property (weak, nonatomic) IBOutlet UITextField *UrlBar;
 @property (weak, nonatomic) IBOutlet UIButton *webViewGoBack;

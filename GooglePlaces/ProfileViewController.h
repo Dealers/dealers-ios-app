@@ -20,7 +20,7 @@
     int cellsNumbersInFillWithImages;
     int cellNumberInScrollViewForLikeView;
     int cellsNumbersInFillWithImagesForLikeView;
-
+    BOOL currentVC;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -31,7 +31,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *dealerProfileImage;
 @property (weak, nonatomic) IBOutlet UILabel *dealerName;
 @property (weak, nonatomic) IBOutlet UIImageView *dealerRankImage;
-@property (weak, nonatomic) IBOutlet UILabel *dealsCount;
 @property (weak, nonatomic) IBOutlet UILabel *followersCount;
 @property (weak, nonatomic) IBOutlet UILabel *followingCount;
 @property (weak, nonatomic) IBOutlet UIButton *dealsViewButton;
@@ -46,21 +45,6 @@
 @property (strong, nonatomic)  UIImage *image2ForLikeView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
-
-- (IBAction)Adddeal:(id)sender;
-- (IBAction)myfeedbutton:(id)sender;
-- (IBAction)morebutton:(id)sender;
-- (IBAction)explorebutton:(id)sender;
-
-@property (weak, nonatomic) IBOutlet UIView *BlueButtonsView;
-@property (weak, nonatomic) IBOutlet UIButton *LocalButton;
-@property (weak, nonatomic) IBOutlet UIButton *OnlineButton;
-@property (weak, nonatomic) IBOutlet UIButton *LockTableButton;
-@property (weak, nonatomic) IBOutlet UILabel *OnlineText;
-@property (weak, nonatomic) IBOutlet UILabel *LocalText;
-- (IBAction)LocalButtonAction:(id)sender;
-- (IBAction)OnlineButtonAction:(id)sender;
-- (IBAction)UNLockButtonAction:(id)sender;
 
 @property (nonatomic, strong) NSMutableArray *TITLEMARRAY;
 @property (nonatomic, strong) NSMutableArray *DESCRIPTIONMARRAY;
@@ -100,15 +84,10 @@
 @property (nonatomic, weak) NSString *deals;
 @property (nonatomic, weak) NSString *likes;
 @property (strong, nonatomic) NSString *dealsUserLikes;
+@property (weak, nonatomic) IBOutlet UILabel *dealsCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *likesCountLabel;
 
 @property (nonatomic, strong) NSString *dealerId;
 @property (nonatomic, strong) NSString *didComeFromLikesTable;
-@property (weak, nonatomic) IBOutlet UIButton *myFeedButton;
-@property (weak, nonatomic) IBOutlet UIImageView *myFeedIcon;
-@property (weak, nonatomic) IBOutlet UILabel *myFeedLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *profileIcon;
-@property (weak, nonatomic) IBOutlet UILabel *profileLabel;
-@property (weak, nonatomic) IBOutlet UIButton *profileBurron;
-- (IBAction)profileButtonClicked:(id)sender;
 
 @end

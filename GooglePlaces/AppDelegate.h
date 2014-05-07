@@ -19,6 +19,8 @@
 @property (strong, nonatomic)  NSString *onlineOrLocal;
 @property (strong, nonatomic)  NSString *previousViewControllerAddDeal;
 @property (strong, nonatomic)  NSString *previousViewController;
+@property (strong, nonatomic)  NSString *dealerName;
+@property (strong, nonatomic)  UIImage *dealerProfileImage;
 
 
 

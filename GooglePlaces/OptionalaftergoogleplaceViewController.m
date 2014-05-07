@@ -11,6 +11,7 @@
 #import "TableViewController.h"
 #import "OnlineViewController.h"
 #import <mach/mach.h>
+#import "CheckConnection.h"
 
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
 
@@ -117,6 +118,10 @@
         _categorylabel.text=@"No Category";
     }
     
+    if ([app.onlineOrLocal isEqualToString:@"local"]) {
+        _urlSite=@"0";
+    }
+    
     NSString *newString;
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/dealphpFile.php?Title='"];
     newString = [strURL stringByAppendingString:_titleText];
@@ -166,6 +171,9 @@
     newString = [newString stringByAppendingString:@"&onlineorlocal='"];
     newString = [newString stringByAppendingString:app.onlineOrLocal];
     newString = [newString stringByAppendingString:@"'"];
+    newString = [newString stringByAppendingString:@"&urlSite='"];
+    newString = [newString stringByAppendingString:_urlSite];
+    newString = [newString stringByAppendingString:@"'"];
     
     strURL = newString;
     NSLog(@"url=%@",strURL);
@@ -177,25 +185,32 @@
 
 //Points nil all strong vars//
 -(void) DeallocMemory {
-    [session stopRunning];
+    NSArray *viewsToRemove = [self.view subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
     static NSCache *_cache = nil;
     [_cache removeAllObjects];
+    [self.captureSession startRunning];
+    [_imagePreview.layer removeFromSuperlayer];
+    self.stillImageOutput=nil;
+    self.captureSession=nil;
     _storeName=Nil;
     _categoryListArray=Nil;
     _StoreSearchArray=Nil;
     _imagePicker.delegate=nil;
     _imagePicker=Nil;
     _stillImageOutput=Nil;
-    session=nil;
+    _captureSession=nil;
     _titlelabel.delegate=nil;
     _categorylabel.delegate=nil;
     _pricelabel.delegate=nil;
     _discountlabel.delegate=nil;
     _expirationlabel.delegate=nil;
-    NSArray *viewsToRemove = [self.view subviews];
-    for (UIView *v in viewsToRemove) {
-        [v removeFromSuperview];
-    }
+    _DatePicker=Nil;
+    _CategoryPicker.dataSource=Nil;
+    _CategoryPicker.delegate=Nil;
+    _CategoryPicker=Nil;
 }
 
 -(void) waitOneSecond {
@@ -232,32 +247,6 @@
     _expirationlabel.text=@"";
     _categorylabel.text=_segcategory;
     timeOrDate=@"date";
-    
-    _loadingIconCameraImage.animationImages = [NSArray arrayWithObjects:
-                                               [UIImage imageNamed:@"loading.png"],
-                                               [UIImage imageNamed:@"loading5.png"],
-                                               [UIImage imageNamed:@"loading10.png"],
-                                               [UIImage imageNamed:@"loading15.png"],
-                                               [UIImage imageNamed:@"loading20.png"],
-                                               [UIImage imageNamed:@"loading25.png"],
-                                               [UIImage imageNamed:@"loading30.png"],
-                                               [UIImage imageNamed:@"loading35.png"],
-                                               [UIImage imageNamed:@"loading40.png"],
-                                               [UIImage imageNamed:@"loading45.png"],
-                                               [UIImage imageNamed:@"loading50.png"],
-                                               [UIImage imageNamed:@"loading55.png"],
-                                               [UIImage imageNamed:@"loading60.png"],
-                                               [UIImage imageNamed:@"loading65.png"],
-                                               [UIImage imageNamed:@"loading70.png"],
-                                               [UIImage imageNamed:@"loading75.png"],
-                                               [UIImage imageNamed:@"loading80.png"],
-                                               [UIImage imageNamed:@"loading85.png"],
-                                               nil];
-    _loadingIconCameraImage.animationDuration = 0.3;
-    [_loadingIconCameraImage startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{_loadingIconCameraImage.alpha=1.0; _loadingIconCameraImage.transform =CGAffineTransformMakeScale(0,0);
-        _loadingIconCameraImage.transform =CGAffineTransformMakeScale(1,1);}];
-    
 }
 
 - (void)viewDidLoad
@@ -320,18 +309,23 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    [self performSelector:@selector(initializeCamera) withObject:nil afterDelay:2];
+    allocDatePicker=NO;
+    allocCategoryPicker=NO;
+    [self initializeCamera];
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [session stopRunning];
     static NSCache *_cache = nil;
     [_cache removeAllObjects];
+    [self.captureSession startRunning];
+    [_imagePreview.layer removeFromSuperlayer];
+    self.stillImageOutput=nil;
+    self.captureSession=nil;
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='camera'"];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    [self DeallocMemory];
-    [self.navigationController popViewControllerAnimated:YES];
+    _SnapButton.enabled=NO;
+    _SnapButton2.enabled=NO;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -398,7 +392,10 @@
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
             // Do some computation here.
+            CheckConnection *checkconnection = [[CheckConnection alloc]init];
+            if ([checkconnection connected])
             [self BackgroundMethod];
+            else resultFromDb=@"";
             // Update UI after computation.
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI on the main thread.
@@ -535,6 +532,13 @@
 - (IBAction)ExpireButtonAction:(id)sender {
     [self dismissKeyBoard];
     [self EnlargeScroll:@"expire"];
+    
+    if (!allocDatePicker) {
+        _DatePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, ([[UIScreen mainScreen] bounds].size.height), 0, 0)];
+        _DatePicker.datePickerMode=UIDatePickerModeDate;
+        [self.view addSubview:_DatePicker];
+    } allocDatePicker=YES;
+    
     int datepickerheight=self.view.frame.size.height - _DatePicker.bounds.size.height/2;
     int datepickerNavigationBarHeight=self.view.frame.size.height - _DatePicker.bounds.size.height-22;
     
@@ -562,6 +566,15 @@
 - (IBAction)CateoryButtonAction:(id)sender {
     [self dismissKeyBoard];
     [self EnlargeScroll:@"category"];
+    
+    if (!allocCategoryPicker) {
+        _CategoryPicker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, ([[UIScreen mainScreen] bounds].size.height), 0, 0)];
+        _CategoryPicker.delegate=self;
+        _CategoryPicker.dataSource=self;
+        _CategoryPicker.showsSelectionIndicator = YES;
+        [self.view addSubview:_CategoryPicker];
+    } allocCategoryPicker=YES;
+
     float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-216;
     float pickerHeight = self.view.frame.size.height - _CategoryPicker.bounds.size.height/2;
     [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 290);}];
@@ -860,6 +873,7 @@
 }
 
 - (IBAction)ChagrtoDateAction:(id)sender {
+    NSLog(@"date");
     timeOrDate=@"date";
     _DatePicker.datePickerMode=UIDatePickerModeDate;
     _ChangetotimeFull.alpha=0.0;
@@ -933,72 +947,37 @@
 
 //AVCaptureSession to show live video feed in view
 - (void) initializeCamera {
-    session = nil;
-    session = [[AVCaptureSession alloc] init];
-	session.sessionPreset = AVCaptureSessionPresetPhoto;
-	
-	AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
-    [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
-	captureVideoPreviewLayer.frame = _imagePreview.bounds;
-	[_imagePreview.layer addSublayer:captureVideoPreviewLayer];
-	
-    UIView *view = [self imagePreview];
-    CALayer *viewLayer = [view layer];
-    [viewLayer setMasksToBounds:YES];
-    CGRect bounds = [view bounds];
-    [captureVideoPreviewLayer setFrame:bounds];
-    
-    NSArray *devices = [AVCaptureDevice devices];
-    AVCaptureDevice *frontCamera;
-    AVCaptureDevice *backCamera;
-    
-    for (AVCaptureDevice *device in devices) {
-        
-        NSLog(@"Device name: %@", [device localizedName]);
-        
-        if ([device hasMediaType:AVMediaTypeVideo]) {
-            
-            if ([device position] == AVCaptureDevicePositionBack) {
-                NSLog(@"Device position : back");
-                backCamera = device;
-            }
-            else {
-                NSLog(@"Device position : front");
-                frontCamera = device;
-            }
+    self.captureSession = [[AVCaptureSession alloc] init];
+    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if (videoDevice) {
+        NSError *error;
+        AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+        if ([self.captureSession canAddInput:videoInput]) {
+            [self.captureSession addInput:videoInput];
+        } else {
+            _SnapButton.enabled=NO;
+            _SnapButton2.enabled=NO;
+            return;
         }
+    } else {
+        _SnapButton.enabled=NO;
+        _SnapButton2.enabled=NO;
+        return;
     }
+    self.captureSession.sessionPreset=AVCaptureSessionPresetPhoto;
+    AVCaptureVideoPreviewLayer *previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
+    previewLayer.frame = _imagePreview.bounds;
+    previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    [_imagePreview.layer addSublayer:previewLayer];
     
-    if (!FrontCamera) {
-        NSError *error = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:&error];
-        if (!input) {
-            NSLog(@"ERROR: trying to open camera: %@", error);
-        }
-        [session addInput:input];
-    }
-    
-    if (FrontCamera) {
-        NSError *error = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera error:&error];
-        if (!input) {
-            NSLog(@"ERROR: trying to open camera: %@", error);
-        }
-        [session addInput:input];
-    }
-	
-    _stillImageOutput = nil;
-    _stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+    self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
     NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [_stillImageOutput setOutputSettings:outputSettings];
+    [self.stillImageOutput setOutputSettings:outputSettings];
     
-    [session addOutput:_stillImageOutput];
-    
-	[session startRunning];
-    _hideCameraImage.hidden=YES;
-    [_loadingIconCameraImage stopAnimating];
-    
+    [self.captureSession addOutput:self.stillImageOutput];
+
+    [self.captureSession startRunning];
 }
 
 - (IBAction)snapImage:(id)sender {
@@ -1059,7 +1038,7 @@
 
 - (void) capImage {
     AVCaptureConnection *videoConnection = nil;
-    for (AVCaptureConnection *connection in _stillImageOutput.connections) {
+    for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
         
         for (AVCaptureInputPort *port in [connection inputPorts]) {
             
@@ -1073,9 +1052,7 @@
             break;
         }
     }
-    
-    NSLog(@"about to request a capture from: %@", _stillImageOutput);
-    [_stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
+    [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
         
         if (imageSampleBuffer != NULL) {
             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
@@ -1087,43 +1064,33 @@
 
 - (void) processImage:(UIImage *)image { //process captured image, crop, resize and rotate
     haveImage = YES;
-    CGSize size3 = [image size];
-    CGRect rect = CGRectMake(0,0,320,(size3.height*320)/size3.width);
-    UIGraphicsBeginImageContext( rect.size );
-    [image drawInRect:rect];
-    UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
+
+    UIGraphicsBeginImageContext(CGSizeMake(320, 320*2592/1936));
+    [image drawInRect: CGRectMake(0, 0, 320, 320*2592/1936)];
+    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    NSData *imageData = UIImagePNGRepresentation(picture1);
-    UIImage *imgLarge=[UIImage imageWithData:imageData];
-    CGSize size = [imgLarge size];
     
-    // Create rectangle that represents a cropped image
-    // from the middle of the existing image
-    //CGRect rect2 = CGRectMake(2,(size.height / 3),310,155);
-    CGRect rect2 = CGRectMake(2,135,320,155);
-    
-    // Create bitmap image from original image data,
-    // using rectangle to specify desired crop area
-    CGImageRef imageRef = CGImageCreateWithImageInRect([imgLarge CGImage], rect2);
-    UIImage *img = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
+    CGRect cropRect = CGRectMake(2, 55+53+20, 310, 155);
+    CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
     
     if (numofpics==0) {
-        _captureImage.image=img;
+        _captureImage.image=[UIImage imageWithCGImage:imageRef];
     }
     if (numofpics==1) {
-        _captureImage2.image=img;
+        _captureImage2.image=[UIImage imageWithCGImage:imageRef];
     }
     if (numofpics==2) {
-        _captureImage3.image=img;
+        _captureImage3.image=[UIImage imageWithCGImage:imageRef];
     }
     if (numofpics==3) {
-        _captureImage4.image=img;
+        _captureImage4.image=[UIImage imageWithCGImage:imageRef];
     }
     numofpics++;
     [self oreder];
     [self EnlargeCameraScroll];
     [self ImageslideMode];
+    
+    CGImageRelease(imageRef);
 }
 
 
@@ -1197,19 +1164,19 @@
 }
 
 -(void) RotateCamButtonAction:(id)sender {
-    
+    /*
     if (Flag) {
         FrontCamera = YES;
         Flag = false;
-        [session stopRunning];
+        [self.captureSession stopRunning];
         [self initializeCamera];
     }
     else {
         FrontCamera = NO;
         Flag = true;
-        [session stopRunning];
+        [self.captureSession stopRunning];
         [self initializeCamera];
-    }
+    }*/
     
 }
 

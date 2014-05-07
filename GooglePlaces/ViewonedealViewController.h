@@ -50,6 +50,10 @@
 @property (strong,nonatomic) NSString *signLabelFromMyFeeds;
 @property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
 @property (strong,nonatomic) NSString *dealidLabelFromMyFeeds;
+@property (strong,nonatomic) NSString *localoronlineLabelFromMyFeeds;
+
+@property (strong,nonatomic) NSString *dealerUploadDealID;
+@property (strong,nonatomic) NSString *isShoetCell;
 
 @property (strong,nonatomic) NSString *urlImage;
 @property (strong,nonatomic) NSString *urlImage2;
@@ -76,24 +80,6 @@
 - (IBAction)ReturnButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
-
-
-- (IBAction)Adddeal:(id)sender;
-- (IBAction)myfeedbutton:(id)sender;
-- (IBAction)morebutton:(id)sender;
-- (IBAction)profilebutton:(id)sender;
-- (IBAction)explorebutton:(id)sender;
-
-@property (weak, nonatomic) IBOutlet UIView *BlueButtonsView;
-@property (weak, nonatomic) IBOutlet UIButton *LocalButton;
-@property (weak, nonatomic) IBOutlet UIButton *OnlineButton;
-@property (weak, nonatomic) IBOutlet UIButton *LockTableButton;
-@property (weak, nonatomic) IBOutlet UILabel *OnlineText;
-@property (weak, nonatomic) IBOutlet UILabel *LocalText;
-- (IBAction)LocalButtonAction:(id)sender;
-- (IBAction)OnlineButtonAction:(id)sender;
-- (IBAction)UNLockButtonAction:(id)sender;
-- (IBAction)whoLikesTheDeal:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *TitleIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *StoreIcon;
@@ -128,5 +114,13 @@
 @property (weak, nonatomic) IBOutlet UIView *ViewLikes;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewLikes;
 
+- (IBAction)dealerProfileButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *likesandshareView;
+@property (weak, nonatomic) IBOutlet UIImageView *likesCountImage;
+@property (weak, nonatomic) IBOutlet UIImageView *shareCountImage;
+@property (weak, nonatomic) IBOutlet UILabel *likesCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *shreCountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *urlSiteButton;
+- (IBAction)urlSiteButtonClicked:(id)sender;
 
 @end

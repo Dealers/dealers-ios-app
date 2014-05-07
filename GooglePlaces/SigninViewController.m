@@ -21,9 +21,33 @@
 @synthesize Signinbutton,ReturnButton,ReturnButtonFull,LoadingImage;
 
 -(void) MainMethod {
-    MyFeedsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
-    UINavigationController *navigationController = self.navigationController;
-    [navigationController pushViewController:controller animated:YES];
+    
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+
+    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+    dispatch_async(queue, ^{
+        // Do some computation here.
+        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata",app.UserID];
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        NSArray *array;
+        array = [DataResult componentsSeparatedByString:@"."];
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[array objectAtIndex:1]];
+        URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+        // Update UI after computation.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Update the UI on the main thread.
+            app.dealerProfileImage = [UIImage imageWithData:URLData];
+            app.dealerName=[array objectAtIndex:0];
+
+            MyFeedsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
+            UINavigationController *navigationController = self.navigationController;
+            [navigationController pushViewController:controller animated:YES];
+
+        });
+    });
+
+    
 }
 
 -(void) initialize {
@@ -57,6 +81,7 @@
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     NSArray *dataarray = [DataResult componentsSeparatedByString:@" "];
     DataResult = [dataarray objectAtIndex:0];
+    NSLog(@"%@",dataarray);
     if ([dataarray count]>1) {
         app.UserID = [dataarray objectAtIndex:1];;
         NSLog(@"userid=%@",app.UserID);

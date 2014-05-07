@@ -15,7 +15,6 @@
 @interface TableViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate>
 {
     CLLocationManager *_locationManager;
-    CLLocationManager *locationManager;
     NSString *imageName;
     BOOL firstLaunch;
     CLLocationCoordinate2D currentCentre;
@@ -26,13 +25,14 @@
     int SearchTextSize;
     BOOL didUpdateTheMap;
     BOOL currentVC;
+    BOOL loadsuc;
 }
 
 -(void) deallocMemory;
 
 @property (strong,nonatomic) NSString *searchTextToBackground;
 
-@property (nonatomic, weak) IBOutlet MKMapView *mapView;
+@property (nonatomic, strong) MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *whiteCoverView;

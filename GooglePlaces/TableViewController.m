@@ -12,6 +12,8 @@
 #import "StoreSearchCell.h"
 #import "Functions.h"
 #import <mach/mach.h>
+#import "AppDelegate.h"
+#import "CheckConnection.h"
 
 @interface TableViewController ()
 
@@ -19,114 +21,142 @@
 
 @implementation TableViewController
 
--(void) loadStoresFromFoursquare {
-    Functions *func = [[Functions alloc]init];
-    NSString * url= [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=9000&v=20140201",_locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude];
-    NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-    NSData *data = [NSData dataWithContentsOfURL: googleRequestURL];
-    NSError* error;
-    
-    if (data!=nil) {
-        NSDictionary* json = [NSJSONSerialization
-                              JSONObjectWithData:data
-                              options:kNilOptions
-                              error:&error];
-        NSDictionary *responseData = json[@"response"];
-        NSArray *venues = responseData[@"venues"];
-        
-        NSMutableArray *storeNameArray=[[NSMutableArray alloc] init];
-        NSMutableArray *storeLocationArray=[[NSMutableArray alloc]init];
-        NSMutableArray *storeIconArray=[[NSMutableArray alloc]init];
-        NSMutableArray *storeDistanceArray=[[NSMutableArray alloc]init];
-        NSMutableArray *storeCategoryArray=[[NSMutableArray alloc]init];
-        
-        for (int i=0; i<[[venues copy] count]; i++)
-        {
-            NSString *categoryId = [[NSString alloc]init];
-            NSDictionary *storeArrayFromVenues = [venues objectAtIndex:i];
-            NSString *storeName=[storeArrayFromVenues objectForKey:@"name"];
-            NSString *vicinity=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
-            NSString *distance=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"distance"];
-            NSArray *categoryArrayFromVenues=storeArrayFromVenues[@"categories"];
-            UIImageView *tempimage = [[UIImageView alloc]init];
+-(void) connectionProblem {
+    [_mapView removeFromSuperview];
+    UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton9.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton9.tag=110;
+    [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
+    selectDealButton9.alpha=0.7;
+    [[self view] addSubview:selectDealButton9];
+    [[self view] bringSubviewToFront:selectDealButton9];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check your Internet" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    [alert show];
+}
+
+-(BOOL) loadStoresFromFoursquare {
+    CheckConnection *checkconnection = [[CheckConnection alloc]init];
+    if ([checkconnection connected]) {
+        if (_locationManager.location.coordinate.latitude>0) {
+            Functions *func = [[Functions alloc]init];
+            NSString * url= [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=9000&v=20140201",_locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude];
+            NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+            NSData *data = [NSData dataWithContentsOfURL: googleRequestURL];
+            NSError* error;
             
-            if (storeName==nil) storeName=@"";
-            if (vicinity==nil) vicinity=@"";
-            if (distance==nil) distance=@"";
             
-            if ([categoryArrayFromVenues count]>0) {
-                NSDictionary *categoryIdArray=[storeArrayFromVenues[@"categories"] objectAtIndex:0];
-                categoryId =categoryIdArray[@"id"];
-                if ([func CheckIfCategoryExist:categoryId]) {
-                    NSString *ImageName=[func ConnectOldCategoryToNewCategory:categoryId];
-                    if (ImageName!=NULL) {
-                        tempimage.image =[UIImage imageNamed:[NSString stringWithFormat:@"%@",ImageName]];
-                        NSArray *CategoryNameArray = [ImageName componentsSeparatedByString:@"_"];
-                        NSString *CategoryName=[CategoryNameArray objectAtIndex:0];
-                        CategoryName = [CategoryName stringByReplacingOccurrencesOfString:@"@" withString:@"&"];
-                        [storeNameArray addObject:storeName];
-                        [storeLocationArray addObject:CategoryName]; //vicinity
-                        [storeCategoryArray addObject:CategoryName];
-                        [storeIconArray addObject:tempimage];
-                        [storeDistanceArray addObject:distance];
-                    }
-                }
-            }
-        }
-        
-        
-        self.storeNameArraySort=[[NSMutableArray alloc]init];
-        self.storeLocationArraySort=[[NSMutableArray alloc]init];
-        self.storeIconArraySort=[[NSMutableArray alloc]init];
-        self.storeDistanceArraySort=[[NSMutableArray alloc]init];
-        self.storeCategoryArraySort=[[NSMutableArray alloc]init];
-        
-        
-        if ([storeDistanceArray count]==[storeNameArray count]) {
-            for (int i=0; i<[[storeNameArray copy] count]; i++){
-                int index;
-                int min = 10000;
-                for (int j=0; j<[[storeNameArray copy] count]; j++) {
-                    NSString *number;
-                    if (j<[storeDistanceArray count]) {
-                        number = [storeDistanceArray objectAtIndex:j];
-                    } else number=@"0";
-                    int minNumber = [number intValue];
-                    if (minNumber<min) {
-                        index=j;
-                        min=minNumber;
+            if (data!=nil) {
+                NSDictionary* json = [NSJSONSerialization
+                                      JSONObjectWithData:data
+                                      options:kNilOptions
+                                      error:&error];
+                NSDictionary *responseData = json[@"response"];
+                NSArray *venues = responseData[@"venues"];
+                
+                NSMutableArray *storeNameArray=[[NSMutableArray alloc] init];
+                NSMutableArray *storeLocationArray=[[NSMutableArray alloc]init];
+                NSMutableArray *storeIconArray=[[NSMutableArray alloc]init];
+                NSMutableArray *storeDistanceArray=[[NSMutableArray alloc]init];
+                NSMutableArray *storeCategoryArray=[[NSMutableArray alloc]init];
+                
+                for (int i=0; i<[[venues copy] count]; i++)
+                {
+                    NSString *categoryId = [[NSString alloc]init];
+                    NSDictionary *storeArrayFromVenues = [venues objectAtIndex:i];
+                    NSString *storeName=[storeArrayFromVenues objectForKey:@"name"];
+                    NSString *vicinity=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
+                    NSString *distance=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"distance"];
+                    NSArray *categoryArrayFromVenues=storeArrayFromVenues[@"categories"];
+                    UIImageView *tempimage = [[UIImageView alloc]init];
+                    
+                    if (storeName==nil) storeName=@"";
+                    if (vicinity==nil) vicinity=@"";
+                    if (distance==nil) distance=@"";
+                    
+                    if ([categoryArrayFromVenues count]>0) {
+                        NSDictionary *categoryIdArray=[storeArrayFromVenues[@"categories"] objectAtIndex:0];
+                        categoryId =categoryIdArray[@"id"];
+                        if ([func CheckIfCategoryExist:categoryId]) {
+                            NSString *ImageName=[func ConnectOldCategoryToNewCategory:categoryId];
+                            if (ImageName!=NULL) {
+                                tempimage.image =[UIImage imageNamed:[NSString stringWithFormat:@"%@",ImageName]];
+                                NSArray *CategoryNameArray = [ImageName componentsSeparatedByString:@"_"];
+                                NSString *CategoryName=[CategoryNameArray objectAtIndex:0];
+                                CategoryName = [CategoryName stringByReplacingOccurrencesOfString:@"@" withString:@"&"];
+                                [storeNameArray addObject:storeName];
+                                [storeLocationArray addObject:CategoryName]; //vicinity
+                                [storeCategoryArray addObject:CategoryName];
+                                [storeIconArray addObject:tempimage];
+                                [storeDistanceArray addObject:distance];
+                            }
+                        }
                     }
                 }
                 
-                if (index<[storeNameArray count]) {
-                    [self.storeNameArraySort addObject:[storeNameArray objectAtIndex:index]];
-                    
-                } else [self.storeNameArraySort addObject:@"0"];
                 
-                if (index<[storeLocationArray count]) {
-                    [self.storeLocationArraySort addObject:[storeLocationArray objectAtIndex:index]];
-                    
-                } else [self.storeLocationArraySort addObject:@"0"];
+                self.storeNameArraySort=[[NSMutableArray alloc]init];
+                self.storeLocationArraySort=[[NSMutableArray alloc]init];
+                self.storeIconArraySort=[[NSMutableArray alloc]init];
+                self.storeDistanceArraySort=[[NSMutableArray alloc]init];
+                self.storeCategoryArraySort=[[NSMutableArray alloc]init];
                 
-                if (index<[storeIconArray count]) {
-                    [self.storeIconArraySort addObject:[storeIconArray objectAtIndex:index]];
-                    
-                } else [self.storeIconArraySort addObject:@"0"];
                 
-                if (index<[storeDistanceArray count]) {
-                    [self.storeDistanceArraySort addObject:[storeDistanceArray objectAtIndex:index]];
-                    
-                }else [self.storeDistanceArraySort addObject:@"0"];
-                
-                if (index<[storeCategoryArray count]) {
-                    [self.storeCategoryArraySort addObject:[storeCategoryArray objectAtIndex:index]];
-                    
-                }else [self.storeDistanceArraySort addObject:@"0"];
-                
-                [storeDistanceArray replaceObjectAtIndex:index withObject:@"100000"];
+                if ([storeDistanceArray count]==[storeNameArray count]) {
+                    for (int i=0; i<[[storeNameArray copy] count]; i++){
+                        int index;
+                        int min = 10000;
+                        for (int j=0; j<[[storeNameArray copy] count]; j++) {
+                            NSString *number;
+                            if (j<[storeDistanceArray count]) {
+                                number = [storeDistanceArray objectAtIndex:j];
+                            } else number=@"0";
+                            int minNumber = [number intValue];
+                            if (minNumber<min) {
+                                index=j;
+                                min=minNumber;
+                            }
+                        }
+                        
+                        if (index<[storeNameArray count]) {
+                            [self.storeNameArraySort addObject:[storeNameArray objectAtIndex:index]];
+                            
+                        } else [self.storeNameArraySort addObject:@"0"];
+                        
+                        if (index<[storeLocationArray count]) {
+                            [self.storeLocationArraySort addObject:[storeLocationArray objectAtIndex:index]];
+                            
+                        } else [self.storeLocationArraySort addObject:@"0"];
+                        
+                        if (index<[storeIconArray count]) {
+                            [self.storeIconArraySort addObject:[storeIconArray objectAtIndex:index]];
+                            
+                        } else [self.storeIconArraySort addObject:@"0"];
+                        
+                        if (index<[storeDistanceArray count]) {
+                            [self.storeDistanceArraySort addObject:[storeDistanceArray objectAtIndex:index]];
+                            
+                        }else [self.storeDistanceArraySort addObject:@"0"];
+                        
+                        if (index<[storeCategoryArray count]) {
+                            [self.storeCategoryArraySort addObject:[storeCategoryArray objectAtIndex:index]];
+                            
+                        }else [self.storeDistanceArraySort addObject:@"0"];
+                        
+                        [storeDistanceArray replaceObjectAtIndex:index withObject:@"100000"];
+                    }
+                }
             }
+            
+        }//if locationmanager
+        else {
+            return NO;
         }
+    }//if connection
+    else {
+        return NO;
     }
+    return YES;
 }
 
 -(void) mainMethod {
@@ -173,7 +203,6 @@
 }
 
 -(void) initialize {
-    //self.SearchBar.backgroundImage = [UIImage imageNamed:@"Explore_Search bar"];
     [self displayLoadingIcon];
     self.collapseMapButton.hidden=YES;
     self.storeSearchTableView.hidden=YES;
@@ -190,13 +219,41 @@
     [super viewDidLoad];
 }
 
+-(void) deallocMapView {
+    switch (_mapView.mapType) {
+        case MKMapTypeHybrid:
+        {
+            _mapView.mapType = MKMapTypeStandard;
+        }
+            
+            break;
+        case MKMapTypeStandard:
+        {
+            _mapView.mapType = MKMapTypeHybrid;
+        }
+            
+            break;
+        default:
+            break;
+    }
+    
+    [_mapView removeFromSuperview];
+    _mapView.showsUserLocation = NO;
+    _mapView=nil;
+    [_locationManager stopUpdatingLocation];
+}
+
 -(void)didReceiveMemoryWarning{
     if (currentVC) {
-        [self deallocMemory];
-        [self.navigationController popViewControllerAnimated:NO];
+        [self deallocMapView];
+        NSArray *viewsToRemove = [_scrollView subviews];
+        for (UIView *v in viewsToRemove) {
+            [v removeFromSuperview];}
+        _venuesTableView.frame = CGRectMake(0, 0, _venuesTableView.frame.size.height, ([[UIScreen mainScreen] bounds].size.height));
         NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='foursquare'"];
+        [_scrollView addSubview:_venuesTableView];
         NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-        NSLog(@"dealloc foursquare");
+        currentVC=1;
     }
     [super didReceiveMemoryWarning];
 }
@@ -262,6 +319,9 @@
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    app.previousViewControllerAddDeal=@"local";
+    
     if ([[segue identifier] isEqualToString:@"googleseg"]) {
         NSIndexPath *indexpath = [self.venuesTableView indexPathForSelectedRow];
         NSString *string;
@@ -285,88 +345,6 @@
     }
 }
 
--(void) initMapView {
-    if (![self checkLocationAuthorization]) return;
-    if (!_locationManager) [self initLocation];
-    [_locationManager startUpdatingLocation];
-    self.mapView.userTrackingMode = NO;
-    NSLog(@"start location services");
-}
-
--(void) stopMapView {
-    if (![self checkLocationAuthorization]) return;
-    if (!_locationManager) return;
-    self.mapView.showsUserLocation = NO;
-    self.mapView.userTrackingMode = NO;
-    [_locationManager stopUpdatingLocation];
-    NSLog(@"stop location services");
-    haveCoords = NO;
-}
-
--(BOOL) checkLocationAuthorization {
-    if (![CLLocationManager locationServicesEnabled]) {
-        return NO;
-    }
-    if (([CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted) || (([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))) {
-        return NO;
-    }
-    return YES;
-}
-
--(void) initLocation {
-    if ([self checkLocationAuthorization]) {
-        if (Nil == _locationManager) {
-            haveCoords = NO;
-            _locationManager = [[CLLocationManager alloc]init];
-            _locationManager.delegate = self;
-        }
-    }
-}
-
--(void) displayLocation:(CLLocationCoordinate2D)here {
-    lastCoords.latitude = here.latitude;
-    lastCoords.longitude = here.longitude;
-    haveCoords = YES;
-    //[self performSelectorInBackground:@selector(loadStoresFromFoursquare) withObject:nil];
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-    dispatch_async(queue, ^{
-        // Do some computation here.
-        if (!didUpdateTheMap) {
-            [self loadStoresFromFoursquare];
-            didUpdateTheMap=YES;
-        }
-        // Update UI after computation.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
-            [self mainMethod];
-        });
-    });
-    
-    self.mapView.showsUserLocation = YES;
-    [self centerMapView];
-    
-}
-
--(BOOL) coordsEqualCompare:(CLLocationCoordinate2D)here with:(CLLocationCoordinate2D) there {
-    return here.longitude == there.longitude && here.latitude == there.latitude;
-}
-
--(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    CLLocationCoordinate2D here = ((CLLocation *)locations[0]).coordinate;
-    if (!haveCoords || ![self coordsEqualCompare:here with:lastCoords]) {
-        [self displayLocation:here];
-    }
-}
--(void) centerMapView {
-    MKCoordinateRegion region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.01;     // 0.0 is min value u van provide for zooming
-    span.longitudeDelta= 0.01;
-    region.span=span;
-    region.center =lastCoords;     // to locate to the center
-    [self.mapView setRegion:region animated:TRUE];
-    [self.mapView regionThatFits:region];
-}
 
 - (IBAction) returnButtonClicked:(id)sender {
     self.ReturnButtonFull.alpha=1.0;
@@ -540,7 +518,11 @@
 
 -(void) deallocMemory {
     NSLog(@"dealloc foursquare");
-    [self stopMapView];
+    
+    NSArray *viewsToRemove = [self.view subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];}
+    [self deallocMapView];
     static NSCache *_cache = nil;
     [_cache removeAllObjects];
     _locationManager.delegate=nil;
@@ -560,20 +542,51 @@
     self.venuesTableView.delegate=nil;
     self.venuesTableView.dataSource=nil;
     self.venuesTableView=nil;
-    
-    NSArray *viewsToRemove = [self.view subviews];
-    for (UIView *v in viewsToRemove) {
-        [v removeFromSuperview];
-    }
-    [_mapView removeFromSuperview];
     [self.view removeFromSuperview];
     self.view=nil;
 }
 
+-(void) initMapView {
+    self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, -85, 320, 285)];
+    _locationManager = [[CLLocationManager alloc]init];
+    _locationManager.delegate = self;
+    _locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
+    _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+    lastCoords.latitude = _locationManager.location.coordinate.latitude;
+    lastCoords.longitude = _locationManager.location.coordinate.longitude;
+    [_locationManager startUpdatingLocation];
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.01;     // 0.0 is min value u van provide for zooming
+    span.longitudeDelta= 0.01;
+    region.span=span;
+    region.center =lastCoords;     // to locate to the center
+    [self.mapView setRegion:region animated:TRUE];
+    [self.mapView regionThatFits:region];
+    self.mapView.showsUserLocation=YES;
+    [self.scrollView addSubview:self.mapView];
+    [self.scrollView sendSubviewToBack:_mapView];
+}
 -(void)viewDidAppear:(BOOL)animated {
+    [self initMapView];
     if (currentVC) {
         didUpdateTheMap=NO;
-        [self initMapView];
+        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+        dispatch_async(queue, ^{
+            // Do some computation here.
+            if (!didUpdateTheMap) {
+                loadsuc=[self loadStoresFromFoursquare];
+                didUpdateTheMap=YES;
+            }
+            // Update UI after computation.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI on the main thread.
+                [self mainMethod];
+                if (!loadsuc) {
+                    [self connectionProblem];
+                }
+            });
+        });
         [self initialize];
     }
     currentVC=1;
@@ -581,6 +594,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated {
     currentVC=0;
+    [self deallocMapView];
 }
 
 -(void) report_memory {

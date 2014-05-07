@@ -12,6 +12,8 @@
 #import "ExploretableViewController.h"
 #import "AppDelegate.h"
 #import "TableViewController.h"
+#import "OnlineViewController.h"
+
 #define OFFSETSHORTCELL 109
 
 @interface ProfileViewController ()
@@ -19,7 +21,6 @@
 @end
 
 @implementation ProfileViewController
-@synthesize OnlineButton,OnlineText,LocalButton,LocalText,LockTableButton;
 
 -(void) startLoadingUploadImage {
     _loadingImage.animationImages = [NSArray arrayWithObjects:
@@ -141,7 +142,7 @@
         }
         [PRICEMARRAY_temp replaceObjectAtIndex:i withObject:price];
     }
-
+    
     
     _TITLEMARRAY = [NSMutableArray arrayWithArray:TITLEMARRAY_temp];
     _DESCRIPTIONMARRAY = [NSMutableArray arrayWithArray:DESCRIPTIONMARRAY_temp];
@@ -237,7 +238,7 @@
         }
         [PRICEMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:price];
     }
-
+    
     _titleArrayForLikesView = [NSMutableArray arrayWithArray:TITLEMARRAY_tempForLikesView];
     _descriptionArrayForLikesView = [NSMutableArray arrayWithArray:DESCRIPTIONMARRAY_tempForLikesView];
     _storeArrayForLikesView = [NSMutableArray arrayWithArray:STOREMARRAY_tempForLikesView];
@@ -274,7 +275,7 @@
     _onlineOrLocalArray = [[NSMutableArray alloc]init];
     _photoidConvertedArrayForLikesView = [[NSMutableArray alloc]init];
     _PHOTOIDMARRAYCONVERT = [[NSMutableArray alloc]init];
-
+    
     _titleArrayForLikesView = [[NSMutableArray alloc]init];
     _descriptionArrayForLikesView = [[NSMutableArray alloc]init];
     _storeArrayForLikesView = [[NSMutableArray alloc]init];
@@ -373,12 +374,12 @@
         NSLog(@"gap=%d",GAP);
 	}
     cellNumberInScrollView+=10;
-    self.dealsView.frame = CGRectMake(0, 255, 320, GAP);
-
+    self.dealsView.frame = CGRectMake(0, 225, 320, GAP);
+    
     
     for (int i=cellNumberInScrollViewForLikeView; ((i<10+cellNumberInScrollViewForLikeView) && (i<[[self.titleArrayForLikesView copy] count])); i++) {
         NSString *num=[self.photoidArrayForLikesView objectAtIndex:i];
-
+        
         if ([num isEqualToString:@"0"]) {
             isShortCell = YES;
         } else isShortCell = NO;
@@ -452,13 +453,13 @@
         
 		GAPForLikeView=CGRectGetMaxY(imageview.frame)-4;
 	}
-    self.likesView.frame = CGRectMake(0, 255, 320, GAPForLikeView);
+    self.likesView.frame = CGRectMake(0, 225, 320, GAPForLikeView);
     cellNumberInScrollViewForLikeView+=10;
     
     [[self scrollView] setContentSize:CGSizeMake(319,GAP+350)];
     isUpdatingNow = NO;
     [_loadingImage stopAnimating];
-
+    
 }
 -(void) fillTheCellsWithImages {
     NSLog(@"in profile filling the images");
@@ -469,7 +470,7 @@
         // Do some computation here.
         for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
             NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
-
+            
             NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",num];
             
             if (([num isEqualToString:@"0"])||(num==nil)||([num length]==0)) {
@@ -485,7 +486,7 @@
         
         for (int i=cellsNumbersInFillWithImagesForLikeView; ((i<cellNumberInScrollViewForLikeView) && (i<[[self.titleArrayForLikesView copy] count])); i++) {
             NSString *num=[self.photoidArrayForLikesView objectAtIndex:i];
-
+            
             NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",num];
             
             if (([num isEqualToString:@"0"])||(num==nil)||([num length]==0)) {
@@ -504,7 +505,7 @@
             // Update the UI on the main thread.
             for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
                 NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
-
+                
                 if ([num isEqualToString:@"0"]||([num length]==0)) {
                     isShortCell = YES;
                 } else isShortCell = NO;
@@ -588,7 +589,7 @@
                 if ([num length]==0) {
                     continue;
                 }
-
+                
                 if ([num isEqualToString:@"0"]||([num length]==0)) {
                     isShortCell = YES;
                 } else isShortCell = NO;
@@ -744,38 +745,47 @@
 
 -(void) setTopPart {
     
-    
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-    dispatch_async(queue, ^{
-        // Do some computation here.
-        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata",_dealerId];
-        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-        NSArray *array;
-        array = [DataResult componentsSeparatedByString:@"."];
-        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[array objectAtIndex:1]];
-        URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-        // Update UI after computation.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
-            UIImage *image = [UIImage imageWithData:URLData];
-            _dealerProfileImage.image=image;
-            CALayer *mask = [CALayer layer];
-            mask.contents=(id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
-            mask.frame = CGRectMake(0, 0, 100, 100);
-            _dealerProfileImage.layer.mask = mask;
-            _dealerProfileImage.layer.masksToBounds = YES;
-            _dealerName.text=[array objectAtIndex:0];
-            
+    if ([_didComeFromLikesTable isEqualToString:@"yes"]){
+        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+        dispatch_async(queue, ^{
+            // Do some computation here.
+            NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata",_dealerId];
+            NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+            NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+            NSArray *array;
+            array = [DataResult componentsSeparatedByString:@"."];
+            NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[array objectAtIndex:1]];
+            URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+            // Update UI after computation.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI on the main thread.
+                UIImage *image = [UIImage imageWithData:URLData];
+                _dealerProfileImage.image=image;
+                CALayer *mask = [CALayer layer];
+                mask.contents=(id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
+                mask.frame = CGRectMake(0, 0, 80, 80);
+                _dealerProfileImage.layer.mask = mask;
+                _dealerProfileImage.layer.masksToBounds = YES;
+                _dealerName.text=[array objectAtIndex:0];
+                
+            });
         });
-    });
+
+    } else {
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
+    UIImage *image = app.dealerProfileImage;
+    _dealerProfileImage.image=image;
+    CALayer *mask = [CALayer layer];
+    mask.contents=(id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
+    mask.frame = CGRectMake(0, 0, 80, 80);
+    _dealerProfileImage.layer.mask = mask;
+    _dealerProfileImage.layer.masksToBounds = YES;
+    _dealerName.text=app.dealerName;
+    }
     
     UIImage *image2 = [UIImage imageNamed: @"Profile_Master Dealer.png"];
     _dealerRankImage.image=image2;
-    
-    
-    _dealsCount.text=@"15 Deals";
     
     _followersCount.text=@"25 Followers";
     
@@ -807,22 +817,28 @@
     app.AfterAddDeal=@"aftertapbar";
     if (_dealerId==NULL) _dealerId=app.UserID;
     
-    if (![_didComeFromLikesTable isEqualToString:@"yes"]) {
+    /*
+    if () {
         NSLog(@"prev is like on viewdeal");
         _returnButton.hidden=YES;
-        [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button.png"]];
-        [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button (selected).png"]];
+        [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button@2X.png"]];
+        [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button (selected)@2X.png"]];
         _myFeedLabel.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(170/255.0) alpha:1.0];
         _profileLabel.textColor = [UIColor colorWithRed:(150/255.0) green:(0/255.0) blue:(180/255.0) alpha:1.0];
     } else {
-        [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected).png"]];
-        [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button.png"]];
+        [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected)@2X.png"]];
+        [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button@2X.png"]];
         _profileLabel.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(170/255.0) alpha:1.0];
         _myFeedLabel.textColor = [UIColor colorWithRed:(150/255.0) green:(0/255.0) blue:(180/255.0) alpha:1.0];
-    }
+    }*/
+    
+    _dealsCountLabel.textColor = [UIColor whiteColor];
+    _likesCountLabel.textColor = [UIColor colorWithRed:(180/255.0) green:(180/255.0) blue:(185/255.0) alpha:1.0];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    currentVC=1;
     [self allocArrays];
     [self setTopPart];
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
@@ -838,8 +854,12 @@
     });
     
 }
+-(void)viewDidDisappear:(BOOL)animated {
+    currentVC=0;
+}
 - (void)viewDidLoad
 {
+    [self tapBarSet];
     NSLog(@"in profile viewdidload");
     [self startLoadingUploadImage];
     [self initialize];
@@ -850,6 +870,13 @@
 
 - (void)didReceiveMemoryWarning
 {
+    if (currentVC) {
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='online'"];
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+        [self deallocMemory];
+        UINavigationController * navigationController = self.navigationController;
+        [navigationController popViewControllerAnimated:NO];
+    }
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -886,6 +913,12 @@
     _dealidArrayForLikesView = nil;
     _uploadDateArrayForLikesView = nil;
     
+    _image2=nil;
+    _image2ForLikeView=nil;
+    _dealerId=nil;
+    _dealsUserLikes=nil;
+    _didComeFromLikesTable=nil;
+    
     static NSCache *_cache = nil;
     [_cache removeAllObjects];
     NSArray *viewsToRemove = [self.view subviews];
@@ -899,10 +932,10 @@
 - (IBAction)myfeedbutton:(id)sender{
     if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
     } else {
-    [self deallocMemory];
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    UINavigationController * navigationController = self.navigationController;
-    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
+        [self deallocMemory];
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        UINavigationController * navigationController = self.navigationController;
+        [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
     }
 }
 
@@ -911,11 +944,7 @@
     MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
     UINavigationController *navigationController = self.navigationController;
     NSArray *viewControllers = self.navigationController.viewControllers;
-    int count = [viewControllers count];
-    if (count==5) {
-        [navigationController popViewControllerAnimated:NO];
-    }
-    [navigationController popViewControllerAnimated:NO];
+    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
     [navigationController pushViewController:controller animated:NO];
 }
 
@@ -924,18 +953,19 @@
     ExploretableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"explore"];
     UINavigationController *navigationController = self.navigationController;
     NSArray *viewControllers = self.navigationController.viewControllers;
-    int count = [viewControllers count];
-    if (count==5) {
-        [navigationController popViewControllerAnimated:NO];
-    }
-    [navigationController popViewControllerAnimated:NO];
+    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
     [navigationController pushViewController:controller animated:NO];
 }
 
 - (IBAction)dealsViewButtonClicked:(id)sender {
     if ([_deals isEqual:@"b"]){
-        [_dealsViewButton setImage:[UIImage imageNamed:@"Profile_Deals List tab (Selected).png"] forState:UIControlStateNormal];
+        [_dealsViewButton setImage:[UIImage imageNamed:@"Profile_Deals List tab (selected).png"] forState:UIControlStateNormal];
         [_likesViewButton setImage:[UIImage imageNamed:@"Profile_Likes List tab.png"] forState:UIControlStateNormal];
+        _dealsCountLabel.textColor = [UIColor whiteColor];
+        _likesCountLabel.textColor = [UIColor colorWithRed:(180/255.0) green:(180/255.0) blue:(185/255.0) alpha:1.0];
+        [_dealsCountLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:14.0]];
+        [_likesCountLabel setFont:[UIFont fontWithName:@"Avenir-Light" size:14.0]];
+        
         _deals=@"a";
         _likes=@"a";
         _likesView.hidden=YES;
@@ -948,45 +978,21 @@
 - (IBAction)likesViewButtonClicked:(id)sender {
     
     if ([_likes isEqual:@"a"]){
-        [_likesViewButton setImage:[UIImage imageNamed:@"Profile_Likes List tab (Selected).png"] forState:UIControlStateNormal];
+        [_likesViewButton setImage:[UIImage imageNamed:@"Profile_Likes List tab (selected).png"] forState:UIControlStateNormal];
         [_dealsViewButton setImage:[UIImage imageNamed:@"Profile_Deals List tab.png"] forState:UIControlStateNormal];
+        [_likesCountLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:14.0]];
+        [_dealsCountLabel setFont:[UIFont fontWithName:@"Avenir-Light" size:14.0]];
+        _likesCountLabel.textColor = [UIColor whiteColor];
+        _dealsCountLabel.textColor = [UIColor colorWithRed:(180/255.0) green:(180/255.0) blue:(185/255.0) alpha:1.0];
         _likes=@"b";
         _deals=@"b";
         _dealsView.hidden=YES;
         _likesView.hidden=NO;
         _scrollView.contentSize=CGSizeMake(320,350+GAPForLikeView);
+        NSLog(@"like");
     }
 }
 
-- (IBAction)Adddeal:(id)sender {
-    LockTableButton.alpha=1.0;
-    [UIView animateWithDuration:0.5 animations:^{_BlueButtonsView.alpha=1.0;}];
-}
-
--(IBAction)UNLockButtonAction:(id)sender{
-    LockTableButton.alpha=0.0;
-    [UIView animateWithDuration:0.5 animations:^{_BlueButtonsView.alpha=0.0;}];
-}
-
--(void) AddDealFunction {
-    [self deallocMemory];
-    TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
-    UINavigationController *navigationController = self.navigationController;
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    int count = [viewControllers count];
-    if (count==5) {
-        [navigationController popViewControllerAnimated:NO];
-    }
-    [navigationController popViewControllerAnimated:NO];
-    [navigationController pushViewController:controller animated:NO];
-    _BlueButtonsView.alpha=0.0;
-    LockTableButton.alpha=0.0;
-}
-
--(void)LocalButtonAction:(id)sender{
-    [UIView animateWithDuration:0.5 animations:^{_BlueButtonsView.alpha=0.0;}];
-    [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(AddDealFunction) userInfo:nil repeats:NO];
-}
 
 -(void)OnlineButtonAction:(id)sender{
     
@@ -1026,6 +1032,12 @@
     _dealidArrayForLikesView = nil;
     _uploadDateArrayForLikesView = nil;
     
+    _image2=nil;
+    _image2ForLikeView=nil;
+    _dealerId=nil;
+    _dealsUserLikes=nil;
+    _didComeFromLikesTable=nil;
+    
     static NSCache *_cache = nil;
     [_cache removeAllObjects];
     NSArray *viewsToRemove = [self.dealsView subviews];
@@ -1036,7 +1048,8 @@
     for (UIView *v in viewsToRemove) {
         [v removeFromSuperview];
     }
-
+    
+    
     UINavigationController *navigationController = self.navigationController;
     [navigationController popViewControllerAnimated:YES];
 }
@@ -1048,9 +1061,313 @@
         [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
         ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
         [navigationController pushViewController:controller animated:NO];
-
+        
     } else {
     }
-  
 }
+
+
+//////////////////////
+//// tapbar //////////
+//////////////////////
+
+
+-(void) func {
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    app.previousViewControllerAddDeal=@"foursquare";
+    app.onlineOrLocal=@"local";
+    TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
+    UINavigationController *navigationController = self.navigationController;
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
+    [navigationController pushViewController:controller animated:NO];
+}
+
+-(void) func2 {
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    app.previousViewControllerAddDeal=@"online";
+    app.onlineOrLocal=@"online";
+    OnlineViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"OnlineView"];
+    UINavigationController *navigationController = self.navigationController;
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
+    [navigationController pushViewController:controller animated:NO];
+}
+
+-(void) goToOnline {
+    [self hideLocalOrOnlineView];
+    [self performSelector:@selector(func2) withObject:nil afterDelay:0.5];
+}
+
+-(void) goToAddDeal {
+    [self hideLocalOrOnlineView];
+    [self performSelector:@selector(func) withObject:nil afterDelay:0.1];
+    
+}
+
+-(void) tapBarSet {
+    
+    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal_Tab Bar@2X.png"]];
+    [imageview setFrame:CGRectMake(0, ([[UIScreen mainScreen] bounds].size.height)-69, ([[UIScreen mainScreen] bounds].size.width), 50)];
+    [[self view] addSubview:imageview];
+    
+    UIImageView *imageview2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal_Explore button@2X.png"]];
+    [imageview2 setFrame:CGRectMake(74, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+    [[self view] addSubview:imageview2];
+    
+    UIImageView *imageview3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal_More button@2X.png"]];
+    [imageview3 setFrame:CGRectMake(276, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+    [[self view] addSubview:imageview3];
+    
+    
+    UIImageView *imageview4 = [[UIImageView alloc]init];
+    UIImageView *imageview5 = [[UIImageView alloc]init];
+    
+    imageview4.image=[UIImage imageNamed:@"My Feed+View Deal_My Feed button@2X.png"];
+    [imageview4 setFrame:CGRectMake(19, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+    
+    imageview5.image=[UIImage imageNamed:@"My Feed+View Deal_Profile button (selected)@2X.png"];
+    [imageview5 setFrame:CGRectMake(218, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+    
+
+    if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
+        imageview4.image=[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected)@2X.png"];
+        [imageview4 setFrame:CGRectMake(19, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+        
+        imageview5.image=[UIImage imageNamed:@"My Feed+View Deal_Profile button@2X.png"];
+        [imageview5 setFrame:CGRectMake(218, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+
+    }
+    
+    [[self view] addSubview:imageview4];
+    [[self view] addSubview:imageview5];
+
+    
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(56, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
+    [label setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
+    label.text=@"Explore";
+    label.backgroundColor=[UIColor clearColor];
+    label.textColor = [UIColor lightGrayColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    [[self view] addSubview:label];
+    
+    UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(258, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
+    [label2 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
+    label2.text=@"More";
+    label2.backgroundColor=[UIColor clearColor];
+    label2.textColor = [UIColor lightGrayColor];
+    label2.textAlignment = NSTextAlignmentCenter;
+    [[self view] addSubview:label2];
+    
+    UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(1, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
+    [label3 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
+    label3.text=@"My Feed";
+    label3.backgroundColor=[UIColor clearColor];
+    label3.textAlignment = NSTextAlignmentCenter;
+    
+    UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(200, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
+    [label4 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
+    label4.text=@"Profile";
+    label4.backgroundColor=[UIColor clearColor];
+    label4.textAlignment = NSTextAlignmentCenter;
+    
+    label4.textColor = [UIColor colorWithRed:150/255.0 green:0/255.0 blue:180/255.0 alpha:1.0];
+    label3.textColor = [UIColor lightGrayColor];
+
+    if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
+        label3.textColor = [UIColor colorWithRed:150/255.0 green:0/255.0 blue:180/255.0 alpha:1.0];
+        label4.textColor = [UIColor lightGrayColor];
+    }
+    
+    [[self view] addSubview:label3];
+    [[self view] addSubview:label4];
+
+    UIButton *selectDealButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton setTitle:@"" forState:UIControlStateNormal];
+    [selectDealButton setImage:[UIImage imageNamed:@"My Feed+View Deal_Add Deal button@2X.png"] forState:UIControlStateNormal];
+    selectDealButton.frame=CGRectMake(129, ([[UIScreen mainScreen] bounds].size.height)-75,62,56);
+    [selectDealButton addTarget:self action:@selector(showLocalOrOnlineView:) forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton.tag=120;
+    [[self view] addSubview:selectDealButton];
+    
+    UIButton *selectDealButton2=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton2 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton2.frame=CGRectMake(10, ([[UIScreen mainScreen] bounds].size.height)-64,46,45);
+    [selectDealButton2 addTarget:self action:@selector(myFeedClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton2];
+    
+    UIButton *selectDealButton3=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton3 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton3.frame=CGRectMake(65, ([[UIScreen mainScreen] bounds].size.height)-64,46,45);
+    [selectDealButton3 addTarget:self action:@selector(exploreClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton3];
+    
+    UIButton *selectDealButton4=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton4 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton4.frame=CGRectMake(209, ([[UIScreen mainScreen] bounds].size.height)-64,46,45);
+    [selectDealButton4 addTarget:self action:@selector(profileClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton4];
+    
+    UIButton *selectDealButton5=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton5 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton5.frame=CGRectMake(267, ([[UIScreen mainScreen] bounds].size.height)-64,46,45);
+    [selectDealButton5 addTarget:self action:@selector(moreClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton5];
+    
+    
+    //////////////////////
+    //// blue buttons ////
+    //////////////////////
+    
+    UIButton *selectDealButton6=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton6 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton6.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    NSLog(@"%f",[[UIScreen mainScreen] bounds].size.height-44);
+    selectDealButton6.tag=100;
+    [selectDealButton6 setBackgroundColor:[UIColor whiteColor]];
+    [selectDealButton6 addTarget:self action:@selector(hideLocalOrOnlineView) forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton6.alpha=0.0;
+    [[self view] addSubview:selectDealButton6];
+    
+    UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton9.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton9.tag=110;
+    [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
+    //[selectDealButton9 addTarget:self action:@selector() forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton9.alpha=0.0;
+    [[self view] addSubview:selectDealButton9];
+    
+    
+    UIButton *selectDealButton7=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton7 setTitle:@"" forState:UIControlStateNormal];
+    [selectDealButton7 setImage:[UIImage imageNamed:@"Add Deal (Final)_Local button.png"] forState:UIControlStateNormal];
+    selectDealButton7.frame=CGRectMake(76, ([[UIScreen mainScreen] bounds].size.height)-182,76,76);
+    selectDealButton7.tag=101;
+    [selectDealButton7 addTarget:self action:@selector(goToAddDeal) forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton7.alpha=0.0;
+    [[self view] addSubview:selectDealButton7];
+    
+    UIButton *selectDealButton8=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton8 setTitle:@"" forState:UIControlStateNormal];
+    [selectDealButton8 setImage:[UIImage imageNamed:@"Add Deal (Final)_Online button.png"] forState:UIControlStateNormal];
+    selectDealButton8.frame=CGRectMake(178, ([[UIScreen mainScreen] bounds].size.height)-182,76,76);
+    selectDealButton8.tag=102;
+    [selectDealButton8 addTarget:self action:@selector(goToOnline) forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton8.alpha=0.0;
+    [[self view] addSubview:selectDealButton8];
+    
+    UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(89, ([[UIScreen mainScreen] bounds].size.height)-103, 47, 21)];
+    [label5 setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
+    label5.text=@"Local";
+    label5.backgroundColor=[UIColor clearColor];
+    label5.textColor = [UIColor colorWithRed:0/255 green:122/255 blue:255/255 alpha:1.0];
+    label5.textAlignment = NSTextAlignmentCenter;
+    label5.tag=103;
+    label5.alpha=0.0;
+    [[self view] addSubview:label5];
+    
+    UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(189, ([[UIScreen mainScreen] bounds].size.height)-103, 54, 21)];
+    [label6 setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
+    label6.text=@"Online";
+    label6.backgroundColor=[UIColor clearColor];
+    label6.textColor = [UIColor colorWithRed:0/255 green:122/255 blue:255/255 alpha:1.0];
+    label6.textAlignment = NSTextAlignmentCenter;
+    label6.tag=104;
+    label6.alpha=0.0;
+    [[self view] addSubview:label6];
+    
+    
+}
+
+-(void) myFeedClicked:(id)sender {
+    
+    if (![_didComeFromLikesTable isEqualToString:@"yes"]) {
+        [self deallocMemory];
+        UINavigationController *navigationController = self.navigationController;
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
+    }
+}
+
+-(void) exploreClicked:(id)sender {
+    [self deallocMemory];
+    ExploretableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"explore"];
+    UINavigationController *navigationController = self.navigationController;
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
+    [navigationController pushViewController:controller animated:NO];
+}
+
+-(void) moreClicked:(id)sender {
+    [self deallocMemory];
+    MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
+    UINavigationController *navigationController = self.navigationController;
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
+    [navigationController pushViewController:controller animated:NO];
+}
+
+-(void) profileClicked:(id)sender{
+
+    if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
+        [self deallocMemory];
+        ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
+        UINavigationController *navigationController = self.navigationController;
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
+        [navigationController pushViewController:controller animated:NO];
+    }
+}
+
+-(void) hideLocalOrOnlineView {
+    NSLog(@"remove cover");
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:100];
+    UIButton *button2 = (UIButton*)[self.view viewWithTag:101];
+    UIButton *button3 = (UIButton*)[self.view viewWithTag:102];
+    UILabel *label1 = (UILabel*)[self.view viewWithTag:103];
+    UILabel *label2 = (UILabel*)[self.view viewWithTag:104];
+    
+    [UIView animateWithDuration:0.5 animations:^{button1.alpha=0.0;
+        button2.alpha=0.0;
+        button3.alpha=0.0;
+        label1.alpha=0.0;
+        label2.alpha=0.0;
+    }];
+    
+}
+
+-(void) showLocalOrOnlineView:(id)sender {
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:100];
+    UIButton *button2 = (UIButton*)[self.view viewWithTag:101];
+    UIButton *button3 = (UIButton*)[self.view viewWithTag:102];
+    UILabel *label1 = (UILabel*)[self.view viewWithTag:103];
+    UILabel *label2 = (UILabel*)[self.view viewWithTag:104];
+    
+    [UIView animateWithDuration:0.5 animations:^{button1.alpha=0.7;
+        button2.alpha=1.0;
+        button3.alpha=1.0;
+        label1.alpha=1.0;
+        label2.alpha=1.0;
+    }];
+    UIButton *button4 = (UIButton*)[self.view viewWithTag:120];
+    [self.view bringSubviewToFront:button4];
+   
+}
+
+-(void) showWhiteCover {
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
+    UIButton *button2 = (UIButton*)[self.view viewWithTag:120];
+    [self.view bringSubviewToFront:button1];
+    [self.view bringSubviewToFront:button2];
+    button1.alpha=0.7;
+}
+
+-(void) removeWhiteCover {
+    NSLog(@"remove white cover");
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
+    button1.alpha=0.0;
+}
+
+
 @end

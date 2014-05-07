@@ -64,7 +64,8 @@
         gender=@"0";
     } else gender=Genger.text;
     
-    NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",Fullname.text,Password.text,Email.text,Datebirth.text,Genger.text,Photoid];
+    NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",Fullname.text,Password.text,Email.text,date,gender,Photoid];
+    strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     // to execute php code
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
     // to receive the returend value

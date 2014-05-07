@@ -12,5 +12,5 @@
 @interface Functions : NSObject
 -(BOOL)CheckIfCategoryExist:(NSString*) string;
 -(NSString*)ConnectOldCategoryToNewCategory:(NSString*) string;
--(void) trytry:(UIView *)view controller:(MyFeedsViewController*)controller;
+-(UIView *) tapBarSet:(UIView *)view VCname:(NSString*)vc;
 @end

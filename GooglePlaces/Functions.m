@@ -787,9 +787,9 @@
     return CategoryPicture;
 }
 
--(void) trytry:(UIView *)view controller:(MyFeedsViewController*)controller {
-    NSLog(@"in func");
-   // controller.view=Nil;
+-(UIView *) tapBarSet:(UIView *)view VCname:(NSString*)vc {
+    
+    
 }
 
 @end

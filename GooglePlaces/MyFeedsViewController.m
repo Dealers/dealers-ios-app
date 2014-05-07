@@ -17,6 +17,7 @@
 #define OFFSETSHORTCELL 109
 #import <mach/mach.h>
 #import "OptionalaftergoogleplaceViewController.h"
+#import "CheckConnection.h"
 
 @interface MyFeedsViewController ()
 @end
@@ -33,16 +34,7 @@
 }
 
 - (void)didReceiveMemoryWarning
-{/*
-  NSLog(@"MEMORY");
-  NSArray *viewsToRemove = [self.scrollView subviews];
-  for (UIView *v in viewsToRemove) {
-  [v removeFromSuperview];
-  }
-  [super didReceiveMemoryWarning];
-  AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-  app.AfterAddDeal=@"yes";
-  [self viewDidAppear:YES];*/
+{
 }
 
 -(void) removeCellsFromSuperview {
@@ -207,11 +199,6 @@
     for (int i=0; i<[[PRICEMARRAY_temp copy] count]; i++) {
         NSString *price=[PRICEMARRAY_temp objectAtIndex:i];
         int priceint = [price intValue];
-        if ((priceint > 1000) && (priceint < 10000))  {
-            priceint=priceint/1000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
-        }
         if ((priceint > 10000) && (priceint < 100000))  {
             priceint=priceint/10000;
             price = [NSString stringWithFormat:@"%d",priceint];
@@ -251,15 +238,9 @@
     
 }
 
--(void) dbError {
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"DB ERROR" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-    [alert show];
-}
-
 -(void) hiddenWhiteCoverView {
-    [UIView animateWithDuration:0.5 animations:^{self.whiteCoverView.alpha=0.0;}];
+    //[UIView animateWithDuration:0.5 animations:^{self.whiteCoverView.alpha=0.0;}];
     [self.LoadingImage stopAnimating];
-    //[self report_memory];
 }
 
 -(void) startLoadingUploadIcon:(UIImageView*)image {
@@ -305,10 +286,6 @@
 
 -(void) createDealsTable {
     
-    self.AddDealButton.enabled=NO;
-    self.ProfileButton.enabled=NO;
-    self.ExploreButton.enabled=NO;
-    
     isUpdatingNow = YES;
     for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
         NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
@@ -344,7 +321,7 @@
         
         if ((![[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&([[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
             label3.text=[self.PRICEMARRAY objectAtIndex:i];
             label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_SIGNARRAY objectAtIndex:i]]];
             label3.backgroundColor=[UIColor clearColor];
@@ -356,17 +333,21 @@
         
         if ((![[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
             label3.text=[self.PRICEMARRAY objectAtIndex:i];
             label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_SIGNARRAY objectAtIndex:i]]];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
-            [label3 sizeToFit];
             label3.textAlignment=NSTextAlignmentRight;
+            int priceint = [label3.text intValue];
+            if ((priceint>1000)&&(priceint<10000)) {
+                label3.frame=CGRectMake(185, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21);
+            }
+            [label3 sizeToFit];
             [[self scrollView] addSubview:label3];
             
             UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
             label4.text=[self.DISCOUNTMARRAY objectAtIndex:i];
             label4.text = [label4.text stringByAppendingString:@"%"];
             label4.backgroundColor=[UIColor clearColor];
@@ -378,7 +359,7 @@
         
         if (([[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
             label3.text=[self.DISCOUNTMARRAY objectAtIndex:i];
             label3.text = [label3.text stringByAppendingString:@"%"];
             label3.backgroundColor=[UIColor clearColor];
@@ -393,9 +374,6 @@
     cellNumberInScrollView+=10;
     [[self scrollView] setContentSize:CGSizeMake(319,GAP)];
     isUpdatingNow = NO;
-    self.AddDealButton.enabled=YES;
-    self.ProfileButton.enabled=YES;
-    self.ExploreButton.enabled=YES;
     [self hiddenWhiteCoverView];
 }
 
@@ -411,9 +389,7 @@
             
             if (([num isEqualToString:@"0"])||(num==nil)||([num length]==0)) {
                 [_PHOTOIDMARRAYCONVERT addObject:@"0"];
-                NSLog(@"no image");
             } else{
-                NSLog(@"image number %d",[num length]);
                 _image2=[[UIImage alloc]init];
                 _image2 =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
                 [_PHOTOIDMARRAYCONVERT addObject:_image2];
@@ -437,10 +413,8 @@
                 UIImageView *imageview2 = [[UIImageView alloc]init];
                 if (isShortCell) {
                 } else {
-                    NSLog(@"%@",[_PHOTOIDMARRAYCONVERT objectAtIndex:i-1]);
                     imageview2.image=[_PHOTOIDMARRAYCONVERT objectAtIndex:i-1];
                     [imageview2 setFrame:CGRectMake(10, 10+(gap2), 300, 155)];
-                    NSLog(@"download succsses with = %@",imageview2);
                     CALayer *mask = [CALayer layer];
                     mask.contents=(id)[[UIImage imageNamed:@"My Feed+View Deal (final)_Deal Pic mask.png"]CGImage];
                     mask.frame = CGRectMake(0, 0, 300, 155);
@@ -523,7 +497,13 @@
     controller.signLabelFromMyFeeds = [self.SIGNARRAY objectAtIndex:(button.tag)];
     controller.photoIdLabelFromMyFeeds = [self.PHOTOIDMARRAY objectAtIndex:(button.tag)];
     controller.dealidLabelFromMyFeeds = [self.DEALIDARRAY objectAtIndex:(button.tag)];
-    
+    controller.localoronlineLabelFromMyFeeds = [self.onlineOrLocalArray objectAtIndex:(button.tag)];
+
+    if (![[self.PHOTOIDMARRAY objectAtIndex:(button.tag)] isEqualToString:@"0"]) {
+    controller.tempImage = [self.PHOTOIDMARRAYCONVERT objectAtIndex:(button.tag-1)];
+        controller.isShoetCell = @"no";
+    } else controller.isShoetCell = @"yes";
+
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
@@ -543,23 +523,16 @@
 }
 
 -(void)initializeView {
-    NSMutableArray *allViewControllers2 = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
-    [self.navigationController setViewControllers:allViewControllers2];
-    self.onlineOrLocalView.alpha=0.0;
-    self.denyClickingOnCellsButton.alpha=0.0;
-    self.whiteCoverView.alpha=1.0;
     [[self scrollView] setBackgroundColor:[UIColor colorWithRed:(230/255.0) green:(230/255.0) blue:(230/255.0) alpha:1.0]];
-    [[self scrollView]setScrollEnabled:YES];
-    self.scrollView.delegate=self;
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
     isShortCell=NO;
     isUpdatingNow=NO;
     cellNumberInScrollView=1;
     cellsNumbersInFillWithImages=1;
     GAP=0;
     gap2=0;
-	[self orderInPositionTapBarIcons];
     myFeedsFirstTime = YES;
+    _scrollView.frame=CGRectMake(0, 44, 320, [[UIScreen mainScreen] bounds].size.height-110);
+    
 }
 
 -(void) allocArrays {
@@ -587,6 +560,14 @@
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [[self scrollView] addSubview:refreshControl];
 }
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    NSLog(@"refreshing");
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    app.AfterAddDeal=@"yes";
+    [self viewDidAppear:YES];
+    [refreshControl endRefreshing];
+}
+
 
 -(void) didReachFromRegisterOrAddDeal {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
@@ -631,21 +612,18 @@
         static NSCache *_cache = nil;
         [_cache removeAllObjects];
         //[self removeCellsFromSuperview];
-        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-        dispatch_async(queue, ^{
-            // Do some computation here.
-            [self loadDataFromDB];
-            // Update UI after computation.
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // Update the UI on the main thread.
-                [self didReachFromRegisterOrAddDeal];
-            });
-        });
+        CheckConnection *checkconnection = [[CheckConnection alloc]init];
+        if ([checkconnection connected]) {
+            [self loadDBandUpdateCells];
+        } else {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check Internet Connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+            [alert show];
+        }
+
     }
 }
 
 -(void) deallocPrevViewControllers {
-    
     if (myFeedsFirstTime) {
         NSArray *viewControllers = self.navigationController.viewControllers;
         id previousController = [viewControllers objectAtIndex:0];
@@ -657,12 +635,9 @@
         myFeedsFirstTime=NO;
     }
 }
-- (void)viewDidLoad {
-    [self initializeView];
-    [self allocArrays];
-    //[self setRefreshControl];
-    [self startLoadingUploadIcon:_LoadingImage];
-    [self removeCellsFromSuperview];
+
+-(void) loadDBandUpdateCells {
+    [self showWhiteCover];
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         // Do some computation here.
@@ -670,10 +645,26 @@
         // Update UI after computation.
         dispatch_async(dispatch_get_main_queue(), ^{
             // Update the UI on the main thread.
-            NSLog(@"creating cells");
             [self didReachFromRegisterOrAddDeal];
+            [self setRefreshControl];
+            [self removeWhiteCover];
         });
     });
+}
+
+- (void)viewDidLoad {
+    [self tapBarSet];
+    [self initializeView];
+    [self allocArrays];
+    [self startLoadingUploadIcon:_LoadingImage];
+    [self removeCellsFromSuperview];
+    CheckConnection *checkconnection = [[CheckConnection alloc]init];
+    if ([checkconnection connected]){
+        [self loadDBandUpdateCells];
+    } else {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check Internet Connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        [alert show];
+    }
     [super viewDidLoad];
 }
 
@@ -690,10 +681,6 @@
     }
 }
 
-- (void)refresh:(UIRefreshControl *)refreshControl {
-    //[self performSelectorInBackground:@selector(backGroundMethod) withObject:nil];
-    //[refreshControl endRefreshing];
-}
 
 -(NSString *) convetCurrency: (NSString *) currencyToConvert {
     if ([currencyToConvert isEqualToString:@"1"]) {
@@ -708,40 +695,13 @@
 	return currencyToConvert;
 }
 
--(IBAction)addDealButtonClicked:(id)sender {
-    self.denyClickingOnCellsButton.alpha=1.0;
-    self.denyClickingOnCellsButton.backgroundColor = [UIColor colorWithRed:230 green:230 blue:230 alpha:0.5];
-    [UIView animateWithDuration:0.5 animations:^{self.onlineOrLocalView.alpha=1.0;}];
-}
 
--(IBAction)denyClickingOnCellsButtonClicked:(id)sender{
-    [UIView animateWithDuration:0.5 animations:^{self.denyClickingOnCellsButton.alpha=0.0;}];
-    [UIView animateWithDuration:0.5 animations:^{self.onlineOrLocalView.alpha=0.0;}];
-}
+//////////////////////
+//// tapbar //////////
+//////////////////////
 
--(void) orderInPositionTapBarIcons {
-    float tapBarHeight = self.view.frame.size.height - self.TapBar.bounds.size.height/2;
-    float iconHeight = self.view.frame.size.height - self.TapBar.bounds.size.height/2-5;
-    float textHeight = self.view.frame.size.height - 7.5;
-    
-    [UIView animateWithDuration:0.5 animations:^{self.DealersTitle.alpha=1.0;}];
-    [UIView animateWithDuration:0.5 animations:^{self.TapBar.center = CGPointMake(160, (tapBarHeight));}];
-    [UIView animateWithDuration:0.5 animations:^{self.moreImage.center = CGPointMake(290, iconHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.MoreButton.center = CGPointMake(290, iconHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.MoreText.center = CGPointMake(290, textHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.profileImage.center = CGPointMake(232, iconHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.ProfileButton.center = CGPointMake(232, iconHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.ProfileText.center = CGPointMake(232, textHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.AddDealButton.center = CGPointMake(160, tapBarHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.ExploreButton.center = CGPointMake(88, iconHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.exploreImage.center = CGPointMake(88, iconHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.ExploreText.center = CGPointMake(88, textHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.MyFeedButton.center = CGPointMake(33, iconHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.myfeedsImage.center = CGPointMake(33, iconHeight);}];
-    [UIView animateWithDuration:0.5 animations:^{self.MyFeedText.center = CGPointMake(33, textHeight);}];
-}
 
--(void) goToAddDeal {
+-(void) func {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"foursquare";
     app.onlineOrLocal=@"local";
@@ -749,7 +709,7 @@
     [self.navigationController pushViewController:controller animated:NO];
 }
 
--(void) goToOnline {
+-(void) func2 {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"online";
     app.onlineOrLocal=@"online";
@@ -757,93 +717,236 @@
     [self.navigationController pushViewController:controller animated:NO];
 }
 
--(IBAction)morebutton:(id)sender{
+-(void) goToOnline {
+    [self hideLocalOrOnlineView];
+    [self performSelector:@selector(func2) withObject:nil afterDelay:0.5];
+}
+
+-(void) goToAddDeal {
+    [self hideLocalOrOnlineView];
+    [self performSelector:@selector(func) withObject:nil afterDelay:0.1];
+    
+}
+
+-(void) tapBarSet {
+    
+    UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal_Tab Bar@2X.png"]];
+    [imageview setFrame:CGRectMake(0, ([[UIScreen mainScreen] bounds].size.height)-69, ([[UIScreen mainScreen] bounds].size.width), 50)];
+    [[self view] addSubview:imageview];
+    
+    UIImageView *imageview2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal_Explore button@2X.png"]];
+    [imageview2 setFrame:CGRectMake(74, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+    [[self view] addSubview:imageview2];
+    
+    UIImageView *imageview3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal_More button@2X.png"]];
+    [imageview3 setFrame:CGRectMake(276, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+    [[self view] addSubview:imageview3];
+    
+    UIImageView *imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected)@2X.png"]];
+    [imageview4 setFrame:CGRectMake(19, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+    [[self view] addSubview:imageview4];
+    
+    UIImageView *imageview5 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button@2X.png"]];
+    [imageview5 setFrame:CGRectMake(218, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
+    [[self view] addSubview:imageview5];
+    
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(56, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
+    [label setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
+    label.text=@"Explore";
+    label.backgroundColor=[UIColor clearColor];
+    label.textColor = [UIColor lightGrayColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    [[self view] addSubview:label];
+    
+    UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(258, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
+    [label2 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
+    label2.text=@"More";
+    label2.backgroundColor=[UIColor clearColor];
+    label2.textColor = [UIColor lightGrayColor];
+    label2.textAlignment = NSTextAlignmentCenter;
+    [[self view] addSubview:label2];
+    
+    UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(1, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
+    [label3 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
+    label3.text=@"My Feed";
+    label3.backgroundColor=[UIColor clearColor];
+    label3.textColor = [UIColor colorWithRed:150/255.0 green:0/255.0 blue:180/255.0 alpha:1.0];
+    label3.textAlignment = NSTextAlignmentCenter;
+    [[self view] addSubview:label3];
+    
+    UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(200, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
+    [label4 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
+    label4.text=@"Profile";
+    label4.backgroundColor=[UIColor clearColor];
+    label4.textColor = [UIColor lightGrayColor];
+    label4.textAlignment = NSTextAlignmentCenter;
+    [[self view] addSubview:label4];
+    
+    
+    UIButton *selectDealButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton setTitle:@"" forState:UIControlStateNormal];
+    [selectDealButton setImage:[UIImage imageNamed:@"My Feed+View Deal_Add Deal button@2X.png"] forState:UIControlStateNormal];
+    selectDealButton.frame=CGRectMake(129, ([[UIScreen mainScreen] bounds].size.height)-75,62,56);
+    [selectDealButton addTarget:self action:@selector(showLocalOrOnlineView:) forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton.tag=120;
+    [[self view] addSubview:selectDealButton];
+    
+    UIButton *selectDealButton2=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton2 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton2.frame=CGRectMake(10, ([[UIScreen mainScreen] bounds].size.height)-64,46,45);
+    [selectDealButton2 addTarget:self action:@selector(myFeedClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton2];
+    
+    UIButton *selectDealButton3=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton3 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton3.frame=CGRectMake(65, ([[UIScreen mainScreen] bounds].size.height)-64,46,45);
+    [selectDealButton3 addTarget:self action:@selector(exploreClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton3];
+    
+    UIButton *selectDealButton4=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton4 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton4.frame=CGRectMake(209, ([[UIScreen mainScreen] bounds].size.height)-64,46,45);
+    [selectDealButton4 addTarget:self action:@selector(profileClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton4];
+    
+    UIButton *selectDealButton5=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton5 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton5.frame=CGRectMake(267, ([[UIScreen mainScreen] bounds].size.height)-64,46,45);
+    [selectDealButton5 addTarget:self action:@selector(moreClicked:) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton5];
+    
+    
+    //////////////////////
+    //// blue buttons ////
+    //////////////////////
+    
+    UIButton *selectDealButton6=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton6 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton6.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    NSLog(@"%f",[[UIScreen mainScreen] bounds].size.height-44);
+    selectDealButton6.tag=100;
+    [selectDealButton6 setBackgroundColor:[UIColor whiteColor]];
+    [selectDealButton6 addTarget:self action:@selector(hideLocalOrOnlineView) forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton6.alpha=0.0;
+    [[self view] addSubview:selectDealButton6];
+    
+    UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton9.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton9.tag=110;
+    [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
+    //[selectDealButton9 addTarget:self action:@selector() forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton9.alpha=0.0;
+    [[self view] addSubview:selectDealButton9];
+
+    
+    UIButton *selectDealButton7=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton7 setTitle:@"" forState:UIControlStateNormal];
+    [selectDealButton7 setImage:[UIImage imageNamed:@"Add Deal (Final)_Local button.png"] forState:UIControlStateNormal];
+    selectDealButton7.frame=CGRectMake(76, ([[UIScreen mainScreen] bounds].size.height)-182,76,76);
+    selectDealButton7.tag=101;
+    [selectDealButton7 addTarget:self action:@selector(goToAddDeal) forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton7.alpha=0.0;
+    [[self view] addSubview:selectDealButton7];
+    
+    UIButton *selectDealButton8=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton8 setTitle:@"" forState:UIControlStateNormal];
+    [selectDealButton8 setImage:[UIImage imageNamed:@"Add Deal (Final)_Online button.png"] forState:UIControlStateNormal];
+    selectDealButton8.frame=CGRectMake(178, ([[UIScreen mainScreen] bounds].size.height)-182,76,76);
+    selectDealButton8.tag=102;
+    [selectDealButton8 addTarget:self action:@selector(goToOnline) forControlEvents: UIControlEventTouchUpInside];
+    selectDealButton8.alpha=0.0;
+    [[self view] addSubview:selectDealButton8];
+    
+    UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(89, ([[UIScreen mainScreen] bounds].size.height)-103, 47, 21)];
+    [label5 setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
+    label5.text=@"Local";
+    label5.backgroundColor=[UIColor clearColor];
+    label5.textColor = [UIColor colorWithRed:0/255 green:122/255 blue:255/255 alpha:1.0];
+    label5.textAlignment = NSTextAlignmentCenter;
+    label5.tag=103;
+    label5.alpha=0.0;
+    [[self view] addSubview:label5];
+    
+    UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(189, ([[UIScreen mainScreen] bounds].size.height)-103, 54, 21)];
+    [label6 setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
+    label6.text=@"Online";
+    label6.backgroundColor=[UIColor clearColor];
+    label6.textColor = [UIColor colorWithRed:0/255 green:122/255 blue:255/255 alpha:1.0];
+    label6.textAlignment = NSTextAlignmentCenter;
+    label6.tag=104;
+    label6.alpha=0.0;
+    [[self view] addSubview:label6];
+
+
+}
+
+-(void) myFeedClicked:(id)sender {
+}
+
+-(void) exploreClicked:(id)sender {
+    ExploretableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"explore"];
+    [self.navigationController pushViewController:controller animated:NO];
+}
+
+-(void) moreClicked:(id)sender {
     MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
     [self.navigationController pushViewController:controller animated:NO];
 }
 
--(IBAction)profilebutton:(id)sender{
+-(void) profileClicked:(id)sender {
     ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
-    controller.didComeFromLikesTable=@"no";
     [self.navigationController pushViewController:controller animated:NO];
+}
+
+-(void) hideLocalOrOnlineView {
+    NSLog(@"remove cover");
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:100];
+    UIButton *button2 = (UIButton*)[self.view viewWithTag:101];
+    UIButton *button3 = (UIButton*)[self.view viewWithTag:102];
+    UILabel *label1 = (UILabel*)[self.view viewWithTag:103];
+    UILabel *label2 = (UILabel*)[self.view viewWithTag:104];
+    
+    [UIView animateWithDuration:0.5 animations:^{button1.alpha=0.0;
+        button2.alpha=0.0;
+        button3.alpha=0.0;
+        label1.alpha=0.0;
+        label2.alpha=0.0;
+    }];
     
 }
 
--(IBAction)explorebutton:(id)sender{
-    ExploretableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"explore"];
-    [self.navigationController pushViewController:controller animated:NO];
-    
-    
+-(void) showLocalOrOnlineView:(id)sender {
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:100];
+    UIButton *button2 = (UIButton*)[self.view viewWithTag:101];
+    UIButton *button3 = (UIButton*)[self.view viewWithTag:102];
+    UILabel *label1 = (UILabel*)[self.view viewWithTag:103];
+    UILabel *label2 = (UILabel*)[self.view viewWithTag:104];
+
+    [UIView animateWithDuration:0.5 animations:^{button1.alpha=0.7;
+        button2.alpha=1.0;
+        button3.alpha=1.0;
+        label1.alpha=1.0;
+        label2.alpha=1.0;
+    }];
+
 }
 
--(void)hideTapBarAndNavigationBarAndScrollView {
-    [UIView animateWithDuration:0.5 animations:^{self.DealersTitle.alpha=0.0;}];
-    [UIView animateWithDuration:0.5 animations:^{self.TapBar.center = CGPointMake(160, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.MoreButton.center = CGPointMake(290, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.MoreText.center = CGPointMake(290, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.moreImage.center = CGPointMake(290, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.ProfileButton.center = CGPointMake(232, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.ProfileText.center = CGPointMake(232, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.profileImage.center = CGPointMake(232, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.AddDealButton.center = CGPointMake(160, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.ExploreButton.center = CGPointMake(88, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.ExploreText.center = CGPointMake(88, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.exploreImage.center = CGPointMake(88, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.MyFeedButton.center = CGPointMake(30, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.MyFeedText.center = CGPointMake(30, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.myfeedsImage.center = CGPointMake(30, 2500);}];
-    [UIView animateWithDuration:0.5 animations:^{self.onlineOrLocalView.alpha=0.0;}];
-    [UIView animateWithDuration:0.5 animations:^{self.whiteCoverView.alpha=1.0;}];
-    
-    
+-(void) showWhiteCover {
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
+    UIButton *button2 = (UIButton*)[self.view viewWithTag:120];
+    [self.view bringSubviewToFront:button1];
+    [self.view bringSubviewToFront:button2];
+    [self.view bringSubviewToFront:_LoadingImage];
+    button1.alpha=0.7;
 }
 
--(void) hideOnlineLocalView {
-    [UIView animateWithDuration:0.5 animations:^{self.onlineOrLocalView.alpha=0.0;}];
-    [UIView animateWithDuration:0.5 animations:^{self.whiteCoverView.alpha=0.0;}];
-    [UIView animateWithDuration:0.5 animations:^{self.denyClickingOnCellsButton.alpha=0.0;}];
-    
-}
--(void)localButtonClicked:(id)sender{
-	[self hideTapBarAndNavigationBarAndScrollView];
-    [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(goToAddDeal) userInfo:nil repeats:NO];
+-(void) removeWhiteCover {
+    NSLog(@"remove white cover");
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
+    button1.alpha=0.0;
 }
 
--(void)onlineButtonClicked:(id)sender{
-	[self hideTapBarAndNavigationBarAndScrollView];
-    [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(goToOnline) userInfo:nil repeats:NO];
-}
-
--(void)viewDidDisappear:(BOOL)animated {
-    sleep(1);
-    self.onlineOrLocalView.alpha=0.0;
-    self.denyClickingOnCellsButton.alpha=0.0;
-    self.whiteCoverView.alpha=0.0;
-   	[self orderInPositionTapBarIcons];
-}
-
--(void) report_memory {
-    mach_port_t host_port;
-    mach_msg_type_number_t host_size;
-    vm_size_t pagesize;
-    
-    host_port = mach_host_self();
-    host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
-    host_page_size(host_port, &pagesize);
-    
-    vm_statistics_data_t vm_stat;
-    
-    if (host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size) != KERN_SUCCESS)
-        NSLog(@"Failed to fetch vm statistics");
-    
-    /* Stats in bytes */
-    natural_t mem_used = (vm_stat.active_count +
-                          vm_stat.inactive_count +
-                          vm_stat.wire_count) * pagesize;
-    natural_t mem_free = vm_stat.free_count * pagesize;
-    natural_t mem_total = mem_used + mem_free;
-    NSLog(@"used: %u free: %u total: %u", mem_used/1000000, mem_free/1000000, mem_total/1000000);
-}
 
 @end
 

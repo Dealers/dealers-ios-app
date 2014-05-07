@@ -26,6 +26,12 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    currentVC=0;
+}
+-(void)viewDidAppear:(BOOL)animated{
+    currentVC=1;
+}
 -(void) initView {
     self.UrlBar.text=@"www.dealers.co.il";
     NSString *Urlstring=[NSString stringWithFormat:@"http://www.dealers.co.il"];
@@ -33,13 +39,18 @@
     NSURL *url = [NSURL URLWithString:Urlstring];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:request];
-
+    
 }
 - (void)didReceiveMemoryWarning
 {
-    //[self deallocOnlineView];
-    [self.navigationController popViewControllerAnimated:YES];
-    [super didReceiveMemoryWarning];
+    if (currentVC) {
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='online'"];
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+        NSLog(@"memory online");
+        [self deallocOnlineView];
+        [self.navigationController popViewControllerAnimated:YES];
+        [super didReceiveMemoryWarning];
+    }
     // Dispose of any resources that can be recreated.
 }
 
@@ -96,10 +107,10 @@
     if ([dataArray count]>=2) {
         controller.storeName=[dataArray objectAtIndex:1];
     } else controller.storeName=@"online store";
-    NSLog(@"%@",controller.storeName);
     controller.segcategory=@"Online";
+    controller.urlSite=_UrlBar.text;
     [self.navigationController pushViewController:controller animated:YES];
-
+    
 }
 
 - (void)updateProgress:(NSTimer *)sender
