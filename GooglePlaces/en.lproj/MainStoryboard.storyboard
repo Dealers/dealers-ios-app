@@ -705,7 +705,7 @@
         <!--Signin View Controller-->
         <scene sceneID="LVa-iI-ekt">
             <objects>
-                <viewController storyboardIdentifier="signin" id="mrh-gV-aKI" customClass="SigninViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signin" modalTransitionStyle="flipHorizontal" id="mrh-gV-aKI" customClass="SigninViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R5W-pv-LWu">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -961,7 +961,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="41" y="425.00000311221379" width="216" height="21"/>
+                                        <rect key="frame" x="41" y="425.00000693618944" width="216" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
@@ -983,7 +983,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="224" y="425.00000311221379" width="96" height="21"/>
+                                        <rect key="frame" x="224" y="425" width="96" height="21.00000693618945"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -2505,6 +2505,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="WO3-Hq-B8F"/>
+        <segue reference="7NX-Yc-4P8"/>
     </inferredMetricsTieBreakers>
 </document>

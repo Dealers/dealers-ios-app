@@ -431,6 +431,9 @@
 		C873D3A91851040700B913CD /* My Feed+View Deal_Store icon (final)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C873D38D1851040700B913CD /* My Feed+View Deal_Store icon (final)@2x.png */; };
 		C8951AF718FAD79C00C53E9B /* Add Deal (final)_Shade.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */; };
 		C8951AF918FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */; };
+		C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */; };
+		C8A6EBE4191BB99600887C34 /* Registration_Sign Up Mail button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */; };
+		C8A6EBE5191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */; };
 		C8BFD9C218723016007E7E07 /* Profile_About Yourself icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9A618723015007E7E07 /* Profile_About Yourself icon@2x.png */; };
 		C8BFD9C318723016007E7E07 /* Profile_Dealers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9A718723015007E7E07 /* Profile_Dealers@2x.png */; };
 		C8BFD9C418723016007E7E07 /* Profile_Deals List button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9A818723015007E7E07 /* Profile_Deals List button (selected)@2x.png */; };
@@ -982,6 +985,9 @@
 		C873D38D1851040700B913CD /* My Feed+View Deal_Store icon (final)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal_Store icon (final)@2x.png"; sourceTree = "<group>"; };
 		C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (final)_Shade.png"; sourceTree = "<group>"; };
 		C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Black Transparent screen@2x.png"; sourceTree = "<group>"; };
+		C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Facebook button@2x.png"; sourceTree = "<group>"; };
+		C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Mail button@2x.png"; sourceTree = "<group>"; };
+		C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Twitter button@2x.png"; sourceTree = "<group>"; };
 		C8BFD9A618723015007E7E07 /* Profile_About Yourself icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_About Yourself icon@2x.png"; sourceTree = "<group>"; };
 		C8BFD9A718723015007E7E07 /* Profile_Dealers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Dealers@2x.png"; sourceTree = "<group>"; };
 		C8BFD9A818723015007E7E07 /* Profile_Deals List button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List button (selected)@2x.png"; sourceTree = "<group>"; };
@@ -1777,6 +1783,9 @@
 		C8B01FBB18F3FC7500DB6584 /* Registration */ = {
 			isa = PBXGroup;
 			children = (
+				C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */,
+				C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */,
+				C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */,
 				B034B9991804784900625392 /* Registration_Add Photo button (selected)@2x.png */,
 				B034B99A1804784900625392 /* Registration_Add Photo button@2x.png */,
 				B034B99B1804784A00625392 /* Registration_Back button (selected)@2x.png */,
@@ -2093,6 +2102,7 @@
 				B055C72617FE806900FBDFCC /* Explore_Pets icon@2x.png in Resources */,
 				B055C72717FE806900FBDFCC /* Explore_Real Estate icon@2x.png in Resources */,
 				C83EAE6818690AC40084E0E1 /* Food & Groceries_butcher@2x.png in Resources */,
+				C8A6EBE5191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png in Resources */,
 				C869CB6F191A0A9A00DF2C19 /* Add Deal (Final)_Online button@2x.png in Resources */,
 				C83EAF2718690AC40084E0E1 /* Travel_Travel@2x.png in Resources */,
 				C873D3961851040700B913CD /* My Feed+View Deal (final)_Like button (pushed)@2x.png in Resources */,
@@ -2188,6 +2198,7 @@
 				B034B9801804780B00625392 /* My Feed+View Deal_Navigation Bar@2X.png in Resources */,
 				C83EAE5118690AC40084E0E1 /* Entertainment @ Events_museum@2x.png in Resources */,
 				C83EAEE618690AC40084E0E1 /* Other_general@2x.png in Resources */,
+				C8A6EBE4191BB99600887C34 /* Registration_Sign Up Mail button@2x.png in Resources */,
 				C83EAF0918690AC40084E0E1 /* Restaurants & Bars_vegeterian@2x.png in Resources */,
 				C83EAE6C18690AC40084E0E1 /* Food & Groceries_fish_market@2x.png in Resources */,
 				C869CB85191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png in Resources */,
@@ -2401,6 +2412,7 @@
 				B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */,
 				B0274804186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png in Resources */,
 				C873D3991851040700B913CD /* My Feed+View Deal (final)_Likes icon@2x.png in Resources */,
+				C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */,
 				B0C7FB4D183375F900B3B740 /* loading10@2x.png in Resources */,
 				C83EAE3E18690AC40084E0E1 /* Electronics_electronics_store@2x.png in Resources */,
 				B0C7FB4E183375F900B3B740 /* loading15@2x.png in Resources */,
