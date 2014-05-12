@@ -49,7 +49,6 @@
         _loadingImage.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
-
 -(NSString *) currencySymbol : (NSString *) sign {
     if ([sign isEqualToString:@"1"]) {
         sign=@"₪";
@@ -87,9 +86,9 @@
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     NSArray *dataArray = [DataResult componentsSeparatedByString:@"^"];
-    NSLog(@"DATAARRAY=%d",[dataArray count]);
+    NSLog(@"DATAARRAY=%@",dataArray);
     
-    for (int i=0; i<([[dataArray copy]count])-1; i=i+15) {
+    for (int i=0; i+14<([[dataArray copy]count])-1; i=i+15) {
         [TITLEMARRAY_temp addObject:[dataArray objectAtIndex:i]];
         [DESCRIPTIONMARRAY_temp addObject:[dataArray objectAtIndex:i+1]];
         [STOREMARRAY_temp addObject:[dataArray objectAtIndex:i+2]];
@@ -185,7 +184,7 @@
     DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     NSArray *dataArray2 = [DataResult componentsSeparatedByString:@"^"];
     NSLog(@"array=%d",[dataArray2 count]);
-    for (int i=0; i<([[dataArray2 copy]count])-1; i=i+15) {
+    for (int i=0; i+14<([[dataArray2 copy]count])-1; i=i+15) {
         [TITLEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i]];
         [DESCRIPTIONMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+1]];
         [STOREMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+2]];
@@ -298,6 +297,10 @@
     
     isUpdatingNow = YES;
     for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
+        
+        if ((i>=[_TITLEMARRAY count])||(i>=[_DESCRIPTIONMARRAY count])||(i>=[_STOREMARRAY count])||(i>=[_PRICEMARRAY count])||(i>=[_DISCOUNTMARRAY count])||(i>=[_EXPIREMARRAY count])||(i>=[_CLIENTMARRAY count])||(i>=[_LIKEMARRAY count])||(i>=[_COMMENTMARRAY count])||(i>=[_PHOTOIDMARRAY count])||(i>=[_CATEGORYARRAY count])||(i>=[_SIGNARRAY count])||(i>=[_DEALIDARRAY count])||(i>=[_uploadDateArray count])||(i>=[_onlineOrLocalArray count])) {
+            continue;
+        }
         NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
         if ([num isEqualToString:@"0"]) {
             isShortCell = YES;
@@ -371,13 +374,18 @@
         }
         
 		GAP=CGRectGetMaxY(imageview.frame)-4;
-        NSLog(@"gap=%d",GAP);
 	}
     cellNumberInScrollView+=10;
     self.dealsView.frame = CGRectMake(0, 225, 320, GAP);
     
     
     for (int i=cellNumberInScrollViewForLikeView; ((i<10+cellNumberInScrollViewForLikeView) && (i<[[self.titleArrayForLikesView copy] count])); i++) {
+        
+        if ((i>=[_titleArrayForLikesView count])||(i>=[_descriptionArrayForLikesView count])||(i>=[_storeArrayForLikesView count])||(i>=[_priceArrayForLikesView count])||(i>=[_discountArrayForLikesView count])||(i>=[_expireArrayForLikesView count])||(i>=[_clientidArrayForLikesView count])||(i>=[_likesCountArrayForLikesView count])||(i>=[_commentsCountArrayForLikesView count])||(i>=[_photoidArrayForLikesView count])||(i>=[_categoryArrayForLikesView count])||(i>=[_signArrayForLikesView count])||(i>=[_dealidArrayForLikesView count])||(i>=[_uploadDateArrayForLikesView count])||(i>=[_onlineOrLocalArrayForLikesView count])) {
+            NSLog(@"sorrrrrrrry");
+            continue;
+        }
+        
         NSString *num=[self.photoidArrayForLikesView objectAtIndex:i];
         
         if ([num isEqualToString:@"0"]) {
@@ -413,7 +421,7 @@
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAPForLikeView)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
             label3.text=[self.priceArrayForLikesView objectAtIndex:i];
-            label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_SIGNARRAY objectAtIndex:i]]];
+            label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_signArrayForLikesView objectAtIndex:i]]];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
@@ -424,7 +432,7 @@
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAPForLikeView)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
             label3.text=[self.priceArrayForLikesView objectAtIndex:i];
-            label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_SIGNARRAY objectAtIndex:i]]];
+            label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_signArrayForLikesView objectAtIndex:i]]];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
@@ -452,7 +460,10 @@
         }
         
 		GAPForLikeView=CGRectGetMaxY(imageview.frame)-4;
-	}
+        NSLog(@"gap=%d",GAPForLikeView);
+
+    }
+    NSLog(@"stop");
     self.likesView.frame = CGRectMake(0, 225, 320, GAPForLikeView);
     cellNumberInScrollViewForLikeView+=10;
     
@@ -744,6 +755,7 @@
 
 
 -(void) setTopPart {
+    _scrollView.frame=CGRectMake(0, 44, 320, [[UIScreen mainScreen] bounds].size.height-110);
     
     if ([_didComeFromLikesTable isEqualToString:@"yes"]){
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
@@ -970,7 +982,7 @@
         _likes=@"a";
         _likesView.hidden=YES;
         _dealsView.hidden=NO;
-        _scrollView.contentSize=CGSizeMake(320,350+GAP);
+        _scrollView.contentSize=CGSizeMake(320,GAP+300);
         
     }
 }
@@ -988,7 +1000,7 @@
         _deals=@"b";
         _dealsView.hidden=YES;
         _likesView.hidden=NO;
-        _scrollView.contentSize=CGSizeMake(320,350+GAPForLikeView);
+        _scrollView.contentSize=CGSizeMake(320,GAPForLikeView+300);
         NSLog(@"like");
     }
 }
@@ -1221,7 +1233,7 @@
     
     UIButton *selectDealButton6=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton6 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton6.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton6.frame=CGRectMake(0, 0,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-68));
     NSLog(@"%f",[[UIScreen mainScreen] bounds].size.height-44);
     selectDealButton6.tag=100;
     [selectDealButton6 setBackgroundColor:[UIColor whiteColor]];
@@ -1231,10 +1243,9 @@
     
     UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton9.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton9.frame=CGRectMake(0, 0,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-68));
     selectDealButton9.tag=110;
     [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
-    //[selectDealButton9 addTarget:self action:@selector() forControlEvents: UIControlEventTouchUpInside];
     selectDealButton9.alpha=0.0;
     [[self view] addSubview:selectDealButton9];
     

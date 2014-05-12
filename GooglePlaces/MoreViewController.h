@@ -11,6 +11,7 @@
 @interface MoreViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong,nonatomic) NSArray *moreListArray;
+@property (strong,nonatomic) NSArray *moreListIconsArray;
 @property (weak, nonatomic) IBOutlet UITableView *moreTableView;
 
 @end

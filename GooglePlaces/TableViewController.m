@@ -567,27 +567,33 @@
     [self.scrollView addSubview:self.mapView];
     [self.scrollView sendSubviewToBack:_mapView];
 }
+
+-(void) loadFoursquareaAfterDelay {
+    didUpdateTheMap=NO;
+    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+    dispatch_async(queue, ^{
+        // Do some computation here.
+        if (!didUpdateTheMap) {
+            loadsuc=[self loadStoresFromFoursquare];
+            didUpdateTheMap=YES;
+        }
+        // Update UI after computation.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Update the UI on the main thread.
+            [self mainMethod];
+            if (!loadsuc) {
+                [self connectionProblem];
+            }
+        });
+    });
+    [self initialize];
+}
+
+
 -(void)viewDidAppear:(BOOL)animated {
     [self initMapView];
     if (currentVC) {
-        didUpdateTheMap=NO;
-        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-        dispatch_async(queue, ^{
-            // Do some computation here.
-            if (!didUpdateTheMap) {
-                loadsuc=[self loadStoresFromFoursquare];
-                didUpdateTheMap=YES;
-            }
-            // Update UI after computation.
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // Update the UI on the main thread.
-                [self mainMethod];
-                if (!loadsuc) {
-                    [self connectionProblem];
-                }
-            });
-        });
-        [self initialize];
+        [self performSelector:@selector(loadFoursquareaAfterDelay) withObject:nil afterDelay:1];
     }
     currentVC=1;
 }

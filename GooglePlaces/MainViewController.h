@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *dealershead;
 @property (weak, nonatomic) IBOutlet UIImageView *backwhite;
 
-@property (weak, nonatomic) IBOutlet UIImageView *bagimage;
 @property (weak, nonatomic) IBOutlet UIButton *facebookicon;
 @property (weak, nonatomic) IBOutlet UIButton *twittericon;
 @property (weak, nonatomic) IBOutlet UIButton *emailicon;

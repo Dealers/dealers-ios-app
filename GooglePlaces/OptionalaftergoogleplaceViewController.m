@@ -662,9 +662,9 @@
         [self EnlargeScroll:@"description"];
         if ([textView.text length]==0) {
             _descriptionlabel.hidden=YES;
-            float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-216+2;
-            [UIView animateWithDuration:0.5 animations:^{_CategoryNavBar.center = CGPointMake(160, height);}];
         }
+        float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-216+2;
+        [UIView animateWithDuration:0.5 animations:^{_CategoryNavBar.center = CGPointMake(160, height);}];
         [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 350);}];
     }
     
@@ -1224,7 +1224,6 @@
     
     
     if (isMoreOptionViewHidden) {
-        //[UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 220);}];
         CGRect frame3 = _MoreView.frame;
         frame3.origin.y = frame3.origin.y + 190;
         [UIView animateWithDuration:0.6 animations:^{_MoreView.frame = frame3;}];
@@ -1236,6 +1235,7 @@
         frame2.origin.y = frame2.origin.y + 200;
         [UIView animateWithDuration:0.6 animations:^{_SocialView.frame = frame2;}];
         isMoreOptionViewHidden = false;
+        [self performSelector:@selector(scrollOffset) withObject:nil afterDelay:0.1];
         [self ReduceScroll];
         
     } else {
@@ -1252,6 +1252,10 @@
         isMoreOptionViewHidden = true;
         [self ReduceScroll];
     }
+}
+
+-(void) scrollOffset {
+    [UIView animateWithDuration:0.7 animations:^{_scroll.contentOffset = CGPointMake(0, 280);}];
 }
 
 -(void) EnlargeCameraScroll {

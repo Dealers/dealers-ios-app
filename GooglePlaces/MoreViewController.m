@@ -25,6 +25,7 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftertapbar";
     _moreListArray=@[@"Groups", @"Follows", @"Tutorial", @"Scoring Guide"];
+    _moreListIconsArray=@[@"More list_Follows icon.png",@"More list_Groups icon.png",@"More list_Score Guide icon.png",@"More list_Tutorial icon.png"];
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -52,7 +53,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.textLabel.text = [_moreListArray objectAtIndex:indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:@"Check.png"];
+    cell.imageView.image = [UIImage imageNamed:[_moreListIconsArray objectAtIndex:indexPath.row]];
     
     return cell;
 }
@@ -195,7 +196,7 @@
     
     UIButton *selectDealButton6=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton6 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton6.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton6.frame=CGRectMake(0, 0,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-68));
     NSLog(@"%f",[[UIScreen mainScreen] bounds].size.height-44);
     selectDealButton6.tag=100;
     [selectDealButton6 setBackgroundColor:[UIColor whiteColor]];
@@ -205,10 +206,9 @@
     
     UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton9.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton9.frame=CGRectMake(0, 0,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-68));
     selectDealButton9.tag=110;
     [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
-    //[selectDealButton9 addTarget:self action:@selector() forControlEvents: UIControlEventTouchUpInside];
     selectDealButton9.alpha=0.0;
     [[self view] addSubview:selectDealButton9];
     

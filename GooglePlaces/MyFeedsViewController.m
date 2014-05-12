@@ -822,7 +822,7 @@
     
     UIButton *selectDealButton6=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton6 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton6.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton6.frame=CGRectMake(0, 0,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-68));
     NSLog(@"%f",[[UIScreen mainScreen] bounds].size.height-44);
     selectDealButton6.tag=100;
     [selectDealButton6 setBackgroundColor:[UIColor whiteColor]];
@@ -832,10 +832,9 @@
     
     UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton9.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton9.frame=CGRectMake(0, 0,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-68));
     selectDealButton9.tag=110;
     [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
-    //[selectDealButton9 addTarget:self action:@selector() forControlEvents: UIControlEventTouchUpInside];
     selectDealButton9.alpha=0.0;
     [[self view] addSubview:selectDealButton9];
     

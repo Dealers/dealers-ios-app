@@ -58,7 +58,7 @@
     if ([Datebirth.text length]==0) {
         date=@"0";
     } else date=Datebirth.text;
-
+    
     NSString *gender;
     if ([Genger.text length]==0) {
         gender=@"0";
@@ -87,7 +87,7 @@
     ReturnButtonFull.alpha=0.0;
     ImageFrame.hidden = YES;
     [scroll setScrollEnabled:NO];
-    [scroll setContentSize:((CGSizeMake(320, 460)))];
+    [scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(SignupButton.frame)+10+216+44)))];
     [self.Fullname setDelegate:self];
     [self.Fullname setReturnKeyType:UIReturnKeyDone];
     [self.Fullname addTarget:self action:@selector(Fullname) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -259,11 +259,11 @@
 
 -(void)CleanScreen:(NSString*)string
 {
-    
-    [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 590);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, 546);}];
-    [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, 590);}];
-    [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, 546);}];
+    [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 2*([[UIScreen mainScreen] bounds].size.height));
+        GenderNavBar.center = CGPointMake(160, 2*([[UIScreen mainScreen] bounds].size.height));
+        datepick.center = CGPointMake(160, 2*([[UIScreen mainScreen] bounds].size.height));
+        NavBar.center = CGPointMake(160, 2*([[UIScreen mainScreen] bounds].size.height));
+    }];
     [scroll setScrollEnabled:NO];
     
     if (![string isEqualToString:@"text"]) {
@@ -275,11 +275,13 @@
 
 -(void) ShowDatePicker {
     [self CleanScreen:@"DatePicker"];
-    [scroll setContentSize:((CGSizeMake(320, 650)))];
+    float navHeight = self.view.frame.size.height - NavBar.bounds.size.height/2-datepick.bounds.size.height;
+    float pickerHeight = self.view.frame.size.height - datepick.bounds.size.height/2;
+    [scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(SignupButton.frame)+10+216+44)))];
     [scroll setScrollEnabled:YES];
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 140);}];
-    [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, 352);}];
-    [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, 222);}];
+    [UIView animateWithDuration:0.5 animations:^{datepick.center = CGPointMake(160, pickerHeight);}];
+    [UIView animateWithDuration:0.5 animations:^{NavBar.center = CGPointMake(160, navHeight);}];
 }
 
 -(void) HideDatePicker {
@@ -312,7 +314,7 @@
 -(BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
     [self CleanScreen:@"text"];
     [scroll setScrollEnabled:YES ];
-    [scroll setContentSize:((CGSizeMake(320, 650)))];
+    [scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(SignupButton.frame)+10+216+44)))];
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 110);}];
     return YES;
 }
@@ -329,10 +331,12 @@
 
 - (IBAction)GenderButton:(id)sender {
     [self CleanScreen:@"GenderPicker"];
-    [scroll setContentSize:((CGSizeMake(320, 650)))];
+    float navHeight = self.view.frame.size.height - GenderNavBar.bounds.size.height/2-GenderPicker.bounds.size.height;
+    float pickerHeight = self.view.frame.size.height - GenderPicker.bounds.size.height/2;
+    [scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(SignupButton.frame)+10+216+44)))];
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 140);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, 352);}];
-    [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, 222);}];
+    [UIView animateWithDuration:0.5 animations:^{GenderPicker.center = CGPointMake(160, pickerHeight);}];
+    [UIView animateWithDuration:0.5 animations:^{GenderNavBar.center = CGPointMake(160, navHeight);}];
     [scroll setScrollEnabled:YES];
 }
 
@@ -434,4 +438,10 @@
     [scroll setScrollEnabled:NO];
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, 0);}];
 }
+
+-(int) isIphone5 {
+    if ([[UIScreen mainScreen] bounds].size.height == 568) return 1;
+    return 0;
+}
+
 @end

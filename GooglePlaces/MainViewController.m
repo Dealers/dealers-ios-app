@@ -15,7 +15,6 @@
 @end
 
 @implementation MainViewController
-@synthesize bagimage;
 @synthesize facebookicon;
 @synthesize twittericon;
 @synthesize emailicon;
@@ -23,16 +22,15 @@
 @synthesize backwhite,dealershead,via,already,signin;
 
 -(void) ObjectInPlace {
-    signin.alpha=1.0;
+   /* signin.alpha=1.0;
     already.alpha=1.0;
     via.alpha=1.0;
     backwhite.alpha=0.0;
     dealershead.alpha=1.0;
     dealershead.center = CGPointMake(160, 55+(ScreenHeight*[self isIphone5]));
-    bagimage.center = CGPointMake(218, 261+(ScreenHeight*[self isIphone5]));
-    facebookicon.center = CGPointMake(90, 178+(ScreenHeight*[self isIphone5]));
-    twittericon.center = CGPointMake(58, 256+(ScreenHeight*[self isIphone5]));
-    emailicon.center = CGPointMake(86, 334+(ScreenHeight*[self isIphone5]));
+//    facebookicon.center = CGPointMake(90, 178+(ScreenHeight*[self isIphone5]));
+  //  twittericon.center = CGPointMake(58, 256+(ScreenHeight*[self isIphone5]));
+    //emailicon.center = CGPointMake(86, 334+(ScreenHeight*[self isIphone5]));*/
 }
 - (void)viewDidLoad
 {    
@@ -62,15 +60,9 @@
 }
 -(void) anim {
     [UIView animateWithDuration:0.1 animations:^{backwhite.alpha=0.0;}];
-    bagimage.alpha=0.0;
     facebookicon.alpha=0.0;
     twittericon.alpha=0.0;
     emailicon.alpha=0.0;
-    [UIView animateWithDuration:0.5 animations:^{bagimage.center = CGPointMake(218, 261+(ScreenHeight*[self isIphone5]));}];
-    [UIView animateWithDuration:0.5 animations:^{facebookicon.center = CGPointMake(90, 178+(ScreenHeight*[self isIphone5]));}];
-    [UIView animateWithDuration:0.5 animations:^{twittericon.center = CGPointMake(58, 256+(ScreenHeight*[self isIphone5]));}];
-    [UIView animateWithDuration:0.5 animations:^{emailicon.center = CGPointMake(86, 334+(ScreenHeight*[self isIphone5]));}];
-    [UIView animateWithDuration:0.5 animations:^{bagimage.alpha=1.0;}];
     [UIView animateWithDuration:0.5 animations:^{facebookicon.alpha=1.0;}];
     [UIView animateWithDuration:0.5 animations:^{twittericon.alpha=1.0;}];
     [UIView animateWithDuration:0.5 animations:^{emailicon.alpha=1.0;}];
