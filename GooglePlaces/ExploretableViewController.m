@@ -45,6 +45,7 @@
     filteredtypes = [[NSMutableArray alloc] initWithObjects:@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
     
     types_icons = [[NSMutableArray alloc] initWithObjects:@"Explore-Black_Art icon.png",@"Explore-Black_Automotive icon.png",@"Explore-Black_Beauty & Personal Care icon.png",@"Explore-Black_Books & Magazines icon.png",@"Explore-Black_Electronics icon.png",@"Explore-Black_Amusment & Entertainment icon.png",@"Explore-Black_Fashion icon.png",@"Explore-Black_Food & Groceries icon.png",@"Explore-Black_Home & Furniture icon.png",@"Explore-Black_Kids & Babies icon.png",@"Explore-Black_Music icon.png",@"Explore-Black_Pets icon.png",@"Explore-Black_Restaurants & Bars icon.png",@"Explore-Black_Sports & Outdoor icon.png",@"Explore-Black_Travel icon.png",@"Explore-Black_Other icon.png",nil];
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -100,6 +101,9 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length==0) {
         filtered = NO;
+        [self.SearchBar performSelector: @selector(resignFirstResponder)
+                             withObject: nil
+                             afterDelay: 0.1];
     } else
     {
         filtered = YES;
@@ -130,7 +134,9 @@
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder];
+    [self.SearchBar performSelector: @selector(resignFirstResponder)
+                         withObject: nil
+                         afterDelay: 0.1];
 }
 
 
@@ -139,7 +145,9 @@
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [self.SearchBar resignFirstResponder];
+    [self.SearchBar performSelector: @selector(resignFirstResponder)
+                         withObject: nil
+                         afterDelay: 0.1];
 }
 
 -(void) BackButton:(id)sender {

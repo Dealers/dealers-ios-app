@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ExploretableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
-
+{
+    bool cancelKey;
+}
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 
 @property (nonatomic, strong) NSMutableArray *types;
