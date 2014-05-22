@@ -48,6 +48,7 @@
 @property (nonatomic, strong) NSString *dealerId;
 @property (nonatomic, strong) NSString *categoryFromExplore;
 @property (strong, nonatomic) NSString *dealsUserLikes;
+@property (strong, nonatomic) NSString *vcTitle;
 
 
 @end

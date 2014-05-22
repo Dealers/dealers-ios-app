@@ -376,7 +376,7 @@
 		GAP=CGRectGetMaxY(imageview.frame)-4;
 	}
     cellNumberInScrollView+=10;
-    self.dealsView.frame = CGRectMake(0, 225, 320, GAP);
+    self.dealsView.frame = CGRectMake(0, CGRectGetMaxY(_likesViewButton.frame), 320, GAP);
     
     
     for (int i=cellNumberInScrollViewForLikeView; ((i<10+cellNumberInScrollViewForLikeView) && (i<[[self.titleArrayForLikesView copy] count])); i++) {
@@ -464,7 +464,7 @@
 
     }
     NSLog(@"stop");
-    self.likesView.frame = CGRectMake(0, 225, 320, GAPForLikeView);
+    self.likesView.frame = CGRectMake(0, CGRectGetMaxY(_likesViewButton.frame), 320, GAPForLikeView);
     cellNumberInScrollViewForLikeView+=10;
     
     [[self scrollView] setContentSize:CGSizeMake(319,GAP+350)];
@@ -764,6 +764,7 @@
             NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata",_dealerId];
             NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
             NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",DataResult);
             NSArray *array;
             array = [DataResult componentsSeparatedByString:@"."];
             NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[array objectAtIndex:1]];
@@ -1143,12 +1144,13 @@
     
 
     if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
+        _returnButton.hidden=NO;
         imageview4.image=[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected)@2X.png"];
         [imageview4 setFrame:CGRectMake(19, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
-        
         imageview5.image=[UIImage imageNamed:@"My Feed+View Deal_Profile button@2X.png"];
         [imageview5 setFrame:CGRectMake(218, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
-
+    } else {
+        _returnButton.hidden=YES;
     }
     
     [[self view] addSubview:imageview4];

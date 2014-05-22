@@ -53,6 +53,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.textLabel.text = [_moreListArray objectAtIndex:indexPath.row];
+    cell.textLabel.font = [UIFont fontWithName:@"Avenir-Ligth" size:18];
     cell.imageView.image = [UIImage imageNamed:[_moreListIconsArray objectAtIndex:indexPath.row]];
     
     return cell;

@@ -427,6 +427,16 @@
     cellsNumbersInFillWithImages=1;
     GAP=0;
     gap2=0;
+    
+    UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(0, 44, 240, 29)];
+    [label5 setFont:[UIFont fontWithName:@"Avenir-Next" size:54.0]];
+    label5.text=_categoryFromExplore;
+    label5.backgroundColor=[UIColor clearColor];
+    label5.textColor = [UIColor colorWithRed:150/255.0 green:0/255.0 blue:180/255.0 alpha:1.0];
+    [label5 sizeToFit];
+    label5.center = CGPointMake(160, 22);
+    [[self view] addSubview:label5];
+
 }
 //
 - (void)viewDidLoad

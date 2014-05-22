@@ -72,8 +72,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *discountlabel;
 @property (weak, nonatomic) IBOutlet UILabel *expirelabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionlabel;
-@property (weak, nonatomic) IBOutlet UILabel *likelabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentlabel;
+@property (weak, nonatomic)  NSString *likelabel;
+@property (weak, nonatomic)  NSString *commentlabel;
 @property (weak, nonatomic) IBOutlet UILabel *dealersNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *uploadDateLabel;
 
@@ -113,6 +113,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *ViewLikes;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewLikes;
+@property (weak, nonatomic) IBOutlet UIView *buttonsUnderDealerImage;
 
 - (IBAction)dealerProfileButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *likesandshareView;

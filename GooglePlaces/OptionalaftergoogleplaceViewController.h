@@ -71,6 +71,8 @@
 //- (IBAction)whatappButton:(id)sender;
 @property (retain, nonatomic) UIPickerView *CategoryPicker;
 @property (weak, nonatomic) IBOutlet UINavigationBar *CategoryNavBar;
+@property (weak, nonatomic) IBOutlet UINavigationBar *priceNavBar;
+
 - (IBAction)CateoryButtonAction:(id)sender;
 - (IBAction)Cateory_DoneButtonAction:(id)sender;
 - (IBAction)ExpireButtonAction:(id)sender;
@@ -78,7 +80,6 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollcamera;
 
 @property (strong, nonatomic) NSMutableArray *categoryListArray;
-@property (weak, nonatomic) IBOutlet UIImageView *PriceNavBar;
 - (IBAction)DollarButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *DollarButton;
 @property (weak, nonatomic) IBOutlet UIButton *ShekelButton;

@@ -332,6 +332,16 @@
         }
         
         if ((![[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
+            UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
+            label4.text=[self.DISCOUNTMARRAY objectAtIndex:i];
+            label4.text = [label4.text stringByAppendingString:@"%"];
+            label4.backgroundColor=[UIColor clearColor];
+            label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
+            [label4 sizeToFit];
+            label4.textAlignment=NSTextAlignmentRight;
+            [[self scrollView] addSubview:label4];
+            
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
             label3.text=[self.PRICEMARRAY objectAtIndex:i];
@@ -345,16 +355,8 @@
             }
             [label3 sizeToFit];
             [[self scrollView] addSubview:label3];
+
             
-            UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label4.text=[self.DISCOUNTMARRAY objectAtIndex:i];
-            label4.text = [label4.text stringByAppendingString:@"%"];
-            label4.backgroundColor=[UIColor clearColor];
-            label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
-            [label4 sizeToFit];
-            label4.textAlignment=NSTextAlignmentRight;
-            [[self scrollView] addSubview:label4];
         }
         
         if (([[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
@@ -668,15 +670,13 @@
     [super viewDidLoad];
 }
 
--(void)scrollViewDidScroll: (UIScrollView*)scrollView{
+-(void)scrollViewDidScroll: (UIScrollView*)scrollView {
     int scrollOffset = scrollView.contentOffset.y + 300;
     if ((GAP - scrollOffset) < 200) {
         if (!isUpdatingNow) {
             isUpdatingNow = YES;
             [self createDealsTable];
             [self fillTheCellsWithImages];
-            
-            
         }
     }
 }

@@ -71,18 +71,24 @@
     clientimage.layer.masksToBounds = YES;
 }
 
--(void) setViewUnderDealParameters {
+-(void) setViewUnderDealParameters
+{
     
-    if (![likelabel.text isEqualToString:@"0"]) {
+    CGRect frame2 = self.SecondView.frame;
+    frame2.origin.y = 7+lowestYPoint;
+    self.SecondView.frame = frame2;
+    lowestYPoint =(CGRectGetMaxY(_SecondView.frame));
+
+    if (![likelabel isEqualToString:@"0"]) {
         CGRect frame = _likesandshareView.frame;
         frame.origin.y = 15 + lowestYPoint;
         _likesandshareView.frame = frame;
-        NSString *likesCountPrefix=[NSString stringWithFormat:@"%@",likelabel.text];
+        NSString *likesCountPrefix=[NSString stringWithFormat:@"%@",likelabel];
         NSString *likesCountSuffix=@"  people like this deal";
         NSString *likeCount=[likesCountPrefix stringByAppendingString:likesCountSuffix];
         _likesCountLabel.text=likeCount;
         
-        NSString *shareCountPrefix=[NSString stringWithFormat:@"%@",likelabel.text];
+        NSString *shareCountPrefix=[NSString stringWithFormat:@"%@",likelabel];
         NSString *shareCountSuffix=@"  people shared this deal";
         NSString *shareCount=[shareCountPrefix stringByAppendingString:shareCountSuffix];
         _shreCountLabel.text=shareCount;
@@ -91,18 +97,22 @@
         _likesandshareView.hidden=YES;
     }
     
-    CGRect frame2 = self.SecondView.frame;
+    frame2 = _buttonsUnderDealerImage.frame;
     frame2.origin.y = 7+lowestYPoint;
-    self.SecondView.frame = frame2;
+    _buttonsUnderDealerImage.frame = frame2;
+
     
 }
--(void) setScrollSize {
+
+-(void) setScrollSize //ok
+{
     [scroll setScrollEnabled:YES];
-    int BottumCoordinate=CGRectGetMaxY(self.SecondView.frame);
+    int BottumCoordinate=CGRectGetMaxY(_buttonsUnderDealerImage.frame)+80;
     [scroll setContentSize:((CGSizeMake(320, BottumCoordinate)))];
 }
 
--(NSString *) currencySymbol : (NSString *) sign {
+-(NSString *) currencySymbol : (NSString *) sign
+{
     if ([sign isEqualToString:@"1"]) {
         sign=@"₪";
     }
@@ -292,8 +302,8 @@
     expirelabel.text=expirePrefix;
     }
     descriptionlabel.text = self.descriptionLabelFromMyFeeds;
-    likelabel.text = self.likeLabelFromMyFeeds;
-    commentlabel.text = self.commentLabelFromMyFeeds;
+    likelabel = self.likeLabelFromMyFeeds;
+    commentlabel = self.commentLabelFromMyFeeds;
     LikeOrUnlike=TRUE;
 }
 
@@ -325,55 +335,63 @@
     
 }
 
-- (void)viewDidLoad
+- (void)viewDidLoad //ok
 {
-    [self tapBarSet];
     self.scroll.frame=CGRectMake(0, 44, 320, [[UIScreen mainScreen] bounds].size.height-44);
-    numofpics=[self numOfPicturesInTheDeal];
-    if (numofpics==0) {
-        self.cameraScrollView.hidden=YES;
-    }
+    _tableViewLikes.hidden=YES;
     
     if ([_isShoetCell isEqualToString:@"yes"]) {
+        numofpics=0;
+        self.cameraScrollView.hidden=YES;
     } else {
         _captureImage.image=_tempImage;
-        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-        dispatch_async(queue, ^{
-            // Do some computation here.
-            [self loadImageFromUrl];
-            // Update UI after computation.
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // Update the UI on the main thread.
-                [self loadImage];
-            });
-        });
+        numofpics=1;
     }
+    
     if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
         _LikeButton.enabled=NO;
+        [_LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (selected).png"] forState:UIControlStateNormal];
     }
+    
     viewDidApear=YES;
     cellNumberInScrollView=0;
     likesView = NO;
-    [super viewDidLoad];
-    [self startLoadingUploadImage];
+    
+    [self tapBarSet];
     [self loadVarsFromDeal];
     [self locateIconsInPlace];
-    [self dealerViewInitialize];
-    if (numofpics>=2) {
-        _pageControl.hidden=NO;
-    } else _pageControl.hidden=YES;
-    self.pageControl.numberOfPages=numofpics;
-    _ViewLikes.hidden=YES;
-    [self.cameraScrollView setContentSize:((CGSizeMake(320*numofpics, 155)))];
-    [self.cameraScrollView setScrollEnabled:YES];
-    if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
-        NSLog(@"changing the button, %@",_likeornotLabelFromMyFeeds);
-        [_LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (selected).png"] forState:UIControlStateNormal];
-    }
+    
+    [super viewDidLoad];
+
 }
 
--(void)viewDidAppear:(BOOL)animated {
+-(void)viewDidAppear:(BOOL)animated //ok
+{
     if (viewDidApear) {
+        
+        if ([_isShoetCell isEqualToString:@"no"]) {
+            numofpics=[self numOfPicturesInTheDeal];
+            [self startLoadingUploadImage];
+            dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+            dispatch_async(queue, ^{
+                // Do some computation here.
+                [self loadImageFromUrl];
+                // Update UI after computation.
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // Update the UI on the main thread.
+                    [self loadImage];
+                });
+            });
+        }
+        
+        [self dealerViewInitialize];
+        if (numofpics>=2) {
+            _pageControl.hidden=NO;
+        } else _pageControl.hidden=YES;
+        self.pageControl.numberOfPages=numofpics;
+        _ViewLikes.hidden=YES;
+        [self.cameraScrollView setContentSize:((CGSizeMake(320*numofpics, 155)))];
+        [self.cameraScrollView setScrollEnabled:YES];
         viewDidApear=NO;
     }
 }
@@ -414,9 +432,9 @@
         _LikeButton.enabled=NO;
         _likeornotLabelFromMyFeeds=@"yes";
         [self.LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (selected).png"] forState:UIControlStateNormal];
-        int IntLike = [likelabel.text intValue];
+        int IntLike = [likelabel intValue];
         IntLike++;
-        likelabel.text=[NSString stringWithFormat:@"%d",IntLike];
+        likelabel=[NSString stringWithFormat:@"%d",IntLike];
         NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@&Dealid=%@",app.UserID,@"updatelikestables",_dealidLabelFromMyFeeds];
         NSLog(@"url updatin after like: %@", url);
         NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
@@ -527,7 +545,7 @@
 
 - (IBAction)whoLikesTheDeal:(id)sender{
     
-    if (![likelabel.text isEqualToString:@"0"]) {
+    if (![likelabel isEqualToString:@"0"]) {
         likesView=YES;
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue4", NULL);
         dispatch_async(queue, ^{
@@ -576,6 +594,7 @@
     self.DealersDataWhoLikesTheDealArray=nil;
     NSLog(@"dealloc viewdeal");
 }
+
 -(void)viewDidDisappear:(BOOL)animated {
     /*
      self.titleLabelFromMyFeeds=nil;
@@ -599,14 +618,14 @@
      NSLog(@"dealloc viewdeal");*/
 }
 
-
 - (IBAction)dealerProfileButtonClicked:(id)sender {
     ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
     controller.dealerId=_dealerUploadDealID;
     controller.didComeFromLikesTable=@"yes";
     UINavigationController *navigationController = self.navigationController;
-    [navigationController pushViewController:controller animated:NO];
+    [navigationController pushViewController:controller animated:YES];
 }
+
 - (IBAction)urlSiteButtonClicked:(id)sender {
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=bringurlsite&Dealid=%@",_dealidLabelFromMyFeeds];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
@@ -616,6 +635,11 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:DataResult]];
 
 }
+
+
+
+
+
 
 //////////////////////
 //// tapbar //////////
