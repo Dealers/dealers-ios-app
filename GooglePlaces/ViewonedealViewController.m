@@ -71,6 +71,104 @@
     clientimage.layer.masksToBounds = YES;
 }
 
+-(void) wazeAndMap:(int)lowestPoint {
+    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue2", NULL);
+    dispatch_async(queue, ^{
+        // Do some computation here.
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getStoreLocation.php?Dealid=%@",_dealidLabelFromMyFeeds];
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        NSArray *DataArray = [DataResult componentsSeparatedByString:@"^"];
+        NSLog(@"data from db = %@",DataArray);
+        if (([[DataArray objectAtIndex:0] isEqualToString:@"0"])||([[DataArray objectAtIndex:0] isEqualToString:@"Unknown"])||([[DataArray objectAtIndex:0] isEqualToString:@""""])) {
+            _dataResult=@"0";
+        } else {
+            _storeAddress=[DataArray objectAtIndex:0];
+            _storeLatitude=[DataArray objectAtIndex:1];
+            _storeLongitude=[DataArray objectAtIndex:2];
+        }
+        // Update UI after computation.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Update the UI on the main thread.
+            if (![_dataResult isEqualToString:@"0"]) {
+                NSLog(@"store Location exist");
+                self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, lowestPoint, 300, 155)];
+                lastCoords.latitude = [_storeLatitude doubleValue];
+                lastCoords.longitude = [_storeLongitude doubleValue];
+                MKCoordinateRegion region;
+                MKCoordinateSpan span;
+                span.latitudeDelta = 0.01;     // 0.0 is min value u van provide for zooming
+                span.longitudeDelta= 0.01;
+                region.span=span;
+                region.center =lastCoords;     // to locate to the center
+                [self.mapView setRegion:region animated:TRUE];
+                [self.mapView regionThatFits:region];
+                self.mapView.showsUserLocation=YES;
+                self.mapView.zoomEnabled = NO;
+                self.mapView.scrollEnabled = NO;
+                self.mapView.userInteractionEnabled = NO;
+ 
+                
+                CALayer *mask = [CALayer layer];
+                mask.contents=(id)[[UIImage imageNamed:@"My Feed+View Deal - New Version_Store Map mask.png"]CGImage];
+                mask.frame = CGRectMake(0, 0, 300, 155);
+                self.mapView.layer.mask = mask;
+                self.mapView.layer.masksToBounds = YES;
+                [self.scroll addSubview:self.mapView];
+                
+                UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_Store Map shade.png"]];
+                [imageview setFrame:CGRectMake(10, lowestYPoint+15, 300, 155)];
+                [self.scroll addSubview:imageview];
+
+                UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(20, lowestYPoint+100, 65, 21)];
+                [label setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:20.0]];
+                label.text=_storeLabelFromMyFeeds;
+                label.backgroundColor=[UIColor clearColor];
+                label.textColor = [UIColor whiteColor];
+                [label sizeToFit];
+                [self.scroll addSubview:label];
+
+                UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(20, lowestYPoint+130, 65, 21)];
+                [label2 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:15.0]];
+                label2.text=_storeAddress;
+                label2.backgroundColor=[UIColor clearColor];
+                label2.textColor = [UIColor whiteColor];
+                [label2 sizeToFit];
+                [self.scroll addSubview:label2];
+                
+                UIButton *selectDealButton=[UIButton buttonWithType:UIButtonTypeRoundedRect];
+                [selectDealButton setTitle:@"waze" forState:UIControlStateNormal];
+                selectDealButton.frame=CGRectMake(15 , lowestYPoint + 155 + 30 ,62,56);
+                [selectDealButton addTarget:self action:@selector(connectToWaze) forControlEvents: UIControlEventTouchUpInside];
+                [self.scroll addSubview:selectDealButton];
+                
+                lowestYPoint=(CGRectGetMaxY(selectDealButton.frame));
+                [self setScrollSize];
+
+            }
+        });
+    });
+
+}
+
+-(void) connectToWaze {
+    if ([[UIApplication sharedApplication]
+         canOpenURL:[NSURL URLWithString:@"waze://"]]) {
+        
+        // Waze is installed. Launch Waze and start navigation
+        NSString *urlStr =
+        [NSString stringWithFormat:@"waze://?ll=%f,%f&navigate=yes",
+         [_storeLatitude doubleValue], [_storeLongitude doubleValue]];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+        
+    } else {
+        
+        // Waze is not installed. Launch AppStore to install Waze app
+        [[UIApplication sharedApplication] openURL:[NSURL
+                                                    URLWithString:@"http://itunes.apple.com/us/app/id323229106"]];
+    }
+}
 -(void) setViewUnderDealParameters
 {
     
@@ -100,15 +198,17 @@
     frame2 = _buttonsUnderDealerImage.frame;
     frame2.origin.y = 7+lowestYPoint;
     _buttonsUnderDealerImage.frame = frame2;
+    lowestYPoint=(CGRectGetMaxY(_buttonsUnderDealerImage.frame));
+    [self setScrollSize];
+    [self wazeAndMap:lowestYPoint+15];
 
-    
 }
 
 -(void) setScrollSize //ok
 {
     [scroll setScrollEnabled:YES];
-    int BottumCoordinate=CGRectGetMaxY(_buttonsUnderDealerImage.frame)+80;
-    [scroll setContentSize:((CGSizeMake(320, BottumCoordinate)))];
+    NSLog(@"%d",lowestYPoint);
+    [scroll setContentSize:((CGSizeMake(320, lowestYPoint+100)))];
 }
 
 -(NSString *) currencySymbol : (NSString *) sign
@@ -210,7 +310,6 @@
     }
     
     [self setViewUnderDealParameters];
-    [self setScrollSize];
 }
 
 -(void) loadImageFromUrl {
@@ -578,7 +677,31 @@
     self.pageControl.currentPage=currentpage;
 }
 
+-(void) deallocMapView {
+    switch (_mapView.mapType) {
+        case MKMapTypeHybrid:
+        {
+            _mapView.mapType = MKMapTypeStandard;
+        }
+            
+            break;
+        case MKMapTypeStandard:
+        {
+            _mapView.mapType = MKMapTypeHybrid;
+        }
+            
+            break;
+        default:
+            break;
+    }
+    
+    [_mapView removeFromSuperview];
+    _mapView.showsUserLocation = NO;
+    _mapView=nil;
+}
+
 -(void) deallocMemory {
+    [self deallocMapView];
     self.titleLabelFromMyFeeds=nil;
     self.storeLabelFromMyFeeds=nil;
     self.categoryLabelFromMyFeeds=nil;
@@ -596,26 +719,7 @@
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
-    /*
-     self.titleLabelFromMyFeeds=nil;
-     self.storeLabelFromMyFeeds=nil;
-     self.categoryLabelFromMyFeeds=nil;
-     self.priceLabelFromMyFeeds=nil;
-     self.discountLabelFromMyFeeds=nil;
-     self.expireLabelFromMyFeeds=nil;
-     self.descriptionLabelFromMyFeeds=nil;
-     self.photoIdLabelFromMyFeeds=nil;
-     self.likeLabelFromMyFeeds=nil;
-     self.commentLabelFromMyFeeds=nil;
-     self.clientIdLabelFromMyFeeds=nil;
-     self.signLabelFromMyFeeds=nil;
-     NSArray *viewsToRemove = [self.view subviews];
-     for (UIView *v in viewsToRemove) {
-     [v removeFromSuperview];
-     }
-     [self.view removeFromSuperview];
-     self.view=nil;
-     NSLog(@"dealloc viewdeal");*/
+    [self deallocMapView];
 }
 
 - (IBAction)dealerProfileButtonClicked:(id)sender {

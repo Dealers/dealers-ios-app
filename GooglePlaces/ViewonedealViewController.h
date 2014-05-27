@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import <MapKit/MapKit.h>
 
-@interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
 {
     BOOL LikeOrUnlike;
     int numofpics;
@@ -23,8 +24,12 @@
     int gapDealersLikes;
     BOOL likesView;
     int offsetForIcons;
+    CLLocationCoordinate2D currentCentre;
+    CLLocationCoordinate2D lastCoords;
 }
 @property (strong,nonatomic) NSArray *DealersDataWhoLikesTheDealArray;
+
+@property (nonatomic, strong) MKMapView *mapView;
 
 @property (strong,nonatomic) NSMutableArray *dealersNameArray;
 @property (strong,nonatomic) NSMutableArray *dealersLocationArray;
@@ -60,6 +65,10 @@
 @property (strong,nonatomic) NSString *urlImage3;
 @property (strong,nonatomic) NSString *urlImage4;
 
+@property (weak,nonatomic) NSString *dataResult;
+@property (strong,nonatomic) NSString *storeAddress;
+@property (strong,nonatomic) NSString *storeLongitude;
+@property (strong,nonatomic) NSString *storeLatitude;
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scroll;

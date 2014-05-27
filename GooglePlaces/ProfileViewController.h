@@ -21,6 +21,7 @@
     int cellNumberInScrollViewForLikeView;
     int cellsNumbersInFillWithImagesForLikeView;
     BOOL currentVC;
+    bool didLoadView;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

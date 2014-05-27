@@ -33,6 +33,10 @@
 @property (strong,nonatomic) NSString *urlSite;
 @property (strong,nonatomic) NSString *storeName;
 @property (strong,nonatomic) NSString *segcategory;
+@property (strong,nonatomic) NSString *seglat;
+@property (strong,nonatomic) NSString *seglong;
+@property (strong,nonatomic) NSString *segstoreAddress;
+
 @property (strong,nonatomic) NSString *titleText;
 @property (strong,nonatomic) NSString *descriptionText;
 @property (strong,nonatomic) NSString *priceText;
@@ -106,6 +110,8 @@
 - (IBAction)ChangetodateFullAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingDeal;
 
+@property (weak, nonatomic) IBOutlet UILabel *currencyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *discountSignLable;
 
 - (IBAction)ReturnButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
