@@ -823,12 +823,14 @@
     cellsNumbersInFillWithImages = 1;
     cellNumberInScrollViewForLikeView = 1;
     cellsNumbersInFillWithImagesForLikeView = 1;
-    
+    didLoadView=0;
     _likesView.hidden=YES;
     [self setScrollSize];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftertapbar";
-    if (_dealerId==NULL) _dealerId=app.UserID;
+    
+    
+    _dealerId=app.UserID;
     
     /*
     if () {
@@ -852,6 +854,7 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     currentVC=1;
+    if (!didLoadView) {
     [self allocArrays];
     [self setTopPart];
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
@@ -865,7 +868,8 @@
             [self fillTheCellsWithImages];
         });
     });
-    
+        didLoadView=1;
+    }
 }
 -(void)viewDidDisappear:(BOOL)animated {
     currentVC=0;

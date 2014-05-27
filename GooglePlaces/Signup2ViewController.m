@@ -66,6 +66,7 @@
     
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",Fullname.text,Password.text,Email.text,date,gender,Photoid];
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@",strURL);
     // to execute php code
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
     // to receive the returend value
@@ -202,6 +203,10 @@
                     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
                     [alert show];
                 } else if ([app.UserID rangeOfString:@"fail"].location == NSNotFound) {
+                    if (ImageAdded.image==NULL) {
+                        app.dealerProfileImage=[UIImage imageNamed:@"Profile_noPic.jpg"];
+                    } else app.dealerProfileImage=ImageAdded.image;
+                    app.dealerName=Fullname.text;
                     [self MainMethod];
                 } else {
                     registerAgain=YES;

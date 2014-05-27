@@ -287,6 +287,7 @@
 -(void) createDealsTable {
     
     isUpdatingNow = YES;
+    NSLog(@"%d",GAP);
     for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
         NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
         
@@ -672,8 +673,9 @@
 
 -(void)scrollViewDidScroll: (UIScrollView*)scrollView {
     int scrollOffset = scrollView.contentOffset.y + 300;
-    if ((GAP - scrollOffset) < 200) {
+    if (((GAP - scrollOffset) < 200)&&(GAP!=0)) {
         if (!isUpdatingNow) {
+            NSLog(@"scroll reach end, refreshing");
             isUpdatingNow = YES;
             [self createDealsTable];
             [self fillTheCellsWithImages];

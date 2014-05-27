@@ -11,6 +11,7 @@
 @interface ExploretableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
 {
     bool cancelKey;
+    bool flagWhiteCover;
 }
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 

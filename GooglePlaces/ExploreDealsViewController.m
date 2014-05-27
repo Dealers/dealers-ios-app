@@ -32,7 +32,7 @@
         label2.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(175/255.0) alpha:1.0];
         [label2 sizeToFit];
         [[self scrollView] addSubview:label2];
-    }
+    } else NSLog(@"deals amount = %d",[_TITLEMARRAY count]);
 }
 
 -(void) loadFromDB {

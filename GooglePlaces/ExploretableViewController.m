@@ -45,6 +45,17 @@
     filteredtypes = [[NSMutableArray alloc] initWithObjects:@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
     
     types_icons = [[NSMutableArray alloc] initWithObjects:@"Explore-Black_Art icon.png",@"Explore-Black_Automotive icon.png",@"Explore-Black_Beauty & Personal Care icon.png",@"Explore-Black_Books & Magazines icon.png",@"Explore-Black_Electronics icon.png",@"Explore-Black_Amusment & Entertainment icon.png",@"Explore-Black_Fashion icon.png",@"Explore-Black_Food & Groceries icon.png",@"Explore-Black_Home & Furniture icon.png",@"Explore-Black_Kids & Babies icon.png",@"Explore-Black_Music icon.png",@"Explore-Black_Pets icon.png",@"Explore-Black_Restaurants & Bars icon.png",@"Explore-Black_Sports & Outdoor icon.png",@"Explore-Black_Travel icon.png",@"Explore-Black_Other icon.png",nil];
+    
+    UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
+    [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
+    selectDealButton9.frame=CGRectMake(0,_myTableView.frame.origin.y,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-68));
+    selectDealButton9.tag=1;
+    [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
+    selectDealButton9.alpha=0.0;
+    [selectDealButton9 addTarget:self action:@selector(removeWhiteCoverKeyBoard) forControlEvents: UIControlEventTouchUpInside];
+    [[self view] addSubview:selectDealButton9];
+    
+    flagWhiteCover=0;
 
 }
 
@@ -75,7 +86,6 @@
         Cell.explorelabel.text = [filteredtypes objectAtIndex:indexPath.row];
         NSString *imagestring=[filteredtypes_icons objectAtIndex:indexPath.row];
         Cell.exploreicon.image =[UIImage imageNamed:imagestring];
-        
     }
     else {
         Cell.explorelabel.text = [types objectAtIndex:indexPath.row];
@@ -85,25 +95,31 @@
     return Cell;
 }
 
-
-
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *indexpath = [self.myTableView indexPathForSelectedRow];
     NSString *string;
     
+    if (filtered == YES) {
     if (indexpath.row<[self.filteredtypes count]) {
         string = [self.filteredtypes objectAtIndex:indexpath.row];
-        string = [string stringByReplacingOccurrencesOfString:@" & " withString:@"q9j"];
     } else string=@"Unknown";
     [[segue destinationViewController] setCategoryFromExplore:string];
+    }
+    
+    if (filtered == NO) {
+        string = [self.types objectAtIndex:indexpath.row];
+        [[segue destinationViewController] setCategoryFromExplore:string];
+    }
+}
+
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [self showWhiteCoverKeyBoard];
+    return 1;
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length==0) {
         filtered = NO;
-        [self.SearchBar performSelector: @selector(resignFirstResponder)
-                             withObject: nil
-                             afterDelay: 0.1];
     } else
     {
         filtered = YES;
@@ -142,6 +158,7 @@
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [self.SearchBar resignFirstResponder];
+    [self removeWhiteCoverKeyBoard];
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -184,7 +201,11 @@
     [navigationController pushViewController:controller animated:NO];
 }
 
-
+-(void)viewDidDisappear:(BOOL)animated{
+    [self.SearchBar performSelector: @selector(resignFirstResponder)
+                         withObject: nil
+                         afterDelay: 0.0];
+}
 
 -(void) deallocMemory {
     types=nil;
@@ -192,6 +213,31 @@
     filteredtypes=nil;
     filteredtypes_icons=nil;
 }
+
+-(void) showWhiteCoverKeyBoard {
+    if (!flagWhiteCover) {
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:1];
+    [self.view bringSubviewToFront:button1];
+    [UIView animateWithDuration:0.3 animations:^{
+        button1.alpha=0.8;
+    }];
+        flagWhiteCover=1;
+    }
+}
+
+-(void) removeWhiteCoverKeyBoard {
+    if (flagWhiteCover) {
+    UIButton *button1 = (UIButton*)[self.view viewWithTag:1];
+    [UIView animateWithDuration:0.3 animations:^{
+        button1.alpha=0.0;
+    }];
+    [self.SearchBar performSelector: @selector(resignFirstResponder)
+                         withObject: nil
+                         afterDelay: 0.1];
+        flagWhiteCover=0;
+    }
+}
+
 
 
 //////////////////////

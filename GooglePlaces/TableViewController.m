@@ -41,6 +41,7 @@
         if (_locationManager.location.coordinate.latitude>0) {
             Functions *func = [[Functions alloc]init];
             NSString * url= [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=9000&v=20140201",_locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude];
+            NSLog(@"url form FQ api:%@",url);
             NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
             NSData *data = [NSData dataWithContentsOfURL: googleRequestURL];
             NSError* error;
@@ -59,6 +60,8 @@
                 NSMutableArray *storeIconArray=[[NSMutableArray alloc]init];
                 NSMutableArray *storeDistanceArray=[[NSMutableArray alloc]init];
                 NSMutableArray *storeCategoryArray=[[NSMutableArray alloc]init];
+                NSMutableArray *storeLongArray=[[NSMutableArray alloc]init];
+                NSMutableArray *storeLatArray=[[NSMutableArray alloc]init];
                 
                 for (int i=0; i<[[venues copy] count]; i++)
                 {
@@ -66,6 +69,8 @@
                     NSDictionary *storeArrayFromVenues = [venues objectAtIndex:i];
                     NSString *storeName=[storeArrayFromVenues objectForKey:@"name"];
                     NSString *vicinity=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
+                    NSString *lng=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"lng"];
+                    NSString *lat=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"lat"];
                     NSString *distance=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"distance"];
                     NSArray *categoryArrayFromVenues=storeArrayFromVenues[@"categories"];
                     UIImageView *tempimage = [[UIImageView alloc]init];
@@ -85,10 +90,12 @@
                                 NSString *CategoryName=[CategoryNameArray objectAtIndex:0];
                                 CategoryName = [CategoryName stringByReplacingOccurrencesOfString:@"@" withString:@"&"];
                                 [storeNameArray addObject:storeName];
-                                [storeLocationArray addObject:CategoryName]; //vicinity
+                                [storeLocationArray addObject:vicinity]; //vicinity
                                 [storeCategoryArray addObject:CategoryName];
                                 [storeIconArray addObject:tempimage];
                                 [storeDistanceArray addObject:distance];
+                                [storeLatArray addObject:lat];
+                                [storeLongArray addObject:lng];
                             }
                         }
                     }
@@ -100,6 +107,8 @@
                 self.storeIconArraySort=[[NSMutableArray alloc]init];
                 self.storeDistanceArraySort=[[NSMutableArray alloc]init];
                 self.storeCategoryArraySort=[[NSMutableArray alloc]init];
+                self.storeLongArraySort=[[NSMutableArray alloc]init];
+                self.storeLatArraySort=[[NSMutableArray alloc]init];
                 
                 
                 if ([storeDistanceArray count]==[storeNameArray count]) {
@@ -142,7 +151,17 @@
                             [self.storeCategoryArraySort addObject:[storeCategoryArray objectAtIndex:index]];
                             
                         }else [self.storeDistanceArraySort addObject:@"0"];
-                        
+
+                        if (index<[storeLongArray count]) {
+                            [self.storeLongArraySort addObject:[storeLongArray objectAtIndex:index]];
+                            
+                        }else [self.storeLongArraySort addObject:@"0"];
+
+                        if (index<[storeLatArray count]) {
+                            [self.storeLatArraySort addObject:[storeLatArray objectAtIndex:index]];
+                            
+                        }else [self.storeLatArraySort addObject:@"0"];
+
                         [storeDistanceArray replaceObjectAtIndex:index withObject:@"100000"];
                     }
                 }
@@ -204,7 +223,6 @@
 
 -(void) initialize {
     [self displayLoadingIcon];
-    self.collapseMapButton.hidden=YES;
     self.storeSearchTableView.hidden=YES;
     //self.closeStoreSearchTableButton.hidden=YES;
     self.closeStoreSearchTableButton.alpha=0.0;
@@ -214,6 +232,7 @@
 
 - (void)viewDidLoad
 {
+    self.collapseMapButton.hidden=YES;
     NSLog(@"foursquare viewdidload");
     currentVC=1;
     [super viewDidLoad];
@@ -326,6 +345,9 @@
         NSIndexPath *indexpath = [self.venuesTableView indexPathForSelectedRow];
         NSString *string;
         NSString *string2;
+        NSString *string3;
+        NSString *string4;
+        NSString *string5;
         
         if (indexpath.row<[self.storeNameArraySort count]) {
             string = [self.storeNameArraySort objectAtIndex:indexpath.row];
@@ -333,8 +355,21 @@
         if (indexpath.row<[self.storeCategoryArraySort count]) {
             string2 = [self.storeCategoryArraySort objectAtIndex:indexpath.row];
         } else string2=@"Unknown";
+        if (indexpath.row<[self.storeLatArraySort count]) {
+            string3 = [self.storeLatArraySort objectAtIndex:indexpath.row];
+        } else string3=@"0";
+        if (indexpath.row<[self.storeLongArraySort count]) {
+            string4 = [self.storeLongArraySort objectAtIndex:indexpath.row];
+        } else string4=@"0";
+        if (indexpath.row<[self.storeLocationArraySort count]) {
+            string5 = [self.storeLocationArraySort objectAtIndex:indexpath.row];
+        } else string5=@"Unknown";
+
         [[segue destinationViewController] setStoreName:string];
         [[segue destinationViewController] setSegcategory:string2];
+        [[segue destinationViewController] setSeglat:string3];
+        [[segue destinationViewController] setSeglong:string4];
+        [[segue destinationViewController] setSegstoreAddress:string5];
         
     }
     if ([[segue identifier] isEqualToString:@"StoreSearchSeq"]) {
@@ -552,9 +587,9 @@
     _locationManager.delegate = self;
     _locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
     _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+    [_locationManager startUpdatingLocation];
     lastCoords.latitude = _locationManager.location.coordinate.latitude;
     lastCoords.longitude = _locationManager.location.coordinate.longitude;
-    [_locationManager startUpdatingLocation];
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     span.latitudeDelta = 0.01;     // 0.0 is min value u van provide for zooming

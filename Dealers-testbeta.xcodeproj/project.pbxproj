@@ -140,6 +140,9 @@
 		B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0A17F40311004EB3CA /* CustomcellforviewdealCell.m */; };
 		B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0D17F40B78004EB3CA /* SigninViewController.m */; };
 		B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C1317F40BD2004EB3CA /* MainViewController.m */; };
+		B09FBACB192E4CA3006CB986 /* Profile_noPic@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */; };
+		B09FBACD19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACC19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png */; };
+		B09FBACF19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACE19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png */; };
 		B0C7FB4B183375F900B3B740 /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB39183375F900B3B740 /* loading@2x.png */; };
 		B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3A183375F900B3B740 /* loading5@2x.png */; };
 		B0C7FB4D183375F900B3B740 /* loading10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3B183375F900B3B740 /* loading10@2x.png */; };
@@ -697,6 +700,9 @@
 		B0930C0D17F40B78004EB3CA /* SigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigninViewController.m; sourceTree = "<group>"; };
 		B0930C1217F40BD2004EB3CA /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		B0930C1317F40BD2004EB3CA /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Profile_noPic@2x.jpg"; path = "../GooglePlaces/Profile_noPic@2x.jpg"; sourceTree = "<group>"; };
+		B09FBACC19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_Store Map shade@2x.png"; sourceTree = "<group>"; };
+		B09FBACE19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_Store Map mask@2x.png"; sourceTree = "<group>"; };
 		B0C7FB39183375F900B3B740 /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
 		B0C7FB3A183375F900B3B740 /* loading5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading5@2x.png"; sourceTree = "<group>"; };
 		B0C7FB3B183375F900B3B740 /* loading10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading10@2x.png"; sourceTree = "<group>"; };
@@ -1661,6 +1667,8 @@
 		C873D3711851040700B913CD /* My Feed+View Deal */ = {
 			isa = PBXGroup;
 			children = (
+				B09FBACE19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png */,
+				B09FBACC19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png */,
 				B0907D5C18F8315600ED54F2 /* nodeal.jpeg */,
 				B0E4F6F5190A6F500080CD32 /* My Feed+View Deal - New Version_Likes & Shares border@2x.png */,
 				C88B3F641921F4A0009252DD /* My Feed+View Deal - New Version_Likes View Deal icon@2x.png */,
@@ -1914,6 +1922,7 @@
 		C8BFD9A518723015007E7E07 /* Profile Icons */ = {
 			isa = PBXGroup;
 			children = (
+				B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */,
 				C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */,
 				C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */,
 				C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */,
@@ -2234,6 +2243,7 @@
 				B034B97C1804780B00625392 /* My Feed+View Deal_More button@2X.png in Resources */,
 				B034B97D1804780B00625392 /* My Feed+View Deal_My Feed button(selected)@2X.png in Resources */,
 				B034B97E1804780B00625392 /* My Feed+View Deal_My Feed button@2X.png in Resources */,
+				B09FBACF19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png in Resources */,
 				C8273A3718959A3300A412FC /* Add Deal (Final)_Deal It! button@2x.png in Resources */,
 				C8B7C2351920FCF60032726E /* Registration_Purple button@2x.png in Resources */,
 				C83EAF0D18690AC40084E0E1 /* Sports & Outdoor_beach@2x.png in Resources */,
@@ -2305,6 +2315,7 @@
 				C873D3951851040700B913CD /* My Feed+View Deal (final)_Deal Pic mask@2x.png in Resources */,
 				C83EAE3D18690AC40084E0E1 /* Electronics_Electronics@2x.png in Resources */,
 				C8D2E45E185B781D00398873 /* Add Deal (Final)_Groups Switch background(selected)@2x.png in Resources */,
+				B09FBACB192E4CA3006CB986 /* Profile_noPic@2x.jpg in Resources */,
 				C8D2E45A185B781D00398873 /* Add Deal (Final)_Deal Location icon@2x.png in Resources */,
 				C8DADE5018FDF3CB0056AC9F /* Explore-Black_Sports & Outdoor icon@2x.png in Resources */,
 				B034B9C01804788900625392 /* Registration_Fill Box Arrow@2x.png in Resources */,
@@ -2528,6 +2539,7 @@
 				B0C7FB7E1838B78D00B3B740 /* Loading80white@2x.png in Resources */,
 				C873D3941851040700B913CD /* My Feed+View Deal (final)_Deal background & Shadow@2x.png in Resources */,
 				B0C7FB7F1838B78D00B3B740 /* Loading85white@2x.png in Resources */,
+				B09FBACD19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png in Resources */,
 				C8951AF918FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png in Resources */,
 				C83EAE7818690AC40084E0E1 /* Home & Furniture_locksmith@2x.png in Resources */,
 				B0FB2E5E191CA8D800C6227F /* More list_Groups icon@2x.png in Resources */,

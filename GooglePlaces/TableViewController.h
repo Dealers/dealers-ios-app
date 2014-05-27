@@ -43,6 +43,8 @@
 
 @property (strong, nonatomic) NSMutableArray *storeNameArraySort;
 @property (strong, nonatomic) NSMutableArray *storeLocationArraySort;
+@property (strong, nonatomic) NSMutableArray *storeLatArraySort;
+@property (strong, nonatomic) NSMutableArray *storeLongArraySort;
 @property (strong, nonatomic) NSMutableArray *storeIconArraySort;
 @property (strong, nonatomic) NSMutableArray *storeDistanceArraySort;
 @property (strong, nonatomic) NSMutableArray *storeCategoryArraySort;

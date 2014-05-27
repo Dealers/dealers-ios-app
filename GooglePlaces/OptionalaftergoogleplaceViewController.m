@@ -120,8 +120,14 @@
     
     if ([app.onlineOrLocal isEqualToString:@"local"]) {
         _urlSite=@"0";
+    } else {
+        _segstoreAddress=@"Unknown";
+        _seglat=@"0";
+        _seglong=@"0";
     }
     
+    NSLog(@"%@,%@,%@,%@",_storeName,_seglong,_seglat,_segstoreAddress);
+        
     NSString *newString;
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/dealphpFile.php?Title='"];
     newString = [strURL stringByAppendingString:_titleText];
@@ -174,8 +180,13 @@
     newString = [newString stringByAppendingString:@"&urlSite='"];
     newString = [newString stringByAppendingString:_urlSite];
     newString = [newString stringByAppendingString:@"'"];
-    
+    newString = [newString stringByAppendingString:@"&storeAddress='"];
+    newString = [newString stringByAppendingString:_segstoreAddress];
+    newString = [newString stringByAppendingString:@"'"];
     strURL = newString;
+    
+    NSMutableString *mutString = [NSMutableString stringWithFormat:@"%@&longitude='%@'&latitude='%@'",strURL,_seglong,_seglat];
+    strURL=mutString;
     NSLog(@"url=%@",strURL);
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
@@ -612,8 +623,9 @@
 
 //If the length is 0 then the PALCEHOLDER is shown//
 -(void)textViewDidEndEditing:(UITextView *)textView {
-    [self dismissKeyBoard];
-    [self ReduceScroll];
+    //[self dismissKeyBoard];
+    [textView resignFirstResponder];
+   // [self ReduceScroll];
     NSLog(@"endtext");
     
     if (textView == _titlelabel) {
@@ -626,27 +638,26 @@
         if ([textView.text length]==0) {
             _descriptionlabel.hidden=NO;
         }
+        [UIView animateWithDuration:0.2 animations:^{_priceNavBar.center = CGPointMake(160, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_DollarButton.center = CGPointMake(18, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_ShekelButton.center = CGPointMake(53, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_PoundButton.center = CGPointMake(90, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_DollarButtonFull.center = CGPointMake(18, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_ShekelButtonFull.center = CGPointMake(53, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_PoundButtonFull.center = CGPointMake(90, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
+        [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
+        [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
+        [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
+        [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
+        [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_PersentButton.center = CGPointMake(18, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_PersentButtonFull.center = CGPointMake(18, 700);}];
+        [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
     }
     //[UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 0);}];
-    [UIView animateWithDuration:0.2 animations:^{_priceNavBar.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_DollarButton.center = CGPointMake(18, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_ShekelButton.center = CGPointMake(53, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_PoundButton.center = CGPointMake(90, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_DollarButtonFull.center = CGPointMake(18, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_ShekelButtonFull.center = CGPointMake(53, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_PoundButtonFull.center = CGPointMake(90, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
-    [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_PersentButton.center = CGPointMake(18, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_PersentButtonFull.center = CGPointMake(18, 700);}];
-    [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
-    
-    
 }
+
 //If the length is 0 then the PALCEHOLDER is hidden//
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     NSLog(@"in the func text should begin");
@@ -712,6 +723,7 @@
 
 //If pressed Price or Discount //
 -(BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
+    NSLog(@"start editing price label");
     [self EnlargeScroll:@"price"];
     float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-216+2;
     
@@ -737,7 +749,7 @@
     }
     
     if (textField == _pricelabel) {
-        [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 310);}];
+        [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 200);}];
         _DollarButtonFull.hidden=NO;
         _DollarButton.hidden=NO;
         _PoundButton.hidden=NO;
@@ -749,7 +761,7 @@
     }
     
     if (textField == _discountlabel) {
-        [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 310);}];
+        [UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 200);}];
         _DollarButtonFull.hidden=YES;
         _DollarButton.hidden=YES;
         _PoundButton.hidden=YES;
@@ -798,6 +810,7 @@
     _PoundButton.alpha=1.0;
     _DollarButtonFull.alpha=0.0;
     _DollarButton.alpha=1.0;
+    _currencyLabel.text=@"₪";
 }
 
 -(IBAction)DollarButtonAction:(id)sender {
@@ -808,6 +821,7 @@
     _PoundButton.alpha=1.0;
     _DollarButtonFull.alpha=1.0;
     _DollarButton.alpha=0.0;
+    _currencyLabel.text=@"$";
 }
 
 -(IBAction)PoundButtonAction:(id)sender{
@@ -818,6 +832,7 @@
     _PoundButton.alpha=0.0;
     _DollarButtonFull.alpha=0.0;
     _DollarButton.alpha=1.0;
+    _currencyLabel.text=@"£";
 }
 
 -(NSString *)modifyDateString:(NSDate *)dateFromPicker{
