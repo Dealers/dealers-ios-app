@@ -525,6 +525,8 @@
 		C8D7CADE1934879D00841C22 /* Profile_About Yourself icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D7CADC1934879D00841C22 /* Profile_About Yourself icon@2x.png */; };
 		C8D7CADF1934879D00841C22 /* Profile_Location icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D7CADD1934879D00841C22 /* Profile_Location icon@2x.png */; };
 		C8D7CAE1193495CF00841C22 /* profile_1 Field@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D7CAE0193495CF00841C22 /* profile_1 Field@2x.png */; };
+		C8D7CAE419350A0400841C22 /* profile_Edit Profile button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D7CAE219350A0400841C22 /* profile_Edit Profile button@2x.png */; };
+		C8D7CAE519350A0400841C22 /* profile_Favorites button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D7CAE319350A0400841C22 /* profile_Favorites button@2x.png */; };
 		C8DADE3F18FDF3CB0056AC9F /* Explore-Black_Amusment & Entertainment icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE2C18FDF3CB0056AC9F /* Explore-Black_Amusment & Entertainment icon@2x.png */; };
 		C8DADE4018FDF3CB0056AC9F /* Explore-Black_Art icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE2D18FDF3CB0056AC9F /* Explore-Black_Art icon@2x.png */; };
 		C8DADE4118FDF3CB0056AC9F /* Explore-Black_Automotive icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE2E18FDF3CB0056AC9F /* Explore-Black_Automotive icon@2x.png */; };
@@ -1098,6 +1100,8 @@
 		C8D7CADC1934879D00841C22 /* Profile_About Yourself icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_About Yourself icon@2x.png"; sourceTree = "<group>"; };
 		C8D7CADD1934879D00841C22 /* Profile_Location icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Location icon@2x.png"; sourceTree = "<group>"; };
 		C8D7CAE0193495CF00841C22 /* profile_1 Field@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_1 Field@2x.png"; sourceTree = "<group>"; };
+		C8D7CAE219350A0400841C22 /* profile_Edit Profile button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_Edit Profile button@2x.png"; sourceTree = "<group>"; };
+		C8D7CAE319350A0400841C22 /* profile_Favorites button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_Favorites button@2x.png"; sourceTree = "<group>"; };
 		C8DADE2C18FDF3CB0056AC9F /* Explore-Black_Amusment & Entertainment icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Amusment & Entertainment icon@2x.png"; sourceTree = "<group>"; };
 		C8DADE2D18FDF3CB0056AC9F /* Explore-Black_Art icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Art icon@2x.png"; sourceTree = "<group>"; };
 		C8DADE2E18FDF3CB0056AC9F /* Explore-Black_Automotive icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Automotive icon@2x.png"; sourceTree = "<group>"; };
@@ -1938,6 +1942,8 @@
 			isa = PBXGroup;
 			children = (
 				B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */,
+				C8D7CAE219350A0400841C22 /* profile_Edit Profile button@2x.png */,
+				C8D7CAE319350A0400841C22 /* profile_Favorites button@2x.png */,
 				C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */,
 				C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */,
 				C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */,
@@ -2373,6 +2379,7 @@
 				C8B7C2371920FCF60032726E /* Registration_Sign In button@2x.png in Resources */,
 				B0274802186B291B005A52F0 /* PLCameraSheetButtonPressed@2x.png in Resources */,
 				B0E4F6F6190A6F500080CD32 /* My Feed+View Deal - New Version_Likes & Shares border@2x.png in Resources */,
+				C8D7CAE519350A0400841C22 /* profile_Favorites button@2x.png in Resources */,
 				B034B9E21805D6CA00625392 /* Registration_Navigation Bar@2x.png in Resources */,
 				C88B3F741921F883009252DD /* My Feed+View Deal (final)_Like button@2x.png in Resources */,
 				B034B9E91806C77D00625392 /* My Feed+View Deal_Comments icon@2X.png in Resources */,
@@ -2399,6 +2406,7 @@
 				C8D7CACF19346FE000841C22 /* Add Deal (Final)_Deal It! button@2x.png in Resources */,
 				B0D6545718111EA4000DB9AF /* Add Deal_Euro button (selected)@2x.png in Resources */,
 				C88B3F6B1921F5CB009252DD /* My Feed+View Deal (final)_Comment button (selected)@2x.png in Resources */,
+				C8D7CAE419350A0400841C22 /* profile_Edit Profile button@2x.png in Resources */,
 				B0D6545818111EA4000DB9AF /* Add Deal_Euro button@2x.png in Resources */,
 				B0D6545918111EA4000DB9AF /* Add Deal_Options bar@2x.png in Resources */,
 				B0D6545A18111EA4000DB9AF /* Add Deal_Percentage button (pushed)@2x.png in Resources */,
