@@ -13,6 +13,46 @@
 #import <sqlite3.h>
 @implementation Functions
 
+-(NSString *) currencySymbol : (NSString *) sign {
+    if ([sign isEqualToString:@"1"]) {
+        sign=@"₪";
+    }
+    if ([sign isEqualToString:@"2"]) {
+        sign=@"$";
+    }
+    if ([sign isEqualToString:@"3"]) {
+        sign=@"£";
+    }
+    return sign;
+}
+
+-(NSString *) removeUniqueSigns : (NSString *) string {
+    string = [string stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+    string = [string stringByReplacingOccurrencesOfString:@"q8j" withString:@"'"];
+    return string;
+}
+
+-(NSString *) priceAdaptation : (NSString *) price {
+    int priceint = [price intValue];
+    if ((priceint >= 10000) && (priceint < 100000))  {
+        priceint = priceint/10000;
+        price = [NSString stringWithFormat:@"%d",priceint];
+        price = [price stringByAppendingString:@"k"];
+    }
+    if ((priceint >= 100000) && (priceint < 1000000))  {
+        priceint = priceint/100000;
+        price = [NSString stringWithFormat:@"%d",priceint];
+        price = [price stringByAppendingString:@"k"];
+    }
+    if (priceint >= 1000000) {
+        priceint = priceint/1000000;
+        price = [NSString stringWithFormat:@"%d",priceint];
+        price = [price stringByAppendingString:@"m"];
+    }
+    NSLog(@"new price is=%@",price);
+    return price;
+}
+
 -(BOOL)CheckIfCategoryExist:(NSString*) string {
     NSArray *array = [[NSArray alloc]initWithObjects:
                       @"Entertainment @ Events_hot_spring.png",@"4bf58dd8d48988d160941735",

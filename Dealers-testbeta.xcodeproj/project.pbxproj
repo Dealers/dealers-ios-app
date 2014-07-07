@@ -142,6 +142,9 @@
 		B09FBACB192E4CA3006CB986 /* Profile_noPic@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */; };
 		B09FBACD19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACC19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png */; };
 		B09FBACF19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACE19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png */; };
+		B09FBAD2193CBE0A006CB986 /* DealClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD1193CBE0A006CB986 /* DealClass.m */; };
+		B09FBAD5193F0764006CB986 /* DealerClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD4193F0764006CB986 /* DealerClass.m */; };
+		B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */; };
 		B0C7FB4B183375F900B3B740 /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB39183375F900B3B740 /* loading@2x.png */; };
 		B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3A183375F900B3B740 /* loading5@2x.png */; };
 		B0C7FB4D183375F900B3B740 /* loading10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3B183375F900B3B740 /* loading10@2x.png */; };
@@ -710,6 +713,12 @@
 		B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Profile_noPic@2x.jpg"; path = "../GooglePlaces/Profile_noPic@2x.jpg"; sourceTree = "<group>"; };
 		B09FBACC19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_Store Map shade@2x.png"; sourceTree = "<group>"; };
 		B09FBACE19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_Store Map mask@2x.png"; sourceTree = "<group>"; };
+		B09FBAD0193CBE0A006CB986 /* DealClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealClass.h; sourceTree = "<group>"; };
+		B09FBAD1193CBE0A006CB986 /* DealClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealClass.m; sourceTree = "<group>"; };
+		B09FBAD3193F0764006CB986 /* DealerClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealerClass.h; sourceTree = "<group>"; };
+		B09FBAD4193F0764006CB986 /* DealerClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealerClass.m; sourceTree = "<group>"; };
+		B09FBAD6193F0C7D006CB986 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		B0C7FB39183375F900B3B740 /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
 		B0C7FB3A183375F900B3B740 /* loading5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading5@2x.png"; sourceTree = "<group>"; };
 		B0C7FB3B183375F900B3B740 /* loading10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading10@2x.png"; sourceTree = "<group>"; };
@@ -1203,6 +1212,8 @@
 				B0493AD718FDC5E90044AD91 /* AppDelegate.h */,
 				56849791154C00BF001601A2 /* AppDelegate.m */,
 				56849793154C00BF001601A2 /* MainStoryboard.storyboard */,
+				B09FBAD3193F0764006CB986 /* DealerClass.h */,
+				B09FBAD4193F0764006CB986 /* DealerClass.m */,
 				C869CB78191A13E300DF2C19 /* General */,
 				C87B6D05192DDC810026DA66 /* Opening Screen */,
 				C869CB74191A12EF00DF2C19 /* Registration */,
@@ -1606,6 +1617,8 @@
 		C869CB72191A12C900DF2C19 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				B09FBAD6193F0C7D006CB986 /* EditProfileViewController.h */,
+				B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */,
 				B012D94E182AA320006288CA /* ProfileViewController.h */,
 				B012D94F182AA321006288CA /* ProfileViewController.m */,
 			);
@@ -1659,6 +1672,8 @@
 				B01BD1B417F0D7000010C9A4 /* googleCell2.m */,
 				B01BD1B017F0D6470010C9A4 /* TableViewController.h */,
 				B01BD1B117F0D6470010C9A4 /* TableViewController.m */,
+				B09FBAD0193CBE0A006CB986 /* DealClass.h */,
+				B09FBAD1193CBE0A006CB986 /* DealClass.m */,
 			);
 			name = "Add Deal";
 			sourceTree = "<group>";
@@ -2634,6 +2649,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B09FBAD2193CBE0A006CB986 /* DealClass.m in Sources */,
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
 				B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */,
@@ -2643,7 +2659,9 @@
 				B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */,
 				B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
+				B09FBAD5193F0764006CB986 /* DealerClass.m in Sources */,
 				B0F1BB9D18DB83D300AD2929 /* LikesCell.m in Sources */,
+				B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,

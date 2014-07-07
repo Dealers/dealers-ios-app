@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DealerClass.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
@@ -21,7 +22,6 @@
 @property (strong, nonatomic)  NSString *previousViewController;
 @property (strong, nonatomic)  NSString *dealerName;
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
-
-
+@property (strong, nonatomic)  DealerClass *dealerClass;
 
 @end

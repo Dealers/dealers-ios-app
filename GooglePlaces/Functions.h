@@ -13,4 +13,8 @@
 -(BOOL)CheckIfCategoryExist:(NSString*) string;
 -(NSString*)ConnectOldCategoryToNewCategory:(NSString*) string;
 -(UIView *) tapBarSet:(UIView *)view VCname:(NSString*)vc;
+-(NSString *) currencySymbol : (NSString *) sign;
+-(NSString *) removeUniqueSigns : (NSString *) string;
+-(NSString *) priceAdaptation : (NSString *) price;
+
 @end

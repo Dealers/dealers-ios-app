@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DealClass.h"
 
 @interface ProfileViewController : UIViewController <UINavigationControllerDelegate>
 {
@@ -82,6 +83,10 @@
 @property (nonatomic, strong) NSMutableArray *uploadDateArrayForLikesView;
 @property (nonatomic, strong) NSMutableArray *onlineOrLocalArrayForLikesView;
 
+@property (nonatomic, strong) NSMutableArray *dealClassUpload;
+@property (nonatomic, strong) NSMutableArray *dealClassLikes;
+
+
 @property (nonatomic, weak) NSString *deals;
 @property (nonatomic, weak) NSString *likes;
 @property (strong, nonatomic) NSString *dealsUserLikes;
@@ -90,5 +95,6 @@
 
 @property (nonatomic, strong) NSString *dealerId;
 @property (nonatomic, strong) NSString *didComeFromLikesTable;
+@property (weak, nonatomic) IBOutlet UIButton *editProfileButton;
 
 @end

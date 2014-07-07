@@ -18,6 +18,8 @@
 #import <mach/mach.h>
 #import "OptionalaftergoogleplaceViewController.h"
 #import "CheckConnection.h"
+#import "DealClass.h"
+#import "Functions.h"
 
 @interface MyFeedsViewController ()
 @end
@@ -46,200 +48,60 @@
 
 -(void) loadDataFromDB {
     
-    self.TITLEMARRAY=nil;
-    self.DESCRIPTIONMARRAY =nil;
-    self.STOREMARRAY=nil;
-    self.PRICEMARRAY=nil;
-    self.DISCOUNTMARRAY=nil;
-    self.EXPIREMARRAY=nil;
-    self.LIKEMARRAY=nil;
-    self.COMMENTMARRAY=nil;
-    self.CLIENTMARRAY=nil;
-    self.PHOTOIDMARRAY=nil;
-    self.CATEGORYARRAY=nil;
-    self.SIGNARRAY=nil;
-    self.DEALIDARRAY=nil;
-    self.USERSIDSARRAY=nil;
-    _onlineOrLocalArray=nil;
-    
-    NSArray *types = [[NSArray alloc] initWithObjects:@"TITLE",@"DESCRIPTION",@"STORE",@"PRICE",@"DISCOUNT",@"EXPIRE",@"LIKEBUTTON",@"COMMENT",@"CLIENTID",@"PHOTOID",@"CATEGORY",@"SIGN",@"DEALID",@"USERSIDS",@"onlineorlocal", nil];
-    
-    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:0]];
-    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    NSArray *DataArray = [DataResult componentsSeparatedByString:@"///"];
-    NSArray *reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *TITLEMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:1]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *DESCRIPTIONMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:2]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *STOREMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:3]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *PRICEMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:4]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *DISCOUNTMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:5]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *EXPIREMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:6]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *LIKEMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:7]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *COMMENTMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:8]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *CLIENTMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:9]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *PHOTOIDMARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:10]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *CATEGORYARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:11]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *SIGNARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:12]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *DEALIDARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:13]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *USERSIDSARRAY_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/getphpFile.php?var=%@",[types objectAtIndex:14]];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    DataArray = [DataResult componentsSeparatedByString:@"///"];
-    reversed = [[DataArray reverseObjectEnumerator] allObjects];
-    NSMutableArray *onlineOrLocalArray_temp = [[NSMutableArray alloc] initWithArray:reversed];
-    
+    CheckConnection *checkconnection = [[CheckConnection alloc]init];
+    if ([checkconnection connected]) {
+        NSString * url= [NSString stringWithFormat:@"http://www.dealers.co.il/getDealsData.php"];
+        NSURL *dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+        NSData *data = [NSData dataWithContentsOfURL: dbRequestURL];
+        NSError* error;
+
+        if (data!=nil) {
+            NSDictionary* json = [NSJSONSerialization
+                                  JSONObjectWithData:data
+                                  options:kNilOptions
+                                  error:&error];
+            NSDictionary *responseData = json[@"respone"];
+            NSArray *deals = responseData[@"deals"];
+            NSLog(@"%@",deals);
+
+            for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
+            {
+                DealClass *dealClass = [[DealClass alloc]init];
+                NSDictionary *dealsDictionary = [deals objectAtIndex:i];
+                [dealClass setDealTitle:[dealsDictionary objectForKey:@"title"]];
+                [dealClass setDealStore:[dealsDictionary objectForKey:@"store"]];
+                [dealClass setDealDescription:[dealsDictionary objectForKey:@"description"]];
+                [dealClass setDealCurrency:[dealsDictionary objectForKey:@"currency"]];
+                [dealClass setDealPrice:[dealsDictionary objectForKey:@"price"]];
+                [dealClass setDealDiscount:[dealsDictionary objectForKey:@"discount"]];
+                [dealClass setDealExpireDate:[dealsDictionary objectForKey:@"expire"]];
+                [dealClass setDealLikesCount:[dealsDictionary objectForKey:@"likescount"]];
+                [dealClass setDealCommentCount:[dealsDictionary objectForKey:@"commentscount"]];
+                [dealClass setDealPhotoID1:[dealsDictionary objectForKey:@"photoid1"]];
+                [dealClass setDealPhotoID2:[dealsDictionary objectForKey:@"photoid2"]];
+                [dealClass setDealPhotoID3:[dealsDictionary objectForKey:@"photoid3"]];
+                [dealClass setDealPhotoID4:[dealsDictionary objectForKey:@"photoid4"]];
+                [dealClass setDealPhotoSum:[dealsDictionary objectForKey:@"photosum"]];
+                [dealClass setDealCategory:[dealsDictionary objectForKey:@"category"]];
+                [dealClass setDealUserID:[dealsDictionary objectForKey:@"userid"]];
+                [dealClass setDealID:[dealsDictionary objectForKey:@"dealid"]];
+                [dealClass setDealUploadDate:[dealsDictionary objectForKey:@"uploaddate"]];
+                [dealClass setDealOnlineOrLocal:[dealsDictionary objectForKey:@"onlineorlocal"]];
+                [dealClass setDealUrlSite:[dealsDictionary objectForKey:@"urlsite"]];
+                [dealClass setDealStoreAddress:[dealsDictionary objectForKey:@"storeaddress"]];
+                [dealClass setDealStoreLatitude:[dealsDictionary objectForKey:@"storelatitude"]];
+                [dealClass setDealStoreLongitude:[dealsDictionary objectForKey:@"storelongitude"]];
+                
+                [_dealsArray addObject:dealClass];
+            }
+        }
+    }
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftersign";
-    
-    for (int i=0; i<[[TITLEMARRAY_temp copy] count]; i++) {
-        NSString *title=[TITLEMARRAY_temp objectAtIndex:i];
-        title = [title stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        title = [title stringByReplacingOccurrencesOfString:@"q8j" withString:@"'"];
-        [TITLEMARRAY_temp replaceObjectAtIndex:i withObject:title];
-    }
-    for (int i=0; i<[[STOREMARRAY_temp copy] count]; i++) {
-        NSString *store=[STOREMARRAY_temp objectAtIndex:i];
-        store = [store stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        store = [store stringByReplacingOccurrencesOfString:@"q8j" withString:@"'"];
-        [STOREMARRAY_temp replaceObjectAtIndex:i withObject:store];
-    }
-    for (int i=0; i<[[DESCRIPTIONMARRAY_temp copy] count]; i++) {
-        NSString *description=[DESCRIPTIONMARRAY_temp objectAtIndex:i];
-        description = [description stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        description = [description stringByReplacingOccurrencesOfString:@"q8j" withString:@"'"];
-        [DESCRIPTIONMARRAY_temp replaceObjectAtIndex:i withObject:description];
-    }
-    for (int i=0; i<[[CATEGORYARRAY_temp copy] count]; i++) {
-        NSString *category=[CATEGORYARRAY_temp objectAtIndex:i];
-        category = [category stringByReplacingOccurrencesOfString:@"q9j" withString:@" & "];
-        [CATEGORYARRAY_temp replaceObjectAtIndex:i withObject:category];
-    }
-    
-    for (int i=0; i<[[PRICEMARRAY_temp copy] count]; i++) {
-        NSString *price=[PRICEMARRAY_temp objectAtIndex:i];
-        int priceint = [price intValue];
-        if ((priceint > 10000) && (priceint < 100000))  {
-            priceint=priceint/10000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
-        }
-        if ((priceint > 100000) && (priceint < 1000000))  {
-            priceint=priceint/100000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
-        }
-        if (priceint > 1000000) {
-            priceint=priceint/1000000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"m"];
-        }
-        
-        [PRICEMARRAY_temp replaceObjectAtIndex:i withObject:price];
-    }
-    
-    
-    
-    self.TITLEMARRAY = [NSMutableArray arrayWithArray:TITLEMARRAY_temp];
-    self.DESCRIPTIONMARRAY = [NSMutableArray arrayWithArray:DESCRIPTIONMARRAY_temp];
-    self.STOREMARRAY = [NSMutableArray arrayWithArray:STOREMARRAY_temp];
-    self.PRICEMARRAY = [NSMutableArray arrayWithArray:PRICEMARRAY_temp];
-    self.DISCOUNTMARRAY = [NSMutableArray arrayWithArray:DISCOUNTMARRAY_temp];
-    self.EXPIREMARRAY = [NSMutableArray arrayWithArray:EXPIREMARRAY_temp];
-    self.LIKEMARRAY = [NSMutableArray arrayWithArray:LIKEMARRAY_temp];
-    self.COMMENTMARRAY = [NSMutableArray arrayWithArray:COMMENTMARRAY_temp];
-    self.CLIENTMARRAY = [NSMutableArray arrayWithArray:CLIENTMARRAY_temp];
-    self.PHOTOIDMARRAY = [NSMutableArray arrayWithArray:PHOTOIDMARRAY_temp];
-    self.CATEGORYARRAY = [NSMutableArray arrayWithArray:CATEGORYARRAY_temp];
-    self.SIGNARRAY = [NSMutableArray arrayWithArray:SIGNARRAY_temp];
-    self.DEALIDARRAY = [NSMutableArray arrayWithArray:DEALIDARRAY_temp];
-    self.USERSIDSARRAY = [NSMutableArray arrayWithArray:USERSIDSARRAY_temp];
-    _onlineOrLocalArray = [NSMutableArray arrayWithArray:onlineOrLocalArray_temp];
     
 }
 
 -(void) hiddenWhiteCoverView {
-    //[UIView animateWithDuration:0.5 animations:^{self.whiteCoverView.alpha=0.0;}];
     [self.LoadingImage stopAnimating];
 }
 
@@ -271,25 +133,12 @@
         image.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
--(NSString *) currencySymbol : (NSString *) sign {
-    if ([sign isEqualToString:@"1"]) {
-        sign=@"₪";
-    }
-    if ([sign isEqualToString:@"2"]) {
-        sign=@"$";
-    }
-    if ([sign isEqualToString:@"3"]) {
-        sign=@"£";
-    }
-    return sign;
-}
-
 -(void) createDealsTable {
-    
+    DealClass *dealClass = [[DealClass alloc]init];
     isUpdatingNow = YES;
-    NSLog(@"%d",GAP);
-    for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
-        NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
+    for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
+        dealClass = [_dealsArray objectAtIndex:i];
+        NSString *num=[dealClass getDealPhotoID1];
         
         if ([num isEqualToString:@"0"]) {
             isShortCell = YES;
@@ -301,10 +150,10 @@
         } else imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Deal background & Shadow.png"]];
         
         [imageview setFrame:CGRectMake(2.5, 4+(GAP), 315, 199-(OFFSETSHORTCELL*isShortCell))];
-		[[self scrollView] addSubview:imageview];
+        [[self scrollView] addSubview:imageview];
         
         UIImageView *imageview4;
-        if ([[_onlineOrLocalArray objectAtIndex:i] isEqualToString:@"local"]) {
+        if ([[dealClass getDealOnlineOrLocal] isEqualToString:@"local"]) {
             imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Local icon.png"]];
             [imageview4 setFrame:CGRectMake(18, 173+(GAP)-(OFFSETSHORTCELL*isShortCell), 11, 14)];
         } else {
@@ -315,16 +164,15 @@
         
         UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(34, 168+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
         [label2 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        label2.text=[self.STOREMARRAY objectAtIndex:i];
+        label2.text=[dealClass getDealStore];
         label2.backgroundColor=[UIColor clearColor];
         label2.textColor = [UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:1.0];
         [[self scrollView] addSubview:label2];
         
-        if ((![[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&([[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
+        if ((![[dealClass getDealPrice] isEqualToString:@"0"])&&([[dealClass getDealDiscount] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label3.text=[self.PRICEMARRAY objectAtIndex:i];
-            label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_SIGNARRAY objectAtIndex:i]]];
+            label3.text=[dealClass getDealPrice];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
@@ -332,10 +180,10 @@
             [[self scrollView] addSubview:label3];
         }
         
-        if ((![[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
+        if ((![[dealClass getDealPrice] isEqualToString:@"0"])&&(![[dealClass getDealDiscount] isEqualToString:@"0"])) {
             UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label4.text=[self.DISCOUNTMARRAY objectAtIndex:i];
+            label4.text=[dealClass getDealDiscount];
             label4.text = [label4.text stringByAppendingString:@"%"];
             label4.backgroundColor=[UIColor clearColor];
             label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
@@ -345,25 +193,20 @@
             
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label3.text=[self.PRICEMARRAY objectAtIndex:i];
-            label3.text = [label3.text stringByAppendingString:[self currencySymbol:[_SIGNARRAY objectAtIndex:i]]];
+            label3.text=[dealClass getDealPrice];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             label3.textAlignment=NSTextAlignmentRight;
-            int priceint = [label3.text intValue];
-            if ((priceint>1000)&&(priceint<10000)) {
-                label3.frame=CGRectMake(185, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21);
-            }
             [label3 sizeToFit];
             [[self scrollView] addSubview:label3];
-
+            
             
         }
         
-        if (([[self.PRICEMARRAY objectAtIndex:i] isEqualToString:@"0"])&&(![[self.DISCOUNTMARRAY objectAtIndex:i] isEqualToString:@"0"])) {
+        if (([[dealClass getDealPrice] isEqualToString:@"0"])&&(![[dealClass getDealDiscount] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label3.text=[self.DISCOUNTMARRAY objectAtIndex:i];
+            label3.text=[dealClass getDealDiscount];
             label3.text = [label3.text stringByAppendingString:@"%"];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor redColor];
@@ -372,8 +215,8 @@
             [[self scrollView] addSubview:label3];
         }
         
-		GAP=CGRectGetMaxY(imageview.frame)-4;
-	}
+        GAP=CGRectGetMaxY(imageview.frame)-4;
+    }
     cellNumberInScrollView+=10;
     [[self scrollView] setContentSize:CGSizeMake(319,GAP)];
     isUpdatingNow = NO;
@@ -386,23 +229,27 @@
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         // Do some computation here.
-        for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
-            NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
+        DealClass *dealClass = [[DealClass alloc]init];
+        for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
+            dealClass = [_dealsArray objectAtIndex:i];
+            NSString *num=[dealClass getDealPhotoID1];
             NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",num];
             
             if (([num isEqualToString:@"0"])||(num==nil)||([num length]==0)) {
-                [_PHOTOIDMARRAYCONVERT addObject:@"0"];
+                [_dealPhotosArray addObject:@"0"];
             } else{
                 _image2=[[UIImage alloc]init];
                 _image2 =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
-                [_PHOTOIDMARRAYCONVERT addObject:_image2];
+                [_dealPhotosArray addObject:_image2];
             }
         }
         // Update UI after computation.
         dispatch_async(dispatch_get_main_queue(), ^{
             // Update the UI on the main thread.
-            for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
-                NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
+            DealClass *dealClass = [[DealClass alloc]init];
+            for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
+                dealClass = [_dealsArray objectAtIndex:i];
+                NSString *num=[dealClass getDealPhotoID1];
                 if ([num isEqualToString:@"0"]||([num length]==0)) {
                     isShortCell = YES;
                 } else isShortCell = NO;
@@ -416,7 +263,7 @@
                 UIImageView *imageview2 = [[UIImageView alloc]init];
                 if (isShortCell) {
                 } else {
-                    imageview2.image=[_PHOTOIDMARRAYCONVERT objectAtIndex:i-1];
+                    imageview2.image=[_dealPhotosArray objectAtIndex:i];
                     [imageview2 setFrame:CGRectMake(10, 10+(gap2), 300, 155)];
                     CALayer *mask = [CALayer layer];
                     mask.contents=(id)[[UIImage imageNamed:@"My Feed+View Deal (final)_Deal Pic mask.png"]CGImage];
@@ -447,7 +294,7 @@
                 
                 UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(18, 119+(gap2)-(OFFSETSHORTCELL*isShortCell), 249, 41)];
                 [label setFont:[UIFont fontWithName:@"Avenir-Roman" size:14.0]];
-                label.text=[self.TITLEMARRAY objectAtIndex:i];
+                label.text=[dealClass getDealTitle];
                 label.backgroundColor=[UIColor clearColor];
                 label.textColor = [UIColor whiteColor];
                 label.numberOfLines=2;
@@ -455,7 +302,7 @@
                 
                 UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(291, 121+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
                 [label5 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-                label5.text=[self.LIKEMARRAY objectAtIndex:i];
+                label5.text=[dealClass getDealLikesCount];
                 label5.backgroundColor=[UIColor clearColor];
                 label5.textColor = [UIColor whiteColor];
                 [label5 sizeToFit];
@@ -463,7 +310,7 @@
                 
                 UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(291, 141+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
                 [label6 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-                label6.text=[self.COMMENTMARRAY objectAtIndex:i];
+                label6.text=[dealClass getDealCommentCount];
                 label6.backgroundColor=[UIColor clearColor];
                 label6.textColor = [UIColor whiteColor];
                 [label6 sizeToFit];
@@ -488,34 +335,22 @@
 -(void) selectDealButtonClicked:(id)sender {
     ViewonedealViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
     UIButton *button = (UIButton *)sender;
-    controller.titleLabelFromMyFeeds = [self.TITLEMARRAY objectAtIndex:(button.tag)];
-    controller.storeLabelFromMyFeeds = [self.STOREMARRAY objectAtIndex:(button.tag)];
-    controller.categoryLabelFromMyFeeds = [self.CATEGORYARRAY objectAtIndex:(button.tag)];
-    controller.priceLabelFromMyFeeds = [self.PRICEMARRAY objectAtIndex:(button.tag)];
-    controller.discountLabelFromMyFeeds = [self.DISCOUNTMARRAY objectAtIndex:(button.tag)];
-    controller.expireLabelFromMyFeeds = [self.EXPIREMARRAY objectAtIndex:(button.tag)];
-    controller.descriptionLabelFromMyFeeds = [self.DESCRIPTIONMARRAY objectAtIndex:(button.tag)];
-    controller.likeLabelFromMyFeeds = [self.LIKEMARRAY objectAtIndex:(button.tag)];
-    controller.commentLabelFromMyFeeds = [self.COMMENTMARRAY objectAtIndex:(button.tag)];
-    controller.signLabelFromMyFeeds = [self.SIGNARRAY objectAtIndex:(button.tag)];
-    controller.photoIdLabelFromMyFeeds = [self.PHOTOIDMARRAY objectAtIndex:(button.tag)];
-    controller.dealidLabelFromMyFeeds = [self.DEALIDARRAY objectAtIndex:(button.tag)];
-    controller.localoronlineLabelFromMyFeeds = [self.onlineOrLocalArray objectAtIndex:(button.tag)];
-
-    if (![[self.PHOTOIDMARRAY objectAtIndex:(button.tag)] isEqualToString:@"0"]) {
-    controller.tempImage = [self.PHOTOIDMARRAYCONVERT objectAtIndex:(button.tag-1)];
+    DealClass *dealClass = [[DealClass alloc]init];
+    dealClass = [_dealsArray objectAtIndex:(button.tag)];
+    controller.dealClass=dealClass;
+    
+    if (![[dealClass getDealPhotoID1] isEqualToString:@"0"]) {
+        controller.tempImage = [_dealPhotosArray objectAtIndex:(button.tag)];
         controller.isShoetCell = @"no";
     } else controller.isShoetCell = @"yes";
-
+    
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     _dealsUserLikes=DataResult;
     
-    NSLog(@"in myfeeds the dealid is: %@ and the deals that user likes is: %@",[self.DEALIDARRAY objectAtIndex:(button.tag)],_dealsUserLikes);
-    
-    if ([_dealsUserLikes rangeOfString:[self.DEALIDARRAY objectAtIndex:(button.tag)]].location == NSNotFound) {
+    if ([_dealsUserLikes rangeOfString:[dealClass getDealID]].location == NSNotFound) {
         controller.likeornotLabelFromMyFeeds=@"no";
         NSLog(@"didnt find");
     } else {
@@ -529,8 +364,8 @@
     [[self scrollView] setBackgroundColor:[UIColor colorWithRed:(230/255.0) green:(230/255.0) blue:(230/255.0) alpha:1.0]];
     isShortCell=NO;
     isUpdatingNow=NO;
-    cellNumberInScrollView=1;
-    cellsNumbersInFillWithImages=1;
+    cellNumberInScrollView=0;
+    cellsNumbersInFillWithImages=0;
     GAP=0;
     gap2=0;
     myFeedsFirstTime = YES;
@@ -538,32 +373,21 @@
     
 }
 
--(void) allocArrays {
-    self.TITLEMARRAY = [[NSMutableArray alloc]init];
-    self.DESCRIPTIONMARRAY = [[NSMutableArray alloc]init];
-    self.STOREMARRAY = [[NSMutableArray alloc]init];
-    self.PRICEMARRAY = [[NSMutableArray alloc]init];
-    self.DISCOUNTMARRAY = [[NSMutableArray alloc]init];
-    self.EXPIREMARRAY =  [[NSMutableArray alloc]init];
-    self.LIKEMARRAY = [[NSMutableArray alloc]init];
-    self.COMMENTMARRAY = [[NSMutableArray alloc]init];
-    self.CLIENTMARRAY =  [[NSMutableArray alloc]init];
-    self.PHOTOIDMARRAY = [[NSMutableArray alloc]init];
-    _PHOTOIDMARRAYCONVERT=nil;
-    _PHOTOIDMARRAYCONVERT = [[NSMutableArray alloc]init];
-    self.CATEGORYARRAY = [[NSMutableArray alloc]init];
-    self.SIGNARRAY =  [[NSMutableArray alloc]init];
-    self.DEALIDARRAY = [[NSMutableArray alloc]init];
-    self.USERSIDSARRAY = [[NSMutableArray alloc]init];
+-(void)allocArrays {
+    _dealsArray=Nil;
+    _dealPhotosArray=Nil;
+    _dealsArray = [[NSMutableArray alloc]init];
+    _dealPhotosArray=[[NSMutableArray alloc]init];
 }
 
--(void) setRefreshControl {
+-(void)setRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor=[UIColor colorWithRed:150/255.0f green:0/255.0f blue:180/255.0f alpha:1.0];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [[self scrollView] addSubview:refreshControl];
 }
-- (void)refresh:(UIRefreshControl *)refreshControl {
+
+-(void)refresh:(UIRefreshControl *)refreshControl {
     NSLog(@"refreshing");
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"yes";
@@ -571,11 +395,10 @@
     [refreshControl endRefreshing];
 }
 
-
--(void) didReachFromRegisterOrAddDeal {
+-(void)didReachFromRegisterOrAddDeal {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
-    if ([app.AfterAddDeal isEqualToString:@"aftersign"]) {
+    if (![app.AfterAddDeal isEqualToString:@"no"]) {
         app.AfterAddDeal = @"no";
         NSArray *viewsToRemove = [self.scrollView subviews];
         for (UIView *v in viewsToRemove) {
@@ -584,20 +407,6 @@
         
         [self createDealsTable];
         [self fillTheCellsWithImages];
-    }
-    
-    if ([app.AfterAddDeal isEqualToString:@"yes"]) {
-        app.AfterAddDeal = @"no";
-        NSArray *viewsToRemove = [self.scrollView subviews];
-        for (UIView *v in viewsToRemove) {
-            [v removeFromSuperview];
-        }
-        
-        [self createDealsTable];
-        [self fillTheCellsWithImages];
-    }
-    
-    if ([app.AfterAddDeal isEqualToString:@"aftertapbar"]) {
     }
 }
 
@@ -609,12 +418,12 @@
     
     if ([app.AfterAddDeal isEqualToString:@"yes"]) {
         app.AfterAddDeal = @"no";
+        NSLog(@"delete old dealsArray, uploading new deals, and update VC");
         [self startLoadingUploadIcon:_LoadingImage];
         [self initializeView];
         [self allocArrays];
         static NSCache *_cache = nil;
         [_cache removeAllObjects];
-        //[self removeCellsFromSuperview];
         CheckConnection *checkconnection = [[CheckConnection alloc]init];
         if ([checkconnection connected]) {
             [self loadDBandUpdateCells];
@@ -622,11 +431,10 @@
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check Internet Connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
             [alert show];
         }
-
     }
 }
 
--(void) deallocPrevViewControllers {
+-(void)deallocPrevViewControllers {
     if (myFeedsFirstTime) {
         NSArray *viewControllers = self.navigationController.viewControllers;
         id previousController = [viewControllers objectAtIndex:0];
@@ -639,7 +447,7 @@
     }
 }
 
--(void) loadDBandUpdateCells {
+-(void)loadDBandUpdateCells {
     [self showWhiteCover];
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
@@ -655,7 +463,7 @@
     });
 }
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [self tapBarSet];
     [self initializeView];
     [self allocArrays];
@@ -681,20 +489,6 @@
             [self fillTheCellsWithImages];
         }
     }
-}
-
-
--(NSString *) convetCurrency: (NSString *) currencyToConvert {
-    if ([currencyToConvert isEqualToString:@"1"]) {
-        currencyToConvert=@"₪";
-    }
-    if ([currencyToConvert isEqualToString:@"2"]) {
-        currencyToConvert=@"$";
-    }
-    if ([currencyToConvert isEqualToString:@"3"]) {
-        currencyToConvert=@"£";
-    }
-	return currencyToConvert;
 }
 
 
@@ -887,7 +681,7 @@
     label7.tag=105;
     label7.alpha=0.0;
     [[self view] addSubview:label7];
-
+    
 }
 
 -(void) myFeedClicked:(id)sender {
@@ -916,7 +710,7 @@
     UILabel *label1 = (UILabel*)[self.view viewWithTag:103];
     UILabel *label2 = (UILabel*)[self.view viewWithTag:104];
     UILabel *label3 = (UILabel*)[self.view viewWithTag:105];
-
+    
     
     [UIView animateWithDuration:0.5 animations:^{
         button1.alpha=0.0;
@@ -938,7 +732,7 @@
     UILabel *label2 = (UILabel*)[self.view viewWithTag:104];
     UILabel *label3 = (UILabel*)[self.view viewWithTag:105];
     [self.view bringSubviewToFront:button4];
-
+    
     [UIView animateWithDuration:0.5 animations:^{
         button1.alpha=0.9;
         button2.alpha=1.0;
@@ -947,7 +741,7 @@
         label2.alpha=1.0;
         label3.alpha=1.0;
     }];
-
+    
 }
 
 -(void) showWhiteCover {
@@ -965,7 +759,7 @@
 -(void) removeWhiteCover {
     NSLog(@"remove white cover");
     UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
-
+    
     [UIView animateWithDuration:0.3 animations:^{
         button1.alpha=0.0;
     }];

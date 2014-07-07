@@ -28,24 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
 @property (weak, nonatomic) UIImageView *loadingIconLoadNewDeals;
 
-@property (nonatomic, strong) NSMutableArray *TITLEMARRAY;
-@property (nonatomic, strong) NSMutableArray *DESCRIPTIONMARRAY;
-@property (nonatomic, strong) NSMutableArray *STOREMARRAY;
-@property (nonatomic, strong) NSMutableArray *PRICEMARRAY;
-@property (nonatomic, strong) NSMutableArray *DISCOUNTMARRAY;
-@property (nonatomic, strong) NSMutableArray *EXPIREMARRAY;
-@property (nonatomic, strong) NSMutableArray *LIKEMARRAY;
-@property (nonatomic, strong) NSMutableArray *COMMENTMARRAY;
-@property (nonatomic, strong) NSMutableArray *CLIENTMARRAY;
-@property (nonatomic, strong) NSMutableArray *PHOTOIDMARRAY;
-@property (nonatomic, strong) NSMutableArray *PHOTOIDMARRAYCONVERT;
-@property (nonatomic, strong) NSMutableArray *FAVARRAY;
-@property (nonatomic, strong) NSMutableArray *CATEGORYARRAY;
-@property (nonatomic, strong) NSMutableArray *SIGNARRAY;
-@property (nonatomic, strong) NSMutableArray *DEALIDARRAY;
-@property (nonatomic, strong) NSMutableArray *USERSIDSARRAY;
-@property (nonatomic, strong) NSMutableArray *onlineOrLocalArray;
-
+@property (nonatomic, strong) NSMutableArray *dealsArray;
+@property (nonatomic, strong) NSMutableArray *dealPhotosArray;
 
 @property (strong, nonatomic) NSString *dealsUserLikes;
 

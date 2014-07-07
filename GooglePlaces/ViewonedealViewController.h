@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <MapKit/MapKit.h>
+#import "DealClass.h"
 
 @interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
 {
@@ -40,36 +41,14 @@
 @property (strong,nonatomic) NSMutableArray *dealsPhotosArray;
 
 
-
-@property (strong,nonatomic) NSString *titleLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *storeLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *categoryLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *priceLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *discountLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *expireLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *descriptionLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *photoIdLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *likeLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *commentLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *clientIdLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *signLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *dealidLabelFromMyFeeds;
-@property (strong,nonatomic) NSString *localoronlineLabelFromMyFeeds;
-
-@property (strong,nonatomic) NSString *dealerUploadDealID;
+@property (strong,nonatomic) DealClass *dealClass;
 @property (strong,nonatomic) NSString *isShoetCell;
+@property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
 
 @property (strong,nonatomic) NSString *urlImage;
 @property (strong,nonatomic) NSString *urlImage2;
 @property (strong,nonatomic) NSString *urlImage3;
 @property (strong,nonatomic) NSString *urlImage4;
-
-@property (weak,nonatomic) NSString *dataResult;
-@property (strong,nonatomic) NSString *storeAddress;
-@property (strong,nonatomic) NSString *storeLongitude;
-@property (strong,nonatomic) NSString *storeLatitude;
-
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scroll;
 @property (weak, nonatomic) IBOutlet UIImageView *productimage;

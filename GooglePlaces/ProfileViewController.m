@@ -13,6 +13,8 @@
 #import "AppDelegate.h"
 #import "TableViewController.h"
 #import "OnlineViewController.h"
+#import "CheckConnection.h"
+
 
 #define OFFSETSHORTCELL 109
 
@@ -64,6 +66,101 @@
 
 
 -(void) loadDataFromDB {
+    
+    CheckConnection *checkconnection = [[CheckConnection alloc]init];
+    if ([checkconnection connected]) {
+        NSString * url= [NSString stringWithFormat:@"http://www.dealers.co.il/setDealClass.php?Indicator=whatdealstheuseruploaded&Userid=%@",_dealerId];
+        NSURL *dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+        NSData *data = [NSData dataWithContentsOfURL: dbRequestURL];
+        NSError* error;
+        
+        if (data!=nil) {
+            NSDictionary* json = [NSJSONSerialization
+                                  JSONObjectWithData:data
+                                  options:kNilOptions
+                                  error:&error];
+            NSDictionary *responseData = json[@"respone"];
+            NSArray *deals = responseData[@"deals"];
+            NSLog(@"deals for profile=%@",deals);
+            
+            for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
+            {
+                DealClass *dealClass = [[DealClass alloc]init];
+                NSDictionary *dealsDictionary = [deals objectAtIndex:i];
+                [dealClass setDealTitle:[dealsDictionary objectForKey:@"title"]];
+                [dealClass setDealStore:[dealsDictionary objectForKey:@"store"]];
+                [dealClass setDealDescription:[dealsDictionary objectForKey:@"description"]];
+                [dealClass setDealCurrency:[dealsDictionary objectForKey:@"currency"]];
+                [dealClass setDealPrice:[dealsDictionary objectForKey:@"price"]];
+                [dealClass setDealDiscount:[dealsDictionary objectForKey:@"discount"]];
+                [dealClass setDealExpireDate:[dealsDictionary objectForKey:@"expire"]];
+                [dealClass setDealLikesCount:[dealsDictionary objectForKey:@"likescount"]];
+                [dealClass setDealCommentCount:[dealsDictionary objectForKey:@"commentscount"]];
+                [dealClass setDealPhotoID1:[dealsDictionary objectForKey:@"photoid1"]];
+                [dealClass setDealPhotoID2:[dealsDictionary objectForKey:@"photoid2"]];
+                [dealClass setDealPhotoID3:[dealsDictionary objectForKey:@"photoid3"]];
+                [dealClass setDealPhotoID4:[dealsDictionary objectForKey:@"photoid4"]];
+                [dealClass setDealPhotoSum:[dealsDictionary objectForKey:@"photosum"]];
+                [dealClass setDealCategory:[dealsDictionary objectForKey:@"category"]];
+                [dealClass setDealUserID:[dealsDictionary objectForKey:@"userid"]];
+                [dealClass setDealID:[dealsDictionary objectForKey:@"dealid"]];
+                [dealClass setDealUploadDate:[dealsDictionary objectForKey:@"uploaddate"]];
+                [dealClass setDealOnlineOrLocal:[dealsDictionary objectForKey:@"onlineorlocal"]];
+                [dealClass setDealUrlSite:[dealsDictionary objectForKey:@"urlsite"]];
+                [dealClass setDealStoreAddress:[dealsDictionary objectForKey:@"storeaddress"]];
+                [dealClass setDealStoreLatitude:[dealsDictionary objectForKey:@"storelatitude"]];
+                [dealClass setDealStoreLongitude:[dealsDictionary objectForKey:@"storelongitude"]];
+                
+                [_dealClassUpload addObject:dealClass];
+            }
+        }
+
+        url= [NSString stringWithFormat:@"http://www.dealers.co.il/setDealClass.php?Indicator=bringdealstheuserlikes&Userid=%@",_dealerId];
+        dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+        data = [NSData dataWithContentsOfURL: dbRequestURL];
+        
+        if (data!=nil) {
+            NSDictionary* json = [NSJSONSerialization
+                                  JSONObjectWithData:data
+                                  options:kNilOptions
+                                  error:&error];
+            NSDictionary *responseData = json[@"respone"];
+            NSArray *deals = responseData[@"deals"];
+            NSLog(@"%@",deals);
+            
+            for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
+            {
+                DealClass *dealClass = [[DealClass alloc]init];
+                NSDictionary *dealsDictionary = [deals objectAtIndex:i];
+                [dealClass setDealTitle:[dealsDictionary objectForKey:@"title"]];
+                [dealClass setDealStore:[dealsDictionary objectForKey:@"store"]];
+                [dealClass setDealDescription:[dealsDictionary objectForKey:@"description"]];
+                [dealClass setDealCurrency:[dealsDictionary objectForKey:@"currency"]];
+                [dealClass setDealPrice:[dealsDictionary objectForKey:@"price"]];
+                [dealClass setDealDiscount:[dealsDictionary objectForKey:@"discount"]];
+                [dealClass setDealExpireDate:[dealsDictionary objectForKey:@"expire"]];
+                [dealClass setDealLikesCount:[dealsDictionary objectForKey:@"likescount"]];
+                [dealClass setDealCommentCount:[dealsDictionary objectForKey:@"commentscount"]];
+                [dealClass setDealPhotoID1:[dealsDictionary objectForKey:@"photoid1"]];
+                [dealClass setDealPhotoID2:[dealsDictionary objectForKey:@"photoid2"]];
+                [dealClass setDealPhotoID3:[dealsDictionary objectForKey:@"photoid3"]];
+                [dealClass setDealPhotoID4:[dealsDictionary objectForKey:@"photoid4"]];
+                [dealClass setDealPhotoSum:[dealsDictionary objectForKey:@"photosum"]];
+                [dealClass setDealCategory:[dealsDictionary objectForKey:@"category"]];
+                [dealClass setDealUserID:[dealsDictionary objectForKey:@"userid"]];
+                [dealClass setDealID:[dealsDictionary objectForKey:@"dealid"]];
+                [dealClass setDealUploadDate:[dealsDictionary objectForKey:@"uploaddate"]];
+                [dealClass setDealOnlineOrLocal:[dealsDictionary objectForKey:@"onlineorlocal"]];
+                [dealClass setDealUrlSite:[dealsDictionary objectForKey:@"urlsite"]];
+                [dealClass setDealStoreAddress:[dealsDictionary objectForKey:@"storeaddress"]];
+                [dealClass setDealStoreLatitude:[dealsDictionary objectForKey:@"storelatitude"]];
+                [dealClass setDealStoreLongitude:[dealsDictionary objectForKey:@"storelongitude"]];
+                
+                [_dealClassLikes addObject:dealClass];
+            }
+        }
+
+
     
     NSMutableArray *TITLEMARRAY_temp = [[NSMutableArray alloc] init];
     NSMutableArray *DESCRIPTIONMARRAY_temp = [[NSMutableArray alloc] init];
@@ -254,9 +351,13 @@
     _uploadDateArrayForLikesView = [NSMutableArray arrayWithArray:uploadDateArray_tempForLikesView];
     _onlineOrLocalArrayForLikesView = [NSMutableArray arrayWithArray:uploadDateArray_tempForLikesView];
     
+
+    }//if connection
 }
 
 -(void) allocArrays {
+    _dealClassUpload=[[NSMutableArray alloc]init];
+    _dealClassLikes=[[NSMutableArray alloc]init];
     _TITLEMARRAY = [[NSMutableArray alloc]init];
     _DESCRIPTIONMARRAY = [[NSMutableArray alloc]init];
     _STOREMARRAY = [[NSMutableArray alloc]init];
@@ -690,31 +791,29 @@
 -(void) selectDealButtonForLikeViewClicked:(id)sender {
     ViewonedealViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
     UIButton *button = (UIButton *)sender;
-    controller.titleLabelFromMyFeeds = [self.titleArrayForLikesView objectAtIndex:(button.tag)];
-    controller.storeLabelFromMyFeeds = [self.storeArrayForLikesView objectAtIndex:(button.tag)];
-    controller.categoryLabelFromMyFeeds = [self.categoryArrayForLikesView objectAtIndex:(button.tag)];
-    controller.priceLabelFromMyFeeds = [self.priceArrayForLikesView objectAtIndex:(button.tag)];
-    controller.discountLabelFromMyFeeds = [self.discountArrayForLikesView objectAtIndex:(button.tag)];
-    controller.expireLabelFromMyFeeds = [self.expireArrayForLikesView objectAtIndex:(button.tag)];
-    controller.descriptionLabelFromMyFeeds = [self.descriptionArrayForLikesView objectAtIndex:(button.tag)];
-    controller.likeLabelFromMyFeeds = [self.likesCountArrayForLikesView objectAtIndex:(button.tag)];
-    controller.commentLabelFromMyFeeds = [self.commentsCountArrayForLikesView objectAtIndex:(button.tag)];
-    controller.signLabelFromMyFeeds = [self.signArrayForLikesView objectAtIndex:(button.tag)];
-    controller.photoIdLabelFromMyFeeds = [self.photoidArrayForLikesView objectAtIndex:(button.tag)];
-    controller.dealidLabelFromMyFeeds = [self.dealidArrayForLikesView objectAtIndex:(button.tag)];
-    
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     _dealsUserLikes=DataResult;
     
-    if ([_dealsUserLikes rangeOfString:[self.DEALIDARRAY objectAtIndex:(button.tag)]].location == NSNotFound) {
+    if ([_dealsUserLikes rangeOfString:[self.DEALIDARRAY objectAtIndex:(button.tag-1)]].location == NSNotFound) {
         controller.likeornotLabelFromMyFeeds=@"no";
         NSLog(@"didnt find");
     } else {
         controller.likeornotLabelFromMyFeeds=@"yes";
     }
+    
+    DealClass *dealClass = [[DealClass alloc]init];
+    dealClass = [_dealClassLikes objectAtIndex:(button.tag-1)];
+    [dealClass printClass];
+    controller.dealClass=dealClass;
+    
+    if (![[dealClass getDealPhotoID1] isEqualToString:@"0"]) {
+        controller.tempImage = [_photoidConvertedArrayForLikesView objectAtIndex:(button.tag-1)];
+        controller.isShoetCell = @"no";
+    } else controller.isShoetCell = @"yes";
+
     
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -723,18 +822,6 @@
 -(void) selectDealButtonClicked:(id)sender {
     ViewonedealViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
     UIButton *button = (UIButton *)sender;
-    controller.titleLabelFromMyFeeds = [self.TITLEMARRAY objectAtIndex:(button.tag)];
-    controller.storeLabelFromMyFeeds = [self.STOREMARRAY objectAtIndex:(button.tag)];
-    controller.categoryLabelFromMyFeeds = [self.CATEGORYARRAY objectAtIndex:(button.tag)];
-    controller.priceLabelFromMyFeeds = [self.PRICEMARRAY objectAtIndex:(button.tag)];
-    controller.discountLabelFromMyFeeds = [self.DISCOUNTMARRAY objectAtIndex:(button.tag)];
-    controller.expireLabelFromMyFeeds = [self.EXPIREMARRAY objectAtIndex:(button.tag)];
-    controller.descriptionLabelFromMyFeeds = [self.DESCRIPTIONMARRAY objectAtIndex:(button.tag)];
-    controller.likeLabelFromMyFeeds = [self.LIKEMARRAY objectAtIndex:(button.tag)];
-    controller.commentLabelFromMyFeeds = [self.COMMENTMARRAY objectAtIndex:(button.tag)];
-    controller.signLabelFromMyFeeds = [self.SIGNARRAY objectAtIndex:(button.tag)];
-    controller.photoIdLabelFromMyFeeds = [self.PHOTOIDMARRAY objectAtIndex:(button.tag)];
-    controller.dealidLabelFromMyFeeds = [self.DEALIDARRAY objectAtIndex:(button.tag)];
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
@@ -748,6 +835,18 @@
     } else {
         controller.likeornotLabelFromMyFeeds=@"yes";
     }
+    
+    DealClass *dealClass = [[DealClass alloc]init];
+    dealClass = [_dealClassUpload objectAtIndex:(button.tag)];
+    [dealClass printClass];
+    controller.dealClass=dealClass;
+    
+    if (![[dealClass getDealPhotoID1] isEqualToString:@"0"]) {
+        controller.tempImage = [_PHOTOIDMARRAYCONVERT objectAtIndex:(button.tag)];
+        controller.isShoetCell = @"no";
+    } else controller.isShoetCell = @"yes";
+
+    NSLog(@"end of profile");
     
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -758,6 +857,7 @@
     _scrollView.frame=CGRectMake(0, 44, 320, [[UIScreen mainScreen] bounds].size.height-110);
     
     if ([_didComeFromLikesTable isEqualToString:@"yes"]){
+        _editProfileButton.enabled=NO;
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
             // Do some computation here.
@@ -829,8 +929,8 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftertapbar";
     
-    
-    _dealerId=app.UserID;
+   if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
+   } else {_dealerId=app.UserID;}
     
     /*
     if () {
@@ -854,9 +954,10 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     currentVC=1;
+    [self setTopPart];
+
     if (!didLoadView) {
     [self allocArrays];
-    [self setTopPart];
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         // Do some computation here.

@@ -711,14 +711,23 @@
 // FORCE THE TITLELABEL LENGHT TO BE UNDER 41 AND DEFINES ENTERKEY FOR DISMISS KEYBOARD //
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if (textView == _titlelabel) {
-        NSUInteger newLength = [textView.text length] + [text length] - range.length;
         if([text isEqualToString:@"\n"]) {
             [textView resignFirstResponder];
             [self Cateory_DoneButtonAction:nil];
             return NO;
         }
+        NSUInteger newLength = [textView.text length] + [text length] - range.length;
         return (newLength > 60) ? NO : YES;
-    } else return YES;
+    }
+
+    if (textView == _DescriptionTextView) {
+        if([text isEqualToString:@"\n"]) {
+            [textView resignFirstResponder];
+            [self Cateory_DoneButtonAction:nil];
+            return NO;
+        }
+    }
+    return YES;
 }
 
 //If pressed Price or Discount //
