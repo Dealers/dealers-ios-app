@@ -12,6 +12,7 @@
 
 @synthesize window = _window;
 
+//Good...?
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
