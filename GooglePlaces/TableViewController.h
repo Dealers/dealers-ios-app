@@ -59,6 +59,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *closeStoreSearchViewButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *theShadow;
+@property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 @property (weak, nonatomic) IBOutlet UIImageView *NavBarImage;
 @property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;

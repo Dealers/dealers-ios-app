@@ -225,7 +225,8 @@
 }
 
 -(void) waitOneSecond {
-    [self performSelector:@selector(reloadMyFeeds) withObject:nil afterDelay:1];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    //[self performSelector:@selector(reloadMyFeeds) withObject:nil afterDelay:1];
 }
 
 //Loads MYFEED vc //
@@ -262,9 +263,12 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"What is the Deal?";
+    
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     NSLog(@"%@",app.previousViewControllerAddDeal);
     [self initialize];
+    app.onlineOrLocal = @"local";
     _PageControl.hidden=YES;
     Flag = true;
     isMoreOptionViewHidden = true;
@@ -273,6 +277,7 @@
     [self ReduceScroll];
     [self EnlargeCameraScroll];
     [_scroll setScrollEnabled:YES];
+    [_scroll setFrame: [UIScreen mainScreen].bounds];
     [_scrollcamera setScrollEnabled:YES];
     [_scrollcamera setBackgroundColor:[UIColor blackColor]];
     _TrashButton.hidden=YES;
@@ -372,7 +377,7 @@
                                      nil];
     _LoadingImage.animationDuration = 0.3;
     [_LoadingImage startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{_LoadingImage.alpha=1.0; _LoadingImage.transform =CGAffineTransformMakeScale(0,0);
+    [UIView animateWithDuration:0.3 animations:^{_LoadingImage.alpha=1.0; _LoadingImage.transform =CGAffineTransformMakeScale(0,0);
         _LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
 }
 

@@ -568,7 +568,7 @@
     self.likesView.frame = CGRectMake(0, CGRectGetMaxY(_likesViewButton.frame), 320, GAPForLikeView);
     cellNumberInScrollViewForLikeView+=10;
     
-    [[self scrollView] setContentSize:CGSizeMake(319,GAP+350)];
+    [[self scrollView] setContentSize:CGSizeMake([UIScreen mainScreen].bounds.size.width,GAP+350)];
     isUpdatingNow = NO;
     [_loadingImage stopAnimating];
     
@@ -854,7 +854,6 @@
 
 
 -(void) setTopPart {
-    _scrollView.frame=CGRectMake(0, 44, 320, [[UIScreen mainScreen] bounds].size.height-110);
     
     if ([_didComeFromLikesTable isEqualToString:@"yes"]){
         _editProfileButton.enabled=NO;
@@ -925,7 +924,7 @@
     cellsNumbersInFillWithImagesForLikeView = 1;
     didLoadView=0;
     _likesView.hidden=YES;
-    [self setScrollSize];
+    self.scrollView.frame = [[UIScreen mainScreen] bounds];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftertapbar";
     
@@ -977,8 +976,6 @@
 }
 - (void)viewDidLoad
 {
-    [self tapBarSet];
-    NSLog(@"in profile viewdidload");
     [self startLoadingUploadImage];
     [self initialize];
     
@@ -1088,7 +1085,7 @@
         _likes=@"a";
         _likesView.hidden=YES;
         _dealsView.hidden=NO;
-        _scrollView.contentSize=CGSizeMake(320,GAP+300);
+        _scrollView.contentSize=CGSizeMake(320,GAP+20);
         
     }
 }
@@ -1106,7 +1103,7 @@
         _deals=@"b";
         _dealsView.hidden=YES;
         _likesView.hidden=NO;
-        _scrollView.contentSize=CGSizeMake(320,GAPForLikeView+300);
+        _scrollView.contentSize=CGSizeMake(320,GAPForLikeView+20);
         NSLog(@"like");
     }
 }

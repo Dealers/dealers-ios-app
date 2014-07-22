@@ -9,6 +9,7 @@
 #import "SigninViewController.h"
 #import "AppDelegate.h"
 #import "MyFeedsViewController.h"
+#import "CheckConnection.h"
 
 @interface SigninViewController ()
 
@@ -23,7 +24,7 @@
 -(void) MainMethod {
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-
+    
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         // Do some computation here.
@@ -39,14 +40,15 @@
             // Update the UI on the main thread.
             app.dealerProfileImage = [UIImage imageWithData:URLData];
             app.dealerName=[array objectAtIndex:0];
-
-            MyFeedsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
-            UINavigationController *navigationController = self.navigationController;
-            [navigationController pushViewController:controller animated:YES];
-
+            [self StopLoading];
+            [app setTabBarController];
+            //            MyFeedsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
+            //            UINavigationController *navigationController = self.navigationController;
+            //            [navigationController pushViewController:controller animated:YES];
+            
         });
     });
-
+    
     
 }
 
@@ -54,18 +56,33 @@
     ReturnButtonFull.alpha=0.0;
     EmailText.text=[[NSUserDefaults standardUserDefaults] stringForKey:@"Email"];
     PasswordText.text=[[NSUserDefaults standardUserDefaults] stringForKey:@"Password"];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.EmailText setDelegate:self];
-    [self.EmailText setReturnKeyType:UIReturnKeyDone];
+    [self.EmailText setReturnKeyType:UIReturnKeyNext];
     [self.EmailText addTarget:self action:@selector(EmailText) forControlEvents:UIControlEventEditingDidEndOnExit];
+    self.EmailText.tag = 1;
     [self.PasswordText setDelegate:self];
     [self.PasswordText setReturnKeyType:UIReturnKeyDone];
     [self.PasswordText addTarget:self action:@selector(PasswordText) forControlEvents:UIControlEventEditingDidEndOnExit];
+    self.PasswordText.tag = 2;
 }
 - (void)viewDidLoad
 {
+    self.title = @"Sign In";
     [self initialize];
     [super viewDidLoad];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField.tag == 1) {
+        [textField resignFirstResponder];
+        [self.PasswordText becomeFirstResponder];
+        return NO;
+    } else {
+        [self performSelector:@selector(SinginButton:) withObject:nil];
+        return YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,8 +107,9 @@
 }
 
 -(void) StartLoading {
-    [UIView animateWithDuration:0.2 animations:^{Signinbutton.alpha=0.0; Signinbutton.transform =CGAffineTransformMakeScale(1,1);
-        LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
+    self.app.networkActivityIndicatorVisible = YES;
+    [UIView animateWithDuration:0.3 animations:^{Signinbutton.alpha=0.0; Signinbutton.transform =CGAffineTransformMakeScale(1,1);
+        Signinbutton.transform =CGAffineTransformMakeScale(0,0);}];
     LoadingImage.animationImages = [NSArray arrayWithObjects:
                                     [UIImage imageNamed:@"Loadingwhite.png"],
                                     [UIImage imageNamed:@"Loading5white.png"],
@@ -114,39 +132,70 @@
                                     nil];
     LoadingImage.animationDuration = 0.3;
     [LoadingImage startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
+    [UIView animateWithDuration:0.3 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
         LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
-- (IBAction)SinginButton:(id)sender {
+- (void)StopLoading
+{
+    self.app.networkActivityIndicatorVisible = NO;
+    [UIView animateWithDuration:0.3 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(1,1); LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
+    [LoadingImage stopAnimating];
+    [UIView animateWithDuration:0.3 animations:^{Signinbutton.alpha=1.0; Signinbutton.transform =CGAffineTransformMakeScale(0,0);
+        Signinbutton.transform =CGAffineTransformMakeScale(1,1);}];
+}
 
-    NSString *DataResult = [self CheckIfUserExist];
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+- (IBAction)SinginButton:(id)sender {
     
-    if ([app.UserID length]<=1) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Can't Login, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-        [alert show];
-    } else if (([EmailText.text isEqual:@""]) || ([EmailText.text isEqual:@"Email"])) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter Email" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-        [alert show];
-    } else if (([PasswordText.text isEqual:@"Password"]) || ([PasswordText.text isEqual:@""])) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter Password" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-            [alert show];
-    } else if ([DataResult isEqualToString:@"Pass"]) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Your Password is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-        [alert show];
-    } else if ([DataResult isEqualToString:@"ok"]) {
-        [[NSUserDefaults standardUserDefaults] setObject:EmailText.text forKey:@"Email"];
-        [[NSUserDefaults standardUserDefaults] setObject:PasswordText.text forKey:@"Password"];
-        [EmailText resignFirstResponder];
-        [PasswordText resignFirstResponder];
-        [self StartLoading];
-        [self performSelector:@selector(MainMethod) withObject:nil afterDelay:2];
-    }
-    else {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Your Email is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-        [alert show];
-    }
+    self.app = [UIApplication sharedApplication];
+    [self StartLoading];
+    dispatch_queue_t queue = dispatch_queue_create("com.MyQueueLoading", NULL);
+    dispatch_async(queue, ^{
+        CheckConnection *connection = [[CheckConnection alloc]init];
+        NSString *DataResult;
+        if (connection.connected) {
+            error = NO;
+            DataResult = [self CheckIfUserExist];
+        } else {
+            [self StopLoading];
+            error = YES;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+            
+            if (error) {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Connection Error!" message:@"Check you network connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                [alert show];
+            } else if ([app.UserID length]<=1 && !error) {
+                [self StopLoading];
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Can't Login, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                [alert show];
+            } else if (([EmailText.text isEqual:@""]) || ([EmailText.text isEqual:@"Email"])) {
+                [self StopLoading];
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter Email" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                [alert show];
+            } else if (([PasswordText.text isEqual:@"Password"]) || ([PasswordText.text isEqual:@""])) {
+                [self StopLoading];
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter Password" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                [alert show];
+            } else if ([DataResult isEqualToString:@"Pass"]) {
+                [self StopLoading];
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Your Password is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                [alert show];
+            } else if ([DataResult isEqualToString:@"ok"]) {
+                [[NSUserDefaults standardUserDefaults] setObject:EmailText.text forKey:@"Email"];
+                [[NSUserDefaults standardUserDefaults] setObject:PasswordText.text forKey:@"Password"];
+                [EmailText resignFirstResponder];
+                [PasswordText resignFirstResponder];
+                [self performSelector:@selector(MainMethod) withObject:nil afterDelay:2];
+            }
+            else {
+                [self StopLoading];
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Your Email is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                [alert show];
+            }
+        });
+    });
 }
 
 - (IBAction)ReturnButtonAction:(id)sender {
@@ -159,92 +208,92 @@
 }
 
 /*
--(NSString *)FilePath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"DealersDB3.sql"];
-}
-
--(void)OpenDB {
-    if (sqlite3_open([[self FilePath] UTF8String], &db) != SQLITE_OK)  {
-        sqlite3_close(db);
-        NSAssert(0, @"DB failed");
-    }else{
-        NSLog(@"db opened");
-        [self DeleteTable];
-        [self CreateTable];
-    }
-}
-
--(void)InsertToDB: (NSString *) parameter1 withParameter: (NSString *) parameter2 withParameter: (NSString *) parameter3 withParameter: (NSString *) parameter4 withParameter: (NSString *) parameter5 withParameter: (NSString *) parameter6 withParameter: (NSString *) parameter7 withParameter: (NSString *) parameter8 withParameter: (NSString *) parameter9 withParameter: (NSString *) parameter10 withParameter: (NSString *) parameter11 withParameter: (NSString *) parameter12
-    {
-    NSString *sql = [NSString stringWithFormat:@"INSERT INTO DEALS ('TITLE', 'DESCRIPTION', 'STORE', 'DISCOUNT', 'PRICE', 'EXPIRE', 'PHOTOID', 'CATEGORY', 'SIGN', 'CLIENTID', 'LIKES', 'COMMENTS') VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",parameter1,parameter2,parameter3,parameter4,parameter5,parameter6,parameter7,parameter8,parameter9,parameter10,parameter11,parameter12];
-    char *err;
-    if (sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK) {
-        sqlite3_close(db);
-        NSAssert(0, @"insert failed");
-    }else{
-        //NSLog(@"Insert to table");
-    }
-}
-
--(void) DeleteTable {
-    char *err;
-    const char *sql = "DELETE FROM DEALS";
-    
-    if (sqlite3_exec(db, sql, NULL, NULL, &err) != SQLITE_OK) {
-        sqlite3_close(db);
-        NSAssert(0, @"DB failed");
-    }else{
-        NSLog(@"TABLE DELETED");
-    }
-}
-
-
--(void) CreateTable {
-    char *err;
-    const char *sql = "CREATE TABLE IF NOT EXISTS DEALS (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, STORE TEXT, DISCOUNT TEXT, PRICE TEXT, EXPIRE TEXT, PHOTOID TEXT, CATEGORY TEXT, SIGN TEXT, CLIENTID TEXT, LIKES TEXT, COMMENTS TEXT)";
-    
-    if (sqlite3_exec(db, sql, NULL, NULL, &err) != SQLITE_OK) {
-        sqlite3_close(db);
-        NSAssert(0, @"DB failed");
-    }else{
-        NSLog(@"TABLE CREATED");
-    }
-}
-
-- (void) LoadFromTable
-{
-    NSString *querySQL = [NSString stringWithFormat: @"SELECT * FROM DEALS"];
-    const char *query_stmt = [querySQL UTF8String];
-    sqlite3_stmt *statement;
-    NSMutableArray *resultArray = [[NSMutableArray alloc]init];
-    
-    if (sqlite3_prepare_v2(db, query_stmt, -1, &statement, NULL) == SQLITE_OK)
-        {
-            while (sqlite3_step(statement) == SQLITE_ROW)
-            {
-                NSString *name = [[NSString alloc] initWithUTF8String:
-                                  (const char *) sqlite3_column_text(statement, 0)];
-                [resultArray addObject:name];
-                NSString *department = [[NSString alloc] initWithUTF8String:
-                                        (const char *) sqlite3_column_text(statement, 1)];
-                [resultArray addObject:department];
-                NSString *year = [[NSString alloc]initWithUTF8String:
-                                  (const char *) sqlite3_column_text(statement, 2)];
-                [resultArray addObject:year];
-                
-                char *field2 = (char *) sqlite3_column_text(statement,1);
-                NSString *field2Str = [[NSString alloc] initWithUTF8String: field2];
-
-              //  [resultArray addObject:field1Str];
-                [resultArray addObject:field2Str];
-            }
-        }
-    for (int i=0; i<[resultArray count]; i++) {
-        NSLog(@"res=%@", [resultArray objectAtIndex:i]);
-    }
-    NSLog(@"load=%d",[resultArray count]);
-}*/
+ -(NSString *)FilePath {
+ NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+ return [[paths objectAtIndex:0] stringByAppendingPathComponent:@"DealersDB3.sql"];
+ }
+ 
+ -(void)OpenDB {
+ if (sqlite3_open([[self FilePath] UTF8String], &db) != SQLITE_OK)  {
+ sqlite3_close(db);
+ NSAssert(0, @"DB failed");
+ }else{
+ NSLog(@"db opened");
+ [self DeleteTable];
+ [self CreateTable];
+ }
+ }
+ 
+ -(void)InsertToDB: (NSString *) parameter1 withParameter: (NSString *) parameter2 withParameter: (NSString *) parameter3 withParameter: (NSString *) parameter4 withParameter: (NSString *) parameter5 withParameter: (NSString *) parameter6 withParameter: (NSString *) parameter7 withParameter: (NSString *) parameter8 withParameter: (NSString *) parameter9 withParameter: (NSString *) parameter10 withParameter: (NSString *) parameter11 withParameter: (NSString *) parameter12
+ {
+ NSString *sql = [NSString stringWithFormat:@"INSERT INTO DEALS ('TITLE', 'DESCRIPTION', 'STORE', 'DISCOUNT', 'PRICE', 'EXPIRE', 'PHOTOID', 'CATEGORY', 'SIGN', 'CLIENTID', 'LIKES', 'COMMENTS') VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",parameter1,parameter2,parameter3,parameter4,parameter5,parameter6,parameter7,parameter8,parameter9,parameter10,parameter11,parameter12];
+ char *err;
+ if (sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err) != SQLITE_OK) {
+ sqlite3_close(db);
+ NSAssert(0, @"insert failed");
+ }else{
+ //NSLog(@"Insert to table");
+ }
+ }
+ 
+ -(void) DeleteTable {
+ char *err;
+ const char *sql = "DELETE FROM DEALS";
+ 
+ if (sqlite3_exec(db, sql, NULL, NULL, &err) != SQLITE_OK) {
+ sqlite3_close(db);
+ NSAssert(0, @"DB failed");
+ }else{
+ NSLog(@"TABLE DELETED");
+ }
+ }
+ 
+ 
+ -(void) CreateTable {
+ char *err;
+ const char *sql = "CREATE TABLE IF NOT EXISTS DEALS (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, STORE TEXT, DISCOUNT TEXT, PRICE TEXT, EXPIRE TEXT, PHOTOID TEXT, CATEGORY TEXT, SIGN TEXT, CLIENTID TEXT, LIKES TEXT, COMMENTS TEXT)";
+ 
+ if (sqlite3_exec(db, sql, NULL, NULL, &err) != SQLITE_OK) {
+ sqlite3_close(db);
+ NSAssert(0, @"DB failed");
+ }else{
+ NSLog(@"TABLE CREATED");
+ }
+ }
+ 
+ - (void) LoadFromTable
+ {
+ NSString *querySQL = [NSString stringWithFormat: @"SELECT * FROM DEALS"];
+ const char *query_stmt = [querySQL UTF8String];
+ sqlite3_stmt *statement;
+ NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+ 
+ if (sqlite3_prepare_v2(db, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+ {
+ while (sqlite3_step(statement) == SQLITE_ROW)
+ {
+ NSString *name = [[NSString alloc] initWithUTF8String:
+ (const char *) sqlite3_column_text(statement, 0)];
+ [resultArray addObject:name];
+ NSString *department = [[NSString alloc] initWithUTF8String:
+ (const char *) sqlite3_column_text(statement, 1)];
+ [resultArray addObject:department];
+ NSString *year = [[NSString alloc]initWithUTF8String:
+ (const char *) sqlite3_column_text(statement, 2)];
+ [resultArray addObject:year];
+ 
+ char *field2 = (char *) sqlite3_column_text(statement,1);
+ NSString *field2Str = [[NSString alloc] initWithUTF8String: field2];
+ 
+ //  [resultArray addObject:field1Str];
+ [resultArray addObject:field2Str];
+ }
+ }
+ for (int i=0; i<[resultArray count]; i++) {
+ NSLog(@"res=%@", [resultArray objectAtIndex:i]);
+ }
+ NSLog(@"load=%d",[resultArray count]);
+ }*/
 
 - (void)viewDidUnload {
     [super viewDidUnload];

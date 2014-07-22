@@ -15,7 +15,10 @@
     NSString *Photoid;
     BOOL didAddPhoto;
     BOOL registerAgain;
+    CGPoint scrollOriginOffset;
 }
+@property (nonatomic) UIApplication *app;
+
 @property (strong, nonatomic) NSMutableArray *list;
 
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
@@ -43,6 +46,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ImageFrame;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
 @property (weak, nonatomic) IBOutlet UIImageView *PurpImage;
+@property (weak, nonatomic) IBOutlet UIImageView *textFieldsFrame;
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datepick;
 @property (weak, nonatomic) IBOutlet UINavigationBar *NavBar;

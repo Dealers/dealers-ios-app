@@ -14,6 +14,8 @@
     int picsNumbers;
 }
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic) UIStoryboard *storyboard;
+@property (nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic)  NSString *Animate_first;
 @property (strong, nonatomic)  NSString *UserID;
 @property (strong, nonatomic)  NSString *AfterAddDeal;
@@ -23,5 +25,7 @@
 @property (strong, nonatomic)  NSString *dealerName;
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
 @property (strong, nonatomic)  DealerClass *dealerClass;
+
+- (void)setTabBarController;
 
 @end

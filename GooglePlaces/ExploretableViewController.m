@@ -31,8 +31,9 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"Explore";
+    
     [super viewDidLoad];
-    [self tapBarSet];
     self.myTableView.dataSource = self;
     self.myTableView.delegate = self;
     self.SearchBar.delegate=self;
@@ -82,15 +83,18 @@
         Cell = [[ExploreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    Cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17.0];
+    
     if (filtered == YES) {
-        Cell.explorelabel.text = [filteredtypes objectAtIndex:indexPath.row];
+        
+        Cell.textLabel.text = [filteredtypes objectAtIndex:indexPath.row];
         NSString *imagestring=[filteredtypes_icons objectAtIndex:indexPath.row];
-        Cell.exploreicon.image =[UIImage imageNamed:imagestring];
+        Cell.imageView.image =[UIImage imageNamed:imagestring];
     }
     else {
-        Cell.explorelabel.text = [types objectAtIndex:indexPath.row];
+        Cell.textLabel.text = [types objectAtIndex:indexPath.row];
         NSString *imagestring=[types_icons objectAtIndex:indexPath.row];
-        Cell.exploreicon.image =[UIImage imageNamed:imagestring];
+        Cell.imageView.image =[UIImage imageNamed:imagestring];
     }
     return Cell;
 }
@@ -113,7 +117,6 @@
 }
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    [self showWhiteCoverKeyBoard];
     return 1;
 }
 
@@ -158,7 +161,6 @@
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [self.SearchBar resignFirstResponder];
-    [self removeWhiteCoverKeyBoard];
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -177,31 +179,7 @@
     [super viewDidUnload];
 }
 
-- (IBAction)myfeedbutton:(id)sender{
-    [self deallocMemory];
-    UINavigationController *navigationController = self.navigationController;
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
-}
-- (IBAction)morebutton:(id)sender{
-    [self deallocMemory];
-    MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
-    UINavigationController *navigationController = self.navigationController;
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
-    [navigationController pushViewController:controller animated:NO];
-}
-
-- (IBAction)profilebutton:(id)sender{
-    [self deallocMemory];
-    ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
-    UINavigationController *navigationController = self.navigationController;
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
-    [navigationController pushViewController:controller animated:NO];
-}
-
--(void)viewDidDisappear:(BOOL)animated{
+- (void)viewDidDisappear:(BOOL)animated{
     [self.SearchBar performSelector: @selector(resignFirstResponder)
                          withObject: nil
                          afterDelay: 0.0];
@@ -516,11 +494,11 @@
     button1.alpha=0.8;
 }
 
--(void) removeWhiteCover {
-    NSLog(@"remove white cover");
-    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
-    button1.alpha=0.0;
-}
+//-(void) removeWhiteCover {
+//    NSLog(@"remove white cover");
+//    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
+//    button1.alpha=0.0;
+//}
 
 
 @end

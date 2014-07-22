@@ -25,13 +25,13 @@
     [_mapView removeFromSuperview];
     UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton9.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton9.frame=[[UIScreen mainScreen] bounds];
     selectDealButton9.tag=110;
     [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
     selectDealButton9.alpha=0.7;
     [[self view] addSubview:selectDealButton9];
     [[self view] bringSubviewToFront:selectDealButton9];
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check your Internet" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Check your network connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
     [alert show];
 }
 
@@ -180,16 +180,17 @@
 
 -(void) mainMethod {
     [self.venuesTableView reloadData];
-    [UIView animateWithDuration:0.2 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform =CGAffineTransformMakeScale(1,1);
+    [UIView animateWithDuration:0.3 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform =CGAffineTransformMakeScale(1,1);
         self.loadingImage.transform =CGAffineTransformMakeScale(0,0);}];
-    [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.5];
-    [self.scrollView setContentSize:((CGSizeMake(320, 118+([self.storeNameArraySort count]*70))))];
+    [UIView animateWithDuration:0.3 animations:^{self.loadingLabel.alpha=0.0; self.loadingLabel.center = CGPointMake(self.loadingLabel.center.x,self.loadingLabel.center.y+10);}];
+    [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.3];
+    [self.scrollView setContentSize:((CGSizeMake(320, 118+([self.storeNameArraySort count]*70+55))))];
     self.venuesTableView.frame = CGRectMake(0, 119, 320, ([self.storeNameArraySort count]*70+15));
     [self.venuesTableView setScrollEnabled:NO];
 }
 
 -(void) hideWhiteCoverView {
-    [UIView animateWithDuration:0.5 animations:^{self.whiteCoverView.alpha=0.0;}];
+    [UIView animateWithDuration:0.3 animations:^{self.whiteCoverView.alpha=0.0;}];
     [self.loadingImage stopAnimating];
     // [self report_memory];
 }
@@ -217,7 +218,7 @@
                                          nil];
     self.loadingImage.animationDuration = 0.3;
     [self.loadingImage startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform =CGAffineTransformMakeScale(0,0);
+    [UIView animateWithDuration:0.3 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform =CGAffineTransformMakeScale(0,0);
         self.loadingImage.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
@@ -232,6 +233,10 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"Where is the Deal?";
+    
+    self.whiteCoverView.frame = self.venuesTableView.frame;
+
     self.collapseMapButton.hidden=YES;
     NSLog(@"foursquare viewdidload");
     currentVC=1;
@@ -380,6 +385,9 @@
     }
 }
 
+- (IBAction)Dismiss:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (IBAction) returnButtonClicked:(id)sender {
     self.ReturnButtonFull.alpha=1.0;
@@ -508,7 +516,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.venuesTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -624,11 +631,16 @@
     [self initialize];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.venuesTableView deselectRowAtIndexPath:self.venuesTableView.indexPathForSelectedRow animated:YES];
+}
+
 
 -(void)viewDidAppear:(BOOL)animated {
     [self initMapView];
     if (currentVC) {
-        [self performSelector:@selector(loadFoursquareaAfterDelay) withObject:nil afterDelay:1];
+        [self performSelector:@selector(loadFoursquareaAfterDelay) withObject:nil afterDelay:0];
     }
     currentVC=1;
 }

@@ -27,12 +27,12 @@
 -(void) checkIfThereIsNoDeals {
     [_loadingImage stopAnimating];
     if ([_dealsArray count]==0) {
-        UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(35, 168, 175, 24)];
-        [label2 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
+        UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(0, self.scrollView.center.y - 60, 320, 18)];
+        [label2 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+        [label2 setTextAlignment:NSTextAlignmentCenter];
         label2.text=@"There are no deals at this moment!";
         label2.backgroundColor=[UIColor clearColor];
-        label2.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(175/255.0) alpha:1.0];
-        [label2 sizeToFit];
+        label2.textColor = [UIColor colorWithRed:(150/255.0) green:(150/255.0) blue:(155/255.0) alpha:1.0];
         [[self scrollView] addSubview:label2];
     } else NSLog(@"deals amount = %d",[_dealsArray count]);
 }
@@ -398,9 +398,9 @@
     //self.onlineOrLocalView.alpha=0.0;
     //self.denyClickingOnCellsButton.alpha=0.0;
     //self.whiteCoverView.alpha=1.0;
-    [[self scrollView] setBackgroundColor:[UIColor colorWithRed:(230/255.0) green:(230/255.0) blue:(230/255.0) alpha:1.0]];
+    self.scrollView.frame = [[UIScreen mainScreen] bounds];
+    [[self scrollView] setBackgroundColor:[UIColor colorWithRed:(230/255.0) green:(230/255.0) blue:(235/255.0) alpha:1.0]];
     [[self scrollView]setScrollEnabled:YES];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
     isShortCell=NO;
     isUpdatingNow=NO;
     cellNumberInScrollView=0;
@@ -421,7 +421,7 @@
 //
 - (void)viewDidLoad
 {
-    [self tapBarSet];
+    self.title = self.categoryFromExplore;
     [self initialize];
     [self allocArrays];
     //[self setRefreshControl];

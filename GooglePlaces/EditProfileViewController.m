@@ -138,7 +138,7 @@
                              nil];
     image.animationDuration = 0.3;
     [image startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{image.alpha=1.0; image.transform =CGAffineTransformMakeScale(0,0);
+    [UIView animateWithDuration:0.3 animations:^{image.alpha=1.0; image.transform =CGAffineTransformMakeScale(0,0);
         image.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
@@ -261,7 +261,7 @@
 }
 
 -(void) errorUpadting {
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Couldn't Save Changes" message:@"Please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
     [alert show];
 }
 
