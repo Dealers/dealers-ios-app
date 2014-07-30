@@ -280,7 +280,7 @@
     URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     NSArray *dataArray2 = [DataResult componentsSeparatedByString:@"^"];
-    NSLog(@"array=%d",[dataArray2 count]);
+    NSLog(@"array=%lu",(unsigned long)[dataArray2 count]);
     for (int i=0; i+14<([[dataArray2 copy]count])-1; i=i+15) {
         [TITLEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i]];
         [DESCRIPTIONMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+1]];
@@ -589,7 +589,7 @@
                 [_PHOTOIDMARRAYCONVERT addObject:@"0"];
                 NSLog(@"no image");
             } else{
-                NSLog(@"image number %d",[num length]);
+                NSLog(@"image number %lu",(unsigned long)[num length]);
                 _image2=[[UIImage alloc]init];
                 _image2 =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
                 [_PHOTOIDMARRAYCONVERT addObject:_image2];
@@ -605,7 +605,7 @@
                 [_photoidConvertedArrayForLikesView addObject:@"0"];
                 NSLog(@"no image");
             } else{
-                NSLog(@"image number %d",[num length]);
+                NSLog(@"image number %lu",(unsigned long)[num length]);
                 _image2ForLikeView=[[UIImage alloc]init];
                 _image2ForLikeView=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
                 [_photoidConvertedArrayForLikesView addObject:_image2ForLikeView];

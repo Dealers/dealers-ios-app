@@ -27,5 +27,7 @@
 @property (strong, nonatomic)  DealerClass *dealerClass;
 
 - (void)setTabBarController;
+- (NSArray *)getCategories;
+- (NSArray *)getCategoriesIcons;
 
 @end

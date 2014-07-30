@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DealClass.h"
 
 @interface EditDealTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property DealClass *currentDeal;
 
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UILabel *store;

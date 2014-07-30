@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
+
 
 @interface ChooseCategoryTableViewController : UITableViewController
+
+@property (nonatomic) NSArray *categories;
+@property (nonatomic) NSArray *icons;
+
+@property (nonatomic) NSString *cameFrom;
 
 @end

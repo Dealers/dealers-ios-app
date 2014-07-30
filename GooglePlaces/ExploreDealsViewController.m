@@ -34,7 +34,7 @@
         label2.backgroundColor=[UIColor clearColor];
         label2.textColor = [UIColor colorWithRed:(150/255.0) green:(150/255.0) blue:(155/255.0) alpha:1.0];
         [[self scrollView] addSubview:label2];
-    } else NSLog(@"deals amount = %d",[_dealsArray count]);
+    } else NSLog(@"deals amount = %lu",(unsigned long)[_dealsArray count]);
 }
 
 -(void) startLoadingUploadImage:(UIImageView*)image {
@@ -81,7 +81,7 @@
                                   error:&error];
             NSDictionary *responseData = json[@"respone"];
             NSArray *deals = responseData[@"deals"];
-            NSLog(@"%d",[deals count]);
+            NSLog(@"%lu",(unsigned long)[deals count]);
             
             for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
             {
