@@ -310,6 +310,9 @@
     [_scrollcamera setBackgroundColor:[UIColor blackColor]];
     [_scrollcamera setScrollEnabled:NO];
     
+    [self.priceNavBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.priceNavBar setBarTintColor:[UIColor lightGrayColor]];
+    [self.priceNavBar setTranslucent:YES];
     [self.CategoryNavBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [self.CategoryNavBar setBarTintColor:[UIColor lightGrayColor]];
     [self.CategoryNavBar setTranslucent:YES];
@@ -351,6 +354,7 @@
     allocDatePicker=NO;
     allocCategoryPicker=NO;
     [self initializeCamera];
+    self.isNavBarVisible = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -367,13 +371,6 @@
     _SnapButton2.enabled=NO;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(void) dismissKeyBoard {
-    [_pricelabel resignFirstResponder];
-    [_discountlabel resignFirstResponder];
-    [_DescriptionTextView resignFirstResponder];
-    [_titlelabel resignFirstResponder];
 }
 
 //Showing the Loading Icon //
@@ -407,7 +404,8 @@
 - (IBAction)adddealbutton:(id)sender {
     NSLog(@"in add deal function");
     NSString *everyThingsOK = @"no";
-    [self dismissKeyBoard];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     
     if ((_titlelabel.text.length == 0)){
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter a Title" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
@@ -567,7 +565,8 @@
 
 - (IBAction)ExpireButtonAction:(id)sender {
     
-    [self dismissAll];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     [self EnlargeScroll:@"expire"];
     
     if (!allocDatePicker) {
@@ -595,7 +594,8 @@
 
 - (IBAction)CateoryButtonAction:(id)sender {
     
-    [self dismissAll];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     [self EnlargeScroll:@"category"];
     
     if (!allocCategoryPicker) {
@@ -634,7 +634,8 @@
 
 - (IBAction)Cateory_DoneButtonAction:(id)sender {
     
-    [self dismissAll];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     [self ReduceScroll];
     
 }
@@ -643,7 +644,8 @@
     
     _categorylabel.text = nil;
     
-    [self dismissAll];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     [self ReduceScroll];
     
 }
@@ -658,33 +660,17 @@
     }
     if (textView == _DescriptionTextView) {
         
-        [UIView animateWithDuration:0.2 animations:^{_priceNavBar.center = CGPointMake(160, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_DollarButton.center = CGPointMake(18, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_ShekelButton.center = CGPointMake(53, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_PoundButton.center = CGPointMake(90, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_DollarButtonFull.center = CGPointMake(18, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_ShekelButtonFull.center = CGPointMake(53, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_PoundButtonFull.center = CGPointMake(90, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-        [UIView animateWithDuration:0.5 animations:^{_ChagrtoTime.center = CGPointMake(80, 700);}];
-        [UIView animateWithDuration:0.5 animations:^{_ChagrtoDate.center = CGPointMake(110, 700);}];
-        [UIView animateWithDuration:0.5 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-        [UIView animateWithDuration:0.5 animations:^{_ChangetotimeFull.center = CGPointMake(80, 700);}];
-        [UIView animateWithDuration:0.5 animations:^{_ChangetodateFull.center = CGPointMake(110, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_PersentButton.center = CGPointMake(18, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_PersentButtonFull.center = CGPointMake(18, 700);}];
-        [UIView animateWithDuration:0.2 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
     }
-    //[UIView animateWithDuration:0.4 animations:^{_scroll.contentOffset = CGPointMake(0, 0);}];
     
     return YES;
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     
-    [self dismissAll];
+    [self dismissAllNoneKeyboard];
     
     if (textView == _titlelabel) {
+        
         [self EnlargeScroll:@"title"];
         [self titleAndPriceAutoScroll];
         if (textView.text > 0) {
@@ -695,6 +681,7 @@
     }
     
     if (textView == _DescriptionTextView) {
+        
         [self EnlargeScroll:@"description"];
         
         if ([_CategoryNavBar.items.firstObject leftBarButtonItem]) {
@@ -706,9 +693,14 @@
         } else {
             [self moreViewAutoScroll];
         }
-            
+        
+        float animationDuration;
+        animationDuration = (self.isNavBarVisible) ? 0 : 0.35;
+        
         float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2-keyboardHeight+2;
-        [UIView animateWithDuration:0.35 animations:^{_CategoryNavBar.center = CGPointMake(160, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_CategoryNavBar.center = CGPointMake(160, height);}];
+        
+        self.isNavBarVisible = YES;
     }
     
     return true;
@@ -767,7 +759,7 @@
     return YES;
 }
 
-//If pressed Price or Discount:
+// If pressed Price or Discount:
 -(BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
     [self EnlargeScroll:@"price"];
     float height = self.view.frame.size.height - _CategoryNavBar.bounds.size.height/2 - keyboardHeight + 2;
@@ -775,18 +767,23 @@
     if ((textField == _pricelabel)||(textField == _discountlabel)) {
         
         [self titleAndPriceAutoScroll];
-        [self dismissAll];
+        [self dismissAllNoneKeyboard];
         
-        [UIView animateWithDuration:0.4 animations:^{_priceNavBar.center = CGPointMake(160, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_DollarButton.center = CGPointMake(20, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_ShekelButton.center = CGPointMake(60, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_PoundButton.center = CGPointMake(100, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_DollarButtonFull.center = CGPointMake(20, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_ShekelButtonFull.center = CGPointMake(60, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_PoundButtonFull.center = CGPointMake(100, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_PersentButton.center = CGPointMake(20, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_PersentButtonFull.center = CGPointMake(20, height);}];
-        [UIView animateWithDuration:0.4 animations:^{_DoneButton.center = CGPointMake(285, height);}];
+        float animationDuration;
+        animationDuration = (self.isNavBarVisible) ? 0 : 0.4;
+        
+        [UIView animateWithDuration:animationDuration animations:^{_priceNavBar.center = CGPointMake(160, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_DollarButton.center = CGPointMake(20, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_ShekelButton.center = CGPointMake(60, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_PoundButton.center = CGPointMake(100, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_DollarButtonFull.center = CGPointMake(20, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_ShekelButtonFull.center = CGPointMake(60, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_PoundButtonFull.center = CGPointMake(100, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_PersentButton.center = CGPointMake(20, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_PersentButtonFull.center = CGPointMake(20, height);}];
+        [UIView animateWithDuration:animationDuration animations:^{_DoneButton.center = CGPointMake(285, height);}];
+        
+        self.isNavBarVisible = YES;
     }
     
     if (textField == _pricelabel) {
@@ -818,25 +815,9 @@
     
     NSLog(@"textFieldShouldReturn");
     
-    [self dismissKeyBoard];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     [self ReduceScroll];
-    
-    [UIView animateWithDuration:0.4 animations:^{_priceNavBar.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_DollarButton.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_ShekelButton.center = CGPointMake(60, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_PoundButton.center = CGPointMake(100, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_DollarButtonFull.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_ShekelButtonFull.center = CGPointMake(60, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_PoundButtonFull.center = CGPointMake(100, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_DatePicker.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_ChagrtoTime.center = CGPointMake(90, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_ChagrtoDate.center = CGPointMake(130, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_DateNavBar.center = CGPointMake(160, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_ChangetotimeFull.center = CGPointMake(90, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_ChangetodateFull.center = CGPointMake(130, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_PersentButton.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_PersentButtonFull.center = CGPointMake(20, 700);}];
-    [UIView animateWithDuration:0.4 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
     
     return YES;
 }
@@ -910,7 +891,8 @@
 
 -(IBAction)Date_DoneButtonAction:(id)sender {
     
-    [self dismissAll];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     [self ReduceScroll];
     
     NSDate *select = [_DatePicker date];
@@ -971,7 +953,8 @@
 -(void) DoneButtonAction:(id)sender {
     
     [self ReduceScroll];
-    [self dismissAll];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     
 }
 
@@ -1246,7 +1229,8 @@
 
 -(void) MoreButtonAction:(id)sender {
     
-    [self dismissAll];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     
     if ([_morebutton isEqual:@"a"]){
         [_MoreButtonButton setImage:[UIImage imageNamed:@"Add Deal (Final)_More Details button (selected).png"] forState:UIControlStateNormal];
@@ -1416,15 +1400,24 @@
 
 - (IBAction)cancelDatePickerPressed:(id)sender {
     
-    [self dismissAll];
+    [self dismissAllKeyBoards];
+    [self dismissAllNoneKeyboard];
     [self ReduceScroll];
     _expirationlabel.text = nil;
 }
 
-- (void)dismissAll
+-(void) dismissAllKeyBoards
 {
-    [self dismissKeyBoard];
+    [_pricelabel resignFirstResponder];
+    [_discountlabel resignFirstResponder];
+    [_DescriptionTextView resignFirstResponder];
+    [_titlelabel resignFirstResponder];
     
+    self.isNavBarVisible = NO;
+}
+
+- (void)dismissAllNoneKeyboard
+{
     [UIView animateWithDuration:0.3 animations:^{_priceNavBar.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.3 animations:^{_DollarButton.center = CGPointMake(20, 700);}];
     [UIView animateWithDuration:0.3 animations:^{_ShekelButton.center = CGPointMake(60, 700);}];
@@ -1444,6 +1437,7 @@
     [UIView animateWithDuration:0.4 animations:^{_DoneButton.center = CGPointMake(285, 700);}];
     [UIView animateWithDuration:0.4 animations:^{_CategoryPicker.center = CGPointMake(160, 700);}];
     [UIView animateWithDuration:0.3 animations:^{_CategoryNavBar.center = CGPointMake(160, 700);}];
+    
 }
 
 

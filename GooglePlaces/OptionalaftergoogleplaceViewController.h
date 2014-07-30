@@ -156,4 +156,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *hideCameraImage;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingIconCameraImage;
 
+@property BOOL isNavBarVisible;
+
 @end

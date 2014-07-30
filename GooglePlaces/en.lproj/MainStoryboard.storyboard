@@ -2464,7 +2464,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <items>
                                     <navigationItem id="hSO-by-b36">
                                         <nil key="title"/>
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="4KY-nb-5E1">
+                                        <barButtonItem key="leftBarButtonItem" title="No Date" id="4KY-nb-5E1">
                                             <connections>
                                                 <action selector="cancelDatePickerPressed:" destination="iJA-Ix-JTl" id="ReS-ga-fOV"/>
                                             </connections>
