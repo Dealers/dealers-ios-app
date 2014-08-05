@@ -15,6 +15,8 @@
 #import "AppDelegate.h"
 #import "CheckConnection.h"
 
+#define barTableGap 152 // The gap between the bottom of the search bar and the top of the venues table view.
+
 @interface TableViewController ()
 
 @end
@@ -25,13 +27,13 @@
     [_mapView removeFromSuperview];
     UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton9.frame=CGRectMake(0, 42,([[UIScreen mainScreen] bounds].size.width),([[UIScreen mainScreen] bounds].size.height-110));
+    selectDealButton9.frame=[[UIScreen mainScreen] bounds];
     selectDealButton9.tag=110;
     [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
     selectDealButton9.alpha=0.7;
     [[self view] addSubview:selectDealButton9];
     [[self view] bringSubviewToFront:selectDealButton9];
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check your Internet" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Check your network connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
     [alert show];
 }
 
@@ -151,17 +153,17 @@
                             [self.storeCategoryArraySort addObject:[storeCategoryArray objectAtIndex:index]];
                             
                         }else [self.storeDistanceArraySort addObject:@"0"];
-
+                        
                         if (index<[storeLongArray count]) {
                             [self.storeLongArraySort addObject:[storeLongArray objectAtIndex:index]];
                             
                         }else [self.storeLongArraySort addObject:@"0"];
-
+                        
                         if (index<[storeLatArray count]) {
                             [self.storeLatArraySort addObject:[storeLatArray objectAtIndex:index]];
                             
                         }else [self.storeLatArraySort addObject:@"0"];
-
+                        
                         [storeDistanceArray replaceObjectAtIndex:index withObject:@"100000"];
                     }
                 }
@@ -180,18 +182,58 @@
 
 -(void) mainMethod {
     [self.venuesTableView reloadData];
-    [UIView animateWithDuration:0.2 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform =CGAffineTransformMakeScale(1,1);
-        self.loadingImage.transform =CGAffineTransformMakeScale(0,0);}];
-    [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.5];
-    [self.scrollView setContentSize:((CGSizeMake(320, 118+([self.storeNameArraySort count]*70))))];
-    self.venuesTableView.frame = CGRectMake(0, 119, 320, ([self.storeNameArraySort count]*70+15));
+    [self.scrollView setContentSize:((CGSizeMake(320, ([self.storeNameArraySort count]*70+barTableGap))))];
+    
+    self.venuesTableView.frame = CGRectMake(0, barTableGap, 320, ([self.storeNameArraySort count]*70));
+    self.whiteCoverView.frame = self.venuesTableInitialFrame;
+
+    if ([self.storeNameArraySort count] == 0 && loadsuc) {
+        [self noStoresAround];
+    } else if (self.venuesTableView.frame.size.height < self.venuesTableInitialFrame.size.height) {
+        self.venuesTableView.frame = self.venuesTableInitialFrame;
+        self.venuesTableView.backgroundColor = [UIColor whiteColor];
+    }
+    
     [self.venuesTableView setScrollEnabled:NO];
+    [UIView animateWithDuration:0.3 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform = CGAffineTransformMakeScale(0,0);}];
+    [UIView animateWithDuration:0.3 animations:^{self.loadingLabel.alpha=0.0; self.loadingLabel.center = CGPointMake(self.loadingLabel.center.x,self.loadingLabel.center.y+10);}];
+    [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.3];
 }
 
 -(void) hideWhiteCoverView {
-    [UIView animateWithDuration:0.5 animations:^{self.whiteCoverView.alpha=0.0;}];
+    [UIView animateWithDuration:0.3 animations:^{self.whiteCoverView.alpha=0.0;}];
     [self.loadingImage stopAnimating];
     // [self report_memory];
+}
+
+- (void)noStoresAround {
+    UILabel *noStoresLabel = [[UILabel alloc]initWithFrame:self.venuesTableInitialFrame];
+    noStoresLabel.backgroundColor = [UIColor whiteColor];
+    noStoresLabel.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
+    noStoresLabel.textAlignment = NSTextAlignmentCenter;
+    noStoresLabel.textColor = [UIColor lightGrayColor];
+    
+    noStoresLabel.text = @"No stores were found around you";
+    
+    UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, noStoresLabel.center.y - 80, 320, 50)];
+    sadSmiley.backgroundColor = [UIColor clearColor];
+    sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];
+    sadSmiley.textAlignment = NSTextAlignmentCenter;
+    sadSmiley.textColor = [UIColor lightGrayColor];
+    
+    sadSmiley.text = @":(";
+    
+    UIButton *tryAgain = [UIButton buttonWithType:UIButtonTypeSystem];
+    [tryAgain setFrame:CGRectMake(noStoresLabel.center.x - 50, noStoresLabel.center.y + 30, 100, 20)];
+    [tryAgain setBackgroundColor:[UIColor clearColor]];
+    tryAgain.titleLabel.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
+    [tryAgain addTarget:self action:@selector(loadFoursquareaAfterDelay) forControlEvents:UIControlEventTouchUpInside];
+    
+    [tryAgain setTitle:@"Try Again" forState:UIControlStateNormal];
+    
+    [self.scrollView insertSubview:noStoresLabel belowSubview:self.whiteCoverView];
+    [self.scrollView insertSubview:sadSmiley belowSubview:self.whiteCoverView];
+    [self.scrollView insertSubview:tryAgain belowSubview:self.whiteCoverView];
 }
 
 -(void) displayLoadingIcon {
@@ -217,7 +259,7 @@
                                          nil];
     self.loadingImage.animationDuration = 0.3;
     [self.loadingImage startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform =CGAffineTransformMakeScale(0,0);
+    [UIView animateWithDuration:0.3 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform =CGAffineTransformMakeScale(0,0);
         self.loadingImage.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
@@ -232,8 +274,12 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"Where is the Deal?";
+    
+    // This is the size of the venues table view in the initial display of the view:
+    self.venuesTableInitialFrame = CGRectMake(0, barTableGap, 320, [[UIScreen mainScreen]bounds].size.height - 64 - 44 - barTableGap);
+    
     self.collapseMapButton.hidden=YES;
-    NSLog(@"foursquare viewdidload");
     currentVC=1;
     [super viewDidLoad];
 }
@@ -282,7 +328,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (tableView==self.venuesTableView) {
+    if (tableView == self.venuesTableView) {
         if ([self.storeNameArraySort count] == 0) {
             return 0;
         }
@@ -364,7 +410,7 @@
         if (indexpath.row<[self.storeLocationArraySort count]) {
             string5 = [self.storeLocationArraySort objectAtIndex:indexpath.row];
         } else string5=@"Unknown";
-
+        
         [[segue destinationViewController] setStoreName:string];
         [[segue destinationViewController] setSegcategory:string2];
         [[segue destinationViewController] setSeglat:string3];
@@ -380,6 +426,9 @@
     }
 }
 
+- (IBAction)Dismiss:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (IBAction) returnButtonClicked:(id)sender {
     self.ReturnButtonFull.alpha=1.0;
@@ -392,26 +441,42 @@
 
 -(IBAction) enlargeMapButtonClicked:(id)sender {
     self.enlargeMapButton.hidden=YES;
+    
+    self.collapseMapButton.center = CGPointMake(self.collapseMapButton.center.x, [[UIScreen mainScreen]bounds].size.height + self.collapseMapButton.frame.size.height);
     self.collapseMapButton.hidden=NO;
-    [UIView animateWithDuration:0.3 animations:^{self.mapView.frame=CGRectMake(0, 0, 320, 480);}];
+    
+    [UIView animateWithDuration:0.3 animations:^{self.mapView.frame = self.scrollView.bounds;}];
+    
     CGRect frame = self.venuesTableView.frame;
-    frame.origin.y = frame.origin.y + 600;
-    [UIView animateWithDuration:0.3 animations:^{self.venuesTableView.frame = frame;}];
+    frame.origin.y = frame.origin.y + 500;
+    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{self.venuesTableView.frame = frame;} completion:nil];
     CGRect frame3 = self.theShadow.frame;
-    frame3.origin.y = frame3.origin.y + 600;
-    [UIView animateWithDuration:0.3 animations:^{self.theShadow.frame = frame3;}];
+    frame3.origin.y = frame3.origin.y + 500;
+    [UIView animateWithDuration:0.4 animations:^{self.theShadow.frame = frame3;} completion:^(BOOL finished)
+     {[UIView animateWithDuration:0.5 animations:^{self.collapseMapButton.center = CGPointMake(self.collapseMapButton.center.x, [[UIScreen mainScreen]bounds].size.height - self.collapseMapButton.frame.size.height / 2);}];}];
 }
 
 -(IBAction) collapseMapButtonClicked:(id)sender {
     self.enlargeMapButton.hidden=NO;
     self.collapseMapButton.hidden=YES;
-    [UIView animateWithDuration:0.3 animations:^{self.mapView.frame=CGRectMake(0, -90, 320, 284);}];
+    [UIView animateWithDuration:0.4 animations:^{self.mapView.center = CGPointMake(self.mapView.center.x, barTableGap / 2);}];
     CGRect frame = self.venuesTableView.frame;
-    frame.origin.y = frame.origin.y - 600;
-    [UIView animateWithDuration:0.3 animations:^{self.venuesTableView.frame = frame;}];
+    frame.origin.y = frame.origin.y - 500;
+    [UIView animateWithDuration:0.4 animations:^{self.venuesTableView.frame = frame;}];
     CGRect frame3 = self.theShadow.frame;
-    frame3.origin.y = frame3.origin.y - 600;
-    [UIView animateWithDuration:0.3 animations:^{self.theShadow.frame = frame3;}];
+    frame3.origin.y = frame3.origin.y - 500;
+    [UIView animateWithDuration:0.4 animations:^{self.theShadow.frame = frame3;}];
+    
+    // Getting back to the original location of the user:
+    lastCoords.latitude = _locationManager.location.coordinate.latitude;
+    lastCoords.longitude = _locationManager.location.coordinate.longitude;
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.01;
+    span.longitudeDelta= 0.01;
+    region.span=span;
+    region.center =lastCoords;
+    [self.mapView setRegion:region animated:TRUE];
 }
 
 -(void) storeSearchFromFoursquer{
@@ -497,18 +562,14 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView==self.scrollView) {
+    if (scrollView == self.scrollView) {
         CGFloat y = scrollView.contentOffset.y;
-        [UIView animateWithDuration:0.0 animations:^{self.mapView.center = CGPointMake(160,58+(y/2));}];
-        if (y==0) {
-            CGRect cropRect = CGRectMake(0, -90, 320, 284);
-            [UIView animateWithDuration:0.0 animations:^{self.mapView.frame=cropRect;}];
-        }
+        CGFloat mapCenter = (y + 64 + barTableGap) / 2; // The offset in iOS7 navigation controller is by default -64. So first +64, and then plus the gap between the bar and the table.
+        self.mapView.center = CGPointMake(160, mapCenter);
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.venuesTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -582,7 +643,8 @@
 }
 
 -(void) initMapView {
-    self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, -85, 320, 285)];
+    self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 0, 320, self.scrollView.bounds.size.height)];
+    self.mapView.center = CGPointMake(160, barTableGap / 2);
     _locationManager = [[CLLocationManager alloc]init];
     _locationManager.delegate = self;
     _locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
@@ -624,11 +686,16 @@
     [self initialize];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.venuesTableView deselectRowAtIndexPath:self.venuesTableView.indexPathForSelectedRow animated:YES];
+}
+
 
 -(void)viewDidAppear:(BOOL)animated {
     [self initMapView];
     if (currentVC) {
-        [self performSelector:@selector(loadFoursquareaAfterDelay) withObject:nil afterDelay:1];
+        [self performSelector:@selector(loadFoursquareaAfterDelay) withObject:nil afterDelay:0];
     }
     currentVC=1;
 }
@@ -646,8 +713,8 @@
                                    (task_info_t)&info,
                                    &size);
     if( kerr == KERN_SUCCESS ) {
-        NSLog(@"Memory in use (in bytes): %u", info.resident_size);
-        NSString *a=[NSString stringWithFormat:@"%u",info.resident_size/1000000];
+        NSLog(@"Memory in use (in bytes): %lu", (unsigned long)info.resident_size);
+        NSString *a=[NSString stringWithFormat:@"%lu",(unsigned long)info.resident_size/1000000];
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"" message:a delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
         

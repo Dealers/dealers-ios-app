@@ -224,6 +224,7 @@
 		B0FB2E5D191CA8D800C6227F /* More list_Score Guide icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0FB2E59191CA8D800C6227F /* More list_Score Guide icon@2x.png */; };
 		B0FB2E5E191CA8D800C6227F /* More list_Groups icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0FB2E5A191CA8D800C6227F /* More list_Groups icon@2x.png */; };
 		B0FB2E5F191CA8D800C6227F /* More list_Follows icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0FB2E5B191CA8D800C6227F /* More list_Follows icon@2x.png */; };
+		C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */; };
 		C8273A2F18959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2618959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png */; };
 		C8273A3018959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2718959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png */; };
 		C8273A3118959A3300A412FC /* Add Deal (Final)_Browser bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2818959A3300A412FC /* Add Deal (Final)_Browser bar@2x.png */; };
@@ -549,6 +550,7 @@
 		C8DADE4F18FDF3CB0056AC9F /* Explore-Black_Restaurants & Bars icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE3C18FDF3CB0056AC9F /* Explore-Black_Restaurants & Bars icon@2x.png */; };
 		C8DADE5018FDF3CB0056AC9F /* Explore-Black_Sports & Outdoor icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE3D18FDF3CB0056AC9F /* Explore-Black_Sports & Outdoor icon@2x.png */; };
 		C8DADE5118FDF3CB0056AC9F /* Explore-Black_Travel icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE3E18FDF3CB0056AC9F /* Explore-Black_Travel icon@2x.png */; };
+		C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FFF56B197C437600D01744 /* EditDealTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -803,6 +805,8 @@
 		B0FB2E59191CA8D800C6227F /* More list_Score Guide icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "More list_Score Guide icon@2x.png"; path = "GooglePlaces/More list_Score Guide icon@2x.png"; sourceTree = "<group>"; };
 		B0FB2E5A191CA8D800C6227F /* More list_Groups icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "More list_Groups icon@2x.png"; path = "GooglePlaces/More list_Groups icon@2x.png"; sourceTree = "<group>"; };
 		B0FB2E5B191CA8D800C6227F /* More list_Follows icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "More list_Follows icon@2x.png"; path = "GooglePlaces/More list_Follows icon@2x.png"; sourceTree = "<group>"; };
+		C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewController.h; sourceTree = "<group>"; };
+		C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCategoryTableViewController.m; sourceTree = "<group>"; };
 		C8273A2618959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser Back button (highlighted)@2x.png"; sourceTree = "<group>"; };
 		C8273A2718959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser Back button@2x.png"; sourceTree = "<group>"; };
 		C8273A2818959A3300A412FC /* Add Deal (Final)_Browser bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser bar@2x.png"; sourceTree = "<group>"; };
@@ -1130,6 +1134,8 @@
 		C8DADE3C18FDF3CB0056AC9F /* Explore-Black_Restaurants & Bars icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Restaurants & Bars icon@2x.png"; sourceTree = "<group>"; };
 		C8DADE3D18FDF3CB0056AC9F /* Explore-Black_Sports & Outdoor icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Sports & Outdoor icon@2x.png"; sourceTree = "<group>"; };
 		C8DADE3E18FDF3CB0056AC9F /* Explore-Black_Travel icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Travel icon@2x.png"; sourceTree = "<group>"; };
+		C8FFF56A197C437600D01744 /* EditDealTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDealTableViewController.h; sourceTree = "<group>"; };
+		C8FFF56B197C437600D01744 /* EditDealTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDealTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1212,6 +1218,8 @@
 				B0493AD718FDC5E90044AD91 /* AppDelegate.h */,
 				56849791154C00BF001601A2 /* AppDelegate.m */,
 				56849793154C00BF001601A2 /* MainStoryboard.storyboard */,
+				B09FBAD0193CBE0A006CB986 /* DealClass.h */,
+				B09FBAD1193CBE0A006CB986 /* DealClass.m */,
 				B09FBAD3193F0764006CB986 /* DealerClass.h */,
 				B09FBAD4193F0764006CB986 /* DealerClass.m */,
 				C869CB78191A13E300DF2C19 /* General */,
@@ -1657,6 +1665,8 @@
 			children = (
 				B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */,
 				B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */,
+				C8FFF56A197C437600D01744 /* EditDealTableViewController.h */,
+				C8FFF56B197C437600D01744 /* EditDealTableViewController.m */,
 			);
 			name = "View Deal";
 			sourceTree = "<group>";
@@ -1672,8 +1682,8 @@
 				B01BD1B417F0D7000010C9A4 /* googleCell2.m */,
 				B01BD1B017F0D6470010C9A4 /* TableViewController.h */,
 				B01BD1B117F0D6470010C9A4 /* TableViewController.m */,
-				B09FBAD0193CBE0A006CB986 /* DealClass.h */,
-				B09FBAD1193CBE0A006CB986 /* DealClass.m */,
+				C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */,
+				C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */,
 			);
 			name = "Add Deal";
 			sourceTree = "<group>";
@@ -2118,7 +2128,12 @@
 		56849774154C00BF001601A2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					5684977C154C00BF001601A2 = {
+						DevelopmentTeam = KRLZZN4NG9;
+					};
+				};
 			};
 			buildConfigurationList = 56849777154C00BF001601A2 /* Build configuration list for PBXProject "Dealers-testbeta" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2660,6 +2675,7 @@
 				B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
 				B09FBAD5193F0764006CB986 /* DealerClass.m in Sources */,
+				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
 				B0F1BB9D18DB83D300AD2929 /* LikesCell.m in Sources */,
 				B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
@@ -2680,6 +2696,7 @@
 				B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */,
 				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
+				C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */,
 				B0862126186FF1450017099E /* Functions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2735,11 +2752,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "7CB3B920-9C4D-47CA-B295-D4D96A658DA1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "140AB15A-0E3E-4EED-95DE-EB9DECC48084";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -2765,11 +2782,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "7CB3B920-9C4D-47CA-B295-D4D96A658DA1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "140AB15A-0E3E-4EED-95DE-EB9DECC48084";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -2781,7 +2798,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_RESOURCE_RULES_PATH[sdk=*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/itzikberrebi/Desktop/dealers_beta_rep,
@@ -2790,9 +2807,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
 				INFOPLIST_FILE = "GooglePlaces/Dealers_beta-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Dealers;
-				"PROVISIONING_PROFILE[sdk=*]" = "";
+				PROVISIONING_PROFILE = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
+				"PROVISIONING_PROFILE[sdk=*]" = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -2806,7 +2824,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/itzikberrebi/Desktop/dealers_beta_rep,
 					"/Users/itzikberrebi/Desktop/dealers_beta_rep/HockeySDK-iOS/HockeySDK.embeddedframework",
@@ -2814,9 +2832,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
 				INFOPLIST_FILE = "GooglePlaces/Dealers_beta-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Dealers;
-				"PROVISIONING_PROFILE[sdk=*]" = "";
+				PROVISIONING_PROFILE = "5862ED47-EC3F-4CEF-8159-F963E78EECBE";
+				"PROVISIONING_PROFILE[sdk=*]" = "5862ED47-EC3F-4CEF-8159-F963E78EECBE";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

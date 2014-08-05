@@ -36,7 +36,6 @@
 {    
     ScreenHeight = self.view.frame.size.height/10;
     
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if (([app.Animate_first isEqualToString:@"first"]) || (app.Animate_first == NULL))  {
@@ -46,12 +45,18 @@
         via.alpha=0.0;
         backwhite.alpha=1.0;
         dealershead.alpha=1.0;
-        dealershead.center = CGPointMake(160,200);
+        dealershead.center = CGPointMake(160,(CGRectGetMidY(app.window.bounds)-dealershead.frame.size.height/2-16));
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(anim2) userInfo:nil repeats:NO];
     } else {
         [self ObjectInPlace];
     }
     [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 -(void) anim2 {

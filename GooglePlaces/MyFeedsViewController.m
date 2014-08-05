@@ -369,7 +369,7 @@
     GAP=0;
     gap2=0;
     myFeedsFirstTime = YES;
-    _scrollView.frame=CGRectMake(0, 44, 320, [[UIScreen mainScreen] bounds].size.height-110);
+    self.scrollView.frame=[[UIScreen mainScreen] bounds];
     
 }
 
@@ -412,7 +412,7 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     
-    [self deallocPrevViewControllers];
+    // [self deallocPrevViewControllers];
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
@@ -434,6 +434,7 @@
     }
 }
 
+/*
 -(void)deallocPrevViewControllers {
     if (myFeedsFirstTime) {
         NSArray *viewControllers = self.navigationController.viewControllers;
@@ -446,6 +447,7 @@
         myFeedsFirstTime=NO;
     }
 }
+*/
 
 -(void)loadDBandUpdateCells {
     [self showWhiteCover];
@@ -464,7 +466,9 @@
 }
 
 -(void)viewDidLoad {
-    [self tapBarSet];
+    
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
+    
     [self initializeView];
     [self allocArrays];
     [self startLoadingUploadIcon:_LoadingImage];

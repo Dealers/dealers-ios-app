@@ -11,6 +11,7 @@
 @interface SigninViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate,UINavigationBarDelegate>
 {
     //sqlite3 *db;
+    BOOL error;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *EmailText;
@@ -22,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
 @property (weak, nonatomic) IBOutlet UIImageView *PurpImage;
+@property (nonatomic) UIApplication *app;
 
 
 @end

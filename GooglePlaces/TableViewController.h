@@ -59,11 +59,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *closeStoreSearchViewButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *theShadow;
+@property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 @property (weak, nonatomic) IBOutlet UIImageView *NavBarImage;
 @property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
+@property CGRect venuesTableInitialFrame;
 
 - (IBAction)returnButtonClicked:(id)sender;
 - (IBAction)enlargeMapButtonClicked:(id)sender;

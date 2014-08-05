@@ -190,7 +190,7 @@
 -(void) setScrollSize //ok
 {
     [scroll setScrollEnabled:YES];
-    [scroll setContentSize:((CGSizeMake(320, lowestYPoint+100)))];
+    [scroll setContentSize:((CGSizeMake(320, lowestYPoint+10)))];
 }
 
 -(void) locateIconsInPlace
@@ -360,62 +360,61 @@
     
 }
 
-- (void)viewDidLoad //ok
+-(void)viewWillAppear:(BOOL)animated
 {
-    self.scroll.frame=CGRectMake(0, 44, 320, [[UIScreen mainScreen] bounds].size.height-44);
-    _tableViewLikes.hidden=YES;
-    
     if ([_isShoetCell isEqualToString:@"yes"]) {
         self.cameraScrollView.hidden=YES;
     } else {
         _captureImage.image=_tempImage;
     }
+    if ([[_dealClass getDealPhotoSum]intValue]>=2) {
+        _pageControl.hidden=NO;
+    } else _pageControl.hidden=YES;
+    
+    if ([_isShoetCell isEqualToString:@"no"]) {
+        [self startLoadingUploadImage];
+        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+        dispatch_async(queue, ^{
+            // Do some computation here.
+            [self loadImageFromUrl];
+            // Update UI after computation.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI on the main thread.
+                [self loadImage];
+            });
+        });
+    }
+}
+
+- (void)viewDidLoad //ok
+{
+    _tableViewLikes.hidden = YES;
+    
+    self.navigationItem.titleView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
+    
+    self.scroll.frame=[[UIScreen mainScreen] bounds];
     
     if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
         _LikeButton.enabled=NO;
         [_LikeButton setImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Like button (selected).png"] forState:UIControlStateNormal];
     }
     
-    viewDidApear=YES;
+    [self dealerViewInitialize];
+    self.pageControl.numberOfPages=[[_dealClass getDealPhotoSum]intValue];
+    [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass getDealPhotoSum]intValue], 165)))];
+    [self.cameraScrollView setScrollEnabled:YES];
+    
     cellNumberInScrollView=0;
     likesView = NO;
     
-    [self tapBarSet];
     [self loadVarsFromDeal];
     [self locateIconsInPlace];
     
     [super viewDidLoad];
-    
 }
 
--(void)viewDidAppear:(BOOL)animated //ok
+-(void)viewdidAppear:(BOOL)animated //ok
 {
-    if (viewDidApear) {
-        
-        if ([_isShoetCell isEqualToString:@"no"]) {
-            [self startLoadingUploadImage];
-            dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-            dispatch_async(queue, ^{
-                // Do some computation here.
-                [self loadImageFromUrl];
-                // Update UI after computation.
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    // Update the UI on the main thread.
-                    [self loadImage];
-                });
-            });
-        }
-        
-        [self dealerViewInitialize];
-        if ([[_dealClass getDealPhotoSum]intValue]>=2) {
-            _pageControl.hidden=NO;
-        } else _pageControl.hidden=YES;
-        self.pageControl.numberOfPages=[[_dealClass getDealPhotoSum]intValue];
-        _ViewLikes.hidden=YES;
-        [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass getDealPhotoSum]intValue], 155)))];
-        [self.cameraScrollView setScrollEnabled:YES];
-        viewDidApear=NO;
-    }
 }
 
 - (void)didReceiveMemoryWarning

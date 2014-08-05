@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "GKImagePicker.h"
 
-@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,GKImagePickerDelegate>
+@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,GKImagePickerDelegate>
 {
     NSString *dealphotoid;
     NSString *timeorday;
@@ -22,7 +22,6 @@
     BOOL FrontCamera;
     BOOL haveImage;
     BOOL isMoreOptionViewHidden;
-    NSString *segcategorey;
     NSString *timeOrDate;
     NSString *resultFromDb;
     BOOL allocDatePicker;
@@ -156,5 +155,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *hideCameraImage;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingIconCameraImage;
+
+@property BOOL isNavBarVisible;
 
 @end

@@ -31,8 +31,9 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"Explore";
+    
     [super viewDidLoad];
-    [self tapBarSet];
     self.myTableView.dataSource = self;
     self.myTableView.delegate = self;
     self.SearchBar.delegate=self;
@@ -40,11 +41,11 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftertapbar";
     
-    types = [[NSMutableArray alloc] initWithObjects:@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
+    types = [[NSMutableArray alloc]initWithArray:[app getCategories]];
     
-    filteredtypes = [[NSMutableArray alloc] initWithObjects:@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
+    filteredtypes = [[NSMutableArray alloc] initWithArray:[app getCategories]];
     
-    types_icons = [[NSMutableArray alloc] initWithObjects:@"Explore-Black_Art icon.png",@"Explore-Black_Automotive icon.png",@"Explore-Black_Beauty & Personal Care icon.png",@"Explore-Black_Books & Magazines icon.png",@"Explore-Black_Electronics icon.png",@"Explore-Black_Amusment & Entertainment icon.png",@"Explore-Black_Fashion icon.png",@"Explore-Black_Food & Groceries icon.png",@"Explore-Black_Home & Furniture icon.png",@"Explore-Black_Kids & Babies icon.png",@"Explore-Black_Music icon.png",@"Explore-Black_Pets icon.png",@"Explore-Black_Restaurants & Bars icon.png",@"Explore-Black_Sports & Outdoor icon.png",@"Explore-Black_Travel icon.png",@"Explore-Black_Other icon.png",nil];
+    types_icons = [[NSMutableArray alloc] initWithArray:[app getCategoriesIcons]];
     
     UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
@@ -82,15 +83,18 @@
         Cell = [[ExploreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    Cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17.0];
+    
     if (filtered == YES) {
-        Cell.explorelabel.text = [filteredtypes objectAtIndex:indexPath.row];
+        
+        Cell.textLabel.text = [filteredtypes objectAtIndex:indexPath.row];
         NSString *imagestring=[filteredtypes_icons objectAtIndex:indexPath.row];
-        Cell.exploreicon.image =[UIImage imageNamed:imagestring];
+        Cell.imageView.image =[UIImage imageNamed:imagestring];
     }
     else {
-        Cell.explorelabel.text = [types objectAtIndex:indexPath.row];
+        Cell.textLabel.text = [types objectAtIndex:indexPath.row];
         NSString *imagestring=[types_icons objectAtIndex:indexPath.row];
-        Cell.exploreicon.image =[UIImage imageNamed:imagestring];
+        Cell.imageView.image =[UIImage imageNamed:imagestring];
     }
     return Cell;
 }
@@ -113,7 +117,6 @@
 }
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    [self showWhiteCoverKeyBoard];
     return 1;
 }
 
@@ -158,7 +161,6 @@
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [self.SearchBar resignFirstResponder];
-    [self removeWhiteCoverKeyBoard];
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -177,31 +179,7 @@
     [super viewDidUnload];
 }
 
-- (IBAction)myfeedbutton:(id)sender{
-    [self deallocMemory];
-    UINavigationController *navigationController = self.navigationController;
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
-}
-- (IBAction)morebutton:(id)sender{
-    [self deallocMemory];
-    MoreViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"more"];
-    UINavigationController *navigationController = self.navigationController;
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
-    [navigationController pushViewController:controller animated:NO];
-}
-
-- (IBAction)profilebutton:(id)sender{
-    [self deallocMemory];
-    ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
-    UINavigationController *navigationController = self.navigationController;
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];
-    [navigationController pushViewController:controller animated:NO];
-}
-
--(void)viewDidDisappear:(BOOL)animated{
+- (void)viewDidDisappear:(BOOL)animated{
     [self.SearchBar performSelector: @selector(resignFirstResponder)
                          withObject: nil
                          afterDelay: 0.0];
@@ -516,11 +494,11 @@
     button1.alpha=0.8;
 }
 
--(void) removeWhiteCover {
-    NSLog(@"remove white cover");
-    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
-    button1.alpha=0.0;
-}
+//-(void) removeWhiteCover {
+//    NSLog(@"remove white cover");
+//    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
+//    button1.alpha=0.0;
+//}
 
 
 @end

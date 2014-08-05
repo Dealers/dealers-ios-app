@@ -827,9 +827,4 @@
     return CategoryPicture;
 }
 
--(UIView *) tapBarSet:(UIView *)view VCname:(NSString*)vc {
-    
-    
-}
-
 @end
