@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "TableViewController.h"
 
 @implementation AppDelegate
 
@@ -95,6 +96,8 @@
 
 - (void)addDealVC: (id) sender {
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"addDealNavController"];
+    TableViewController *tvc = (TableViewController *)[navigationController topViewController];
+    tvc.cameFrom = @"addDeal";
     [tabBarController presentViewController:navigationController animated:YES completion:nil];
 }
 

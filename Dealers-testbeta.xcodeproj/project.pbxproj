@@ -479,6 +479,8 @@
 		C8BFD9DB18723016007E7E07 /* Profile_Update Deal button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9BF18723016007E7E07 /* Profile_Update Deal button (selected)@2x.png */; };
 		C8BFD9DC18723016007E7E07 /* Profile_Update Deal button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9C018723016007E7E07 /* Profile_Update Deal button@2x.png */; };
 		C8BFD9DD18723016007E7E07 /* Profile_Watcher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BFD9C118723016007E7E07 /* Profile_Watcher@2x.png */; };
+		C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */; };
+		C8C43E80198F6CDD00409DD2 /* BetterScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C43E7F198F6CDD00409DD2 /* BetterScrollView.m */; };
 		C8D2E454185B781D00398873 /* Add Deal (Final)_-Not There- box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E41C185B781D00398873 /* Add Deal (Final)_-Not There- box@2x.png */; };
 		C8D2E455185B781D00398873 /* Add Deal (Final)_Add Another Photo button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E41D185B781D00398873 /* Add Deal (Final)_Add Another Photo button@2x.png */; };
 		C8D2E458185B781D00398873 /* Add Deal (Final)_Camera Frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D2E420185B781D00398873 /* Add Deal (Final)_Camera Frame@2x.png */; };
@@ -1062,6 +1064,10 @@
 		C8BFD9BF18723016007E7E07 /* Profile_Update Deal button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Update Deal button (selected)@2x.png"; sourceTree = "<group>"; };
 		C8BFD9C018723016007E7E07 /* Profile_Update Deal button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Update Deal button@2x.png"; sourceTree = "<group>"; };
 		C8BFD9C118723016007E7E07 /* Profile_Watcher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Watcher@2x.png"; sourceTree = "<group>"; };
+		C8C43E7B198E7CA700409DD2 /* EditTextModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextModeViewController.h; sourceTree = "<group>"; };
+		C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextModeViewController.m; sourceTree = "<group>"; };
+		C8C43E7E198F6CDD00409DD2 /* BetterScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BetterScrollView.h; sourceTree = "<group>"; };
+		C8C43E7F198F6CDD00409DD2 /* BetterScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BetterScrollView.m; sourceTree = "<group>"; };
 		C8D2E41C185B781D00398873 /* Add Deal (Final)_-Not There- box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add Deal (Final)_-Not There- box@2x.png"; path = "Add Deal Icons/Add Deal (Final)_-Not There- box@2x.png"; sourceTree = "<group>"; };
 		C8D2E41D185B781D00398873 /* Add Deal (Final)_Add Another Photo button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add Deal (Final)_Add Another Photo button@2x.png"; path = "Add Deal Icons/Add Deal (Final)_Add Another Photo button@2x.png"; sourceTree = "<group>"; };
 		C8D2E420185B781D00398873 /* Add Deal (Final)_Camera Frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add Deal (Final)_Camera Frame@2x.png"; path = "Add Deal Icons/Add Deal (Final)_Camera Frame@2x.png"; sourceTree = "<group>"; };
@@ -1667,6 +1673,8 @@
 				B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */,
 				C8FFF56A197C437600D01744 /* EditDealTableViewController.h */,
 				C8FFF56B197C437600D01744 /* EditDealTableViewController.m */,
+				C8C43E7B198E7CA700409DD2 /* EditTextModeViewController.h */,
+				C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */,
 			);
 			name = "View Deal";
 			sourceTree = "<group>";
@@ -1701,6 +1709,8 @@
 				B0E4F6FD1910171E0080CD32 /* Reachability.m */,
 				B0E4F6F9191015F50080CD32 /* CheckConnection.h */,
 				B0E4F6FA191015F50080CD32 /* CheckConnection.m */,
+				C8C43E7E198F6CDD00409DD2 /* BetterScrollView.h */,
+				C8C43E7F198F6CDD00409DD2 /* BetterScrollView.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -2665,6 +2675,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B09FBAD2193CBE0A006CB986 /* DealClass.m in Sources */,
+				C8C43E80198F6CDD00409DD2 /* BetterScrollView.m in Sources */,
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
 				B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */,
@@ -2696,6 +2707,7 @@
 				B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */,
 				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
+				C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */,
 				C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */,
 				B0862126186FF1450017099E /* Functions.m in Sources */,
 			);

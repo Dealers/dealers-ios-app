@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <MapKit/MapKit.h>
 #import "DealClass.h"
+#import "EditDealTableViewController.h"
 
 @interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
 {
@@ -90,11 +91,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage2;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
-
-@property (strong, nonatomic)  UIImage *tempImage;
-@property (strong, nonatomic)  UIImage *tempImage2;
-@property (strong, nonatomic)  UIImage *tempImage3;
-@property (strong, nonatomic)  UIImage *tempImage4;
 
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;

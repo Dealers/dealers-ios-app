@@ -153,7 +153,7 @@
     isUpdatingNow = YES;
     for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
         dealClass = [_dealsArray objectAtIndex:i];
-        NSString *num=[dealClass getDealPhotoID1];
+        NSString *num=[dealClass dealPhotoID1];
         
         if ([num isEqualToString:@"0"]) {
             isShortCell = YES;
@@ -168,7 +168,7 @@
         [[self scrollView] addSubview:imageview];
         
         UIImageView *imageview4;
-        if ([[dealClass getDealOnlineOrLocal] isEqualToString:@"local"]) {
+        if ([[dealClass dealOnlineOrLocal] isEqualToString:@"local"]) {
             imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Local icon.png"]];
             [imageview4 setFrame:CGRectMake(18, 173+(GAP)-(OFFSETSHORTCELL*isShortCell), 11, 14)];
         } else {
@@ -179,15 +179,15 @@
         
         UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(34, 168+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
         [label2 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        label2.text=[dealClass getDealStore];
+        label2.text=[dealClass dealStore];
         label2.backgroundColor=[UIColor clearColor];
         label2.textColor = [UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:1.0];
         [[self scrollView] addSubview:label2];
         
-        if ((![[dealClass getDealPrice] isEqualToString:@"0"])&&([[dealClass getDealDiscount] isEqualToString:@"0"])) {
+        if ((![[dealClass dealPrice] isEqualToString:@"0"])&&([[dealClass dealDiscount] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label3.text=[dealClass getDealPrice];
+            label3.text=[dealClass dealPrice];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
@@ -195,10 +195,10 @@
             [[self scrollView] addSubview:label3];
         }
         
-        if ((![[dealClass getDealPrice] isEqualToString:@"0"])&&(![[dealClass getDealDiscount] isEqualToString:@"0"])) {
+        if ((![[dealClass dealPrice] isEqualToString:@"0"])&&(![[dealClass dealDiscount] isEqualToString:@"0"])) {
             UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label4.text=[dealClass getDealDiscount];
+            label4.text=[dealClass dealDiscount];
             label4.text = [label4.text stringByAppendingString:@"%"];
             label4.backgroundColor=[UIColor clearColor];
             label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
@@ -208,7 +208,7 @@
             
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label3.text=[dealClass getDealPrice];
+            label3.text=[dealClass dealPrice];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             label3.textAlignment=NSTextAlignmentRight;
@@ -218,10 +218,10 @@
             
         }
         
-        if (([[dealClass getDealPrice] isEqualToString:@"0"])&&(![[dealClass getDealDiscount] isEqualToString:@"0"])) {
+        if (([[dealClass dealPrice] isEqualToString:@"0"])&&(![[dealClass dealDiscount] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label3.text=[dealClass getDealDiscount];
+            label3.text=[dealClass dealDiscount];
             label3.text = [label3.text stringByAppendingString:@"%"];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor redColor];
@@ -245,7 +245,7 @@
         DealClass *dealClass = [[DealClass alloc]init];
         for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
             dealClass = [_dealsArray objectAtIndex:i];
-            NSString *num=[dealClass getDealPhotoID1];
+            NSString *num=[dealClass dealPhotoID1];
             NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",num];
             
             if (([num isEqualToString:@"0"])||(num==nil)||([num length]==0)) {
@@ -262,7 +262,7 @@
             DealClass *dealClass = [[DealClass alloc]init];
             for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
                 dealClass = [_dealsArray objectAtIndex:i];
-                NSString *num=[dealClass getDealPhotoID1];
+                NSString *num=[dealClass dealPhotoID1];
                 if ([num isEqualToString:@"0"]||([num length]==0)) {
                     isShortCell = YES;
                 } else isShortCell = NO;
@@ -307,7 +307,7 @@
                 
                 UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(18, 119+(gap2)-(OFFSETSHORTCELL*isShortCell), 249, 41)];
                 [label setFont:[UIFont fontWithName:@"Avenir-Roman" size:14.0]];
-                label.text=[dealClass getDealTitle];
+                label.text=[dealClass dealTitle];
                 label.backgroundColor=[UIColor clearColor];
                 label.textColor = [UIColor whiteColor];
                 label.numberOfLines=2;
@@ -315,7 +315,7 @@
                 
                 UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(291, 121+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
                 [label5 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-                label5.text=[dealClass getDealLikesCount];
+                label5.text=[dealClass dealLikesCount];
                 label5.backgroundColor=[UIColor clearColor];
                 label5.textColor = [UIColor whiteColor];
                 [label5 sizeToFit];
@@ -323,7 +323,7 @@
                 
                 UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(291, 141+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
                 [label6 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-                label6.text=[dealClass getDealCommentCount];
+                label6.text=[dealClass dealCommentCount];
                 label6.backgroundColor=[UIColor clearColor];
                 label6.textColor = [UIColor whiteColor];
                 [label6 sizeToFit];
@@ -352,8 +352,8 @@
     dealClass = [_dealsArray objectAtIndex:(button.tag)];
     controller.dealClass=dealClass;
     
-    if (![[dealClass getDealPhotoID1] isEqualToString:@"0"]) {
-        controller.tempImage = [_dealPhotosArray objectAtIndex:(button.tag)];
+    if (![[dealClass dealPhotoID1] isEqualToString:@"0"]) {
+        controller.dealClass.dealPhoto1 = [_dealPhotosArray objectAtIndex:(button.tag)];
         controller.isShoetCell = @"no";
     } else controller.isShoetCell = @"yes";
     
@@ -363,7 +363,7 @@
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     _dealsUserLikes=DataResult;
     
-    if ([_dealsUserLikes rangeOfString:[dealClass getDealID]].location == NSNotFound) {
+    if ([_dealsUserLikes rangeOfString:[dealClass dealID]].location == NSNotFound) {
         controller.likeornotLabelFromMyFeeds=@"no";
         NSLog(@"didnt find");
     } else {

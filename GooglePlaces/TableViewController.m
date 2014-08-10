@@ -14,6 +14,7 @@
 #import <mach/mach.h>
 #import "AppDelegate.h"
 #import "CheckConnection.h"
+#import "EditDealTableViewController.h"
 
 #define barTableGap 152 // The gap between the bottom of the search bar and the top of the venues table view.
 
@@ -21,7 +22,9 @@
 
 @end
 
-@implementation TableViewController
+@implementation TableViewController {
+    OptionalaftergoogleplaceViewController *oagpvc;
+}
 
 -(void) connectionProblem {
     [_mapView removeFromSuperview];
@@ -186,7 +189,7 @@
     
     self.venuesTableView.frame = CGRectMake(0, barTableGap, 320, ([self.storeNameArraySort count]*70));
     self.whiteCoverView.frame = self.venuesTableInitialFrame;
-
+    
     if ([self.storeNameArraySort count] == 0 && loadsuc) {
         [self noStoresAround];
     } else if (self.venuesTableView.frame.size.height < self.venuesTableInitialFrame.size.height) {
@@ -278,6 +281,13 @@
     
     // This is the size of the venues table view in the initial display of the view:
     self.venuesTableInitialFrame = CGRectMake(0, barTableGap, 320, [[UIScreen mainScreen]bounds].size.height - 64 - 44 - barTableGap);
+    
+    // If came frome Edit Deal, no need for dismiss button:
+    if ([self.cameFrom isEqualToString:@"editDeal"]) {
+        self.navigationItem.leftBarButtonItem = NO;
+    }
+    
+    oagpvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Optional"];
     
     self.collapseMapButton.hidden=YES;
     currentVC=1;
@@ -384,46 +394,48 @@
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.previousViewControllerAddDeal=@"local";
     
-    if ([[segue identifier] isEqualToString:@"googleseg"]) {
-        NSIndexPath *indexpath = [self.venuesTableView indexPathForSelectedRow];
-        NSString *string;
-        NSString *string2;
-        NSString *string3;
-        NSString *string4;
-        NSString *string5;
-        
-        if (indexpath.row<[self.storeNameArraySort count]) {
-            string = [self.storeNameArraySort objectAtIndex:indexpath.row];
-        } else string=@"Unknown";
-        if (indexpath.row<[self.storeCategoryArraySort count]) {
-            string2 = [self.storeCategoryArraySort objectAtIndex:indexpath.row];
-        } else string2=@"Unknown";
-        if (indexpath.row<[self.storeLatArraySort count]) {
-            string3 = [self.storeLatArraySort objectAtIndex:indexpath.row];
-        } else string3=@"0";
-        if (indexpath.row<[self.storeLongArraySort count]) {
-            string4 = [self.storeLongArraySort objectAtIndex:indexpath.row];
-        } else string4=@"0";
-        if (indexpath.row<[self.storeLocationArraySort count]) {
-            string5 = [self.storeLocationArraySort objectAtIndex:indexpath.row];
-        } else string5=@"Unknown";
-        
-        [[segue destinationViewController] setStoreName:string];
-        [[segue destinationViewController] setSegcategory:string2];
-        [[segue destinationViewController] setSeglat:string3];
-        [[segue destinationViewController] setSeglong:string4];
-        [[segue destinationViewController] setSegstoreAddress:string5];
-        
-    }
     if ([[segue identifier] isEqualToString:@"StoreSearchSeq"]) {
         NSIndexPath *indexpath = [self.storeSearchTableView indexPathForSelectedRow];
         NSString *string = [self.storeSearchNameArray objectAtIndex:indexpath.row];
         [[segue destinationViewController] setStoreName:string];
         [[segue destinationViewController] setSegcategory:@"No Category"];
     }
+}
+
+- (void)passingStoreToOptionals
+{
+    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    app.previousViewControllerAddDeal=@"local";
+    
+    NSIndexPath *indexpath = [self.venuesTableView indexPathForSelectedRow];
+    NSString *string;
+    NSString *string2;
+    NSString *string3;
+    NSString *string4;
+    NSString *string5;
+    
+    if (indexpath.row<[self.storeNameArraySort count]) {
+        string = [self.storeNameArraySort objectAtIndex:indexpath.row];
+    } else string=@"Unknown";
+    if (indexpath.row<[self.storeCategoryArraySort count]) {
+        string2 = [self.storeCategoryArraySort objectAtIndex:indexpath.row];
+    } else string2=@"Unknown";
+    if (indexpath.row<[self.storeLatArraySort count]) {
+        string3 = [self.storeLatArraySort objectAtIndex:indexpath.row];
+    } else string3=@"0";
+    if (indexpath.row<[self.storeLongArraySort count]) {
+        string4 = [self.storeLongArraySort objectAtIndex:indexpath.row];
+    } else string4=@"0";
+    if (indexpath.row<[self.storeLocationArraySort count]) {
+        string5 = [self.storeLocationArraySort objectAtIndex:indexpath.row];
+    } else string5=@"Unknown";
+    
+    [oagpvc setStoreName:string];
+    [oagpvc setSegcategory:string2];
+    [oagpvc setSeglat:string3];
+    [oagpvc setSeglong:string4];
+    [oagpvc setSegstoreAddress:string5];
 }
 
 - (IBAction)Dismiss:(id)sender {
@@ -569,7 +581,26 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.venuesTableView) {
+        
+        // Need to check this with Itzik regarding the store info.
+        
+        if ([self.cameFrom isEqualToString:@"editDeal"]) {
+            EditDealTableViewController *edtvc = (EditDealTableViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+            edtvc.currentDeal.dealStore = [self.storeNameArraySort objectAtIndex:indexPath.row];
+            edtvc.currentDeal.dealStoreAddress = [self.storeLocationArraySort objectAtIndex:indexPath.row];
+            edtvc.currentDeal.dealStoreLatitude = [self.storeLatArraySort objectAtIndex:indexPath.row];
+            edtvc.currentDeal.dealStoreLongitude = [self.storeLongArraySort objectAtIndex:indexPath.row];
+            edtvc.didChangeOriginalDeal = YES;
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
+            [self passingStoreToOptionals];
+            [self.navigationController pushViewController:oagpvc animated:YES];
+        }
+    }
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {

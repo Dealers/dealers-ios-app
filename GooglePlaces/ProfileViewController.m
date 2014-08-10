@@ -809,8 +809,8 @@
     [dealClass printClass];
     controller.dealClass=dealClass;
     
-    if (![[dealClass getDealPhotoID1] isEqualToString:@"0"]) {
-        controller.tempImage = [_photoidConvertedArrayForLikesView objectAtIndex:(button.tag-1)];
+    if (![[dealClass dealPhotoID1] isEqualToString:@"0"]) {
+        controller.dealClass.dealPhoto1 = [_photoidConvertedArrayForLikesView objectAtIndex:(button.tag-1)];
         controller.isShoetCell = @"no";
     } else controller.isShoetCell = @"yes";
 
@@ -841,8 +841,8 @@
     [dealClass printClass];
     controller.dealClass=dealClass;
     
-    if (![[dealClass getDealPhotoID1] isEqualToString:@"0"]) {
-        controller.tempImage = [_PHOTOIDMARRAYCONVERT objectAtIndex:(button.tag)];
+    if (![[dealClass dealPhotoID1] isEqualToString:@"0"]) {
+        controller.dealClass.dealPhoto1 = [_PHOTOIDMARRAYCONVERT objectAtIndex:(button.tag)];
         controller.isShoetCell = @"no";
     } else controller.isShoetCell = @"yes";
 

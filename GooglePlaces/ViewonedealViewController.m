@@ -75,10 +75,10 @@
 
 -(void) wazeAndMap:(int)lowestPoint
 {
-    if (![[_dealClass getDealStoreLatitude] isEqualToString:@"0"]) {
+    if (![[_dealClass dealStoreLatitude] isEqualToString:@"0"]) {
         self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, lowestPoint, 300, 155)];
-        lastCoords.latitude = [[_dealClass getDealStoreLatitude] doubleValue];
-        lastCoords.longitude = [[_dealClass getDealStoreLongitude] doubleValue];
+        lastCoords.latitude = [[_dealClass dealStoreLatitude] doubleValue];
+        lastCoords.longitude = [[_dealClass dealStoreLongitude] doubleValue];
         MKCoordinateRegion region;
         MKCoordinateSpan span;
         span.latitudeDelta = 0.01;     // 0.0 is min value u van provide for zooming
@@ -105,7 +105,7 @@
         
         UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(20, lowestYPoint+100, 65, 21)];
         [label setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:20.0]];
-        label.text=[_dealClass getDealStore];
+        label.text=[_dealClass dealStore];
         label.backgroundColor=[UIColor clearColor];
         label.textColor = [UIColor whiteColor];
         [label sizeToFit];
@@ -113,7 +113,7 @@
         
         UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(20, lowestYPoint+130, 65, 21)];
         [label2 setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:15.0]];
-        label2.text=[_dealClass getDealStoreAddress];
+        label2.text=[_dealClass dealStoreAddress];
         label2.backgroundColor=[UIColor clearColor];
         label2.textColor = [UIColor whiteColor];
         [label2 sizeToFit];
@@ -137,7 +137,7 @@
          canOpenURL:[NSURL URLWithString:@"waze://"]]) {
         // Waze is installed. Launch Waze and start navigation
         NSString *urlStr =
-        [NSString stringWithFormat:@"waze://?ll=%f,%f&navigate=yes",[[_dealClass getDealStoreLatitude] doubleValue], [[_dealClass getDealStoreLongitude] doubleValue]];
+        [NSString stringWithFormat:@"waze://?ll=%f,%f&navigate=yes",[[_dealClass dealStoreLatitude] doubleValue], [[_dealClass dealStoreLongitude] doubleValue]];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
     } else {
         // Waze is not installed. Launch AppStore to install Waze app
@@ -152,12 +152,12 @@
     self.SecondView.frame = frame2;
     lowestYPoint =(CGRectGetMaxY(_SecondView.frame));
     
-    if (![[_dealClass getDealLikesCount] isEqualToString:@"0"]) {
+    if (![[_dealClass dealLikesCount] isEqualToString:@"0"]) {
         CGRect frame = _likesandshareView.frame;
         frame.origin.y = 15 + lowestYPoint;
         _likesandshareView.frame = frame;
         
-        NSString *likesCountPrefix=[NSString stringWithFormat:@"%@",[_dealClass getDealLikesCount]];
+        NSString *likesCountPrefix=[NSString stringWithFormat:@"%@",[_dealClass dealLikesCount]];
         NSString *likesCountSuffix=@"  people like this deal";
         NSString *likeCount=[likesCountPrefix stringByAppendingString:likesCountSuffix];
         _likesCountLabel.text=likeCount;
@@ -169,7 +169,7 @@
         [_likesandshareView addSubview:button];
 
         
-        NSString *shareCountPrefix=[NSString stringWithFormat:@"%@",[_dealClass getDealLikesCount]];
+        NSString *shareCountPrefix=[NSString stringWithFormat:@"%@",[_dealClass dealLikesCount]];
         NSString *shareCountSuffix=@"  people shared this deal";
         NSString *shareCount=[shareCountPrefix stringByAppendingString:shareCountSuffix];
         _shreCountLabel.text=shareCount;
@@ -198,7 +198,7 @@
     [self maskUserProfileImage];
     flag = NO;
     int offset;
-    if ([[_dealClass getDealPhotoSum]intValue]==0) {
+    if ([[_dealClass dealPhotoSum]intValue]==0) {
         offset=10;
     } else offset=184;
     
@@ -212,7 +212,7 @@
     self.StoreIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.StoreIcon.frame.size.width, self.StoreIcon.frame.size.height);
     storelabel.frame = CGRectMake(50, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     
-    if ([[_dealClass getDealOnlineOrLocal] isEqualToString:@"online"]) {
+    if ([[_dealClass dealOnlineOrLocal] isEqualToString:@"online"]) {
         _urlSiteButton.frame = CGRectMake(50, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     } else _urlSiteButton.hidden=YES;
     
@@ -278,49 +278,45 @@
 }
 
 -(void) loadImageFromUrl {
-    int photosNumber=[[_dealClass getDealPhotoSum]intValue];
-    if (photosNumber!=0) {
-        if (photosNumber==2) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass getDealPhotoID2]];
-            _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+    int photosNumber = [[_dealClass dealPhotoSum]intValue];
+    if (photosNumber != 0) {
+        if (photosNumber == 2) {
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID2]];
+            self.dealClass.dealPhoto2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
         }
-        if (photosNumber==3) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass getDealPhotoID2]];
-            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass getDealPhotoID3]];
-            _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
-            _tempImage3=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
+        if (photosNumber == 3) {
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID2]];
+            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID3]];
+            self.dealClass.dealPhoto2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            self.dealClass.dealPhoto3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
         }
-        if (photosNumber==4) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass getDealPhotoID2]];
-            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass getDealPhotoID3]];
-            _urlImage4 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass getDealPhotoID4]];
-            _tempImage2=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
-            _tempImage3=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
-            _tempImage4=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage4]]];
+        if (photosNumber == 4) {
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID2]];
+            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID3]];
+            _urlImage4 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID4]];
+            self.dealClass.dealPhoto2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            self.dealClass.dealPhoto3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
+            self.dealClass.dealPhoto4 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage4]]];
         }
     }
     
 }
 
 -(void) loadImage {
-    int photosNumber=[[_dealClass getDealPhotoSum]intValue];
+    int photosNumber=[[_dealClass dealPhotoSum]intValue];
     
     if (photosNumber==2) {
-        self.captureImage2.image = _tempImage2;
+        self.captureImage2.image = self.dealClass.dealPhoto2;
     }
     if (photosNumber==3) {
-        self.captureImage2.image = _tempImage2;
-        self.captureImage3.image = _tempImage3;
+        self.captureImage2.image = self.dealClass.dealPhoto2;
+        self.captureImage3.image = self.dealClass.dealPhoto3;
     }
     if (photosNumber==4) {
-        self.captureImage2.image = _tempImage2;
-        self.captureImage3.image = _tempImage3;
-        self.captureImage4.image = _tempImage4;
+        self.captureImage2.image = self.dealClass.dealPhoto2;
+        self.captureImage3.image = self.dealClass.dealPhoto3;
+        self.captureImage4.image = self.dealClass.dealPhoto4;
     }
-    _tempImage=nil;
-    _tempImage2=nil;
-    _tempImage3=nil;
-    _tempImage4=nil;
     
     [_loadingImage stopAnimating];
     _loadingImage.hidden=YES;
@@ -328,15 +324,15 @@
 
 -(void) loadVarsFromDeal{
     
-    titlelabel.text = [_dealClass getDealTitle];
-    storelabel.text = [_dealClass getDealStore];
-    categorylabel.text = [_dealClass getDealCategory];
-    pricelabel.text = [_dealClass getDealPrice];
-    discountlabel.text = [_dealClass getDealDiscount];
-    expirelabel.text = [_dealClass getDealExpireDate];
-    descriptionlabel.text = [_dealClass getDealDescription];
-    likelabel = [_dealClass getDealLikesCount];
-    commentlabel = [_dealClass getDealCommentCount];
+    titlelabel.text = [_dealClass dealTitle];
+    storelabel.text = [_dealClass dealStore];
+    categorylabel.text = [_dealClass dealCategory];
+    pricelabel.text = ![_dealClass.dealPrice isEqualToString:@"0"] ? [_dealClass.dealCurrency stringByAppendingString:_dealClass.dealPrice] : @"0";
+    discountlabel.text = [_dealClass dealDiscount];
+    expirelabel.text = [_dealClass dealExpireDate];
+    descriptionlabel.text = [_dealClass dealDescription];
+    likelabel = [_dealClass dealLikesCount];
+    commentlabel = [_dealClass dealCommentCount];
     LikeOrUnlike=TRUE;
 }
 
@@ -344,7 +340,7 @@
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue2", NULL);
     dispatch_async(queue, ^{
         // Do some computation here.
-        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=whodiduploadthedeal&Dealid=%@",[_dealClass getDealID]];
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=whodiduploadthedeal&Dealid=%@",[_dealClass dealID]];
         NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
         NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
         NSArray *DataArray = [DataResult componentsSeparatedByString:@"^"];
@@ -365,9 +361,9 @@
     if ([_isShoetCell isEqualToString:@"yes"]) {
         self.cameraScrollView.hidden=YES;
     } else {
-        _captureImage.image=_tempImage;
+        _captureImage.image = self.dealClass.dealPhoto1;
     }
-    if ([[_dealClass getDealPhotoSum]intValue]>=2) {
+    if ([[_dealClass dealPhotoSum]intValue]>=2) {
         _pageControl.hidden=NO;
     } else _pageControl.hidden=YES;
     
@@ -400,8 +396,8 @@
     }
     
     [self dealerViewInitialize];
-    self.pageControl.numberOfPages=[[_dealClass getDealPhotoSum]intValue];
-    [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass getDealPhotoSum]intValue], 165)))];
+    self.pageControl.numberOfPages=[[_dealClass dealPhotoSum]intValue];
+    [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass dealPhotoSum]intValue], 165)))];
     [self.cameraScrollView setScrollEnabled:YES];
     
     cellNumberInScrollView=0;
@@ -454,7 +450,7 @@
         int IntLike = [likelabel intValue];
         IntLike++;
         likelabel=[NSString stringWithFormat:@"%d",IntLike];
-        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@&Dealid=%@",app.UserID,@"updatelikestables",[_dealClass getDealID]];
+        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@&Dealid=%@",app.UserID,@"updatelikestables",[_dealClass dealID]];
         NSLog(@"url updatin after like: %@", url);
         NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
@@ -462,7 +458,7 @@
 }
 
 -(void) loadDataFromDB {
-    NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Dealid=%@",@"wholikesthedeal",[_dealClass getDealID]];
+    NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Dealid=%@",@"wholikesthedeal",[_dealClass dealID]];
     NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
     _DealersDataWhoLikesTheDealArray = [DataResult componentsSeparatedByString:@"."];
@@ -559,6 +555,12 @@
         [[segue destinationViewController] setDealerId:string];
         [[segue destinationViewController] setDidComeFromLikesTable:@"yes"];
     }
+    
+    if ([[segue identifier] isEqualToString:@"editDealID"]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+        EditDealTableViewController *edtvc = (EditDealTableViewController *)[navigationController topViewController];
+        edtvc.originalDeal = self.dealClass;
+    }
 }
 
 -(void)whoLikesTheDeal:(id)sender
@@ -592,7 +594,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     CGFloat pageWidth = self.cameraScrollView.frame.size.width;
     currentpage = floor((self.cameraScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    self.pageControl.currentPage=currentpage;
+    self.pageControl.currentPage = currentpage;
 }
 
 -(void) deallocMapView {
@@ -643,7 +645,7 @@
 
 - (IBAction)dealerProfileButtonClicked:(id)sender {
     ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
-    controller.dealerId=[_dealClass getDealUserID];
+    controller.dealerId=[_dealClass dealUserID];
     controller.didComeFromLikesTable=@"yes";
     UINavigationController *navigationController = self.navigationController;
     [navigationController pushViewController:controller animated:YES];
@@ -651,8 +653,8 @@
 
 - (IBAction)urlSiteButtonClicked:(id)sender {
     NSString *DataResult;
-    if (![[_dealClass getDealUrlSite] isEqualToString:@"0"]) {
-    DataResult = [@"http://" stringByAppendingString:[_dealClass getDealUrlSite]];
+    if (![[_dealClass dealUrlSite] isEqualToString:@"0"]) {
+    DataResult = [@"http://" stringByAppendingString:[_dealClass dealUrlSite]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:DataResult]];
     }
 }

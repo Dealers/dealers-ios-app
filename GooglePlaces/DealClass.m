@@ -10,190 +10,124 @@
 #import "Functions.h"
 
 @implementation DealClass
+/*
 -(id)init {
     self = [super init];
     if (self) {
-        dealID=@"";
-        dealTitle=@"";
-        dealDescription=@"";
-        dealStore=@"";
-        dealPrice=@"";
-        dealDiscount=@"";
-        dealExpireDate=@"";
-        dealLikesCount=@"";
-        dealCommentCount=@"";
-        dealPhotoID1=@"";
-        dealPhotoID2=@"";
-        dealPhotoID3=@"";
-        dealPhotoID4=@"";
-        dealPhotoSum=@"";
-        dealCategory=@"";
-        dealUserID=@"";
-        dealCurrency=@"";
-        dealUploadDate=@"";
-        dealOnlineOrLocal=@"";
-        dealUrlSite=@"";
-        dealStoreAddress=@"";
-        dealStoreLatitude=@"";
-        dealStoreLongitude=@"";
+        _dealID=@"";
+        _dealTitle=@"";
+        _dealDescription=@"";
+        _dealStore=@"";
+        _dealPrice=@"";
+        _dealDiscount=@"";
+        _dealExpireDate=@"";
+        _dealLikesCount=@"";
+        _dealCommentCount=@"";
+        _dealPhotoID1=@"";
+        _dealPhotoID2=@"";
+        _dealPhotoID3=@"";
+        _dealPhotoID4=@"";
+        _dealPhotoSum=@"";
+        _dealCategory=@"";
+        _dealUserID=@"";
+        _dealCurrency=@"";
+        _dealUploadDate=@"";
+        _dealOnlineOrLocal=@"";
+        _dealUrlSite=@"";
+        _dealStoreAddress=@"";
+        _dealStoreLatitude=@"";
+        _dealStoreLongitude=@"";
     }
     
     return self;
 }
+ */
 
--(void) setDealID:(NSString*)dealid{
-    dealID=dealid;
-}
--(void) setDealTitle:(NSString*)title{
+- (void)setDealTitle:(NSString*)title {
     Functions *func = [[Functions alloc]init];
-    dealTitle= [func removeUniqueSigns:title];
+    _dealTitle = [func removeUniqueSigns:title];
 }
--(void) setDealDescription:(NSString*)description{
+
+-(void) setDealDescription:(NSString*)description {
     Functions *func = [[Functions alloc]init];
-    dealDescription=[func removeUniqueSigns:description];
+    _dealDescription = [func removeUniqueSigns:description];
 }
+
 -(void) setDealStore:(NSString*)store{
     Functions *func = [[Functions alloc]init];
-    dealStore=[func removeUniqueSigns:store];
+    _dealStore=[func removeUniqueSigns:store];
 }
+
 -(void) setDealPrice:(NSString*)price{
+    _dealPrice = price;
+    
+    /*
     Functions *func = [[Functions alloc]init];
-    if ([price intValue]>=10000) {
-        dealPrice=[func priceAdaptation:price];
-    } else dealPrice=price;
-    if (![price isEqualToString:@"0"]) {
-        dealPrice = [dealPrice stringByAppendingString:dealCurrency];
-    }
+    if ([price intValue] >= 10000) {
+        _dealPrice = [func priceAdaptation:price];
+    } else _dealPrice = price;
+    */
 }
--(void) setDealDiscount:(NSString*)discount{
-    dealDiscount=discount;
-}
--(void) setDealExpireDate:(NSString*)expiredate{
-    dealExpireDate=expiredate;
-}
--(void) setDealLikesCount:(NSString*)likescount{
-    dealLikesCount=likescount;
-}
--(void) setDealCommentCount:(NSString*)commentcount{
-    dealCommentCount=commentcount;
-}
--(void) setDealPhotoID1:(NSString*)photoid1{
-    dealPhotoID1=photoid1;
-}
--(void) setDealPhotoID2:(NSString*)photoid2{
-    dealPhotoID2=photoid2;
-}
--(void) setDealPhotoID3:(NSString*)photoid3{
-    dealPhotoID3=photoid3;
-}
--(void) setDealPhotoID4:(NSString*)photoid4{
-    dealPhotoID4=photoid4;
-}
--(void) setDealPhotoSum:(NSString*)photosum{
-    dealPhotoSum=photosum;
-}
+
 -(void) setDealCategory:(NSString*)category{
     Functions *func = [[Functions alloc]init];
-    dealCategory=[func removeUniqueSigns:category];
+    _dealCategory=[func removeUniqueSigns:category];
 }
--(void) setDealUserID:(NSString*)userid{
-    dealUserID=userid;
-}
+
 -(void) setDealCurrency:(NSString*)currency{
     Functions *func = [[Functions alloc]init];
-    dealCurrency=[func currencySymbol:currency];
+    _dealCurrency = [func currencySymbol:currency];
 }
--(void) setDealUploadDate:(NSString*)uploaddate{
-    dealUploadDate=uploaddate;
-}
--(void) setDealOnlineOrLocal:(NSString*)onlineOrlocal{
-    dealOnlineOrLocal=onlineOrlocal;
-}
--(void) setDealUrlSite:(NSString*)urlsite{
-    dealUrlSite=urlsite;
-}
--(void) setDealStoreAddress:(NSString*)storeaddress{
+
+-(void) setDealStoreAddress:(NSString*)storeAddress{
     Functions *func = [[Functions alloc]init];
-    dealStoreAddress=[func removeUniqueSigns:storeaddress];
-}
--(void) setDealStoreLatitude:(NSString*)storelatitude{
-    dealStoreLatitude=storelatitude;
-}
--(void) setDealStoreLongitude:(NSString*)storelongitude{
-    dealStoreLongitude=storelongitude;
-}
--(NSString*) getDealID{
-    return dealID;
-}
--(NSString*) getDealTitle{
-    return dealTitle;
-}
--(NSString*) getDealDescription{
-    return dealDescription;
-}
--(NSString*) getDealStore{
-    return dealStore;
-}
--(NSString*) getDealPrice{
-    return dealPrice;
-}
--(NSString*) getDealDiscount{
-    return dealDiscount;
-}
--(NSString*) getDealExpireDate{
-    return dealExpireDate;
-}
--(NSString*) getDealLikesCount{
-    return dealLikesCount;
-}
--(NSString*) getDealCommentCount{
-    return dealCommentCount;
-}
--(NSString*) getDealPhotoID1{
-    return dealPhotoID1;
-}
--(NSString*) getDealPhotoID2{
-    return dealPhotoID2;
-}
--(NSString*) getDealPhotoID3{
-    return dealPhotoID3;
-}
--(NSString*) getDealPhotoID4{
-    return dealPhotoID4;
-}
--(NSString*) getDealPhotoSum{
-    return dealPhotoSum;
-}
--(NSString*) getDealCategory{
-    return dealCategory;
-}
--(NSString*) getDealUserID{
-    return dealUserID;
-}
--(NSString*) getDealCurrency{
-    return dealCurrency;
-}
--(NSString*) getDealUploadDate{
-    return dealUploadDate;
-}
--(NSString*) getDealOnlineOrLocal{
-    return dealOnlineOrLocal;
-}
--(NSString*) getDealUrlSite{
-    return dealUrlSite;
-}
--(NSString*) getDealStoreAddress{
-    return dealStoreAddress;
-}
--(NSString*) getDealStoreLatitude{
-    return dealStoreLatitude;
-}
--(NSString*) getDealStoreLongitude{
-    return dealStoreLongitude;
+    _dealStoreAddress = [func removeUniqueSigns:storeAddress];
 }
 
 -(void)printClass{
-    NSLog(@"my class is=%@,%@,%@,%@",dealTitle,dealStore,dealID,dealUserID);
+    NSLog(@"my class is=%@,%@,%@,%@",self.dealTitle,self.dealStore,self.dealID,self.dealUserID);
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    DealClass *dealCopy = [[DealClass allocWithZone:zone]init];
+    
+    dealCopy = [dealCopy mutableCopyWithZone:zone];
+    
+    return dealCopy;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+    DealClass *dealCopy = [[DealClass allocWithZone:zone]init];
+    
+    dealCopy.dealID = [self.dealID mutableCopy];
+    dealCopy.dealDescription = [self.dealDescription mutableCopy];
+    dealCopy.dealTitle = [self.dealTitle mutableCopy];
+    dealCopy.dealStore = [self.dealStore mutableCopy];
+    dealCopy.dealPrice = [self.dealPrice mutableCopy];
+    dealCopy.dealDiscount = [self.dealDiscount mutableCopy];
+    dealCopy.dealExpireDate = [self.dealExpireDate mutableCopy];
+    dealCopy.dealLikesCount = [self.dealLikesCount mutableCopy];
+    dealCopy.dealCommentCount = [self.dealCommentCount mutableCopy];
+    dealCopy.dealPhotoID1 = [self.dealPhotoID1 mutableCopy];
+    dealCopy.dealPhotoID2 = [self.dealPhotoID2 mutableCopy];
+    dealCopy.dealPhotoID3 = [self.dealPhotoID3 mutableCopy];
+    dealCopy.dealPhotoID4 = [self.dealPhotoID4 mutableCopy];
+    dealCopy.dealPhotoSum = [self.dealPhotoSum mutableCopy];
+    dealCopy.dealCategory = [self.dealCategory mutableCopy];
+    dealCopy.dealUserID = [self.dealUserID mutableCopy];
+    dealCopy.dealCurrency = [self.dealCurrency mutableCopy];
+    dealCopy.dealDiscountType = [self.dealDiscountType mutableCopy];
+    dealCopy.dealUploadDate = [self.dealUploadDate mutableCopy];
+    dealCopy.dealOnlineOrLocal = [self.dealOnlineOrLocal mutableCopy];
+    dealCopy.dealUrlSite = [self.dealUrlSite mutableCopy];
+    dealCopy.dealStoreAddress = [self.dealStoreAddress mutableCopy];
+    dealCopy.dealStoreLatitude = [self.dealStoreLatitude mutableCopy];
+    dealCopy.dealStoreLongitude = [self.dealStoreLongitude mutableCopy];
+    
+    
+    return dealCopy;
 }
 
 @end

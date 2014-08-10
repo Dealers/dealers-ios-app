@@ -67,6 +67,8 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
 @property CGRect venuesTableInitialFrame;
 
+@property NSString *cameFrom;
+
 - (IBAction)returnButtonClicked:(id)sender;
 - (IBAction)enlargeMapButtonClicked:(id)sender;
 - (IBAction)collapseMapButtonClicked:(id)sender;
