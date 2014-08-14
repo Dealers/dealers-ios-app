@@ -9,37 +9,18 @@
 #import <Foundation/Foundation.h>
 
 @interface DealerClass : NSObject
-{
-    NSString *userID;
-    NSString *userName;
-    NSString *userPassword;
-    NSString *userEmail;
-    NSString *userDateofBirth;
-    NSString *userGender;
-    NSString *userPhotoID;
-    NSString *userAbout;
-    NSString *userLocation;
-}
 
--(void) setUserID:(NSString*)idd;
--(void) setUserName:(NSString*)name;
--(void) setUserPassword:(NSString*)password;
--(void) setUserEmail:(NSString*)email;
--(void) setUserDateofBirth:(NSString*)dateofBirth;
--(void) setUserGender:(NSString*)gender;
--(void) setUserPhotoID:(NSString*)photoID;
--(void) setUserAbout:(NSString*)about;
--(void) setUserLocation:(NSString*)location;
-
--(NSString*) getUserID;
--(NSString*) getUserName;
--(NSString*) getUserPassword;
--(NSString*) getUserEmail;
--(NSString*) getUserDateofBirth;
--(NSString*) getUserGender;
--(NSString*) getUserPhotoID;
--(NSString*) getUserAbout;
--(NSString*) getUserLocation;
+@property NSString *userID;
+@property NSString *userName;
+@property NSString *userPassword;
+@property NSString *userEmail;
+@property NSString *userDateofBirth;
+@property NSString *userGender;
+@property NSString *userAbout;
+@property NSString *userLocation;
+@property NSString *userLikesList;
+@property NSString *userPhotoID;
+@property UIImage *userPhoto;
 
 -(int) dealerEmpty: (NSString *) check;
 

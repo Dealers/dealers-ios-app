@@ -13,16 +13,18 @@
 {
     int GAP;
     int gap2;
-    BOOL isShortCell;
-    BOOL isUpdatingNow;
+    int numberOfDealsLoadingAtATime;
     int cellNumberInScrollView;
     int cellsNumbersInFillWithImages;
+    BOOL isShortCell;
+    BOOL isUpdatingNow;
     BOOL myFeedsFirstTime;
+    BOOL refreshing;
 }
 
 @property (weak,nonatomic) IBOutlet UIScrollView *scrollView;
 
-@property (strong, nonatomic)  UIImage *image2;
+@property (strong, nonatomic)  UIImage *image;
 
 @property (weak, nonatomic) IBOutlet UIImageView *DealersTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;

@@ -10,11 +10,9 @@
 #import "ViewonedealViewController.h"
 #import "MoreViewController.h"
 #import "ExploretableViewController.h"
-#import "AppDelegate.h"
 #import "TableViewController.h"
 #import "OnlineViewController.h"
 #import "CheckConnection.h"
-
 
 #define OFFSETSHORTCELL 109
 
@@ -23,6 +21,9 @@
 @end
 
 @implementation ProfileViewController
+
+@synthesize appDelegate;
+
 
 -(void) startLoadingUploadImage {
     _loadingImage.animationImages = [NSArray arrayWithObjects:
@@ -114,7 +115,7 @@
                 [_dealClassUpload addObject:dealClass];
             }
         }
-
+        
         url= [NSString stringWithFormat:@"http://www.dealers.co.il/setDealClass.php?Indicator=bringdealstheuserlikes&Userid=%@",_dealerId];
         dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
         data = [NSData dataWithContentsOfURL: dbRequestURL];
@@ -159,199 +160,199 @@
                 [_dealClassLikes addObject:dealClass];
             }
         }
-
-
-    
-    NSMutableArray *TITLEMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *DESCRIPTIONMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *STOREMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *PRICEMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *DISCOUNTMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *EXPIREMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *LIKEMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *COMMENTMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *CLIENTMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *PHOTOIDMARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *CATEGORYARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *SIGNARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *DEALIDARRAY_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *uploadDateArray_temp = [[NSMutableArray alloc] init];
-    NSMutableArray *onlineOrLocalArray_temp = [[NSMutableArray alloc] init];
-    
-    
-    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=whatdealstheuseruploaded&Userid=%@",_dealerId];
-    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    NSArray *dataArray = [DataResult componentsSeparatedByString:@"^"];
-    NSLog(@"DATAARRAY=%@",dataArray);
-    
-    for (int i=0; i+14<([[dataArray copy]count])-1; i=i+15) {
-        [TITLEMARRAY_temp addObject:[dataArray objectAtIndex:i]];
-        [DESCRIPTIONMARRAY_temp addObject:[dataArray objectAtIndex:i+1]];
-        [STOREMARRAY_temp addObject:[dataArray objectAtIndex:i+2]];
-        [PRICEMARRAY_temp addObject:[dataArray objectAtIndex:i+3]];
-        [DISCOUNTMARRAY_temp addObject:[dataArray objectAtIndex:i+4]];
-        [EXPIREMARRAY_temp addObject:[dataArray objectAtIndex:i+5]];
-        [LIKEMARRAY_temp addObject:[dataArray objectAtIndex:i+6]];
-        [COMMENTMARRAY_temp addObject:[dataArray objectAtIndex:i+7]];
-        [PHOTOIDMARRAY_temp addObject:[dataArray objectAtIndex:i+8]];
-        [CATEGORYARRAY_temp addObject:[dataArray objectAtIndex:i+9]];
-        [CLIENTMARRAY_temp addObject:[dataArray objectAtIndex:i+10]];
-        [DEALIDARRAY_temp addObject:[dataArray objectAtIndex:i+11]];
-        [SIGNARRAY_temp addObject:[dataArray objectAtIndex:i+12]];
-        [uploadDateArray_temp addObject:[dataArray objectAtIndex:i+13]];
-        [onlineOrLocalArray_temp addObject:[dataArray objectAtIndex:i+14]];
         
-    }
-    
-    for (int i=0; i<[[TITLEMARRAY_temp copy] count]; i++) {
-        NSString *title=[TITLEMARRAY_temp objectAtIndex:i];
-        NSString *store=[STOREMARRAY_temp objectAtIndex:i];
-        NSString *description=[DESCRIPTIONMARRAY_temp objectAtIndex:i];
-        NSString *category=[CATEGORYARRAY_temp objectAtIndex:i];
-        category = [category stringByReplacingOccurrencesOfString:@"q9j" withString:@" & "];
-        title = [title stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        store = [store stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        description = [description stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        [TITLEMARRAY_temp replaceObjectAtIndex:i withObject:title];
-        [STOREMARRAY_temp replaceObjectAtIndex:i withObject:store];
-        [CATEGORYARRAY_temp replaceObjectAtIndex:i withObject:category];
-        [DESCRIPTIONMARRAY_temp replaceObjectAtIndex:i withObject:description];
-    }
-    for (int i=0; i<[[PRICEMARRAY_temp copy] count]; i++) {
-        NSString *price=[PRICEMARRAY_temp objectAtIndex:i];
-        int priceint = [price intValue];
-        if ((priceint > 1000) && (priceint < 10000))  {
-            priceint=priceint/1000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
-        }
-        if ((priceint > 10000) && (priceint < 100000))  {
-            priceint=priceint/10000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
-        }
-        if ((priceint > 100000) && (priceint < 1000000))  {
-            priceint=priceint/100000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
-        }
-        [PRICEMARRAY_temp replaceObjectAtIndex:i withObject:price];
-    }
-    
-    
-    _TITLEMARRAY = [NSMutableArray arrayWithArray:TITLEMARRAY_temp];
-    _DESCRIPTIONMARRAY = [NSMutableArray arrayWithArray:DESCRIPTIONMARRAY_temp];
-    _STOREMARRAY = [NSMutableArray arrayWithArray:STOREMARRAY_temp];
-    _PRICEMARRAY = [NSMutableArray arrayWithArray:PRICEMARRAY_temp];
-    _DISCOUNTMARRAY = [NSMutableArray arrayWithArray:DISCOUNTMARRAY_temp];
-    _EXPIREMARRAY = [NSMutableArray arrayWithArray:EXPIREMARRAY_temp];
-    _LIKEMARRAY = [NSMutableArray arrayWithArray:LIKEMARRAY_temp];
-    _COMMENTMARRAY = [NSMutableArray arrayWithArray:COMMENTMARRAY_temp];
-    _CLIENTMARRAY = [NSMutableArray arrayWithArray:CLIENTMARRAY_temp];
-    _PHOTOIDMARRAY = [NSMutableArray arrayWithArray:PHOTOIDMARRAY_temp];
-    _CATEGORYARRAY = [NSMutableArray arrayWithArray:CATEGORYARRAY_temp];
-    _SIGNARRAY = [NSMutableArray arrayWithArray:SIGNARRAY_temp];
-    _DEALIDARRAY = [NSMutableArray arrayWithArray:DEALIDARRAY_temp];
-    _uploadDateArray = [NSMutableArray arrayWithArray:uploadDateArray_temp];
-    _onlineOrLocalArray = [NSMutableArray arrayWithArray:uploadDateArray_temp];
-    
-    /////////////////
-    //for likesview
-    /////////////////
-    
-    NSMutableArray *TITLEMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *DESCRIPTIONMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *STOREMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *PRICEMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *DISCOUNTMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *EXPIREMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *LIKEMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *COMMENTMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *CLIENTMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *PHOTOIDMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *CATEGORYARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *SIGNARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *DEALIDARRAY_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *uploadDateArray_tempForLikesView = [[NSMutableArray alloc] init];
-    NSMutableArray *onlineOrLocalArray_tempForLikesView = [[NSMutableArray alloc] init];
-    
-    FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=bringdealstheuserlikes&Userid=%@",_dealerId];
-    URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    NSArray *dataArray2 = [DataResult componentsSeparatedByString:@"^"];
-    NSLog(@"array=%lu",(unsigned long)[dataArray2 count]);
-    for (int i=0; i+14<([[dataArray2 copy]count])-1; i=i+15) {
-        [TITLEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i]];
-        [DESCRIPTIONMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+1]];
-        [STOREMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+2]];
-        [PRICEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+3]];
-        [DISCOUNTMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+4]];
-        [EXPIREMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+5]];
-        [LIKEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+6]];
-        [COMMENTMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+7]];
-        [PHOTOIDMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+8]];
-        [CATEGORYARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+9]];
-        [CLIENTMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+10]];
-        [DEALIDARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+11]];
-        [SIGNARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+12]];
-        [uploadDateArray_tempForLikesView addObject:[dataArray2 objectAtIndex:i+13]];
-        [onlineOrLocalArray_tempForLikesView addObject:[dataArray2 objectAtIndex:i+14]];
         
-    }
-    
-    for (int i=0; i<[[TITLEMARRAY_tempForLikesView copy] count]; i++) {
-        NSString *title=[TITLEMARRAY_tempForLikesView objectAtIndex:i];
-        NSString *store=[STOREMARRAY_tempForLikesView objectAtIndex:i];
-        NSString *description=[DESCRIPTIONMARRAY_tempForLikesView objectAtIndex:i];
-        NSString *category=[CATEGORYARRAY_tempForLikesView objectAtIndex:i];
-        category = [category stringByReplacingOccurrencesOfString:@"q9j" withString:@" & "];
-        title = [title stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        store = [store stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        description = [description stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
-        [TITLEMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:title];
-        [STOREMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:store];
-        [CATEGORYARRAY_tempForLikesView replaceObjectAtIndex:i withObject:category];
-        [DESCRIPTIONMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:description];
-    }
-    for (int i=0; i<[[PRICEMARRAY_tempForLikesView copy] count]; i++) {
-        NSString *price=[PRICEMARRAY_tempForLikesView objectAtIndex:i];
-        int priceint = [price intValue];
-        if ((priceint > 1000) && (priceint < 10000))  {
-            priceint=priceint/1000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
+        
+        NSMutableArray *TITLEMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *DESCRIPTIONMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *STOREMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *PRICEMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *DISCOUNTMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *EXPIREMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *LIKEMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *COMMENTMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *CLIENTMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *PHOTOIDMARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *CATEGORYARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *SIGNARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *DEALIDARRAY_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *uploadDateArray_temp = [[NSMutableArray alloc] init];
+        NSMutableArray *onlineOrLocalArray_temp = [[NSMutableArray alloc] init];
+        
+        
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=whatdealstheuseruploaded&Userid=%@",_dealerId];
+        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        NSArray *dataArray = [DataResult componentsSeparatedByString:@"^"];
+        NSLog(@"DATAARRAY=%@",dataArray);
+        
+        for (int i=0; i+14<([[dataArray copy]count])-1; i=i+15) {
+            [TITLEMARRAY_temp addObject:[dataArray objectAtIndex:i]];
+            [DESCRIPTIONMARRAY_temp addObject:[dataArray objectAtIndex:i+1]];
+            [STOREMARRAY_temp addObject:[dataArray objectAtIndex:i+2]];
+            [PRICEMARRAY_temp addObject:[dataArray objectAtIndex:i+3]];
+            [DISCOUNTMARRAY_temp addObject:[dataArray objectAtIndex:i+4]];
+            [EXPIREMARRAY_temp addObject:[dataArray objectAtIndex:i+5]];
+            [LIKEMARRAY_temp addObject:[dataArray objectAtIndex:i+6]];
+            [COMMENTMARRAY_temp addObject:[dataArray objectAtIndex:i+7]];
+            [PHOTOIDMARRAY_temp addObject:[dataArray objectAtIndex:i+8]];
+            [CATEGORYARRAY_temp addObject:[dataArray objectAtIndex:i+9]];
+            [CLIENTMARRAY_temp addObject:[dataArray objectAtIndex:i+10]];
+            [DEALIDARRAY_temp addObject:[dataArray objectAtIndex:i+11]];
+            [SIGNARRAY_temp addObject:[dataArray objectAtIndex:i+12]];
+            [uploadDateArray_temp addObject:[dataArray objectAtIndex:i+13]];
+            [onlineOrLocalArray_temp addObject:[dataArray objectAtIndex:i+14]];
+            
         }
-        if ((priceint > 10000) && (priceint < 100000))  {
-            priceint=priceint/10000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
+        
+        for (int i=0; i<[[TITLEMARRAY_temp copy] count]; i++) {
+            NSString *title=[TITLEMARRAY_temp objectAtIndex:i];
+            NSString *store=[STOREMARRAY_temp objectAtIndex:i];
+            NSString *description=[DESCRIPTIONMARRAY_temp objectAtIndex:i];
+            NSString *category=[CATEGORYARRAY_temp objectAtIndex:i];
+            category = [category stringByReplacingOccurrencesOfString:@"q9j" withString:@" & "];
+            title = [title stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+            store = [store stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+            description = [description stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+            [TITLEMARRAY_temp replaceObjectAtIndex:i withObject:title];
+            [STOREMARRAY_temp replaceObjectAtIndex:i withObject:store];
+            [CATEGORYARRAY_temp replaceObjectAtIndex:i withObject:category];
+            [DESCRIPTIONMARRAY_temp replaceObjectAtIndex:i withObject:description];
         }
-        if ((priceint > 100000) && (priceint < 1000000))  {
-            priceint=priceint/100000;
-            price = [NSString stringWithFormat:@"%d",priceint];
-            price = [price stringByAppendingString:@"k"];
+        for (int i=0; i<[[PRICEMARRAY_temp copy] count]; i++) {
+            NSString *price=[PRICEMARRAY_temp objectAtIndex:i];
+            int priceint = [price intValue];
+            if ((priceint > 1000) && (priceint < 10000))  {
+                priceint=priceint/1000;
+                price = [NSString stringWithFormat:@"%d",priceint];
+                price = [price stringByAppendingString:@"k"];
+            }
+            if ((priceint > 10000) && (priceint < 100000))  {
+                priceint=priceint/10000;
+                price = [NSString stringWithFormat:@"%d",priceint];
+                price = [price stringByAppendingString:@"k"];
+            }
+            if ((priceint > 100000) && (priceint < 1000000))  {
+                priceint=priceint/100000;
+                price = [NSString stringWithFormat:@"%d",priceint];
+                price = [price stringByAppendingString:@"k"];
+            }
+            [PRICEMARRAY_temp replaceObjectAtIndex:i withObject:price];
         }
-        [PRICEMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:price];
-    }
-    
-    _titleArrayForLikesView = [NSMutableArray arrayWithArray:TITLEMARRAY_tempForLikesView];
-    _descriptionArrayForLikesView = [NSMutableArray arrayWithArray:DESCRIPTIONMARRAY_tempForLikesView];
-    _storeArrayForLikesView = [NSMutableArray arrayWithArray:STOREMARRAY_tempForLikesView];
-    _priceArrayForLikesView = [NSMutableArray arrayWithArray:PRICEMARRAY_tempForLikesView];
-    _discountArrayForLikesView = [NSMutableArray arrayWithArray:DISCOUNTMARRAY_tempForLikesView];
-    _expireArrayForLikesView = [NSMutableArray arrayWithArray:EXPIREMARRAY_tempForLikesView];
-    _likesCountArrayForLikesView = [NSMutableArray arrayWithArray:LIKEMARRAY_tempForLikesView];
-    _commentsCountArrayForLikesView = [NSMutableArray arrayWithArray:COMMENTMARRAY_tempForLikesView];
-    _clientidArrayForLikesView = [NSMutableArray arrayWithArray:CLIENTMARRAY_tempForLikesView];
-    _photoidArrayForLikesView = [NSMutableArray arrayWithArray:PHOTOIDMARRAY_tempForLikesView];
-    _categoryArrayForLikesView = [NSMutableArray arrayWithArray:CATEGORYARRAY_tempForLikesView];
-    _signArrayForLikesView = [NSMutableArray arrayWithArray:SIGNARRAY_tempForLikesView];
-    _dealidArrayForLikesView = [NSMutableArray arrayWithArray:DEALIDARRAY_tempForLikesView];
-    _uploadDateArrayForLikesView = [NSMutableArray arrayWithArray:uploadDateArray_tempForLikesView];
-    _onlineOrLocalArrayForLikesView = [NSMutableArray arrayWithArray:uploadDateArray_tempForLikesView];
-    
-
+        
+        
+        _TITLEMARRAY = [NSMutableArray arrayWithArray:TITLEMARRAY_temp];
+        _DESCRIPTIONMARRAY = [NSMutableArray arrayWithArray:DESCRIPTIONMARRAY_temp];
+        _STOREMARRAY = [NSMutableArray arrayWithArray:STOREMARRAY_temp];
+        _PRICEMARRAY = [NSMutableArray arrayWithArray:PRICEMARRAY_temp];
+        _DISCOUNTMARRAY = [NSMutableArray arrayWithArray:DISCOUNTMARRAY_temp];
+        _EXPIREMARRAY = [NSMutableArray arrayWithArray:EXPIREMARRAY_temp];
+        _LIKEMARRAY = [NSMutableArray arrayWithArray:LIKEMARRAY_temp];
+        _COMMENTMARRAY = [NSMutableArray arrayWithArray:COMMENTMARRAY_temp];
+        _CLIENTMARRAY = [NSMutableArray arrayWithArray:CLIENTMARRAY_temp];
+        _PHOTOIDMARRAY = [NSMutableArray arrayWithArray:PHOTOIDMARRAY_temp];
+        _CATEGORYARRAY = [NSMutableArray arrayWithArray:CATEGORYARRAY_temp];
+        _SIGNARRAY = [NSMutableArray arrayWithArray:SIGNARRAY_temp];
+        _DEALIDARRAY = [NSMutableArray arrayWithArray:DEALIDARRAY_temp];
+        _uploadDateArray = [NSMutableArray arrayWithArray:uploadDateArray_temp];
+        _onlineOrLocalArray = [NSMutableArray arrayWithArray:uploadDateArray_temp];
+        
+        /////////////////
+        //for likesview
+        /////////////////
+        
+        NSMutableArray *TITLEMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *DESCRIPTIONMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *STOREMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *PRICEMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *DISCOUNTMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *EXPIREMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *LIKEMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *COMMENTMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *CLIENTMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *PHOTOIDMARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *CATEGORYARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *SIGNARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *DEALIDARRAY_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *uploadDateArray_tempForLikesView = [[NSMutableArray alloc] init];
+        NSMutableArray *onlineOrLocalArray_tempForLikesView = [[NSMutableArray alloc] init];
+        
+        FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=bringdealstheuserlikes&Userid=%@",_dealerId];
+        URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+        DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        NSArray *dataArray2 = [DataResult componentsSeparatedByString:@"^"];
+        NSLog(@"array=%lu",(unsigned long)[dataArray2 count]);
+        for (int i=0; i+14<([[dataArray2 copy]count])-1; i=i+15) {
+            [TITLEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i]];
+            [DESCRIPTIONMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+1]];
+            [STOREMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+2]];
+            [PRICEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+3]];
+            [DISCOUNTMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+4]];
+            [EXPIREMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+5]];
+            [LIKEMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+6]];
+            [COMMENTMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+7]];
+            [PHOTOIDMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+8]];
+            [CATEGORYARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+9]];
+            [CLIENTMARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+10]];
+            [DEALIDARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+11]];
+            [SIGNARRAY_tempForLikesView addObject:[dataArray2 objectAtIndex:i+12]];
+            [uploadDateArray_tempForLikesView addObject:[dataArray2 objectAtIndex:i+13]];
+            [onlineOrLocalArray_tempForLikesView addObject:[dataArray2 objectAtIndex:i+14]];
+            
+        }
+        
+        for (int i=0; i<[[TITLEMARRAY_tempForLikesView copy] count]; i++) {
+            NSString *title=[TITLEMARRAY_tempForLikesView objectAtIndex:i];
+            NSString *store=[STOREMARRAY_tempForLikesView objectAtIndex:i];
+            NSString *description=[DESCRIPTIONMARRAY_tempForLikesView objectAtIndex:i];
+            NSString *category=[CATEGORYARRAY_tempForLikesView objectAtIndex:i];
+            category = [category stringByReplacingOccurrencesOfString:@"q9j" withString:@" & "];
+            title = [title stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+            store = [store stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+            description = [description stringByReplacingOccurrencesOfString:@"q9j" withString:@"&"];
+            [TITLEMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:title];
+            [STOREMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:store];
+            [CATEGORYARRAY_tempForLikesView replaceObjectAtIndex:i withObject:category];
+            [DESCRIPTIONMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:description];
+        }
+        for (int i=0; i<[[PRICEMARRAY_tempForLikesView copy] count]; i++) {
+            NSString *price=[PRICEMARRAY_tempForLikesView objectAtIndex:i];
+            int priceint = [price intValue];
+            if ((priceint > 1000) && (priceint < 10000))  {
+                priceint=priceint/1000;
+                price = [NSString stringWithFormat:@"%d",priceint];
+                price = [price stringByAppendingString:@"k"];
+            }
+            if ((priceint > 10000) && (priceint < 100000))  {
+                priceint=priceint/10000;
+                price = [NSString stringWithFormat:@"%d",priceint];
+                price = [price stringByAppendingString:@"k"];
+            }
+            if ((priceint > 100000) && (priceint < 1000000))  {
+                priceint=priceint/100000;
+                price = [NSString stringWithFormat:@"%d",priceint];
+                price = [price stringByAppendingString:@"k"];
+            }
+            [PRICEMARRAY_tempForLikesView replaceObjectAtIndex:i withObject:price];
+        }
+        
+        _titleArrayForLikesView = [NSMutableArray arrayWithArray:TITLEMARRAY_tempForLikesView];
+        _descriptionArrayForLikesView = [NSMutableArray arrayWithArray:DESCRIPTIONMARRAY_tempForLikesView];
+        _storeArrayForLikesView = [NSMutableArray arrayWithArray:STOREMARRAY_tempForLikesView];
+        _priceArrayForLikesView = [NSMutableArray arrayWithArray:PRICEMARRAY_tempForLikesView];
+        _discountArrayForLikesView = [NSMutableArray arrayWithArray:DISCOUNTMARRAY_tempForLikesView];
+        _expireArrayForLikesView = [NSMutableArray arrayWithArray:EXPIREMARRAY_tempForLikesView];
+        _likesCountArrayForLikesView = [NSMutableArray arrayWithArray:LIKEMARRAY_tempForLikesView];
+        _commentsCountArrayForLikesView = [NSMutableArray arrayWithArray:COMMENTMARRAY_tempForLikesView];
+        _clientidArrayForLikesView = [NSMutableArray arrayWithArray:CLIENTMARRAY_tempForLikesView];
+        _photoidArrayForLikesView = [NSMutableArray arrayWithArray:PHOTOIDMARRAY_tempForLikesView];
+        _categoryArrayForLikesView = [NSMutableArray arrayWithArray:CATEGORYARRAY_tempForLikesView];
+        _signArrayForLikesView = [NSMutableArray arrayWithArray:SIGNARRAY_tempForLikesView];
+        _dealidArrayForLikesView = [NSMutableArray arrayWithArray:DEALIDARRAY_tempForLikesView];
+        _uploadDateArrayForLikesView = [NSMutableArray arrayWithArray:uploadDateArray_tempForLikesView];
+        _onlineOrLocalArrayForLikesView = [NSMutableArray arrayWithArray:uploadDateArray_tempForLikesView];
+        
+        
     }//if connection
 }
 
@@ -562,7 +563,7 @@
         
 		GAPForLikeView=CGRectGetMaxY(imageview.frame)-4;
         NSLog(@"gap=%d",GAPForLikeView);
-
+        
     }
     NSLog(@"stop");
     self.likesView.frame = CGRectMake(0, CGRectGetMaxY(_likesViewButton.frame), 320, GAPForLikeView);
@@ -813,7 +814,7 @@
         controller.dealClass.dealPhoto1 = [_photoidConvertedArrayForLikesView objectAtIndex:(button.tag-1)];
         controller.isShoetCell = @"no";
     } else controller.isShoetCell = @"yes";
-
+    
     
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -845,7 +846,7 @@
         controller.dealClass.dealPhoto1 = [_PHOTOIDMARRAYCONVERT objectAtIndex:(button.tag)];
         controller.isShoetCell = @"no";
     } else controller.isShoetCell = @"yes";
-
+    
     NSLog(@"end of profile");
     
     [self.navigationController pushViewController:controller animated:YES];
@@ -856,7 +857,7 @@
 -(void) setTopPart {
     
     if ([_didComeFromLikesTable isEqualToString:@"yes"]){
-        _editProfileButton.enabled=NO;
+        _editProfileButton.enabled = NO;
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
             // Do some computation here.
@@ -882,26 +883,25 @@
                 
             });
         });
-
+        
     } else {
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
-    UIImage *image = app.dealerProfileImage;
-    _dealerProfileImage.image=image;
-    CALayer *mask = [CALayer layer];
-    mask.contents=(id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
-    mask.frame = CGRectMake(0, 0, 80, 80);
-    _dealerProfileImage.layer.mask = mask;
-    _dealerProfileImage.layer.masksToBounds = YES;
-    _dealerName.text=app.dealerName;
+        
+        UIImage *image = appDelegate.dealerClass.userPhoto;
+        _dealerProfileImage.image = image;
+        
+        CALayer *mask = [CALayer layer];
+        mask.contents = (id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
+        mask.frame = CGRectMake(0, 0, 80, 80);
+        _dealerProfileImage.layer.mask = mask;
+        _dealerProfileImage.layer.masksToBounds = YES;
+        
+        _dealerName.text=appDelegate.dealerClass.userName;
     }
     
     UIImage *image2 = [UIImage imageNamed: @"Profile_Master Dealer.png"];
-    _dealerRankImage.image=image2;
+    _dealerRankImage.image = image2;
     
-    _followersCount.text=@"25 Followers";
     
-    _followingCount.text=@"40 Following";
     
     
 }
@@ -911,6 +911,8 @@
 }
 
 -(void) initialize {
+    
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     _deals=@"b";
     _likes=@"a";
     GAP = 0;
@@ -928,23 +930,23 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.AfterAddDeal=@"aftertapbar";
     
-   if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
-   } else {_dealerId=app.UserID;}
+    if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
+    } else {_dealerId=app.UserID;}
     
     /*
-    if () {
-        NSLog(@"prev is like on viewdeal");
-        _returnButton.hidden=YES;
-        [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button@2X.png"]];
-        [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button (selected)@2X.png"]];
-        _myFeedLabel.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(170/255.0) alpha:1.0];
-        _profileLabel.textColor = [UIColor colorWithRed:(150/255.0) green:(0/255.0) blue:(180/255.0) alpha:1.0];
-    } else {
-        [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected)@2X.png"]];
-        [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button@2X.png"]];
-        _profileLabel.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(170/255.0) alpha:1.0];
-        _myFeedLabel.textColor = [UIColor colorWithRed:(150/255.0) green:(0/255.0) blue:(180/255.0) alpha:1.0];
-    }*/
+     if () {
+     NSLog(@"prev is like on viewdeal");
+     _returnButton.hidden=YES;
+     [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button@2X.png"]];
+     [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button (selected)@2X.png"]];
+     _myFeedLabel.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(170/255.0) alpha:1.0];
+     _profileLabel.textColor = [UIColor colorWithRed:(150/255.0) green:(0/255.0) blue:(180/255.0) alpha:1.0];
+     } else {
+     [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected)@2X.png"]];
+     [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button@2X.png"]];
+     _profileLabel.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(170/255.0) alpha:1.0];
+     _myFeedLabel.textColor = [UIColor colorWithRed:(150/255.0) green:(0/255.0) blue:(180/255.0) alpha:1.0];
+     }*/
     
     _dealsCountLabel.textColor = [UIColor whiteColor];
     _likesCountLabel.textColor = [UIColor colorWithRed:(180/255.0) green:(180/255.0) blue:(185/255.0) alpha:1.0];
@@ -953,29 +955,33 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     currentVC=1;
+    
     [self setTopPart];
 
     if (!didLoadView) {
-    [self allocArrays];
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-    dispatch_async(queue, ^{
-        // Do some computation here.
-        [self loadDataFromDB];
-        // Update UI after computation.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
-            [self createDealsTable];
-            [self fillTheCellsWithImages];
+        [self allocArrays];
+        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+        dispatch_async(queue, ^{
+            // Do some computation here.
+            [self loadDataFromDB];
+            // Update UI after computation.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Update the UI on the main thread.
+                [self createDealsTable];
+                [self fillTheCellsWithImages];
+            });
         });
-    });
         didLoadView=1;
     }
 }
 -(void)viewDidDisappear:(BOOL)animated {
     currentVC=0;
 }
+
 - (void)viewDidLoad
 {
+    self.title = @"Profile";
+    
     [self startLoadingUploadImage];
     [self initialize];
     
@@ -1244,7 +1250,7 @@
     imageview5.image=[UIImage imageNamed:@"My Feed+View Deal_Profile button (selected)@2X.png"];
     [imageview5 setFrame:CGRectMake(218, ([[UIScreen mainScreen] bounds].size.height)-64, 29, 29)];
     
-
+    
     if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
         _returnButton.hidden=NO;
         imageview4.image=[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected)@2X.png"];
@@ -1257,7 +1263,7 @@
     
     [[self view] addSubview:imageview4];
     [[self view] addSubview:imageview5];
-
+    
     
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(56, ([[UIScreen mainScreen] bounds].size.height)-38, 65, 21)];
     [label setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:11.0]];
@@ -1289,7 +1295,7 @@
     
     label4.textColor = [UIColor colorWithRed:150/255.0 green:0/255.0 blue:180/255.0 alpha:1.0];
     label3.textColor = [UIColor lightGrayColor];
-
+    
     if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
         label3.textColor = [UIColor colorWithRed:150/255.0 green:0/255.0 blue:180/255.0 alpha:1.0];
         label4.textColor = [UIColor lightGrayColor];
@@ -1297,7 +1303,7 @@
     
     [[self view] addSubview:label3];
     [[self view] addSubview:label4];
-
+    
     UIButton *selectDealButton=[UIButton buttonWithType:UIButtonTypeCustom];
     [selectDealButton setTitle:@"" forState:UIControlStateNormal];
     [selectDealButton setImage:[UIImage imageNamed:@"My Feed+View Deal_Add Deal button@2X.png"] forState:UIControlStateNormal];

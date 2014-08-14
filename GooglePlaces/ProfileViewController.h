@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DealClass.h"
+#import "AppDelegate.h"
 
 @interface ProfileViewController : UIViewController <UINavigationControllerDelegate>
 {
@@ -24,6 +25,8 @@
     BOOL currentVC;
     bool didLoadView;
 }
+
+@property AppDelegate *appDelegate;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

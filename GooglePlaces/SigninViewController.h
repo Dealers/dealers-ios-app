@@ -11,7 +11,7 @@
 @interface SigninViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate,UINavigationBarDelegate>
 {
     //sqlite3 *db;
-    BOOL error;
+    BOOL error, isPopping;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *EmailText;

@@ -41,7 +41,6 @@
 @property (strong,nonatomic) NSMutableArray *dealsPhotosidArray;
 @property (strong,nonatomic) NSMutableArray *dealsPhotosArray;
 
-
 @property (strong,nonatomic) DealClass *dealClass;
 @property (strong,nonatomic) NSString *isShoetCell;
 @property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
@@ -52,8 +51,7 @@
 @property (strong,nonatomic) NSString *urlImage4;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scroll;
-@property (weak, nonatomic) IBOutlet UIImageView *productimage;
-@property (weak, nonatomic) IBOutlet UIImageView *clientimage;
+@property (weak, nonatomic) IBOutlet UIImageView *dealerImage;
 @property (weak, nonatomic) IBOutlet UILabel *titlelabel;
 @property (weak, nonatomic) IBOutlet UILabel *storelabel;
 @property (weak, nonatomic) IBOutlet UILabel *categorylabel;
@@ -66,7 +64,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *dealersNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *uploadDateLabel;
 
-- (IBAction)ReturnButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
 
@@ -78,7 +75,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *DescriptionIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 
-@property (weak, nonatomic) IBOutlet UIView *SecondView;
+@property (weak, nonatomic) IBOutlet UIView *dealerSection;
+
+@property UIView *mapAndStoreSection;
 
 @property (weak, nonatomic) IBOutlet UIButton *LikeButton;
 - (IBAction)LikeButtonAction:(id)sender;
@@ -91,16 +90,15 @@
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage2;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
-
+@property (weak, nonatomic) IBOutlet UIView *likesAndButtonsSection;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 
 @property (weak, nonatomic) IBOutlet UIView *ViewLikes;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewLikes;
-@property (weak, nonatomic) IBOutlet UIView *buttonsUnderDealerImage;
 
 - (IBAction)dealerProfileButtonClicked:(id)sender;
-@property (weak, nonatomic) IBOutlet UIView *likesandshareView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *likesCountImage;
 @property (weak, nonatomic) IBOutlet UIImageView *shareCountImage;
 @property (weak, nonatomic) IBOutlet UILabel *likesCountLabel;

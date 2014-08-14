@@ -7,7 +7,6 @@
 //
 
 #import "Signup2ViewController.h"
-#import "AppDelegate.h"
 #import "Functions.h"
 #import "MyFeedsViewController.h"
 
@@ -17,7 +16,7 @@
 
 @implementation Signup2ViewController
 
-
+@synthesize appDelegate;
 @synthesize Fullname;
 @synthesize Email;
 @synthesize Password;
@@ -27,7 +26,11 @@
 @synthesize addphotobutton;
 @synthesize datepick,NavBar,ImageFrame,scroll,GenderNavBar,GenderPicker,ReturnButton,list,ReturnButtonFull,LoadingImage,PurpImage,SignupButton;
 
+
 -(void) BackgroundMethod {
+    
+    DealerClass *dealer = [[DealerClass alloc]init];
+    
     if (didAddPhoto) {
         NSData *imageData = UIImageJPEGRepresentation(ImageAdded.image, 2);
         NSString *urlString = @"http://www.dealers.co.il/uploadphpFile.php";
@@ -51,36 +54,46 @@
         NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
         Photoid = returnString;
+        
+        dealer.userPhoto = ImageAdded.image;
+        
         didAddPhoto = NO;
+    
+    } else {
+        dealer.userPhoto = [UIImage imageNamed:@"Profile_noPic.jpg"];
     }
     
     NSString *date;
-    if ([Datebirth.text length]==0) {
-        date=@"0";
-    } else date=Datebirth.text;
+    if ([Datebirth.text length] == 0) {
+        date = @"0";
+    } else date = Datebirth.text;
     
     NSString *gender;
-    if ([Genger.text length]==0) {
-        gender=@"0";
-    } else gender=Genger.text;
+    if ([Genger.text length] == 0) {
+        gender = @"0";
+    } else gender = Genger.text;
     
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",Fullname.text,Password.text,Email.text,date,gender,Photoid];
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@",strURL);
+    
     // to execute php code
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+    
     // to receive the returend value
     NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.UserID = strResult;
-}
-
--(void) MainMethod {
-    list=nil;
-    [self StopLoading];
-    MyFeedsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
-    UINavigationController *navigationController = self.navigationController;
-    [navigationController pushViewController:controller animated:YES];
+    
+    // Filling the information on the user:
+    
+    dealer.userID = strResult;
+    dealer.userName = Fullname.text;
+    dealer.userPassword = Password.text;
+    dealer.userEmail = Email.text;
+    dealer.userDateofBirth = date;
+    dealer.userGender = gender;
+    dealer.userPhotoID = Photoid;
+    
+    appDelegate.dealerClass = dealer;
 }
 
 -(void) initialize
@@ -88,6 +101,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     ReturnButtonFull.alpha=0.0;
     ImageFrame.hidden = YES;
+    isPopping = NO;
     [scroll setScrollEnabled:NO];
     [scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(SignupButton.frame)+10+216+44)))];
     scrollOriginOffset = scroll.contentOffset;
@@ -126,10 +140,22 @@
 
 - (void)viewDidLoad
 {
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.title = @"Sign Up";
     [self setElementsLocation];
     [self initialize];
     [super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    isPopping = NO;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    isPopping = YES;
+    self.app.networkActivityIndicatorVisible = NO;
 }
 
 - (void)setElementsLocation
@@ -186,79 +212,81 @@
         SignupButton.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
--(IBAction)SingupButton:(id)sender
+- (IBAction)SingupButton:(id)sender
 {
     self.app = [UIApplication sharedApplication];
-    [self StartLoading];
     
     if (([Fullname.text isEqual:@""]) ||  ([Fullname.text isEqual:@"Fullname"])) {
-        [self StopLoading];
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter your name." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
         
     } else if (([Email.text isEqual:@""]) || ([Email.text isEqual:@"Email"])) {
-        [self StopLoading];
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter an email address." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
         
     } else if ([Email.text rangeOfString:@"@"].location == NSNotFound) {
-        [self StopLoading];
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Please enter a valid email address." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
+    
     } else if (([Password.text isEqual:@""]) ||  ([Password.text isEqual:@"Password"])) {
-        [self StopLoading];
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter a password." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
-    }
     
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueueLoading", NULL);
-    dispatch_async(queue, ^{
-        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/registercheck.php?var1=%@",Email.text];
-        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+    } else {
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([DataResult isEqualToString:@"exist"]){
-                [self StopLoading];
-                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Email already exist." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-                [alert show];
-            }
-            else {
-                [Fullname resignFirstResponder];
-                [Email resignFirstResponder];
-                [Password resignFirstResponder];
-                dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-                dispatch_async(queue, ^{
-                    // Do some computation here.
-                    [self BackgroundMethod];
-                    // Update UI after computation.
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        // Update the UI on the main thread.
-                        AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-                        NSLog(@"usrid=%@",app.UserID);
-                        if (([app.UserID isEqualToString:@"0"])||(app.UserID==nil)||([app.UserID isEqualToString:@""])) {
-                            registerAgain=YES;
-                            [self StopLoading];
-                            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-                            [alert show];
-                        } else if ([app.UserID rangeOfString:@"fail"].location == NSNotFound) {
-                            if (ImageAdded.image==NULL) {
-                                app.dealerProfileImage=[UIImage imageNamed:@"Profile_noPic.jpg"];
-                            } else app.dealerProfileImage=ImageAdded.image;
-                            app.dealerName=Fullname.text;
-                            [self MainMethod];
-                        } else {
-                            registerAgain=YES;
-                            [self StopLoading];
-                            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-                            [alert show];
+        [self StartLoading];
+        [self resignFirstResponder];
+        [self CleanScreen:@"all"];
+        
+        dispatch_queue_t queue = dispatch_queue_create("com.MyQueueLoading", NULL);
+        dispatch_async(queue, ^{
+            NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/registercheck.php?var1=%@",Email.text];
+            NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+            NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([DataResult isEqualToString:@"exist"]){
+                    [self StopLoading];
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Email already exist." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                    [alert show];
+                
+                } else {
+                    
+                    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+                    dispatch_async(queue, ^{
+
+                        [self BackgroundMethod];
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+
+                            NSLog(@"usrid=%@",appDelegate.dealerClass.userID);
                             
-                        }
+                            if (([appDelegate.dealerClass.userID isEqualToString:@"0"]) || (appDelegate.dealerClass.userID == nil) || ([appDelegate.dealerClass.userID isEqualToString:@""])) {
+                                registerAgain = YES;
+                                [self StopLoading];
+                                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                                [alert show];
+                                
+                            } else if ([appDelegate.dealerClass.userID rangeOfString:@"fail"].location == NSNotFound) {
+                                
+                                if (!isPopping) {
+                                    self.app.networkActivityIndicatorVisible = NO;
+                                    [appDelegate setTabBarController];
+                                }
+                                
+                            } else {
+                                registerAgain = YES;
+                                [self StopLoading];
+                                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                                [alert show];
+                            }
+                        });
                     });
-                });
-            }
+                }
+            });
         });
-    });
+    }
 }
 
 - (IBAction)AddphotoButton:(id)sender
@@ -290,12 +318,12 @@
     mask.frame = CGRectMake(0, 0, 100, 100);
     ImageAdded.layer.mask = mask;
     ImageAdded.layer.masksToBounds = YES;
-    addphotobutton.hidden=YES;
-    ImageFrame.hidden=NO;
+    addphotobutton.hidden = YES;
+    ImageFrame.hidden = NO;
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    ImageAdded.image = [ info objectForKey:UIImagePickerControllerEditedImage];
+    ImageAdded.image = [info objectForKey:UIImagePickerControllerEditedImage];
     [self dismissViewControllerAnimated:YES completion:nil];
     [self MaskImage];
     didAddPhoto = YES;
@@ -413,23 +441,23 @@
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
-    if (ImageAdded.image==NULL)
+    if (ImageAdded.image == nil)
     {
         if (buttonIndex == 0) {
             
             UIImagePickerController *picker = [[UIImagePickerController alloc]init];
             picker.delegate = self;
             picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            picker.allowsEditing=YES;
+            picker.allowsEditing = YES;
             [self presentViewController:picker animated:YES completion:nil];
             
         }
-        if (buttonIndex==1) {
+        if (buttonIndex == 1) {
             
             UIImagePickerController *picker = [[UIImagePickerController alloc]init];
             picker.delegate = self;
             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            picker.allowsEditing=YES;
+            picker.allowsEditing = YES;
             [self presentViewController:picker animated:YES completion:nil];
         }
     } else {

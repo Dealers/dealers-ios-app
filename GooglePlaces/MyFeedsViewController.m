@@ -21,6 +21,13 @@
 #import "DealClass.h"
 #import "Functions.h"
 
+
+#define imageViewTag -10
+#define imageViewBackgroundTag 10
+#define titleBackgroundTag 1000
+#define loadingIndicatorTag 100000
+#define spinningWheelTag 4444
+
 @interface MyFeedsViewController ()
 @end
 
@@ -54,7 +61,7 @@
         NSURL *dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
         NSData *data = [NSData dataWithContentsOfURL: dbRequestURL];
         NSError* error;
-
+        
         if (data!=nil) {
             NSDictionary* json = [NSJSONSerialization
                                   JSONObjectWithData:data
@@ -63,7 +70,7 @@
             NSDictionary *responseData = json[@"respone"];
             NSArray *deals = responseData[@"deals"];
             NSLog(@"%@",deals);
-
+            
             for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
             {
                 DealClass *dealClass = [[DealClass alloc]init];
@@ -97,7 +104,7 @@
         }
     }
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.AfterAddDeal=@"aftersign";
+    app.AfterAddDeal = @"aftersign";
     
 }
 
@@ -105,107 +112,148 @@
     [self.LoadingImage stopAnimating];
 }
 
--(void) startLoadingUploadIcon:(UIImageView*)image {
+- (void)createDealsTable {
     
-    image.animationImages = [NSArray arrayWithObjects:
-                             [UIImage imageNamed:@"loading.png"],
-                             [UIImage imageNamed:@"loading5.png"],
-                             [UIImage imageNamed:@"loading10.png"],
-                             [UIImage imageNamed:@"loading15.png"],
-                             [UIImage imageNamed:@"loading20.png"],
-                             [UIImage imageNamed:@"loading25.png"],
-                             [UIImage imageNamed:@"loading30.png"],
-                             [UIImage imageNamed:@"loading35.png"],
-                             [UIImage imageNamed:@"loading40.png"],
-                             [UIImage imageNamed:@"loading45.png"],
-                             [UIImage imageNamed:@"loading50.png"],
-                             [UIImage imageNamed:@"loading55.png"],
-                             [UIImage imageNamed:@"loading60.png"],
-                             [UIImage imageNamed:@"loading65.png"],
-                             [UIImage imageNamed:@"loading70.png"],
-                             [UIImage imageNamed:@"loading75.png"],
-                             [UIImage imageNamed:@"loading80.png"],
-                             [UIImage imageNamed:@"loading85.png"],
-                             nil];
-    image.animationDuration = 0.3;
-    [image startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{image.alpha=1.0; image.transform =CGAffineTransformMakeScale(0,0);
-        image.transform =CGAffineTransformMakeScale(1,1);}];
-}
-
--(void) createDealsTable {
     DealClass *dealClass = [[DealClass alloc]init];
+    
     isUpdatingNow = YES;
-    for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
+    
+    for (int i = cellNumberInScrollView; ((i < numberOfDealsLoadingAtATime + cellNumberInScrollView) && (i < [_dealsArray count])); i++) {
         dealClass = [_dealsArray objectAtIndex:i];
-        NSString *num = [dealClass dealPhotoID1];
+        NSString *imageID = [dealClass dealPhotoID1];
         
-        if ([num isEqualToString:@"0"]) {
+        if ([imageID isEqualToString:@"0"]) {
             isShortCell = YES;
         } else isShortCell = NO;
         
-        UIImageView *imageview;
+        UIImageView *imageview, *imageViewBackground;
+        
         if (isShortCell) {
-            imageview=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_No Pic Deal background & Shadow.png"]];
-        } else imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Deal background & Shadow.png"]];
+            imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"No Pic Deal Background"]];
+        } else {
+            imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Deal Background"]];
+            imageViewBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Deal Pic Mask"]];
+        }
         
         [imageview setFrame:CGRectMake(2.5, 4+(GAP), 315, 199-(OFFSETSHORTCELL*isShortCell))];
+        [imageViewBackground setFrame:CGRectMake(10, 10+(GAP), 300, 155)];
+        imageViewBackground.tag = (i + 1) * imageViewBackgroundTag;
         [[self scrollView] addSubview:imageview];
+        [[self scrollView] addSubview:imageViewBackground];
+        
+        if (!isShortCell) {
+            UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            loading.center = imageViewBackground.center;
+            loading.tag = (i + 1) * loadingIndicatorTag;
+            [loading startAnimating];
+            [self.scrollView addSubview:loading];
+        }
+        
+        UIImageView *titleBackground;
+        
+        if (isShortCell) {
+            titleBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"No Pic Title Background"]];
+            [titleBackground setFrame:CGRectMake(10, 9+(GAP), 300, 47)];
+        } else {
+            titleBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Title Background"]];
+            titleBackground.alpha = 0.7;
+            [titleBackground setFrame:CGRectMake(10, 87+(GAP)-(OFFSETSHORTCELL*isShortCell), 300, 78)];
+            titleBackground.tag = (i + 1) * titleBackgroundTag;
+        }
+        [[self scrollView] addSubview:titleBackground];
+        
+        UIImageView *likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Likes icon.png"]];
+        [likeIcon setFrame:CGRectMake(274, 124+(GAP)-(OFFSETSHORTCELL*isShortCell), 13, 12)];
+        [[self scrollView] addSubview:likeIcon];
+        
+        UIImageView *commentIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Comments icon.png"]];
+        [commentIcon setFrame:CGRectMake(274, 143+(GAP)-(OFFSETSHORTCELL*isShortCell), 12, 14)];
+        [[self scrollView] addSubview:commentIcon];
+        
+        
+        UILabel *title=[[UILabel alloc]initWithFrame:CGRectMake(18, 119+(GAP)-(OFFSETSHORTCELL*isShortCell), 249, 41)];
+        [title setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
+        title.text = [dealClass dealTitle];
+        title.backgroundColor = [UIColor clearColor];
+        title.textColor = [UIColor whiteColor];
+        title.numberOfLines = 2;
+        [[self scrollView] addSubview:title];
+        
+        UILabel *likes = [[UILabel alloc]initWithFrame:CGRectMake(291, 121+(GAP)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
+        [likes setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
+        likes.text=[dealClass dealLikesCount];
+        likes.backgroundColor = [UIColor clearColor];
+        likes.textColor = [UIColor whiteColor];
+        [likes sizeToFit];
+        [[self scrollView] addSubview:likes];
+        
+        UILabel *comments = [[UILabel alloc]initWithFrame:CGRectMake(291, 141+(GAP)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
+        [comments setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
+        comments.text=[dealClass dealCommentCount];
+        comments.backgroundColor = [UIColor clearColor];
+        comments.textColor = [UIColor whiteColor];
+        [comments sizeToFit];
+        [[self scrollView] addSubview:comments];
+        
+        UIButton *selectDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [selectDealButton setTitle:@"" forState:UIControlStateNormal];
+        selectDealButton.frame = CGRectMake(0, 4+(GAP), 319, 193-(OFFSETSHORTCELL*isShortCell));//193
+        selectDealButton.tag = i;
+        [selectDealButton addTarget:self action:@selector(selectDealButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [[self scrollView] addSubview:selectDealButton];
         
         UIImageView *imageview4;
         if ([[dealClass dealOnlineOrLocal] isEqualToString:@"local"]) {
-            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Local icon.png"]];
+            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Local Icon"]];
             [imageview4 setFrame:CGRectMake(18, 173+(GAP)-(OFFSETSHORTCELL*isShortCell), 11, 14)];
         } else {
-            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - (final)_Online icon.png"]];
+            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Online Icon"]];
             [imageview4 setFrame:CGRectMake(17, 174+(GAP)-(OFFSETSHORTCELL*isShortCell), 13, 13)];
         }
         [[self scrollView] addSubview:imageview4];
         
-        UILabel *label2=[[UILabel alloc]initWithFrame:CGRectMake(34, 168+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(34, 168+(GAP)-(OFFSETSHORTCELL*isShortCell), 175, 24)];
         [label2 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        label2.text=[dealClass dealStore];
-        label2.backgroundColor=[UIColor clearColor];
-        label2.textColor = [UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:1.0];
+        label2.text = [dealClass dealStore];
+        label2.backgroundColor = [UIColor clearColor];
+        label2.textColor = [UIColor blackColor];
         [[self scrollView] addSubview:label2];
         
-        if ((![[dealClass dealPrice] isEqualToString:@"0"])&&([[dealClass dealDiscount] isEqualToString:@"0"])) {
-            UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label3.text=[dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
-            label3.backgroundColor=[UIColor clearColor];
+        if ((![[dealClass dealPrice] isEqualToString:@"0"]) && ([[dealClass dealDiscount] isEqualToString:@"0"])) {
+            UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text = [dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
+            label3.backgroundColor = [UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
-            label3.textAlignment=NSTextAlignmentRight;
+            label3.textAlignment = NSTextAlignmentRight;
             [[self scrollView] addSubview:label3];
         }
         
-        if ((![[dealClass dealPrice] isEqualToString:@"0"])&&(![[dealClass dealDiscount] isEqualToString:@"0"])) {
+        if ((![[dealClass dealPrice] isEqualToString:@"0"]) && (![[dealClass dealDiscount] isEqualToString:@"0"])) {
             UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label4.text=[dealClass dealDiscount];
+            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label4.text = [dealClass dealDiscount];
             label4.text = [label4.text stringByAppendingString:@"%"];
-            label4.backgroundColor=[UIColor clearColor];
+            label4.backgroundColor = [UIColor clearColor];
             label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
             [label4 sizeToFit];
-            label4.textAlignment=NSTextAlignmentRight;
+            label4.textAlignment = NSTextAlignmentRight;
             [[self scrollView] addSubview:label4];
             
-            UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
-            label3.text=[dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
-            label3.backgroundColor=[UIColor clearColor];
+            UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text = [dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
+            label3.backgroundColor = [UIColor clearColor];
             label3.textColor = [UIColor blackColor];
-            label3.textAlignment=NSTextAlignmentRight;
+            label3.textAlignment = NSTextAlignmentRight;
             [label3 sizeToFit];
             [[self scrollView] addSubview:label3];
-            
-            
         }
         
-        if (([[dealClass dealPrice] isEqualToString:@"0"])&&(![[dealClass dealDiscount] isEqualToString:@"0"])) {
+        if (([[dealClass dealPrice] isEqualToString:@"0"]) && (![[dealClass dealDiscount] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(OFFSETSHORTCELL*isShortCell), 53, 21)];
-            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:16.0]];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
             label3.text=[dealClass dealDiscount];
             label3.text = [label3.text stringByAppendingString:@"%"];
             label3.backgroundColor=[UIColor clearColor];
@@ -215,122 +263,176 @@
             [[self scrollView] addSubview:label3];
         }
         
-        GAP=CGRectGetMaxY(imageview.frame)-4;
+        GAP = CGRectGetMaxY(imageview.frame)-4;
+        
+    } // End of for loop.
+    
+    if (cellNumberInScrollView + numberOfDealsLoadingAtATime < self.dealsArray.count) {
+        
+        // Need the spinning wheel:
+        CGFloat width = 30;
+        CGFloat height = 30;
+        CGFloat x = self.view.center.x - width/2;
+        CGFloat y = GAP + 15;
+        UIImageView *spinningWheel = [[UIImageView alloc]initWithFrame:CGRectMake(x , y, width, height)];
+        spinningWheel.tag = spinningWheelTag;
+        
+        [self.scrollView addSubview:spinningWheel];
+        [self startLoading:spinningWheel];
+        
+        [[self scrollView] setContentSize:CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(spinningWheel.frame) + 25)];
+        
+    } else {
+        // Add here the logo that indicates that the deals array is finished.
+        [[self scrollView] setContentSize:CGSizeMake(self.view.frame.size.width, GAP + 10)];
     }
-    cellNumberInScrollView+=10;
-    [[self scrollView] setContentSize:CGSizeMake(319,GAP)];
-    isUpdatingNow = NO;
-    [self hiddenWhiteCoverView];
+    
+    cellNumberInScrollView += numberOfDealsLoadingAtATime;
+    
+    UIRefreshControl *refreshControl = (UIRefreshControl *)[self.scrollView viewWithTag:999];
+    
+    if ([refreshControl isRefreshing]) {
+        [refreshControl endRefreshing];
+    }
 }
 
--(void) fillTheCellsWithImages {
+- (void)fillCellsImagesOneByOne {
+    
     isUpdatingNow = YES;
     
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-    dispatch_async(queue, ^{
-        // Do some computation here.
-        DealClass *dealClass = [[DealClass alloc]init];
-        for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
-            dealClass = [_dealsArray objectAtIndex:i];
-            NSString *num=[dealClass dealPhotoID1];
-            NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",num];
-            
-            if ((![num isEqualToString:@"0"])||(num != nil)||([num length] != 0)) {
-                _image2=[[UIImage alloc]init];
-                _image2 =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
-                [dealClass setDealPhoto1:_image2];
-            }
+    dispatch_queue_t photosQueue;
+    
+    for (int i = cellsNumbersInFillWithImages; ((i < cellNumberInScrollView) && (i < [_dealsArray count])); i++) {
+        
+        if (!photosQueue) {
+            photosQueue = dispatch_queue_create("com.MyQueue", NULL);
         }
-        // Update UI after computation.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
+        
+        dispatch_async(photosQueue, ^{
+            
             DealClass *dealClass = [[DealClass alloc]init];
-            for (int i=cellsNumbersInFillWithImages; ((i<cellNumberInScrollView) && (i<[_dealsArray count])); i++) {
-                dealClass = [_dealsArray objectAtIndex:i];
-                NSString *num=[dealClass dealPhotoID1];
-                if ([num isEqualToString:@"0"]||([num length]==0)) {
-                    isShortCell = YES;
-                } else isShortCell = NO;
+            
+            
+            dealClass = [_dealsArray objectAtIndex:i];
+            NSString *imageID = [dealClass dealPhotoID1];
+            
+            if ((![imageID isEqualToString:@"0"]) || (imageID != nil) || ([imageID length] != 0)) {
                 
-                UIImageView *imageview;
-                if (isShortCell) {
-                    imageview=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_No Pic Deal background & Shadow.png"]];
-                } else imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Deal background & Shadow.png"]];
-                [imageview setFrame:CGRectMake(2.5, 4+(gap2), 315, 199-(OFFSETSHORTCELL*isShortCell))];
+                NSString *URLForPhoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg", imageID];
+                NSData *imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:URLForPhoto]];
+                self.image = [[UIImage alloc]initWithData:imageData];
+                [dealClass setDealPhoto1:self.image];
                 
-                UIImageView *imageview2 = [[UIImageView alloc]init];
-                if (isShortCell) {
-                } else {
-                    imageview2.image=[dealClass dealPhoto1];
-                    [imageview2 setFrame:CGRectMake(10, 10+(gap2), 300, 155)];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    UIImageView *imageview2 = [[UIImageView alloc]init];
+                    
+                    UIImageView *imageViewBackground = (UIImageView *)[self.scrollView viewWithTag:(i + 1) * imageViewBackgroundTag];
+                    [imageview2 setFrame:imageViewBackground.frame];
+                    
+                    imageview2.image = [dealClass dealPhoto1];
                     CALayer *mask = [CALayer layer];
-                    mask.contents=(id)[[UIImage imageNamed:@"My Feed+View Deal (final)_Deal Pic mask.png"]CGImage];
+                    mask.contents = (id)[[UIImage imageNamed:@"Deal Pic Mask"]CGImage];
                     mask.frame = CGRectMake(0, 0, 300, 155);
                     imageview2.layer.mask = mask;
                     imageview2.layer.masksToBounds = YES;
-                    imageview2.tag=i;
-                    if (!isShortCell) [[self scrollView] addSubview:imageview2];
-                }
-                UIImageView *imageview3;
-                if (isShortCell) {
-                    imageview3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal - New Version_No Pic Deal Dark background.png"]];
-                    [imageview3 setFrame:CGRectMake(10, 9+(gap2), 300, 47)];
+                    imageview2.tag = (i + 1) * imageViewTag;
+                    imageview2.alpha = 0;
+                    UIImageView *titlebackground = (UIImageView *)[self.scrollView viewWithTag:(i + 1) * titleBackgroundTag];
+                    [[self scrollView] insertSubview:imageview2 belowSubview:titlebackground];
+                    UIActivityIndicatorView *loading = (UIActivityIndicatorView *)[self.scrollView viewWithTag:(i + 1) * loadingIndicatorTag];
                     
-                } else { imageview3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Title & Store shade.png"]];
-                    [imageview3 setFrame:CGRectMake(10, 87+(gap2)-(OFFSETSHORTCELL*isShortCell), 300, 78)];
-                }
-                [[self scrollView] addSubview:imageview3];
-                
-                UIImageView *imageview5 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Likes icon.png"]];
-                [imageview5 setFrame:CGRectMake(274, 124+(gap2)-(OFFSETSHORTCELL*isShortCell), 13, 12)];
-                [[self scrollView] addSubview:imageview5];
-                
-                UIImageView *imageview6 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Comments icon.png"]];
-                [imageview6 setFrame:CGRectMake(274, 143+(gap2)-(OFFSETSHORTCELL*isShortCell), 12, 14)];
-                [[self scrollView] addSubview:imageview6];
-                
-                
-                UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(18, 119+(gap2)-(OFFSETSHORTCELL*isShortCell), 249, 41)];
-                [label setFont:[UIFont fontWithName:@"Avenir-Roman" size:14.0]];
-                label.text=[dealClass dealTitle];
-                label.backgroundColor=[UIColor clearColor];
-                label.textColor = [UIColor whiteColor];
-                label.numberOfLines=2;
-                [[self scrollView] addSubview:label];
-                
-                UILabel *label5=[[UILabel alloc]initWithFrame:CGRectMake(291, 121+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
-                [label5 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-                label5.text=[dealClass dealLikesCount];
-                label5.backgroundColor=[UIColor clearColor];
-                label5.textColor = [UIColor whiteColor];
-                [label5 sizeToFit];
-                [[self scrollView] addSubview:label5];
-                
-                UILabel *label6=[[UILabel alloc]initWithFrame:CGRectMake(291, 141+(gap2)-(OFFSETSHORTCELL*isShortCell), 21, 21)];
-                [label6 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-                label6.text=[dealClass dealCommentCount];
-                label6.backgroundColor=[UIColor clearColor];
-                label6.textColor = [UIColor whiteColor];
-                [label6 sizeToFit];
-                [[self scrollView] addSubview:label6];
-                
-                UIButton *selectDealButton=[UIButton buttonWithType:UIButtonTypeCustom];
-                [selectDealButton setTitle:@"" forState:UIControlStateNormal];
-                selectDealButton.frame=CGRectMake(0, 4+(gap2), 319, 193-(OFFSETSHORTCELL*isShortCell));//193
-                selectDealButton.tag=i;
-                [selectDealButton addTarget:self action:@selector(selectDealButtonClicked:) forControlEvents: UIControlEventTouchUpInside];
-                [[self scrollView] addSubview:selectDealButton];
-                gap2=CGRectGetMaxY(imageview.frame)-4;
+                    [UIView animateWithDuration:0.5 animations:^{
+                        loading.alpha = 0;
+                        imageview2.alpha = 1.0;
+                    } completion:^(BOOL finished){
+                        [loading stopAnimating];
+                    }];
+                    
+                    if (i + 1 == cellNumberInScrollView) {
+                        isUpdatingNow = NO; // Releasing only when the loop is finished.
+                        NSLog(@"isUpdateNow is NO");
+                        
+                        int scrollOffset = self.scrollView.contentOffset.y + self.view.frame.size.height;
+                        if (((GAP - scrollOffset) < 200) && (GAP != 0)) {
+                            isUpdatingNow = YES;
+                            [self stopWheelAndPresentDeals];
+                        }
+                    }
+                    
+                    NSLog(@"\n cellNumbersInFillWithImages: %i \n cellNumberInScrollView: %i \n i: %i", cellsNumbersInFillWithImages, cellNumberInScrollView, i);
+                });
             }
-            cellsNumbersInFillWithImages+=10;
-            isUpdatingNow = NO;
-            
         });
-    });
+    }
     
+    cellsNumbersInFillWithImages += numberOfDealsLoadingAtATime;
 }
 
--(void) selectDealButtonClicked:(id)sender {
+/*
+ - (void)fillTheCellsWithImages {
+ 
+ isUpdatingNow = YES;
+ 
+ dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+ dispatch_async(queue, ^{
+ 
+ DealClass *dealClass = [[DealClass alloc]init];
+ 
+ for (int i = cellsNumbersInFillWithImages; ((i < cellNumberInScrollView) && (i < [_dealsArray count])); i++) {
+ dealClass = [_dealsArray objectAtIndex:i];
+ NSString *num = [dealClass dealPhotoID1];
+ NSString *URLforphoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",num];
+ 
+ if ((![num isEqualToString:@"0"]) || (num != nil) || ([num length] != 0)) {
+ self.image = [[UIImage alloc]init];
+ self.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:URLforphoto]]];
+ [dealClass setDealPhoto1:self.image];
+ }
+ }
+ 
+ dispatch_async(dispatch_get_main_queue(), ^{
+ 
+ DealClass *dealClass = [[DealClass alloc]init];
+ 
+ for (int i = cellsNumbersInFillWithImages; ((i < cellNumberInScrollView) && (i < [_dealsArray count])); i++) {
+ dealClass = [_dealsArray objectAtIndex:i];
+ NSString *num = [dealClass dealPhotoID1];
+ if ([num isEqualToString:@"0"] || ([num length] == 0)) {
+ isShortCell = YES;
+ } else isShortCell = NO;
+ 
+ UIImageView *imageview2 = [[UIImageView alloc]init];
+ 
+ if (!isShortCell) {
+ 
+ UIImageView *imageViewBackground = (UIImageView *)[self.scrollView viewWithTag:(i + 1) * imageViewBackgroundTag];
+ [imageview2 setFrame:imageViewBackground.frame];
+ 
+ imageview2.image = [dealClass dealPhoto1];
+ CALayer *mask = [CALayer layer];
+ mask.contents = (id)[[UIImage imageNamed:@"Deal Pic Mask"]CGImage];
+ mask.frame = CGRectMake(0, 0, 300, 155);
+ imageview2.layer.mask = mask;
+ imageview2.layer.masksToBounds = YES;
+ imageview2.tag = i;
+ imageview2.alpha = 0;
+ UIImageView *titlebackground = (UIImageView *)[self.scrollView viewWithTag:(i + 1) * titleBackgroundTag];
+ [[self scrollView] insertSubview:imageview2 belowSubview:titlebackground];
+ [UIView animateWithDuration:0.5 animations:^{ imageview2.alpha = 1.0; }];
+ }
+ }
+ 
+ cellsNumbersInFillWithImages += 10;
+ isUpdatingNow = NO;
+ 
+ });
+ });
+ }
+ */
+
+- (void)selectDealButtonClicked:(id)sender {
+    
     ViewonedealViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
     UIButton *button = (UIButton *)sender;
     DealClass *dealClass = [[DealClass alloc]init];
@@ -342,72 +444,101 @@
     } else controller.isShoetCell = @"yes";
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
-    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-    NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-    _dealsUserLikes=DataResult;
     
-    if ([_dealsUserLikes rangeOfString:[dealClass dealID]].location == NSNotFound) {
-        controller.likeornotLabelFromMyFeeds=@"no";
-        NSLog(@"didnt find");
+    if ([app.dealerClass.userLikesList rangeOfString:[dealClass dealID]].location == NSNotFound) {
+        controller.likeornotLabelFromMyFeeds = @"no";
     } else {
-        controller.likeornotLabelFromMyFeeds=@"yes";
+        controller.likeornotLabelFromMyFeeds = @"yes";
     }
     
     [self.navigationController pushViewController:controller animated:YES];
 }
 
--(void)initializeView {
-    [[self scrollView] setBackgroundColor:[UIColor colorWithRed:(230/255.0) green:(230/255.0) blue:(230/255.0) alpha:1.0]];
-    isShortCell=NO;
-    isUpdatingNow=NO;
-    cellNumberInScrollView=0;
-    cellsNumbersInFillWithImages=0;
-    GAP=0;
-    gap2=0;
-    myFeedsFirstTime = YES;
-    self.scrollView.frame=[[UIScreen mainScreen] bounds];
-    
+-(void)startLoading:(UIImageView *)spinningWheel
+{
+    spinningWheel.animationImages = [NSArray arrayWithObjects:
+                                     [UIImage imageNamed:@"loading.png"],
+                                     [UIImage imageNamed:@"loading5.png"],
+                                     [UIImage imageNamed:@"loading10.png"],
+                                     [UIImage imageNamed:@"loading15.png"],
+                                     [UIImage imageNamed:@"loading20.png"],
+                                     [UIImage imageNamed:@"loading25.png"],
+                                     [UIImage imageNamed:@"loading30.png"],
+                                     [UIImage imageNamed:@"loading35.png"],
+                                     [UIImage imageNamed:@"loading40.png"],
+                                     [UIImage imageNamed:@"loading45.png"],
+                                     [UIImage imageNamed:@"loading50.png"],
+                                     [UIImage imageNamed:@"loading55.png"],
+                                     [UIImage imageNamed:@"loading60.png"],
+                                     [UIImage imageNamed:@"loading65.png"],
+                                     [UIImage imageNamed:@"loading70.png"],
+                                     [UIImage imageNamed:@"loading75.png"],
+                                     [UIImage imageNamed:@"loading80.png"],
+                                     [UIImage imageNamed:@"loading85.png"],
+                                     nil];
+    spinningWheel.animationDuration = 0.3;
+    [spinningWheel startAnimating];
+    [UIView animateWithDuration:0.3 animations:^{spinningWheel.alpha=1.0; spinningWheel.transform =CGAffineTransformMakeScale(0,0);
+        spinningWheel.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
--(void)allocArrays {
+- (void)initializeView {
+    
+    [[self scrollView] setBackgroundColor:[UIColor colorWithRed:(230/255.0) green:(230/255.0) blue:(235/255.0) alpha:1.0]];
+    
+    isShortCell = NO;
+    isUpdatingNow = NO;
+    
+    numberOfDealsLoadingAtATime = 10;
+    cellNumberInScrollView = 0;
+    cellsNumbersInFillWithImages = 0;
+    
+    GAP = 0;
+    gap2 = 0;
+    
+    myFeedsFirstTime = YES;
+    self.scrollView.frame =[[UIScreen mainScreen] bounds];
+}
+
+- (void)allocArrays {
     _dealsArray=Nil;
     _dealPhotosArray=Nil;
     _dealsArray = [[NSMutableArray alloc]init];
     _dealPhotosArray=[[NSMutableArray alloc]init];
 }
 
--(void)setRefreshControl {
+- (void)setRefreshControl {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.tintColor=[UIColor colorWithRed:150/255.0f green:0/255.0f blue:180/255.0f alpha:1.0];
+    refreshControl.tintColor = [UIColor colorWithRed:150/255.0f green:0/255.0f blue:180/255.0f alpha:1.0];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    refreshControl.tag = 999;
     [[self scrollView] addSubview:refreshControl];
 }
 
 -(void)refresh:(UIRefreshControl *)refreshControl {
     NSLog(@"refreshing");
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.AfterAddDeal=@"yes";
+    app.AfterAddDeal = @"yes";
     [self viewDidAppear:YES];
-    [refreshControl endRefreshing];
 }
 
--(void)didReachFromRegisterOrAddDeal {
+- (void)didReachFromRegisterOrAddDeal {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if (![app.AfterAddDeal isEqualToString:@"no"]) {
         app.AfterAddDeal = @"no";
         NSArray *viewsToRemove = [self.scrollView subviews];
         for (UIView *v in viewsToRemove) {
-            [v removeFromSuperview];
+            if (v.tag != 999) {     // Every view except the refresh controller.
+                [v removeFromSuperview];
+            }
         }
-        
         [self createDealsTable];
-        [self fillTheCellsWithImages];
+        [self fillCellsImagesOneByOne];
     }
 }
 
--(void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     
     // [self deallocPrevViewControllers];
     
@@ -416,7 +547,6 @@
     if ([app.AfterAddDeal isEqualToString:@"yes"]) {
         app.AfterAddDeal = @"no";
         NSLog(@"delete old dealsArray, uploading new deals, and update VC");
-        [self startLoadingUploadIcon:_LoadingImage];
         [self initializeView];
         [self allocArrays];
         static NSCache *_cache = nil;
@@ -425,26 +555,26 @@
         if ([checkconnection connected]) {
             [self loadDBandUpdateCells];
         } else {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check Internet Connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Check Your Internet Connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
             [alert show];
         }
     }
 }
 
 /*
--(void)deallocPrevViewControllers {
-    if (myFeedsFirstTime) {
-        NSArray *viewControllers = self.navigationController.viewControllers;
-        id previousController = [viewControllers objectAtIndex:0];
-        if ([previousController respondsToSelector:@selector(deallocMemory)])
-            [previousController deallocMemory];
-        previousController = [viewControllers objectAtIndex:1];
-        if ([previousController respondsToSelector:@selector(deallocMemory)])
-            [previousController deallocMemory];
-        myFeedsFirstTime=NO;
-    }
-}
-*/
+ -(void)deallocPrevViewControllers {
+ if (myFeedsFirstTime) {
+ NSArray *viewControllers = self.navigationController.viewControllers;
+ id previousController = [viewControllers objectAtIndex:0];
+ if ([previousController respondsToSelector:@selector(deallocMemory)])
+ [previousController deallocMemory];
+ previousController = [viewControllers objectAtIndex:1];
+ if ([previousController respondsToSelector:@selector(deallocMemory)])
+ [previousController deallocMemory];
+ myFeedsFirstTime=NO;
+ }
+ }
+ */
 
 -(void)loadDBandUpdateCells {
     [self showWhiteCover];
@@ -456,38 +586,40 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             // Update the UI on the main thread.
             [self didReachFromRegisterOrAddDeal];
-            [self setRefreshControl];
             [self removeWhiteCover];
         });
     });
 }
 
--(void)viewDidLoad {
+- (void)viewDidLoad {
     
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
     
     [self initializeView];
     [self allocArrays];
-    [self startLoadingUploadIcon:_LoadingImage];
     [self removeCellsFromSuperview];
+    [self setRefreshControl];
+    
     CheckConnection *checkconnection = [[CheckConnection alloc]init];
+    
     if ([checkconnection connected]){
         [self loadDBandUpdateCells];
     } else {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Check Internet Connection" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
     }
+    
     [super viewDidLoad];
 }
 
--(void)scrollViewDidScroll: (UIScrollView*)scrollView {
-    int scrollOffset = scrollView.contentOffset.y + 300;
-    if (((GAP - scrollOffset) < 200)&&(GAP!=0)) {
+- (void)scrollViewDidScroll: (UIScrollView *)scrollView {
+    int scrollOffset = scrollView.contentOffset.y + self.view.frame.size.height;
+    if (((GAP - scrollOffset) < 200) && (GAP != 0)) {
+        
         if (!isUpdatingNow) {
-            NSLog(@"scroll reach end, refreshing");
             isUpdatingNow = YES;
-            [self createDealsTable];
-            [self fillTheCellsWithImages];
+            [self stopWheelAndPresentDeals];
+            
         }
     }
 }
@@ -495,6 +627,24 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [scrollView becomeFirstResponder];
+}
+
+- (void)stopWheelAndPresentDeals
+{
+    UIImageView *spinningWheel = (UIImageView *)[self.scrollView viewWithTag:spinningWheelTag];
+    
+    if (spinningWheel) {
+        
+        [UIView animateWithDuration:0.3 animations:^{ spinningWheel.transform = CGAffineTransformMakeScale(0,0); }
+                         completion:^(BOOL finished){
+                             [self createDealsTable];
+                             [self fillCellsImagesOneByOne];
+                             [spinningWheel stopAnimating];
+                         }];
+    } else {
+        [self createDealsTable];
+        [self fillCellsImagesOneByOne];
+    }
 }
 
 
@@ -751,23 +901,28 @@
 }
 
 -(void) showWhiteCover {
-    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
-    UIButton *button2 = (UIButton*)[self.view viewWithTag:120];
-    [self.view bringSubviewToFront:button1];
-    [self.view bringSubviewToFront:button2];
-    [self.view bringSubviewToFront:_LoadingImage];
     
+    UIView *whiteCover = [self.view viewWithTag:111];
+    
+    if (!whiteCover) {
+        whiteCover = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+        whiteCover.tag = 111;
+        [self.view addSubview:whiteCover];
+        [self.view bringSubviewToFront:_LoadingImage];
+    }
+    
+    whiteCover.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0];
     [UIView animateWithDuration:0.3 animations:^{
-        button1.alpha=0.8;
+        whiteCover.alpha=0.8;
     }];
 }
 
 -(void) removeWhiteCover {
     NSLog(@"remove white cover");
-    UIButton *button1 = (UIButton*)[self.view viewWithTag:110];
+    UIView *whiteCover = [self.view viewWithTag:111];
     
     [UIView animateWithDuration:0.3 animations:^{
-        button1.alpha=0.0;
+        whiteCover.alpha=0.0;
     }];
 }
 

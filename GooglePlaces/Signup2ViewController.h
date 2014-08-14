@@ -8,16 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-
+#import "AppDelegate.h"
 
 @interface Signup2ViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIActionSheetDelegate,UINavigationBarDelegate,UINavigationControllerDelegate>
 {
     NSString *Photoid;
     BOOL didAddPhoto;
     BOOL registerAgain;
+    BOOL isPopping;
     CGPoint scrollOriginOffset;
 }
 @property (nonatomic) UIApplication *app;
+@property (nonatomic) AppDelegate *appDelegate;
 
 @property (strong, nonatomic) NSMutableArray *list;
 

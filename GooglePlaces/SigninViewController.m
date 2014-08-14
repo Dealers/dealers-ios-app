@@ -28,24 +28,37 @@
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         // Do some computation here.
-        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata",app.UserID];
+        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata", app.UserID];
         NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        
+        // Need to do this in the same call as the above...
+        NSString *url2 = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
+        NSData *URLData2 = [NSData dataWithContentsOfURL:[NSURL URLWithString:url2]];
+        NSString *DataLikes = [[NSString alloc] initWithData:URLData2 encoding:NSUTF8StringEncoding];
+        
         NSArray *array;
         array = [DataResult componentsSeparatedByString:@"."];
         NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[array objectAtIndex:1]];
         URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-        // Update UI after computation.
+        
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
-            app.dealerProfileImage = [UIImage imageWithData:URLData];
-            app.dealerName=[array objectAtIndex:0];
-            [self StopLoading];
-            [app setTabBarController];
-            //            MyFeedsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"feeds"];
-            //            UINavigationController *navigationController = self.navigationController;
-            //            [navigationController pushViewController:controller animated:YES];
             
+            NSLog(@"Done");
+            if (!isPopping) {
+                DealerClass *dealer = [[DealerClass alloc]init];
+                dealer.userID = app.UserID;
+                dealer.userName = [array objectAtIndex:0];
+                dealer.userPhoto = [UIImage imageWithData:URLData];
+                dealer.userLikesList = DataLikes;
+                
+                app.dealerClass = dealer;
+                
+                [self StopLoading];
+                
+                [app setTabBarController];
+            }
         });
     });
     
@@ -56,6 +69,7 @@
     ReturnButtonFull.alpha=0.0;
     EmailText.text=[[NSUserDefaults standardUserDefaults] stringForKey:@"Email"];
     PasswordText.text=[[NSUserDefaults standardUserDefaults] stringForKey:@"Password"];
+    isPopping = NO;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.EmailText setDelegate:self];
     [self.EmailText setReturnKeyType:UIReturnKeyNext];
@@ -71,6 +85,10 @@
     self.title = @"Sign In";
     [self initialize];
     [super viewDidLoad];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    isPopping = YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
