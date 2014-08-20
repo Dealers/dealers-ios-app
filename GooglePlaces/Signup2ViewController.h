@@ -51,6 +51,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *textFieldsFrame;
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datepick;
+@property (nonatomic) NSDate *selectedDate;
+@property (nonatomic) NSDateFormatter *dateFormatter;
 @property (weak, nonatomic) IBOutlet UINavigationBar *NavBar;
 @property (weak, nonatomic) IBOutlet UIScrollView *scroll;
 @property (weak, nonatomic) IBOutlet UIPickerView *GenderPicker;

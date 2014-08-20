@@ -14,7 +14,7 @@
 @property NSString *userName;
 @property NSString *userPassword;
 @property NSString *userEmail;
-@property NSString *userDateofBirth;
+@property NSDate *userDateofBirth;
 @property NSString *userGender;
 @property NSString *userAbout;
 @property NSString *userLocation;

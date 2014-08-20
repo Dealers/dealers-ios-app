@@ -20,6 +20,8 @@
     BOOL isUpdatingNow;
     BOOL myFeedsFirstTime;
     BOOL refreshing;
+    
+    NSString *selfViewController;
 }
 
 @property (weak,nonatomic) IBOutlet UIScrollView *scrollView;
@@ -34,5 +36,7 @@
 @property (nonatomic, strong) NSMutableArray *dealPhotosArray;
 
 @property (strong, nonatomic) NSString *dealsUserLikes;
+
+@property (nonatomic) NSString *categoryFromExplore;
 
 @end

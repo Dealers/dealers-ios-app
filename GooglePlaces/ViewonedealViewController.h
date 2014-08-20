@@ -80,6 +80,7 @@
 @property UIView *mapAndStoreSection;
 
 @property (weak, nonatomic) IBOutlet UIButton *LikeButton;
+@property (weak, nonatomic) IBOutlet UIButton *likeButtonSelected;
 - (IBAction)LikeButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *CommentButton;
 - (IBAction)CommentButtonAction:(id)sender;

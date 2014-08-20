@@ -14,7 +14,14 @@
 #import "OnlineViewController.h"
 #import "CheckConnection.h"
 
-#define OFFSETSHORTCELL 109
+#define profileOptionsSectionTag 4321
+#define offSetShortCell 109
+#define imageViewBackgroundTag 10
+#define titleBackgroundTag 1000
+#define loadingIndicatorTag 100000
+#define spinningWheelTag 4444
+
+#define sectionGap 20
 
 @interface ProfileViewController ()
 
@@ -48,7 +55,7 @@
                                      nil];
     _loadingImage.animationDuration = 0.3;
     [_loadingImage startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{_loadingImage.alpha=1.0; _loadingImage.transform =CGAffineTransformMakeScale(0,0);
+    [UIView animateWithDuration:0.2 animations:^{_loadingImage.alpha=1.0; _loadingImage.transform = CGAffineTransformMakeScale(0,0);
         _loadingImage.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
@@ -70,21 +77,21 @@
     
     CheckConnection *checkconnection = [[CheckConnection alloc]init];
     if ([checkconnection connected]) {
-        NSString * url= [NSString stringWithFormat:@"http://www.dealers.co.il/setDealClass.php?Indicator=whatdealstheuseruploaded&Userid=%@",_dealerId];
+        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setDealClass.php?Indicator=whatdealstheuseruploaded&Userid=%@",self.dealerId];
         NSURL *dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
         NSData *data = [NSData dataWithContentsOfURL: dbRequestURL];
         NSError* error;
         
-        if (data!=nil) {
+        if (data != nil) {
             NSDictionary* json = [NSJSONSerialization
                                   JSONObjectWithData:data
                                   options:kNilOptions
                                   error:&error];
             NSDictionary *responseData = json[@"respone"];
             NSArray *deals = responseData[@"deals"];
-            NSLog(@"deals for profile=%@",deals);
+            NSLog(@"deals for profile = %@",deals);
             
-            for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
+            for (int i = 0; i < [deals count] && deals != nil; i++)
             {
                 DealClass *dealClass = [[DealClass alloc]init];
                 NSDictionary *dealsDictionary = [deals objectAtIndex:i];
@@ -112,11 +119,11 @@
                 [dealClass setDealStoreLatitude:[dealsDictionary objectForKey:@"storelatitude"]];
                 [dealClass setDealStoreLongitude:[dealsDictionary objectForKey:@"storelongitude"]];
                 
-                [_dealClassUpload addObject:dealClass];
+                [self.uploadedDeals addObject:dealClass];
             }
         }
         
-        url= [NSString stringWithFormat:@"http://www.dealers.co.il/setDealClass.php?Indicator=bringdealstheuserlikes&Userid=%@",_dealerId];
+        url= [NSString stringWithFormat:@"http://www.dealers.co.il/setDealClass.php?Indicator=bringdealstheuserlikes&Userid=%@",self.dealerId];
         dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
         data = [NSData dataWithContentsOfURL: dbRequestURL];
         
@@ -129,7 +136,7 @@
             NSArray *deals = responseData[@"deals"];
             NSLog(@"%@",deals);
             
-            for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
+            for (int i = 0; i < [deals count] && deals != nil; i++)
             {
                 DealClass *dealClass = [[DealClass alloc]init];
                 NSDictionary *dealsDictionary = [deals objectAtIndex:i];
@@ -157,11 +164,11 @@
                 [dealClass setDealStoreLatitude:[dealsDictionary objectForKey:@"storelatitude"]];
                 [dealClass setDealStoreLongitude:[dealsDictionary objectForKey:@"storelongitude"]];
                 
-                [_dealClassLikes addObject:dealClass];
+                [self.likedDeals addObject:dealClass];
             }
         }
         
-        
+        /*
         
         NSMutableArray *TITLEMARRAY_temp = [[NSMutableArray alloc] init];
         NSMutableArray *DESCRIPTIONMARRAY_temp = [[NSMutableArray alloc] init];
@@ -180,7 +187,7 @@
         NSMutableArray *onlineOrLocalArray_temp = [[NSMutableArray alloc] init];
         
         
-        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=whatdealstheuseruploaded&Userid=%@",_dealerId];
+        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=whatdealstheuseruploaded&Userid=%@",self.dealerId];
         NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
         NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
         NSArray *dataArray = [DataResult componentsSeparatedByString:@"^"];
@@ -352,13 +359,14 @@
         _uploadDateArrayForLikesView = [NSMutableArray arrayWithArray:uploadDateArray_tempForLikesView];
         _onlineOrLocalArrayForLikesView = [NSMutableArray arrayWithArray:uploadDateArray_tempForLikesView];
         
+        */
         
     }//if connection
 }
 
 -(void) allocArrays {
-    _dealClassUpload=[[NSMutableArray alloc]init];
-    _dealClassLikes=[[NSMutableArray alloc]init];
+    _uploadedDeals=[[NSMutableArray alloc]init];
+    _likedDeals=[[NSMutableArray alloc]init];
     _TITLEMARRAY = [[NSMutableArray alloc]init];
     _DESCRIPTIONMARRAY = [[NSMutableArray alloc]init];
     _STOREMARRAY = [[NSMutableArray alloc]init];
@@ -394,16 +402,203 @@
     _onlineOrLocalArrayForLikesView = [[NSMutableArray alloc]init];
 }
 
--(void) createDealsTable {
-    NSLog(@"in createDealsTable");
+- (void)createDealsTable {
+    
+    DealClass *dealClass = [[DealClass alloc]init];
     
     isUpdatingNow = YES;
-    for (int i=cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
+    
+    for (int i = cellNumberInScrollView; ((i < numberOfDealsLoadingAtATime + cellNumberInScrollView) && (i < [self.uploadedDeals count])); i++) {
+        dealClass = [self.uploadedDeals objectAtIndex:i];
+        NSString *imageID = [dealClass dealPhotoID1];
+        
+        if ([imageID isEqualToString:@"0"]) {
+            isShortCell = YES;
+        } else isShortCell = NO;
+        
+        UIImageView *imageview, *imageViewBackground;
+        
+        if (isShortCell) {
+            imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"No Pic Deal Background"]];
+        } else {
+            imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Deal Background"]];
+            imageViewBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Deal Pic Mask"]];
+        }
+        
+        [imageview setFrame:CGRectMake(2.5, 4 + GAP, 315, 199 - (offSetShortCell * isShortCell))];
+        [imageViewBackground setFrame:CGRectMake(10, 10 + GAP, 300, 155)];
+        imageViewBackground.tag = (i + 1) * imageViewBackgroundTag;
+        [self.dealsView addSubview:imageview];
+        [self.dealsView addSubview:imageViewBackground];
+        
+        if (!isShortCell) {
+            UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            loading.center = imageViewBackground.center;
+            loading.tag = (i + 1) * loadingIndicatorTag;
+            [loading startAnimating];
+            [self.dealsView addSubview:loading];
+        }
+        
+        UIImageView *titleBackground;
+        
+        if (isShortCell) {
+            titleBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"No Pic Title Background"]];
+            [titleBackground setFrame:CGRectMake(10, 9 + GAP, 300, 47)];
+        } else {
+            titleBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Title Background"]];
+            titleBackground.alpha = 0.7;
+            [titleBackground setFrame:CGRectMake(10, 87+(GAP)-(offSetShortCell*isShortCell), 300, 78)];
+            titleBackground.tag = (i + 1) * titleBackgroundTag;
+        }
+        [self.dealsView addSubview:titleBackground];
+        
+        UIImageView *likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Likes icon.png"]];
+        [likeIcon setFrame:CGRectMake(274, 124+(GAP)-(offSetShortCell*isShortCell), 13, 12)];
+        [self.dealsView addSubview:likeIcon];
+        
+        UIImageView *commentIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Comments icon.png"]];
+        [commentIcon setFrame:CGRectMake(274, 143+(GAP)-(offSetShortCell*isShortCell), 12, 14)];
+        [self.dealsView addSubview:commentIcon];
+        
+        
+        UILabel *title=[[UILabel alloc]initWithFrame:CGRectMake(18, 119+(GAP)-(offSetShortCell*isShortCell), 249, 41)];
+        [title setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
+        title.text = [dealClass dealTitle];
+        title.backgroundColor = [UIColor clearColor];
+        title.textColor = [UIColor whiteColor];
+        title.numberOfLines = 2;
+        [self.dealsView addSubview:title];
+        
+        UILabel *likes = [[UILabel alloc]initWithFrame:CGRectMake(291, 121+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
+        [likes setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
+        likes.text=[dealClass dealLikesCount];
+        likes.backgroundColor = [UIColor clearColor];
+        likes.textColor = [UIColor whiteColor];
+        [likes sizeToFit];
+        [self.dealsView addSubview:likes];
+        
+        UILabel *comments = [[UILabel alloc]initWithFrame:CGRectMake(291, 141+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
+        [comments setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
+        comments.text=[dealClass dealCommentCount];
+        comments.backgroundColor = [UIColor clearColor];
+        comments.textColor = [UIColor whiteColor];
+        [comments sizeToFit];
+        [self.dealsView addSubview:comments];
+        
+        UIButton *selectDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [selectDealButton setTitle:@"" forState:UIControlStateNormal];
+        selectDealButton.frame = CGRectMake(0, 4+(GAP), 319, 193-(offSetShortCell*isShortCell));//193
+        selectDealButton.tag = i;
+        [selectDealButton addTarget:self action:@selector(selectDealButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.dealsView addSubview:selectDealButton];
+        
+        UIImageView *imageview4;
+        if ([[dealClass dealOnlineOrLocal] isEqualToString:@"local"]) {
+            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Local Icon"]];
+            [imageview4 setFrame:CGRectMake(18, 173+(GAP)-(offSetShortCell*isShortCell), 11, 14)];
+        } else {
+            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Online Icon"]];
+            [imageview4 setFrame:CGRectMake(17, 174+(GAP)-(offSetShortCell*isShortCell), 13, 13)];
+        }
+        [self.dealsView addSubview:imageview4];
+        
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(34, 168+(GAP)-(offSetShortCell*isShortCell), 175, 24)];
+        [label2 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
+        label2.text = [dealClass dealStore];
+        label2.backgroundColor = [UIColor clearColor];
+        label2.textColor = [UIColor blackColor];
+        [self.dealsView addSubview:label2];
+        
+        if ((![[dealClass dealPrice] isEqualToString:@"0"]) && ([[dealClass dealDiscount] isEqualToString:@"0"])) {
+            UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text = [dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
+            label3.backgroundColor = [UIColor clearColor];
+            label3.textColor = [UIColor blackColor];
+            [label3 sizeToFit];
+            label3.textAlignment = NSTextAlignmentRight;
+            [self.dealsView addSubview:label3];
+        }
+        
+        if ((![[dealClass dealPrice] isEqualToString:@"0"]) && (![[dealClass dealDiscount] isEqualToString:@"0"])) {
+            UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
+            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label4.text = [dealClass dealDiscount];
+            label4.text = [label4.text stringByAppendingString:@"%"];
+            label4.backgroundColor = [UIColor clearColor];
+            label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
+            [label4 sizeToFit];
+            label4.textAlignment = NSTextAlignmentRight;
+            [self.dealsView addSubview:label4];
+            
+            UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text = [dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
+            label3.backgroundColor = [UIColor clearColor];
+            label3.textColor = [UIColor blackColor];
+            label3.textAlignment = NSTextAlignmentRight;
+            [label3 sizeToFit];
+            [self.dealsView addSubview:label3];
+        }
+        
+        if (([[dealClass dealPrice] isEqualToString:@"0"]) && (![[dealClass dealDiscount] isEqualToString:@"0"])) {
+            UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text=[dealClass dealDiscount];
+            label3.text = [label3.text stringByAppendingString:@"%"];
+            label3.backgroundColor=[UIColor clearColor];
+            label3.textColor = [UIColor redColor];
+            [label3 sizeToFit];
+            label3.textAlignment=NSTextAlignmentRight;
+            [self.dealsView addSubview:label3];
+        }
+        
+        GAP = CGRectGetMaxY(imageview.frame) - 4;
+        
+    } // End of for loop.
+    
+    if (cellNumberInScrollView + numberOfDealsLoadingAtATime < self.uploadedDeals.count) {
+        
+        // Need the spinning wheel:
+        CGFloat width = 30;
+        CGFloat height = 30;
+        CGFloat x = self.view.center.x - width/2;
+        CGFloat y = GAP + 15;
+        UIImageView *spinningWheel = [[UIImageView alloc]initWithFrame:CGRectMake(x , y, width, height)];
+        spinningWheel.tag = spinningWheelTag;
+        
+        [self.dealsView addSubview:spinningWheel];
+        [self startLoading:spinningWheel];
+        
+        [self.dealsView setFrame:CGRectMake(self.dealsView.frame.origin.x, self.dealsView.frame.origin.y, self.view.frame.size.width, CGRectGetMaxY(spinningWheel.frame) + 25)];
+        
+    } else {
+        // Add here the logo that indicates that the deals array is finished.
+        [self.dealsView setFrame:CGRectMake(self.dealsView.frame.origin.x, self.dealsView.frame.origin.y, self.view.frame.size.width, GAP + 10)];
+    }
+    
+    [self.scrollView setContentSize:self.dealsView.frame.size];
+    
+    cellNumberInScrollView += numberOfDealsLoadingAtATime;
+    
+    UIRefreshControl *refreshControl = (UIRefreshControl *)[self.scrollView viewWithTag:999];
+    
+    if ([refreshControl isRefreshing]) {
+        [refreshControl endRefreshing];
+    }
+}
+
+/*
+
+- (void)createDealsTable {
+    
+    isUpdatingNow = YES;
+    for (int i = cellNumberInScrollView; ((i<10+cellNumberInScrollView) && (i<[[self.TITLEMARRAY copy] count])); i++) {
         
         if ((i>=[_TITLEMARRAY count])||(i>=[_DESCRIPTIONMARRAY count])||(i>=[_STOREMARRAY count])||(i>=[_PRICEMARRAY count])||(i>=[_DISCOUNTMARRAY count])||(i>=[_EXPIREMARRAY count])||(i>=[_CLIENTMARRAY count])||(i>=[_LIKEMARRAY count])||(i>=[_COMMENTMARRAY count])||(i>=[_PHOTOIDMARRAY count])||(i>=[_CATEGORYARRAY count])||(i>=[_SIGNARRAY count])||(i>=[_DEALIDARRAY count])||(i>=[_uploadDateArray count])||(i>=[_onlineOrLocalArray count])) {
             continue;
         }
-        NSString *num=[self.PHOTOIDMARRAY objectAtIndex:i];
+        NSString *num = [self.PHOTOIDMARRAY objectAtIndex:i];
         if ([num isEqualToString:@"0"]) {
             isShortCell = YES;
         } else isShortCell = NO;
@@ -477,7 +672,7 @@
         
 		GAP=CGRectGetMaxY(imageview.frame)-4;
 	}
-    cellNumberInScrollView+=10;
+    cellNumberInScrollView += 10;
     self.dealsView.frame = CGRectMake(0, CGRectGetMaxY(_likesViewButton.frame), 320, GAP);
     
     
@@ -574,6 +769,8 @@
     [_loadingImage stopAnimating];
     
 }
+ 
+
 -(void) fillTheCellsWithImages {
     NSLog(@"in profile filling the images");
     isUpdatingNow = YES;
@@ -788,6 +985,7 @@
     });
     
 }
+*/
 
 -(void) selectDealButtonForLikeViewClicked:(id)sender {
     ViewonedealViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
@@ -806,7 +1004,7 @@
     }
     
     DealClass *dealClass = [[DealClass alloc]init];
-    dealClass = [_dealClassLikes objectAtIndex:(button.tag-1)];
+    dealClass = [self.likedDeals objectAtIndex:(button.tag-1)];
     [dealClass printClass];
     controller.dealClass=dealClass;
     
@@ -838,7 +1036,7 @@
     }
     
     DealClass *dealClass = [[DealClass alloc]init];
-    dealClass = [_dealClassUpload objectAtIndex:(button.tag)];
+    dealClass = [self.uploadedDeals objectAtIndex:(button.tag)];
     [dealClass printClass];
     controller.dealClass=dealClass;
     
@@ -852,16 +1050,43 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-
+- (void)startLoading:(UIImageView *)spinningWheel
+{
+    spinningWheel.animationImages = [NSArray arrayWithObjects:
+                                     [UIImage imageNamed:@"loading.png"],
+                                     [UIImage imageNamed:@"loading5.png"],
+                                     [UIImage imageNamed:@"loading10.png"],
+                                     [UIImage imageNamed:@"loading15.png"],
+                                     [UIImage imageNamed:@"loading20.png"],
+                                     [UIImage imageNamed:@"loading25.png"],
+                                     [UIImage imageNamed:@"loading30.png"],
+                                     [UIImage imageNamed:@"loading35.png"],
+                                     [UIImage imageNamed:@"loading40.png"],
+                                     [UIImage imageNamed:@"loading45.png"],
+                                     [UIImage imageNamed:@"loading50.png"],
+                                     [UIImage imageNamed:@"loading55.png"],
+                                     [UIImage imageNamed:@"loading60.png"],
+                                     [UIImage imageNamed:@"loading65.png"],
+                                     [UIImage imageNamed:@"loading70.png"],
+                                     [UIImage imageNamed:@"loading75.png"],
+                                     [UIImage imageNamed:@"loading80.png"],
+                                     [UIImage imageNamed:@"loading85.png"],
+                                     nil];
+    spinningWheel.animationDuration = 0.3;
+    [spinningWheel startAnimating];
+    [UIView animateWithDuration:0.3 animations:^{spinningWheel.alpha=1.0; spinningWheel.transform =CGAffineTransformMakeScale(0,0);
+        spinningWheel.transform =CGAffineTransformMakeScale(1,1);}];
+}
 
 -(void) setTopPart {
     
-    if ([_didComeFromLikesTable isEqualToString:@"yes"]){
-        _editProfileButton.enabled = NO;
+    lowestYPoint = CGRectGetMaxY(self.followersCount.frame);
+    
+    if ([self.profileMode isEqualToString:@"Other Profile"]){
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
             // Do some computation here.
-            NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata",_dealerId];
+            NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata",self.dealerId];
             NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
             NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
             NSLog(@"%@",DataResult);
@@ -873,41 +1098,161 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI on the main thread.
                 UIImage *image = [UIImage imageWithData:URLData];
-                _dealerProfileImage.image=image;
+                self.dealerProfileImage.image=image;
                 CALayer *mask = [CALayer layer];
                 mask.contents=(id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
                 mask.frame = CGRectMake(0, 0, 80, 80);
-                _dealerProfileImage.layer.mask = mask;
-                _dealerProfileImage.layer.masksToBounds = YES;
-                _dealerName.text=[array objectAtIndex:0];
-                
+                self.dealerProfileImage.layer.mask = mask;
+                self.dealerProfileImage.layer.masksToBounds = YES;
+                self.dealerName.text = [array objectAtIndex:0];
             });
         });
         
-    } else {
+    } else if ([self.profileMode isEqualToString:@"My Profile Tab"] || [self.profileMode isEqualToString:@"My Profile"]){
         
-        UIImage *image = appDelegate.dealerClass.userPhoto;
-        _dealerProfileImage.image = image;
+        self.currentDealer = self.appDelegate.dealerClass;
+        
+        self.dealerProfileImage.image = self.currentDealer.userPhoto;
         
         CALayer *mask = [CALayer layer];
         mask.contents = (id)[[UIImage imageNamed:@"Registration_Email button.png"]CGImage];
         mask.frame = CGRectMake(0, 0, 80, 80);
-        _dealerProfileImage.layer.mask = mask;
-        _dealerProfileImage.layer.masksToBounds = YES;
+        self.dealerProfileImage.layer.mask = mask;
+        self.dealerProfileImage.layer.masksToBounds = YES;
         
-        _dealerName.text=appDelegate.dealerClass.userName;
+        self.dealerName.text = self.currentDealer.userName;
+        
+        [self setProfileOptions];
     }
+}
+
+- (void)setProfileOptions
+{
+    UIView *profileOptionsSection = [[UIView alloc]initWithFrame:CGRectMake(0, lowestYPoint + sectionGap, self.view.frame.size.width, 60)];
+    profileOptionsSection.tag = profileOptionsSectionTag;
+    [self.scrollView addSubview:profileOptionsSection];
     
-    UIImage *image2 = [UIImage imageNamed: @"Profile_Master Dealer.png"];
-    _dealerRankImage.image = image2;
+    lowestYPoint = CGRectGetMaxY(profileOptionsSection.frame);
     
+    CGFloat buttonsWidth = 92;
+    CGFloat buttonsHeight = 60;
+    CGFloat iconWidthHeight = 20;
+    CGRect frame;
     
+    UIView *savedDealsFrame = [[UIView alloc]initWithFrame:CGRectMake(10, 0, buttonsWidth, buttonsHeight)];
+    savedDealsFrame.layer.cornerRadius = 5;
+    savedDealsFrame.layer.masksToBounds = YES;
+    savedDealsFrame.backgroundColor = [UIColor whiteColor];
+    [profileOptionsSection addSubview:savedDealsFrame];
     
+    UIImageView *savedDealsIcon = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, iconWidthHeight, iconWidthHeight)];
+    savedDealsIcon.center = CGPointMake(46, 20);
+    savedDealsIcon.image = [UIImage imageNamed:@"Saved Deals Icon"];
+    [savedDealsFrame addSubview:savedDealsIcon];
     
+    UILabel *savedDealsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, savedDealsFrame.frame.size.width, 15)];
+    savedDealsLabel.text = @"Saved Deals";
+    savedDealsLabel.textAlignment = NSTextAlignmentCenter;
+    savedDealsLabel.font = [UIFont fontWithName:@"Avenir-Light" size:14.0];
+    savedDealsLabel.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:147.0/255.0 alpha:1.0];
+    [savedDealsFrame addSubview:savedDealsLabel];
+    
+    UIButton *savedDealsButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    frame = savedDealsFrame.frame;
+    frame.origin = CGPointMake(0, 0);
+    savedDealsButton.frame = frame;
+    [savedDealsButton addTarget:self action:@selector(pushSavedDealsView) forControlEvents:UIControlEventTouchUpInside];
+    [savedDealsFrame addSubview:savedDealsButton];
+    
+    UIView *settingsFrame = [[UIView alloc]initWithFrame:CGRectMake(114, 0, buttonsWidth, buttonsHeight)];
+    settingsFrame.layer.cornerRadius = 5;
+    settingsFrame.layer.masksToBounds = YES;
+    settingsFrame.backgroundColor = [UIColor whiteColor];
+    [profileOptionsSection addSubview:settingsFrame];
+    
+    UIImageView *settingsIcon = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, iconWidthHeight, iconWidthHeight)];
+    settingsIcon.center = CGPointMake(46, 20);
+    settingsIcon.image = [UIImage imageNamed:@"Settings Icon"];
+    [settingsFrame addSubview:settingsIcon];
+    
+    UILabel *settingsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, settingsFrame.frame.size.width, 16)];
+    settingsLabel.text = @"Settings";
+    settingsLabel.textAlignment = NSTextAlignmentCenter;
+    settingsLabel.font = [UIFont fontWithName:@"Avenir-Light" size:14.0];
+    settingsLabel.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:147.0/255.0 alpha:1.0];
+    [settingsFrame addSubview:settingsLabel];
+    
+    UIButton *settingsButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    frame = settingsFrame.frame;
+    frame.origin = CGPointMake(0, 0);
+    settingsButton.frame = frame;
+    [settingsButton addTarget:self action:@selector(pushSettingsView) forControlEvents:UIControlEventTouchUpInside];
+    [settingsFrame addSubview:settingsButton];
+    
+    UIView *notificationsFrame = [[UIView alloc]initWithFrame:CGRectMake(218, 0, buttonsWidth, buttonsHeight)];
+    notificationsFrame.layer.cornerRadius = 5;
+    notificationsFrame.layer.masksToBounds = YES;
+    notificationsFrame.backgroundColor = [UIColor whiteColor];
+    [profileOptionsSection addSubview:notificationsFrame];
+    
+    UIImageView *notifictionsIcon = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, iconWidthHeight, iconWidthHeight)];
+    notifictionsIcon.center = CGPointMake(46, 20);
+    notifictionsIcon.image = [UIImage imageNamed:@"Notifications Icon"];
+    [notificationsFrame addSubview:notifictionsIcon];
+    
+    UILabel *notificatoinsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 35, notificationsFrame.frame.size.width, 15)];
+    notificatoinsLabel.text = @"Notifications";
+    notificatoinsLabel.textAlignment = NSTextAlignmentCenter;
+    notificatoinsLabel.font = [UIFont fontWithName:@"Avenir-Light" size:14.0];
+    notificatoinsLabel.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:147.0/255.0 alpha:1.0];
+    [notificationsFrame addSubview:notificatoinsLabel];
+    
+    UIButton *notificationsButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    frame = notificationsFrame.frame;
+    frame.origin = CGPointMake(0, 0);
+    notificationsButton.frame = frame;
+    [notificationsButton addTarget:self action:@selector(pushNotificationsView) forControlEvents:UIControlEventTouchUpInside];
+    [notificationsFrame addSubview:notificationsButton];
+}
+
+- (void)pushSavedDealsView
+{
+    NSLog(@"Saved Deals Pushed");
+    NSLog(@"dealsView location: \n %f, %f \n dealsView size: %f, %f", self.dealsView.frame.origin.x, self.dealsView.frame.origin.x,self.dealsView.frame.size.width,self.dealsView.frame.size.height);
+}
+
+- (void)pushSettingsView
+{
+    SettingsTableViewController *stvc = [self.storyboard instantiateViewControllerWithIdentifier:@"settingsID"];
+    [self.navigationController pushViewController:stvc animated:YES];
+}
+
+- (void)pushNotificationsView
+{
+    NSLog(@"Notifications Pushed");
 }
 
 -(void) setScrollSize {
     //[_scrollView setContentSize:CGSizeMake(320, 500)];
+}
+
+- (void)setDealsOrLikesControl
+{
+    self.dealsOrLikesControl.center = CGPointMake(self.dealsOrLikesControl.center.x, lowestYPoint + sectionGap + self.dealsOrLikesControl.frame.size.height/2);
+}
+
+- (void)setRefreshControl {
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor colorWithRed:150/255.0f green:0/255.0f blue:180/255.0f alpha:1.0];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    refreshControl.tag = 999;
+    [[self scrollView] addSubview:refreshControl];
+}
+
+-(void)refresh:(UIRefreshControl *)refreshControl {
+    NSLog(@"refreshing");
+    didLoadView = 0;
+    [self viewDidAppear:YES];
 }
 
 -(void) initialize {
@@ -916,47 +1261,24 @@
     _deals=@"b";
     _likes=@"a";
     GAP = 0;
-    GAP = 0;
     gap2 = 0;
     GAPForLikeView = 0;
     gap2ForLikeView = 0;
+    numberOfDealsLoadingAtATime = 10;
     cellNumberInScrollView = 1;
     cellsNumbersInFillWithImages = 1;
     cellNumberInScrollViewForLikeView = 1;
     cellsNumbersInFillWithImagesForLikeView = 1;
-    didLoadView=0;
+    didLoadView = 0;
     _likesView.hidden=YES;
     self.scrollView.frame = [[UIScreen mainScreen] bounds];
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.AfterAddDeal=@"aftertapbar";
     
-    if ([_didComeFromLikesTable isEqualToString:@"yes"]) {
-    } else {_dealerId=app.UserID;}
-    
-    /*
-     if () {
-     NSLog(@"prev is like on viewdeal");
-     _returnButton.hidden=YES;
-     [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button@2X.png"]];
-     [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button (selected)@2X.png"]];
-     _myFeedLabel.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(170/255.0) alpha:1.0];
-     _profileLabel.textColor = [UIColor colorWithRed:(150/255.0) green:(0/255.0) blue:(180/255.0) alpha:1.0];
-     } else {
-     [_myFeedIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_My Feed button(selected)@2X.png"]];
-     [_profileIcon setImage:[UIImage imageNamed:@"My Feed+View Deal_Profile button@2X.png"]];
-     _profileLabel.textColor = [UIColor colorWithRed:(170/255.0) green:(170/255.0) blue:(170/255.0) alpha:1.0];
-     _myFeedLabel.textColor = [UIColor colorWithRed:(150/255.0) green:(0/255.0) blue:(180/255.0) alpha:1.0];
-     }*/
-    
-    _dealsCountLabel.textColor = [UIColor whiteColor];
-    _likesCountLabel.textColor = [UIColor colorWithRed:(180/255.0) green:(180/255.0) blue:(185/255.0) alpha:1.0];
+    self.dealsCountLabel.textColor = [UIColor whiteColor];
+    self.likesCountLabel.textColor = [UIColor colorWithRed:(180/255.0) green:(180/255.0) blue:(185/255.0) alpha:1.0];
     
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    currentVC=1;
-    
-    [self setTopPart];
 
     if (!didLoadView) {
         [self allocArrays];
@@ -968,36 +1290,50 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 // Update the UI on the main thread.
                 [self createDealsTable];
-                [self fillTheCellsWithImages];
+//                [self fillTheCellsWithImages];
+                NSLog(@"dealsView location: \n %f, %f \n dealsView size: %f, %f", self.dealsView.frame.origin.x, self.dealsView.frame.origin.x,self.dealsView.frame.size.width,self.dealsView.frame.size.height);
             });
         });
-        didLoadView=1;
+        didLoadView = 1;
     }
-}
--(void)viewDidDisappear:(BOOL)animated {
-    currentVC=0;
 }
 
 - (void)viewDidLoad
 {
     self.title = @"Profile";
     
-    [self startLoadingUploadImage];
     [self initialize];
     
-    //[self performSelectorInBackground:@selector(loadDataFromDB) withObject:nil];
+    [self determineProfileMode];
+    
+    [self setTopPart];
+    
+    [self setDealsOrLikesControl];
+    
+    [self setRefreshControl];
+    
+    [self startLoadingUploadImage];
+    
     [super viewDidLoad];
+}
+
+- (void)determineProfileMode
+{
+    if ([[self.navigationController.viewControllers objectAtIndex:0] isEqual:self]) {
+        // This is the user's Profile Tab
+        self.profileMode = @"My Profile Tab";
+    } else if ([self.appDelegate.dealerClass.userID isEqualToString:self.dealerId]) {
+        // This is the user's Profile view reached in another way
+        self.profileMode = @"My Profile";
+    } else {
+        // This is another user's Profile view
+        self.profileMode = @"Other Profile";
+    }
+    NSLog(@"/n Profile mode is: %@", self.profileMode);
 }
 
 - (void)didReceiveMemoryWarning
 {
-    if (currentVC) {
-        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='online'"];
-        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-        [self deallocMemory];
-        UINavigationController * navigationController = self.navigationController;
-        [navigationController popViewControllerAnimated:NO];
-    }
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

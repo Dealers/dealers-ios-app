@@ -399,6 +399,8 @@
 		C83EAF2618690AC40084E0E1 /* Travel_train@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAE1F18690AC40084E0E1 /* Travel_train@2x.png */; };
 		C83EAF2718690AC40084E0E1 /* Travel_Travel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAE2018690AC40084E0E1 /* Travel_Travel@2x.png */; };
 		C83EAF2818690AC40084E0E1 /* Travel_travel_agent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAE2118690AC40084E0E1 /* Travel_travel_agent@2x.png */; };
+		C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84846FB19A2617B00BC6ACE /* SettingsTableViewController.m */; };
+		C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */; };
 		C869CB85191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */; };
 		C869CB86191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */; };
 		C869CB87191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */; };
@@ -443,6 +445,9 @@
 		C88B3F711921F7A5009252DD /* My Feed+View Deal (final)_Like button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C88B3F6F1921F7A5009252DD /* My Feed+View Deal (final)_Like button (selected)@2x.png */; };
 		C88B3F741921F883009252DD /* My Feed+View Deal (final)_Like button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C88B3F721921F883009252DD /* My Feed+View Deal (final)_Like button@2x.png */; };
 		C88B3F751921F883009252DD /* My Feed+View Deal (final)_Likes icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C88B3F731921F883009252DD /* My Feed+View Deal (final)_Likes icon@2x.png */; };
+		C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890607E19A27F88001D3359 /* NotificationsTableViewController.m */; };
+		C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */; };
+		C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890608419A49014001D3359 /* PasswordTableViewController.m */; };
 		C8951AF718FAD79C00C53E9B /* Add Deal (final)_Shade.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */; };
 		C8951AF918FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */; };
 		C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */; };
@@ -983,6 +988,10 @@
 		C83EAE1F18690AC40084E0E1 /* Travel_train@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Travel_train@2x.png"; sourceTree = "<group>"; };
 		C83EAE2018690AC40084E0E1 /* Travel_Travel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Travel_Travel@2x.png"; sourceTree = "<group>"; };
 		C83EAE2118690AC40084E0E1 /* Travel_travel_agent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Travel_travel_agent@2x.png"; sourceTree = "<group>"; };
+		C84846FA19A2617B00BC6ACE /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		C84846FB19A2617B00BC6ACE /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		C84846FD19A2620C00BC6ACE /* EditProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileTableViewController.h; sourceTree = "<group>"; };
+		C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileTableViewController.m; sourceTree = "<group>"; };
 		C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab (selected)@2x.png"; sourceTree = "<group>"; };
 		C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab@2x.png"; sourceTree = "<group>"; };
 		C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Likes List tab (selected)@2x.png"; sourceTree = "<group>"; };
@@ -1028,6 +1037,12 @@
 		C88B3F6F1921F7A5009252DD /* My Feed+View Deal (final)_Like button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal (final)_Like button (selected)@2x.png"; sourceTree = "<group>"; };
 		C88B3F721921F883009252DD /* My Feed+View Deal (final)_Like button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal (final)_Like button@2x.png"; sourceTree = "<group>"; };
 		C88B3F731921F883009252DD /* My Feed+View Deal (final)_Likes icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal (final)_Likes icon@2x.png"; sourceTree = "<group>"; };
+		C890607D19A27F88001D3359 /* NotificationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsTableViewController.h; sourceTree = "<group>"; };
+		C890607E19A27F88001D3359 /* NotificationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsTableViewController.m; sourceTree = "<group>"; };
+		C890608019A32AA7001D3359 /* PushNotificationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationsTableViewController.h; sourceTree = "<group>"; };
+		C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationsTableViewController.m; sourceTree = "<group>"; };
+		C890608319A49014001D3359 /* PasswordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordTableViewController.h; sourceTree = "<group>"; };
+		C890608419A49014001D3359 /* PasswordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordTableViewController.m; sourceTree = "<group>"; };
 		C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (final)_Shade.png"; sourceTree = "<group>"; };
 		C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Black Transparent screen@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Facebook button@2x.png"; sourceTree = "<group>"; };
@@ -1635,6 +1650,16 @@
 				B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */,
 				B012D94E182AA320006288CA /* ProfileViewController.h */,
 				B012D94F182AA321006288CA /* ProfileViewController.m */,
+				C84846FA19A2617B00BC6ACE /* SettingsTableViewController.h */,
+				C84846FB19A2617B00BC6ACE /* SettingsTableViewController.m */,
+				C84846FD19A2620C00BC6ACE /* EditProfileTableViewController.h */,
+				C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */,
+				C890608319A49014001D3359 /* PasswordTableViewController.h */,
+				C890608419A49014001D3359 /* PasswordTableViewController.m */,
+				C890607D19A27F88001D3359 /* NotificationsTableViewController.h */,
+				C890607E19A27F88001D3359 /* NotificationsTableViewController.m */,
+				C890608019A32AA7001D3359 /* PushNotificationsTableViewController.h */,
+				C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -2682,6 +2707,7 @@
 				B01BD1B517F0D7010010C9A4 /* googleCell2.m in Sources */,
 				B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */,
 				B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */,
+				C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */,
 				B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */,
 				B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
@@ -2690,6 +2716,7 @@
 				B0F1BB9D18DB83D300AD2929 /* LikesCell.m in Sources */,
 				B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
+				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
 				B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,
 				B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */,
@@ -2699,12 +2726,15 @@
 				B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */,
 				B055C73417FE882700FBDFCC /* ExploreCell.m in Sources */,
 				B0294C7318B0CC0900699107 /* MyFeedsViewController.m in Sources */,
+				C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */,
 				B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */,
 				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
+				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
 				B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */,
 				B0E4F6FE1910171E0080CD32 /* Reachability.m in Sources */,
 				B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */,
+				C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */,
 				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
 				C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */,

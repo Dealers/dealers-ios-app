@@ -6,6 +6,8 @@
 //
 //
 
+
+
 #import "EditProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "DealerClass.h"
@@ -17,6 +19,7 @@
 
 @implementation EditProfileViewController
 
+/*
 -(void) dealerClassSetting {
     
     CheckConnection *checkconnection = [[CheckConnection alloc]init];
@@ -557,4 +560,7 @@
         _scrollView.contentOffset = CGPointMake(0, 0);
     }];
 }
+ 
+*/
+ 
 @end

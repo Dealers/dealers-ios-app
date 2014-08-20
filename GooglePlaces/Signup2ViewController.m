@@ -89,7 +89,7 @@
     dealer.userName = Fullname.text;
     dealer.userPassword = Password.text;
     dealer.userEmail = Email.text;
-    dealer.userDateofBirth = date;
+    dealer.userDateofBirth = self.selectedDate;
     dealer.userGender = gender;
     dealer.userPhotoID = Photoid;
     
@@ -362,22 +362,15 @@
 
 -(void) HideDatePicker {
     [self CleanScreen:@"DatePicker"];
-    NSDate *select = [datepick date];
-    NSString *selecteddate = [[NSString alloc]initWithFormat:@"%@",select];
-    NSArray *datearray = [selecteddate componentsSeparatedByString:@" "];
-    NSString *first = [datearray objectAtIndex:0];
-    NSArray *reversedate = [first componentsSeparatedByString:@"-"];
-    NSString *day = [reversedate objectAtIndex:2];
-    NSString *mounth = [reversedate objectAtIndex:1];
-    NSString *year = [reversedate objectAtIndex:0];
-    NSString *space = @"-";
-    NSString *date = [[NSString alloc] initWithString:day];
-    date = [date stringByAppendingString:space];
-    date = [date stringByAppendingString:mounth];
-    date = [date stringByAppendingString:space];
-    date = [date stringByAppendingString:year];
-    Datebirth.text=date;
-    self.optional_date.hidden=YES;
+    self.selectedDate = [datepick date];
+    
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    
+    self.Datebirth.text = [self.dateFormatter stringFromDate:self.selectedDate];
+    
+    self.optional_date.hidden = YES;
     [self performSelector:@selector(GenderButton:) withObject:nil];
 }
 

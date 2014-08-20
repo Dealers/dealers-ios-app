@@ -9,6 +9,13 @@
 #import "DealClass.h"
 #import "Functions.h"
 
+#define offSetShortCell 109
+#define imageViewTag -10
+#define imageViewBackgroundTag 10
+#define titleBackgroundTag 1000
+#define loadingIndicatorTag 100000
+#define spinningWheelTag 4444
+
 @implementation DealClass
 /*
 -(id)init {
@@ -129,5 +136,172 @@
     
     return dealCopy;
 }
+
++ (UIView *)createDealsTableIn:(UIViewController *)viewController withDeals:(NSMutableArray *)deals
+{
+    int gap = 0;
+    int numberOfDealsLoadingAtATime = 10;
+    BOOL isShortCell;
+    UIView *dealsTable = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, [[UIScreen mainScreen]bounds].size.height)];
+    
+    DealClass *dealClass = [[DealClass alloc]init];
+    
+    for (int i = 0; i < numberOfDealsLoadingAtATime && i < [deals count]; i++) {
+        dealClass = [deals objectAtIndex:i];
+        NSString *imageID = [dealClass dealPhotoID1];
+        
+        if ([imageID isEqualToString:@"0"]) {
+            isShortCell = YES;
+        } else isShortCell = NO;
+        
+        UIImageView *imageview, *imageViewBackground;
+        
+        if (isShortCell) {
+            imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"No Pic Deal Background"]];
+        } else {
+            imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Deal Background"]];
+            imageViewBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Deal Pic Mask"]];
+        }
+        
+        [imageview setFrame:CGRectMake(2.5, 4 + gap, 315, 199 - (offSetShortCell * isShortCell))];
+        [imageViewBackground setFrame:CGRectMake(10, 10 + gap, 300, 155)];
+        imageViewBackground.tag = (i + 1) * imageViewBackgroundTag;
+        [dealsTable addSubview:imageview];
+        [dealsTable addSubview:imageViewBackground];
+        
+        if (!isShortCell) {
+            UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            loading.center = imageViewBackground.center;
+            loading.tag = (i + 1) * loadingIndicatorTag;
+            [loading startAnimating];
+            [dealsTable addSubview:loading];
+        }
+        
+        UIImageView *titleBackground;
+        
+        if (isShortCell) {
+            titleBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"No Pic Title Background"]];
+            [titleBackground setFrame:CGRectMake(10, 9 + gap, 300, 47)];
+        } else {
+            titleBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Title Background"]];
+            titleBackground.alpha = 0.7;
+            [titleBackground setFrame:CGRectMake(10, 87 + gap - (offSetShortCell * isShortCell), 300, 78)];
+            titleBackground.tag = (i + 1) * titleBackgroundTag;
+        }
+        [dealsTable addSubview:titleBackground];
+        
+        UIImageView *likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Likes icon.png"]];
+        [likeIcon setFrame:CGRectMake(274, 124 + gap - (offSetShortCell * isShortCell), 13, 12)];
+        [dealsTable addSubview:likeIcon];
+        
+        UIImageView *commentIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Comments icon.png"]];
+        [commentIcon setFrame:CGRectMake(274, 143 + gap - (offSetShortCell * isShortCell), 12, 14)];
+        [dealsTable addSubview:commentIcon];
+        
+        
+        UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(18, 119 + gap - (offSetShortCell * isShortCell), 249, 41)];
+        [title setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
+        title.text = [dealClass dealTitle];
+        title.backgroundColor = [UIColor clearColor];
+        title.textColor = [UIColor whiteColor];
+        title.numberOfLines = 2;
+        [dealsTable addSubview:title];
+        
+        UILabel *likes = [[UILabel alloc]initWithFrame:CGRectMake(291, 121 + gap - (offSetShortCell * isShortCell), 21, 21)];
+        [likes setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
+        likes.text = [dealClass dealLikesCount];
+        likes.backgroundColor = [UIColor clearColor];
+        likes.textColor = [UIColor whiteColor];
+        [likes sizeToFit];
+        [dealsTable addSubview:likes];
+        
+        UILabel *comments = [[UILabel alloc]initWithFrame:CGRectMake(291, 141 + gap - (offSetShortCell * isShortCell), 21, 21)];
+        [comments setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
+        comments.text = [dealClass dealCommentCount];
+        comments.backgroundColor = [UIColor clearColor];
+        comments.textColor = [UIColor whiteColor];
+        [comments sizeToFit];
+        [dealsTable addSubview:comments];
+        
+        /*
+        UIButton *selectDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [selectDealButton setTitle:@"" forState:UIControlStateNormal];
+        selectDealButton.frame = CGRectMake(0, 4 + gap, 319, 193 - (offSetShortCell * isShortCell));
+        selectDealButton.tag = i;
+        [selectDealButton addTarget:self action:@selector(selectDealButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [dealsTable addSubview:selectDealButton];
+        */
+        
+        UIImageView *imageview4;
+        if ([[dealClass dealOnlineOrLocal] isEqualToString:@"local"]) {
+            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Local Icon"]];
+            [imageview4 setFrame:CGRectMake(18, 173 + gap - (offSetShortCell * isShortCell), 11, 14)];
+        } else {
+            imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Online Icon"]];
+            [imageview4 setFrame:CGRectMake(17, 174 + gap - (offSetShortCell * isShortCell), 13, 13)];
+        }
+        [dealsTable addSubview:imageview4];
+        
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(34, 168 + gap - (offSetShortCell * isShortCell), 175, 24)];
+        [label2 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
+        label2.text = [dealClass dealStore];
+        label2.backgroundColor = [UIColor clearColor];
+        label2.textColor = [UIColor blackColor];
+        [dealsTable addSubview:label2];
+        
+        if ((![[dealClass dealPrice] isEqualToString:@"0"]) && ([[dealClass dealDiscount] isEqualToString:@"0"])) {
+            UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(265, 169 + gap - (offSetShortCell * isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text = [dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
+            label3.backgroundColor = [UIColor clearColor];
+            label3.textColor = [UIColor blackColor];
+            [label3 sizeToFit];
+            label3.textAlignment = NSTextAlignmentRight;
+            [dealsTable addSubview:label3];
+        }
+        
+        if ((![[dealClass dealPrice] isEqualToString:@"0"]) && (![[dealClass dealDiscount] isEqualToString:@"0"])) {
+            UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169 + gap - (offSetShortCell * isShortCell), 53, 21)];
+            [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label4.text = [dealClass dealDiscount];
+            label4.text = [label4.text stringByAppendingString:@"%"];
+            label4.backgroundColor = [UIColor clearColor];
+            label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
+            [label4 sizeToFit];
+            label4.textAlignment = NSTextAlignmentRight;
+            [dealsTable addSubview:label4];
+            
+            UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(215, 169 + gap - (offSetShortCell * isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text = [dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
+            label3.backgroundColor = [UIColor clearColor];
+            label3.textColor = [UIColor blackColor];
+            label3.textAlignment = NSTextAlignmentRight;
+            [label3 sizeToFit];
+            [dealsTable addSubview:label3];
+        }
+        
+        if (([[dealClass dealPrice] isEqualToString:@"0"]) && (![[dealClass dealDiscount] isEqualToString:@"0"])) {
+            UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169 + gap - (offSetShortCell * isShortCell), 53, 21)];
+            [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
+            label3.text = [dealClass dealDiscount];
+            label3.text = [label3.text stringByAppendingString:@"%"];
+            label3.backgroundColor=[UIColor clearColor];
+            label3.textColor = [UIColor redColor];
+            [label3 sizeToFit];
+            label3.textAlignment=NSTextAlignmentRight;
+            [dealsTable addSubview:label3];
+        }
+        
+        gap = CGRectGetMaxY(imageview.frame) - 4;
+        
+    } // End of for loop.
+    
+    dealsTable.frame = CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, gap);
+    return dealsTable;
+}
+
+
+
 
 @end

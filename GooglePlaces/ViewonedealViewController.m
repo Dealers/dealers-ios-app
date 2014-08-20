@@ -16,7 +16,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OnlineViewController.h"
 
-#define GAP 12
+#define GAP 15
+#define sectionGap 20
 #define loadingIndicatorTag 1111
 
 @interface ViewonedealViewController ()
@@ -67,10 +68,6 @@
 {
     self.mapAndStoreSection = [[UIView alloc]initWithFrame:CGRectMake(0, lowestYPoint, self.view.frame.size.width, 500)];
     [self.scroll addSubview:self.mapAndStoreSection];
-    
-    lowestYPoint = CGRectGetMaxY(self.mapAndStoreSection.frame);
-    
-    [self.scroll setContentSize:CGSizeMake(self.scroll.frame.size.width, lowestYPoint + 10)];
     
     if (![[self.dealClass dealStoreLatitude] isEqualToString:@"0"]) {
         
@@ -129,13 +126,21 @@
             [self.mapAndStoreSection addSubview:storeAddress];
         }
         
-        UIButton *selectDealButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [selectDealButton setTitle:@"waze" forState:UIControlStateNormal];
-        selectDealButton.frame=CGRectMake(15 , lowestYPoint + 155 + 30 ,62,56);
-        [selectDealButton addTarget:self action:@selector(connectToWaze) forControlEvents: UIControlEventTouchUpInside];
-        [self.scroll addSubview:selectDealButton];
+        UIButton *wazeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIImage *wazeImage = [[UIImage imageNamed:@"Waze Button"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        [wazeButton setImage:wazeImage forState:UIControlStateNormal];
+        wazeButton.frame = CGRectMake(0, 0, 208, 45);
+        CGFloat buttonCenterY = self.mapView.frame.size.height + wazeButton.frame.size.height/2 + GAP;
+        wazeButton.center = CGPointMake(self.view.center.x, buttonCenterY);
+        wazeButton.alpha = 0.9;
+        [wazeButton addTarget:self action:@selector(connectToWaze) forControlEvents: UIControlEventTouchUpInside];
+        [self.mapAndStoreSection addSubview:wazeButton];
         
-        lowestYPoint=(CGRectGetMaxY(selectDealButton.frame));
+        self.mapAndStoreSection.frame = CGRectMake(self.mapAndStoreSection.frame.origin.x,
+                                                   self.mapAndStoreSection.frame.origin.y,
+                                                   self.mapAndStoreSection.frame.size.width,
+                                                   CGRectGetMaxY(wazeButton.frame) + sectionGap);
+        lowestYPoint = CGRectGetMaxY(self.mapAndStoreSection.frame);
         [self setScrollSize];
         
     }
@@ -179,6 +184,8 @@
     } else {
         self.likesCountImage.hidden = YES;
         self.likesCountLabel.hidden = YES;
+        
+        self.likesAndButtonsSection.frame = CGRectMake(0, originY, self.likesAndButtonsSection.frame.size.width, self.LikeButton.frame.size.height + sectionGap * 2);
     }
     
     lowestYPoint = (CGRectGetMaxY(self.likesAndButtonsSection.frame));
@@ -196,12 +203,12 @@
     flag = NO;
     int offset;
     if ([[_dealClass dealPhotoSum]intValue]==0) {
-        offset=10;
-    } else offset=184;
+        offset = 10;
+    } else offset = 184;
     
     self.TitleIcon.frame = CGRectMake(10, offset, self.TitleIcon.frame.size.width, self.TitleIcon.frame.size.height);
-    titlelabel.frame = CGRectMake(50, offset+4, titlelabel.frame.size.width, titlelabel.frame.size.height);
-    titlelabel.numberOfLines=0;
+    titlelabel.frame = CGRectMake(12, offset + 4, titlelabel.frame.size.width, titlelabel.frame.size.height);
+    titlelabel.numberOfLines = 0;
     [titlelabel sizeToFit];
     
     lowestYPoint=(CGRectGetMaxY(self.TitleIcon.frame) > CGRectGetMaxY(titlelabel.frame)) ? CGRectGetMaxY(self.TitleIcon.frame) : CGRectGetMaxY(titlelabel.frame);
@@ -214,15 +221,6 @@
     } else _urlSiteButton.hidden=YES;
     
     lowestYPoint = (CGRectGetMaxY(self.StoreIcon.frame) > CGRectGetMaxY(storelabel.frame)) ? CGRectGetMaxY(self.StoreIcon.frame) : CGRectGetMaxY(storelabel.frame);
-    
-    if ((![categorylabel.text isEqualToString:@""]) || (![categorylabel.text isEqualToString:@"No Category"])) {
-        self.CategoryIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.CategoryIcon.frame.size.width, self.CategoryIcon.frame.size.height);
-        categorylabel.frame = CGRectMake(50, lowestYPoint+3+GAP, categorylabel.frame.size.width, categorylabel.frame.size.height);
-        lowestYPoint=(CGRectGetMaxY(self.CategoryIcon.frame) > CGRectGetMaxY(categorylabel.frame)) ? CGRectGetMaxY(self.CategoryIcon.frame) : CGRectGetMaxY(categorylabel.frame);
-    } else {
-        categorylabel.hidden=YES;
-        self.CategoryIcon.hidden=YES;
-    }
     
     maxXPoint = 50;
     
@@ -250,7 +248,16 @@
     
     if ((pricelabel.hidden == YES) && (discountlabel.hidden == YES)) self.PriceIcon.hidden=YES;
     
-    if (((![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"])||(![expirelabel.text isEqualToString:@"0"]))&&([expirelabel.text length]>0)) {
+    if ((![categorylabel.text isEqualToString:@""]) || (![categorylabel.text isEqualToString:@"No Category"])) {
+        self.CategoryIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.CategoryIcon.frame.size.width, self.CategoryIcon.frame.size.height);
+        categorylabel.frame = CGRectMake(50, lowestYPoint+3+GAP, categorylabel.frame.size.width, categorylabel.frame.size.height);
+        lowestYPoint=(CGRectGetMaxY(self.CategoryIcon.frame) > CGRectGetMaxY(categorylabel.frame)) ? CGRectGetMaxY(self.CategoryIcon.frame) : CGRectGetMaxY(categorylabel.frame);
+    } else {
+        categorylabel.hidden=YES;
+        self.CategoryIcon.hidden=YES;
+    }
+    
+    if (((![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"]) && (![expirelabel.text isEqualToString:@"0"])) && ([expirelabel.text length] > 0)) {
         self.ExpireIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.ExpireIcon.frame.size.width, self.ExpireIcon.frame.size.height);
         expirelabel.frame = CGRectMake(50, lowestYPoint+3+GAP, expirelabel.frame.size.width, expirelabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.ExpireIcon.frame) > CGRectGetMaxY(expirelabel.frame)) ? CGRectGetMaxY(self.ExpireIcon.frame) : CGRectGetMaxY(expirelabel.frame);
@@ -351,7 +358,7 @@
 - (void)setDealerSection
 {
     CGRect dealerSectionFrame = self.dealerSection.frame;
-    dealerSectionFrame.origin.y = lowestYPoint + 15;
+    dealerSectionFrame.origin.y = lowestYPoint + sectionGap;
     self.dealerSection.frame = dealerSectionFrame;
     lowestYPoint = (CGRectGetMaxY(self.dealerSection.frame));
     
@@ -378,10 +385,9 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            _uploadDateLabel.text = [DataArray objectAtIndex:0];
-            _dealersNameLabel.text = [DataArray objectAtIndex:1];
+            self.uploadDateLabel.text = [@"Uploaded on " stringByAppendingString:[DataArray objectAtIndex:0]];
+            self.dealersNameLabel.text = [DataArray objectAtIndex:1];
             self.dealerImage.image = dealerImage;
-            
             
             [UIView animateWithDuration:0.3 animations:^{ self.dealerSection.alpha = 1; }];
         });
@@ -393,7 +399,7 @@
 {
     if ([self.isShoetCell isEqualToString:@"yes"]) {
         self.cameraScrollView.hidden = YES;
-    
+        
     } else {
         self.captureImage.image = self.dealClass.dealPhoto1;
         
@@ -434,15 +440,16 @@
     self.scroll.frame = [[UIScreen mainScreen] bounds];
     
     if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
-//        _LikeButton.enabled = NO;
-        _LikeButton.selected = YES;
+        //        _LikeButton.enabled = NO;
+        self.LikeButton.hidden = YES;
+        self.likeButtonSelected.hidden = NO;
     }
     
     self.pageControl.numberOfPages=[[_dealClass dealPhotoSum]intValue];
     [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass dealPhotoSum]intValue], 165)))];
     [self.cameraScrollView setScrollEnabled:YES];
     
-    cellNumberInScrollView=0;
+    cellNumberInScrollView = 0;
     likesView = NO;
     
     [self loadVarsFromDeal];
@@ -475,17 +482,32 @@
 {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
-    if ([_likeornotLabelFromMyFeeds isEqualToString:@"no"]) {
-//        _LikeButton.enabled = NO;
-        _likeornotLabelFromMyFeeds = @"yes";
-        self.LikeButton.selected = YES;
+    if ([self.likeornotLabelFromMyFeeds isEqualToString:@"no"]) {
+        //        self.LikeButton.enabled = NO;
+        self.likeornotLabelFromMyFeeds = @"yes";
+        
+        self.likeButtonSelected.hidden = NO;
+        self.likeButtonSelected.alpha = 0;
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.likeButtonSelected.transform = CGAffineTransformMakeScale(0.2, 0.2);
+            self.likeButtonSelected.transform = CGAffineTransformMakeScale(1, 1);
+            self.likeButtonSelected.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            self.LikeButton.hidden = YES;
+        }];
+        
         int IntLike = [likelabel intValue];
         IntLike++;
-        likelabel=[NSString stringWithFormat:@"%d",IntLike];
-        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@&Dealid=%@",app.UserID,@"updatelikestables",[_dealClass dealID]];
-        NSLog(@"url updatin after like: %@", url);
-        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        likelabel = [NSString stringWithFormat:@"%d",IntLike];
+        
+        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue3", NULL);
+        dispatch_async(queue, ^{
+            NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@&Dealid=%@",app.UserID,@"updatelikestables",[_dealClass dealID]];
+            NSLog(@"url updatin after like: %@", url);
+//            NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//            NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+        });
     }
 }
 
@@ -514,7 +536,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView==_tableViewLikes) {
-        NSLog(@"count=%d",[_dealersNameArray count]);
+        NSLog(@"count=%lu",(unsigned long)[_dealersNameArray count]);
         if ([_dealersNameArray count] == 0) {
             return 0;
         }

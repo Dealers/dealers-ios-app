@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DealClass : NSObject <NSCopying>
+@interface DealClass : NSObject <NSCopying> 
 
 @property (nonatomic) NSString *dealID;
 @property (nonatomic) NSString *dealTitle;
@@ -40,6 +40,8 @@
 @property (nonatomic) UIImage *dealPhoto3;
 @property (nonatomic) UIImage *dealPhoto4;
 
+@property (nonatomic) NSMutableArray *deals;
+
 
 // Only our setters which override the default ones are mentioned here:
 
@@ -55,5 +57,7 @@
 
 - (id)copyWithZone:(NSZone *)zone;
 - (id)mutableCopyWithZone:(NSZone *)zone;
+
++ (UIView *)createDealsTableIn:(UIViewController *)viewController withDeals:(NSMutableArray *)deals;
 
 @end

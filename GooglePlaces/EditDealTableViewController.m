@@ -177,6 +177,8 @@
     NSDate *today = [NSDate date];
     [self.datePicker setMinimumDate:today];
     
+    self.datePicker.backgroundColor = [UIColor whiteColor];
+    
     self.datePickerIsShowing = NO;
     self.datePicker.hidden = YES;
     self.noDateButton.hidden = YES;

@@ -26,6 +26,8 @@
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
 @property (strong, nonatomic)  DealerClass *dealerClass;
 
+@property (weak) UIImage *screenShot;
+
 - (void)setTabBarController;
 - (NSArray *)getCategories;
 - (NSArray *)getCategoriesIcons;
