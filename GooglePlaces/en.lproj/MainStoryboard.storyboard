@@ -112,8 +112,35 @@
                                     <outlet property="delegate" destination="XKf-Bu-Ol1" id="6LE-49-i1l"/>
                                 </connections>
                             </scrollView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" id="SbK-VX-mF5" userLabel="Table StoreSearch">
-                                <rect key="frame" x="0.0" y="108" width="320" height="221"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CWn-sJ-CKk" userLabel="Button - CloseSearch">
+                                <rect key="frame" x="0.0" y="108" width="320" height="482"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeStoreSearchTableButtonClicked:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="Jbt-1E-nMU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DV5-QH-swA" userLabel="Button - removemap">
+                                <rect key="frame" x="139" y="526" width="42" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="Add Deal (Final)_Minimize Map button.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="Add Deal (Final)_Minimize Map button (selected).png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="collapseMapButtonClicked:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="xBQ-w4-Ifp"/>
+                                </connections>
+                            </button>
+                            <tableView hidden="YES" opaque="NO" clipsSubviews="YES" alpha="0.89999999999999991" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" id="SbK-VX-mF5" userLabel="Table StoreSearch">
+                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.9360984564" green="0.93607044220000002" blue="0.93608629700000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -153,10 +180,9 @@
                                     <outlet property="delegate" destination="XKf-Bu-Ol1" id="prr-Jf-gQM"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="scaleToFill" placeholder="Not there? Type store here" id="U4o-rW-sgd">
+                            <searchBar contentMode="scaleToFill" placeholder="Not there? Type store here" translucent="NO" id="U4o-rW-sgd">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" red="0.76862745099999996" green="0.7725490196" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>
@@ -166,38 +192,6 @@
                                     <outlet property="delegate" destination="XKf-Bu-Ol1" id="Bwb-dj-gmy"/>
                                 </connections>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DV5-QH-swA" userLabel="Button - removemap">
-                                <rect key="frame" x="139" y="526" width="42" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="Add Deal (Final)_Minimize Map button.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted" image="Add Deal (Final)_Minimize Map button (selected).png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="collapseMapButtonClicked:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="xBQ-w4-Ifp"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CWn-sJ-CKk" userLabel="Button - CloseSearch">
-                                <rect key="frame" x="0.0" y="108" width="320" height="482"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="closeStoreSearchTableButtonClicked:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="Jbt-1E-nMU"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" id="XNZ-el-j6T" userLabel="View - large table">
-                                <rect key="frame" x="0.0" y="108" width="320" height="479"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -218,7 +212,6 @@
                         <outlet property="loadingLabel" destination="XI9-sz-Xhp" id="gYN-70-ngi"/>
                         <outlet property="scrollView" destination="i2k-NE-Qm2" id="8qw-4J-vUW"/>
                         <outlet property="storeSearchTableView" destination="SbK-VX-mF5" id="g7V-cM-lez"/>
-                        <outlet property="storeSearchView" destination="XNZ-el-j6T" id="Tg2-fg-gmb"/>
                         <outlet property="theShadow" destination="zuc-OM-0sX" id="rRR-mf-3C2"/>
                         <outlet property="venuesTableView" destination="nR9-Vr-DbC" id="KBa-wE-rfi"/>
                         <outlet property="whiteCoverView" destination="ZiZ-i4-bFF" id="WUo-yp-9AU"/>
@@ -1763,7 +1756,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? Great," lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="27" y="514" width="230" height="26"/>
+                                        <rect key="frame" x="27" y="513.99999906925052" width="230" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>

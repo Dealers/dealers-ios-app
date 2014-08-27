@@ -20,6 +20,7 @@
 #define clientSecret @"5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G"
 
 #define barTableGap 152 // The gap between the bottom of the search bar and the top of the venues table view.
+#define keyboardHeight 216
 
 @interface TableViewController ()
 
@@ -200,7 +201,6 @@
         self.venuesTableView.backgroundColor = [UIColor whiteColor];
     }
     
-    [self.venuesTableView setScrollEnabled:NO];
     [UIView animateWithDuration:0.3 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform = CGAffineTransformMakeScale(0,0);}];
     [UIView animateWithDuration:0.3 animations:^{self.loadingLabel.alpha=0.0; self.loadingLabel.center = CGPointMake(self.loadingLabel.center.x,self.loadingLabel.center.y+10);}];
     [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.3];
@@ -274,14 +274,13 @@
     self.storeSearchTableView.hidden=YES;
     //self.closeStoreSearchTableButton.hidden=YES;
     self.closeStoreSearchTableButton.alpha=0.0;
-    self.storeSearchView.hidden=YES;
     self.closeStoreSearchViewButton.hidden=YES;
 }
 
 - (void)viewDidLoad
 {
     self.title = @"Where is the Deal?";
-        
+    
     // This is the size of the venues table view in the initial display of the view:
     self.venuesTableInitialFrame = CGRectMake(0, barTableGap, 320, [[UIScreen mainScreen]bounds].size.height - 64 - 44 - barTableGap);
     
@@ -377,8 +376,8 @@
             return Cell;
         }
     }
-    if (tableView==self.storeSearchTableView) {
-        self.storeSearchTableView.hidden=NO;
+    if (tableView == self.storeSearchTableView) {
+        self.storeSearchTableView.hidden = NO;
         static NSString *CellIdentifier = @"StoreSearch";
         StoreSearchCell *Cell=nil;
         Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -485,9 +484,22 @@
     [self.mapView setRegion:region animated:TRUE];
 }
 
--(void) storeSearchFromFoursquer{
-    
-    NSString *searchText = _searchTextToBackground;
+- (void)sendToFoursquareAndUpdateWithText:(NSString *)text
+{
+    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+    dispatch_async(queue, ^{
+        // Do some computation here.
+        [self storeSearchFromFoursquer:text];
+        // Update UI after computation.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Update the UI on the main thread.
+            [self LoadStoresTableView];
+        });
+    });
+}
+
+- (void)storeSearchFromFoursquer:(NSString *)text
+{
     self.storeSearchNameArray = nil;
     self.storeSearchLocationArray = nil;
     self.storeSearchNameArray = [[NSMutableArray alloc]init];
@@ -495,7 +507,7 @@
     
     //NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=100000&v=20131120&query=%@&intent=global&limit=50",_locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude,searchText];
     
-    NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&v=20131120&query=%@&intent=global&limit=50",searchText];
+    NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&v=20131120&query=%@&intent=global&limit=50",text];
     NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
     NSData *data = [NSData dataWithContentsOfURL: googleRequestURL];
     NSError* error;
@@ -525,41 +537,45 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
     if (searchText.length == 0) {
-        SearchTextSize = 0;
-        self.closeStoreSearchTableButton.alpha = 0.3;
-        
         self.storeSearchNameArray = nil;
         self.storeSearchLocationArray = nil;
-        self.storeSearchTableView.hidden = YES;
-        self.theShadow.hidden = YES;
-        [self.mapView setZoomEnabled:NO];
-        [self.scrollView setScrollEnabled:NO];
-    } else {
-        SearchTextSize = 1;
-        self.closeStoreSearchTableButton.alpha = 0.0;
-        self.storeSearchTableView.hidden = NO;
-        _searchTextToBackground = searchText;
+        [UIView animateWithDuration:0.2
+                         animations:^{ self.storeSearchTableView.alpha = 0; }
+                         completion:^(BOOL finished) { self.storeSearchTableView.hidden = YES;}
+         ];
+        SearchTextSize = 0;
         
-        dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-        dispatch_async(queue, ^{
-            // Do some computation here.
-            [self storeSearchFromFoursquer];
-            // Update UI after computation.
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // Update the UI on the main thread.
-                [self LoadStoresTableView];
-            });
-        });
+    } else {
+        if (SearchTextSize != 1) {
+            self.storeSearchTableView.hidden = NO;
+            self.storeSearchTableView.alpha = 0;
+            [UIView animateWithDuration:0.2 animations:^{ self.storeSearchTableView.alpha = 0.9; }];
+        }
+        [self sendToFoursquareAndUpdateWithText:searchText];
+        SearchTextSize = 1;
     }
 }
 
--(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    self.closeStoreSearchTableButton.alpha=0.3;
-    return 1;
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.closeStoreSearchTableButton.hidden = NO;
+    [UIView animateWithDuration:0.2 animations:^{ self.closeStoreSearchTableButton.alpha = 0.5; }];
+    self.storeSearchTableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+    [searchBar setShowsCancelButton:YES animated:YES];
 }
-- (void)viewDidUnload {
-    [super viewDidUnload];
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+    [UIView animateWithDuration:0.2
+                     animations:^{ self.storeSearchTableView.alpha = 0; }
+                     completion:^(BOOL finished) { self.storeSearchTableView.hidden = YES;}
+     ];
+    [UIView animateWithDuration:0.2
+                     animations:^{ self.closeStoreSearchTableButton.alpha = 0; }
+                     completion:^(BOOL finished) { self.closeStoreSearchTableButton.hidden = YES;}
+     ];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -592,38 +608,32 @@
     }
 }
 
-- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    self.closeStoreSearchViewButton.hidden=NO;
-    self.venuesTableView.hidden=YES;
-    self.storeSearchView.hidden=NO;
-    self.storeSearchTableView.frame = CGRectMake(0, 0, 320, 371);
-    [self.storeSearchView addSubview:self.storeSearchTableView];
-    [self.SearchBar resignFirstResponder];
-}
-
--(void) closeStoreSearchViewButtonClicked: (id)sender {
-    self.closeStoreSearchViewButton.hidden=YES;
-    self.closeStoreSearchTableButton.alpha=0.0;
-    self.storeSearchTableView.hidden=YES;
-    self.venuesTableView.hidden=NO;
-    self.theShadow.hidden=NO;
-    [self.mapView setZoomEnabled:YES];
-    [self.scrollView setScrollEnabled:YES];
-    [self.SearchBar resignFirstResponder];
-    self.storeSearchView.hidden=YES;
-    self.storeSearchTableView.frame = CGRectMake(0, 88, 320, 170);
-    [self.view addSubview:self.storeSearchTableView];
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    
+    if (self.storeSearchTableView.isHidden) {
+        self.storeSearchTableView.hidden = NO;
+        self.storeSearchTableView.alpha = 0;
+        [UIView animateWithDuration:0.2 animations:^{ self.storeSearchTableView.alpha = 1.0; }];
+        [self sendToFoursquareAndUpdateWithText:self.SearchBar.text];
+        [self.SearchBar resignFirstResponder];
+        [self.SearchBar setShowsCancelButton:NO animated:YES];
+    } else {
+        self.closeStoreSearchViewButton.hidden = NO;
+        self.storeSearchTableView.contentInset = UIEdgeInsetsZero;
+        [UIView animateWithDuration:0.2 animations:^{ self.storeSearchTableView.alpha = 1.0; }];
+        [self.SearchBar resignFirstResponder];
+        [searchBar setShowsCancelButton:NO animated:YES];
+    }
 }
 
 -(void) closeStoreSearchTableButtonClicked:(id)sender {
-    self.closeStoreSearchTableButton.alpha=0.0;
-    self.storeSearchTableView.hidden=YES;
-    self.venuesTableView.hidden=NO;
-    self.theShadow.hidden=NO;
-    [self.mapView setZoomEnabled:YES];
-    [self.scrollView setScrollEnabled:YES];
+    [UIView animateWithDuration:0.2
+                     animations:^{ self.closeStoreSearchTableButton.alpha = 0.0; }
+                     completion:^(BOOL finished) { self.closeStoreSearchViewButton.hidden = YES; }
+     ];
+    self.storeSearchTableView.hidden = YES;
     [self.SearchBar resignFirstResponder];
-    self.storeSearchView.hidden=YES;
+    [self.SearchBar setShowsCancelButton:NO animated:YES];
 }
 
 -(void) deallocMemory {
@@ -702,16 +712,18 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.venuesTableView deselectRowAtIndexPath:self.venuesTableView.indexPathForSelectedRow animated:YES];
-}
-
-
--(void)viewDidAppear:(BOOL)animated {
     [self initMapView];
     if (currentVC) {
         [self performSelector:@selector(loadFoursquareaAfterDelay) withObject:nil afterDelay:0];
     }
-    currentVC=1;
+    currentVC = 1;
+    [self.venuesTableView deselectRowAtIndexPath:self.venuesTableView.indexPathForSelectedRow animated:YES];
+    [self.storeSearchTableView deselectRowAtIndexPath:self.storeSearchTableView.indexPathForSelectedRow animated:YES];
+    [self.SearchBar setShowsScopeBar:NO];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated {

@@ -30,13 +30,10 @@
 
 -(void) deallocMemory;
 
-@property (strong,nonatomic) NSString *searchTextToBackground;
-
 @property (nonatomic, strong) MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *whiteCoverView;
-@property (weak, nonatomic) IBOutlet UIView *storeSearchView;
 
 @property (strong, nonatomic) IBOutlet UITableView *venuesTableView;
 @property (strong, nonatomic) IBOutlet UITableView *storeSearchTableView;
@@ -70,6 +67,5 @@
 - (IBAction)enlargeMapButtonClicked:(id)sender;
 - (IBAction)collapseMapButtonClicked:(id)sender;
 - (IBAction)closeStoreSearchTableButtonClicked:(id)sender;
-- (IBAction)closeStoreSearchViewButtonClicked:(id)sender;
 
 @end
