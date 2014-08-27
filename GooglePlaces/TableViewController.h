@@ -52,8 +52,6 @@
 @property (strong, nonatomic) NSMutableArray *storeSearchNameArray;
 
 @property (weak, nonatomic) IBOutlet UIButton *enlargeMapButton;
-@property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
-@property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
 @property (weak, nonatomic) IBOutlet UIButton *collapseMapButton;
 @property (weak, nonatomic) IBOutlet UIButton *closeStoreSearchTableButton;
 @property (weak, nonatomic) IBOutlet UIButton *closeStoreSearchViewButton;
@@ -69,7 +67,6 @@
 
 @property NSString *cameFrom;
 
-- (IBAction)returnButtonClicked:(id)sender;
 - (IBAction)enlargeMapButtonClicked:(id)sender;
 - (IBAction)collapseMapButtonClicked:(id)sender;
 - (IBAction)closeStoreSearchTableButtonClicked:(id)sender;

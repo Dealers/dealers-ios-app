@@ -10,6 +10,7 @@
 
 #import "AppDelegate.h"
 #import "TableViewController.h"
+#import <RestKit/RestKit.h>
 
 @implementation AppDelegate
 

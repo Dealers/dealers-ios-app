@@ -6,9 +6,9 @@
 //
 //
 
-#import "DealerClass.h"
+#import "Dealer.h"
 
-@implementation DealerClass
+@implementation Dealer
 
 -(int) dealerEmpty: (NSString *) check{
     if ([check isEqualToString:@"0"]) return 0;

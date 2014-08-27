@@ -95,8 +95,9 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.screenShot setImage:nil];
 }
 
 -(int) isIphone5 {

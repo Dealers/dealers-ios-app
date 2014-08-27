@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DealerClass.h"
+#import "Dealer.h"
 
 @interface EditProfileViewController : UIViewController <UIActionSheetDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
 {
@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *genderNavBar;
 @property (strong, nonatomic) UIDatePicker *datePicker;
 @property (strong, nonatomic) UIPickerView *genderPicker;
-@property (strong, nonatomic) DealerClass *dealerClass;
+@property (strong, nonatomic) Dealer *dealerClass;
 
 @property (weak, nonatomic) IBOutlet UIView *scrollEnd;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

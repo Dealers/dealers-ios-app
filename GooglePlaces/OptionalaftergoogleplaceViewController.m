@@ -120,7 +120,7 @@
     
     NSDate *localDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    dateFormatter.dateFormat = @"yyyy-MM-dd 'at' HH:mm";
+    dateFormatter.dateFormat = @"MM'/'dd'/'yyyy 'at' HH:mm";
     NSString *dateString = [dateFormatter stringFromDate: localDate];
     
     if ([_categorylabel.text length] == 0) {
@@ -329,6 +329,8 @@
     
     [self initialize];
     
+    [self setDateFormatter];
+    
     app.onlineOrLocal = @"local";
     
     _titlelabel.delegate=self;
@@ -348,6 +350,13 @@
     _categoryListArray = [[NSMutableArray alloc] initWithArray:[app getCategories]];
     
     [super viewDidLoad];
+}
+
+- (void)setDateFormatter
+{
+    self.dateFormatter = [[NSDateFormatter alloc]init];
+    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -904,7 +913,7 @@
     [self ReduceScroll];
     
     NSDate *select = [_DatePicker date];
-    NSString *date = [self modifyDateString:select];
+    NSString *date = [self.dateFormatter stringFromDate:select];
     _expirationlabel.text = date;
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DealClass.h"
+#import "Deal.h"
 #import "AppDelegate.h"
 #import "SettingsTableViewController.h"
 
@@ -31,7 +31,7 @@
 
 @property AppDelegate *appDelegate;
 
-@property DealerClass *currentDealer;
+@property Dealer *currentDealer;
 
 @property NSString *profileMode;
 

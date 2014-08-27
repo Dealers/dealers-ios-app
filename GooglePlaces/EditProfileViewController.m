@@ -10,7 +10,7 @@
 
 #import "EditProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "DealerClass.h"
+#import "Dealer.h"
 #import "CheckConnection.h"
 #import "AppDelegate.h"
 @interface EditProfileViewController ()

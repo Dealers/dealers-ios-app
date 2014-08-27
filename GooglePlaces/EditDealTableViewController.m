@@ -75,24 +75,24 @@
 
 - (void)loadingParameters
 {
-    self.dealTitle.text = [self.currentDeal dealTitle];
+    self.dealTitle.text = [self.currentDeal title];
     
-    self.dealStore.text = [self.currentDeal dealStore];
+    self.dealStore.text = [self.currentDeal store];
     
-    if (![self.currentDeal.dealPrice isEqualToString:@"0"]) {
-        self.dealPrice.text = [self.currentDeal.dealCurrency stringByAppendingString:self.currentDeal.dealPrice];
+    if (![self.currentDeal.price isEqualToString:@"0"]) {
+        self.dealPrice.text = [self.currentDeal.currency stringByAppendingString:self.currentDeal.price];
         self.dealPrice.textColor = [UIColor blackColor];
     } else {
         self.dealPrice.text = @"Price";
         self.dealPrice.textColor = [UIColor lightGrayColor];
     }
     
-    if (![self.currentDeal.dealDiscount isEqualToString:@"0"]) {
-        if ([self.currentDeal.dealDiscountType isEqualToString:@"%"]) {
-            self.dealDiscount.text = [self.currentDeal.dealDiscount stringByAppendingString:self.currentDeal.dealDiscountType];
+    if (![self.currentDeal.discountValue isEqualToString:@"0"]) {
+        if ([self.currentDeal.discountType isEqualToString:@"%"]) {
+            self.dealDiscount.text = [self.currentDeal.discountValue stringByAppendingString:self.currentDeal.discountType];
         } else {
             NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.currentDeal.dealDiscount attributes:attributes];
+            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.currentDeal.discountValue attributes:attributes];
             self.dealDiscount.attributedText = attrText;
         }
         self.dealDiscount.textColor = [UIColor blackColor];
@@ -101,16 +101,16 @@
         self.dealDiscount.textColor = [UIColor lightGrayColor];
     }
     
-    if (self.currentDeal.dealCategory) {
-        self.dealCategory.text = self.currentDeal.dealCategory;
+    if (self.currentDeal.category) {
+        self.dealCategory.text = self.currentDeal.category;
         self.dealCategory.textColor = [UIColor blackColor];
     } else {
         self.dealCategory.text = @"Category";
         self.dealCategory.textColor = [UIColor lightGrayColor];
     }
     
-    if(![self.currentDeal.dealDescription isEqualToString:@"0"]) {
-        self.dealDescription.text = self.currentDeal.dealDescription;
+    if(![self.currentDeal.moreDescription isEqualToString:@"0"]) {
+        self.dealDescription.text = self.currentDeal.moreDescription;
         self.dealDescription.textColor = [UIColor blackColor];
     } else {
         self.dealDescription.text = @"Description";
@@ -186,35 +186,35 @@
 
 - (void)bundlePhotosInArray
 {
-    switch ([self.currentDeal.dealPhotoSum intValue]) {
+    switch ([self.currentDeal.photoSum intValue]) {
             
         case 0:
             NSLog(@"No Photos, so no photosArray...");
             break;
             
         case 1:
-            self.photosArray = [NSMutableArray arrayWithObjects:self.originalDeal.dealPhoto1, nil];
+            self.photosArray = [NSMutableArray arrayWithObjects:self.originalDeal.photo1, nil];
             break;
             
         case 2:
             self.photosArray = [NSMutableArray arrayWithObjects:
-                                self.originalDeal.dealPhoto1,
-                                self.originalDeal.dealPhoto2, nil];
+                                self.originalDeal.photo1,
+                                self.originalDeal.photo2, nil];
             break;
             
         case 3:
             self.photosArray = [NSMutableArray arrayWithObjects:
-                                self.originalDeal.dealPhoto1,
-                                self.originalDeal.dealPhoto2,
-                                self.originalDeal.dealPhoto3, nil];
+                                self.originalDeal.photo1,
+                                self.originalDeal.photo2,
+                                self.originalDeal.photo3, nil];
             break;
             
         case 4:
             self.photosArray = [NSMutableArray arrayWithObjects:
-                                self.originalDeal.dealPhoto1,
-                                self.originalDeal.dealPhoto2,
-                                self.originalDeal.dealPhoto3,
-                                self.originalDeal.dealPhoto4, nil ];
+                                self.originalDeal.photo1,
+                                self.originalDeal.photo2,
+                                self.originalDeal.photo3,
+                                self.originalDeal.photo4, nil ];
             break;
             
         default:
@@ -279,7 +279,7 @@
             switch (indexPath.row) {
                 case 0:
                     etmvc.title = @"Title";
-                    etmvc.currentValue = self.currentDeal.dealTitle;
+                    etmvc.currentValue = self.currentDeal.title;
                     etmvc.textView.returnKeyType = UIReturnKeyDone;
                     [self.navigationController pushViewController:etmvc animated:YES];
                     NSLog(@"image \n width: %f \n height: %f", self.captureImage.image.size.width, self.captureImage.image.size.height);
@@ -292,9 +292,9 @@
                     
                 case 2:
                     etmvc.title = @"Price";
-                    etmvc.currency = self.currentDeal.dealCurrency;
-                    etmvc.currentValue = self.currentDeal.dealPrice;
-                    if ([self.currentDeal.dealPrice isEqualToString:@"0"]) {
+                    etmvc.currency = self.currentDeal.currency;
+                    etmvc.currentValue = self.currentDeal.price;
+                    if ([self.currentDeal.price isEqualToString:@"0"]) {
                         etmvc.currentValue = @"";
                     }
                     [self.navigationController pushViewController:etmvc animated:YES];
@@ -302,9 +302,9 @@
                     
                 case 3:
                     etmvc.title = @"Discount";
-                    etmvc.discountType = self.currentDeal.dealDiscountType;
-                    etmvc.currentValue = self.currentDeal.dealDiscount;
-                    if ([self.currentDeal.dealDiscount isEqualToString:@"0"]) {
+                    etmvc.discountType = self.currentDeal.discountType;
+                    etmvc.currentValue = self.currentDeal.discountValue;
+                    if ([self.currentDeal.discountValue isEqualToString:@"0"]) {
                         etmvc.currentValue = @"";
                     }
                     [self.navigationController pushViewController:etmvc animated:YES];
@@ -334,8 +334,8 @@
                     
                 case 3:
                     etmvc.title = @"Description";
-                    etmvc.currentValue = self.currentDeal.dealDescription;
-                    if ([self.currentDeal.dealDescription isEqualToString:@"0"]) {
+                    etmvc.currentValue = self.currentDeal.moreDescription;
+                    if ([self.currentDeal.moreDescription isEqualToString:@"0"]) {
                         etmvc.currentValue = @"";
                     }
                     [self.navigationController pushViewController:etmvc animated:YES];
@@ -392,14 +392,14 @@
 - (IBAction)dateChanged:(UIDatePicker *)sender {
     
     if (!self.didCancelDate) {
-        self.currentDeal.dealExpireDate = [sender.date description];
+        self.currentDeal.expiration = sender.date;
         self.dealExpirationDate.text = [@"Expires on " stringByAppendingString:[self.dateFormatter stringFromDate:sender.date]];
     }
 }
 
 - (IBAction)noDate:(id)sender {
     
-    self.currentDeal.dealExpireDate = @"0";
+    self.currentDeal.expiration = nil;
     self.dealExpirationDate.text = @"Expiration Date";
     self.dealExpirationDate.textColor = [UIColor lightGrayColor];
     self.didCancelDate = YES;

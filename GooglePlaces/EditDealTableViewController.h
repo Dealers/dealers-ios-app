@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DealClass.h"
+#import "Deal.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
 #import "EditTextModeViewController.h"
@@ -19,8 +19,8 @@
     BOOL isFrontCamera, isSessionRunning, shouldDealloc;
 }
 
-@property DealClass *currentDeal;
-@property DealClass *originalDeal;
+@property Deal *currentDeal;
+@property Deal *originalDeal;
 
 @property (weak, nonatomic) IBOutlet UILabel *dealTitle;
 @property (weak, nonatomic) IBOutlet UILabel *dealStore;

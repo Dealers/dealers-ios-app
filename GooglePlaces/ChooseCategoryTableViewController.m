@@ -68,7 +68,7 @@
     if ([self.cameFrom isEqualToString:@"editDeal"]) {
         
         EditDealTableViewController *edtvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
-        edtvc.currentDeal.dealCategory = [self.categories objectAtIndex:indexPath.row];
+        edtvc.currentDeal.category = [self.categories objectAtIndex:indexPath.row];
         edtvc.didChangeOriginalDeal = YES;
         [self.navigationController popViewControllerAnimated:YES];
         

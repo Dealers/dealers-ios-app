@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <MapKit/MapKit.h>
-#import "DealClass.h"
+#import "Deal.h"
 #import "EditDealTableViewController.h"
 
 @interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
@@ -41,7 +41,7 @@
 @property (strong,nonatomic) NSMutableArray *dealsPhotosidArray;
 @property (strong,nonatomic) NSMutableArray *dealsPhotosArray;
 
-@property (strong,nonatomic) DealClass *dealClass;
+@property (strong,nonatomic) Deal *dealClass;
 @property (strong,nonatomic) NSString *isShoetCell;
 @property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
 
@@ -76,6 +76,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 
 @property (weak, nonatomic) IBOutlet UIView *dealerSection;
+
+@property NSDateFormatter *dateFormatter;
 
 @property UIView *mapAndStoreSection;
 

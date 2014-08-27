@@ -47,10 +47,10 @@
             
             NSLog(@"Done");
             if (!isPopping) {
-                DealerClass *dealer = [[DealerClass alloc]init];
+                Dealer *dealer = [[Dealer alloc]init];
                 dealer.userID = app.UserID;
-                dealer.userName = [array objectAtIndex:0];
-                dealer.userPhoto = [UIImage imageWithData:URLData];
+                dealer.fullName = [array objectAtIndex:0];
+                dealer.photo = [UIImage imageWithData:URLData];
                 dealer.userLikesList = DataLikes;
                 
                 app.dealerClass = dealer;

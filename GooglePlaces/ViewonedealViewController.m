@@ -113,7 +113,7 @@
         
         UILabel *storeTitle = [[UILabel alloc]initWithFrame:CGRectMake(10, mapBottom - 44, 300, 20)];
         [storeTitle setFont:[UIFont fontWithName:@"Avenir-Roman" size:19.0]];
-        storeTitle.text = [_dealClass dealStore];
+        storeTitle.text = [_dealClass store];
         storeTitle.textColor = [UIColor whiteColor];
         [self.mapAndStoreSection addSubview:storeTitle];
         
@@ -165,12 +165,12 @@
     CGFloat originY = CGRectGetMaxY(self.dealerSection.frame);
     self.likesAndButtonsSection.frame = CGRectMake(0, originY, self.view.frame.size.width, self.likesAndButtonsSection.frame.size.height);
     
-    if (![[self.dealClass dealLikesCount] isEqualToString:@"0"]) {
+    if (![[self.dealClass likeCounter] isEqualToString:@"0"]) {
         CGRect likesSectionFrame = self.likesAndButtonsSection.frame;
         likesSectionFrame.origin.y = lowestYPoint + 7;
         self.likesAndButtonsSection.frame = likesSectionFrame;
         
-        NSString *likesCountPrefix = [NSString stringWithFormat:@"%@",[_dealClass dealLikesCount]];
+        NSString *likesCountPrefix = [NSString stringWithFormat:@"%@",[_dealClass likeCounter]];
         NSString *likesCountSuffix = @" people like this deal";
         NSString *likeCount = [likesCountPrefix stringByAppendingString:likesCountSuffix];
         self.likesCountLabel.text = likeCount;
@@ -202,7 +202,7 @@
 {
     flag = NO;
     int offset;
-    if ([[_dealClass dealPhotoSum]intValue]==0) {
+    if ([[_dealClass photoSum]intValue]==0) {
         offset = 10;
     } else offset = 184;
     
@@ -216,7 +216,7 @@
     self.StoreIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.StoreIcon.frame.size.width, self.StoreIcon.frame.size.height);
     storelabel.frame = CGRectMake(50, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     
-    if ([[_dealClass dealOnlineOrLocal] isEqualToString:@"online"]) {
+    if ([[_dealClass type] isEqualToString:@"online"]) {
         _urlSiteButton.frame = CGRectMake(50, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     } else _urlSiteButton.hidden=YES;
     
@@ -279,31 +279,31 @@
 }
 
 - (void)loadImageFromUrl {
-    int photosNumber = [[_dealClass dealPhotoSum]intValue];
+    int photosNumber = [[_dealClass photoSum]intValue];
     if (photosNumber != 0) {
         
         if (!self.captureImage.image) {     // In case the photo wasn't downloaded yet.
-            NSString *imageURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID1]];
-            self.dealClass.dealPhoto1 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
+            NSString *imageURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID1]];
+            self.dealClass.photo1 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
         }
         
         if (photosNumber == 2) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID2]];
-            self.dealClass.dealPhoto2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID2]];
+            self.dealClass.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
         }
         if (photosNumber == 3) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID2]];
-            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID3]];
-            self.dealClass.dealPhoto2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
-            self.dealClass.dealPhoto3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID2]];
+            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID3]];
+            self.dealClass.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            self.dealClass.photo3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
         }
         if (photosNumber == 4) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID2]];
-            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID3]];
-            _urlImage4 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass dealPhotoID4]];
-            self.dealClass.dealPhoto2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
-            self.dealClass.dealPhoto3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
-            self.dealClass.dealPhoto4 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage4]]];
+            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID2]];
+            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID3]];
+            _urlImage4 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID4]];
+            self.dealClass.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            self.dealClass.photo3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
+            self.dealClass.photo4 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage4]]];
         }
     }
     
@@ -311,11 +311,11 @@
 
 - (void)loadImage
 {
-    int photosNumber = [[self.dealClass dealPhotoSum]intValue];
+    int photosNumber = [[self.dealClass photoSum]intValue];
     
     if (!self.captureImage.image) {
         self.captureImage.alpha = 0;
-        self.captureImage.image = self.dealClass.dealPhoto1;
+        self.captureImage.image = self.dealClass.photo1;
         
         UIActivityIndicatorView *loadingIndicator = (UIActivityIndicatorView *)[self.scroll viewWithTag:loadingIndicatorTag];
         [UIView animateWithDuration:0.5 animations:^{
@@ -325,16 +325,16 @@
     }
     
     if (photosNumber==2) {
-        self.captureImage2.image = self.dealClass.dealPhoto2;
+        self.captureImage2.image = self.dealClass.photo2;
     }
     if (photosNumber==3) {
-        self.captureImage2.image = self.dealClass.dealPhoto2;
-        self.captureImage3.image = self.dealClass.dealPhoto3;
+        self.captureImage2.image = self.dealClass.photo2;
+        self.captureImage3.image = self.dealClass.photo3;
     }
     if (photosNumber==4) {
-        self.captureImage2.image = self.dealClass.dealPhoto2;
-        self.captureImage3.image = self.dealClass.dealPhoto3;
-        self.captureImage4.image = self.dealClass.dealPhoto4;
+        self.captureImage2.image = self.dealClass.photo2;
+        self.captureImage3.image = self.dealClass.photo3;
+        self.captureImage4.image = self.dealClass.photo4;
     }
     
     [_loadingImage stopAnimating];
@@ -343,15 +343,15 @@
 
 -(void) loadVarsFromDeal{
     
-    titlelabel.text = [_dealClass dealTitle];
-    storelabel.text = [_dealClass dealStore];
-    categorylabel.text = [_dealClass dealCategory];
-    pricelabel.text = ![_dealClass.dealPrice isEqualToString:@"0"] ? [_dealClass.dealCurrency stringByAppendingString:_dealClass.dealPrice] : @"0";
-    discountlabel.text = [_dealClass dealDiscount];
-    expirelabel.text = [_dealClass dealExpireDate];
-    descriptionlabel.text = [_dealClass dealDescription];
-    likelabel = [_dealClass dealLikesCount];
-    commentlabel = [_dealClass dealCommentCount];
+    titlelabel.text = [_dealClass title];
+    storelabel.text = [_dealClass store];
+    categorylabel.text = [_dealClass category];
+    pricelabel.text = ![_dealClass.price isEqualToString:@"0"] ? [_dealClass.currency stringByAppendingString:_dealClass.price] : @"0";
+    discountlabel.text = [_dealClass discountValue];
+    expirelabel.text = [self.dateFormatter stringFromDate:self.dealClass.expiration];
+    descriptionlabel.text = [_dealClass moreDescription];
+    likelabel = [_dealClass likeCounter];
+    commentlabel = [_dealClass commentCounter];
     LikeOrUnlike=TRUE;
 }
 
@@ -401,7 +401,7 @@
         self.cameraScrollView.hidden = YES;
         
     } else {
-        self.captureImage.image = self.dealClass.dealPhoto1;
+        self.captureImage.image = self.dealClass.photo1;
         
         if (!self.captureImage.image) { // In case the photo didn't downloaded in the my feed yet.
             UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -411,7 +411,7 @@
             [self.scroll addSubview:loadingIndicator];
         }
         
-        if ([[self.dealClass dealPhotoSum]intValue] >= 2) {
+        if ([[self.dealClass photoSum]intValue] >= 2) {
             self.pageControl.hidden = NO;
         } else {
             self.pageControl.hidden = YES;
@@ -445,8 +445,8 @@
         self.likeButtonSelected.hidden = NO;
     }
     
-    self.pageControl.numberOfPages=[[_dealClass dealPhotoSum]intValue];
-    [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass dealPhotoSum]intValue], 165)))];
+    self.pageControl.numberOfPages=[[_dealClass photoSum]intValue];
+    [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass photoSum]intValue], 165)))];
     [self.cameraScrollView setScrollEnabled:YES];
     
     cellNumberInScrollView = 0;
@@ -459,12 +459,16 @@
     [self setLikesAndButtonsSection];
     [self setMapAndStoreInfo];
     
+    [self setDateFormatter];
     
     [super viewDidLoad];
 }
 
--(void)viewdidAppear:(BOOL)animated //ok
+-(void)setDateFormatter
 {
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
 }
 
 - (void)didReceiveMemoryWarning

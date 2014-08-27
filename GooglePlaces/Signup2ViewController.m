@@ -29,7 +29,7 @@
 
 -(void) BackgroundMethod {
     
-    DealerClass *dealer = [[DealerClass alloc]init];
+    Dealer *dealer = [[Dealer alloc]init];
     
     if (didAddPhoto) {
         NSData *imageData = UIImageJPEGRepresentation(ImageAdded.image, 2);
@@ -55,12 +55,12 @@
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
         Photoid = returnString;
         
-        dealer.userPhoto = ImageAdded.image;
+        dealer.photo = ImageAdded.image;
         
         didAddPhoto = NO;
     
     } else {
-        dealer.userPhoto = [UIImage imageNamed:@"Profile_noPic.jpg"];
+        dealer.photo = [UIImage imageNamed:@"Profile_noPic.jpg"];
     }
     
     NSString *date;
@@ -86,12 +86,12 @@
     // Filling the information on the user:
     
     dealer.userID = strResult;
-    dealer.userName = Fullname.text;
+    dealer.fullName = Fullname.text;
     dealer.userPassword = Password.text;
-    dealer.userEmail = Email.text;
-    dealer.userDateofBirth = self.selectedDate;
-    dealer.userGender = gender;
-    dealer.userPhotoID = Photoid;
+    dealer.email = Email.text;
+    dealer.dateOfBirth = self.selectedDate;
+    dealer.gender = gender;
+    dealer.photoID = Photoid;
     
     appDelegate.dealerClass = dealer;
 }

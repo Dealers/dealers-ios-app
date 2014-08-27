@@ -17,7 +17,7 @@
 #import <mach/mach.h>
 #import "OptionalaftergoogleplaceViewController.h"
 #import "CheckConnection.h"
-#import "DealClass.h"
+#import "Deal.h"
 #import "Functions.h"
 
 
@@ -81,27 +81,31 @@
             
             for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
             {
-                DealClass *dealClass = [[DealClass alloc]init];
+                Deal *dealClass = [[Deal alloc]init];
                 NSDictionary *dealsDictionary = [deals objectAtIndex:i];
-                [dealClass setDealTitle:[dealsDictionary objectForKey:@"title"]];
-                [dealClass setDealStore:[dealsDictionary objectForKey:@"store"]];
-                [dealClass setDealDescription:[dealsDictionary objectForKey:@"description"]];
-                [dealClass setDealCurrency:[dealsDictionary objectForKey:@"currency"]];
-                [dealClass setDealPrice:[dealsDictionary objectForKey:@"price"]];
-                [dealClass setDealDiscount:[dealsDictionary objectForKey:@"discount"]];
-                [dealClass setDealExpireDate:[dealsDictionary objectForKey:@"expire"]];
-                [dealClass setDealLikesCount:[dealsDictionary objectForKey:@"likescount"]];
-                [dealClass setDealCommentCount:[dealsDictionary objectForKey:@"commentscount"]];
-                [dealClass setDealPhotoID1:[dealsDictionary objectForKey:@"photoid1"]];
-                [dealClass setDealPhotoID2:[dealsDictionary objectForKey:@"photoid2"]];
-                [dealClass setDealPhotoID3:[dealsDictionary objectForKey:@"photoid3"]];
-                [dealClass setDealPhotoID4:[dealsDictionary objectForKey:@"photoid4"]];
-                [dealClass setDealPhotoSum:[dealsDictionary objectForKey:@"photosum"]];
-                [dealClass setDealCategory:[dealsDictionary objectForKey:@"category"]];
+                [dealClass setTitle:[dealsDictionary objectForKey:@"title"]];
+                [dealClass setStore:[dealsDictionary objectForKey:@"store"]];
+                [dealClass setMoreDescription:[dealsDictionary objectForKey:@"description"]];
+                [dealClass setCurrency:[dealsDictionary objectForKey:@"currency"]];
+                [dealClass setPrice:[dealsDictionary objectForKey:@"price"]];
+                [dealClass setDiscountValue:[dealsDictionary objectForKey:@"discount"]];
+                
+                NSDate *date = [[NSDate alloc]init];
+                date = [self.dateFormatter dateFromString:[dealsDictionary objectForKey:@"expire"]];
+                [dealClass setExpiration:date];
+                
+                [dealClass setLikeCounter:[dealsDictionary objectForKey:@"likescount"]];
+                [dealClass setCommentCounter:[dealsDictionary objectForKey:@"commentscount"]];
+                [dealClass setPhotoID1:[dealsDictionary objectForKey:@"photoid1"]];
+                [dealClass setPhotoID2:[dealsDictionary objectForKey:@"photoid2"]];
+                [dealClass setPhotoID3:[dealsDictionary objectForKey:@"photoid3"]];
+                [dealClass setPhotoID4:[dealsDictionary objectForKey:@"photoid4"]];
+                [dealClass setPhotoSum:[dealsDictionary objectForKey:@"photosum"]];
+                [dealClass setCategory:[dealsDictionary objectForKey:@"category"]];
                 [dealClass setDealUserID:[dealsDictionary objectForKey:@"userid"]];
                 [dealClass setDealID:[dealsDictionary objectForKey:@"dealid"]];
-                [dealClass setDealUploadDate:[dealsDictionary objectForKey:@"uploaddate"]];
-                [dealClass setDealOnlineOrLocal:[dealsDictionary objectForKey:@"onlineorlocal"]];
+                [dealClass setUploadDate:[dealsDictionary objectForKey:@"uploaddate"]];
+                [dealClass setType:[dealsDictionary objectForKey:@"onlineorlocal"]];
                 [dealClass setDealUrlSite:[dealsDictionary objectForKey:@"urlsite"]];
                 [dealClass setDealStoreAddress:[dealsDictionary objectForKey:@"storeaddress"]];
                 [dealClass setDealStoreLatitude:[dealsDictionary objectForKey:@"storelatitude"]];
@@ -122,13 +126,13 @@
 
 - (void)createDealsTable {
     
-    DealClass *dealClass = [[DealClass alloc]init];
+    Deal *dealClass = [[Deal alloc]init];
     
     isUpdatingNow = YES;
     
     for (int i = cellNumberInScrollView; ((i < numberOfDealsLoadingAtATime + cellNumberInScrollView) && (i < [self.dealsArray count])); i++) {
         dealClass = [self.dealsArray objectAtIndex:i];
-        NSString *imageID = [dealClass dealPhotoID1];
+        NSString *imageID = [dealClass photoID1];
         
         if ([imageID isEqualToString:@"0"]) {
             isShortCell = YES;
@@ -181,7 +185,7 @@
         
         UILabel *title=[[UILabel alloc]initWithFrame:CGRectMake(18, 119+(GAP)-(offSetShortCell*isShortCell), 249, 41)];
         [title setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
-        title.text = [dealClass dealTitle];
+        title.text = [dealClass title];
         title.backgroundColor = [UIColor clearColor];
         title.textColor = [UIColor whiteColor];
         title.numberOfLines = 2;
@@ -189,7 +193,7 @@
         
         UILabel *likes = [[UILabel alloc]initWithFrame:CGRectMake(291, 121+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
         [likes setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        likes.text=[dealClass dealLikesCount];
+        likes.text=[dealClass likeCounter];
         likes.backgroundColor = [UIColor clearColor];
         likes.textColor = [UIColor whiteColor];
         [likes sizeToFit];
@@ -197,7 +201,7 @@
         
         UILabel *comments = [[UILabel alloc]initWithFrame:CGRectMake(291, 141+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
         [comments setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        comments.text=[dealClass dealCommentCount];
+        comments.text=[dealClass commentCounter];
         comments.backgroundColor = [UIColor clearColor];
         comments.textColor = [UIColor whiteColor];
         [comments sizeToFit];
@@ -211,7 +215,7 @@
         [[self scrollView] addSubview:selectDealButton];
         
         UIImageView *imageview4;
-        if ([[dealClass dealOnlineOrLocal] isEqualToString:@"local"]) {
+        if ([[dealClass type] isEqualToString:@"local"]) {
             imageview4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Local Icon"]];
             [imageview4 setFrame:CGRectMake(18, 173+(GAP)-(offSetShortCell*isShortCell), 11, 14)];
         } else {
@@ -222,15 +226,15 @@
         
         UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(34, 168+(GAP)-(offSetShortCell*isShortCell), 175, 24)];
         [label2 setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        label2.text = [dealClass dealStore];
+        label2.text = [dealClass store];
         label2.backgroundColor = [UIColor clearColor];
         label2.textColor = [UIColor blackColor];
         [[self scrollView] addSubview:label2];
         
-        if ((![[dealClass dealPrice] isEqualToString:@"0"]) && ([[dealClass dealDiscount] isEqualToString:@"0"])) {
+        if ((![[dealClass price] isEqualToString:@"0"]) && ([[dealClass discountValue] isEqualToString:@"0"])) {
             UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-            label3.text = [dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
+            label3.text = [dealClass.currency stringByAppendingString:dealClass.price];
             label3.backgroundColor = [UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
@@ -238,10 +242,10 @@
             [[self scrollView] addSubview:label3];
         }
         
-        if ((![[dealClass dealPrice] isEqualToString:@"0"]) && (![[dealClass dealDiscount] isEqualToString:@"0"])) {
+        if ((![[dealClass price] isEqualToString:@"0"]) && (![[dealClass discountValue] isEqualToString:@"0"])) {
             UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-            label4.text = [dealClass dealDiscount];
+            label4.text = [dealClass discountValue];
             label4.text = [label4.text stringByAppendingString:@"%"];
             label4.backgroundColor = [UIColor clearColor];
             label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
@@ -251,7 +255,7 @@
             
             UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-            label3.text = [dealClass.dealCurrency stringByAppendingString:dealClass.dealPrice];
+            label3.text = [dealClass.currency stringByAppendingString:dealClass.price];
             label3.backgroundColor = [UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             label3.textAlignment = NSTextAlignmentRight;
@@ -259,10 +263,10 @@
             [[self scrollView] addSubview:label3];
         }
         
-        if (([[dealClass dealPrice] isEqualToString:@"0"]) && (![[dealClass dealDiscount] isEqualToString:@"0"])) {
+        if (([[dealClass price] isEqualToString:@"0"]) && (![[dealClass discountValue] isEqualToString:@"0"])) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-            label3.text=[dealClass dealDiscount];
+            label3.text=[dealClass discountValue];
             label3.text = [label3.text stringByAppendingString:@"%"];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor redColor];
@@ -318,18 +322,18 @@
         
         dispatch_async(photosQueue, ^{
             
-            DealClass *dealClass = [[DealClass alloc]init];
+            Deal *dealClass = [[Deal alloc]init];
             
             
             dealClass = [self.dealsArray objectAtIndex:i];
-            NSString *imageID = [dealClass dealPhotoID1];
+            NSString *imageID = [dealClass photoID1];
             
             if ((![imageID isEqualToString:@"0"]) || (imageID != nil) || ([imageID length] != 0)) {
                 
                 NSString *URLForPhoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg", imageID];
                 NSData *imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:URLForPhoto]];
                 self.image = [[UIImage alloc]initWithData:imageData];
-                [dealClass setDealPhoto1:self.image];
+                [dealClass setPhoto1:self.image];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
@@ -338,7 +342,7 @@
                     UIImageView *imageViewBackground = (UIImageView *)[self.scrollView viewWithTag:(i + 1) * imageViewBackgroundTag];
                     [imageview2 setFrame:imageViewBackground.frame];
                     
-                    imageview2.image = [dealClass dealPhoto1];
+                    imageview2.image = [dealClass photo1];
                     CALayer *mask = [CALayer layer];
                     mask.contents = (id)[[UIImage imageNamed:@"Deal Pic Mask"]CGImage];
                     mask.frame = CGRectMake(0, 0, 300, 155);
@@ -443,11 +447,11 @@
     
     ViewonedealViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
     UIButton *button = (UIButton *)sender;
-    DealClass *dealClass = [[DealClass alloc]init];
+    Deal *dealClass = [[Deal alloc]init];
     dealClass = [self.dealsArray objectAtIndex:(button.tag)];
     controller.dealClass = dealClass;
     
-    if (![[dealClass dealPhotoID1] isEqualToString:@"0"]) {
+    if (![[dealClass photoID1] isEqualToString:@"0"]) {
         controller.isShoetCell = @"no";
     } else controller.isShoetCell = @"yes";
     
@@ -492,7 +496,7 @@
 
 - (void)initializeView {
     
-    [[self scrollView] setBackgroundColor:[UIColor colorWithRed:(230/255.0) green:(230/255.0) blue:(235/255.0) alpha:1.0]];
+    [[self scrollView] setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     
     isShortCell = NO;
     isUpdatingNow = NO;
@@ -505,7 +509,7 @@
     gap2 = 0;
     
     myFeedsFirstTime = YES;
-    self.scrollView.frame =[[UIScreen mainScreen] bounds];
+    self.scrollView.frame = [[UIScreen mainScreen] bounds];
 }
 
 - (void)allocArrays {
@@ -641,7 +645,16 @@
         [alert show];
     }
     
+    [self setDateFormatter];
+    
     [super viewDidLoad];
+}
+
+- (void)setDateFormatter
+{
+    self.dateFormatter = [[NSDateFormatter alloc]init];
+    self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
 }
 
 - (void)checkFeature

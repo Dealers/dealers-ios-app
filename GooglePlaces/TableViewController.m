@@ -16,6 +16,9 @@
 #import "CheckConnection.h"
 #import "EditDealTableViewController.h"
 
+#define clientID @"JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O"
+#define clientSecret @"5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G"
+
 #define barTableGap 152 // The gap between the bottom of the search bar and the top of the venues table view.
 
 @interface TableViewController ()
@@ -43,7 +46,7 @@
 -(BOOL) loadStoresFromFoursquare {
     CheckConnection *checkconnection = [[CheckConnection alloc]init];
     if ([checkconnection connected]) {
-        if (_locationManager.location.coordinate.latitude>0) {
+        if (_locationManager.location.coordinate.latitude > 0) {
             Functions *func = [[Functions alloc]init];
             NSString * url= [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&redius=9000&v=20140201",_locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude];
             NSLog(@"url form FQ api:%@",url);
@@ -72,7 +75,7 @@
                 {
                     NSString *categoryId = [[NSString alloc]init];
                     NSDictionary *storeArrayFromVenues = [venues objectAtIndex:i];
-                    NSString *storeName=[storeArrayFromVenues objectForKey:@"name"];
+                    NSString *storeName = [storeArrayFromVenues objectForKey:@"name"];
                     NSString *vicinity=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
                     NSString *lng=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"lng"];
                     NSString *lat=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"lat"];
@@ -278,7 +281,7 @@
 - (void)viewDidLoad
 {
     self.title = @"Where is the Deal?";
-    
+        
     // This is the size of the venues table view in the initial display of the view:
     self.venuesTableInitialFrame = CGRectMake(0, barTableGap, 320, [[UIScreen mainScreen]bounds].size.height - 64 - 44 - barTableGap);
     
@@ -289,8 +292,8 @@
     
     oagpvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Optional"];
     
-    self.collapseMapButton.hidden=YES;
-    currentVC=1;
+    self.collapseMapButton.hidden = YES;
+    currentVC = 1;
     [super viewDidLoad];
 }
 
@@ -442,15 +445,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction) returnButtonClicked:(id)sender {
-    self.ReturnButtonFull.alpha=1.0;
-    self.ReturnButton.alpha=0.0;
-    [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
-    [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
-    [self deallocMemory];
-    [self.navigationController popViewControllerAnimated:NO];
-}
-
 -(IBAction) enlargeMapButtonClicked:(id)sender {
     self.enlargeMapButton.hidden=YES;
     
@@ -493,7 +487,7 @@
 
 -(void) storeSearchFromFoursquer{
     
-    NSString *searchText=_searchTextToBackground;
+    NSString *searchText = _searchTextToBackground;
     self.storeSearchNameArray = nil;
     self.storeSearchLocationArray = nil;
     self.storeSearchNameArray = [[NSMutableArray alloc]init];
@@ -515,8 +509,8 @@
         for (int i=0; i<[[venues copy] count]; i++)
         {
             NSDictionary *storeArrayFromVenues = [venues objectAtIndex:i];
-            NSString *storeName=[storeArrayFromVenues objectForKey:@"name"];
-            NSString *vicinity=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
+            NSString *storeName = [storeArrayFromVenues objectForKey:@"name"];
+            NSString *vicinity = [[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
             if (storeName==nil) storeName=@"";
             if (vicinity==nil) continue; //vicinity=@"Unknow";
             
@@ -524,8 +518,6 @@
             [self.storeSearchLocationArray addObject:vicinity];
         }
     }
-    // [self performSelectorOnMainThread:@selector(LoadStoresTableView) withObject:nil waitUntilDone:NO];
-    
 }
 
 -(void) LoadStoresTableView {
@@ -533,22 +525,21 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length==0) {
-        SearchTextSize=0;
-        self.closeStoreSearchTableButton.alpha=0.3;
-        [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
+    if (searchText.length == 0) {
+        SearchTextSize = 0;
+        self.closeStoreSearchTableButton.alpha = 0.3;
         
         self.storeSearchNameArray = nil;
         self.storeSearchLocationArray = nil;
-        self.storeSearchTableView.hidden=YES;
-        self.theShadow.hidden=YES;
+        self.storeSearchTableView.hidden = YES;
+        self.theShadow.hidden = YES;
         [self.mapView setZoomEnabled:NO];
         [self.scrollView setScrollEnabled:NO];
     } else {
-        SearchTextSize=1;
-        self.closeStoreSearchTableButton.alpha=0.0;
-        self.storeSearchTableView.hidden=NO;
-        _searchTextToBackground=searchText;
+        SearchTextSize = 1;
+        self.closeStoreSearchTableButton.alpha = 0.0;
+        self.storeSearchTableView.hidden = NO;
+        _searchTextToBackground = searchText;
         
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
@@ -560,8 +551,6 @@
                 [self LoadStoresTableView];
             });
         });
-        
-        //[self performSelectorInBackground:@selector(storeSearchFromFoursquer:) withObject:searchText];
     }
 }
 
@@ -589,7 +578,7 @@
         
         if ([self.cameFrom isEqualToString:@"editDeal"]) {
             EditDealTableViewController *edtvc = (EditDealTableViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
-            edtvc.currentDeal.dealStore = [self.storeNameArraySort objectAtIndex:indexPath.row];
+            edtvc.currentDeal.store = [self.storeNameArraySort objectAtIndex:indexPath.row];
             edtvc.currentDeal.dealStoreAddress = [self.storeLocationArraySort objectAtIndex:indexPath.row];
             edtvc.currentDeal.dealStoreLatitude = [self.storeLatArraySort objectAtIndex:indexPath.row];
             edtvc.currentDeal.dealStoreLongitude = [self.storeLongArraySort objectAtIndex:indexPath.row];
@@ -604,8 +593,6 @@
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    self.ReturnButton.hidden=YES;
-    self.ReturnButtonFull.hidden=YES;
     self.closeStoreSearchViewButton.hidden=NO;
     self.venuesTableView.hidden=YES;
     self.storeSearchView.hidden=NO;
@@ -616,8 +603,6 @@
 
 -(void) closeStoreSearchViewButtonClicked: (id)sender {
     self.closeStoreSearchViewButton.hidden=YES;
-    self.ReturnButton.hidden=NO;
-    self.ReturnButtonFull.hidden=NO;
     self.closeStoreSearchTableButton.alpha=0.0;
     self.storeSearchTableView.hidden=YES;
     self.venuesTableView.hidden=NO;
@@ -631,8 +616,6 @@
 }
 
 -(void) closeStoreSearchTableButtonClicked:(id)sender {
-    self.ReturnButton.hidden=NO;
-    self.ReturnButtonFull.hidden=NO;
     self.closeStoreSearchTableButton.alpha=0.0;
     self.storeSearchTableView.hidden=YES;
     self.venuesTableView.hidden=NO;
@@ -697,13 +680,13 @@
 }
 
 -(void) loadFoursquareaAfterDelay {
-    didUpdateTheMap=NO;
+    didUpdateTheMap = NO;
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         // Do some computation here.
         if (!didUpdateTheMap) {
-            loadsuc=[self loadStoresFromFoursquare];
-            didUpdateTheMap=YES;
+            loadsuc = [self loadStoresFromFoursquare];
+            didUpdateTheMap = YES;
         }
         // Update UI after computation.
         dispatch_async(dispatch_get_main_queue(), ^{

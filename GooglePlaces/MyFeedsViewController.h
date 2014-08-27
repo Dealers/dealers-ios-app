@@ -39,4 +39,6 @@
 
 @property (nonatomic) NSString *categoryFromExplore;
 
+@property NSDateFormatter *dateFormatter;
+
 @end

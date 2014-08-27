@@ -32,7 +32,7 @@
     self.didChangeProfile = NO;
     self.datePickerIsShowing = NO;
     
-    if (appDelegate.dealerClass.userPhoto) {
+    if (appDelegate.dealerClass.photo) {
         userHaveProfilePic = YES;
     } else {
         userHaveProfilePic = NO;
@@ -72,7 +72,7 @@
 - (void)setProfilePicSection
 {
     if (userHaveProfilePic) {
-        [self.profilePicButton setImage:[appDelegate.dealerClass.userPhoto copy] forState:UIControlStateNormal];
+        [self.profilePicButton setImage:[appDelegate.dealerClass.photo copy] forState:UIControlStateNormal];
     } else {
         [self.profilePicButton setImage:[UIImage imageNamed:@"Profile Pic Placeholder"] forState:UIControlStateNormal];
     }
@@ -82,15 +82,15 @@
 
 - (void)setKnownValues
 {
-    self.name.text = [appDelegate.dealerClass.userName mutableCopy];
-    self.about.text = [appDelegate.dealerClass.userAbout mutableCopy];
-    self.location.text = [appDelegate.dealerClass.userLocation mutableCopy];
-    self.email.text = [appDelegate.dealerClass.userEmail mutableCopy];
+    self.name.text = [appDelegate.dealerClass.fullName mutableCopy];
+    self.about.text = [appDelegate.dealerClass.about mutableCopy];
+    self.location.text = [appDelegate.dealerClass.location mutableCopy];
+    self.email.text = [appDelegate.dealerClass.email mutableCopy];
     
     [self setDateOfBirthLabel];
     
-    if (appDelegate.dealerClass.userGender) {
-        self.gender.text = appDelegate.dealerClass.userGender;
+    if (appDelegate.dealerClass.gender) {
+        self.gender.text = appDelegate.dealerClass.gender;
         self.gender.textColor = [UIColor blackColor];
     }
 }
@@ -324,9 +324,9 @@
     NSDate *today = [NSDate date];
     [self.datePicker setMaximumDate:today];
     
-    if (appDelegate.dealerClass.userDateofBirth) {
+    if (appDelegate.dealerClass.dateOfBirth) {
         
-        NSDate *defaultDate = [appDelegate.dealerClass.userDateofBirth copy];
+        NSDate *defaultDate = [appDelegate.dealerClass.dateOfBirth copy];
         [self.datePicker setDate:defaultDate];
         self.dateOfBirth.text = [self.dateFormatter stringFromDate:defaultDate];
     }

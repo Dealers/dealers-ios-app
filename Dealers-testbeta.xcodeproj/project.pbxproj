@@ -29,7 +29,6 @@
 		B02436E017F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = B02436DF17F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png */; };
 		B024374B17F47D9000FB24CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B024374A17F47D9000FB24CC /* QuartzCore.framework */; };
 		B024374D17F47F5400FB24CC /* mask.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B024374C17F47F5300FB24CC /* mask.PNG */; };
-		B024374F17F47FE900FB24CC /* itzik.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B024374E17F47FE900FB24CC /* itzik.jpg */; };
 		B02747FF186B291B005A52F0 /* PLCameraSheetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */; };
 		B0274800186B291B005A52F0 /* PLCameraSheetButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747EF186B291B005A52F0 /* PLCameraSheetButton@2x.png */; };
 		B0274801186B291B005A52F0 /* PLCameraSheetButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747F0186B291B005A52F0 /* PLCameraSheetButtonPressed.png */; };
@@ -142,8 +141,8 @@
 		B09FBACB192E4CA3006CB986 /* Profile_noPic@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */; };
 		B09FBACD19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACC19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png */; };
 		B09FBACF19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACE19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png */; };
-		B09FBAD2193CBE0A006CB986 /* DealClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD1193CBE0A006CB986 /* DealClass.m */; };
-		B09FBAD5193F0764006CB986 /* DealerClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD4193F0764006CB986 /* DealerClass.m */; };
+		B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD1193CBE0A006CB986 /* Deal.m */; };
+		B09FBAD5193F0764006CB986 /* Dealer.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD4193F0764006CB986 /* Dealer.m */; };
 		B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */; };
 		B0C7FB4B183375F900B3B740 /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB39183375F900B3B740 /* loading@2x.png */; };
 		B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3A183375F900B3B740 /* loading5@2x.png */; };
@@ -401,6 +400,7 @@
 		C83EAF2818690AC40084E0E1 /* Travel_travel_agent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAE2118690AC40084E0E1 /* Travel_travel_agent@2x.png */; };
 		C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84846FB19A2617B00BC6ACE /* SettingsTableViewController.m */; };
 		C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */; };
+		C848B66D19ADB92A000F138D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B66C19ADB92A000F138D /* Comment.m */; };
 		C869CB85191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */; };
 		C869CB86191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */; };
 		C869CB87191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */; };
@@ -450,6 +450,11 @@
 		C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890608419A49014001D3359 /* PasswordTableViewController.m */; };
 		C8951AF718FAD79C00C53E9B /* Add Deal (final)_Shade.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */; };
 		C8951AF918FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */; };
+		C898FE6419A6177800F1C11A /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE5B19A6098A00F1C11A /* libRestKit.a */; };
+		C898FE6819A617AE00F1C11A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE6519A617AE00F1C11A /* CFNetwork.framework */; };
+		C898FE6919A617AE00F1C11A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE6619A617AE00F1C11A /* CoreData.framework */; };
+		C898FE6A19A617AE00F1C11A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE6719A617AE00F1C11A /* MobileCoreServices.framework */; };
+		C898FE6D19AB94BA00F1C11A /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = C898FE6C19AB94BA00F1C11A /* Store.m */; };
 		C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */; };
 		C8A6EBE4191BB99600887C34 /* Registration_Sign Up Mail button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */; };
 		C8A6EBE5191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */; };
@@ -560,6 +565,44 @@
 		C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FFF56B197C437600D01744 /* EditDealTableViewController.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C898FE5A19A6098A00F1C11A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D1614564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+		C898FE5C19A6098A00F1C11A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D2614564E820060A5C5;
+			remoteInfo = RestKitTests;
+		};
+		C898FE5E19A6098A00F1C11A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E62145651060060A5C5;
+			remoteInfo = RestKitFramework;
+		};
+		C898FE6019A6098A00F1C11A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E78145651060060A5C5;
+			remoteInfo = RestKitFrameworkTests;
+		};
+		C898FE6219A6176400F1C11A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 25160D1514564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5684977D154C00BF001601A2 /* Dealers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dealers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56849781154C00BF001601A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -589,7 +632,6 @@
 		B02436DF17F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_iPhone (high resolution).png"; sourceTree = "<group>"; };
 		B024374A17F47D9000FB24CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B024374C17F47F5300FB24CC /* mask.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.PNG; sourceTree = "<group>"; };
-		B024374E17F47FE900FB24CC /* itzik.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = itzik.jpg; sourceTree = "<group>"; };
 		B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetButton.png; sourceTree = "<group>"; };
 		B02747EF186B291B005A52F0 /* PLCameraSheetButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetButton@2x.png"; sourceTree = "<group>"; };
 		B02747F0186B291B005A52F0 /* PLCameraSheetButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetButtonPressed.png; sourceTree = "<group>"; };
@@ -722,10 +764,10 @@
 		B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Profile_noPic@2x.jpg"; path = "../GooglePlaces/Profile_noPic@2x.jpg"; sourceTree = "<group>"; };
 		B09FBACC19320F48006CB986 /* My Feed+View Deal - New Version_Store Map shade@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_Store Map shade@2x.png"; sourceTree = "<group>"; };
 		B09FBACE19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_Store Map mask@2x.png"; sourceTree = "<group>"; };
-		B09FBAD0193CBE0A006CB986 /* DealClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealClass.h; sourceTree = "<group>"; };
-		B09FBAD1193CBE0A006CB986 /* DealClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealClass.m; sourceTree = "<group>"; };
-		B09FBAD3193F0764006CB986 /* DealerClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealerClass.h; sourceTree = "<group>"; };
-		B09FBAD4193F0764006CB986 /* DealerClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealerClass.m; sourceTree = "<group>"; };
+		B09FBAD0193CBE0A006CB986 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
+		B09FBAD1193CBE0A006CB986 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
+		B09FBAD3193F0764006CB986 /* Dealer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dealer.h; sourceTree = "<group>"; };
+		B09FBAD4193F0764006CB986 /* Dealer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dealer.m; sourceTree = "<group>"; };
 		B09FBAD6193F0C7D006CB986 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		B0C7FB39183375F900B3B740 /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
@@ -992,6 +1034,8 @@
 		C84846FB19A2617B00BC6ACE /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		C84846FD19A2620C00BC6ACE /* EditProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileTableViewController.h; sourceTree = "<group>"; };
 		C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileTableViewController.m; sourceTree = "<group>"; };
+		C848B66B19ADB92A000F138D /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		C848B66C19ADB92A000F138D /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab (selected)@2x.png"; sourceTree = "<group>"; };
 		C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab@2x.png"; sourceTree = "<group>"; };
 		C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Likes List tab (selected)@2x.png"; sourceTree = "<group>"; };
@@ -1045,6 +1089,12 @@
 		C890608419A49014001D3359 /* PasswordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordTableViewController.m; sourceTree = "<group>"; };
 		C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (final)_Shade.png"; sourceTree = "<group>"; };
 		C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Black Transparent screen@2x.png"; sourceTree = "<group>"; };
+		C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		C898FE6519A617AE00F1C11A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C898FE6619A617AE00F1C11A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C898FE6719A617AE00F1C11A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		C898FE6B19AB94BA00F1C11A /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
+		C898FE6C19AB94BA00F1C11A /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Facebook button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Mail button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Twitter button@2x.png"; sourceTree = "<group>"; };
@@ -1164,8 +1214,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */,
+				C898FE6819A617AE00F1C11A /* CFNetwork.framework in Frameworks */,
+				C898FE6919A617AE00F1C11A /* CoreData.framework in Frameworks */,
+				C898FE6A19A617AE00F1C11A /* MobileCoreServices.framework in Frameworks */,
 				B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */,
+				B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */,
+				C898FE6419A6177800F1C11A /* libRestKit.a in Frameworks */,
 				B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */,
 				B0E0A943189C43BB00EF0641 /* libsqlite3.dylib in Frameworks */,
 				B03F6B8A18676F6C000ACC13 /* Accounts.framework in Frameworks */,
@@ -1187,6 +1241,7 @@
 		56849772154C00BF001601A2 = {
 			isa = PBXGroup;
 			children = (
+				C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */,
 				B08A3667187B3C82005B72D8 /* Images.xcassets */,
 				B0274807186B2A2B005A52F0 /* GKClasses */,
 				B02747ED186B291B005A52F0 /* GKImages */,
@@ -1215,6 +1270,9 @@
 		56849780154C00BF001601A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C898FE6519A617AE00F1C11A /* CFNetwork.framework */,
+				C898FE6619A617AE00F1C11A /* CoreData.framework */,
+				C898FE6719A617AE00F1C11A /* MobileCoreServices.framework */,
 				B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */,
 				B0F1BB9718B913EC00AD2929 /* Security.framework */,
 				B0F1BB9518B913D700AD2929 /* CoreText.framework */,
@@ -1239,10 +1297,7 @@
 				B0493AD718FDC5E90044AD91 /* AppDelegate.h */,
 				56849791154C00BF001601A2 /* AppDelegate.m */,
 				56849793154C00BF001601A2 /* MainStoryboard.storyboard */,
-				B09FBAD0193CBE0A006CB986 /* DealClass.h */,
-				B09FBAD1193CBE0A006CB986 /* DealClass.m */,
-				B09FBAD3193F0764006CB986 /* DealerClass.h */,
-				B09FBAD4193F0764006CB986 /* DealerClass.m */,
+				C898FE6E19AB94C700F1C11A /* Custom Classes */,
 				C869CB78191A13E300DF2C19 /* General */,
 				C87B6D05192DDC810026DA66 /* Opening Screen */,
 				C869CB74191A12EF00DF2C19 /* Registration */,
@@ -1258,7 +1313,6 @@
 				B04B7C9D185DB3DE00F06472 /* StoreSearchCell.h */,
 				B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */,
 				B034B8B41804765500625392 /* DB2-Prefix.pch */,
-				B024374E17F47FE900FB24CC /* itzik.jpg */,
 				56849788154C00BF001601A2 /* Supporting Files */,
 			);
 			name = Dealers;
@@ -1800,6 +1854,32 @@
 			name = "Opening Screen";
 			sourceTree = "<group>";
 		};
+		C898FE5419A6098A00F1C11A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C898FE5B19A6098A00F1C11A /* libRestKit.a */,
+				C898FE5D19A6098A00F1C11A /* RestKitTests.octest */,
+				C898FE5F19A6098A00F1C11A /* RestKit.framework */,
+				C898FE6119A6098A00F1C11A /* RestKitFrameworkTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C898FE6E19AB94C700F1C11A /* Custom Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B09FBAD0193CBE0A006CB986 /* Deal.h */,
+				B09FBAD1193CBE0A006CB986 /* Deal.m */,
+				B09FBAD3193F0764006CB986 /* Dealer.h */,
+				B09FBAD4193F0764006CB986 /* Dealer.m */,
+				C898FE6B19AB94BA00F1C11A /* Store.h */,
+				C898FE6C19AB94BA00F1C11A /* Store.m */,
+				C848B66B19ADB92A000F138D /* Comment.h */,
+				C848B66C19ADB92A000F138D /* Comment.m */,
+			);
+			name = "Custom Classes";
+			sourceTree = "<group>";
+		};
 		C8B01FB518F3F18300DB6584 /* Bars Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -2151,6 +2231,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C898FE6319A6176400F1C11A /* PBXTargetDependency */,
 			);
 			name = "Dealers-test";
 			productName = GooglePlaces;
@@ -2181,12 +2262,49 @@
 			mainGroup = 56849772154C00BF001601A2;
 			productRefGroup = 5684977E154C00BF001601A2 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C898FE5419A6098A00F1C11A /* Products */;
+					ProjectRef = C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				5684977C154C00BF001601A2 /* Dealers-test */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C898FE5B19A6098A00F1C11A /* libRestKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRestKit.a;
+			remoteRef = C898FE5A19A6098A00F1C11A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C898FE5D19A6098A00F1C11A /* RestKitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitTests.octest;
+			remoteRef = C898FE5C19A6098A00F1C11A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C898FE5F19A6098A00F1C11A /* RestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RestKit.framework;
+			remoteRef = C898FE5E19A6098A00F1C11A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C898FE6119A6098A00F1C11A /* RestKitFrameworkTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitFrameworkTests.octest;
+			remoteRef = C898FE6019A6098A00F1C11A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5684977B154C00BF001601A2 /* Resources */ = {
@@ -2207,7 +2325,6 @@
 				B02436DE17F423CD00FB24CC /* Launch App Icons_iPhone.png in Resources */,
 				B02436E017F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png in Resources */,
 				B024374D17F47F5400FB24CC /* mask.PNG in Resources */,
-				B024374F17F47FE900FB24CC /* itzik.jpg in Resources */,
 				C83EAF2818690AC40084E0E1 /* Travel_travel_agent@2x.png in Resources */,
 				B055C71717FE806900FBDFCC /* Explore_Amusment & Entertainment icon@2x.png in Resources */,
 				B055C71817FE806900FBDFCC /* Explore_Art icon@2x.png in Resources */,
@@ -2699,9 +2816,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B09FBAD2193CBE0A006CB986 /* DealClass.m in Sources */,
+				B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */,
 				C8C43E80198F6CDD00409DD2 /* BetterScrollView.m in Sources */,
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
+				C898FE6D19AB94BA00F1C11A /* Store.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
 				B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */,
 				B01BD1B517F0D7010010C9A4 /* googleCell2.m in Sources */,
@@ -2711,7 +2829,7 @@
 				B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */,
 				B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
-				B09FBAD5193F0764006CB986 /* DealerClass.m in Sources */,
+				B09FBAD5193F0764006CB986 /* Dealer.m in Sources */,
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
 				B0F1BB9D18DB83D300AD2929 /* LikesCell.m in Sources */,
 				B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */,
@@ -2727,6 +2845,7 @@
 				B055C73417FE882700FBDFCC /* ExploreCell.m in Sources */,
 				B0294C7318B0CC0900699107 /* MyFeedsViewController.m in Sources */,
 				C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */,
+				C848B66D19ADB92A000F138D /* Comment.m in Sources */,
 				B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */,
 				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
 				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
@@ -2744,6 +2863,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C898FE6319A6176400F1C11A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RestKit;
+			targetProxy = C898FE6219A6176400F1C11A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5684978A154C00BF001601A2 /* InfoPlist.strings */ = {
@@ -2848,8 +2975,14 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"",
+				);
 				INFOPLIST_FILE = "GooglePlaces/Dealers_beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-objC";
 				PRODUCT_NAME = Dealers;
 				PROVISIONING_PROFILE = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
 				"PROVISIONING_PROFILE[sdk=*]" = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
@@ -2873,8 +3006,14 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"",
+				);
 				INFOPLIST_FILE = "GooglePlaces/Dealers_beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-objC";
 				PRODUCT_NAME = Dealers;
 				PROVISIONING_PROFILE = "5862ED47-EC3F-4CEF-8159-F963E78EECBE";
 				"PROVISIONING_PROFILE[sdk=*]" = "5862ED47-EC3F-4CEF-8159-F963E78EECBE";

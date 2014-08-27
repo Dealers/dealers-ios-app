@@ -24,37 +24,37 @@
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Title Can't Be Empty" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [alert show];
         } else {
-            edtvc.currentDeal.dealTitle = self.textView.text;
+            edtvc.currentDeal.title = self.textView.text;
             [self.navigationController popViewControllerAnimated:YES];
         }
     
     } else if ([self.title isEqualToString:@"Price"]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.currentDeal.dealPrice = @"0";
+            edtvc.currentDeal.price = @"0";
         } else {
-            edtvc.currentDeal.dealPrice = self.textView.text;
+            edtvc.currentDeal.price = self.textView.text;
         }
-        if (self.shekel.selected) edtvc.currentDeal.dealCurrency = @"₪";
-        if (self.dollar.selected) edtvc.currentDeal.dealCurrency = @"$";
-        if (self.pound.selected) edtvc.currentDeal.dealCurrency = @"£";
+        if (self.shekel.selected) edtvc.currentDeal.currency = @"₪";
+        if (self.dollar.selected) edtvc.currentDeal.currency = @"$";
+        if (self.pound.selected) edtvc.currentDeal.currency = @"£";
     
         [self.navigationController popViewControllerAnimated:YES];
         
     } else if ([self.title isEqualToString:@"Discount"]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.currentDeal.dealDiscount = @"0";
+            edtvc.currentDeal.discountValue = @"0";
         } else {
-            edtvc.currentDeal.dealDiscount = self.textView.text;
+            edtvc.currentDeal.discountValue = self.textView.text;
         }
-        if (self.percentage.selected) edtvc.currentDeal.dealDiscountType = @"%";
-        if (self.lastPrice.selected) edtvc.currentDeal.dealDiscountType = @"lastPrice";
+        if (self.percentage.selected) edtvc.currentDeal.discountType = @"%";
+        if (self.lastPrice.selected) edtvc.currentDeal.discountType = @"lastPrice";
         [self.navigationController popViewControllerAnimated:YES];
     
     } else if ([self.title isEqualToString:@"Description"]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.currentDeal.dealDescription = @"0";
+            edtvc.currentDeal.moreDescription = @"0";
         } else {
-            edtvc.currentDeal.dealDescription = self.textView.text;
+            edtvc.currentDeal.moreDescription = self.textView.text;
         }
         [self.navigationController popViewControllerAnimated:YES];
     }
