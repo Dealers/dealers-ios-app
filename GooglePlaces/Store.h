@@ -13,7 +13,7 @@
 
 @property NSString *foursquareID;
 @property NSString *name;
-@property NSString *categoryID;
+@property NSArray *categories;
 
 @property NSNumber *latitude;
 @property NSNumber *longitude;
@@ -28,7 +28,7 @@
 @property NSString *url;
 @property NSString *phone;
 
-@property BOOL verifiedByFoursquare;
+@property NSString *verifiedByFoursquare;
 
 
 @end

@@ -401,6 +401,8 @@
 		C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84846FB19A2617B00BC6ACE /* SettingsTableViewController.m */; };
 		C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */; };
 		C848B66D19ADB92A000F138D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B66C19ADB92A000F138D /* Comment.m */; };
+		C848B67819B4AB76000F138D /* StoresTabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B67719B4AB76000F138D /* StoresTabelCell.m */; };
+		C848B67A19B4ACA4000F138D /* StoresTabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C848B67919B4ACA4000F138D /* StoresTabelCell.xib */; };
 		C869CB85191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */; };
 		C869CB86191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */; };
 		C869CB87191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */; };
@@ -1036,6 +1038,9 @@
 		C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileTableViewController.m; sourceTree = "<group>"; };
 		C848B66B19ADB92A000F138D /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		C848B66C19ADB92A000F138D /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		C848B67619B4AB76000F138D /* StoresTabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoresTabelCell.h; sourceTree = "<group>"; };
+		C848B67719B4AB76000F138D /* StoresTabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoresTabelCell.m; sourceTree = "<group>"; };
+		C848B67919B4ACA4000F138D /* StoresTabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoresTabelCell.xib; sourceTree = "<group>"; };
 		C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab (selected)@2x.png"; sourceTree = "<group>"; };
 		C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab@2x.png"; sourceTree = "<group>"; };
 		C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Likes List tab (selected)@2x.png"; sourceTree = "<group>"; };
@@ -1308,10 +1313,7 @@
 				C869CB73191A12D900DF2C19 /* More */,
 				C869CB77191A137800DF2C19 /* Add Deal */,
 				C869CB76191A135A00DF2C19 /* View Deal */,
-				B0930C0917F40311004EB3CA /* CustomcellforviewdealCell.h */,
-				B0930C0A17F40311004EB3CA /* CustomcellforviewdealCell.m */,
-				B04B7C9D185DB3DE00F06472 /* StoreSearchCell.h */,
-				B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */,
+				C848B67119B4A247000F138D /* Custom Cells */,
 				B034B8B41804765500625392 /* DB2-Prefix.pch */,
 				56849788154C00BF001601A2 /* Supporting Files */,
 			);
@@ -1675,6 +1677,22 @@
 			path = Travel;
 			sourceTree = "<group>";
 		};
+		C848B67119B4A247000F138D /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B01BD1B317F0D7000010C9A4 /* googleCell2.h */,
+				B01BD1B417F0D7000010C9A4 /* googleCell2.m */,
+				B0930C0917F40311004EB3CA /* CustomcellforviewdealCell.h */,
+				B0930C0A17F40311004EB3CA /* CustomcellforviewdealCell.m */,
+				B04B7C9D185DB3DE00F06472 /* StoreSearchCell.h */,
+				B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */,
+				C848B67619B4AB76000F138D /* StoresTabelCell.h */,
+				C848B67719B4AB76000F138D /* StoresTabelCell.m */,
+				C848B67919B4ACA4000F138D /* StoresTabelCell.xib */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
 		C869CB70191A126400DF2C19 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1765,8 +1783,6 @@
 				B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */,
 				B0930BFA17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.h */,
 				B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */,
-				B01BD1B317F0D7000010C9A4 /* googleCell2.h */,
-				B01BD1B417F0D7000010C9A4 /* googleCell2.m */,
 				B01BD1B017F0D6470010C9A4 /* TableViewController.h */,
 				B01BD1B117F0D6470010C9A4 /* TableViewController.m */,
 				C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */,
@@ -2557,6 +2573,7 @@
 				C87B6D0B192DEF5C0026DA66 /* Add Deal (Final)_Add the Deal button@2x.png in Resources */,
 				C8D7CADB1934852E00841C22 /* profile_3 Fields@2x.png in Resources */,
 				B034B9DE1805536A00625392 /* Default@2x.png in Resources */,
+				C848B67A19B4ACA4000F138D /* StoresTabelCell.xib in Resources */,
 				C8D2E484185B781D00398873 /* Add Deal (Final)_Title & More Details box@2x.png in Resources */,
 				C8B7C2371920FCF60032726E /* Registration_Sign In button@2x.png in Resources */,
 				B0274802186B291B005A52F0 /* PLCameraSheetButtonPressed@2x.png in Resources */,
@@ -2850,6 +2867,7 @@
 				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
 				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
+				C848B67819B4AB76000F138D /* StoresTabelCell.m in Sources */,
 				B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */,
 				B0E4F6FE1910171E0080CD32 /* Reachability.m in Sources */,
 				B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */,
@@ -2982,7 +3000,10 @@
 				);
 				INFOPLIST_FILE = "GooglePlaces/Dealers_beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "-objC";
+				OTHER_LDFLAGS = (
+					"-objC",
+					"-all_load",
+				);
 				PRODUCT_NAME = Dealers;
 				PROVISIONING_PROFILE = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
 				"PROVISIONING_PROFILE[sdk=*]" = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
@@ -3013,7 +3034,10 @@
 				);
 				INFOPLIST_FILE = "GooglePlaces/Dealers_beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "-objC";
+				OTHER_LDFLAGS = (
+					"-objC",
+					"-all_load",
+				);
 				PRODUCT_NAME = Dealers;
 				PROVISIONING_PROFILE = "5862ED47-EC3F-4CEF-8159-F963E78EECBE";
 				"PROVISIONING_PROFILE[sdk=*]" = "5862ED47-EC3F-4CEF-8159-F963E78EECBE";
