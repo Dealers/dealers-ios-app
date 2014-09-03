@@ -2267,7 +2267,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 56849777154C00BF001601A2 /* Build configuration list for PBXProject "Dealers-testbeta" */;
+			buildConfigurationList = 56849777154C00BF001601A2 /* Build configuration list for PBXProject "Dealers" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2987,10 +2987,6 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_RESOURCE_RULES_PATH[sdk=*]" = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					/Users/itzikberrebi/Desktop/dealers_beta_rep,
-					"/Users/itzikberrebi/Desktop/dealers_beta_rep/HockeySDK-iOS/HockeySDK.embeddedframework",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3021,10 +3017,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					/Users/itzikberrebi/Desktop/dealers_beta_rep,
-					"/Users/itzikberrebi/Desktop/dealers_beta_rep/HockeySDK-iOS/HockeySDK.embeddedframework",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3050,7 +3042,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		56849777154C00BF001601A2 /* Build configuration list for PBXProject "Dealers-testbeta" */ = {
+		56849777154C00BF001601A2 /* Build configuration list for PBXProject "Dealers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56849799154C00BF001601A2 /* Debug */,

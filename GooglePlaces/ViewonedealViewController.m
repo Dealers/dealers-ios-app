@@ -19,6 +19,10 @@
 #define GAP 15
 #define sectionGap 20
 #define loadingIndicatorTag 1111
+#define sharedViewTag 9898
+
+#define iconsLeftMargin 10
+#define labelsLeftMargin 48
 
 @interface ViewonedealViewController ()
 
@@ -142,7 +146,6 @@
                                                    CGRectGetMaxY(wazeButton.frame) + sectionGap);
         lowestYPoint = CGRectGetMaxY(self.mapAndStoreSection.frame);
         [self setScrollSize];
-        
     }
 }
 
@@ -211,13 +214,13 @@
     titlelabel.numberOfLines = 0;
     [titlelabel sizeToFit];
     
-    lowestYPoint=(CGRectGetMaxY(self.TitleIcon.frame) > CGRectGetMaxY(titlelabel.frame)) ? CGRectGetMaxY(self.TitleIcon.frame) : CGRectGetMaxY(titlelabel.frame);
+    lowestYPoint = (CGRectGetMaxY(self.TitleIcon.frame) > CGRectGetMaxY(titlelabel.frame)) ? CGRectGetMaxY(self.TitleIcon.frame) : CGRectGetMaxY(titlelabel.frame);
     
-    self.StoreIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.StoreIcon.frame.size.width, self.StoreIcon.frame.size.height);
-    storelabel.frame = CGRectMake(50, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
+    self.StoreIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.StoreIcon.frame.size.width, self.StoreIcon.frame.size.height);
+    storelabel.frame = CGRectMake(labelsLeftMargin, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     
     if ([[_dealClass type] isEqualToString:@"online"]) {
-        _urlSiteButton.frame = CGRectMake(50, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
+        _urlSiteButton.frame = CGRectMake(labelsLeftMargin, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     } else _urlSiteButton.hidden=YES;
     
     lowestYPoint = (CGRectGetMaxY(self.StoreIcon.frame) > CGRectGetMaxY(storelabel.frame)) ? CGRectGetMaxY(self.StoreIcon.frame) : CGRectGetMaxY(storelabel.frame);
@@ -226,7 +229,7 @@
     
     if (![pricelabel.text isEqualToString:@"0"]) {
         [pricelabel sizeToFit];
-        self.PriceIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
+        self.PriceIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
         pricelabel.frame = CGRectMake(maxXPoint, lowestYPoint+3+GAP, pricelabel.frame.size.width, pricelabel.frame.size.height);
         flag = YES;
         maxXPoint= CGRectGetMaxX (pricelabel.frame)+20;
@@ -236,7 +239,7 @@
     
     if (![discountlabel.text isEqualToString:@"0"]) {
         discountlabel.text = [discountlabel.text stringByAppendingString:@"%"];
-        self.PriceIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
+        self.PriceIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
         discountlabel.frame = CGRectMake(maxXPoint, lowestYPoint+3+GAP, discountlabel.frame.size.width, discountlabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.PriceIcon.frame) > CGRectGetMaxY(discountlabel.frame)) ? CGRectGetMaxY(self.PriceIcon.frame) : CGRectGetMaxY(discountlabel.frame);
     } else {
@@ -248,9 +251,9 @@
     
     if ((pricelabel.hidden == YES) && (discountlabel.hidden == YES)) self.PriceIcon.hidden=YES;
     
-    if ((![categorylabel.text isEqualToString:@""]) || (![categorylabel.text isEqualToString:@"No Category"])) {
-        self.CategoryIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.CategoryIcon.frame.size.width, self.CategoryIcon.frame.size.height);
-        categorylabel.frame = CGRectMake(50, lowestYPoint+3+GAP, categorylabel.frame.size.width, categorylabel.frame.size.height);
+    if (![self.categorylabel.text isEqualToString:@""] && [self.categorylabel.text rangeOfString:@"No Category"].location == NSNotFound) {
+        self.CategoryIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.CategoryIcon.frame.size.width, self.CategoryIcon.frame.size.height);
+        categorylabel.frame = CGRectMake(labelsLeftMargin, lowestYPoint+3+GAP, categorylabel.frame.size.width, categorylabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.CategoryIcon.frame) > CGRectGetMaxY(categorylabel.frame)) ? CGRectGetMaxY(self.CategoryIcon.frame) : CGRectGetMaxY(categorylabel.frame);
     } else {
         categorylabel.hidden=YES;
@@ -258,8 +261,8 @@
     }
     
     if (((![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"]) && (![expirelabel.text isEqualToString:@"0"])) && ([expirelabel.text length] > 0)) {
-        self.ExpireIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.ExpireIcon.frame.size.width, self.ExpireIcon.frame.size.height);
-        expirelabel.frame = CGRectMake(50, lowestYPoint+3+GAP, expirelabel.frame.size.width, expirelabel.frame.size.height);
+        self.ExpireIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.ExpireIcon.frame.size.width, self.ExpireIcon.frame.size.height);
+        expirelabel.frame = CGRectMake(labelsLeftMargin, lowestYPoint+3+GAP, expirelabel.frame.size.width, expirelabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.ExpireIcon.frame) > CGRectGetMaxY(expirelabel.frame)) ? CGRectGetMaxY(self.ExpireIcon.frame) : CGRectGetMaxY(expirelabel.frame);
     } else {
         expirelabel.hidden = YES;
@@ -267,10 +270,10 @@
     }
     
     if (![descriptionlabel.text isEqualToString:@"0"]) {
-        descriptionlabel.numberOfLines=0;
+        descriptionlabel.numberOfLines = 0;
         [descriptionlabel sizeToFit];
-        self.DescriptionIcon.frame = CGRectMake(10, lowestYPoint + GAP, self.DescriptionIcon.frame.size.width, self.DescriptionIcon.frame.size.height);
-        descriptionlabel.frame = CGRectMake(50, lowestYPoint+3+GAP, descriptionlabel.frame.size.width, descriptionlabel.frame.size.height);
+        self.DescriptionIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.DescriptionIcon.frame.size.width, self.DescriptionIcon.frame.size.height);
+        descriptionlabel.frame = CGRectMake(labelsLeftMargin, lowestYPoint+3+GAP, descriptionlabel.frame.size.width, descriptionlabel.frame.size.height);
         lowestYPoint = (CGRectGetMaxY(self.DescriptionIcon.frame) > CGRectGetMaxY(descriptionlabel.frame)) ? CGRectGetMaxY(self.DescriptionIcon.frame) : CGRectGetMaxY(descriptionlabel.frame);
     } else {
         descriptionlabel.hidden = YES;
@@ -344,15 +347,28 @@
 -(void) loadVarsFromDeal{
     
     titlelabel.text = [_dealClass title];
-    storelabel.text = [_dealClass store];
-    categorylabel.text = [_dealClass category];
+    storelabel.text = [@"Store: " stringByAppendingString:[_dealClass store]];
     pricelabel.text = ![_dealClass.price isEqualToString:@"0"] ? [_dealClass.currency stringByAppendingString:_dealClass.price] : @"0";
     discountlabel.text = [_dealClass discountValue];
-    expirelabel.text = [self.dateFormatter stringFromDate:self.dealClass.expiration];
-    descriptionlabel.text = [_dealClass moreDescription];
+    
+    if (self.dealClass.category && ![self.dealClass.category isEqualToString:@"0"])
+        categorylabel.text = [@"Category: " stringByAppendingString:[_dealClass category]];
+    else
+        categorylabel.text = @"";
+    
+    if (self.dealClass.expiration)
+        expirelabel.text = [self.dateFormatter stringFromDate:self.dealClass.expiration];
+    else
+        expirelabel.text = @"0";
+    
+    if (self.dealClass.moreDescription && ![self.dealClass.moreDescription isEqualToString:@"0"])
+        descriptionlabel.text = [@"Description: " stringByAppendingString:[_dealClass moreDescription]];
+    else
+        descriptionlabel.text = @"0";
+    
     likelabel = [_dealClass likeCounter];
     commentlabel = [_dealClass commentCounter];
-    LikeOrUnlike=TRUE;
+    LikeOrUnlike = TRUE;
 }
 
 - (void)setDealerSection
@@ -464,6 +480,12 @@
     [super viewDidLoad];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self setSharedView];
+    [self screenshotSharedView];
+}
+
 -(void)setDateFormatter
 {
     self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -509,8 +531,8 @@
         dispatch_async(queue, ^{
             NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@&Dealid=%@",app.UserID,@"updatelikestables",[_dealClass dealID]];
             NSLog(@"url updatin after like: %@", url);
-//            NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-//            NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+            //            NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+            //            NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
         });
     }
 }
@@ -643,8 +665,8 @@
 }
 
 - (IBAction)ShareButtonAction:(id)sender {
-    NSString *name = @"Dealers";
-    NSArray *activityItems = @[name];
+    NSString *name = @"Hear from others and share great deals at Dealers!";
+    NSArray *activityItems = @[self.sharedImage, name];
     UIActivityViewController *acv = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
     [self presentViewController:acv animated:YES completion:nil];
 }
@@ -717,12 +739,182 @@
     }
 }
 
+- (void)setSharedView
+{
+    CGFloat screenWidth = self.view.frame.size.width;
+    
+    UIView *sharedView = [[UIView alloc]initWithFrame:CGRectMake(0, lowestYPoint + 1000, screenWidth, self.view.frame.size.width)];
+    sharedView.backgroundColor = [UIColor whiteColor];
+    sharedView.tag = sharedViewTag;
+    [self.scroll addSubview:sharedView];
+    
+    // Setting the shared view content:
+    
+    UIImageView *dealPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, self.captureImage.frame.size.height)];
+    dealPic.image = self.captureImage.image;
+    [sharedView addSubview:dealPic];
+    
+    CGFloat titleBackgroundHeight = 78.0;
+    UIImageView *titleBackground = [[UIImageView alloc]initWithFrame:CGRectMake(0, dealPic.frame.size.height - titleBackgroundHeight, screenWidth, titleBackgroundHeight)];
+    titleBackground.image = [UIImage imageNamed:@"Title Background"];
+    titleBackground.alpha = 0.65;
+    [sharedView addSubview:titleBackground];
+    
+    CGFloat titleLabelHeight = 48.0;
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+                                                                   dealPic.frame.size.height - titleLabelHeight - 5,
+                                                                   screenWidth - iconsLeftMargin * 2,
+                                                                   titleLabelHeight)];
+    titleLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.numberOfLines = 2;
+    titleLabel.text = self.titlelabel.text;
+    [sharedView addSubview:titleLabel];
+    
+    CGFloat detailsVerticalGap = 7.0;
+    CGFloat detailsLowestYPoint;
+    CGFloat priceXPoint = labelsLeftMargin;
+    UIColor *detailsTextColor = [UIColor colorWithRed:160.0/255.0 green:160.0/255.0 blue:165.0/255.0 alpha:1.0];
+    
+    UIImageView *storeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+                                                                          dealPic.frame.size.height + detailsVerticalGap,
+                                                                          self.StoreIcon.frame.size.width,
+                                                                          self.StoreIcon.frame.size.height)];
+    storeIcon.image = [UIImage imageNamed:@"Store Icon"];
+    [sharedView addSubview:storeIcon];
+    
+    UILabel *storeLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+                                                                   storeIcon.frame.origin.y,
+                                                                   self.storelabel.frame.size.width,
+                                                                   storeIcon.frame.size.height)];
+    storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    storeLabel.textColor = detailsTextColor;
+    storeLabel.numberOfLines = 1;
+    storeLabel.text = self.storelabel.text;
+    [sharedView addSubview:storeLabel];
+    
+    detailsLowestYPoint = CGRectGetMaxY(storeIcon.frame);
+    
+    if (![self.pricelabel.text isEqualToString:@"0"] || ![self.discountlabel.text isEqualToString:@"0"]) {
+        
+        UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+                                                                              detailsLowestYPoint + detailsVerticalGap,
+                                                                              self.PriceIcon.frame.size.width,
+                                                                              self.PriceIcon.frame.size.height)];
+        priceIcon.image = [UIImage imageNamed:@"Price Icon"];
+        [sharedView addSubview:priceIcon];
+        
+        if (![self.pricelabel.text isEqualToString:@"0"]) {
+            
+            UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+                                                                           priceIcon.frame.origin.y,
+                                                                           self.pricelabel.frame.size.width,
+                                                                           priceIcon.frame.size.height)];
+            priceLabel.text = self.pricelabel.text;
+            [priceLabel sizeToFit];
+            priceLabel.center = priceIcon.center;
+            CGRect priceLabelFrame = priceLabel.frame;
+            priceLabelFrame.origin.x = labelsLeftMargin;
+            priceLabel.frame = priceLabelFrame;
+            
+            priceLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+            priceLabel.textColor = detailsTextColor;
+            priceLabel.numberOfLines = 1;
+            [sharedView addSubview:priceLabel];
+            
+            priceXPoint = CGRectGetMaxX(priceLabel.frame) + 20;
+        }
+        
+        if (![self.discountlabel.text isEqualToString:@"0"]) {
+            
+            UILabel *discountLabel = [[UILabel alloc]initWithFrame:CGRectMake(priceXPoint,
+                                                                              priceIcon.frame.origin.y,
+                                                                              self.pricelabel.frame.size.width,
+                                                                              priceIcon.frame.size.height)];
+            discountLabel.text = self.discountlabel.text;
+            [discountLabel sizeToFit];
+            discountLabel.center = priceIcon.center;
+            CGRect discountLabelFrame = discountLabel.frame;
+            discountLabelFrame.origin.x = priceXPoint;
+            discountLabel.frame = discountLabelFrame;
+            
+            discountLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+            discountLabel.textColor = detailsTextColor;
+            discountLabel.numberOfLines = 1;
+            [sharedView addSubview:discountLabel];
+        }
+        
+        detailsLowestYPoint = CGRectGetMaxY(priceIcon.frame);
+    }
+    
+    if (![self.categorylabel.text isEqualToString:@""] && [self.categorylabel.text rangeOfString:@"No Category"].location == NSNotFound) {
+        
+        UIImageView *categoryIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+                                                                              detailsLowestYPoint + detailsVerticalGap,
+                                                                              self.CategoryIcon.frame.size.width,
+                                                                              self.CategoryIcon.frame.size.height)];
+        categoryIcon.image = [UIImage imageNamed:@"Category Icon"];
+        [sharedView addSubview:categoryIcon];
+        
+        UILabel *categoryLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+                                                                       categoryIcon.frame.origin.y,
+                                                                       self.categorylabel.frame.size.width,
+                                                                       categoryIcon.frame.size.height)];
+        categoryLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+        categoryLabel.textColor = detailsTextColor;
+        categoryLabel.numberOfLines = 1;
+        categoryLabel.text = self.categorylabel.text;
+        [sharedView addSubview:categoryLabel];
+        
+        detailsLowestYPoint = CGRectGetMaxY(categoryIcon.frame);
+    }
+    
+    if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"] && ![expirelabel.text isEqualToString:@"0"] && ([expirelabel.text length] > 0)) {
+        
+        UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+                                                                                 detailsLowestYPoint + detailsVerticalGap,
+                                                                                 self.ExpireIcon.frame.size.width,
+                                                                                 self.ExpireIcon.frame.size.height)];
+        storeIcon.image = [UIImage imageNamed:@"Expiration Date Icon"];
+        [sharedView addSubview:expirationIcon];
+        
+        UILabel *expirationLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+                                                                          expirationIcon.frame.origin.y,
+                                                                          self.expirelabel.frame.size.width,
+                                                                          expirationIcon.frame.size.height)];
+        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+        expirationLabel.textColor = detailsTextColor;
+        expirationLabel.numberOfLines = 1;
+        expirationLabel.text = self.expirelabel.text;
+        [sharedView addSubview:expirationLabel];
+        
+        detailsLowestYPoint = CGRectGetMaxY(expirationLabel.frame);
+    }
+}
+
+- (void)screenshotSharedView
+{
+    self.sharedImage = [[UIImage alloc]init];
+    
+    UIView *sharedView = [self.scroll viewWithTag:sharedViewTag];
+    
+    CGRect screenShotRect = sharedView.bounds;
+    
+    UIGraphicsBeginImageContextWithOptions(sharedView.bounds.size, YES, 0.0);
+    [sharedView drawViewHierarchyInRect:screenShotRect afterScreenUpdates:YES];
+    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+//    NSData *screenshotData = UIImagePNGRepresentation(screenshot);
+    UIGraphicsEndImageContext();
+    
+    self.sharedImage = screenshot;
+}
+
 //////////////////////
 //// tapbar //////////
 //////////////////////
 
 
--(void) func {
+- (void)func {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"foursquare";
     app.onlineOrLocal=@"local";

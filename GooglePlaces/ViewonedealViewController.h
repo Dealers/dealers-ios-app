@@ -109,4 +109,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *urlSiteButton;
 - (IBAction)urlSiteButtonClicked:(id)sender;
 
+@property UIImage *sharedImage;
+
 @end
