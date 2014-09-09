@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DealerClass.h"
+#import "Dealer.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
@@ -24,7 +24,9 @@
 @property (strong, nonatomic)  NSString *previousViewController;
 @property (strong, nonatomic)  NSString *dealerName;
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
-@property (strong, nonatomic)  DealerClass *dealerClass;
+@property (strong, nonatomic)  Dealer *dealerClass;
+
+@property (weak) UIImage *screenShot;
 
 - (void)setTabBarController;
 - (NSArray *)getCategories;

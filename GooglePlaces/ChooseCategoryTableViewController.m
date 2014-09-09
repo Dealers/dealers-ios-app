@@ -8,6 +8,7 @@
 
 #import "ChooseCategoryTableViewController.h"
 #import "EditDealTableViewController.h"
+#import "OptionalaftergoogleplaceViewController.h"
 
 @interface ChooseCategoryTableViewController ()
 
@@ -28,9 +29,11 @@
 {
     AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
+    self.title = @"Choose Category";
+    
     self.categories = [[NSArray alloc]initWithArray:[app getCategories]];
     self.icons = [[NSArray alloc]initWithArray:[app getCategoriesIcons]];
-    
+
     [super viewDidLoad];
 }
 
@@ -60,15 +63,22 @@
     return cell;
 }
 
-/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
+    if ([self.cameFrom isEqualToString:@"editDeal"]) {
+        
         EditDealTableViewController *edtvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
-        edtvc.currentDeal.c
+        edtvc.currentDeal.category = [self.categories objectAtIndex:indexPath.row];
+        edtvc.didChangeOriginalDeal = YES;
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
+        
+        OptionalaftergoogleplaceViewController *oagpvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+        oagpvc.categorylabel.text = [self.categories objectAtIndex:indexPath.row];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
-*/
 
 /*
 #pragma mark - Navigation

@@ -8,16 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-
+#import "AppDelegate.h"
 
 @interface Signup2ViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIActionSheetDelegate,UINavigationBarDelegate,UINavigationControllerDelegate>
 {
     NSString *Photoid;
     BOOL didAddPhoto;
     BOOL registerAgain;
+    BOOL isPopping;
     CGPoint scrollOriginOffset;
 }
 @property (nonatomic) UIApplication *app;
+@property (nonatomic) AppDelegate *appDelegate;
 
 @property (strong, nonatomic) NSMutableArray *list;
 
@@ -49,6 +51,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *textFieldsFrame;
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datepick;
+@property (nonatomic) NSDate *selectedDate;
+@property (nonatomic) NSDateFormatter *dateFormatter;
 @property (weak, nonatomic) IBOutlet UINavigationBar *NavBar;
 @property (weak, nonatomic) IBOutlet UIScrollView *scroll;
 @property (weak, nonatomic) IBOutlet UIPickerView *GenderPicker;

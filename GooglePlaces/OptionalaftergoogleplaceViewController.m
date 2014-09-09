@@ -55,7 +55,8 @@
     _descriptionText = [_descriptionText stringByReplacingOccurrencesOfString:@"'" withString:@"q8j"];
     
 }
--(void) BackgroundMethod {
+
+- (void)BackgroundMethod {
     
     NSMutableArray *photosArray=[[NSMutableArray alloc]init];
     NSMutableArray *photosidArray=[[NSMutableArray alloc]init];
@@ -79,7 +80,7 @@
         [photosArray addObject:_captureImage4.image];
     }
     
-    if (numofpics>0) {
+    if (numofpics > 0) {
         for (int i=0; i<[photosArray count]; i++) {
             NSData *imagedata = UIImageJPEGRepresentation([photosArray objectAtIndex:i], 1);
             NSString *urlString = @"http://www.dealers.co.il/uploadphpFile.php";
@@ -119,11 +120,11 @@
     
     NSDate *localDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    dateFormatter.dateFormat =@"yyyy-MM-dd 'at' HH:mm";
+    dateFormatter.dateFormat = @"MM'/'dd'/'yyyy 'at' HH:mm";
     NSString *dateString = [dateFormatter stringFromDate: localDate];
     
-    if ([_categorylabel.text length]==0) {
-        _categorylabel.text=@"No Category";
+    if ([_categorylabel.text length] == 0) {
+        _categorylabel.text = @"No Category";
     }
     
     if ([app.onlineOrLocal isEqualToString:@"local"]) {
@@ -194,7 +195,7 @@
     strURL = newString;
     
     NSMutableString *mutString = [NSMutableString stringWithFormat:@"%@&longitude='%@'&latitude='%@'",strURL,_seglong,_seglat];
-    strURL=mutString;
+    strURL = mutString;
     NSLog(@"url=%@",strURL);
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
@@ -232,9 +233,8 @@
     _CategoryPicker=Nil;
 }
 
--(void) waitOneSecond {
+-(void) waitThreeSeconds {
     [self dismissViewControllerAnimated:YES completion:nil];
-    //[self performSelector:@selector(reloadMyFeeds) withObject:nil afterDelay:1];
 }
 
 //Loads MYFEED vc //
@@ -329,6 +329,8 @@
     
     [self initialize];
     
+    [self setDateFormatter];
+    
     app.onlineOrLocal = @"local";
     
     _titlelabel.delegate=self;
@@ -350,6 +352,13 @@
     [super viewDidLoad];
 }
 
+- (void)setDateFormatter
+{
+    self.dateFormatter = [[NSDateFormatter alloc]init];
+    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+}
+
 -(void)viewDidAppear:(BOOL)animated {
     allocDatePicker=NO;
     allocCategoryPicker=NO;
@@ -361,19 +370,26 @@
 {
     static NSCache *_cache = nil;
     [_cache removeAllObjects];
+   
+    /*  It seems that even though there's a memory warning, everything still works fine. So we should cancel these for now:
+    
     [self.captureSession stopRunning];
     [_imagePreview.layer removeFromSuperlayer];
     self.stillImageOutput=nil;
     self.captureSession=nil;
-    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='camera'"];
-    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
     _SnapButton.enabled=NO;
     _SnapButton2.enabled=NO;
+    
+     */
+    
+    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='camera'"];
+    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+   
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-//Showing the Loading Icon //
+//Showing the Loading Icon:
 -(void) startLoadingIcon {
     _LoadingImage.animationImages = [NSArray arrayWithObjects:
                                      [UIImage imageNamed:@"loading.png"],
@@ -402,26 +418,28 @@
 }
 
 - (IBAction)adddealbutton:(id)sender {
+    
     NSLog(@"in add deal function");
     NSString *everyThingsOK = @"no";
+    
     [self dismissAllKeyBoards];
     [self dismissAllNoneKeyboard];
     
     if ((_titlelabel.text.length == 0)){
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"You must enter a Title" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter a Title" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
     } else if ((_discountlabel.text.length > 0)){
         int price = [_discountlabel.text intValue];
-        if (price>100) {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Check your discount" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        if (price > 100) {
+            UIAlertView *alert =[ [UIAlertView alloc]initWithTitle:@"Oops!" message:@"Check your discount" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
         } else everyThingsOK=@"yes";
     } else everyThingsOK=@"yes";
     
     if ([everyThingsOK isEqualToString:@"yes"]) {
-        [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=1.0;}];
-        _LoadingDeal.hidden=NO;
-        [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=1.0; _LoadingDeal.transform =CGAffineTransformMakeScale(0.8,0.8);
+        [UIView animateWithDuration:0.5 animations:^{_Coverblack.alpha=1.0;}];
+        _LoadingDeal.hidden = NO;
+        [UIView animateWithDuration:0.5 animations:^{_LoadingDeal.alpha=1.0; _LoadingDeal.transform =CGAffineTransformMakeScale(0.6, 0.6);
             _LoadingDeal.transform =CGAffineTransformMakeScale(1,1);}];
         [self startLoadingIcon];
         [self removeUniqueSigns];
@@ -438,27 +456,26 @@
                 // Update the UI on the main thread.
                 NSLog(@"res=%@",resultFromDb);
                 if (([resultFromDb length]==0)) {
-                    [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=0.0;}];
+                    [UIView animateWithDuration:0.5 animations:^{_Coverblack.alpha=0.0;}];
                     _LoadingDeal.hidden=YES;
-                    [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=0.0; _LoadingDeal.transform =CGAffineTransformMakeScale(1.0,1.0);
+                    [UIView animateWithDuration:0.5 animations:^{_LoadingDeal.alpha=0.0; _LoadingDeal.transform =CGAffineTransformMakeScale(1.0,1.0);
                         _LoadingDeal.transform =CGAffineTransformMakeScale(0,0);}];
                     [_LoadingImage stopAnimating];
                     
-                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Could not Upload Your Deal, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Connection Problem" message:@"Couldn't upload your deal. Please check you connection and try Again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
                     [alert show];
                 }
                 else if ([resultFromDb rangeOfString:@"fail"].location == NSNotFound) {
-                    [self waitOneSecond];
+                    [self performSelector:@selector(waitThreeSeconds) withObject:nil afterDelay:3.0];
                 } else {
-                    [UIView animateWithDuration:0.3 animations:^{_Coverblack.alpha=0.0;}];
+                    [UIView animateWithDuration:0.5 animations:^{_Coverblack.alpha=0.0;}];
                     _LoadingDeal.hidden=YES;
-                    [UIView animateWithDuration:0.3 animations:^{_LoadingDeal.alpha=0.0; _LoadingDeal.transform =CGAffineTransformMakeScale(1.0,1.0);
+                    [UIView animateWithDuration:0.5 animations:^{_LoadingDeal.alpha=0.0; _LoadingDeal.transform =CGAffineTransformMakeScale(1.0,1.0);
                         _LoadingDeal.transform =CGAffineTransformMakeScale(0,0);}];
                     [_LoadingImage stopAnimating];
                     
-                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"oops!" message:@"Could not Upload Your Deal, Please Try Again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Could not Upload Your Deal, Please Try Again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
                     [alert show];
-                    
                 }
             });
         });
@@ -896,7 +913,7 @@
     [self ReduceScroll];
     
     NSDate *select = [_DatePicker date];
-    NSString *date = [self modifyDateString:select];
+    NSString *date = [self.dateFormatter stringFromDate:select];
     _expirationlabel.text = date;
 }
 
@@ -958,7 +975,11 @@
     
 }
 
-//AVCaptureSession to show live video feed in view
+
+#pragma mark - The Camera
+
+//AVCaptureSession to show live video feed in view:
+
 - (void) initializeCamera {
     
     self.captureSession = [[AVCaptureSession alloc] init];
@@ -969,16 +990,16 @@
         if ([self.captureSession canAddInput:videoInput]) {
             [self.captureSession addInput:videoInput];
         } else {
-            _SnapButton.enabled=NO;
-            _SnapButton2.enabled=NO;
+            _SnapButton.enabled = NO;
+            _SnapButton2.enabled = NO;
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Camera Error" message:@"There was a problem with the camera" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
             [alert show];
             return;
         }
     } else {
-        _SnapButton.enabled=NO;
-        _SnapButton2.enabled=NO;
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Camera Error" message:@"There was a problem with the camera" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        _SnapButton.enabled = NO;
+        _SnapButton2.enabled = NO;
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Camera Error" message:@"There's no camera in this device" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
         return;
     }

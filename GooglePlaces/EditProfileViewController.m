@@ -6,9 +6,11 @@
 //
 //
 
+
+
 #import "EditProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "DealerClass.h"
+#import "Dealer.h"
 #import "CheckConnection.h"
 #import "AppDelegate.h"
 @interface EditProfileViewController ()
@@ -17,6 +19,7 @@
 
 @implementation EditProfileViewController
 
+/*
 -(void) dealerClassSetting {
     
     CheckConnection *checkconnection = [[CheckConnection alloc]init];
@@ -55,7 +58,7 @@
 
                 }
             }
-            NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealerClass getUserPhotoID]];
+            NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealerClass userPhotoID]];
             NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
             // Update UI after computation.
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -67,13 +70,13 @@
                 mask.frame = CGRectMake(0, 0, 80, 80);
                 _userImage.layer.mask = mask;
                 _userImage.layer.masksToBounds = YES;
-                _userNameTF.text=[_dealerClass getUserName];
-                _userEmailTF.text=[_dealerClass getUserEmail];
-                _userAboutTF.text=[_dealerClass dealerEmpty:[_dealerClass getUserAbout]] ? [_dealerClass getUserAbout] : NULL;
-                _userLocationTF.text=[_dealerClass dealerEmpty:[_dealerClass getUserLocation]] ? [_dealerClass getUserLocation] : NULL;
-                _userGenderTF.text=[_dealerClass dealerEmpty:[_dealerClass getUserGender]] ? [_dealerClass getUserGender] : NULL;
-                _userBirthTF.text=[_dealerClass dealerEmpty:[_dealerClass getUserDateofBirth]] ? [_dealerClass getUserDateofBirth] : NULL;
-                _userPasswordTF.text=[_dealerClass dealerEmpty:[_dealerClass getUserPassword]] ? [_dealerClass getUserPassword] : NULL;
+                _userNameTF.text=[_dealerClass userName];
+                _userEmailTF.text=[_dealerClass userEmail];
+                _userAboutTF.text=[_dealerClass dealerEmpty:[_dealerClass userAbout]] ? [_dealerClass userAbout] : NULL;
+                _userLocationTF.text=[_dealerClass dealerEmpty:[_dealerClass userLocation]] ? [_dealerClass userLocation] : NULL;
+                _userGenderTF.text=[_dealerClass dealerEmpty:[_dealerClass userGender]] ? [_dealerClass userGender] : NULL;
+                _userBirthTF.text=[_dealerClass dealerEmpty:[_dealerClass userDateofBirth]] ? [_dealerClass userDateofBirth] : NULL;
+                _userPasswordTF.text=[_dealerClass dealerEmpty:[_dealerClass userPassword]] ? [_dealerClass userPassword] : NULL;
 
                 [self removeWhiteCover];
                 [_LoadingImage stopAnimating];
@@ -246,7 +249,7 @@
     [_dealerClass setUserEmail:_userEmailTF.text];
 
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/editProfileUpdating.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@&About=%@&Location=%@&Userid=%@",[_dealerClass getUserName],[_dealerClass getUserPassword],[_dealerClass getUserEmail],[_dealerClass getUserDateofBirth],[_dealerClass getUserGender],[_dealerClass getUserPhotoID],[_dealerClass getUserAbout],[_dealerClass getUserLocation],app.UserID];
+    NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/editProfileUpdating.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@&About=%@&Location=%@&Userid=%@",[_dealerClass userName],[_dealerClass userPassword],[_dealerClass userEmail],[_dealerClass userDateofBirth],[_dealerClass userGender],[_dealerClass userPhotoID],[_dealerClass userAbout],[_dealerClass userLocation],app.UserID];
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@",strURL);
     // to execute php code
@@ -254,7 +257,7 @@
     // to receive the returend value
     NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
     if ([strResult isEqualToString:@"success"]) {
-        app.dealerName=[_dealerClass getUserName];
+        app.dealerName=[_dealerClass userName];
         app.dealerProfileImage = _userImage.image;
         return 1;
     } else return 0;
@@ -557,4 +560,7 @@
         _scrollView.contentOffset = CGPointMake(0, 0);
     }];
 }
+ 
+*/
+ 
 @end

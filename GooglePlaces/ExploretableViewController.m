@@ -39,7 +39,7 @@
     self.SearchBar.delegate=self;
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.AfterAddDeal=@"aftertapbar";
+    app.AfterAddDeal = @"aftertapbar";
     
     types = [[NSMutableArray alloc]initWithArray:[app getCategories]];
     
@@ -104,9 +104,9 @@
     NSString *string;
     
     if (filtered == YES) {
-    if (indexpath.row<[self.filteredtypes count]) {
+    if (indexpath.row < [self.filteredtypes count]) {
         string = [self.filteredtypes objectAtIndex:indexpath.row];
-    } else string=@"Unknown";
+    } else string = @"Unknown";
     [[segue destinationViewController] setCategoryFromExplore:string];
     }
     

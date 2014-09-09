@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 @interface MainViewController : UIViewController <UINavigationBarDelegate,UINavigationBarDelegate>
 {
      float ScreenHeight;
 }
+
+@property AppDelegate *appDelegate;
 
 @property (weak, nonatomic) IBOutlet UIImageView *dealershead;
 @property (weak, nonatomic) IBOutlet UIImageView *backwhite;
@@ -23,7 +26,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *already;
 @property (weak, nonatomic) IBOutlet UILabel *signin;
-@property (weak, nonatomic) IBOutlet UILabel *via;
+
+@property (weak, nonatomic) IBOutlet UIImageView *screenShot;
+
+@property BOOL didComeFromLogOut;
 
 - (IBAction)EmailimageButton:(id)sender;
 - (IBAction)SigninButton:(id)sender;

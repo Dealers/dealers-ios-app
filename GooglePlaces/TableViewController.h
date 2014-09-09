@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
+#import "Store.h"
 #import <MapKit/MapKit.h>
+#import <RestKit/RestKit.h>
 #import <CoreLocation/CoreLocation.h>
 #define kGOOGLE_API_KEY @"AIzaSyCcDzlxbL52wI4wT_2y3iKqhrdCCo9WuUY"
 
@@ -30,13 +33,12 @@
 
 -(void) deallocMemory;
 
-@property (strong,nonatomic) NSString *searchTextToBackground;
+@property UIApplication *app;
 
 @property (nonatomic, strong) MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *whiteCoverView;
-@property (weak, nonatomic) IBOutlet UIView *storeSearchView;
 
 @property (strong, nonatomic) IBOutlet UITableView *venuesTableView;
 @property (strong, nonatomic) IBOutlet UITableView *storeSearchTableView;
@@ -51,26 +53,24 @@
 @property (strong, nonatomic) NSMutableArray *storeSearchLocationArray;
 @property (strong, nonatomic) NSMutableArray *storeSearchNameArray;
 
+@property (strong, nonatomic) NSArray *storesNearby;
+@property (strong, nonatomic) NSArray *storesSearched;
+
 @property (weak, nonatomic) IBOutlet UIButton *enlargeMapButton;
-@property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
-@property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
 @property (weak, nonatomic) IBOutlet UIButton *collapseMapButton;
 @property (weak, nonatomic) IBOutlet UIButton *closeStoreSearchTableButton;
-@property (weak, nonatomic) IBOutlet UIButton *closeStoreSearchViewButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *theShadow;
 @property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
-@property (weak, nonatomic) IBOutlet UIImageView *NavBarImage;
-@property (weak, nonatomic) IBOutlet UIImageView *BlackCoverImage;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
 @property CGRect venuesTableInitialFrame;
 
-- (IBAction)returnButtonClicked:(id)sender;
+@property NSString *cameFrom;
+
 - (IBAction)enlargeMapButtonClicked:(id)sender;
 - (IBAction)collapseMapButtonClicked:(id)sender;
 - (IBAction)closeStoreSearchTableButtonClicked:(id)sender;
-- (IBAction)closeStoreSearchViewButtonClicked:(id)sender;
 
 @end

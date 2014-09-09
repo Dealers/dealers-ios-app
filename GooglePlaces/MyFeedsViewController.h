@@ -13,16 +13,20 @@
 {
     int GAP;
     int gap2;
-    BOOL isShortCell;
-    BOOL isUpdatingNow;
+    int numberOfDealsLoadingAtATime;
     int cellNumberInScrollView;
     int cellsNumbersInFillWithImages;
+    BOOL isShortCell;
+    BOOL isUpdatingNow;
     BOOL myFeedsFirstTime;
+    BOOL refreshing;
+    
+    NSString *selfViewController;
 }
 
 @property (weak,nonatomic) IBOutlet UIScrollView *scrollView;
 
-@property (strong, nonatomic)  UIImage *image2;
+@property (strong, nonatomic)  UIImage *image;
 
 @property (weak, nonatomic) IBOutlet UIImageView *DealersTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
@@ -32,5 +36,9 @@
 @property (nonatomic, strong) NSMutableArray *dealPhotosArray;
 
 @property (strong, nonatomic) NSString *dealsUserLikes;
+
+@property (nonatomic) NSString *categoryFromExplore;
+
+@property NSDateFormatter *dateFormatter;
 
 @end
