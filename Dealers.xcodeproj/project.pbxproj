@@ -19,14 +19,10 @@
 		B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B012D94C182AA2B4006288CA /* MoreViewController.m */; };
 		B012D950182AA323006288CA /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B012D94F182AA321006288CA /* ProfileViewController.m */; };
 		B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01BD1B117F0D6470010C9A4 /* TableViewController.m */; };
-		B01BD1B517F0D7010010C9A4 /* googleCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = B01BD1B417F0D7000010C9A4 /* googleCell2.m */; };
-		B02436D017F421F000FB24CC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B02436CF17F421F000FB24CC /* Default-568h@2x.png */; };
 		B02436D717F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = B02436D117F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png */; };
 		B02436D817F4237D00FB24CC /* Launch App Icons_AppStore.png in Resources */ = {isa = PBXBuildFile; fileRef = B02436D217F4237D00FB24CC /* Launch App Icons_AppStore.png */; };
 		B02436D917F4237D00FB24CC /* Launch App Icons_iPad (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = B02436D317F4237D00FB24CC /* Launch App Icons_iPad (high resolution).png */; };
 		B02436DA17F4237D00FB24CC /* Launch App Icons_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B02436D417F4237D00FB24CC /* Launch App Icons_iPad.png */; };
-		B02436DE17F423CD00FB24CC /* Launch App Icons_iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = B02436DD17F423CD00FB24CC /* Launch App Icons_iPhone.png */; };
-		B02436E017F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = B02436DF17F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png */; };
 		B024374B17F47D9000FB24CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B024374A17F47D9000FB24CC /* QuartzCore.framework */; };
 		B024374D17F47F5400FB24CC /* mask.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B024374C17F47F5300FB24CC /* mask.PNG */; };
 		B02747FF186B291B005A52F0 /* PLCameraSheetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */; };
@@ -87,7 +83,6 @@
 		B034B9CE1804788900625392 /* Registration_Sign In Fill Boxes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9B11804787400625392 /* Registration_Sign In Fill Boxes@2x.png */; };
 		B034B9D11804788900625392 /* Registration_Twitter button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9B41804788000625392 /* Registration_Twitter button (selected)@2x.png */; };
 		B034B9D21804788900625392 /* Registration_Twitter button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9B51804788400625392 /* Registration_Twitter button@2x.png */; };
-		B034B9DE1805536A00625392 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B8B2180475D500625392 /* Default@2x.png */; };
 		B034B9E21805D6CA00625392 /* Registration_Navigation Bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9E11805D6C900625392 /* Registration_Navigation Bar@2x.png */; };
 		B034B9E91806C77D00625392 /* My Feed+View Deal_Comments icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9E51806C77700625392 /* My Feed+View Deal_Comments icon@2X.png */; };
 		B034B9EA1806C77D00625392 /* My Feed+View Deal_Likes icon@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = B034B9E61806C77800625392 /* My Feed+View Deal_Likes icon@2X.png */; };
@@ -96,7 +91,6 @@
 		B03F6B8A18676F6C000ACC13 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03F6B8718676F6C000ACC13 /* Accounts.framework */; };
 		B03F6B8B18676F6C000ACC13 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03F6B8818676F6C000ACC13 /* AdSupport.framework */; };
 		B03F6B8C18676F6C000ACC13 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03F6B8918676F6C000ACC13 /* Social.framework */; };
-		B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */; };
 		B055C71717FE806900FBDFCC /* Explore_Amusment & Entertainment icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C6FF17FE7D3B00FBDFCC /* Explore_Amusment & Entertainment icon@2x.png */; };
 		B055C71817FE806900FBDFCC /* Explore_Art icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C70017FE7D5100FBDFCC /* Explore_Art icon@2x.png */; };
 		B055C71917FE806900FBDFCC /* Explore_Automotive icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C70117FE7D7700FBDFCC /* Explore_Automotive icon@2x.png */; };
@@ -125,17 +119,13 @@
 		B055C73617FE95CC00FBDFCC /* Explore_Music icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C73517FE95AF00FBDFCC /* Explore_Music icon.png */; };
 		B0691CB1191BEE270052DCCF /* Add Deal_Done button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0691CB0191BEE270052DCCF /* Add Deal_Done button@2x.png */; };
 		B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B06F806B181275E30032CE68 /* BackgroundLayer.m */; };
-		B06F808B1813D9450032CE68 /* Launch App Icons (Flat)_iPhone (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = B06F808A1813D9420032CE68 /* Launch App Icons (Flat)_iPhone (high resolution).png */; };
-		B06F808D1813D9540032CE68 /* Launch App Icons (Flat)_iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = B06F808C1813D9510032CE68 /* Launch App Icons (Flat)_iPhone.png */; };
 		B079F2B81846230A00E0C186 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B079F2B71846230800E0C186 /* AVFoundation.framework */; };
-		B079F2C01847C0CE00E0C186 /* beta.png in Resources */ = {isa = PBXBuildFile; fileRef = B079F2BF1847C0CE00E0C186 /* beta.png */; };
 		B0862126186FF1450017099E /* Functions.m in Sources */ = {isa = PBXBuildFile; fileRef = B0862125186FF1450017099E /* Functions.m */; };
 		B08A3668187B3C82005B72D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B08A3667187B3C82005B72D8 /* Images.xcassets */; };
 		B0907D5D18F8315600ED54F2 /* nodeal.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = B0907D5C18F8315600ED54F2 /* nodeal.jpeg */; };
 		B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0907D5F18F95A7500ED54F2 /* ExploreDealsViewController.m */; };
 		B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */; };
 		B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */; };
-		B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0A17F40311004EB3CA /* CustomcellforviewdealCell.m */; };
 		B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0D17F40B78004EB3CA /* SigninViewController.m */; };
 		B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C1317F40BD2004EB3CA /* MainViewController.m */; };
 		B09FBACB192E4CA3006CB986 /* Profile_noPic@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACA192E4CA3006CB986 /* Profile_noPic@2x.jpg */; };
@@ -401,8 +391,8 @@
 		C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84846FB19A2617B00BC6ACE /* SettingsTableViewController.m */; };
 		C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */; };
 		C848B66D19ADB92A000F138D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B66C19ADB92A000F138D /* Comment.m */; };
-		C848B67819B4AB76000F138D /* StoresTabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B67719B4AB76000F138D /* StoresTabelCell.m */; };
-		C848B67A19B4ACA4000F138D /* StoresTabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C848B67919B4ACA4000F138D /* StoresTabelCell.xib */; };
+		C848B67819B4AB76000F138D /* StoresTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B67719B4AB76000F138D /* StoresTableCell.m */; };
+		C848B67A19B4ACA4000F138D /* StoresTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C848B67919B4ACA4000F138D /* StoresTableCell.xib */; };
 		C869CB85191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */; };
 		C869CB86191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */; };
 		C869CB87191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */; };
@@ -460,6 +450,8 @@
 		C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */; };
 		C8A6EBE4191BB99600887C34 /* Registration_Sign Up Mail button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */; };
 		C8A6EBE5191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */; };
+		C8AC887E19BD9A5D002A2C16 /* CommentsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AC887C19BD9A5C002A2C16 /* CommentsTableCell.m */; };
+		C8AC887F19BD9A5D002A2C16 /* CommentsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8AC887D19BD9A5C002A2C16 /* CommentsTableCell.xib */; };
 		C8B7C2351920FCF60032726E /* Registration_Purple button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8B7C2301920FCF60032726E /* Registration_Purple button@2x.png */; };
 		C8B7C2361920FCF60032726E /* Registration_Sign In button (highlighted)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8B7C2311920FCF60032726E /* Registration_Sign In button (highlighted)@2x.png */; };
 		C8B7C2371920FCF60032726E /* Registration_Sign In button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8B7C2321920FCF60032726E /* Registration_Sign In button@2x.png */; };
@@ -564,6 +556,9 @@
 		C8DADE4F18FDF3CB0056AC9F /* Explore-Black_Restaurants & Bars icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE3C18FDF3CB0056AC9F /* Explore-Black_Restaurants & Bars icon@2x.png */; };
 		C8DADE5018FDF3CB0056AC9F /* Explore-Black_Sports & Outdoor icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE3D18FDF3CB0056AC9F /* Explore-Black_Sports & Outdoor icon@2x.png */; };
 		C8DADE5118FDF3CB0056AC9F /* Explore-Black_Travel icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DADE3E18FDF3CB0056AC9F /* Explore-Black_Travel icon@2x.png */; };
+		C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */; };
+		C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */; };
+		C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */; };
 		C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FFF56B197C437600D01744 /* EditDealTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -623,15 +618,10 @@
 		B012D94F182AA321006288CA /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		B01BD1B017F0D6470010C9A4 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		B01BD1B117F0D6470010C9A4 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
-		B01BD1B317F0D7000010C9A4 /* googleCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = googleCell2.h; sourceTree = "<group>"; };
-		B01BD1B417F0D7000010C9A4 /* googleCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = googleCell2.m; sourceTree = "<group>"; };
-		B02436CF17F421F000FB24CC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B02436D117F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_AppStore (high resolution).png"; sourceTree = "<group>"; };
 		B02436D217F4237D00FB24CC /* Launch App Icons_AppStore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_AppStore.png"; sourceTree = "<group>"; };
 		B02436D317F4237D00FB24CC /* Launch App Icons_iPad (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_iPad (high resolution).png"; sourceTree = "<group>"; };
 		B02436D417F4237D00FB24CC /* Launch App Icons_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_iPad.png"; sourceTree = "<group>"; };
-		B02436DD17F423CD00FB24CC /* Launch App Icons_iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_iPhone.png"; sourceTree = "<group>"; };
-		B02436DF17F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_iPhone (high resolution).png"; sourceTree = "<group>"; };
 		B024374A17F47D9000FB24CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B024374C17F47F5300FB24CC /* mask.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.PNG; sourceTree = "<group>"; };
 		B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetButton.png; sourceTree = "<group>"; };
@@ -656,7 +646,6 @@
 		B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKResizeableCropOverlayView.m; sourceTree = "<group>"; };
 		B0294C7118B0CC0900699107 /* MyFeedsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFeedsViewController.h; sourceTree = "<group>"; };
 		B0294C7218B0CC0900699107 /* MyFeedsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFeedsViewController.m; sourceTree = "<group>"; };
-		B034B8B2180475D500625392 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B034B8B41804765500625392 /* DB2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DB2-Prefix.pch"; sourceTree = "<group>"; };
 		B034B8B5180476AC00625392 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B034B8C11804777A00625392 /* Add Deal_Cancel Adding button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add Deal_Cancel Adding button (selected)@2x.png"; path = "GooglePlaces/Add Deal_Cancel Adding button (selected)@2x.png"; sourceTree = "<group>"; };
@@ -710,8 +699,6 @@
 		B03F6B8818676F6C000ACC13 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B03F6B8918676F6C000ACC13 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		B0493AD718FDC5E90044AD91 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		B04B7C9D185DB3DE00F06472 /* StoreSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreSearchCell.h; sourceTree = "<group>"; };
-		B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreSearchCell.m; sourceTree = "<group>"; };
 		B055C6FF17FE7D3B00FBDFCC /* Explore_Amusment & Entertainment icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore_Amusment & Entertainment icon@2x.png"; sourceTree = "<group>"; };
 		B055C70017FE7D5100FBDFCC /* Explore_Art icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore_Art icon@2x.png"; sourceTree = "<group>"; };
 		B055C70117FE7D7700FBDFCC /* Explore_Automotive icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore_Automotive icon@2x.png"; sourceTree = "<group>"; };
@@ -743,10 +730,7 @@
 		B0691CB0191BEE270052DCCF /* Add Deal_Done button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Done button@2x.png"; sourceTree = "<group>"; };
 		B06F806A181275E20032CE68 /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		B06F806B181275E30032CE68 /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
-		B06F808A1813D9420032CE68 /* Launch App Icons (Flat)_iPhone (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons (Flat)_iPhone (high resolution).png"; sourceTree = "<group>"; };
-		B06F808C1813D9510032CE68 /* Launch App Icons (Flat)_iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons (Flat)_iPhone.png"; sourceTree = "<group>"; };
 		B079F2B71846230800E0C186 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		B079F2BF1847C0CE00E0C186 /* beta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beta.png; sourceTree = "<group>"; };
 		B0862124186FF1450017099E /* Functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Functions.h; sourceTree = "<group>"; };
 		B0862125186FF1450017099E /* Functions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Functions.m; sourceTree = "<group>"; };
 		B08A3667187B3C82005B72D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Dealers-test/Images.xcassets"; sourceTree = "<group>"; };
@@ -757,8 +741,6 @@
 		B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionalaftergoogleplaceViewController.m; sourceTree = "<group>"; };
 		B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewonedealViewController.h; sourceTree = "<group>"; };
 		B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewonedealViewController.m; sourceTree = "<group>"; };
-		B0930C0917F40311004EB3CA /* CustomcellforviewdealCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomcellforviewdealCell.h; path = ../CustomcellforviewdealCell.h; sourceTree = "<group>"; };
-		B0930C0A17F40311004EB3CA /* CustomcellforviewdealCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomcellforviewdealCell.m; path = ../CustomcellforviewdealCell.m; sourceTree = "<group>"; };
 		B0930C0C17F40B78004EB3CA /* SigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SigninViewController.h; sourceTree = "<group>"; };
 		B0930C0D17F40B78004EB3CA /* SigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigninViewController.m; sourceTree = "<group>"; };
 		B0930C1217F40BD2004EB3CA /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -1038,9 +1020,9 @@
 		C84846FE19A2620C00BC6ACE /* EditProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileTableViewController.m; sourceTree = "<group>"; };
 		C848B66B19ADB92A000F138D /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		C848B66C19ADB92A000F138D /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
-		C848B67619B4AB76000F138D /* StoresTabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoresTabelCell.h; sourceTree = "<group>"; };
-		C848B67719B4AB76000F138D /* StoresTabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoresTabelCell.m; sourceTree = "<group>"; };
-		C848B67919B4ACA4000F138D /* StoresTabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoresTabelCell.xib; sourceTree = "<group>"; };
+		C848B67619B4AB76000F138D /* StoresTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoresTableCell.h; sourceTree = "<group>"; };
+		C848B67719B4AB76000F138D /* StoresTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoresTableCell.m; sourceTree = "<group>"; };
+		C848B67919B4ACA4000F138D /* StoresTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoresTableCell.xib; sourceTree = "<group>"; };
 		C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab (selected)@2x.png"; sourceTree = "<group>"; };
 		C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab@2x.png"; sourceTree = "<group>"; };
 		C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Likes List tab (selected)@2x.png"; sourceTree = "<group>"; };
@@ -1103,6 +1085,9 @@
 		C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Facebook button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Mail button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Twitter button@2x.png"; sourceTree = "<group>"; };
+		C8AC887B19BD9A5C002A2C16 /* CommentsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableCell.h; sourceTree = "<group>"; };
+		C8AC887C19BD9A5C002A2C16 /* CommentsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableCell.m; sourceTree = "<group>"; };
+		C8AC887D19BD9A5C002A2C16 /* CommentsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsTableCell.xib; sourceTree = "<group>"; };
 		C8B7C2301920FCF60032726E /* Registration_Purple button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Purple button@2x.png"; sourceTree = "<group>"; };
 		C8B7C2311920FCF60032726E /* Registration_Sign In button (highlighted)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign In button (highlighted)@2x.png"; sourceTree = "<group>"; };
 		C8B7C2321920FCF60032726E /* Registration_Sign In button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign In button@2x.png"; sourceTree = "<group>"; };
@@ -1210,6 +1195,11 @@
 		C8DADE3C18FDF3CB0056AC9F /* Explore-Black_Restaurants & Bars icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Restaurants & Bars icon@2x.png"; sourceTree = "<group>"; };
 		C8DADE3D18FDF3CB0056AC9F /* Explore-Black_Sports & Outdoor icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Sports & Outdoor icon@2x.png"; sourceTree = "<group>"; };
 		C8DADE3E18FDF3CB0056AC9F /* Explore-Black_Travel icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore-Black_Travel icon@2x.png"; sourceTree = "<group>"; };
+		C8DC1D8619B863B60062E184 /* ActivityTypeWhatsApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTypeWhatsApp.h; sourceTree = "<group>"; };
+		C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTypeWhatsApp.m; sourceTree = "<group>"; };
+		C8DC1D8A19BC89410062E184 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C8FFF56A197C437600D01744 /* EditDealTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDealTableViewController.h; sourceTree = "<group>"; };
 		C8FFF56B197C437600D01744 /* EditDealTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDealTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1219,6 +1209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */,
 				C898FE6819A617AE00F1C11A /* CFNetwork.framework in Frameworks */,
 				C898FE6919A617AE00F1C11A /* CoreData.framework in Frameworks */,
 				C898FE6A19A617AE00F1C11A /* MobileCoreServices.framework in Frameworks */,
@@ -1248,15 +1239,6 @@
 			children = (
 				C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */,
 				B08A3667187B3C82005B72D8 /* Images.xcassets */,
-				B0274807186B2A2B005A52F0 /* GKClasses */,
-				B02747ED186B291B005A52F0 /* GKImages */,
-				B079F2BF1847C0CE00E0C186 /* beta.png */,
-				B06F808C1813D9510032CE68 /* Launch App Icons (Flat)_iPhone.png */,
-				B06F808A1813D9420032CE68 /* Launch App Icons (Flat)_iPhone (high resolution).png */,
-				B034B8B2180475D500625392 /* Default@2x.png */,
-				B02436DF17F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png */,
-				B02436DD17F423CD00FB24CC /* Launch App Icons_iPhone.png */,
-				B02436CF17F421F000FB24CC /* Default-568h@2x.png */,
 				56849787154C00BF001601A2 /* Dealers */,
 				56849780154C00BF001601A2 /* Frameworks */,
 				5684977E154C00BF001601A2 /* Products */,
@@ -1275,6 +1257,10 @@
 		56849780154C00BF001601A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */,
+				C8DC1D8919BC892B0062E184 /* MBProgressHUD */,
+				B0274807186B2A2B005A52F0 /* GKClasses */,
+				B02747ED186B291B005A52F0 /* GKImages */,
 				C898FE6519A617AE00F1C11A /* CFNetwork.framework */,
 				C898FE6619A617AE00F1C11A /* CoreData.framework */,
 				C898FE6719A617AE00F1C11A /* MobileCoreServices.framework */,
@@ -1314,6 +1300,7 @@
 				C869CB77191A137800DF2C19 /* Add Deal */,
 				C869CB76191A135A00DF2C19 /* View Deal */,
 				C848B67119B4A247000F138D /* Custom Cells */,
+				C8DC1D8219B863680062E184 /* Activities */,
 				B034B8B41804765500625392 /* DB2-Prefix.pch */,
 				56849788154C00BF001601A2 /* Supporting Files */,
 			);
@@ -1680,15 +1667,12 @@
 		C848B67119B4A247000F138D /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
-				B01BD1B317F0D7000010C9A4 /* googleCell2.h */,
-				B01BD1B417F0D7000010C9A4 /* googleCell2.m */,
-				B0930C0917F40311004EB3CA /* CustomcellforviewdealCell.h */,
-				B0930C0A17F40311004EB3CA /* CustomcellforviewdealCell.m */,
-				B04B7C9D185DB3DE00F06472 /* StoreSearchCell.h */,
-				B04B7C9E185DB3DF00F06472 /* StoreSearchCell.m */,
-				C848B67619B4AB76000F138D /* StoresTabelCell.h */,
-				C848B67719B4AB76000F138D /* StoresTabelCell.m */,
-				C848B67919B4ACA4000F138D /* StoresTabelCell.xib */,
+				C848B67619B4AB76000F138D /* StoresTableCell.h */,
+				C848B67719B4AB76000F138D /* StoresTableCell.m */,
+				C848B67919B4ACA4000F138D /* StoresTableCell.xib */,
+				C8AC887B19BD9A5C002A2C16 /* CommentsTableCell.h */,
+				C8AC887C19BD9A5C002A2C16 /* CommentsTableCell.m */,
+				C8AC887D19BD9A5C002A2C16 /* CommentsTableCell.xib */,
 			);
 			name = "Custom Cells";
 			sourceTree = "<group>";
@@ -2233,6 +2217,24 @@
 			name = "Add Deal";
 			sourceTree = "<group>";
 		};
+		C8DC1D8219B863680062E184 /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				C8DC1D8619B863B60062E184 /* ActivityTypeWhatsApp.h */,
+				C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */,
+			);
+			name = Activities;
+			sourceTree = "<group>";
+		};
+		C8DC1D8919BC892B0062E184 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				C8DC1D8A19BC89410062E184 /* MBProgressHUD.h */,
+				C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2330,7 +2332,6 @@
 				5684978C154C00BF001601A2 /* InfoPlist.strings in Resources */,
 				C8D2E478185B781D00398873 /* Add Deal (Final)_Share via WhatsApp button (pushed)@2x.png in Resources */,
 				56849795154C00BF001601A2 /* MainStoryboard.storyboard in Resources */,
-				B02436D017F421F000FB24CC /* Default-568h@2x.png in Resources */,
 				B02436D717F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png in Resources */,
 				C83EAE5818690AC40084E0E1 /* Entertainment @ Events_vineyard@2x.png in Resources */,
 				B02436D817F4237D00FB24CC /* Launch App Icons_AppStore.png in Resources */,
@@ -2338,8 +2339,6 @@
 				B02436DA17F4237D00FB24CC /* Launch App Icons_iPad.png in Resources */,
 				C87B6D0D192DF34E0026DA66 /* Add Deal (Final)_More Details boxes@2x.png in Resources */,
 				C8BFD9C718723016007E7E07 /* Profile_Export List button@2x.png in Resources */,
-				B02436DE17F423CD00FB24CC /* Launch App Icons_iPhone.png in Resources */,
-				B02436E017F423D300FB24CC /* Launch App Icons_iPhone (high resolution).png in Resources */,
 				B024374D17F47F5400FB24CC /* mask.PNG in Resources */,
 				C83EAF2818690AC40084E0E1 /* Travel_travel_agent@2x.png in Resources */,
 				B055C71717FE806900FBDFCC /* Explore_Amusment & Entertainment icon@2x.png in Resources */,
@@ -2572,13 +2571,13 @@
 				C83EAEE718690AC40084E0E1 /* Other_health@2x.png in Resources */,
 				C87B6D0B192DEF5C0026DA66 /* Add Deal (Final)_Add the Deal button@2x.png in Resources */,
 				C8D7CADB1934852E00841C22 /* profile_3 Fields@2x.png in Resources */,
-				B034B9DE1805536A00625392 /* Default@2x.png in Resources */,
-				C848B67A19B4ACA4000F138D /* StoresTabelCell.xib in Resources */,
+				C848B67A19B4ACA4000F138D /* StoresTableCell.xib in Resources */,
 				C8D2E484185B781D00398873 /* Add Deal (Final)_Title & More Details box@2x.png in Resources */,
 				C8B7C2371920FCF60032726E /* Registration_Sign In button@2x.png in Resources */,
 				B0274802186B291B005A52F0 /* PLCameraSheetButtonPressed@2x.png in Resources */,
 				B0E4F6F6190A6F500080CD32 /* My Feed+View Deal - New Version_Likes & Shares border@2x.png in Resources */,
 				C8D7CAE519350A0400841C22 /* profile_Favorites button@2x.png in Resources */,
+				C8AC887F19BD9A5D002A2C16 /* CommentsTableCell.xib in Resources */,
 				B034B9E21805D6CA00625392 /* Registration_Navigation Bar@2x.png in Resources */,
 				C88B3F741921F883009252DD /* My Feed+View Deal (final)_Like button@2x.png in Resources */,
 				B034B9E91806C77D00625392 /* My Feed+View Deal_Comments icon@2X.png in Resources */,
@@ -2639,9 +2638,7 @@
 				C8BFD9DA18723016007E7E07 /* Profile_Senior Dealer@2x.png in Resources */,
 				C83EAE2518690AC40084E0E1 /* Art_art_museum@2x.png in Resources */,
 				C83EAF0F18690AC40084E0E1 /* Sports & Outdoor_football@2x.png in Resources */,
-				B06F808B1813D9450032CE68 /* Launch App Icons (Flat)_iPhone (high resolution).png in Resources */,
 				C83EAF0618690AC40084E0E1 /* Restaurants & Bars_sea_food@2x.png in Resources */,
-				B06F808D1813D9540032CE68 /* Launch App Icons (Flat)_iPhone.png in Resources */,
 				C83EAF1318690AC40084E0E1 /* Sports & Outdoor_marina@2x.png in Resources */,
 				C83EAE5718690AC40084E0E1 /* Entertainment @ Events_student_center@2x.png in Resources */,
 				C83EAEF818690AC40084E0E1 /* Restaurants & Bars_breakfast_spot@2x.png in Resources */,
@@ -2820,7 +2817,6 @@
 				C83EAEF518690AC40084E0E1 /* Restaurants & Bars_bagel_shop@2x.png in Resources */,
 				C8BFD9D318723016007E7E07 /* Profile_Notifications Like icon@2x.png in Resources */,
 				C83EAE4C18690AC40084E0E1 /* Entertainment @ Events_gay_bar@2x.png in Resources */,
-				B079F2C01847C0CE00E0C186 /* beta.png in Resources */,
 				C83EAF1B18690AC40084E0E1 /* Sports & Outdoor_Sports & Outdoor@2x.png in Resources */,
 				C8DADE4B18FDF3CB0056AC9F /* Explore-Black_Kitchen icon@2x.png in Resources */,
 			);
@@ -2839,35 +2835,35 @@
 				C898FE6D19AB94BA00F1C11A /* Store.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
 				B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */,
-				B01BD1B517F0D7010010C9A4 /* googleCell2.m in Sources */,
 				B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */,
 				B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */,
 				C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */,
 				B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */,
-				B04B7C9F185DB3DF00F06472 /* StoreSearchCell.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
 				B09FBAD5193F0764006CB986 /* Dealer.m in Sources */,
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
+				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
 				B0F1BB9D18DB83D300AD2929 /* LikesCell.m in Sources */,
 				B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
-				B0930C0B17F40311004EB3CA /* CustomcellforviewdealCell.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,
 				B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */,
 				B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */,
 				B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */,
+				C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */,
 				B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */,
 				B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */,
 				B055C73417FE882700FBDFCC /* ExploreCell.m in Sources */,
 				B0294C7318B0CC0900699107 /* MyFeedsViewController.m in Sources */,
 				C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */,
+				C8AC887E19BD9A5D002A2C16 /* CommentsTableCell.m in Sources */,
 				C848B66D19ADB92A000F138D /* Comment.m in Sources */,
 				B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */,
 				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
 				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
-				C848B67819B4AB76000F138D /* StoresTabelCell.m in Sources */,
+				C848B67819B4AB76000F138D /* StoresTableCell.m in Sources */,
 				B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */,
 				B0E4F6FE1910171E0080CD32 /* Reachability.m in Sources */,
 				B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */,

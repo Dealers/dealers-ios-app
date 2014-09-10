@@ -19,4 +19,6 @@
 @property NSDate *uploadDate;
 @property NSString *type; // Deal or Post. Currently only Deal type exists.
 
+@property NSDateFormatter *dateFormatter;
+
 @end

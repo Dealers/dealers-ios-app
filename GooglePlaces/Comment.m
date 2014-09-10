@@ -10,4 +10,15 @@
 
 @implementation Comment
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    }
+    return self;
+}
+
 @end

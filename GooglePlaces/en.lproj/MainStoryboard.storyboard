@@ -22,47 +22,14 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell_google" rowHeight="70" id="3he-l2-Yth" customClass="googleCell2">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell_google" rowHeight="70" id="3he-l2-Yth" customClass="StoresTableCell">
                                                 <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3he-l2-Yth" id="iXf-BB-hMb">
                                                     <rect key="frame" x="0.0" y="0.0" width="287" height="69"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" id="Wqu-4O-b9H">
-                                                            <rect key="frame" x="10" y="10" width="50" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gxe-l2-GSV">
-                                                            <rect key="frame" x="70" y="41" width="239" height="28"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                                            <color key="textColor" red="0.77152714416058399" green="0.77517677919708028" blue="0.78946167883211682" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ep7-fF-Wor">
-                                                            <rect key="frame" x="70" y="23" width="175" height="24"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                                            <color key="textColor" red="0.7736941149635036" green="0.77340898722627738" blue="0.78432937956204385" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lh1-kb-8Po">
-                                                            <rect key="frame" x="70" y="0.0" width="239" height="24"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                    </subviews>
                                                 </tableViewCellContentView>
                                                 <inset key="separatorInset" minX="70" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <connections>
-                                                    <outlet property="googlepic" destination="Wqu-4O-b9H" id="Zsv-iL-Dg0"/>
-                                                    <outlet property="lastlabel" destination="Ep7-fF-Wor" id="qAH-e7-cj2"/>
-                                                    <outlet property="mainlabel" destination="lh1-kb-8Po" id="oln-M8-Eja"/>
-                                                    <outlet property="sublabel" destination="gxe-l2-GSV" id="FZk-i4-J3L"/>
-                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
@@ -144,32 +111,14 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.9360984564" green="0.93607044220000002" blue="0.93608629700000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StoreSearch" rowHeight="64" id="a7D-bw-SuD" customClass="StoreSearchCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StoreSearch" rowHeight="64" id="a7D-bw-SuD" customClass="StoresTableCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a7D-bw-SuD" id="72X-32-Xfo">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="63"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OKk-eH-6rG">
-                                                    <rect key="frame" x="20" y="10" width="236" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mgM-bJ-LbS">
-                                                    <rect key="frame" x="20" y="31" width="236" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="StoreLocationLabel" destination="mgM-bJ-LbS" id="2ed-9b-PJm"/>
-                                            <outlet property="StoreNameLabel" destination="OKk-eH-6rG" id="N67-Hw-pir"/>
                                             <segue destination="iJA-Ix-JTl" kind="push" identifier="StoreSearchSeq" id="WO3-Hq-B8F"/>
                                         </connections>
                                     </tableViewCell>
@@ -770,10 +719,21 @@
                                                     <action selector="ShareButtonAction:" destination="B3g-mc-ay4" eventType="touchUpInside" id="bnj-p8-af0"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" alpha="0.89999999999999991" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xwr-BY-JYI" userLabel="More Options Button">
+                                            <button opaque="NO" alpha="0.89999999999999991" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xwr-BY-JYI" userLabel="Options Button">
                                                 <rect key="frame" x="266" y="51" width="44" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <state key="normal" image="Options Button"/>
+                                                <connections>
+                                                    <action selector="optionsAction:" destination="B3g-mc-ay4" eventType="touchUpInside" id="UKh-Ra-hwQ"/>
+                                                </connections>
+                                            </button>
+                                            <button hidden="YES" opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="muC-js-JOU" userLabel="Options Button Selected">
+                                                <rect key="frame" x="266" y="51" width="44" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <state key="normal" image="Options Button Selected"/>
+                                                <connections>
+                                                    <action selector="optionsAction:" destination="B3g-mc-ay4" eventType="touchUpInside" id="Yyp-5I-EZi"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -851,13 +811,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="mh1-L3-98F">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="C5G-0x-Ebv">
-                            <connections>
-                                <segue destination="qKK-Cj-xea" kind="modal" identifier="editDealID" id="1pF-M5-mbv"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="mh1-L3-98F"/>
                     <connections>
                         <outlet property="CategoryIcon" destination="nYs-y3-9D5" id="4Jy-op-8Lk"/>
                         <outlet property="DescriptionIcon" destination="Ejp-i8-KjP" id="z2v-UK-JNu"/>
@@ -884,6 +838,8 @@
                         <outlet property="likesCountImage" destination="2cb-MJ-bmv" id="Kg9-NV-pi3"/>
                         <outlet property="likesCountLabel" destination="Y9i-ko-RdH" id="3Gk-gS-vKv"/>
                         <outlet property="loadingImage" destination="XZz-c6-vMk" id="aPf-UW-VNx"/>
+                        <outlet property="optionsButton" destination="Xwr-BY-JYI" id="knz-lK-p6l"/>
+                        <outlet property="optionsButtonSelected" destination="muC-js-JOU" id="mjE-RB-69s"/>
                         <outlet property="pageControl" destination="Gcc-63-ZKR" id="D00-gt-NlO"/>
                         <outlet property="pricelabel" destination="LKY-mr-2qf" id="EfW-Ah-Z9I"/>
                         <outlet property="scroll" destination="mDS-vg-sh1" id="HjN-XX-cB4"/>
@@ -1756,7 +1712,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? Great," lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="27" y="513.99999793856227" width="230" height="26"/>
+                                        <rect key="frame" x="27" y="513.99999286925333" width="230" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
@@ -3694,7 +3650,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <!--Navigation Controller-->
         <scene sceneID="xOJ-ja-15R">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qKK-Cj-xea" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="EditDeal" automaticallyAdjustsScrollViewInsets="NO" id="qKK-Cj-xea" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1hP-ZA-7So">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -3795,6 +3751,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="My Feed+View Deal_Store icon (final).png" width="26" height="26"/>
         <image name="Openning Screen Logo" width="215" height="50"/>
         <image name="Options Button" width="45" height="45"/>
+        <image name="Options Button Selected" width="45" height="45"/>
         <image name="Password Icon" width="30" height="30"/>
         <image name="Price Icon" width="26" height="26"/>
         <image name="Profile_About Yourself icon.png" width="30" height="30"/>

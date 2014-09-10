@@ -15,6 +15,7 @@
 #import "LikesCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OnlineViewController.h"
+#import "ActivityTypeWhatsApp.h"
 
 #define GAP 15
 #define sectionGap 20
@@ -191,9 +192,52 @@
         self.likesAndButtonsSection.frame = CGRectMake(0, originY, self.likesAndButtonsSection.frame.size.width, self.LikeButton.frame.size.height + sectionGap * 2);
     }
     
-    lowestYPoint = (CGRectGetMaxY(self.likesAndButtonsSection.frame));
+    lowestYPoint = CGRectGetMaxY(self.likesAndButtonsSection.frame);
     
     [self setScrollSize];
+}
+
+- (void)setCommentsSection
+{
+    CGFloat originY = lowestYPoint;
+    
+    self.commentsSection = [[UIView alloc]initWithFrame:CGRectMake(0,
+                                                                  originY,
+                                                                  self.view.frame.size.width,
+                                                                   40 + sectionGap * 2)];
+    
+    [self setCommentsTableViewAtPoint: sectionGap];
+    
+    self.commentsSection.frame = CGRectMake(0,
+                                            originY,
+                                            self.view.frame.size.width,
+                                            self.commentsTableView.frame.size.height + sectionGap * 2);
+    
+    self.commentsSection.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    
+    [self.scroll addSubview:self.commentsSection];
+    
+    lowestYPoint = CGRectGetMaxY(self.commentsSection.frame);
+}
+
+- (void)setCommentsTableViewAtPoint:(CGFloat)originPoint
+{
+    self.commentsTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, originPoint, self.view.frame.size.width, 0) style:UITableViewStylePlain];
+    self.commentsTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    self.commentsTableView.delegate = self;
+    self.commentsTableView.dataSource = self;
+    self.commentsTableView.scrollEnabled = NO;
+    self.commentsTableView.backgroundColor = [UIColor clearColor];
+    
+    self.cellPrototype = (CommentsTableCell *)[self.commentsTableView dequeueReusableCellWithIdentifier:@"CommentsTableCell"];
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:self options:nil];
+    self.cellPrototype = [nib objectAtIndex:0];
+    
+    [self.commentsTableView reloadData];
+    
+    self.commentsTableView.frame = CGRectMake(0, originPoint, self.view.frame.size.width, self.tableViewHeight);
+    
+    [self.commentsSection addSubview:self.commentsTableView];
 }
 
 -(void) setScrollSize
@@ -232,9 +276,9 @@
         self.PriceIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
         pricelabel.frame = CGRectMake(maxXPoint, lowestYPoint+3+GAP, pricelabel.frame.size.width, pricelabel.frame.size.height);
         flag = YES;
-        maxXPoint= CGRectGetMaxX (pricelabel.frame)+20;
+        maxXPoint= CGRectGetMaxX (pricelabel.frame) + 20;
     } else {
-        pricelabel.hidden=YES;
+        pricelabel.hidden = YES;
     }
     
     if (![discountlabel.text isEqualToString:@"0"]) {
@@ -461,7 +505,9 @@
         self.likeButtonSelected.hidden = NO;
     }
     
-    self.pageControl.numberOfPages=[[_dealClass photoSum]intValue];
+    self.appDelegate = [[UIApplication sharedApplication]delegate];
+    
+    self.pageControl.numberOfPages = [[_dealClass photoSum]intValue];
     [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass photoSum]intValue], 165)))];
     [self.cameraScrollView setScrollEnabled:YES];
     
@@ -470,9 +516,12 @@
     
     [self loadVarsFromDeal];
     
+    [self setDummyCommentsArray];
+    
     [self locateIconsInPlace];
     [self setDealerSection];
     [self setLikesAndButtonsSection];
+    [self setCommentsSection];
     [self setMapAndStoreInfo];
     
     [self setDateFormatter];
@@ -498,6 +547,41 @@
     [super didReceiveMemoryWarning];
     [self deallocMapView];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setDummyCommentsArray
+{
+    self.comments = [[NSMutableArray alloc]init];
+    
+    Comment *comment = [[Comment alloc]init];
+    comment.dealer = self.appDelegate.dealerClass;
+    comment.text = @"This is a really nice deal! The interesting part is that bla bla bla bla bla bla bla bla. GO check it out!";
+    comment.uploadDate = [NSDate date];
+    [self.comments addObject:comment];
+    
+    comment = [[Comment alloc]init];
+    comment.dealer = self.appDelegate.dealerClass;
+    comment.text = @"Hey whats up....?";
+    comment.uploadDate = [NSDate date];
+    [self.comments addObject:comment];
+    
+    comment = [[Comment alloc]init];
+    comment.dealer = self.appDelegate.dealerClass;
+    comment.text = @"This is a really nice deal! The interesting part is that bla bla bla bla bla bla bla bla. GO check it out!";
+    comment.uploadDate = [NSDate date];
+    [self.comments addObject:comment];
+    
+    comment = [[Comment alloc]init];
+    comment.dealer = self.appDelegate.dealerClass;
+    comment.text = @":)";
+    comment.uploadDate = [NSDate date];
+    [self.comments addObject:comment];
+    
+    comment = [[Comment alloc]init];
+    comment.dealer = self.appDelegate.dealerClass;
+    comment.text = @"Hey whats up my name is Gilad and I love mostly sports and electronics. If you want to see go offers in these categories, contuct me!";
+    comment.uploadDate = [NSDate date];
+    [self.comments addObject:comment];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -556,24 +640,31 @@
     }
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (tableView==_tableViewLikes) {
-        NSLog(@"count=%lu",(unsigned long)[_dealersNameArray count]);
+    
+    if (tableView ==_tableViewLikes) {
         if ([_dealersNameArray count] == 0) {
             return 0;
         }
         return [_dealersNameArray count];
-    } else return [_dealersNameArray count];
+        
+    } else if (tableView == self.commentsTableView) {
+        if (self.comments.count <= 3) {
+            self.commentsPreviewCount = self.comments.count;
+            return self.comments.count + 1; // The +1 is for the add comment button.
+        } else {
+            self.commentsPreviewCount = 4;
+            return 4;
+        }
+    }
+    return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     LikesCell *Cell=nil;
-    if (tableView==_tableViewLikes) {
+    
+    if (tableView == _tableViewLikes) {
         
         static NSString *CellIdentifier = @"likescell";
         Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -617,13 +708,70 @@
         }
         
     }
-    return Cell;
     
+    else if (tableView == self.commentsTableView) {
+        
+        if (self.commentsPreviewCount - 1 != indexPath.row) {
+            
+            CommentsTableCell *cell = (CommentsTableCell *)[tableView dequeueReusableCellWithIdentifier:@"CommentsTableCell"];
+            if (!cell) {
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            
+            Comment *comment = [self.comments objectAtIndex:indexPath.row];
+            cell.dealerProfilePic.image = self.appDelegate.dealerClass.photo;
+            cell.dealerName.text = comment.dealer.fullName;
+            cell.commentBody.text = comment.text;
+            cell.commentDate.text = [comment.dateFormatter stringFromDate:comment.uploadDate];
+            
+            return cell;
+            
+        } else {
+            
+            UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+            
+            UIImageView *yourCommentProfilePic = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin, 7, 40, 40)];
+            yourCommentProfilePic.image = self.appDelegate.dealerProfileImage;
+            yourCommentProfilePic.layer.cornerRadius = yourCommentProfilePic.frame.size.width / 2;
+            yourCommentProfilePic.layer.masksToBounds = YES;
+            [cell.contentView addSubview:yourCommentProfilePic];
+            
+            UIButton *addComment = [UIButton buttonWithType:UIButtonTypeCustom];
+            [addComment setFrame:CGRectMake(60, 15, 250, 24)];
+            [addComment setBackgroundColor:[UIColor whiteColor]];
+            
+            return cell;
+        }
+    }
+    
+    return Cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableViewLikes deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (tableView == self.commentsTableView) {
+        @try {
+            Comment *comment = [self.comments objectAtIndex:indexPath.row];
+            self.cellPrototype.commentBody.text = comment.text;
+            [self.cellPrototype layoutSubviews];
+            
+            self.tableViewHeight += self.cellPrototype.requiredCellHeight;
+            
+            return MAX(self.cellPrototype.requiredCellHeight, 54.0f);
+        }
+        
+        @catch (NSException *e)
+        {
+            NSLog(@"Exception: %@", e);
+            return 54.0f;
+        }
+    }
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -634,12 +782,6 @@
         string = [_dealersidArray objectAtIndex:indexpath.row];
         [[segue destinationViewController] setDealerId:string];
         [[segue destinationViewController] setDidComeFromLikesTable:@"yes"];
-    }
-    
-    if ([[segue identifier] isEqualToString:@"editDealID"]) {
-        UINavigationController *navigationController = [segue destinationViewController];
-        EditDealTableViewController *edtvc = (EditDealTableViewController *)[navigationController topViewController];
-        edtvc.originalDeal = self.dealClass;
     }
 }
 
@@ -665,10 +807,50 @@
 }
 
 - (IBAction)ShareButtonAction:(id)sender {
-    NSString *name = @"Hear from others and share great deals at Dealers!";
-    NSArray *activityItems = @[self.sharedImage, name];
-    UIActivityViewController *acv = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
-    [self presentViewController:acv animated:YES completion:nil];
+    
+    NSString *messageText = @"Hear from others about great deals at Dealers!";
+    NSArray *activityItems = @[self.sharedImage, messageText];
+    NSArray *excludedActivities = @[UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeSaveToCameraRoll];
+    
+    ActivityTypeWhatsApp *whatsappActivity = [[ActivityTypeWhatsApp alloc]init];
+    NSArray *appActivities = @[whatsappActivity];
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:appActivities];
+    
+    activityController.excludedActivityTypes = excludedActivities;
+    
+    __weak ViewonedealViewController *weakSelf = self;
+    
+    [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        
+        if (completed) {
+            if ([activityType isEqualToString:@"WhatsApp Sharing"]) {
+                [weakSelf whatsAppShare];
+            }
+        }
+    }];
+    
+    [self presentViewController:activityController animated:YES completion:nil];
+}
+
+- (IBAction)optionsAction:(id)sender {
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil
+                                                            delegate:self
+                                                   cancelButtonTitle:@"Cancel"
+                                              destructiveButtonTitle:nil
+                                                   otherButtonTitles:@"Edit Deal", @"Report as Spam", nil];
+    
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    
+    self.optionsButtonSelected.hidden = NO;
+    self.optionsButtonSelected.alpha = 0;
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.optionsButtonSelected.alpha = 1.0;
+                         self.optionsButton.alpha = 0; }
+                     completion:^(BOOL finished){
+                         self.optionsButton.hidden = YES; }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
@@ -850,16 +1032,16 @@
     if (![self.categorylabel.text isEqualToString:@""] && [self.categorylabel.text rangeOfString:@"No Category"].location == NSNotFound) {
         
         UIImageView *categoryIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
-                                                                              detailsLowestYPoint + detailsVerticalGap,
-                                                                              self.CategoryIcon.frame.size.width,
-                                                                              self.CategoryIcon.frame.size.height)];
+                                                                                 detailsLowestYPoint + detailsVerticalGap,
+                                                                                 self.CategoryIcon.frame.size.width,
+                                                                                 self.CategoryIcon.frame.size.height)];
         categoryIcon.image = [UIImage imageNamed:@"Category Icon"];
         [sharedView addSubview:categoryIcon];
         
         UILabel *categoryLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
-                                                                       categoryIcon.frame.origin.y,
-                                                                       self.categorylabel.frame.size.width,
-                                                                       categoryIcon.frame.size.height)];
+                                                                          categoryIcon.frame.origin.y,
+                                                                          self.categorylabel.frame.size.width,
+                                                                          categoryIcon.frame.size.height)];
         categoryLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
         categoryLabel.textColor = detailsTextColor;
         categoryLabel.numberOfLines = 1;
@@ -872,16 +1054,16 @@
     if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"] && ![expirelabel.text isEqualToString:@"0"] && ([expirelabel.text length] > 0)) {
         
         UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
-                                                                                 detailsLowestYPoint + detailsVerticalGap,
-                                                                                 self.ExpireIcon.frame.size.width,
-                                                                                 self.ExpireIcon.frame.size.height)];
+                                                                                   detailsLowestYPoint + detailsVerticalGap,
+                                                                                   self.ExpireIcon.frame.size.width,
+                                                                                   self.ExpireIcon.frame.size.height)];
         storeIcon.image = [UIImage imageNamed:@"Expiration Date Icon"];
         [sharedView addSubview:expirationIcon];
         
         UILabel *expirationLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
-                                                                          expirationIcon.frame.origin.y,
-                                                                          self.expirelabel.frame.size.width,
-                                                                          expirationIcon.frame.size.height)];
+                                                                            expirationIcon.frame.origin.y,
+                                                                            self.expirelabel.frame.size.width,
+                                                                            expirationIcon.frame.size.height)];
         expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
         expirationLabel.textColor = detailsTextColor;
         expirationLabel.numberOfLines = 1;
@@ -903,10 +1085,65 @@
     UIGraphicsBeginImageContextWithOptions(sharedView.bounds.size, YES, 0.0);
     [sharedView drawViewHierarchyInRect:screenShotRect afterScreenUpdates:YES];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-//    NSData *screenshotData = UIImagePNGRepresentation(screenshot);
+    //    NSData *screenshotData = UIImagePNGRepresentation(screenshot);
     UIGraphicsEndImageContext();
     
     self.sharedImage = screenshot;
+}
+
+- (void)whatsAppShare
+{
+    if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:@"whatsapp://app"]]){
+        
+        UIImage     * iconImage = self.sharedImage;
+        NSString    * savePath  = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/whatsAppTmp.wai"];
+        
+        [UIImageJPEGRepresentation(iconImage, 1.0) writeToFile:savePath atomically:YES];
+        
+        _documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:savePath]];
+        _documentInteractionController.UTI = @"net.whatsapp.image";
+        _documentInteractionController.delegate = self;
+        
+        [_documentInteractionController presentOpenInMenuFromRect:CGRectMake(0, 0, 0, 0) inView:self.scroll animated:YES];
+        
+        
+    } else {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"WhatsApp not installed." message:@"Your device has WhatsApp installed." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0: { // Edit Deal:
+            UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditDeal"];
+            EditDealTableViewController *edtvc = (EditDealTableViewController *)[navigationController topViewController];
+            edtvc.originalDeal = self.dealClass;
+            
+            [self presentViewController:navigationController animated:YES completion:nil];
+        }
+            break;
+            
+        case 1: // Report as Spam:
+            // ...
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.optionsButton.hidden = NO;
+    self.optionsButton.alpha = 0;
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.optionsButtonSelected.alpha = 0;
+                         self.optionsButton.alpha = 1.0; }
+                     completion:^(BOOL finished){
+                         self.optionsButtonSelected.hidden = YES; }];
 }
 
 //////////////////////

@@ -20,12 +20,27 @@
     
     self.title = @"Settings";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
+    [self setProgressIndicator];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setProgressIndicator
+{
+    progressIndicator = [[MBProgressHUD alloc]initWithView:self.tabBarController.view];
+    progressIndicator.delegate = self;
+    progressIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
+    progressIndicator.mode = MBProgressHUDModeCustomView;
+    progressIndicator.labelText = @"Email Sent";
+    progressIndicator.labelFont = [UIFont fontWithName:@"Avenir-Light" size:19.0];
+    progressIndicator.animationType = MBProgressHUDAnimationZoomIn;
+    
+    [self.tabBarController.view addSubview:progressIndicator];
 }
 
 #pragma mark - Table view data source
@@ -41,6 +56,19 @@
             if (indexPath.row == 1) {
                 // Push Notifications:
                 [self pushPushNotificationsView];
+            }
+            break;
+        case 2:
+            switch (indexPath.row) {
+                case 0:
+                    // Tutorial...
+                    break;
+                case 1:
+                    // Report a Problem:
+                    [self sendReportProblem];
+                case 2:
+                    // Send Feedback:
+                    [self sendFeedback];
             }
             break;
         case 3:
@@ -97,15 +125,75 @@
     appDelegate.window.rootViewController = nc;
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - Email methods
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)sendReportProblem
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    NSString *emailTitle = @"Support";
+    // Email Content
+    NSString *messageBody = @"";
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"support@dealers-app.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:nil];
 }
-*/
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+            
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+            
+        case MFMailComposeResultSent:   {
+            [progressIndicator show:YES];
+            [progressIndicator hide:YES afterDelay:2.5];
+
+            break;
+        }
+        case MFMailComposeResultFailed: {
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Email Error" message:@"Unable to send email. please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+            break;
+        
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)sendFeedback
+{
+    NSString *emailTitle = @"Feedback";
+    // Email Content
+    NSString *messageBody = @"";
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"ideas@dealers-app.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:nil];
+}
 
 @end

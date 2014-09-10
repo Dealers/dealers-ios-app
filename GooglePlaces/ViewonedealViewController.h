@@ -10,9 +10,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import <MapKit/MapKit.h>
 #import "Deal.h"
+#import "Dealer.h"
+#import "Store.h"
+#import "Comment.h"
+#import "CommentsTableCell.h"
 #import "EditDealTableViewController.h"
 
-@interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
+@interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate>
+
 {
     BOOL LikeOrUnlike;
     int numofpics;
@@ -29,6 +34,9 @@
     CLLocationCoordinate2D currentCentre;
     CLLocationCoordinate2D lastCoords;
 }
+
+@property AppDelegate *appDelegate;
+
 @property (strong,nonatomic) NSArray *DealersDataWhoLikesTheDealArray;
 
 @property (nonatomic, strong) MKMapView *mapView;
@@ -83,11 +91,21 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *LikeButton;
 @property (weak, nonatomic) IBOutlet UIButton *likeButtonSelected;
-- (IBAction)LikeButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *CommentButton;
-- (IBAction)CommentButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *ShareButton;
+@property (weak, nonatomic) IBOutlet UIButton *optionsButton;
+@property (weak, nonatomic) IBOutlet UIButton *optionsButtonSelected;
+
+- (IBAction)LikeButtonAction:(id)sender;
+- (IBAction)CommentButtonAction:(id)sender;
 - (IBAction)ShareButtonAction:(id)sender;
+- (IBAction)optionsAction:(id)sender;
+
+@property NSMutableArray *comments;
+@property UITableView *commentsTableView;
+@property CommentsTableCell *cellPrototype;
+@property CGFloat tableViewHeight;
+@property NSUInteger commentsPreviewCount;
 
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage2;
@@ -96,6 +114,8 @@
 @property (weak, nonatomic) IBOutlet UIView *likesAndButtonsSection;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
+
+@property (nonatomic) UIView *commentsSection;
 
 @property (weak, nonatomic) IBOutlet UIView *ViewLikes;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewLikes;
@@ -110,5 +130,11 @@
 - (IBAction)urlSiteButtonClicked:(id)sender;
 
 @property UIImage *sharedImage;
+
+@property (retain) UIDocumentInteractionController * documentInteractionController;
+
+@property BOOL whatsappShouldAppear;
+
+- (void)whatsAppShare;
 
 @end

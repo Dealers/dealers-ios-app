@@ -8,8 +8,7 @@
 
 #import "TableViewController.h"
 #import "OptionalaftergoogleplaceViewController.h"
-#import "StoresTabelCell.h"
-#import "StoreSearchCell.h"
+#import "StoresTableCell.h"
 #import "Functions.h"
 #import <mach/mach.h>
 #import "CheckConnection.h"
@@ -428,12 +427,11 @@
     
     if (tableView == self.venuesTableView) {
         
-        static NSString *cellIdentifier = @"StoresTabelCell";
-        StoresTabelCell *cell = (StoresTabelCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        static NSString *cellIdentifier = @"StoresTableCell";
+        StoresTableCell *cell = (StoresTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTabelCell" owner:self options:nil];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTableCell" owner:nil options:nil];
             cell = [nib objectAtIndex:0];
-            
         }
         
         if ([self.storeNameArraySort count] > 0){
@@ -456,10 +454,10 @@
         
         
         self.storeSearchTableView.hidden = NO;
-        static NSString *cellIdentifier = @"StoresTabelCell";
-        StoresTabelCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        static NSString *cellIdentifier = @"StoresTableCell";
+        StoresTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTabelCell" owner:self options:nil];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTableCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
         }
 

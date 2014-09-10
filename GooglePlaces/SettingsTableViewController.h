@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "EditProfileTableViewController.h"
 #import "PushNotificationsTableViewController.h"
+#import "MBProgressHUD.h"
 
-@interface SettingsTableViewController : UITableViewController
+@interface SettingsTableViewController : UITableViewController <MFMailComposeViewControllerDelegate, MBProgressHUDDelegate> {
+    
+    MBProgressHUD *progressIndicator;
+    
+}
 
 @end

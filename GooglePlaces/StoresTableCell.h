@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoresTabelCell : UITableViewCell
+@interface StoresTableCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *categoryIcon;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
