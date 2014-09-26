@@ -26,17 +26,18 @@
 
 - (void)layoutSubviews
 {
-    [self.commentBody sizeToFit];
+    [super layoutSubviews];
+    
     self.dealerProfilePic.layer.cornerRadius = self.dealerProfilePic.frame.size.width / 2;
     self.dealerProfilePic.layer.masksToBounds = YES;
     
-    CGSize maxSize = CGSizeMake(self.commentBody.frame.size.width, CGFLOAT_MAX);
+    CGSize maxSize = CGSizeMake(250.0f, CGFLOAT_MAX);
     CGSize requiredSize = [self.commentBody sizeThatFits:maxSize];
     self.commentBody.frame = CGRectMake(self.commentBody.frame.origin.x, self.commentBody.frame.origin.y, requiredSize.width, requiredSize.height);
     
     // Calculate cell height
     
-    requiredCellHeight = 8.0f + self.dealerName.frame.size.height + 4.0f + 8.0f;
+    requiredCellHeight = 10.0f + self.dealerName.frame.size.height + 6.0f + 10.0f;
     requiredCellHeight += self.commentBody.frame.size.height;
 }
 

@@ -26,6 +26,8 @@
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
 @property (strong, nonatomic)  Dealer *dealerClass;
 
+@property (nonatomic) NSString *token;
+
 @property (weak) UIImage *screenShot;
 
 - (void)setTabBarController;

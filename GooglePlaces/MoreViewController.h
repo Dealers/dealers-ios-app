@@ -14,4 +14,6 @@
 @property (strong,nonatomic) NSArray *moreListIconsArray;
 @property (weak, nonatomic) IBOutlet UITableView *moreTableView;
 
+@property (nonatomic) NSArray *deals;
+
 @end

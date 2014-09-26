@@ -102,8 +102,9 @@
 - (IBAction)optionsAction:(id)sender;
 
 @property NSMutableArray *comments;
+@property NSNumber *commentsCount;
 @property UITableView *commentsTableView;
-@property CommentsTableCell *cellPrototype;
+@property (weak, nonatomic) CommentsTableCell *cellPrototype;
 @property CGFloat tableViewHeight;
 @property NSUInteger commentsPreviewCount;
 

@@ -79,10 +79,6 @@
     static NSString *CellIdentifier = @"Explorecell";
     ExploreCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (!Cell) {
-        Cell = [[ExploreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
     Cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17.0];
     
     if (filtered == YES) {

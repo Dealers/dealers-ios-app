@@ -14,6 +14,7 @@
 @interface Deal : NSObject <NSCopying> 
 
 @property (nonatomic) NSString *dealID;
+@property (nonatomic) NSString *url;
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *store;
 @property (nonatomic) NSString *price;

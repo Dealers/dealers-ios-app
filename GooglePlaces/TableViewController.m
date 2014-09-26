@@ -428,8 +428,9 @@
     if (tableView == self.venuesTableView) {
         
         static NSString *cellIdentifier = @"StoresTableCell";
-        StoresTableCell *cell = (StoresTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        StoresTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
+            cell = [[StoresTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTableCell" owner:nil options:nil];
             cell = [nib objectAtIndex:0];
         }

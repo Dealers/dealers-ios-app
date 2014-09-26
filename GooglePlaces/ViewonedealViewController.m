@@ -199,19 +199,23 @@
 
 - (void)setCommentsSection
 {
-    CGFloat originY = lowestYPoint;
+    CGFloat sectionY = lowestYPoint;
+    CGFloat sectionHeight = sectionGap * 2;
     
-    self.commentsSection = [[UIView alloc]initWithFrame:CGRectMake(0,
-                                                                  originY,
-                                                                  self.view.frame.size.width,
-                                                                   40 + sectionGap * 2)];
+    self.commentsSection = [[UIView alloc]initWithFrame:CGRectZero];
+    
+    [self setCommentsOverview];
+    
+    
     
     [self setCommentsTableViewAtPoint: sectionGap];
     
+    sectionHeight += self.commentsTableView.frame.size.height;
+    
     self.commentsSection.frame = CGRectMake(0,
-                                            originY,
+                                            lowestYPoint,
                                             self.view.frame.size.width,
-                                            self.commentsTableView.frame.size.height + sectionGap * 2);
+                                            sectionHeight);
     
     self.commentsSection.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
@@ -220,22 +224,37 @@
     lowestYPoint = CGRectGetMaxY(self.commentsSection.frame);
 }
 
+- (void)setCommentsOverview
+{
+    UILabel *commentsOverview = [[UILabel alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+                                                                        sectionGap,
+                                                                        self.view.frame.size.width - iconsLeftMargin * 2,
+                                                                        17)];
+    
+    commentsOverview.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    commentsOverview.textColor = [UIColor lightGrayColor];
+    commentsOverview.text = [NSString stringWithFormat:@"%@ Comments", self.commentsCount];
+    [self.commentsSection addSubview:commentsOverview];
+}
+
 - (void)setCommentsTableViewAtPoint:(CGFloat)originPoint
 {
     self.commentsTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, originPoint, self.view.frame.size.width, 0) style:UITableViewStylePlain];
     self.commentsTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.commentsTableView.delegate = self;
     self.commentsTableView.dataSource = self;
-    self.commentsTableView.scrollEnabled = NO;
+//    self.commentsTableView.scrollEnabled = NO;
     self.commentsTableView.backgroundColor = [UIColor clearColor];
     
-    self.cellPrototype = (CommentsTableCell *)[self.commentsTableView dequeueReusableCellWithIdentifier:@"CommentsTableCell"];
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:self options:nil];
-    self.cellPrototype = [nib objectAtIndex:0];
+    static NSString *cellIdentifier = @"CommentsTableCell";
+    [self.commentsTableView registerNib:[UINib nibWithNibName:@"CommentsTableCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
+    self.cellPrototype = (CommentsTableCell *)[self.commentsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     [self.commentsTableView reloadData];
     
-    self.commentsTableView.frame = CGRectMake(0, originPoint, self.view.frame.size.width, self.tableViewHeight);
+    CGRect tableFrame = self.commentsTableView.frame;
+    tableFrame.size = self.commentsTableView.contentSize;
+    self.commentsTableView.frame = tableFrame;
     
     [self.commentsSection addSubview:self.commentsTableView];
 }
@@ -493,6 +512,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+
     _tableViewLikes.hidden = YES;
     
     self.navigationItem.titleView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
@@ -525,8 +546,6 @@
     [self setMapAndStoreInfo];
     
     [self setDateFormatter];
-    
-    [super viewDidLoad];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -561,7 +580,7 @@
     
     comment = [[Comment alloc]init];
     comment.dealer = self.appDelegate.dealerClass;
-    comment.text = @"Hey whats up....?";
+    comment.text = @"Hey whats up....? \n good good";
     comment.uploadDate = [NSDate date];
     [self.comments addObject:comment];
     
@@ -706,24 +725,34 @@
             Cell.dealerImage.layer.mask = mask;
             Cell.dealerImage.layer.masksToBounds = YES;
         }
-        
     }
     
     else if (tableView == self.commentsTableView) {
         
         if (self.commentsPreviewCount - 1 != indexPath.row) {
             
-            CommentsTableCell *cell = (CommentsTableCell *)[tableView dequeueReusableCellWithIdentifier:@"CommentsTableCell"];
+            static NSString *commentsTableCellIdentifier = @"CommentsTableCell";
+            Comment *comment = [self.comments objectAtIndex:indexPath.row];
+            CommentsTableCell *cell = (CommentsTableCell *)[tableView dequeueReusableCellWithIdentifier:commentsTableCellIdentifier];
+            
             if (!cell) {
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:self options:nil];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:nil options:nil];
                 cell = [nib objectAtIndex:0];
             }
             
-            Comment *comment = [self.comments objectAtIndex:indexPath.row];
             cell.dealerProfilePic.image = self.appDelegate.dealerClass.photo;
             cell.dealerName.text = comment.dealer.fullName;
-            cell.commentBody.text = comment.text;
             cell.commentDate.text = [comment.dateFormatter stringFromDate:comment.uploadDate];
+            cell.commentBody.text = comment.text;
+            [cell.commentBody sizeToFit];
+            
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            NSLog(@"\n origin x: %f \n origin y: %f \n width: %f \n height: %f",
+                  cell.commentBody.frame.origin.x,
+                  cell.commentBody.frame.origin.y,
+                  cell.commentBody.frame.size.width,
+                  cell.commentBody.frame.size.height);
             
             return cell;
             
@@ -731,15 +760,31 @@
             
             UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             
-            UIImageView *yourCommentProfilePic = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin, 7, 40, 40)];
-            yourCommentProfilePic.image = self.appDelegate.dealerProfileImage;
+            cell.backgroundColor = [UIColor clearColor];
+            
+            UIImageView *yourCommentProfilePic = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin, 12, 40, 40)];
+            yourCommentProfilePic.image = self.appDelegate.dealerClass.photo;
             yourCommentProfilePic.layer.cornerRadius = yourCommentProfilePic.frame.size.width / 2;
             yourCommentProfilePic.layer.masksToBounds = YES;
             [cell.contentView addSubview:yourCommentProfilePic];
             
+            UILabel *addCommentTitle = [[UILabel alloc]initWithFrame:CGRectMake(58, 12, 244, 39)];
+            addCommentTitle.textColor = [UIColor lightGrayColor];
+            addCommentTitle.font = [UIFont fontWithName:@"Avenir-Light" size:14.0];
+            addCommentTitle.text = @"  Add a comment...";
+            addCommentTitle.backgroundColor = [UIColor whiteColor];
+            addCommentTitle.layer.cornerRadius = 4.0;
+            addCommentTitle.layer.masksToBounds = YES;
+            [cell.contentView addSubview:addCommentTitle];
+            
             UIButton *addComment = [UIButton buttonWithType:UIButtonTypeCustom];
-            [addComment setFrame:CGRectMake(60, 15, 250, 24)];
-            [addComment setBackgroundColor:[UIColor whiteColor]];
+            [addComment setFrame:addCommentTitle.frame];
+            [addComment setBackgroundColor:[UIColor clearColor]];
+            [addComment addTarget:self action:@selector(CommentButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.contentView addSubview:addComment];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.separatorInset = UIEdgeInsetsMake(0, [[UIScreen mainScreen]bounds].size.width * 2, 0, 0);
             
             return cell;
         }
@@ -751,11 +796,23 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableViewLikes deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (tableView == self.commentsTableView) {
+        
+        CommentsTableCell *cell = (CommentsTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+        
+        NSLog(@"\n origin x: %f \n origin y: %f \n width: %f \n height: %f",
+              cell.commentBody.frame.origin.x,
+              cell.commentBody.frame.origin.y,
+              cell.commentBody.frame.size.width,
+              cell.commentBody.frame.size.height);
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (tableView == self.commentsTableView) {
+        
         @try {
             Comment *comment = [self.comments objectAtIndex:indexPath.row];
             self.cellPrototype.commentBody.text = comment.text;
@@ -763,14 +820,17 @@
             
             self.tableViewHeight += self.cellPrototype.requiredCellHeight;
             
-            return MAX(self.cellPrototype.requiredCellHeight, 54.0f);
+            return MAX(self.cellPrototype.requiredCellHeight, 60.0f);
         }
         
         @catch (NSException *e)
         {
             NSLog(@"Exception: %@", e);
-            return 54.0f;
+            return 60.0f;
         }
+    
+    } else {
+        return tableView.rowHeight;
     }
 }
 
@@ -804,6 +864,8 @@
 }
 
 - (IBAction)CommentButtonAction:(id)sender {
+
+    NSLog(@"Go to Comments!");
 }
 
 - (IBAction)ShareButtonAction:(id)sender {
