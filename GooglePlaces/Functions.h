@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MyFeedsViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface Functions : NSObject
 -(BOOL)CheckIfCategoryExist:(NSString*) string;
@@ -15,5 +16,9 @@
 -(NSString *) currencySymbol : (NSString *) sign;
 -(NSString *) removeUniqueSigns : (NSString *) string;
 -(NSString *) priceAdaptation : (NSString *) price;
+-(BOOL) checkIfUserExist : (NSString *) email;
+-(void) dataTOdb : (id<FBGraphUser>)user;
+-(BOOL) isFacebookAccount: (NSString *)email;
+-(BOOL) dbAsFacebookAccount: (id<FBGraphUser>)user;
 
 @end

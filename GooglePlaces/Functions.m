@@ -13,6 +13,82 @@
 #import <sqlite3.h>
 @implementation Functions
 
+-(BOOL) checkIfUserExist : (NSString *) email{
+    //AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/facebookuserexist.php?email=%@",email];
+    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+    NSString *dataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+    if ([dataResult isEqualToString:@"notexist"]) {
+        return 0;
+    } else return 1;
+}
+
+-(BOOL) isFacebookAccount: (NSString *)email {
+    NSString *findURL = [NSString stringWithFormat:@"http://www.dealers.co.il/isFacebookAccount.php?email=%@",email];
+    NSData *urlData = [NSData dataWithContentsOfURL:[NSURL URLWithString:findURL]];
+    NSString *dataResult = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
+    
+    if ([dataResult isEqualToString:@"1"]) {
+        return 1;
+    } else return 0;
+}
+
+-(BOOL) dbAsFacebookAccount: (id<FBGraphUser>)user{
+    NSString *findURL = [NSString stringWithFormat:@"http://www.dealers.co.il/dbAsFacebookAccount.php?email=%@",[user objectForKey:@"email"]];
+    NSData *urlData = [NSData dataWithContentsOfURL:[NSURL URLWithString:findURL]];
+    NSString *dataResult = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
+    return 1;
+}
+
+
+-(void) dataTOdb : (id<FBGraphUser>)user{
+    
+    Dealer *dealer = [[Dealer alloc]init];
+    
+    
+    
+    NSString *URLForPhoto = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=small", [user objectForKey:@"id"]];
+    NSData *imageDataTemp = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:URLForPhoto]];
+    UIImage *tempImage = [[UIImage alloc]initWithData:imageDataTemp];
+    NSData *imageData = UIImageJPEGRepresentation(tempImage, 2);
+    NSString *urlString = @"http://www.dealers.co.il/uploadphpFile.php";
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:urlString]];
+    [request setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"---------------------------14737809831466499882746641449";
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+    
+    NSMutableData *body = [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Disposition: form-data; name=\"userfile\"; filename=\".jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[NSData dataWithData:imageData]];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:body];
+    
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSString *photoID = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    dealer.photo = tempImage;
+    
+    ////////////////
+    // end photo uploading //
+    ////////////////
+    
+    
+    NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",user.name,@"facebook123",[user objectForKey:@"email"],[user objectForKey:@"birthday"],@"unknown",photoID];
+    strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@",strURL);
+    
+    // to execute php code
+    NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+    
+    // to receive the returend value
+    NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
+}
+
 -(NSString *) currencySymbol : (NSString *) sign {
     if ([sign isEqualToString:@"1"]) {
         sign=@"₪";
@@ -433,8 +509,8 @@
                       @"Fashion_shopping_mall.png",@"4bf58dd8d48988d1ff941735",
                       @"Fashion_shopping_mall.png",@"4bf58dd8d48988d101951735",
                       
-
-
+                      
+                      
                       nil];
     BOOL isTheObjectThere = [array containsObject:[NSString stringWithFormat:@"%@",string]];
     //NSUInteger indexOfTheObject = [array indexOfObject: @"test2"];
@@ -821,7 +897,7 @@
                          @"Fashion_shopping_mall.png",@"4bf58dd8d48988d1ff941735",
                          @"Fashion_shopping_mall.png",@"4bf58dd8d48988d101951735",
                          
-
+                         
                          nil];
     NSString *CategoryPicture = [dic objectForKey:[NSString stringWithFormat:@"%@",string]];
     return CategoryPicture;

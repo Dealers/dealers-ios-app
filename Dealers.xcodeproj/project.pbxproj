@@ -203,6 +203,8 @@
 		B0E4F6F6190A6F500080CD32 /* My Feed+View Deal - New Version_Likes & Shares border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E4F6F5190A6F500080CD32 /* My Feed+View Deal - New Version_Likes & Shares border@2x.png */; };
 		B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E4F6FA191015F50080CD32 /* CheckConnection.m */; };
 		B0E4F6FE1910171E0080CD32 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E4F6FD1910171E0080CD32 /* Reachability.m */; };
+		B0E62D0019C575810038FCDF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E62CFF19C575810038FCDF /* FacebookSDK.framework */; };
+		B0E62D0619C57C5F0038FCDF /* FBloginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E62D0519C57C5F0038FCDF /* FBloginViewController.m */; };
 		B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */; };
 		B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9518B913D700AD2929 /* CoreText.framework */; };
 		B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9718B913EC00AD2929 /* Security.framework */; };
@@ -826,6 +828,9 @@
 		B0E4F6FA191015F50080CD32 /* CheckConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckConnection.m; path = ../CheckConnection.m; sourceTree = "<group>"; };
 		B0E4F6FC1910171E0080CD32 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B0E4F6FD1910171E0080CD32 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		B0E62CFF19C575810038FCDF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		B0E62D0419C57C5F0038FCDF /* FBloginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBloginViewController.h; sourceTree = "<group>"; };
+		B0E62D0519C57C5F0038FCDF /* FBloginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBloginViewController.m; sourceTree = "<group>"; };
 		B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signup2ViewController.h; sourceTree = "<group>"; };
 		B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signup2ViewController.m; sourceTree = "<group>"; };
 		B0F1BB9518B913D700AD2929 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -1210,6 +1215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */,
+				B0E62D0019C575810038FCDF /* FacebookSDK.framework in Frameworks */,
 				C898FE6819A617AE00F1C11A /* CFNetwork.framework in Frameworks */,
 				C898FE6919A617AE00F1C11A /* CoreData.framework in Frameworks */,
 				C898FE6A19A617AE00F1C11A /* MobileCoreServices.framework in Frameworks */,
@@ -1257,6 +1263,7 @@
 		56849780154C00BF001601A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0E62CFF19C575810038FCDF /* FacebookSDK.framework */,
 				C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */,
 				C8DC1D8919BC892B0062E184 /* MBProgressHUD */,
 				B0274807186B2A2B005A52F0 /* GKClasses */,
@@ -1741,6 +1748,8 @@
 		C869CB75191A131B00DF2C19 /* Sign In */ = {
 			isa = PBXGroup;
 			children = (
+				B0E62D0419C57C5F0038FCDF /* FBloginViewController.h */,
+				B0E62D0519C57C5F0038FCDF /* FBloginViewController.m */,
 				B0930C0C17F40B78004EB3CA /* SigninViewController.h */,
 				B0930C0D17F40B78004EB3CA /* SigninViewController.m */,
 			);
@@ -2848,6 +2857,7 @@
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,
+				B0E62D0619C57C5F0038FCDF /* FBloginViewController.m in Sources */,
 				B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */,
 				B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */,
 				B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */,
@@ -2983,6 +2993,10 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_RESOURCE_RULES_PATH[sdk=*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/itzikberrebi/Desktop/dealers_beta-0",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3013,6 +3027,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/itzikberrebi/Desktop/dealers_beta-0",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
