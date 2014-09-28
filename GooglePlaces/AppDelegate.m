@@ -63,7 +63,6 @@
     return YES;
 }
 
-<<<<<<< HEAD
 - (void)configureRestKit
 {
     // initialize AFNetworking HTTPClient
@@ -113,8 +112,6 @@
                                                   [alert show];
                                               }];
 }
-=======
->>>>>>> 73a2156eab671987397f45a52bd989bbb54ca217
 
 - (void)setTabBarController
 {
