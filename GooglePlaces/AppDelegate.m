@@ -11,12 +11,20 @@
 #import "AppDelegate.h"
 #import "TableViewController.h"
 #import <RestKit/RestKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize storyboard;
 @synthesize tabBarController;
+
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+   
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication];
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -49,10 +57,13 @@
     [[UIPickerView appearance] setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
     [[UIDatePicker appearance] setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
     
+    [FBLoginView class];
+    [FBProfilePictureView class];
     
     return YES;
 }
 
+<<<<<<< HEAD
 - (void)configureRestKit
 {
     // initialize AFNetworking HTTPClient
@@ -102,6 +113,8 @@
                                                   [alert show];
                                               }];
 }
+=======
+>>>>>>> 73a2156eab671987397f45a52bd989bbb54ca217
 
 - (void)setTabBarController
 {

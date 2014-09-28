@@ -33,6 +33,7 @@
 
 - (IBAction)EmailimageButton:(id)sender;
 - (IBAction)SigninButton:(id)sender;
+- (IBAction)facebookButtonClicked:(id)sender;
 
 
 @end

@@ -95,6 +95,11 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+-(IBAction)facebookButtonClicked:(id)sender{
+    SigninViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"FBView"];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [self.screenShot setImage:nil];
