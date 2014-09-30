@@ -32,8 +32,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
 @property (weak, nonatomic) UIImageView *loadingIconLoadNewDeals;
 
-@property (nonatomic, strong) NSMutableArray *dealsArray;
-@property (nonatomic, strong) NSMutableArray *dealPhotosArray;
+@property (nonatomic) NSArray *dealsSet;
+@property (nonatomic) NSMutableArray *deals;
+@property (nonatomic) NSMutableArray *dealPhotosArray;
 
 @property (strong, nonatomic) NSString *dealsUserLikes;
 

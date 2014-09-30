@@ -79,20 +79,20 @@
     
     self.dealStore.text = [self.currentDeal store];
     
-    if (![self.currentDeal.price isEqualToString:@"0"]) {
-        self.dealPrice.text = [self.currentDeal.currency stringByAppendingString:self.currentDeal.price];
+    if (!self.currentDeal.price) {
+        self.dealPrice.text = [self.currentDeal.currency stringByAppendingString:self.currentDeal.price.stringValue];
         self.dealPrice.textColor = [UIColor blackColor];
     } else {
         self.dealPrice.text = @"Price";
         self.dealPrice.textColor = [UIColor lightGrayColor];
     }
     
-    if (![self.currentDeal.discountValue isEqualToString:@"0"]) {
+    if (!self.currentDeal.discountValue) {
         if ([self.currentDeal.discountType isEqualToString:@"%"]) {
-            self.dealDiscount.text = [self.currentDeal.discountValue stringByAppendingString:self.currentDeal.discountType];
+            self.dealDiscount.text = [self.currentDeal.discountValue.stringValue stringByAppendingString:self.currentDeal.discountType];
         } else {
             NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.currentDeal.discountValue attributes:attributes];
+            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.currentDeal.discountValue.stringValue attributes:attributes];
             self.dealDiscount.attributedText = attrText;
         }
         self.dealDiscount.textColor = [UIColor blackColor];
@@ -293,8 +293,8 @@
                 case 2:
                     etmvc.title = @"Price";
                     etmvc.currency = self.currentDeal.currency;
-                    etmvc.currentValue = self.currentDeal.price;
-                    if ([self.currentDeal.price isEqualToString:@"0"]) {
+                    etmvc.currentValue = self.currentDeal.price.stringValue;
+                    if (!self.currentDeal.price) {
                         etmvc.currentValue = @"";
                     }
                     [self.navigationController pushViewController:etmvc animated:YES];
@@ -303,8 +303,8 @@
                 case 3:
                     etmvc.title = @"Discount";
                     etmvc.discountType = self.currentDeal.discountType;
-                    etmvc.currentValue = self.currentDeal.discountValue;
-                    if ([self.currentDeal.discountValue isEqualToString:@"0"]) {
+                    etmvc.currentValue = self.currentDeal.discountValue.stringValue;
+                    if (!self.currentDeal.discountValue) {
                         etmvc.currentValue = @"";
                     }
                     [self.navigationController pushViewController:etmvc animated:YES];

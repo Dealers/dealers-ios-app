@@ -1291,7 +1291,7 @@
 				C898FE6E19AB94C700F1C11A /* Custom Classes */,
 				C869CB78191A13E300DF2C19 /* General */,
 				C87B6D05192DDC810026DA66 /* Opening Screen */,
-				C869CB74191A12EF00DF2C19 /* Registration */,
+				C869CB74191A12EF00DF2C19 /* Sign Up */,
 				C869CB75191A131B00DF2C19 /* Sign In */,
 				C869CB71191A129A00DF2C19 /* My Feed */,
 				C869CB70191A126400DF2C19 /* Explore */,
@@ -1729,13 +1729,13 @@
 			name = More;
 			sourceTree = "<group>";
 		};
-		C869CB74191A12EF00DF2C19 /* Registration */ = {
+		C869CB74191A12EF00DF2C19 /* Sign Up */ = {
 			isa = PBXGroup;
 			children = (
 				B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */,
 				B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */,
 			);
-			name = Registration;
+			name = "Sign Up";
 			sourceTree = "<group>";
 		};
 		C869CB75191A131B00DF2C19 /* Sign In */ = {

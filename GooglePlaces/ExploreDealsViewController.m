@@ -24,6 +24,8 @@
 
 @implementation ExploreDealsViewController
 
+/*
+
 -(void) checkIfThereIsNoDeals {
     [_loadingImage stopAnimating];
     if ([_dealsArray count]==0) {
@@ -783,6 +785,6 @@
 }
 
 
-
+*/
 
 @end

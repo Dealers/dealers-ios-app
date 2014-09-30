@@ -471,7 +471,7 @@
         
         UILabel *likes = [[UILabel alloc]initWithFrame:CGRectMake(291, 121+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
         [likes setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        likes.text=[dealClass likeCounter];
+        likes.text = [[dealClass likeCounter] stringValue];
         likes.backgroundColor = [UIColor clearColor];
         likes.textColor = [UIColor whiteColor];
         [likes sizeToFit];
@@ -479,7 +479,7 @@
         
         UILabel *comments = [[UILabel alloc]initWithFrame:CGRectMake(291, 141+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
         [comments setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        comments.text=[dealClass commentCounter];
+        comments.text= [[dealClass commentCounter] stringValue];
         comments.backgroundColor = [UIColor clearColor];
         comments.textColor = [UIColor whiteColor];
         [comments sizeToFit];
@@ -509,10 +509,10 @@
         label2.textColor = [UIColor blackColor];
         [self.dealsView addSubview:label2];
         
-        if ((![[dealClass price] isEqualToString:@"0"]) && ([[dealClass discountValue] isEqualToString:@"0"])) {
+        if (![dealClass price] && ![dealClass discountValue]) {
             UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-            label3.text = [dealClass.currency stringByAppendingString:dealClass.price];
+            label3.text = [dealClass.currency stringByAppendingString:dealClass.price.stringValue];
             label3.backgroundColor = [UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             [label3 sizeToFit];
@@ -520,10 +520,10 @@
             [self.dealsView addSubview:label3];
         }
         
-        if ((![[dealClass price] isEqualToString:@"0"]) && (![[dealClass discountValue] isEqualToString:@"0"])) {
+        if (![dealClass price] && ![dealClass discountValue]) {
             UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-            label4.text = [dealClass discountValue];
+            label4.text = [[dealClass discountValue] stringValue];
             label4.text = [label4.text stringByAppendingString:@"%"];
             label4.backgroundColor = [UIColor clearColor];
             label4.textColor = [UIColor colorWithRed:(255/255.0) green:(59/255.0) blue:(48/255.0) alpha:1.0];
@@ -533,7 +533,7 @@
             
             UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(215, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-            label3.text = [dealClass.currency stringByAppendingString:dealClass.price];
+            label3.text = [dealClass.currency stringByAppendingString:dealClass.price.stringValue];
             label3.backgroundColor = [UIColor clearColor];
             label3.textColor = [UIColor blackColor];
             label3.textAlignment = NSTextAlignmentRight;
@@ -541,10 +541,10 @@
             [self.dealsView addSubview:label3];
         }
         
-        if (([[dealClass price] isEqualToString:@"0"]) && (![[dealClass discountValue] isEqualToString:@"0"])) {
+        if (![dealClass price] && ![dealClass discountValue]) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
-            label3.text=[dealClass discountValue];
+            label3.text=[[dealClass discountValue] stringValue];
             label3.text = [label3.text stringByAppendingString:@"%"];
             label3.backgroundColor=[UIColor clearColor];
             label3.textColor = [UIColor redColor];

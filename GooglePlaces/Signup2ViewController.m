@@ -212,11 +212,11 @@
         SignupButton.transform =CGAffineTransformMakeScale(1,1);}];
 }
 
-- (IBAction)SingupButton:(id)sender
+- (IBAction)SignUpButton:(id)sender
 {
     self.app = [UIApplication sharedApplication];
     
-    if (([Fullname.text isEqual:@""]) ||  ([Fullname.text isEqual:@"Fullname"])) {
+    if (([Fullname.text isEqual:@""]) || ([Fullname.text isEqual:@"Fullname"])) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter your name." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
         
@@ -228,7 +228,7 @@
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Please enter a valid email address." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
     
-    } else if (([Password.text isEqual:@""]) ||  ([Password.text isEqual:@"Password"])) {
+    } else if (([Password.text isEqual:@""]) || ([Password.text isEqual:@"Password"])) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter a password." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
         [alert show];
     

@@ -11,7 +11,7 @@
 @interface Store : NSObject
 
 
-@property NSString *foursquareID;
+@property NSString *storeID;
 @property NSString *name;
 @property NSArray *categories;
 

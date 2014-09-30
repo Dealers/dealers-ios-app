@@ -17,16 +17,16 @@
 @property (nonatomic) NSString *url;
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *store;
-@property (nonatomic) NSString *price;
+@property (nonatomic) NSNumber *price;
 @property (nonatomic) NSString *currency;
-@property (nonatomic) NSString *discountValue;
+@property (nonatomic) NSNumber *discountValue;
 @property (nonatomic) NSString *discountType;
 @property (nonatomic) NSString *category;
 @property (nonatomic) NSDate *expiration;
 @property (nonatomic) NSString *moreDescription;
 
-@property (nonatomic) NSString *likeCounter;
-@property (nonatomic) NSString *commentCounter;
+@property (nonatomic) NSNumber *likeCounter;
+@property (nonatomic) NSNumber *commentCounter;
 
 @property (nonatomic) NSString *type;
 @property (nonatomic) NSString *dealUrlSite;

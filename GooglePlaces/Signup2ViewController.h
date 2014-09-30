@@ -34,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *Datebirth;
 @property (weak, nonatomic) IBOutlet UITextField *Genger;
 
-- (IBAction)SingupButton:(id)sender;
+- (IBAction)SignUpButton:(id)sender;
 - (IBAction)AddphotoButton:(id)sender;
 - (IBAction)HideDatePicker;
 - (IBAction)ShowDatePicker;

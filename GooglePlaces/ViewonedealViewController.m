@@ -169,7 +169,7 @@
     CGFloat originY = CGRectGetMaxY(self.dealerSection.frame);
     self.likesAndButtonsSection.frame = CGRectMake(0, originY, self.view.frame.size.width, self.likesAndButtonsSection.frame.size.height);
     
-    if (![[self.dealClass likeCounter] isEqualToString:@"0"]) {
+    if ([self.dealClass likeCounter] != 0) {
         CGRect likesSectionFrame = self.likesAndButtonsSection.frame;
         likesSectionFrame.origin.y = lowestYPoint + 7;
         self.likesAndButtonsSection.frame = likesSectionFrame;
@@ -411,8 +411,8 @@
     
     titlelabel.text = [_dealClass title];
     storelabel.text = [@"Store: " stringByAppendingString:[_dealClass store]];
-    pricelabel.text = ![_dealClass.price isEqualToString:@"0"] ? [_dealClass.currency stringByAppendingString:_dealClass.price] : @"0";
-    discountlabel.text = [_dealClass discountValue];
+    pricelabel.text = self.dealClass.price != nil ? [self.dealClass.currency stringByAppendingString:self.dealClass.price.stringValue] : @"0";
+    discountlabel.text = self.dealClass.discountValue != nil ? [self.dealClass.discountValue stringValue] : @"0";
     
     if (self.dealClass.category && ![self.dealClass.category isEqualToString:@"0"])
         categorylabel.text = [@"Category: " stringByAppendingString:[_dealClass category]];
@@ -429,8 +429,8 @@
     else
         descriptionlabel.text = @"0";
     
-    likelabel = [_dealClass likeCounter];
-    commentlabel = [_dealClass commentCounter];
+    likelabel = [[_dealClass likeCounter] stringValue];
+    commentlabel = [[_dealClass commentCounter] stringValue];
     LikeOrUnlike = TRUE;
 }
 

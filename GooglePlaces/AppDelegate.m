@@ -25,10 +25,6 @@
     int cacheSizeDisk = 32*1024*1024; // 32MB
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
     [NSURLCache setSharedURLCache:sharedCache];
-    
-    // Getting the Token:
-//    [self configureRestKit];
-//    [self getTokenString];
 
     // Customizing the Navigation Bar:
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
@@ -51,56 +47,6 @@
     
     
     return YES;
-}
-
-- (void)configureRestKit
-{
-    // initialize AFNetworking HTTPClient
-    NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
-    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
-    
-    // initialize RestKit
-    RKObjectManager *dealersManager = [[RKObjectManager alloc] initWithHTTPClient:client];
-    
-    // setup object mappings
-    RKObjectMapping *getToken = [RKObjectMapping mappingForClass:[AppDelegate class]];
-    [getToken addAttributeMappingsFromDictionary:@{
-                                                      @"token" : @"token",
-                                                      }];
-    
-    // register mappings with the provider using a response descriptor
-    RKResponseDescriptor *responseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:getToken
-                                                 method:RKRequestMethodGET
-                                            pathPattern:@"/api-auth"
-                                                keyPath:@""
-                                            statusCodes:[NSIndexSet indexSetWithIndex:200]];
-    
-    [dealersManager addResponseDescriptor:responseDescriptor];
-    
-    [dealersManager.HTTPClient setAuthorizationHeaderWithUsername:@"uzi" password:@"090909"];
-}
-
-- (void)getTokenString
-{
-    NSString *username = @"uzi";
-    NSString *password = @"090909";
-    
-    NSDictionary *queryParams = @{@"username" : username,
-                                  @"password" : password
-                                  };
-    
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"/api-auth"
-                                           parameters:queryParams
-                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                  self.token = [mappingResult.array objectAtIndex:0];
-                                                  NSLog(@"\nToken is:%@", self.token);
-                                              }
-                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                  NSLog(@"There was an error with the loading of the store search: %@", error);
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                  [alert show];
-                                              }];
 }
 
 - (void)setTabBarController
