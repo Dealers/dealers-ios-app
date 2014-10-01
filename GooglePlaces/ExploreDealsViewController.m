@@ -12,7 +12,7 @@
 #import "MoreViewController.h"
 #import "ExploretableViewController.h"
 #import "AppDelegate.h"
-#import "TableViewController.h"
+#import "WhereIsTheDeal.h"
 #import "OnlineViewController.h"
 #import "CheckConnection.h"
 
@@ -517,7 +517,7 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"foursquare";
     app.onlineOrLocal=@"local";
-    TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
+    TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"whereIsTheDealID"];
     UINavigationController *navigationController = self.navigationController;
     NSArray *viewControllers = self.navigationController.viewControllers;
     [navigationController popToViewController:[viewControllers objectAtIndex:2] animated:NO];

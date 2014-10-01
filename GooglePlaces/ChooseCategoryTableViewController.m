@@ -8,7 +8,7 @@
 
 #import "ChooseCategoryTableViewController.h"
 #import "EditDealTableViewController.h"
-#import "OptionalaftergoogleplaceViewController.h"
+#import "WhatIsTheDeal.h"
 
 @interface ChooseCategoryTableViewController ()
 
@@ -74,7 +74,7 @@
         
     } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
         
-        OptionalaftergoogleplaceViewController *oagpvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+        WhatIsTheDeal *oagpvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
         oagpvc.categorylabel.text = [self.categories objectAtIndex:indexPath.row];
         [self.navigationController popViewControllerAnimated:YES];
     }

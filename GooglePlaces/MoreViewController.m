@@ -10,7 +10,7 @@
 #import "ProfileViewController.h"
 #import "ExploretableViewController.h"
 #import "AppDelegate.h"
-#import "TableViewController.h"
+#import "WhereIsTheDeal.h"
 #import "OnlineViewController.h"
 
 @interface MoreViewController ()

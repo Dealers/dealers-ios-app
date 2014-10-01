@@ -6,9 +6,9 @@
 //
 //
 #import <Social/Social.h>
-#import "OptionalaftergoogleplaceViewController.h"
+#import "WhatIsTheDeal.h"
 #import "AppDelegate.h"
-#import "TableViewController.h"
+#import "WhereIsTheDeal.h"
 #import "OnlineViewController.h"
 #import <mach/mach.h>
 #import "CheckConnection.h"
@@ -23,11 +23,11 @@
 #define keyboardHeight 216
 #define navigationBarHeight 44
 
-@interface OptionalaftergoogleplaceViewController ()
+@interface WhatIsTheDeal ()
 
 @end
 
-@implementation OptionalaftergoogleplaceViewController
+@implementation WhatIsTheDeal
 
 -(void) uploadImageToAmazon {
     

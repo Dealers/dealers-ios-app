@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "GKImagePicker.h"
 
-@interface OptionalaftergoogleplaceViewController : UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,GKImagePickerDelegate>
+@interface WhatIsTheDeal : UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,GKImagePickerDelegate>
 {
     NSString *dealphotoid;
     NSString *timeorday;

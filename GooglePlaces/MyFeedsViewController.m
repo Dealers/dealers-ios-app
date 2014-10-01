@@ -12,10 +12,10 @@
 #import "MoreViewController.h"
 #import "ProfileViewController.h"
 #import "ExploretableViewController.h"
-#import "TableViewController.h"
+#import "WhereIsTheDeal.h"
 #import "OnlineViewController.h"
 #import <mach/mach.h>
-#import "OptionalaftergoogleplaceViewController.h"
+#import "WhatIsTheDeal.h"
 #import "CheckConnection.h"
 #import "Deal.h"
 #import "Functions.h"
@@ -739,7 +739,7 @@
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"foursquare";
     app.onlineOrLocal=@"local";
-    TableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
+    WhereIsTheDeal *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"whereIsTheDealID"];
     [self.navigationController pushViewController:controller animated:NO];
 }
 

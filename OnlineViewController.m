@@ -8,7 +8,7 @@
 
 #import "OnlineViewController.h"
 #import "AppDelegate.h"
-#import "OptionalaftergoogleplaceViewController.h"
+#import "WhatIsTheDeal.h"
 
 @interface OnlineViewController ()
 
@@ -100,7 +100,7 @@
     [self.UrlBar resignFirstResponder];
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     app.previousViewControllerAddDeal=@"online";
-    OptionalaftergoogleplaceViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"Optional"];
+    WhatIsTheDeal *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"whatIsTheDealID"];
     NSArray *dataArray = [_UrlBar.text componentsSeparatedByString:@"."];
     if ([dataArray count]>=2) {
         controller.storeName=[dataArray objectAtIndex:1];

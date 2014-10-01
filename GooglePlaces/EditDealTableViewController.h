@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
 #import "EditTextModeViewController.h"
-#import "TableViewController.h"
+#import "WhereIsTheDeal.h"
 #import "ChooseCategoryTableViewController.h"
 
 @interface EditDealTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {

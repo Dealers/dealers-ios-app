@@ -18,7 +18,7 @@
 		B012D9341828F583006288CA /* Uploading-the-Deal Graphic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B012D9331828F583006288CA /* Uploading-the-Deal Graphic@2x.png */; };
 		B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B012D94C182AA2B4006288CA /* MoreViewController.m */; };
 		B012D950182AA323006288CA /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B012D94F182AA321006288CA /* ProfileViewController.m */; };
-		B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01BD1B117F0D6470010C9A4 /* TableViewController.m */; };
+		B01BD1B217F0D6480010C9A4 /* WhereIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */; };
 		B02436D717F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = B02436D117F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png */; };
 		B02436D817F4237D00FB24CC /* Launch App Icons_AppStore.png in Resources */ = {isa = PBXBuildFile; fileRef = B02436D217F4237D00FB24CC /* Launch App Icons_AppStore.png */; };
 		B02436D917F4237D00FB24CC /* Launch App Icons_iPad (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = B02436D317F4237D00FB24CC /* Launch App Icons_iPad (high resolution).png */; };
@@ -124,7 +124,7 @@
 		B08A3668187B3C82005B72D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B08A3667187B3C82005B72D8 /* Images.xcassets */; };
 		B0907D5D18F8315600ED54F2 /* nodeal.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = B0907D5C18F8315600ED54F2 /* nodeal.jpeg */; };
 		B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0907D5F18F95A7500ED54F2 /* ExploreDealsViewController.m */; };
-		B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */; };
+		B0930BFC17F3807D004EB3CA /* WhatIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */; };
 		B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */; };
 		B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0D17F40B78004EB3CA /* SigninViewController.m */; };
 		B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C1317F40BD2004EB3CA /* MainViewController.m */; };
@@ -615,8 +615,8 @@
 		B012D94C182AA2B4006288CA /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		B012D94E182AA320006288CA /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		B012D94F182AA321006288CA /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
-		B01BD1B017F0D6470010C9A4 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
-		B01BD1B117F0D6470010C9A4 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhereIsTheDeal.h; sourceTree = "<group>"; };
+		B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhereIsTheDeal.m; sourceTree = "<group>"; };
 		B02436D117F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_AppStore (high resolution).png"; sourceTree = "<group>"; };
 		B02436D217F4237D00FB24CC /* Launch App Icons_AppStore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_AppStore.png"; sourceTree = "<group>"; };
 		B02436D317F4237D00FB24CC /* Launch App Icons_iPad (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch App Icons_iPad (high resolution).png"; sourceTree = "<group>"; };
@@ -736,8 +736,8 @@
 		B0907D5C18F8315600ED54F2 /* nodeal.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nodeal.jpeg; sourceTree = "<group>"; };
 		B0907D5E18F95A7500ED54F2 /* ExploreDealsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreDealsViewController.h; sourceTree = "<group>"; };
 		B0907D5F18F95A7500ED54F2 /* ExploreDealsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreDealsViewController.m; sourceTree = "<group>"; };
-		B0930BFA17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionalaftergoogleplaceViewController.h; sourceTree = "<group>"; };
-		B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionalaftergoogleplaceViewController.m; sourceTree = "<group>"; };
+		B0930BFA17F3807D004EB3CA /* WhatIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatIsTheDeal.h; sourceTree = "<group>"; };
+		B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatIsTheDeal.m; sourceTree = "<group>"; };
 		B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewonedealViewController.h; sourceTree = "<group>"; };
 		B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewonedealViewController.m; sourceTree = "<group>"; };
 		B0930C0C17F40B78004EB3CA /* SigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SigninViewController.h; sourceTree = "<group>"; };
@@ -1760,10 +1760,10 @@
 			children = (
 				B0DBB1C418AB59BA001F8FDB /* OnlineViewController.h */,
 				B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */,
-				B0930BFA17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.h */,
-				B0930BFB17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m */,
-				B01BD1B017F0D6470010C9A4 /* TableViewController.h */,
-				B01BD1B117F0D6470010C9A4 /* TableViewController.m */,
+				B0930BFA17F3807D004EB3CA /* WhatIsTheDeal.h */,
+				B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */,
+				B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */,
+				B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */,
 				C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */,
 				C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */,
 			);
@@ -2829,9 +2829,9 @@
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
 				C898FE6D19AB94BA00F1C11A /* Store.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
-				B01BD1B217F0D6480010C9A4 /* TableViewController.m in Sources */,
+				B01BD1B217F0D6480010C9A4 /* WhereIsTheDeal.m in Sources */,
 				B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */,
-				B0930BFC17F3807D004EB3CA /* OptionalaftergoogleplaceViewController.m in Sources */,
+				B0930BFC17F3807D004EB3CA /* WhatIsTheDeal.m in Sources */,
 				C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */,
 				B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,

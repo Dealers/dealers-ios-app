@@ -6,8 +6,8 @@
 //
 //
 
-#import "TableViewController.h"
-#import "OptionalaftergoogleplaceViewController.h"
+#import "WhereIsTheDeal.h"
+#import "WhatIsTheDeal.h"
 #import "StoresTableCell.h"
 #import "Functions.h"
 #import <mach/mach.h>
@@ -21,12 +21,12 @@
 #define barTableGap 152 // The gap between the bottom of the search bar and the top of the venues table view.
 #define keyboardHeight 216
 
-@interface TableViewController ()
+@interface WhereIsTheDeal ()
 
 @end
 
-@implementation TableViewController {
-    OptionalaftergoogleplaceViewController *oagpvc;
+@implementation WhereIsTheDeal {
+    WhatIsTheDeal *witdvc;
 }
 
 -(void) connectionProblem {
@@ -287,7 +287,7 @@
         self.navigationItem.leftBarButtonItem = NO;
     }
     
-    oagpvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Optional"];
+    witdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"whatIsTheDealID"];
     
     self.collapseMapButton.hidden = YES;
     currentVC = 1;
@@ -347,12 +347,11 @@
     // setup object mappings
     RKObjectMapping *storeMapping = [RKObjectMapping mappingForClass:[Store class]];
     [storeMapping addAttributeMappingsFromDictionary:@{
-                                                       @"id" : @"foursquareID",
+                                                       @"id" : @"storeID",
                                                        @"name" : @"name",
                                                        @"categories" : @"categories",
                                                        @"location.lat" : @"latitude",
                                                        @"location.lng" : @"longitude",
-                                                       @"location.distance" : @"distance",
                                                        @"location.address" : @"address",
                                                        @"location.cc" : @"cc",
                                                        @"location.city" : @"city",
@@ -530,11 +529,11 @@
         string5 = [self.storeLocationArraySort objectAtIndex:indexpath.row];
     } else string5=@"Unknown";
     
-    [oagpvc setStoreName:string];
-    [oagpvc setSegcategory:string2];
-    [oagpvc setSeglat:string3];
-    [oagpvc setSeglong:string4];
-    [oagpvc setSegstoreAddress:string5];
+    [witdvc setStoreName:string];
+    [witdvc setSegcategory:string2];
+    [witdvc setSeglat:string3];
+    [witdvc setSeglong:string4];
+    [witdvc setSegstoreAddress:string5];
 }
 
 - (IBAction)Dismiss:(id)sender {
@@ -713,7 +712,7 @@
             
         } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
             [self passingStoreToOptionals];
-            [self.navigationController pushViewController:oagpvc animated:YES];
+            [self.navigationController pushViewController:witdvc animated:YES];
         }
     }
 }

@@ -267,7 +267,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     EditTextModeViewController *etmvc = [self.storyboard instantiateViewControllerWithIdentifier:@"editTextModeViewControllerID"];
-    TableViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"TableView"];
+    WhereIsTheDeal *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"whereIsTheDealID"];
     ChooseCategoryTableViewController *cctvc = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCategoryID"];
     
     if (!(indexPath.section == 2 && indexPath.row == 1) && self.datePickerIsShowing) {
