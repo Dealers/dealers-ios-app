@@ -381,10 +381,7 @@
     _SnapButton2.enabled=NO;
     
      */
-    
-    NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='camera'"];
-    NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-   
+       
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

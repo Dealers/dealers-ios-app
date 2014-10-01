@@ -251,282 +251,6 @@
             </objects>
             <point key="canvasLocation" x="945" y="1413"/>
         </scene>
-        <!--Edit Profile View Controller - EditProfile-->
-        <scene sceneID="vW5-Lj-ux9">
-            <objects>
-                <viewController title="EditProfile" id="egL-bC-LJ8" customClass="EditProfileViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="dS7-mQ-dch">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="T1I-b3-IoD">
-                                <rect key="frame" x="0.0" y="63" width="320" height="505"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="10v-AN-g24" userLabel="Edit Profile Pic image (button)">
-                                        <rect key="frame" x="120" y="10" width="80" height="80"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TBH-sd-sXj" userLabel="Edit Profile Pic label">
-                                        <rect key="frame" x="139" y="95" width="42" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
-                                        <color key="textColor" red="0.58823529411764708" green="0.0" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_3 Fields.png" id="AVJ-7a-4Fo" userLabel="Name, About &amp; Location Field image">
-                                        <rect key="frame" x="10" y="119" width="300" height="116"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="My Feed+View Deal (final)_Title icon.png" id="1UQ-Hd-OcP" userLabel="Name Icon image">
-                                        <rect key="frame" x="20" y="124" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your Full Name" minimumFontSize="17" id="GaC-dt-IhR" userLabel="Name text field">
-                                        <rect key="frame" x="58" y="131" width="240" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="egL-bC-LJ8" id="U1a-t3-TDw"/>
-                                        </connections>
-                                    </textField>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Profile_About Yourself icon.png" id="M0p-YF-kqY" userLabel="About Icon image">
-                                        <rect key="frame" x="20" y="162" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Something About Yourself..." minimumFontSize="17" id="4TR-6a-9sC" userLabel="About text field">
-                                        <rect key="frame" x="58" y="169" width="240" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="egL-bC-LJ8" id="Jgu-0I-r4N"/>
-                                        </connections>
-                                    </textField>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Profile_Location icon.png" id="1R8-Xv-kLC" userLabel="Location Icon image">
-                                        <rect key="frame" x="20" y="201" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Location" minimumFontSize="17" id="J5D-qb-G6b" userLabel="Location text field">
-                                        <rect key="frame" x="58" y="208" width="240" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="egL-bC-LJ8" id="0JV-Ro-fmc"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIVATE INFORMATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nHB-ms-zHq" userLabel="PRIVATE INFORMATION label">
-                                        <rect key="frame" x="15" y="255" width="300" height="16"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_2 Fields.png" id="civ-bV-5G1" userLabel="Private Information Fields image">
-                                        <rect key="frame" x="10" y="276" width="300" height="78"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Date Of Birth icon.png" id="cS0-hh-Q5J" userLabel="Birth Date Icon image">
-                                        <rect key="frame" x="20" y="281" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date of Birth" minimumFontSize="17" id="NUW-ow-vXn" userLabel="Date of Birth text field">
-                                        <rect key="frame" x="60" y="288" width="240" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="egL-bC-LJ8" id="nvU-Zb-Va2"/>
-                                        </connections>
-                                    </textField>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Registration_Gender icon.png" id="zD7-8f-t3j" userLabel="Gender Icon image">
-                                        <rect key="frame" x="20" y="320" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Gender " minimumFontSize="17" id="bsT-Th-5kr" userLabel="Gender text field">
-                                        <rect key="frame" x="60" y="327" width="240" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="egL-bC-LJ8" id="h96-Zw-GQq"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EMAIL &amp; PASSWORD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Z8f-Ha-4pW" userLabel="EMAIL &amp; PASSWORD label">
-                                        <rect key="frame" x="15" y="374" width="300" height="16"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_2 Fields.png" id="PsZ-xY-dpM" userLabel="Email &amp; Password Fields image">
-                                        <rect key="frame" x="10" y="395" width="300" height="78"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rQ3-AL-Dsc" userLabel="Edit Profile Button">
-                                        <rect key="frame" x="137" y="90" width="44" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="editButtonClicked:" destination="egL-bC-LJ8" eventType="touchUpInside" id="NB3-AI-XM5"/>
-                                        </connections>
-                                    </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Change Email" minimumFontSize="17" id="wft-LO-mXe" userLabel="Change Email text field">
-                                        <rect key="frame" x="20" y="409" width="240" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="egL-bC-LJ8" id="hX2-BG-yKl"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Change Password" minimumFontSize="17" id="upI-JA-oDQ" userLabel="Change Password text field">
-                                        <rect key="frame" x="20" y="443" width="240" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="egL-bC-LJ8" id="0Z3-rg-JII"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="e6U-ZY-gfg" userLabel="Birth Button">
-                                        <rect key="frame" x="56" y="281" width="234" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="userBirthButtonClicked:" destination="egL-bC-LJ8" eventType="touchUpInside" id="iuO-p1-oKn"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="X5j-Jo-AbD" userLabel="Gender Button">
-                                        <rect key="frame" x="56" y="319" width="234" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="userGenderButtonClicked:" destination="egL-bC-LJ8" eventType="touchUpInside" id="BD3-4E-J0D"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" id="rtt-lI-3NC">
-                                        <rect key="frame" x="227" y="491" width="93" height="9"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </view>
-                                </subviews>
-                                <connections>
-                                    <outlet property="delegate" destination="egL-bC-LJ8" id="apC-Q2-XJm"/>
-                                </connections>
-                            </scrollView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="My Feed+View Deal_Navigation Bar@2X.png" id="poS-mG-SKv" userLabel="Navigation Bar">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ocm-yw-ERC" userLabel="Image View loading">
-                                <rect key="frame" x="145" y="215" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Edit Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ltq-sm-QQR" userLabel="Edit Profile Title label">
-                                <rect key="frame" x="61" y="11" width="200" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="22"/>
-                                <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6eL-C2-dyW" userLabel="Back button">
-                                <rect key="frame" x="7" y="7" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Back!" image="Add Deal_Cancel Adding button.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted" image="Add Deal_Cancel Adding button (selected).png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="returnButtonClicked:" destination="egL-bC-LJ8" eventType="touchUpInside" id="cpg-Gw-6Fo"/>
-                                    <action selector="returnButtonClicked:" destination="XKf-Bu-Ol1" eventType="touchUpInside" id="sss-hf-VPe"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Lpf-46-XLH" userLabel="Done button">
-                                <rect key="frame" x="258" y="7" width="55" height="30"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" image="My Feed+View Deal - New Version_Done button.png">
-                                    <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted" image="My Feed+View Deal - New Version_Done button (highlighted).png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="returnButtonClicked:" destination="Uqk-cd-qh2" eventType="touchUpInside" id="dW0-bc-1Jv"/>
-                                    <action selector="updateButtonClicked:" destination="egL-bC-LJ8" eventType="touchUpInside" id="FTu-vv-uRU"/>
-                                </connections>
-                            </button>
-                            <navigationBar contentMode="scaleToFill" id="aE1-FR-oge" userLabel="Date Navigation Bar">
-                                <rect key="frame" x="0.0" y="720" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <navigationItem id="LJj-Sg-2Sk">
-                                        <barButtonItem key="leftBarButtonItem" title="Cancle" id="qqo-z3-yBY">
-                                            <connections>
-                                                <action selector="dateCancleButtonClicked:" destination="egL-bC-LJ8" id="7ck-KT-jaG"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Done" id="Arc-l4-KvT">
-                                            <connections>
-                                                <action selector="dataDoneButtonClicked:" destination="egL-bC-LJ8" id="Npp-MI-GgH"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <navigationBar contentMode="scaleToFill" id="o0f-h7-TUM" userLabel="Gender Navigation Bar">
-                                <rect key="frame" x="0.0" y="700" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem id="NTg-dn-Rdm">
-                                        <barButtonItem key="rightBarButtonItem" title="Done" id="imt-06-dPF">
-                                            <connections>
-                                                <action selector="genderDoneButtonClicked:" destination="egL-bC-LJ8" id="3yq-K7-PnU"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                        </subviews>
-                        <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="71A-C3-Nom"/>
-                    <connections>
-                        <outlet property="LoadingImage" destination="ocm-yw-ERC" id="8ko-NJ-4XR"/>
-                        <outlet property="dateNavBar" destination="aE1-FR-oge" id="5FW-zV-pgi"/>
-                        <outlet property="genderNavBar" destination="o0f-h7-TUM" id="tIY-ED-eqr"/>
-                        <outlet property="scrollEnd" destination="rtt-lI-3NC" id="cj0-z0-NtA"/>
-                        <outlet property="scrollView" destination="T1I-b3-IoD" id="BcT-1R-aWP"/>
-                        <outlet property="userAboutTF" destination="4TR-6a-9sC" id="s8Y-rO-Eu4"/>
-                        <outlet property="userBirthTF" destination="NUW-ow-vXn" id="8qo-0j-ryf"/>
-                        <outlet property="userEmailTF" destination="wft-LO-mXe" id="9Vo-GP-GVP"/>
-                        <outlet property="userGenderTF" destination="bsT-Th-5kr" id="ELl-hI-wmC"/>
-                        <outlet property="userImage" destination="10v-AN-g24" id="Gtr-E0-c6Y"/>
-                        <outlet property="userLocationTF" destination="J5D-qb-G6b" id="IwP-D3-Ldd"/>
-                        <outlet property="userNameTF" destination="GaC-dt-IhR" id="XfB-vU-h24"/>
-                        <outlet property="userPasswordTF" destination="upI-JA-oDQ" id="RbD-mt-WEE"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Cle-OO-ZMu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1438" y="1413"/>
-        </scene>
         <!--Viewonedeal View Controller-->
         <scene sceneID="OfQ-AV-764">
             <objects>
@@ -547,17 +271,25 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="165"/>
                                                 <color key="tintColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="XZz-c6-vMk" userLabel="Image View loading">
-                                                <rect key="frame" x="465" y="68" width="30" height="30"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="TGq-zu-met" userLabel="Image View snap2">
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="hMt-02-jd4" userLabel="White Activity Indicator2">
+                                                <rect key="frame" x="470" y="72" width="20" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </activityIndicatorView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="TGq-zu-met" userLabel="Image View snap2">
                                                 <rect key="frame" x="320" y="0.0" width="320" height="165"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7WM-np-Ooa" userLabel="Image View snap3">
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="L9B-1F-gLg" userLabel="White Activity Indicator3">
+                                                <rect key="frame" x="790" y="72" width="20" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </activityIndicatorView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7WM-np-Ooa" userLabel="Image View snap3">
                                                 <rect key="frame" x="640" y="0.0" width="320" height="165"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="CHX-QK-JxC" userLabel="Image View snap4">
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="y6t-xW-iWu" userLabel="White Activity Indicator4">
+                                                <rect key="frame" x="1110" y="72" width="20" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </activityIndicatorView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="CHX-QK-JxC" userLabel="Image View snap4">
                                                 <rect key="frame" x="960" y="0.0" width="320" height="165"/>
                                             </imageView>
                                         </subviews>
@@ -833,11 +565,13 @@
                         <outlet property="descriptionlabel" destination="HTD-bx-C2Z" id="y1v-vH-dnW"/>
                         <outlet property="discountlabel" destination="BuP-4E-Ser" id="7La-hx-O4Q"/>
                         <outlet property="expirelabel" destination="Pwb-tV-DR1" id="Woj-of-mZX"/>
+                        <outlet property="imageLoading2" destination="hMt-02-jd4" id="1Ns-x0-nVA"/>
+                        <outlet property="imageLoading3" destination="L9B-1F-gLg" id="EqX-Cq-ipX"/>
+                        <outlet property="imageLoading4" destination="y6t-xW-iWu" id="9r0-4p-p5P"/>
                         <outlet property="likeButtonSelected" destination="gJd-Wq-9mT" id="PW8-ru-QeS"/>
                         <outlet property="likesAndButtonsSection" destination="I9S-Ce-tjS" id="K5e-qh-lSH"/>
                         <outlet property="likesCountImage" destination="2cb-MJ-bmv" id="Kg9-NV-pi3"/>
                         <outlet property="likesCountLabel" destination="Y9i-ko-RdH" id="3Gk-gS-vKv"/>
-                        <outlet property="loadingImage" destination="XZz-c6-vMk" id="aPf-UW-VNx"/>
                         <outlet property="optionsButton" destination="Xwr-BY-JYI" id="knz-lK-p6l"/>
                         <outlet property="optionsButtonSelected" destination="muC-js-JOU" id="mjE-RB-69s"/>
                         <outlet property="pageControl" destination="Gcc-63-ZKR" id="D00-gt-NlO"/>
@@ -1712,7 +1446,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account? Great," lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="27" y="514" width="230" height="26"/>
+                                        <rect key="frame" x="27" y="513.99999793856227" width="230" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
@@ -3706,8 +3440,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Add Deal (Final)_Trash button.png" width="30" height="30"/>
         <image name="Add Deal (final)_Shade.png" width="640" height="44"/>
         <image name="Add Deal_Black Transparent screen.png" width="321" height="90"/>
-        <image name="Add Deal_Cancel Adding button (selected).png" width="31" height="31"/>
-        <image name="Add Deal_Cancel Adding button.png" width="31" height="31"/>
         <image name="Add Deal_Dollar button (pushed).png" width="35" height="35"/>
         <image name="Add Deal_Dollar button (selected).png" width="35" height="35"/>
         <image name="Add Deal_Dollar button.png" width="35" height="35"/>
@@ -3741,8 +3473,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Location Icon" width="30" height="30"/>
         <image name="My Feed+View Dea (final)_Price-Discount icon.png" width="26" height="26"/>
         <image name="My Feed+View Deal (final)_Title icon.png" width="26" height="26"/>
-        <image name="My Feed+View Deal - New Version_Done button (highlighted).png" width="55" height="30"/>
-        <image name="My Feed+View Deal - New Version_Done button.png" width="55" height="30"/>
         <image name="My Feed+View Deal - New Version_Likes View Deal icon.png" width="18" height="17"/>
         <image name="My Feed+View Deal_Additional Description (final) icon.png" width="26" height="26"/>
         <image name="My Feed+View Deal_Category (final) icon.png" width="26" height="26"/>
@@ -3754,12 +3484,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Options Button Selected" width="45" height="45"/>
         <image name="Password Icon" width="30" height="30"/>
         <image name="Price Icon" width="26" height="26"/>
-        <image name="Profile_About Yourself icon.png" width="30" height="30"/>
         <image name="Profile_Deals List tab (selected).png" width="156" height="47"/>
         <image name="Profile_Deals List tab.png" width="156" height="47"/>
         <image name="Profile_Likes List tab (selected).png" width="156" height="48"/>
         <image name="Profile_Likes List tab.png" width="156" height="48"/>
-        <image name="Profile_Location icon.png" width="30" height="30"/>
         <image name="Registration_Add Photo button (selected).png" width="100" height="100"/>
         <image name="Registration_Add Photo button.png" width="100" height="100"/>
         <image name="Registration_Back button (selected).png" width="31" height="31"/>
@@ -3787,8 +3515,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="Title Icon" width="26" height="26"/>
         <image name="Trash" width="30" height="30"/>
         <image name="Uploading-the-Deal Graphic.png" width="265" height="345"/>
-        <image name="profile_2 Fields.png" width="300" height="77"/>
-        <image name="profile_3 Fields.png" width="300" height="116"/>
     </resources>
     <color key="tintColor" red="0.58823529409999997" green="0.0" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

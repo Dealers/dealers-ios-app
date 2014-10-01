@@ -25,6 +25,8 @@
 #define iconsLeftMargin 10
 #define labelsLeftMargin 48
 
+#define S3_PHOTOS_ADDRESS @"https://s3-eu-west-1.amazonaws.com/dealers-app/"
+
 @interface ViewonedealViewController ()
 
 @end
@@ -40,34 +42,6 @@
 @synthesize descriptionlabel;
 @synthesize likelabel;
 @synthesize commentlabel;
-
--(void) startLoadingUploadImage
-{
-    _loadingImage.animationImages = [NSArray arrayWithObjects:
-                                     [UIImage imageNamed:@"loading.png"],
-                                     [UIImage imageNamed:@"loading5.png"],
-                                     [UIImage imageNamed:@"loading10.png"],
-                                     [UIImage imageNamed:@"loading15.png"],
-                                     [UIImage imageNamed:@"loading20.png"],
-                                     [UIImage imageNamed:@"loading25.png"],
-                                     [UIImage imageNamed:@"loading30.png"],
-                                     [UIImage imageNamed:@"loading35.png"],
-                                     [UIImage imageNamed:@"loading40.png"],
-                                     [UIImage imageNamed:@"loading45.png"],
-                                     [UIImage imageNamed:@"loading50.png"],
-                                     [UIImage imageNamed:@"loading55.png"],
-                                     [UIImage imageNamed:@"loading60.png"],
-                                     [UIImage imageNamed:@"loading65.png"],
-                                     [UIImage imageNamed:@"loading70.png"],
-                                     [UIImage imageNamed:@"loading75.png"],
-                                     [UIImage imageNamed:@"loading80.png"],
-                                     [UIImage imageNamed:@"loading85.png"],
-                                     nil];
-    _loadingImage.animationDuration = 0.3;
-    [_loadingImage startAnimating];
-    [UIView animateWithDuration:0.2 animations:^{_loadingImage.alpha = 1.0; _loadingImage.transform =CGAffineTransformMakeScale(0,0);
-        _loadingImage.transform =CGAffineTransformMakeScale(1,1);}];
-}
 
 -(void) setMapAndStoreInfo
 {
@@ -227,9 +201,9 @@
 - (void)setCommentsOverview
 {
     UILabel *commentsOverview = [[UILabel alloc]initWithFrame:CGRectMake(iconsLeftMargin,
-                                                                        sectionGap,
-                                                                        self.view.frame.size.width - iconsLeftMargin * 2,
-                                                                        17)];
+                                                                         sectionGap,
+                                                                         self.view.frame.size.width - iconsLeftMargin * 2,
+                                                                         17)];
     
     commentsOverview.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
     commentsOverview.textColor = [UIColor lightGrayColor];
@@ -243,7 +217,7 @@
     self.commentsTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.commentsTableView.delegate = self;
     self.commentsTableView.dataSource = self;
-//    self.commentsTableView.scrollEnabled = NO;
+    //    self.commentsTableView.scrollEnabled = NO;
     self.commentsTableView.backgroundColor = [UIColor clearColor];
     
     static NSString *cellIdentifier = @"CommentsTableCell";
@@ -266,9 +240,8 @@
 
 -(void) locateIconsInPlace
 {
-    flag = NO;
     int offset;
-    if ([[_dealClass photoSum]intValue]==0) {
+    if ([[_dealClass photoSum]intValue] == 0) {
         offset = 10;
     } else offset = 184;
     
@@ -294,7 +267,6 @@
         [pricelabel sizeToFit];
         self.PriceIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.PriceIcon.frame.size.width, self.PriceIcon.frame.size.height);
         pricelabel.frame = CGRectMake(maxXPoint, lowestYPoint+3+GAP, pricelabel.frame.size.width, pricelabel.frame.size.height);
-        flag = YES;
         maxXPoint= CGRectGetMaxX (pricelabel.frame) + 20;
     } else {
         pricelabel.hidden = YES;
@@ -344,77 +316,113 @@
     }
 }
 
-- (void)loadImageFromUrl {
+- (void)loadImagesFromUrl {
+    
     int photosNumber = [[_dealClass photoSum]intValue];
+    
     if (photosNumber != 0) {
         
         if (!self.captureImage.image) {     // In case the photo wasn't downloaded yet.
-            NSString *imageURL = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID1]];
+            
+            NSString *imageURL = [S3_PHOTOS_ADDRESS stringByAppendingString:self.dealClass.photoID1];
             self.dealClass.photo1 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
+            self.captureImage.alpha = 0;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                UIActivityIndicatorView *loadingIndicator = (UIActivityIndicatorView *)[self.scroll viewWithTag:loadingIndicatorTag];
+                [UIView animateWithDuration:0.5 animations:^{
+                    loadingIndicator.alpha = 0;
+                    self.captureImage.alpha = 1;
+                } completion:^(BOOL finished) { [loadingIndicator removeFromSuperview]; }];
+            });
         }
         
         if (photosNumber == 2) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID2]];
+            _urlImage2 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.dealClass.photoID2];
             self.dealClass.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.captureImage2.image = self.dealClass.photo2;
+                [UIView animateWithDuration:0.5 animations:^{
+                    [self.imageLoading2 stopAnimating];
+                    self.captureImage2.alpha = 1;
+                }];
+            });
         }
         if (photosNumber == 3) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID2]];
-            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID3]];
+            
+            _urlImage2 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.dealClass.photoID2];
             self.dealClass.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.captureImage2.image = self.dealClass.photo2;
+                [UIView animateWithDuration:0.5 animations:^{
+                    [self.imageLoading2 stopAnimating];
+                    self.captureImage2.alpha = 1;
+                }];
+            });
+            
+            _urlImage3 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.dealClass.photoID3];
             self.dealClass.photo3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.captureImage3.image = self.dealClass.photo3;
+                [UIView animateWithDuration:0.5 animations:^{
+                    [self.imageLoading3 stopAnimating];
+                    self.captureImage3.alpha = 1;
+                }];
+            });
         }
         if (photosNumber == 4) {
-            _urlImage2 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID2]];
-            _urlImage3 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID3]];
-            _urlImage4 = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg",[_dealClass photoID4]];
+            
+            _urlImage2 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.dealClass.photoID2];
             self.dealClass.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.captureImage2.image = self.dealClass.photo2;
+                
+                [UIView animateWithDuration:0.5 animations:^{
+                    [self.imageLoading2 stopAnimating];
+                    self.captureImage2.alpha = 1;
+                }];
+            });
+            
+            _urlImage3 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.dealClass.photoID3];
             self.dealClass.photo3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.captureImage3.image = self.dealClass.photo3;
+                
+                [UIView animateWithDuration:0.5 animations:^{
+                    [self.imageLoading3 stopAnimating];
+                    self.captureImage3.alpha = 1;
+                }];
+            });
+            
+            _urlImage4 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.dealClass.photoID4];
             self.dealClass.photo4 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage4]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.captureImage4.image = self.dealClass.photo4;
+                
+                [UIView animateWithDuration:0.5 animations:^{
+                    [self.imageLoading4 stopAnimating];
+                    self.captureImage4.alpha = 1;
+                }];
+            });
         }
     }
-    
-}
-
-- (void)loadImage
-{
-    int photosNumber = [[self.dealClass photoSum]intValue];
-    
-    if (!self.captureImage.image) {
-        self.captureImage.alpha = 0;
-        self.captureImage.image = self.dealClass.photo1;
-        
-        UIActivityIndicatorView *loadingIndicator = (UIActivityIndicatorView *)[self.scroll viewWithTag:loadingIndicatorTag];
-        [UIView animateWithDuration:0.5 animations:^{
-            loadingIndicator.alpha = 0;
-            self.captureImage.alpha = 1;
-        } completion:^(BOOL finished) { [loadingIndicator removeFromSuperview]; }];
-    }
-    
-    if (photosNumber==2) {
-        self.captureImage2.image = self.dealClass.photo2;
-    }
-    if (photosNumber==3) {
-        self.captureImage2.image = self.dealClass.photo2;
-        self.captureImage3.image = self.dealClass.photo3;
-    }
-    if (photosNumber==4) {
-        self.captureImage2.image = self.dealClass.photo2;
-        self.captureImage3.image = self.dealClass.photo3;
-        self.captureImage4.image = self.dealClass.photo4;
-    }
-    
-    [_loadingImage stopAnimating];
-    _loadingImage.hidden=YES;
 }
 
 -(void) loadVarsFromDeal{
     
     titlelabel.text = [_dealClass title];
-    storelabel.text = [@"Store: " stringByAppendingString:[_dealClass store]];
+    storelabel.text = self.dealClass.store != nil ? [@"Store: " stringByAppendingString:[self.dealClass store]] : @"0";
     pricelabel.text = self.dealClass.price != nil ? [self.dealClass.currency stringByAppendingString:self.dealClass.price.stringValue] : @"0";
     discountlabel.text = self.dealClass.discountValue != nil ? [self.dealClass.discountValue stringValue] : @"0";
     
-    if (self.dealClass.category && ![self.dealClass.category isEqualToString:@"0"])
+    if (self.dealClass.category && ![self.dealClass.category isEqualToString:@"0"] && ![self.dealClass.category isEqualToString:@"No Category"])
         categorylabel.text = [@"Category: " stringByAppendingString:[_dealClass category]];
     else
         categorylabel.text = @"";
@@ -476,7 +484,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if ([self.isShoetCell isEqualToString:@"yes"]) {
+    if ([self.isShortCell isEqualToString:@"yes"]) {
         self.cameraScrollView.hidden = YES;
         
     } else {
@@ -495,17 +503,11 @@
         } else {
             self.pageControl.hidden = YES;
         }
-        [self startLoadingUploadImage];
         
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
             
-            [self loadImageFromUrl];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [self loadImage];
-            });
+            [self loadImagesFromUrl];
         });
     }
 }
@@ -513,7 +515,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     _tableViewLikes.hidden = YES;
     
     self.navigationItem.titleView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
@@ -521,15 +523,15 @@
     self.scroll.frame = [[UIScreen mainScreen] bounds];
     
     if ([_likeornotLabelFromMyFeeds isEqualToString:@"yes"]) {
-        //        _LikeButton.enabled = NO;
+        
         self.LikeButton.hidden = YES;
         self.likeButtonSelected.hidden = NO;
     }
     
     self.appDelegate = [[UIApplication sharedApplication]delegate];
     
-    self.pageControl.numberOfPages = [[_dealClass photoSum]intValue];
-    [self.cameraScrollView setContentSize:((CGSizeMake(320*[[_dealClass photoSum]intValue], 165)))];
+    self.pageControl.numberOfPages = [[self.dealClass photoSum]intValue];
+    [self.cameraScrollView setContentSize:((CGSizeMake(320*[[self.dealClass photoSum]intValue], 165)))];
     [self.cameraScrollView setScrollEnabled:YES];
     
     cellNumberInScrollView = 0;
@@ -746,7 +748,7 @@
             cell.commentBody.text = comment.text;
             [cell.commentBody sizeToFit];
             
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             NSLog(@"\n origin x: %f \n origin y: %f \n width: %f \n height: %f",
                   cell.commentBody.frame.origin.x,
@@ -810,7 +812,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     if (tableView == self.commentsTableView) {
         
         @try {
@@ -828,7 +830,7 @@
             NSLog(@"Exception: %@", e);
             return 60.0f;
         }
-    
+        
     } else {
         return tableView.rowHeight;
     }
@@ -864,7 +866,7 @@
 }
 
 - (IBAction)CommentButtonAction:(id)sender {
-
+    
     NSLog(@"Go to Comments!");
 }
 
@@ -955,7 +957,7 @@
     _dealsPhotosidArray=nil;
     _dealsPhotosArray=nil;
     _dealClass=nil;
-    _isShoetCell=nil;
+    _isShortCell=nil;
     _likeornotLabelFromMyFeeds=nil;
     _urlImage=nil;
     _urlImage2=nil;

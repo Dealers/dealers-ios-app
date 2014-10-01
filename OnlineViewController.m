@@ -44,8 +44,6 @@
 - (void)didReceiveMemoryWarning
 {
     if (currentVC) {
-        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='online'"];
-        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
         NSLog(@"memory online");
         [self deallocOnlineView];
         [self.navigationController popViewControllerAnimated:YES];

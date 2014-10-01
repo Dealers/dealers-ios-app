@@ -167,7 +167,7 @@
     if (indexPath.row == 0) {
         deal.title = @"So, is it working?!@#";
         deal.type = @"L";
-        deal.price = @"15";
+        deal.price = [NSNumber numberWithInt:15];
         deal.currency = @"SH";
         deal.uploadDate = [NSDate date];
         [self addDeal:deal];

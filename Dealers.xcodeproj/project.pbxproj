@@ -133,7 +133,6 @@
 		B09FBACF19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09FBACE19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png */; };
 		B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD1193CBE0A006CB986 /* Deal.m */; };
 		B09FBAD5193F0764006CB986 /* Dealer.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD4193F0764006CB986 /* Dealer.m */; };
-		B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */; };
 		B0C7FB4B183375F900B3B740 /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB39183375F900B3B740 /* loading@2x.png */; };
 		B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3A183375F900B3B740 /* loading5@2x.png */; };
 		B0C7FB4D183375F900B3B740 /* loading10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C7FB3B183375F900B3B740 /* loading10@2x.png */; };
@@ -752,8 +751,6 @@
 		B09FBAD1193CBE0A006CB986 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
 		B09FBAD3193F0764006CB986 /* Dealer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dealer.h; sourceTree = "<group>"; };
 		B09FBAD4193F0764006CB986 /* Dealer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dealer.m; sourceTree = "<group>"; };
-		B09FBAD6193F0C7D006CB986 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
-		B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		B0C7FB39183375F900B3B740 /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
 		B0C7FB3A183375F900B3B740 /* loading5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading5@2x.png"; sourceTree = "<group>"; };
 		B0C7FB3B183375F900B3B740 /* loading10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading10@2x.png"; sourceTree = "<group>"; };
@@ -1702,8 +1699,6 @@
 		C869CB72191A12C900DF2C19 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				B09FBAD6193F0C7D006CB986 /* EditProfileViewController.h */,
-				B09FBAD7193F0C7D006CB986 /* EditProfileViewController.m */,
 				B012D94E182AA320006288CA /* ProfileViewController.h */,
 				B012D94F182AA321006288CA /* ProfileViewController.m */,
 				C84846FA19A2617B00BC6ACE /* SettingsTableViewController.h */,
@@ -2844,7 +2839,6 @@
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
 				B0F1BB9D18DB83D300AD2929 /* LikesCell.m in Sources */,
-				B09FBAD8193F0C7D006CB986 /* EditProfileViewController.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,

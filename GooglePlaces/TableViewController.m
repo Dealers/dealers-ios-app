@@ -329,9 +329,7 @@
         for (UIView *v in viewsToRemove) {
             [v removeFromSuperview];}
         _venuesTableView.frame = CGRectMake(0, 0, _venuesTableView.frame.size.height, ([[UIScreen mainScreen] bounds].size.height));
-        NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=crash&crashtext='foursquare'"];
         [_scrollView addSubview:_venuesTableView];
-        NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
         currentVC=1;
     }
     [super didReceiveMemoryWarning];

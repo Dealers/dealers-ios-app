@@ -28,6 +28,8 @@
 #define loadingIndicatorTag 100000
 #define spinningWheelTag 4444
 
+#define S3_PHOTOS_ADDRESS @"https://s3-eu-west-1.amazonaws.com/dealers-app/"
+
 @interface MyFeedsViewController ()
 @end
 
@@ -120,7 +122,7 @@
                                                       [self fillCellsImagesOneByOne];
                                                   }
                                                   
-                                                  NSLog(@"\n success!");
+                                                  NSLog(@"\n success! \n number of deals: %lu", (unsigned long)self.deals.count);
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"There was an error with the loading of the store search: %@", error);
@@ -129,73 +131,73 @@
                                               }];
 }
 
-
--(void) loadDataFromDB {
-    
-    CheckConnection *checkconnection = [[CheckConnection alloc]init];
-    if ([checkconnection connected]) {
-        
-        NSString *url;
-        
-        if ([selfViewController isEqualToString:@"My Feed"]) {
-            url = [NSString stringWithFormat:@"http://www.dealers.co.il/getDealsData.php"];
-        } else if ([selfViewController isEqualToString:@"Explore"]) {
-            url = [NSString stringWithFormat:@"http://www.dealers.co.il/newExplore.php?Category='%@'", self.categoryFromExplore];
-        }
-        
-        NSURL *dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-        NSData *data = [NSData dataWithContentsOfURL: dbRequestURL];
-        NSError* error;
-        
-        if (data!=nil) {
-            NSDictionary* json = [NSJSONSerialization
-                                  JSONObjectWithData:data
-                                  options:kNilOptions
-                                  error:&error];
-            NSDictionary *responseData = json[@"respone"];
-            NSArray *deals = responseData[@"deals"];
-            NSLog(@"%@",deals);
-            
-            for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
-            {
-                Deal *dealClass = [[Deal alloc]init];
-                NSDictionary *dealsDictionary = [deals objectAtIndex:i];
-                [dealClass setTitle:[dealsDictionary objectForKey:@"title"]];
-                [dealClass setStore:[dealsDictionary objectForKey:@"store"]];
-                [dealClass setMoreDescription:[dealsDictionary objectForKey:@"description"]];
-                [dealClass setCurrency:[dealsDictionary objectForKey:@"currency"]];
-                [dealClass setPrice:[dealsDictionary objectForKey:@"price"]];
-                [dealClass setDiscountValue:[dealsDictionary objectForKey:@"discount"]];
-                
-                NSDate *date = [[NSDate alloc]init];
-                date = [self.dateFormatter dateFromString:[dealsDictionary objectForKey:@"expire"]];
-                [dealClass setExpiration:date];
-                
-                [dealClass setLikeCounter:[dealsDictionary objectForKey:@"likescount"]];
-                [dealClass setCommentCounter:[dealsDictionary objectForKey:@"commentscount"]];
-                [dealClass setPhotoID1:[dealsDictionary objectForKey:@"photoid1"]];
-                [dealClass setPhotoID2:[dealsDictionary objectForKey:@"photoid2"]];
-                [dealClass setPhotoID3:[dealsDictionary objectForKey:@"photoid3"]];
-                [dealClass setPhotoID4:[dealsDictionary objectForKey:@"photoid4"]];
-                [dealClass setPhotoSum:[dealsDictionary objectForKey:@"photosum"]];
-                [dealClass setCategory:[dealsDictionary objectForKey:@"category"]];
-                [dealClass setDealUserID:[dealsDictionary objectForKey:@"userid"]];
-                [dealClass setDealID:[dealsDictionary objectForKey:@"dealid"]];
-                [dealClass setUploadDate:[dealsDictionary objectForKey:@"uploaddate"]];
-                [dealClass setType:[dealsDictionary objectForKey:@"onlineorlocal"]];
-                [dealClass setDealUrlSite:[dealsDictionary objectForKey:@"urlsite"]];
-                [dealClass setDealStoreAddress:[dealsDictionary objectForKey:@"storeaddress"]];
-                [dealClass setDealStoreLatitude:[dealsDictionary objectForKey:@"storelatitude"]];
-                [dealClass setDealStoreLongitude:[dealsDictionary objectForKey:@"storelongitude"]];
-                
-                [self.deals addObject:dealClass];
-            }
-        }
-    }
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.AfterAddDeal = @"aftersign";
-    
-}
+/*
+ -(void) loadDataFromDB {
+ 
+ CheckConnection *checkconnection = [[CheckConnection alloc]init];
+ if ([checkconnection connected]) {
+ 
+ NSString *url;
+ 
+ if ([selfViewController isEqualToString:@"My Feed"]) {
+ url = [NSString stringWithFormat:@"http://www.dealers.co.il/getDealsData.php"];
+ } else if ([selfViewController isEqualToString:@"Explore"]) {
+ url = [NSString stringWithFormat:@"http://www.dealers.co.il/newExplore.php?Category='%@'", self.categoryFromExplore];
+ }
+ 
+ NSURL *dbRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+ NSData *data = [NSData dataWithContentsOfURL: dbRequestURL];
+ NSError* error;
+ 
+ if (data!=nil) {
+ NSDictionary* json = [NSJSONSerialization
+ JSONObjectWithData:data
+ options:kNilOptions
+ error:&error];
+ NSDictionary *responseData = json[@"respone"];
+ NSArray *deals = responseData[@"deals"];
+ NSLog(@"%@",deals);
+ 
+ for (int i=0; i<[deals count]-1 && deals!=NULL; i++)
+ {
+ Deal *dealClass = [[Deal alloc]init];
+ NSDictionary *dealsDictionary = [deals objectAtIndex:i];
+ [dealClass setTitle:[dealsDictionary objectForKey:@"title"]];
+ [dealClass setStore:[dealsDictionary objectForKey:@"store"]];
+ [dealClass setMoreDescription:[dealsDictionary objectForKey:@"description"]];
+ [dealClass setCurrency:[dealsDictionary objectForKey:@"currency"]];
+ [dealClass setPrice:[dealsDictionary objectForKey:@"price"]];
+ [dealClass setDiscountValue:[dealsDictionary objectForKey:@"discount"]];
+ 
+ NSDate *date = [[NSDate alloc]init];
+ date = [self.dateFormatter dateFromString:[dealsDictionary objectForKey:@"expire"]];
+ [dealClass setExpiration:date];
+ 
+ [dealClass setLikeCounter:[dealsDictionary objectForKey:@"likescount"]];
+ [dealClass setCommentCounter:[dealsDictionary objectForKey:@"commentscount"]];
+ [dealClass setPhotoID1:[dealsDictionary objectForKey:@"photoid1"]];
+ [dealClass setPhotoID2:[dealsDictionary objectForKey:@"photoid2"]];
+ [dealClass setPhotoID3:[dealsDictionary objectForKey:@"photoid3"]];
+ [dealClass setPhotoID4:[dealsDictionary objectForKey:@"photoid4"]];
+ [dealClass setPhotoSum:[dealsDictionary objectForKey:@"photosum"]];
+ [dealClass setCategory:[dealsDictionary objectForKey:@"category"]];
+ [dealClass setDealUserID:[dealsDictionary objectForKey:@"userid"]];
+ [dealClass setDealID:[dealsDictionary objectForKey:@"dealid"]];
+ [dealClass setUploadDate:[dealsDictionary objectForKey:@"uploaddate"]];
+ [dealClass setType:[dealsDictionary objectForKey:@"onlineorlocal"]];
+ [dealClass setDealUrlSite:[dealsDictionary objectForKey:@"urlsite"]];
+ [dealClass setDealStoreAddress:[dealsDictionary objectForKey:@"storeaddress"]];
+ [dealClass setDealStoreLatitude:[dealsDictionary objectForKey:@"storelatitude"]];
+ [dealClass setDealStoreLongitude:[dealsDictionary objectForKey:@"storelongitude"]];
+ 
+ [self.deals addObject:dealClass];
+ }
+ }
+ }
+ AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+ app.AfterAddDeal = @"aftersign";
+ }
+ */
 
 - (void)createDealsTable {
     
@@ -206,6 +208,8 @@
     for (int i = cellNumberInScrollView; ((i < numberOfDealsLoadingAtATime + cellNumberInScrollView) && (i < [self.deals count])); i++) {
         dealClass = [self.deals objectAtIndex:i];
         NSString *imageID = [dealClass photoID1];
+        
+        dealClass.photoSum = [self setPhotoSum:dealClass];
         
         if (imageID.length == 0) {
             isShortCell = YES;
@@ -365,7 +369,7 @@
         [self.scrollView addSubview:spinningWheel];
         [self startLoading:spinningWheel];
         
-        [[self scrollView] setContentSize:CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(spinningWheel.frame) + 25)];
+        [[self scrollView] setContentSize:CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(spinningWheel.frame) + 22)];
         
     } else {
         // Add here the logo that indicates that the deals array is finished.
@@ -401,9 +405,9 @@
             dealClass = [self.deals objectAtIndex:i];
             NSString *imageID = [dealClass photoID1];
             
-            if ((![imageID isEqualToString:@"0"]) || (imageID != nil) || ([imageID length] != 0)) {
+            if ((![imageID isEqualToString:@""]) && (imageID != nil) && ([imageID length] != 0)) {
                 
-                NSString *URLForPhoto = [NSString stringWithFormat:@"http://www.dealers.co.il/%@.jpg", imageID];
+                NSString *URLForPhoto = [S3_PHOTOS_ADDRESS stringByAppendingString:imageID];
                 NSData *imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:URLForPhoto]];
                 self.image = [[UIImage alloc]initWithData:imageData];
                 [dealClass setPhoto1:self.image];
@@ -433,23 +437,23 @@
                     } completion:^(BOOL finished){
                         [loading stopAnimating];
                     }];
-                    
-                    if (i + 1 == cellNumberInScrollView) {
-                        isUpdatingNow = NO; // Releasing only when the loop is finished.
-                        NSLog(@"isUpdateNow is NO");
-                        
-                        int scrollOffset = self.scrollView.contentOffset.y + self.view.frame.size.height;
-                        if (((GAP - scrollOffset) < 200) && (GAP != 0)) {
-                            isUpdatingNow = YES;
-                            [self stopWheelAndPresentDeals];
-                        }
-                    }
-                    
-                    NSLog(@"\n cellNumbersInFillWithImages: %i \n cellNumberInScrollView: %i \n i: %i", cellsNumbersInFillWithImages, cellNumberInScrollView, i);
                 });
+            } // End of if statement
+            
+            if (i + 1 == cellNumberInScrollView) {
+                
+                isUpdatingNow = NO; // Releasing only when the loop is finished.
+                
+                int scrollOffset = self.scrollView.contentOffset.y + self.view.frame.size.height;
+                if (((GAP - scrollOffset) < 200) && (GAP != 0)) {
+                    isUpdatingNow = YES;
+                    [self stopWheelAndPresentDeals];
+                }
+                
+                NSLog(@"\n cellNumbersInFillWithImages: %i \n cellNumberInScrollView: %i \n i: %i", cellsNumbersInFillWithImages, cellNumberInScrollView, i);
             }
         });
-    }
+    } // End of for loop
     
     cellsNumbersInFillWithImages += numberOfDealsLoadingAtATime;
 }
@@ -462,13 +466,13 @@
     dealClass = [self.deals objectAtIndex:(button.tag)];
     controller.dealClass = dealClass;
     
-    if (![[dealClass photoID1] isEqualToString:@"0"]) {
-        controller.isShoetCell = @"no";
-    } else controller.isShoetCell = @"yes";
+    if (dealClass.photoID1.length > 0) {
+        controller.isShortCell = @"no";
+    } else controller.isShortCell = @"yes";
     
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
-    if ([app.dealerClass.userLikesList rangeOfString:[dealClass dealID]].location == NSNotFound) {
+    if ([app.dealerClass.userLikesList rangeOfString:[dealClass url]].location == NSNotFound) {
         controller.likeornotLabelFromMyFeeds = @"no";
     } else {
         controller.likeornotLabelFromMyFeeds = @"yes";
@@ -503,6 +507,31 @@
     [spinningWheel startAnimating];
     [UIView animateWithDuration:0.3 animations:^{spinningWheel.alpha=1.0; spinningWheel.transform =CGAffineTransformMakeScale(0,0);
         spinningWheel.transform =CGAffineTransformMakeScale(1,1);}];
+}
+
+- (NSNumber *)setPhotoSum:(Deal *)deal {
+    
+    if (deal.photoID1.length > 0)
+        deal.photoSum = @(deal.photoSum.intValue + 1);
+    else
+        return [NSNumber numberWithInt:0];
+    
+    if (deal.photoID2.length > 0)
+        deal.photoSum = @(deal.photoSum.intValue + 1);
+    else
+        return [NSNumber numberWithInt:1];
+    
+    if (deal.photoID3.length > 0)
+        deal.photoSum = @(deal.photoSum.intValue + 1);
+    else
+        return [NSNumber numberWithInt:2];
+    
+    if (deal.photoID4.length > 0)
+        deal.photoSum = @(deal.photoSum.intValue + 1);
+    else
+        return [NSNumber numberWithInt:3];
+    
+    return [NSNumber numberWithInt:4];
 }
 
 - (void)initializeView {
@@ -589,7 +618,7 @@
         
         CheckConnection *checkconnection = [[CheckConnection alloc]init];
         if ([checkconnection connected]) {
-
+            
             [self loadDeals];
             //            [self loadDBandUpdateCells];
             
@@ -600,18 +629,20 @@
     }
 }
 
-- (void)loadDBandUpdateCells {
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-    dispatch_async(queue, ^{
-        // Do some computation here.
-        [self loadDataFromDB];
-        // Update UI after computation.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
-            [self didReachFromRegisterOrAddDeal];
-        });
-    });
-}
+/*
+ - (void)loadDBandUpdateCells {
+ dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+ dispatch_async(queue, ^{
+ // Do some computation here.
+ [self loadDataFromDB];
+ // Update UI after computation.
+ dispatch_async(dispatch_get_main_queue(), ^{
+ // Update the UI on the main thread.
+ [self didReachFromRegisterOrAddDeal];
+ });
+ });
+ }
+ */
 
 - (void)viewDidLoad {
     
@@ -633,7 +664,7 @@
     CheckConnection *checkconnection = [[CheckConnection alloc]init];
     
     if ([checkconnection connected]){
-
+        
         [self loadDeals];
         //        [self loadDBandUpdateCells];
         

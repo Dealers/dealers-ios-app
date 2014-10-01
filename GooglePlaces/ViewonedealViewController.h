@@ -50,7 +50,7 @@
 @property (strong,nonatomic) NSMutableArray *dealsPhotosArray;
 
 @property (strong,nonatomic) Deal *dealClass;
-@property (strong,nonatomic) NSString *isShoetCell;
+@property (strong,nonatomic) NSString *isShortCell;
 @property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
 
 @property (strong,nonatomic) NSString *urlImage;
@@ -81,7 +81,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *PriceIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *ExpireIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *DescriptionIcon;
-@property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 
 @property (weak, nonatomic) IBOutlet UIView *dealerSection;
 
@@ -110,8 +109,11 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage2;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *imageLoading2;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage3;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *imageLoading3;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *imageLoading4;
 @property (weak, nonatomic) IBOutlet UIView *likesAndButtonsSection;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;

@@ -42,7 +42,7 @@
 @property (nonatomic) UIImage *photo2;
 @property (nonatomic) UIImage *photo3;
 @property (nonatomic) UIImage *photo4;
-@property (nonatomic) NSString *photoSum;
+@property (nonatomic) NSNumber *photoSum;
 
 @property (nonatomic) NSString *dealUserID;
 

@@ -1010,8 +1010,8 @@
     
     if (![[dealClass photoID1] isEqualToString:@"0"]) {
         controller.dealClass.photo1 = [_photoidConvertedArrayForLikesView objectAtIndex:(button.tag-1)];
-        controller.isShoetCell = @"no";
-    } else controller.isShoetCell = @"yes";
+        controller.isShortCell = @"no";
+    } else controller.isShortCell = @"yes";
     
     
     [self.navigationController pushViewController:controller animated:YES];
@@ -1042,8 +1042,8 @@
     
     if (![[dealClass photoID1] isEqualToString:@"0"]) {
         controller.dealClass.photo1 = [_PHOTOIDMARRAYCONVERT objectAtIndex:(button.tag)];
-        controller.isShoetCell = @"no";
-    } else controller.isShoetCell = @"yes";
+        controller.isShortCell = @"no";
+    } else controller.isShortCell = @"yes";
     
     NSLog(@"end of profile");
     
