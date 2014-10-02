@@ -446,6 +446,8 @@
 		C898FE6919A617AE00F1C11A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE6619A617AE00F1C11A /* CoreData.framework */; };
 		C898FE6A19A617AE00F1C11A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE6719A617AE00F1C11A /* MobileCoreServices.framework */; };
 		C898FE6D19AB94BA00F1C11A /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = C898FE6C19AB94BA00F1C11A /* Store.m */; };
+		C8A012EF19DD52E100C1D973 /* WhatIsTheDeal1.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */; };
+		C8A012F219DD52F700C1D973 /* WhatIsTheDeal2.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A012F119DD52F700C1D973 /* WhatIsTheDeal2.m */; };
 		C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */; };
 		C8A6EBE4191BB99600887C34 /* Registration_Sign Up Mail button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */; };
 		C8A6EBE5191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */; };
@@ -1079,6 +1081,10 @@
 		C898FE6719A617AE00F1C11A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C898FE6B19AB94BA00F1C11A /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		C898FE6C19AB94BA00F1C11A /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
+		C8A012ED19DD52E100C1D973 /* WhatIsTheDeal1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatIsTheDeal1.h; sourceTree = "<group>"; };
+		C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatIsTheDeal1.m; sourceTree = "<group>"; };
+		C8A012F019DD52F700C1D973 /* WhatIsTheDeal2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatIsTheDeal2.h; sourceTree = "<group>"; };
+		C8A012F119DD52F700C1D973 /* WhatIsTheDeal2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatIsTheDeal2.m; sourceTree = "<group>"; };
 		C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Facebook button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Mail button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Twitter button@2x.png"; sourceTree = "<group>"; };
@@ -1763,6 +1769,10 @@
 				B0930BFA17F3807D004EB3CA /* WhatIsTheDeal.h */,
 				B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */,
 				B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */,
+				C8A012ED19DD52E100C1D973 /* WhatIsTheDeal1.h */,
+				C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */,
+				C8A012F019DD52F700C1D973 /* WhatIsTheDeal2.h */,
+				C8A012F119DD52F700C1D973 /* WhatIsTheDeal2.m */,
 				B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */,
 				C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */,
 				C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */,
@@ -2846,6 +2856,7 @@
 				B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */,
 				B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */,
 				C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */,
+				C8A012F219DD52F700C1D973 /* WhatIsTheDeal2.m in Sources */,
 				B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */,
 				B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */,
 				B055C73417FE882700FBDFCC /* ExploreCell.m in Sources */,
@@ -2855,6 +2866,7 @@
 				C848B66D19ADB92A000F138D /* Comment.m in Sources */,
 				B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */,
 				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
+				C8A012EF19DD52E100C1D973 /* WhatIsTheDeal1.m in Sources */,
 				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
 				C848B67819B4AB76000F138D /* StoresTableCell.m in Sources */,

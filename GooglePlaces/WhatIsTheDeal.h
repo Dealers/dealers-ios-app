@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AVFoundation/AVFoundation.h>
 #import "GKImagePicker.h"
+#import "Deal.h"
+#import "Store.h"
+#import "Dealer.h"
 
 @interface WhatIsTheDeal : UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,GKImagePickerDelegate>
 {
@@ -35,6 +38,8 @@
 @property (strong,nonatomic) NSString *seglat;
 @property (strong,nonatomic) NSString *seglong;
 @property (strong,nonatomic) NSString *segstoreAddress;
+
+@property (nonatomic) Store *store;
 
 @property (strong,nonatomic) NSString *titleText;
 @property (strong,nonatomic) NSString *descriptionText;

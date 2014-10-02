@@ -25,9 +25,12 @@
 
 @end
 
+
 @implementation WhereIsTheDeal {
     WhatIsTheDeal *witdvc;
 }
+
+@synthesize foursquareManager;
 
 -(void) connectionProblem {
     [_mapView removeFromSuperview];
@@ -71,7 +74,7 @@
                 NSMutableArray *storeLongArray=[[NSMutableArray alloc]init];
                 NSMutableArray *storeLatArray=[[NSMutableArray alloc]init];
                 
-                for (int i=0; i<[[venues copy] count]; i++)
+                for (int i=0; i < [[venues copy] count]; i++)
                 {
                     NSString *categoryId = [[NSString alloc]init];
                     NSDictionary *storeArrayFromVenues = [venues objectAtIndex:i];
@@ -92,7 +95,7 @@
                         categoryId = categoryIdArray[@"id"];
                         if ([func CheckIfCategoryExist:categoryId]) {
                             NSString *ImageName=[func ConnectOldCategoryToNewCategory:categoryId];
-                            if (ImageName!=NULL) {
+                            if (ImageName != NULL) {
                                 tempimage.image =[UIImage imageNamed:[NSString stringWithFormat:@"%@",ImageName]];
                                 NSArray *CategoryNameArray = [ImageName componentsSeparatedByString:@"_"];
                                 NSString *CategoryName=[CategoryNameArray objectAtIndex:0];
@@ -119,7 +122,7 @@
                 self.storeLatArraySort=[[NSMutableArray alloc]init];
                 
                 
-                if ([storeDistanceArray count]==[storeNameArray count]) {
+                if ([storeDistanceArray count] == [storeNameArray count]) {
                     for (int i=0; i<[[storeNameArray copy] count]; i++){
                         int index;
                         int min = 10000;
@@ -186,45 +189,78 @@
     return YES;
 }
 
--(void) mainMethod {
-    [self.venuesTableView reloadData];
-    [self.scrollView setContentSize:((CGSizeMake(320, ([self.storeNameArraySort count]*70+barTableGap))))];
+- (NSMutableArray *)filterStores:(NSArray *)storesArray
+{
+    NSMutableArray *filteredStores = [[NSMutableArray alloc]init];
+    Functions *func = [[Functions alloc]init];
+    for (Store *store in storesArray) {
+        if (store.categories.count > 0) {
+            NSDictionary *categoryIdArray = [store.categories objectAtIndex:0];
+            if ([func CheckIfCategoryExist:categoryIdArray[@"id"]]) {
+                [filteredStores addObject:store];
+            }
+        }
+    }
+    return filteredStores;
+}
+
+- (void)setTableView {
+    [self.scrollView setContentSize:((CGSizeMake(320, ([self.storesNearby count]*70+barTableGap))))];
     
-    self.venuesTableView.frame = CGRectMake(0, barTableGap, 320, ([self.storeNameArraySort count]*70));
+    self.venuesTableView.frame = CGRectMake(0, barTableGap, 320, ([self.storesNearby count]*70));
     self.whiteCoverView.frame = self.venuesTableInitialFrame;
     
-    if ([self.storeNameArraySort count] == 0 && loadsuc) {
-        [self noStoresAround];
+    if ([self.storesNearby count] == 0 && loadsuc) {
+        [self errorLoadingStores: @"No stores around"];
     } else if (self.venuesTableView.frame.size.height < self.venuesTableInitialFrame.size.height) {
         self.venuesTableView.frame = self.venuesTableInitialFrame;
         self.venuesTableView.backgroundColor = [UIColor whiteColor];
     }
     
-    [UIView animateWithDuration:0.3 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform = CGAffineTransformMakeScale(0,0);}];
-    [UIView animateWithDuration:0.3 animations:^{self.loadingLabel.alpha=0.0; self.loadingLabel.center = CGPointMake(self.loadingLabel.center.x,self.loadingLabel.center.y+10);}];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.loadingImage.alpha = 1.0;
+                         self.loadingImage.transform = CGAffineTransformMakeScale(0,0);
+                     }];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.loadingLabel.alpha=0.0;
+                         self.loadingLabel.center = CGPointMake(self.loadingLabel.center.x,self.loadingLabel.center.y+10);
+                     }];
+    
     [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.3];
 }
 
--(void) hideWhiteCoverView {
-    [UIView animateWithDuration:0.3 animations:^{self.whiteCoverView.alpha=0.0;}];
+- (void)hideWhiteCoverView {
+    [UIView animateWithDuration:0.3 animations:^{self.whiteCoverView.alpha = 0.0;}];
     [self.loadingImage stopAnimating];
-    // [self report_memory];
 }
 
-- (void)noStoresAround {
+- (void)showWhiteCoverView {
+    [self.loadingImage startAnimating];
+    [UIView animateWithDuration:0.3 animations:^{self.whiteCoverView.alpha = 1.0;}];
+}
+
+- (void)errorLoadingStores:(NSString *)error {
     UILabel *noStoresLabel = [[UILabel alloc]initWithFrame:self.venuesTableInitialFrame];
     noStoresLabel.backgroundColor = [UIColor whiteColor];
     noStoresLabel.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
     noStoresLabel.textAlignment = NSTextAlignmentCenter;
     noStoresLabel.textColor = [UIColor lightGrayColor];
+    noStoresLabel.tag = 4321;
     
-    noStoresLabel.text = @"No stores were found around you";
+    if ([error isEqualToString:@"No stores around"]) {
+        noStoresLabel.text = @"No stores were found around you";
+    } else if ([error isEqualToString:@"Connection error"]) {
+        noStoresLabel.text = @"Can't connect to the server";
+    }
     
     UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, noStoresLabel.center.y - 80, 320, 50)];
     sadSmiley.backgroundColor = [UIColor clearColor];
     sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];
     sadSmiley.textAlignment = NSTextAlignmentCenter;
     sadSmiley.textColor = [UIColor lightGrayColor];
+    sadSmiley.tag = 4322;
     
     sadSmiley.text = @":(";
     
@@ -232,13 +268,32 @@
     [tryAgain setFrame:CGRectMake(noStoresLabel.center.x - 50, noStoresLabel.center.y + 30, 100, 20)];
     [tryAgain setBackgroundColor:[UIColor clearColor]];
     tryAgain.titleLabel.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
-    [tryAgain addTarget:self action:@selector(loadFoursquareaAfterDelay) forControlEvents:UIControlEventTouchUpInside];
+    [tryAgain addTarget:self action:@selector(tryAgain) forControlEvents:UIControlEventTouchUpInside];
+    tryAgain.tag = 4323;
     
     [tryAgain setTitle:@"Try Again" forState:UIControlStateNormal];
     
     [self.scrollView insertSubview:noStoresLabel belowSubview:self.whiteCoverView];
     [self.scrollView insertSubview:sadSmiley belowSubview:self.whiteCoverView];
     [self.scrollView insertSubview:tryAgain belowSubview:self.whiteCoverView];
+}
+
+- (void)tryAgain
+{
+    [self showWhiteCoverView];
+    [self loadStoresNearby];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         [self.scrollView viewWithTag:4321].alpha = 0;
+                         [self.scrollView viewWithTag:4322].alpha = 0;
+                         [self.scrollView viewWithTag:4323].alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         [[self.scrollView viewWithTag:4321] removeFromSuperview];
+                         [[self.scrollView viewWithTag:4322] removeFromSuperview];
+                         [[self.scrollView viewWithTag:4323] removeFromSuperview];
+                     }
+     ];
 }
 
 -(void) displayLoadingIcon {
@@ -342,7 +397,7 @@
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
     // initialize RestKit
-    RKObjectManager *foursquareManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+    foursquareManager = [[RKObjectManager alloc] initWithHTTPClient:client];
     
     // setup object mappings
     RKObjectMapping *storeMapping = [RKObjectMapping mappingForClass:[Store class]];
@@ -352,6 +407,7 @@
                                                        @"categories" : @"categories",
                                                        @"location.lat" : @"latitude",
                                                        @"location.lng" : @"longitude",
+                                                       @"location.distance" : @"distance",
                                                        @"location.address" : @"address",
                                                        @"location.cc" : @"cc",
                                                        @"location.city" : @"city",
@@ -389,17 +445,19 @@
                                   @"query" : text
                                   };
     
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"/v2/venues/search"
-                                           parameters:queryParams
-                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                  self.storesSearched = mappingResult.array;
-                                                  self.app.networkActivityIndicatorVisible = NO;
-                                                  [self.storeSearchTableView reloadData];
-                                              }
-                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                  NSLog(@"There was an error with the loading of the store search: %@", error);
-                                                  self.app.networkActivityIndicatorVisible = NO;
-                                              }];
+    [foursquareManager getObjectsAtPath:@"/v2/venues/search"
+                             parameters:queryParams
+                                success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                    
+                                    self.storesSearched = [self filterStores:mappingResult.array];
+                                    
+                                    self.app.networkActivityIndicatorVisible = NO;
+                                    [self.storeSearchTableView reloadData];
+                                }
+                                failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                    NSLog(@"There was an error with the loading of the store search: %@", error);
+                                    self.app.networkActivityIndicatorVisible = NO;
+                                }];
     for (Store *store in self.storesSearched) {
         NSLog(@" \n store name: %@ \n store lat: %@ \n store url: %@ \n store verified? %@ ", store.name,store.latitude,store.url,store.verifiedByFoursquare);
     }
@@ -410,12 +468,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
     if (tableView == self.venuesTableView) {
-        if ([self.storeNameArraySort count] == 0) {
-            return 0;
-        }
-        return [self.storeNameArraySort count];
-    } else return [self.storesSearched count];
+        return self.storesNearby.count;
+        
+    } else return self.storesSearched.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -426,28 +483,33 @@
         
         static NSString *cellIdentifier = @"StoresTableCell";
         StoresTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
         if (!cell) {
             cell = [[StoresTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTableCell" owner:nil options:nil];
             cell = [nib objectAtIndex:0];
         }
         
-        if ([self.storeNameArraySort count] > 0){
-            if (indexPath.row < [self.storeNameArraySort count]) {
-                cell.nameLabel.text = [self.storeNameArraySort objectAtIndex:indexPath.row];
-            } else cell.nameLabel.text = @"Unknown";
-            if (indexPath.row < [self.storeDistanceArraySort count]) {
-                cell.detailLabel.text = [NSString stringWithFormat:@"%@m",[self.storeDistanceArraySort objectAtIndex:indexPath.row]];
-            } else cell.detailLabel.text=@"Unknown";
-            if (indexPath.row < [self.storeIconArraySort count]) {
-                UIImageView *tempImage = [self.storeIconArraySort objectAtIndex:(indexPath.row)];
-                cell.categoryIcon.image = tempImage.image;
+        Store *store = [self.storesNearby objectAtIndex:indexPath.row];
+        
+        cell.nameLabel.text = store.name;
+        cell.detailLabel.text = [[store.distance stringValue] stringByAppendingString:@" m"];
+        
+        if (store.categories.count > 0) {
+            NSDictionary *categoryDetails = [store.categories objectAtIndex:0];
+            NSString *categoryID = categoryDetails[@"id"];
+            if ([func CheckIfCategoryExist:categoryID]) {
+                UIImage *categoryIcon = [UIImage imageNamed:[func ConnectOldCategoryToNewCategory:categoryID]];
+                cell.categoryIcon.image = categoryIcon;
             } else {
                 cell.categoryIcon.image = [UIImage imageNamed:@"Other_general.png"];
             }
-            return cell;
+        } else {
+            cell.categoryIcon.image = [UIImage imageNamed:@"Other_general.png"];
         }
-    
+        
+        return cell;
+        
     } else if (tableView == self.storeSearchTableView) {
         
         
@@ -458,7 +520,7 @@
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTableCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
         }
-
+        
         if (self.storesSearched) {
             Store *store = [self.storesSearched objectAtIndex:indexPath.row];
             cell.nameLabel.text = store.name;
@@ -486,7 +548,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     return 70;
     
 }
@@ -586,16 +648,16 @@
     [self loadStoresSearched:text];
     
     /*
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-    dispatch_async(queue, ^{
-        // Do some computation here.
-        [self storeSearchFromFoursquer:text];
-        // Update UI after computation.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
-            [self LoadStoresTableView];
-        });
-    });
+     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+     dispatch_async(queue, ^{
+     // Do some computation here.
+     [self storeSearchFromFoursquer:text];
+     // Update UI after computation.
+     dispatch_async(dispatch_get_main_queue(), ^{
+     // Update the UI on the main thread.
+     [self LoadStoresTableView];
+     });
+     });
      */
 }
 
@@ -699,7 +761,7 @@
 {
     if (tableView == self.venuesTableView) {
         
-        // Need to check this with Itzik regarding the store info.
+        // Need to fix this when getting to Edit Deal
         
         if ([self.cameFrom isEqualToString:@"editDeal"]) {
             EditDealTableViewController *edtvc = (EditDealTableViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
@@ -711,7 +773,20 @@
             [self.navigationController popViewControllerAnimated:YES];
             
         } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
-            [self passingStoreToOptionals];
+            
+            witdvc.store = [self.storesNearby objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:witdvc animated:YES];
+        }
+        
+    } else if (tableView == self.storeSearchTableView) {
+        
+        if ([self.cameFrom isEqualToString:@"editDeal"]) {
+            
+            // Need to fix this when getting to Edit Deal
+            
+        } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
+            
+            witdvc.store = [self.storesSearched objectAtIndex:indexPath.row];
             [self.navigationController pushViewController:witdvc animated:YES];
         }
     }
@@ -798,7 +873,7 @@
     [self.scrollView sendSubviewToBack:_mapView];
 }
 
--(void) loadFoursquareaAfterDelay {
+- (void)loadFoursquareaAfterDelay {
     didUpdateTheMap = NO;
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
@@ -810,20 +885,57 @@
         // Update UI after computation.
         dispatch_async(dispatch_get_main_queue(), ^{
             // Update the UI on the main thread.
-            [self mainMethod];
+            [self setTableView];
             if (!loadsuc) {
                 [self connectionProblem];
             }
         });
     });
-    [self initialize];
+    
+}
+
+- (void)loadStoresNearby
+{
+    NSString *ll = [NSString stringWithFormat:@"%f,%f", _locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude];
+    NSString *clientID = CLIENTID;
+    NSString *clientSecret = CLIENTSECRET;
+    NSString *foursquareVersion = VERSION;
+    
+    NSDictionary *queryParams = @{@"ll" : ll,
+                                  @"client_id" : clientID,
+                                  @"client_secret" : clientSecret,
+                                  @"v" : foursquareVersion,
+                                  @"radius" : @"1000"
+                                  };
+    
+    [foursquareManager getObjectsAtPath:@"/v2/venues/search"
+                             parameters:queryParams
+                                success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                    
+                                    self.storesNearby = [self filterStores:mappingResult.array];
+                                    
+                                    self.app.networkActivityIndicatorVisible = NO;
+                                    [self.venuesTableView reloadData];
+                                    [self setTableView];
+                                    loadsuc = YES;
+                                }
+                                failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                    
+                                    NSLog(@"There was an error with the loading of the stores nearby: %@", error);
+                                    self.app.networkActivityIndicatorVisible = NO;
+                                    loadsuc = NO;
+                                    [self errorLoadingStores:@"Connection error"];
+                                    [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.3];
+                                }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self initialize];
     [self initMapView];
     if (currentVC) {
-        [self performSelector:@selector(loadFoursquareaAfterDelay) withObject:nil afterDelay:0];
+        [self loadStoresNearby];
+        self.app.networkActivityIndicatorVisible = YES;
     }
     currentVC = 1;
     [self.venuesTableView deselectRowAtIndexPath:self.venuesTableView.indexPathForSelectedRow animated:YES];
@@ -831,12 +943,8 @@
     [self.SearchBar setShowsScopeBar:NO];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    
-}
-
 -(void)viewDidDisappear:(BOOL)animated {
-    currentVC=0;
+    currentVC = 0;
     [self deallocMapView];
 }
 

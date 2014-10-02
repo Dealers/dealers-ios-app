@@ -364,6 +364,8 @@
     allocCategoryPicker=NO;
     [self initializeCamera];
     self.isNavBarVisible = NO;
+    
+    NSLog(@"\n store info: \n ID: %@ \n name: %@ \n lon: %@ \n lat: %@ \n address: %@ \n country: %@ \n \n", self.store.storeID, self.store.name, self.store.longitude, self.store.latitude, self.store.address, self.store.country);
 }
 
 - (void)didReceiveMemoryWarning

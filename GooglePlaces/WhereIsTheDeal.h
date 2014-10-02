@@ -37,6 +37,8 @@
 
 @property (nonatomic, strong) MKMapView *mapView;
 
+@property RKObjectManager *foursquareManager;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *whiteCoverView;
 
@@ -53,8 +55,8 @@
 @property (strong, nonatomic) NSMutableArray *storeSearchLocationArray;
 @property (strong, nonatomic) NSMutableArray *storeSearchNameArray;
 
-@property (strong, nonatomic) NSArray *storesNearby;
-@property (strong, nonatomic) NSArray *storesSearched;
+@property (strong, nonatomic) NSMutableArray *storesNearby;
+@property (strong, nonatomic) NSMutableArray *storesSearched;
 
 @property (weak, nonatomic) IBOutlet UIButton *enlargeMapButton;
 @property (weak, nonatomic) IBOutlet UIButton *collapseMapButton;
