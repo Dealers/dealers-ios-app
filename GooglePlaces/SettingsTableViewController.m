@@ -7,6 +7,7 @@
 //
 
 #import "SettingsTableViewController.h"
+#import "KeychainItemWrapper.h"
 
 @interface SettingsTableViewController ()
 
@@ -37,7 +38,7 @@
     progressIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
     progressIndicator.mode = MBProgressHUDModeCustomView;
     progressIndicator.labelText = @"Email Sent";
-    progressIndicator.labelFont = [UIFont fontWithName:@"Avenir-Light" size:19.0];
+    progressIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     progressIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
     [self.tabBarController.view addSubview:progressIndicator];
@@ -112,15 +113,26 @@
     UINavigationController *nc = [self.storyboard instantiateViewControllerWithIdentifier:@"openingScreenID"];
     
     CGRect screenShotRect = self.view.bounds;
-    screenShotRect.origin.y = self.view.bounds.origin.y - 13;
+    screenShotRect.origin.y = self.view.bounds.origin.y - 15;
     
     UIGraphicsBeginImageContextWithOptions(self.view.frame.size, YES, 0.0);
     [self.tabBarController.view drawViewHierarchyInRect:screenShotRect afterScreenUpdates:NO];
     UIImage *screenShot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
+    appDelegate.dealer = nil;
+    
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    [keychain resetKeychainItem];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults removeObjectForKey:@"fullName"];
+    [defaults removeObjectForKey:@"dateOfBirth"];
+    [defaults removeObjectForKey:@"gender"];
+    [defaults removeObjectForKey:@"image"];
+    
     appDelegate.Animate_first = @"notfirst";
-    appDelegate.DealerClass = nil;
     appDelegate.screenShot = screenShot;
     appDelegate.window.rootViewController = nc;
 }

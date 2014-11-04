@@ -1,0 +1,85 @@
+{
+  "images" : [
+    {
+      "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "Launch App Icons_New iPad Settings.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "Launch App Icons_New iPhone Settings.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "Launch App Icons_New iPhone Spotlight.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "Launch App Icons_New iPhone (high resolution).png",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "iphone",
+      "size" : "60x60",
+      "scale" : "3x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "Launch App Icons_New iPad Settings-1.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "Launch App Icons_New iPhone Settings-1.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "Launch App Icons_New iPad Spotlight.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "Launch App Icons_New iPhone Spotlight-1.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "Launch App Icons_New iPad.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "Launch App Icons_New iPad (high resolution).png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "512x512",
+      "idiom" : "mac",
+      "filename" : "Launch App Icons_New AppStore.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "512x512",
+      "idiom" : "mac",
+      "filename" : "Launch App Icons_New AppStore (high resolution) copy.png",
+      "scale" : "2x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

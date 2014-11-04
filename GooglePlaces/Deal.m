@@ -17,38 +17,19 @@
 #define spinningWheelTag 4444
 
 @implementation Deal
-/*
--(id)init {
-    self = [super init];
-    if (self) {
-        _dealID=@"";
-        _dealTitle=@"";
-        _dealDescription=@"";
-        _dealStore=@"";
-        _dealPrice=@"";
-        _dealDiscount=@"";
-        _dealExpireDate=@"";
-        _dealLikesCount=@"";
-        _dealCommentCount=@"";
-        _dealPhotoID1=@"";
-        _dealPhotoID2=@"";
-        _dealPhotoID3=@"";
-        _dealPhotoID4=@"";
-        _dealPhotoSum=@"";
-        _dealCategory=@"";
-        _dealUserID=@"";
-        _dealCurrency=@"";
-        _dealUploadDate=@"";
-        _dealOnlineOrLocal=@"";
-        _dealUrlSite=@"";
-        _dealStoreAddress=@"";
-        _dealStoreLatitude=@"";
-        _dealStoreLongitude=@"";
-    }
-    
-    return self;
-}
- */
+
+
+//- (instancetype)init
+//{
+//    self = [super init];
+//    if (self) {
+//        
+//        _store = [[Store alloc]init];
+//        _dealAttrib = [[DealAttrib alloc]init];
+//        _dealer = [[Dealer alloc]init];
+//    }
+//    return self;
+//}
 
 - (void)setTitle:(NSString*)title {
     Functions *func = [[Functions alloc]init];
@@ -58,11 +39,6 @@
 -(void) setMoreDescription:(NSString*)description {
     Functions *func = [[Functions alloc]init];
     _moreDescription = [func removeUniqueSigns:description];
-}
-
--(void) setStore:(NSString*)store{
-    Functions *func = [[Functions alloc]init];
-    _store=[func removeUniqueSigns:store];
 }
 
 -(void) setCategory:(NSString*)category{
@@ -100,7 +76,7 @@
     dealCopy.dealID = [self.dealID mutableCopy];
     dealCopy.moreDescription = [self.moreDescription mutableCopy];
     dealCopy.title = [self.title mutableCopy];
-    dealCopy.store = [self.store mutableCopy];
+//    dealCopy.store = [self.store mutableCopy];
     dealCopy.price = [self.price mutableCopy];
     dealCopy.discountValue = [self.discountValue mutableCopy];
     dealCopy.expiration = [self.expiration mutableCopy];

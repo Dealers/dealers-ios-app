@@ -6,6 +6,14 @@
       "filename" : "WhatsAppIcon final-1-1.png"
     },
     {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
       "idiom" : "iphone",
       "scale" : "1x"
     },
@@ -19,6 +27,10 @@
       "filename" : "WhatsAppIcon final.png",
       "subtype" : "retina4",
       "scale" : "2x"
+    },
+    {
+      "idiom" : "iphone",
+      "scale" : "3x"
     }
   ],
   "info" : {

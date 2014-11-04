@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 @interface MyFeedsViewController : UIViewController <UINavigationBarDelegate, UINavigationControllerDelegate, UIScrollViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 {
@@ -22,7 +23,11 @@
     BOOL refreshing;
     
     NSString *selfViewController;
+    
+    UIColor *lightGray;
 }
+
+@property AppDelegate *appDelegate;
 
 @property (weak,nonatomic) IBOutlet UIScrollView *scrollView;
 

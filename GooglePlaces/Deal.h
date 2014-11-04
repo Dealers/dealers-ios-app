@@ -8,15 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@class Dealer;
 @class Store;
+@class Dealer;
+@class DealAttrib;
 
 @interface Deal : NSObject <NSCopying> 
 
 @property (nonatomic) NSString *dealID;
 @property (nonatomic) NSString *url;
 @property (nonatomic) NSString *title;
-@property (nonatomic) NSString *store;
+@property (nonatomic) Store *store;
 @property (nonatomic) NSNumber *price;
 @property (nonatomic) NSString *currency;
 @property (nonatomic) NSNumber *discountValue;
@@ -44,17 +45,17 @@
 @property (nonatomic) UIImage *photo4;
 @property (nonatomic) NSNumber *photoSum;
 
-@property (nonatomic) NSString *dealUserID;
-
 @property (nonatomic) NSDate *uploadDate;
-@property (nonatomic) Dealer *dealer;
+@property DealAttrib *dealAttrib;
+@property Dealer *dealer;
 @property (nonatomic) NSMutableArray *comments;
+
+@property (nonatomic) NSString *dealUserID;
 
 // Only our setters which override the default ones are mentioned here:
 
 - (void)setTitle:(NSString *)title;
 - (void)setMoreDescription:(NSString *)description;
-- (void)setStore:(NSString *)store;
 - (void)setCategory:(NSString *)category;
 - (void)setCurrency:(NSString *)currency;
 - (void)setDealStoreAddress:(NSString *)storeaddress;

@@ -46,7 +46,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *followersCount;
 @property (weak, nonatomic) IBOutlet UILabel *followingCount;
 @property (weak, nonatomic) IBOutlet UIButton *returnButton;
-- (IBAction)returnButtonClicked:(id)sender;
 
 @property (strong, nonatomic)  UIImage *image2;
 @property (strong, nonatomic)  UIImage *image2ForLikeView;

@@ -16,7 +16,6 @@
 		5684979F154C010C001601A2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5684979E154C010C001601A2 /* MapKit.framework */; };
 		568497A1154C0116001601A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 568497A0154C0116001601A2 /* CoreLocation.framework */; };
 		B012D9341828F583006288CA /* Uploading-the-Deal Graphic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B012D9331828F583006288CA /* Uploading-the-Deal Graphic@2x.png */; };
-		B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B012D94C182AA2B4006288CA /* MoreViewController.m */; };
 		B012D950182AA323006288CA /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B012D94F182AA321006288CA /* ProfileViewController.m */; };
 		B01BD1B217F0D6480010C9A4 /* WhereIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */; };
 		B02436D717F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = B02436D117F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png */; };
@@ -421,6 +420,7 @@
 		C87B6D12192DF52C0026DA66 /* Add Deal (Final)_More Details button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C87B6D0F192DF52C0026DA66 /* Add Deal (Final)_More Details button (selected)@2x.png */; };
 		C87B6D13192DF52C0026DA66 /* Add Deal (Final)_More Details button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C87B6D10192DF52C0026DA66 /* Add Deal (Final)_More Details button@2x.png */; };
 		C87B6D15192DF6C40026DA66 /* Add Deal (Final)_Other Social Networks boxes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C87B6D14192DF6C40026DA66 /* Add Deal (Final)_Other Social Networks boxes@2x.png */; };
+		C884E18419EC082100C83A3F /* DealAttrib.m in Sources */ = {isa = PBXBuildFile; fileRef = C884E18319EC082100C83A3F /* DealAttrib.m */; };
 		C88B3F5A192101D2009252DD /* Add Deal (Final)_Local button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C88B3F58192101D2009252DD /* Add Deal (Final)_Local button@2x.png */; };
 		C88B3F5B192101D2009252DD /* Add Deal (Final)_Online button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C88B3F59192101D2009252DD /* Add Deal (Final)_Online button@2x.png */; };
 		C88B3F5D1921085D009252DD /* Add Deal (Final)_Blue Buttons background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C88B3F5C1921085D009252DD /* Add Deal (Final)_Blue Buttons background@2x.png */; };
@@ -439,6 +439,7 @@
 		C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890607E19A27F88001D3359 /* NotificationsTableViewController.m */; };
 		C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */; };
 		C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890608419A49014001D3359 /* PasswordTableViewController.m */; };
+		C891902019FE57D9005E85FB /* AddDealNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C891901F19FE57D9005E85FB /* AddDealNavigationController.m */; };
 		C8951AF718FAD79C00C53E9B /* Add Deal (final)_Shade.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */; };
 		C8951AF918FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */; };
 		C898FE6419A6177800F1C11A /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE5B19A6098A00F1C11A /* libRestKit.a */; };
@@ -448,6 +449,13 @@
 		C898FE6D19AB94BA00F1C11A /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = C898FE6C19AB94BA00F1C11A /* Store.m */; };
 		C8A012EF19DD52E100C1D973 /* WhatIsTheDeal1.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */; };
 		C8A012F219DD52F700C1D973 /* WhatIsTheDeal2.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A012F119DD52F700C1D973 /* WhatIsTheDeal2.m */; };
+		C8A10B9219E465C90090F1D9 /* ThankYouViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A10B9119E465C90090F1D9 /* ThankYouViewController.m */; };
+		C8A10B9C19E711220090F1D9 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A10B9B19E711210090F1D9 /* KeychainItemWrapper.m */; };
+		C8A10B9F19E95B330090F1D9 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A10B9E19E95B330090F1D9 /* Notification.m */; };
+		C8A10BA219E9628D0090F1D9 /* ActivityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A10BA119E9628D0090F1D9 /* ActivityTableViewController.m */; };
+		C8A10BA619E96B100090F1D9 /* NotificationTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A10BA419E96B100090F1D9 /* NotificationTableCell.m */; };
+		C8A10BA719E96B100090F1D9 /* NotificationTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8A10BA519E96B100090F1D9 /* NotificationTableCell.xib */; };
+		C8A10BAA19EAE4520090F1D9 /* CommentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A10BA919EAE4520090F1D9 /* CommentsTableViewController.m */; };
 		C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */; };
 		C8A6EBE4191BB99600887C34 /* Registration_Sign Up Mail button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */; };
 		C8A6EBE5191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */; };
@@ -613,8 +621,6 @@
 		5684979E154C010C001601A2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		568497A0154C0116001601A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B012D9331828F583006288CA /* Uploading-the-Deal Graphic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Uploading-the-Deal Graphic@2x.png"; path = "GooglePlaces/Uploading-the-Deal Graphic@2x.png"; sourceTree = "<group>"; };
-		B012D94B182AA2B1006288CA /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
-		B012D94C182AA2B4006288CA /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		B012D94E182AA320006288CA /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		B012D94F182AA321006288CA /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhereIsTheDeal.h; sourceTree = "<group>"; };
@@ -1052,6 +1058,8 @@
 		C87B6D0F192DF52C0026DA66 /* Add Deal (Final)_More Details button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_More Details button (selected)@2x.png"; sourceTree = "<group>"; };
 		C87B6D10192DF52C0026DA66 /* Add Deal (Final)_More Details button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_More Details button@2x.png"; sourceTree = "<group>"; };
 		C87B6D14192DF6C40026DA66 /* Add Deal (Final)_Other Social Networks boxes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Other Social Networks boxes@2x.png"; sourceTree = "<group>"; };
+		C884E18219EC082100C83A3F /* DealAttrib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealAttrib.h; sourceTree = "<group>"; };
+		C884E18319EC082100C83A3F /* DealAttrib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealAttrib.m; sourceTree = "<group>"; };
 		C88B3F58192101D2009252DD /* Add Deal (Final)_Local button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Local button@2x.png"; sourceTree = "<group>"; };
 		C88B3F59192101D2009252DD /* Add Deal (Final)_Online button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Online button@2x.png"; sourceTree = "<group>"; };
 		C88B3F5C1921085D009252DD /* Add Deal (Final)_Blue Buttons background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Blue Buttons background@2x.png"; sourceTree = "<group>"; };
@@ -1073,6 +1081,8 @@
 		C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationsTableViewController.m; sourceTree = "<group>"; };
 		C890608319A49014001D3359 /* PasswordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordTableViewController.h; sourceTree = "<group>"; };
 		C890608419A49014001D3359 /* PasswordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordTableViewController.m; sourceTree = "<group>"; };
+		C891901E19FE57D9005E85FB /* AddDealNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDealNavigationController.h; sourceTree = "<group>"; };
+		C891901F19FE57D9005E85FB /* AddDealNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDealNavigationController.m; sourceTree = "<group>"; };
 		C8951AF618FAD79C00C53E9B /* Add Deal (final)_Shade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (final)_Shade.png"; sourceTree = "<group>"; };
 		C8951AF818FAD8A500C53E9B /* Add Deal_Black Transparent screen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Black Transparent screen@2x.png"; sourceTree = "<group>"; };
 		C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
@@ -1085,6 +1095,19 @@
 		C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatIsTheDeal1.m; sourceTree = "<group>"; };
 		C8A012F019DD52F700C1D973 /* WhatIsTheDeal2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatIsTheDeal2.h; sourceTree = "<group>"; };
 		C8A012F119DD52F700C1D973 /* WhatIsTheDeal2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatIsTheDeal2.m; sourceTree = "<group>"; };
+		C8A10B9019E465C90090F1D9 /* ThankYouViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThankYouViewController.h; sourceTree = "<group>"; };
+		C8A10B9119E465C90090F1D9 /* ThankYouViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThankYouViewController.m; sourceTree = "<group>"; };
+		C8A10B9A19E711210090F1D9 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		C8A10B9B19E711210090F1D9 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		C8A10B9D19E95B330090F1D9 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		C8A10B9E19E95B330090F1D9 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
+		C8A10BA019E9628D0090F1D9 /* ActivityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewController.h; sourceTree = "<group>"; };
+		C8A10BA119E9628D0090F1D9 /* ActivityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewController.m; sourceTree = "<group>"; };
+		C8A10BA319E96B100090F1D9 /* NotificationTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableCell.h; sourceTree = "<group>"; };
+		C8A10BA419E96B100090F1D9 /* NotificationTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableCell.m; sourceTree = "<group>"; };
+		C8A10BA519E96B100090F1D9 /* NotificationTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableCell.xib; sourceTree = "<group>"; };
+		C8A10BA819EAE4520090F1D9 /* CommentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableViewController.h; sourceTree = "<group>"; };
+		C8A10BA919EAE4520090F1D9 /* CommentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewController.m; sourceTree = "<group>"; };
 		C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Facebook button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Mail button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Twitter button@2x.png"; sourceTree = "<group>"; };
@@ -1212,11 +1235,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */,
 				C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */,
 				C898FE6819A617AE00F1C11A /* CFNetwork.framework in Frameworks */,
 				C898FE6919A617AE00F1C11A /* CoreData.framework in Frameworks */,
 				C898FE6A19A617AE00F1C11A /* MobileCoreServices.framework in Frameworks */,
-				B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */,
 				B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */,
 				C898FE6419A6177800F1C11A /* libRestKit.a in Frameworks */,
 				B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */,
@@ -1260,10 +1283,11 @@
 		56849780154C00BF001601A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */,
+				C8A10B9919E710FE0090F1D9 /* KeyChainWrapper */,
 				C8DC1D8919BC892B0062E184 /* MBProgressHUD */,
 				B0274807186B2A2B005A52F0 /* GKClasses */,
 				B02747ED186B291B005A52F0 /* GKImages */,
+				C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */,
 				C898FE6519A617AE00F1C11A /* CFNetwork.framework */,
 				C898FE6619A617AE00F1C11A /* CoreData.framework */,
 				C898FE6719A617AE00F1C11A /* MobileCoreServices.framework */,
@@ -1299,7 +1323,7 @@
 				C869CB71191A129A00DF2C19 /* My Feed */,
 				C869CB70191A126400DF2C19 /* Explore */,
 				C869CB72191A12C900DF2C19 /* Profile */,
-				C869CB73191A12D900DF2C19 /* More */,
+				C869CB73191A12D900DF2C19 /* Activity */,
 				C869CB77191A137800DF2C19 /* Add Deal */,
 				C869CB76191A135A00DF2C19 /* View Deal */,
 				C848B67119B4A247000F138D /* Custom Cells */,
@@ -1676,6 +1700,9 @@
 				C8AC887B19BD9A5C002A2C16 /* CommentsTableCell.h */,
 				C8AC887C19BD9A5C002A2C16 /* CommentsTableCell.m */,
 				C8AC887D19BD9A5C002A2C16 /* CommentsTableCell.xib */,
+				C8A10BA319E96B100090F1D9 /* NotificationTableCell.h */,
+				C8A10BA419E96B100090F1D9 /* NotificationTableCell.m */,
+				C8A10BA519E96B100090F1D9 /* NotificationTableCell.xib */,
 			);
 			name = "Custom Cells";
 			sourceTree = "<group>";
@@ -1721,13 +1748,13 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
-		C869CB73191A12D900DF2C19 /* More */ = {
+		C869CB73191A12D900DF2C19 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
-				B012D94B182AA2B1006288CA /* MoreViewController.h */,
-				B012D94C182AA2B4006288CA /* MoreViewController.m */,
+				C8A10BA019E9628D0090F1D9 /* ActivityTableViewController.h */,
+				C8A10BA119E9628D0090F1D9 /* ActivityTableViewController.m */,
 			);
-			name = More;
+			name = Activity;
 			sourceTree = "<group>";
 		};
 		C869CB74191A12EF00DF2C19 /* Sign Up */ = {
@@ -1757,6 +1784,8 @@
 				C8FFF56B197C437600D01744 /* EditDealTableViewController.m */,
 				C8C43E7B198E7CA700409DD2 /* EditTextModeViewController.h */,
 				C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */,
+				C8A10BA819EAE4520090F1D9 /* CommentsTableViewController.h */,
+				C8A10BA919EAE4520090F1D9 /* CommentsTableViewController.m */,
 			);
 			name = "View Deal";
 			sourceTree = "<group>";
@@ -1764,18 +1793,22 @@
 		C869CB77191A137800DF2C19 /* Add Deal */ = {
 			isa = PBXGroup;
 			children = (
+				C891901E19FE57D9005E85FB /* AddDealNavigationController.h */,
+				C891901F19FE57D9005E85FB /* AddDealNavigationController.m */,
 				B0DBB1C418AB59BA001F8FDB /* OnlineViewController.h */,
 				B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */,
 				B0930BFA17F3807D004EB3CA /* WhatIsTheDeal.h */,
 				B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */,
 				B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */,
+				B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */,
 				C8A012ED19DD52E100C1D973 /* WhatIsTheDeal1.h */,
 				C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */,
 				C8A012F019DD52F700C1D973 /* WhatIsTheDeal2.h */,
 				C8A012F119DD52F700C1D973 /* WhatIsTheDeal2.m */,
-				B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */,
 				C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */,
 				C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */,
+				C8A10B9019E465C90090F1D9 /* ThankYouViewController.h */,
+				C8A10B9119E465C90090F1D9 /* ThankYouViewController.m */,
 			);
 			name = "Add Deal";
 			sourceTree = "<group>";
@@ -1881,8 +1914,21 @@
 				C898FE6C19AB94BA00F1C11A /* Store.m */,
 				C848B66B19ADB92A000F138D /* Comment.h */,
 				C848B66C19ADB92A000F138D /* Comment.m */,
+				C8A10B9D19E95B330090F1D9 /* Notification.h */,
+				C8A10B9E19E95B330090F1D9 /* Notification.m */,
+				C884E18219EC082100C83A3F /* DealAttrib.h */,
+				C884E18319EC082100C83A3F /* DealAttrib.m */,
 			);
 			name = "Custom Classes";
+			sourceTree = "<group>";
+		};
+		C8A10B9919E710FE0090F1D9 /* KeyChainWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				C8A10B9A19E711210090F1D9 /* KeychainItemWrapper.h */,
+				C8A10B9B19E711210090F1D9 /* KeychainItemWrapper.m */,
+			);
+			name = KeyChainWrapper;
 			sourceTree = "<group>";
 		};
 		C8B01FB518F3F18300DB6584 /* Bars Icons */ = {
@@ -2267,7 +2313,7 @@
 		56849774154C00BF001601A2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				TargetAttributes = {
 					5684977C154C00BF001601A2 = {
 						DevelopmentTeam = KRLZZN4NG9;
@@ -2355,6 +2401,7 @@
 				C8273A3318959A3300A412FC /* Add Deal (Final)_Browser Cancel button@2x.png in Resources */,
 				B055C71B17FE806900FBDFCC /* Explore_Books & Magazines icon@2x.png in Resources */,
 				B055C71C17FE806900FBDFCC /* Explore_Electronics icon@2x.png in Resources */,
+				C8A10BA719E96B100090F1D9 /* NotificationTableCell.xib in Resources */,
 				B055C71D17FE806900FBDFCC /* Explore_Events icon@2x.png in Resources */,
 				C8951AF718FAD79C00C53E9B /* Add Deal (final)_Shade.png in Resources */,
 				C83EAEF618690AC40084E0E1 /* Restaurants & Bars_bars@2x.png in Resources */,
@@ -2837,11 +2884,13 @@
 				B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */,
 				C8C43E80198F6CDD00409DD2 /* BetterScrollView.m in Sources */,
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
+				C891902019FE57D9005E85FB /* AddDealNavigationController.m in Sources */,
 				C898FE6D19AB94BA00F1C11A /* Store.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
 				B01BD1B217F0D6480010C9A4 /* WhereIsTheDeal.m in Sources */,
 				B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */,
 				B0930BFC17F3807D004EB3CA /* WhatIsTheDeal.m in Sources */,
+				C8A10BAA19EAE4520090F1D9 /* CommentsTableViewController.m in Sources */,
 				C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */,
 				B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
@@ -2864,19 +2913,24 @@
 				C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */,
 				C8AC887E19BD9A5D002A2C16 /* CommentsTableCell.m in Sources */,
 				C848B66D19ADB92A000F138D /* Comment.m in Sources */,
+				C8A10BA219E9628D0090F1D9 /* ActivityTableViewController.m in Sources */,
 				B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */,
 				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
 				C8A012EF19DD52E100C1D973 /* WhatIsTheDeal1.m in Sources */,
+				C8A10B9219E465C90090F1D9 /* ThankYouViewController.m in Sources */,
 				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
 				C848B67819B4AB76000F138D /* StoresTableCell.m in Sources */,
 				B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */,
 				B0E4F6FE1910171E0080CD32 /* Reachability.m in Sources */,
-				B012D94D182AA2B9006288CA /* MoreViewController.m in Sources */,
 				C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */,
 				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
+				C8A10BA619E96B100090F1D9 /* NotificationTableCell.m in Sources */,
+				C8A10B9F19E95B330090F1D9 /* Notification.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
+				C8A10B9C19E711220090F1D9 /* KeychainItemWrapper.m in Sources */,
 				C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */,
+				C884E18419EC082100C83A3F /* DealAttrib.m in Sources */,
 				C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */,
 				B0862126186FF1450017099E /* Functions.m in Sources */,
 			);
@@ -2922,10 +2976,12 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2959,10 +3015,12 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

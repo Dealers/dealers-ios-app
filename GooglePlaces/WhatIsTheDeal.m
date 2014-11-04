@@ -445,6 +445,7 @@
         
         dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
         dispatch_async(queue, ^{
+            
             // Do some computation here.
             CheckConnection *checkconnection = [[CheckConnection alloc]init];
             if ([checkconnection connected])

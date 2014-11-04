@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 @interface SigninViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate,UINavigationBarDelegate>
 {
@@ -14,9 +15,11 @@
     BOOL error, isPopping;
 }
 
+@property AppDelegate *appDelegate;
+
 @property (weak, nonatomic) IBOutlet UITextField *EmailText;
 @property (weak, nonatomic) IBOutlet UITextField *PasswordText;
-- (IBAction)SinginButton:(id)sender;
+- (IBAction)SigninButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *Signinbutton;
 - (IBAction)ReturnButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *ReturnButton;

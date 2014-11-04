@@ -34,5 +34,6 @@
 - (IBAction)EmailimageButton:(id)sender;
 - (IBAction)SigninButton:(id)sender;
 
+- (IBAction)getInWithoutSigning:(id)sender;
 
 @end

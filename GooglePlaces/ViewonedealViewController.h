@@ -15,6 +15,7 @@
 #import "Comment.h"
 #import "CommentsTableCell.h"
 #import "EditDealTableViewController.h"
+#import "Notification.h"
 
 @interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate>
 
@@ -49,9 +50,10 @@
 @property (strong,nonatomic) NSMutableArray *dealsPhotosidArray;
 @property (strong,nonatomic) NSMutableArray *dealsPhotosArray;
 
-@property (strong,nonatomic) Deal *dealClass;
+@property (strong,nonatomic) Deal *deal;
 @property (strong,nonatomic) NSString *isShortCell;
-@property (strong,nonatomic) NSString *likeornotLabelFromMyFeeds;
+
+@property (strong,nonatomic) NSString *isDealLikedByUser;
 
 @property (strong,nonatomic) NSString *urlImage;
 @property (strong,nonatomic) NSString *urlImage2;
@@ -88,7 +90,7 @@
 
 @property UIView *mapAndStoreSection;
 
-@property (weak, nonatomic) IBOutlet UIButton *LikeButton;
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UIButton *likeButtonSelected;
 @property (weak, nonatomic) IBOutlet UIButton *CommentButton;
 @property (weak, nonatomic) IBOutlet UIButton *ShareButton;
@@ -103,7 +105,7 @@
 @property NSMutableArray *comments;
 @property NSNumber *commentsCount;
 @property UITableView *commentsTableView;
-@property (weak, nonatomic) CommentsTableCell *cellPrototype;
+@property (nonatomic) CommentsTableCell *cellPrototype;
 @property CGFloat tableViewHeight;
 @property NSUInteger commentsPreviewCount;
 
@@ -137,6 +139,7 @@
 @property (retain) UIDocumentInteractionController * documentInteractionController;
 
 @property BOOL whatsappShouldAppear;
+@property BOOL afterEditing;
 
 - (void)whatsAppShare;
 

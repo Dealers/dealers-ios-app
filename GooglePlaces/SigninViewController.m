@@ -10,8 +10,12 @@
 #import "AppDelegate.h"
 #import "MyFeedsViewController.h"
 #import "CheckConnection.h"
+#import "KeychainItemWrapper.h"
 
-@interface SigninViewController ()
+@interface SigninViewController () {
+    
+    KeychainItemWrapper *keychain;
+}
 
 @end
 
@@ -20,20 +24,19 @@
 @synthesize EmailText;
 @synthesize PasswordText;
 @synthesize Signinbutton,ReturnButton,ReturnButtonFull,LoadingImage;
+@synthesize appDelegate;
 
 -(void) MainMethod {
-    
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         // Do some computation here.
-        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata", app.UserID];
+        NSString *url = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Indicator=%@&Userid=%@",@"bringuserdata", appDelegate.UserID];
         NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
         
         // Need to do this in the same call as the above...
-        NSString *url2 = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",app.UserID,@"whatdealstheuserlikes"];
+        NSString *url2 = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",appDelegate.UserID,@"whatdealstheuserlikes"];
         NSData *URLData2 = [NSData dataWithContentsOfURL:[NSURL URLWithString:url2]];
         NSString *DataLikes = [[NSString alloc] initWithData:URLData2 encoding:NSUTF8StringEncoding];
         
@@ -47,28 +50,33 @@
             
             NSLog(@"Done");
             if (!isPopping) {
+                
                 Dealer *dealer = [[Dealer alloc]init];
-                dealer.userID = app.UserID;
+                dealer.url = appDelegate.UserID;
+                dealer.email = EmailText.text;
                 dealer.fullName = [array objectAtIndex:0];
                 dealer.photo = [UIImage imageWithData:URLData];
-                dealer.userLikesList = DataLikes;
+                dealer.userLikesList = nil;
                 
-                app.dealerClass = dealer;
+                appDelegate.dealer = dealer;
+                
+                [self saveUserDetails];
                 
                 [self StopLoading];
                 
-                [app setTabBarController];
+                [appDelegate setTabBarController];
             }
         });
     });
-    
-    
 }
 
 -(void) initialize {
+    
+    appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     ReturnButtonFull.alpha=0.0;
-    EmailText.text=[[NSUserDefaults standardUserDefaults] stringForKey:@"Email"];
-    PasswordText.text=[[NSUserDefaults standardUserDefaults] stringForKey:@"Password"];
+    keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    EmailText.text=[keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+    PasswordText.text=[keychain objectForKey:(__bridge id)(kSecValueData)];
     isPopping = NO;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.EmailText setDelegate:self];
@@ -98,7 +106,7 @@
         [self.PasswordText becomeFirstResponder];
         return NO;
     } else {
-        [self performSelector:@selector(SinginButton:) withObject:nil];
+        [self performSelector:@selector(SigninButton:) withObject:nil];
         return YES;
     }
 }
@@ -124,10 +132,24 @@
     return DataResult;
 }
 
+- (void)saveUserDetails
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSData *imageData = UIImageJPEGRepresentation(self.appDelegate.dealer.photo, 1.0);
+    
+    [defaults setObject:appDelegate.dealer.fullName forKey:@"fullName"];
+    [defaults setObject:appDelegate.dealer.dateOfBirth forKey:@"dateOfBirth"];
+    [defaults setObject:appDelegate.dealer.gender forKey:@"gender"];
+    [defaults setObject:imageData forKey:@"image"];
+    
+    [defaults synchronize];
+}
+
 -(void) StartLoading {
     self.app.networkActivityIndicatorVisible = YES;
     [UIView animateWithDuration:0.3 animations:^{Signinbutton.alpha=0.0; Signinbutton.transform =CGAffineTransformMakeScale(1,1);
-        Signinbutton.transform =CGAffineTransformMakeScale(0,0);}];
+        Signinbutton.transform =CGAffineTransformMakeScale(0.01,0.01);}];
     LoadingImage.animationImages = [NSArray arrayWithObjects:
                                     [UIImage imageNamed:@"Loadingwhite.png"],
                                     [UIImage imageNamed:@"Loading5white.png"],
@@ -150,20 +172,30 @@
                                     nil];
     LoadingImage.animationDuration = 0.3;
     [LoadingImage startAnimating];
-    [UIView animateWithDuration:0.3 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
-        LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
+    LoadingImage.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         LoadingImage.alpha = 1.0;
+                         LoadingImage.transform = CGAffineTransformMakeScale(1, 1);
+                     }];
 }
 
 - (void)StopLoading
 {
     self.app.networkActivityIndicatorVisible = NO;
-    [UIView animateWithDuration:0.3 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(1,1); LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         LoadingImage.transform = CGAffineTransformMakeScale(0.01,0.01);
+                     }];
     [LoadingImage stopAnimating];
-    [UIView animateWithDuration:0.3 animations:^{Signinbutton.alpha=1.0; Signinbutton.transform =CGAffineTransformMakeScale(0,0);
-        Signinbutton.transform =CGAffineTransformMakeScale(1,1);}];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         Signinbutton.alpha = 1.0;
+                         Signinbutton.transform = CGAffineTransformMakeScale(1,1);
+                     }];
 }
 
-- (IBAction)SinginButton:(id)sender {
+- (IBAction)SigninButton:(id)sender {
     
     self.app = [UIApplication sharedApplication];
     [self StartLoading];
@@ -201,11 +233,11 @@
                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Your Password is Incorrect" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
                 [alert show];
             } else if ([DataResult isEqualToString:@"ok"]) {
-                [[NSUserDefaults standardUserDefaults] setObject:EmailText.text forKey:@"Email"];
-                [[NSUserDefaults standardUserDefaults] setObject:PasswordText.text forKey:@"Password"];
+                [keychain setObject:EmailText.text forKey:(__bridge id)(kSecAttrAccount)];
+                [keychain setObject:PasswordText.text forKey:(__bridge id)(kSecValueData)];
                 [EmailText resignFirstResponder];
                 [PasswordText resignFirstResponder];
-                [self performSelector:@selector(MainMethod) withObject:nil afterDelay:2];
+                [self performSelector:@selector(MainMethod) withObject:nil afterDelay:0];
             }
             else {
                 [self StopLoading];

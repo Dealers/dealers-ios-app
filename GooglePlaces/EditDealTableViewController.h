@@ -10,22 +10,34 @@
 #import "Deal.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
+#import "ViewonedealViewController.h"
 #import "EditTextModeViewController.h"
 #import "WhereIsTheDeal.h"
 #import "ChooseCategoryTableViewController.h"
+#import "MBProgressHUD.h"
 
-@interface EditDealTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
+@interface EditDealTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate> {
     
     BOOL isFrontCamera, isSessionRunning, shouldDealloc;
+    MBProgressHUD *illogicalPercentage, *uploadingDeal;
+    UIColor *placeholderColor;
 }
 
-@property Deal *currentDeal;
-@property Deal *originalDeal;
+@property AppDelegate *appDelegate;
+
+@property id delegate;
+
+@property Deal *deal;
+
+@property Store *store;
 
 @property (weak, nonatomic) IBOutlet UILabel *dealTitle;
 @property (weak, nonatomic) IBOutlet UILabel *dealStore;
 @property (weak, nonatomic) IBOutlet UILabel *dealPrice;
 @property (weak, nonatomic) IBOutlet UILabel *dealDiscount;
+
+@property NSString *selectedCurrency;
+@property NSString *selectedDiscountType;
 
 @property (weak, nonatomic) IBOutlet UILabel *dealCategory;
 @property (weak, nonatomic) IBOutlet UILabel *dealExpirationDate;
@@ -37,6 +49,7 @@
 @property (nonatomic) NSDateFormatter *dateFormatter;
 @property (nonatomic) NSDateFormatter *dateFormatterDataBase;
 @property BOOL datePickerIsShowing;
+@property BOOL didCancelDate;
 
 @property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property AVCaptureSession *session;
@@ -57,8 +70,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *addPhoto;
 @property (nonatomic) NSMutableArray *photosArray;
-
-@property BOOL didCancelDate;
 
 @property BOOL didChangeOriginalDeal;
 

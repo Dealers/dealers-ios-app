@@ -16,119 +16,14 @@
 
 @implementation EditDealTableViewController
 
-@synthesize session, captureVideoPreviewLayer;
+@synthesize session, captureVideoPreviewLayer, appDelegate;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (IBAction)Dismiss:(id)sender {
-    // First we need to check if the original deal is different.
-    // If different, ask if the user is sure he wants to cancel. If he still does, we need to load back the original deal, and then dismiss.
-    
-    if (self.didChangeOriginalDeal) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unsaved Changes" message:@"You have unsaved changes. Are you sure you want to cancel?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-        alert.tag = 11;
-        [alert show];
-    } else {
-        // If not, just dismiss:
-        [self dismissViewControllerAnimated:YES completion:NO];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    switch (alertView.tag) {
-            
-        case 11:
-            switch (buttonIndex) {
-                case 1:
-                    self.currentDeal = nil;
-                    [self dismissViewControllerAnimated:YES completion:NO];
-                    break;
-                    
-                default:
-                    break;
-            }
-            break;
-            
-        case 22:
-            if (buttonIndex == 1) {
-                //            [UIView animateWithDuration:0.4 animations:^{
-                //                [self.capturedImagesSection viewWithTag:self.pageControl.currentPage + 1].alpha = 0;
-                //            } completion:^(BOOL finished) {
-                //                [self setCapturedSectionAfterDelete];
-                //            }];
-                //            [self.capturedImagesSection viewWithTag:self.pageControl.currentPage + 1].alpha = 1;
-                [self setCapturedSectionAfterDelete];
-                break;
-            }
-    }
-}
 
 #pragma mark - Loading View & Parameters
-
-- (void)loadingParameters
-{
-    self.dealTitle.text = [self.currentDeal title];
-    
-    self.dealStore.text = [self.currentDeal store];
-    
-    if (!self.currentDeal.price) {
-        self.dealPrice.text = [self.currentDeal.currency stringByAppendingString:self.currentDeal.price.stringValue];
-        self.dealPrice.textColor = [UIColor blackColor];
-    } else {
-        self.dealPrice.text = @"Price";
-        self.dealPrice.textColor = [UIColor lightGrayColor];
-    }
-    
-    if (!self.currentDeal.discountValue) {
-        if ([self.currentDeal.discountType isEqualToString:@"%"]) {
-            self.dealDiscount.text = [self.currentDeal.discountValue.stringValue stringByAppendingString:self.currentDeal.discountType];
-        } else {
-            NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.currentDeal.discountValue.stringValue attributes:attributes];
-            self.dealDiscount.attributedText = attrText;
-        }
-        self.dealDiscount.textColor = [UIColor blackColor];
-    } else {
-        self.dealDiscount.text = @"Discount";
-        self.dealDiscount.textColor = [UIColor lightGrayColor];
-    }
-    
-    if (self.currentDeal.category) {
-        self.dealCategory.text = self.currentDeal.category;
-        self.dealCategory.textColor = [UIColor blackColor];
-    } else {
-        self.dealCategory.text = @"Category";
-        self.dealCategory.textColor = [UIColor lightGrayColor];
-    }
-    
-    if(![self.currentDeal.moreDescription isEqualToString:@"0"]) {
-        self.dealDescription.text = self.currentDeal.moreDescription;
-        self.dealDescription.textColor = [UIColor blackColor];
-    } else {
-        self.dealDescription.text = @"Description";
-        self.dealDescription.textColor = [UIColor lightGrayColor];
-    }
-}
-
-- (void)canDelete
-{
-    AppDelegate *app = [[AppDelegate alloc]init];
-    if (![app.UserID isEqualToString:self.currentDeal.dealUserID]) {
-    }
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
-    [self loadingParameters];
     self.pageControl.numberOfPages = self.photosArray.count;
 }
 
@@ -138,26 +33,22 @@
     
     self.title = @"Edit Deal";
     
-    self.didChangeOriginalDeal = NO;
-    isFrontCamera = NO;
-    self.capturedImagesSection.hidden = NO;
-    self.cameraSection.hidden = YES;
-    shouldDealloc = NO;
+    [self initialize];
     
-    self.currentDeal = [self.originalDeal mutableCopy]; // DealClass's mutableCopy DOES NOT copy the deal's photos themselves. Only the IDs.
+    [self setSaveButton];
+    
+    [self setProgressIndicator];
+    
+    [self setupExpirationDateCellContentView];
+
+    [self loadingParameters];
     
     [self bundlePhotosInArray];
     
     [self initializeCameraSection];
     
-    [self setupExpirationDateCellContentView];
-    
     [self canDelete];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [self initializeCamera];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -166,6 +57,90 @@
     // Dispose of any resources that can be recreated.
     
     shouldDealloc = YES;
+}
+
+- (void)setSaveButton
+{
+    UIImage *saveImage = [[UIImage imageNamed:@"Save Button"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *save = [[UIBarButtonItem alloc]initWithImage:saveImage style:UIBarButtonItemStyleBordered target:self action:@selector(saveChanges)];
+    [save setImageInsets:UIEdgeInsetsMake(0, -9, 0, 9)];
+    
+    self.navigationItem.rightBarButtonItem = save;
+}
+
+- (void)initialize
+{
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    self.didChangeOriginalDeal = NO;
+    isFrontCamera = NO;
+    self.capturedImagesSection.hidden = NO;
+    self.cameraSection.hidden = YES;
+    shouldDealloc = NO;
+    placeholderColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:206.0/255.0 alpha:1.0];
+}
+
+- (void)loadingParameters
+{
+    self.dealTitle.text = [self.deal.title mutableCopy];
+    
+    self.dealStore.text = [self.deal.store.name mutableCopy];
+    
+    if (self.deal.price) {
+        self.dealPrice.text = [self.deal.currency stringByAppendingString:self.deal.price.stringValue];
+        self.dealPrice.textColor = [UIColor blackColor];
+        self.selectedCurrency = [self.deal.currency mutableCopy];
+    } else {
+        self.dealPrice.text = @"Price";
+        self.dealPrice.textColor = placeholderColor;
+    }
+    
+    if (self.deal.discountValue) {
+        if ([self.deal.discountType isEqualToString:@"%"]) {
+            self.dealDiscount.text = [self.deal.discountValue.stringValue stringByAppendingString:self.deal.discountType];
+        } else if ([self.deal.discountType isEqualToString:@"lastPrice"]){
+            NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
+            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.deal.discountValue.stringValue attributes:attributes];
+            self.dealDiscount.attributedText = attrText;
+        }
+        self.dealDiscount.textColor = [UIColor blackColor];
+        self.selectedDiscountType = [self.deal.discountType mutableCopy];
+    } else {
+        self.dealDiscount.text = @"Discount or Last Price";
+        self.dealDiscount.textColor = placeholderColor;
+    }
+    
+    if (self.deal.category.length > 0) {
+        self.dealCategory.text = [self.deal.category mutableCopy];
+        self.dealCategory.textColor = [UIColor blackColor];
+    } else {
+        self.dealCategory.text = @"Category";
+        self.dealCategory.textColor = placeholderColor;
+    }
+    
+    if (self.deal.expiration) {
+        self.dealExpirationDate.text = [@"Expires on " stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.expiration]];
+        self.datePicker.date = self.deal.expiration;
+        self.dealExpirationDate.textColor = [UIColor blackColor];
+    } else {
+        self.dealExpirationDate.text = @"Expiration Date";
+        self.dealCategory.textColor = placeholderColor;
+    }
+    
+    if (self.deal.moreDescription.length > 0) {
+        self.dealDescription.text = [self.deal.moreDescription mutableCopy];
+        self.dealDescription.textColor = [UIColor blackColor];
+    } else {
+        self.dealDescription.text = @"Description";
+        self.dealDescription.textColor = placeholderColor;
+    }
+}
+
+- (void)canDelete
+{
+    if (![appDelegate.dealer.email isEqualToString:self.deal.dealer.email]) {
+        
+        // Add a cell at the end of the table view for - "Delete Deal".
+    }
 }
 
 - (void)setupExpirationDateCellContentView {
@@ -186,35 +161,35 @@
 
 - (void)bundlePhotosInArray
 {
-    switch ([self.currentDeal.photoSum intValue]) {
+    switch ([self.deal.photoSum intValue]) {
             
         case 0:
             NSLog(@"No Photos, so no photosArray...");
             break;
             
         case 1:
-            self.photosArray = [NSMutableArray arrayWithObjects:self.originalDeal.photo1, nil];
+            self.photosArray = [NSMutableArray arrayWithObjects:self.deal.photo1, nil];
             break;
             
         case 2:
             self.photosArray = [NSMutableArray arrayWithObjects:
-                                self.originalDeal.photo1,
-                                self.originalDeal.photo2, nil];
+                                self.deal.photo1,
+                                self.deal.photo2, nil];
             break;
             
         case 3:
             self.photosArray = [NSMutableArray arrayWithObjects:
-                                self.originalDeal.photo1,
-                                self.originalDeal.photo2,
-                                self.originalDeal.photo3, nil];
+                                self.deal.photo1,
+                                self.deal.photo2,
+                                self.deal.photo3, nil];
             break;
             
         case 4:
             self.photosArray = [NSMutableArray arrayWithObjects:
-                                self.originalDeal.photo1,
-                                self.originalDeal.photo2,
-                                self.originalDeal.photo3,
-                                self.originalDeal.photo4, nil ];
+                                self.deal.photo1,
+                                self.deal.photo2,
+                                self.deal.photo3,
+                                self.deal.photo4, nil ];
             break;
             
         default:
@@ -248,7 +223,7 @@
 #define pictureCell 0
 #define pictureSection 0
 #define expirationDateCell 2
-#define expirationDateSection 2
+#define expirationDateSection 3
 #define expirationDateCellHeight 162
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -267,57 +242,64 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     EditTextModeViewController *etmvc = [self.storyboard instantiateViewControllerWithIdentifier:@"editTextModeViewControllerID"];
-    WhereIsTheDeal *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"whereIsTheDealID"];
+    WhereIsTheDeal *witdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"whereIsTheDealID"];
     ChooseCategoryTableViewController *cctvc = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCategoryID"];
     
-    if (!(indexPath.section == 2 && indexPath.row == 1) && self.datePickerIsShowing) {
+    if (!(indexPath.section == 3 && indexPath.row == 1) && self.datePickerIsShowing) {
         [self hideDatePickerCell];
     }
     
     switch (indexPath.section) {
+            
         case 1:
+            etmvc.title = @"Title";
+            etmvc.currentValue = self.dealTitle.text;
+            etmvc.textView.returnKeyType = UIReturnKeyDone;
+            [self.navigationController pushViewController:etmvc animated:YES];
+            break;
+            
+        case 2:
             switch (indexPath.row) {
+                    
                 case 0:
-                    etmvc.title = @"Title";
-                    etmvc.currentValue = self.currentDeal.title;
-                    etmvc.textView.returnKeyType = UIReturnKeyDone;
-                    [self.navigationController pushViewController:etmvc animated:YES];
-                    NSLog(@"image \n width: %f \n height: %f", self.captureImage.image.size.width, self.captureImage.image.size.height);
+                    witdvc.cameFrom = @"Edit Deal";
+                    [self.navigationController pushViewController:witdvc animated:YES];
                     break;
                     
                 case 1:
-                    tvc.cameFrom = @"editDeal";
-                    [self.navigationController pushViewController:tvc animated:YES];
+                    etmvc.title = @"Price";
+                    etmvc.currency = self.selectedCurrency;
+                    etmvc.currentValue = [self.dealPrice.text substringFromIndex:1];
+                    if ([self.dealPrice.text isEqualToString:@"Price"]) {
+                        etmvc.currentValue = @"";
+                    }
+                    [self.navigationController pushViewController:etmvc animated:YES];
                     break;
                     
                 case 2:
-                    etmvc.title = @"Price";
-                    etmvc.currency = self.currentDeal.currency;
-                    etmvc.currentValue = self.currentDeal.price.stringValue;
-                    if (!self.currentDeal.price) {
+                    etmvc.title = @"Discount";
+                    if ([self.dealDiscount.text isEqualToString:@"Discount or Last Price"]) {
                         etmvc.currentValue = @"";
+                    } else {
+                        etmvc.discountType = self.selectedDiscountType;
+                        if ([etmvc.discountType isEqualToString:@"%"]) {
+                            etmvc.currentValue = [self.dealDiscount.text substringToIndex:self.dealDiscount.text.length - 1];
+                        } else {
+                            etmvc.currentValue = self.dealDiscount.text;
+                        }
                     }
                     [self.navigationController pushViewController:etmvc animated:YES];
                     break;
-                    
-                case 3:
-                    etmvc.title = @"Discount";
-                    etmvc.discountType = self.currentDeal.discountType;
-                    etmvc.currentValue = self.currentDeal.discountValue.stringValue;
-                    if (!self.currentDeal.discountValue) {
-                        etmvc.currentValue = @"";
-                    }
-                    [self.navigationController pushViewController:etmvc animated:YES];
                     
                 default:
                     break;
             }
             break;
             
-        case 2:
+        case 3:
             switch (indexPath.row) {
                 case 0:
-                    cctvc.cameFrom = @"editDeal";
+                    cctvc.cameFrom = @"Edit Deal";
                     [self.navigationController pushViewController:cctvc animated:YES];
                     break;
                     
@@ -334,9 +316,10 @@
                     
                 case 3:
                     etmvc.title = @"Description";
-                    etmvc.currentValue = self.currentDeal.moreDescription;
-                    if ([self.currentDeal.moreDescription isEqualToString:@"0"]) {
+                    if ([self.dealDescription.text isEqualToString:@"Description"]) {
                         etmvc.currentValue = @"";
+                    } else {
+                        etmvc.currentValue = self.dealDescription.text;
                     }
                     [self.navigationController pushViewController:etmvc animated:YES];
                     break;
@@ -382,7 +365,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.datePicker.alpha = 0.0f;
         self.noDateButton.alpha = 0.0f;
-        self.dealExpirationDate.textColor = self.didCancelDate ? [UIColor lightGrayColor] : [UIColor blackColor];
+        self.dealExpirationDate.textColor = self.didCancelDate ? placeholderColor : [UIColor blackColor];
     } completion:^(BOOL finished) {
         self.datePicker.hidden = YES;
         self.noDateButton.hidden = YES;
@@ -392,16 +375,14 @@
 - (IBAction)dateChanged:(UIDatePicker *)sender {
     
     if (!self.didCancelDate) {
-        self.currentDeal.expiration = sender.date;
         self.dealExpirationDate.text = [@"Expires on " stringByAppendingString:[self.dateFormatter stringFromDate:sender.date]];
     }
 }
 
 - (IBAction)noDate:(id)sender {
     
-    self.currentDeal.expiration = nil;
     self.dealExpirationDate.text = @"Expiration Date";
-    self.dealExpirationDate.textColor = [UIColor lightGrayColor];
+    self.dealExpirationDate.textColor = placeholderColor;
     self.didCancelDate = YES;
     [self hideDatePickerCell];
 }
@@ -412,13 +393,13 @@
 - (void)initializeCamera
 {
     session = [[AVCaptureSession alloc] init];
-	session.sessionPreset = AVCaptureSessionPresetPhoto;
+    session.sessionPreset = AVCaptureSessionPresetPhoto;
     
     captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
     [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
-	captureVideoPreviewLayer.frame = self.cameraView.bounds;
-	[self.cameraView.layer addSublayer:captureVideoPreviewLayer];
+    captureVideoPreviewLayer.frame = self.cameraView.bounds;
+    [self.cameraView.layer addSublayer:captureVideoPreviewLayer];
     
     UIView *view = [self cameraView];
     CALayer *viewLayer = [view layer];
@@ -472,7 +453,7 @@
     
     [session addOutput:self.stillImageOutput];
     
-	[session startRunning];
+    [session startRunning];
     
     isSessionRunning = YES;
 }
@@ -526,6 +507,13 @@
     if (self.photosArray.count == 4) {
         self.addAnotherPhoto.hidden = YES;
     }
+    
+    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+    dispatch_async(queue, ^{
+        
+        [self initializeCamera];
+        
+    });
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender
@@ -558,7 +546,7 @@
         } completion:^(BOOL finished){
             self.addPhoto.hidden = YES;
         }];
-    
+        
     } else {
         if (!isSessionRunning) {
             [self initializeCamera];
@@ -834,8 +822,225 @@
     self.didChangeOriginalDeal = YES;
 }
 
+#pragma mark - General methods, saving and deleting
 
+- (void)saveChanges
+{
+    // First validate if there is no discount > 100%
+    
+    if ([self.selectedDiscountType isEqualToString:@"%"] && [self.dealDiscount.text intValue] > 100) {
+        
+        [illogicalPercentage show:YES];
+        [illogicalPercentage hide:YES afterDelay:2.0];
+        
+        return;
+    }
+    
+    // Were there any changes?
+    
+    if (!self.didChangeOriginalDeal) {
+        
+        [self deallocCameraSession];
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+    
+    // Pass all the values into self.deal
+    
+    self.deal.title = self.dealTitle.text;
+    
+    if (self.deal.store != self.store && self.store) {
+        
+        NSDictionary *categoryDictionary = self.store.categories.firstObject;
+        self.store.categoryID = [categoryDictionary valueForKey:@"id"];
+        self.deal.store = self.store;
+        
+    }
+    
+    if ([self.dealPrice.text isEqualToString:@"Price"]) {
+        self.deal.price = nil;
+        self.deal.currency = nil;
+    } else {
+        float price = [self.dealPrice.text substringFromIndex:1].floatValue;
+        self.deal.price = [NSNumber numberWithFloat:price];
+        self.deal.currency = self.selectedCurrency;
+    }
+    
+    if ([self.dealDiscount.text isEqualToString:@"Discount or Last Price"]) {
+        self.deal.discountValue = nil;
+        self.deal.discountType = nil;
+    } else if ([self.selectedDiscountType isEqualToString:@"%"]) {
+        float discount = [self.dealDiscount.text substringToIndex:self.dealDiscount.text.length - 1].floatValue;
+        self.deal.discountValue = [NSNumber numberWithFloat:discount];
+        self.deal.discountType = self.selectedDiscountType;
+    } else {
+        self.deal.discountValue = [NSNumber numberWithFloat:self.dealDiscount.text.floatValue];
+        self.deal.discountType = self.selectedDiscountType;
+    }
+    
+    if ([self.dealCategory.text isEqualToString:@"Category"]) {
+        self.deal.category = nil;
+    } else {
+        self.deal.category = self.dealCategory.text;
+    }
+    
+    if ([self.dealExpirationDate.text isEqualToString:@"Expiration Date"]) {
+        self.deal.expiration = nil;
+    } else {
+        self.deal.expiration = self.datePicker.date;
+    }
+    
+    if ([self.dealDescription.text isEqualToString:@"Description"]) {
+        self.deal.moreDescription = nil;
+    } else {
+        self.deal.moreDescription = self.dealDescription.text;
+    }
+    
+    // Passing the photos
+    
+    NSInteger numberOfPics = (unsigned long)(self.photosArray.count);
+    
+    switch (numberOfPics) {
+        case 0:
+            self.deal.photo1 = nil;
+            self.deal.photo2 = nil;
+            self.deal.photo3 = nil;
+            self.deal.photo4 = nil;
+            break;
+            
+            case 1:
+            self.deal.photo1 = [self.photosArray objectAtIndex:0];
+            self.deal.photo2 = nil;
+            self.deal.photo3 = nil;
+            self.deal.photo4 = nil;
+            break;
+            
+            case 2:
+            self.deal.photo1 = [self.photosArray objectAtIndex:0];
+            self.deal.photo2 = [self.photosArray objectAtIndex:1];
+            self.deal.photo3 = nil;
+            self.deal.photo4 = nil;
+            break;
+            
+        case 3:
+            self.deal.photo1 = [self.photosArray objectAtIndex:0];
+            self.deal.photo2 = [self.photosArray objectAtIndex:1];
+            self.deal.photo3 = [self.photosArray objectAtIndex:2];
+            self.deal.photo4 = nil;
+            break;
+            
+        case 4:
+            self.deal.photo1 = [self.photosArray objectAtIndex:0];
+            self.deal.photo2 = [self.photosArray objectAtIndex:1];
+            self.deal.photo3 = [self.photosArray objectAtIndex:2];
+            self.deal.photo4 = [self.photosArray objectAtIndex:3];
+            break;
+            
+        default:
+            break;
+    }
+    
+    self.deal.photoSum = [NSNumber numberWithInteger:numberOfPics];
+    
+    ViewonedealViewController *vodvc = self.delegate;
+    vodvc.afterEditing = YES;
+    
+    [uploadingDeal show:YES];
+    
+    // Patch self.deal to the server
+    
+    [self uploadChanges];
+}
 
+- (void)uploadChanges
+{
+    NSString *path = [@"/deals/" stringByAppendingString:self.deal.dealID];
+    
+    [[RKObjectManager sharedManager] patchObject:self.deal
+                                            path:path
+                                      parameters:nil
+                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                             
+                                             [uploadingDeal hide:YES];
+                                             NSLog(@"Deal was edited successfuly!");
+                                             [self dismissViewControllerAnimated:YES completion:nil];
+                                         }
+                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                             
+                                             [uploadingDeal hide:YES];
+                                             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                             [alert show];
+                                         }];
+}
+
+- (IBAction)Dismiss:(id)sender {
+    
+    if (self.didChangeOriginalDeal) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unsaved Changes" message:@"You have unsaved changes. Are you sure you want to cancel?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        alert.tag = 11;
+        [alert show];
+    } else {
+        // If not, just dismiss:
+        [self deallocCameraSession];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    switch (alertView.tag) {
+            
+        case 11:
+            switch (buttonIndex) {
+                case 1:
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+            
+        case 22:
+            if (buttonIndex == 1) {
+                //            [UIView animateWithDuration:0.4 animations:^{
+                //                [self.capturedImagesSection viewWithTag:self.pageControl.currentPage + 1].alpha = 0;
+                //            } completion:^(BOOL finished) {
+                //                [self setCapturedSectionAfterDelete];
+                //            }];
+                //            [self.capturedImagesSection viewWithTag:self.pageControl.currentPage + 1].alpha = 1;
+                [self setCapturedSectionAfterDelete];
+                break;
+            }
+    }
+}
+
+- (void)setProgressIndicator
+{
+    
+    illogicalPercentage = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    illogicalPercentage.delegate = self;
+    illogicalPercentage.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
+    illogicalPercentage.mode = MBProgressHUDModeCustomView;
+    illogicalPercentage.labelText = @"Discount above 100%!";
+    illogicalPercentage.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    illogicalPercentage.animationType = MBProgressHUDAnimationZoomIn;
+    
+    
+    UIImageView *loadingAnimation = [appDelegate loadingAnimationWhite];
+    [loadingAnimation startAnimating];
+    
+    uploadingDeal = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    uploadingDeal.delegate = self;
+    uploadingDeal.customView = loadingAnimation;
+    uploadingDeal.mode = MBProgressHUDModeCustomView;
+    uploadingDeal.labelText = @"Uploading";
+    uploadingDeal.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    uploadingDeal.animationType = MBProgressHUDAnimationZoomIn;
+    
+    [self.navigationController.view addSubview:illogicalPercentage];
+    [self.navigationController.view addSubview:uploadingDeal];
+}
 
 /*
  #pragma mark - Navigation

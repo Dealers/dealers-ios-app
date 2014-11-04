@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <RestKit/RestKit.h>
+#import "Deal.h"
+#import "Store.h"
 #import "Dealer.h"
+#import "DealAttrib.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
@@ -24,14 +28,34 @@
 @property (strong, nonatomic)  NSString *previousViewController;
 @property (strong, nonatomic)  NSString *dealerName;
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
-@property (strong, nonatomic)  Dealer *dealerClass;
+@property (strong, nonatomic)  Dealer *dealer;
 
 @property (nonatomic) NSString *token;
 
 @property (weak) UIImage *screenShot;
 
+
 - (void)setTabBarController;
+- (void)showPlusButton;
+- (void)hidePlusButton;
+
+- (UIImageView *)loadingAnimationWhite;
+
+- (NSDictionary *)getCurrenciesDictionary;
+- (NSString *)getCurrencySign:(NSString *)currencyKey;
+- (NSString *)getCurrencyKey:(NSString *)currencySign;
+
+- (NSDictionary *)getDiscountTypesDictionary;
+- (NSString *)getDiscountType:(NSString *)discountKey;
+- (NSString *)getDiscountKey:(NSString *)discountType;
+
 - (NSArray *)getCategories;
 - (NSArray *)getCategoriesIcons;
+- (NSDictionary *)getCategoriesDictionary;
+- (NSString *)getCategoryKeyForValue:(NSString *)value;
+- (NSString *)getCategoryValueForKey:(NSString *)key;
+
+- (RKObjectMapping *)getTempDealMapping;
+- (RKObjectMapping *)getDealMapping;
 
 @end

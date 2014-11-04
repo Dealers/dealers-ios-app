@@ -43,7 +43,7 @@
                               cancelButtonTitle:@"Ok"
                               otherButtonTitles:nil];
         [blank show];
-    } else if (self.passwordCurrent.text != appDelegate.dealerClass.userPassword) {
+    } else if (self.passwordCurrent.text != appDelegate.dealer.userPassword) {
         UIAlertView *blank = [[UIAlertView alloc]
                               initWithTitle:@"Wrong Password"
                               message:@"Your current password was entered incorrectly"
@@ -61,7 +61,7 @@
         [blank show];
     
     } else {
-        appDelegate.dealerClass.userPassword = self.passwordNewAgain.text;
+        appDelegate.dealer.userPassword = self.passwordNewAgain.text;
         // Send to the database the new password...
         [self.navigationController popViewControllerAnimated:YES];
     }

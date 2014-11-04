@@ -8,7 +8,7 @@
 
 #import "ChooseCategoryTableViewController.h"
 #import "EditDealTableViewController.h"
-#import "WhatIsTheDeal.h"
+#import "WhatIsTheDeal2.h"
 
 @interface ChooseCategoryTableViewController ()
 
@@ -35,6 +35,22 @@
     self.icons = [[NSArray alloc]initWithArray:[app getCategoriesIcons]];
 
     [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if ([self.cameFrom isEqualToString:@"Add Deal"]) {
+        
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if ([self.cameFrom isEqualToString:@"Add Deal"]) {
+        
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Add Deal Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,17 +81,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.cameFrom isEqualToString:@"editDeal"]) {
+    if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
         
         EditDealTableViewController *edtvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
-        edtvc.currentDeal.category = [self.categories objectAtIndex:indexPath.row];
+        edtvc.dealCategory.text = [self.categories objectAtIndex:indexPath.row];
+        edtvc.dealCategory.textColor = [UIColor blackColor];
         edtvc.didChangeOriginalDeal = YES;
         [self.navigationController popViewControllerAnimated:YES];
         
-    } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
+    } else if ([self.cameFrom isEqualToString:@"Add Deal"]) {
         
-        WhatIsTheDeal *oagpvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
-        oagpvc.categorylabel.text = [self.categories objectAtIndex:indexPath.row];
+        WhatIsTheDeal2 *witd2vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+        witd2vc.categoryLabel.text = [self.categories objectAtIndex:indexPath.row];
+        witd2vc.categoryLabel.textColor = [UIColor blackColor];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

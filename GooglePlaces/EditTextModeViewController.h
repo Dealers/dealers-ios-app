@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "EditDealTableViewController.h"
+#import "MBProgressHUD.h"
 
-@interface EditTextModeViewController : UIViewController
+@interface EditTextModeViewController : UIViewController <MBProgressHUDDelegate> {
+    
+    MBProgressHUD *blankTitleIndicator, *tooMuchIndicator;
+}
 
 @property NSString *currentValue;
 @property (weak, nonatomic) IBOutlet UITextView *textView;

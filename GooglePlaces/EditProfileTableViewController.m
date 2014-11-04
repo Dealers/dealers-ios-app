@@ -16,32 +16,24 @@
 
 @synthesize appDelegate;
 
-- (void)dismiss:(id)sender
-{
-    
-}
-
-- (void)saveChanges
-{
-    
-}
 
 - (void)initialize
 {
     self.appDelegate = [[UIApplication sharedApplication]delegate];
-    self.didChangeProfile = NO;
+    
+    self.dealer = self.appDelegate.dealer;
+    
+    self.didChangeProfilePic = NO;
     self.datePickerIsShowing = NO;
     
-    if (appDelegate.dealerClass.photo) {
+    if (self.dealer.photo) {
         userHaveProfilePic = YES;
     } else {
         userHaveProfilePic = NO;
     }
     
     [self signUpForKeyboardNotifications];
-    
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-//    [self.view addGestureRecognizer:tap];
+    [self setProgressIndicator];
 }
 
 - (void)viewDidLoad
@@ -72,7 +64,7 @@
 - (void)setProfilePicSection
 {
     if (userHaveProfilePic) {
-        [self.profilePicButton setImage:[appDelegate.dealerClass.photo copy] forState:UIControlStateNormal];
+        [self.profilePicButton setImage:[appDelegate.dealer.photo copy] forState:UIControlStateNormal];
     } else {
         [self.profilePicButton setImage:[UIImage imageNamed:@"Profile Pic Placeholder"] forState:UIControlStateNormal];
     }
@@ -82,15 +74,15 @@
 
 - (void)setKnownValues
 {
-    self.name.text = [appDelegate.dealerClass.fullName mutableCopy];
-    self.about.text = [appDelegate.dealerClass.about mutableCopy];
-    self.location.text = [appDelegate.dealerClass.location mutableCopy];
-    self.email.text = [appDelegate.dealerClass.email mutableCopy];
+    self.fullName.text = [appDelegate.dealer.fullName mutableCopy];
+    self.about.text = [appDelegate.dealer.about mutableCopy];
+    self.location.text = [appDelegate.dealer.location mutableCopy];
+    self.email.text = [appDelegate.dealer.email mutableCopy];
     
     [self setDateOfBirthLabel];
     
-    if (appDelegate.dealerClass.gender) {
-        self.gender.text = appDelegate.dealerClass.gender;
+    if (appDelegate.dealer.gender) {
+        self.gender.text = appDelegate.dealer.gender;
         self.gender.textColor = [UIColor blackColor];
     }
 }
@@ -99,6 +91,41 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setProgressIndicator
+{
+    
+    blankFullName = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    blankFullName.delegate = self;
+    blankFullName.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
+    blankFullName.mode = MBProgressHUDModeCustomView;
+    blankFullName.labelText = @"Name can't be blank!";
+    blankFullName.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    blankFullName.animationType = MBProgressHUDAnimationZoomIn;
+    
+    blankEmail = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    blankEmail.delegate = self;
+    blankEmail.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
+    blankEmail.mode = MBProgressHUDModeCustomView;
+    blankEmail.labelText = @"Email can't be blank!";
+    blankEmail.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    blankEmail.animationType = MBProgressHUDAnimationZoomIn;
+    
+    UIImageView *loadingAnimation = [appDelegate loadingAnimationWhite];
+    [loadingAnimation startAnimating];
+    
+    uploading = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    uploading.delegate = self;
+    uploading.customView = loadingAnimation;
+    uploading.mode = MBProgressHUDModeCustomView;
+    uploading.labelText = @"Uploading";
+    uploading.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    uploading.animationType = MBProgressHUDAnimationZoomIn;
+    
+    [self.navigationController.view addSubview:blankFullName];
+    [self.navigationController.view addSubview:blankEmail];
+    [self.navigationController.view addSubview:uploading];
 }
 
 
@@ -219,7 +246,7 @@
             
             [self.profilePicButton setImage:[UIImage imageNamed:@"Profile Pic Placeholder"] forState:UIControlStateNormal];
             userHaveProfilePic = NO;
-            self.didChangeProfile = YES;
+            self.didChangeProfilePic = YES;
         }
         if (buttonIndex == 1) { // Take a Picture:
             
@@ -284,7 +311,7 @@
     [self.profilePicButton setImage:image forState:UIControlStateNormal];
     [self dismissViewControllerAnimated:YES completion:nil];
     userHaveProfilePic = YES;
-    self.didChangeProfile = YES;
+    self.didChangeProfilePic = YES;
 }
 
 
@@ -324,9 +351,9 @@
     NSDate *today = [NSDate date];
     [self.datePicker setMaximumDate:today];
     
-    if (appDelegate.dealerClass.dateOfBirth) {
+    if (appDelegate.dealer.dateOfBirth) {
         
-        NSDate *defaultDate = [appDelegate.dealerClass.dateOfBirth copy];
+        NSDate *defaultDate = [appDelegate.dealer.dateOfBirth copy];
         [self.datePicker setDate:defaultDate];
         self.dateOfBirth.text = [self.dateFormatter stringFromDate:defaultDate];
     }
@@ -351,7 +378,6 @@
     self.didCancelDate = NO;
     self.datePicker.alpha = 0.0f;
     self.noDateButton.alpha = 0.0f;
-    self.didChangeProfile = YES;
     
     [UIView animateWithDuration:0.3 animations:^{
         self.datePicker.alpha = 1.0f;
@@ -385,10 +411,122 @@
 
 - (IBAction)noDate:(id)sender {
 
-    self.dateOfBirth.text = @"Date Of Birth";
+    self.dateOfBirth.text = @"Date of Birth";
     self.dateOfBirth.textColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     self.didCancelDate = YES;
     [self hideDatePickerCell];
 }
+
+
+#pragma mark - Uploading and dismissing
+
+- (void)saveChanges
+{
+    if (!(self.fullName.text.length > 0)) {
+        
+        [blankFullName show:YES];
+        [blankFullName hide:YES afterDelay:1.5];
+        return;
+    
+    } else if (!(self.email.text.length > 0)) {
+        
+        [blankEmail show:YES];
+        [blankEmail hide:YES afterDelay:1.5];
+        return;
+    }
+    
+    if (![self didProfileChange]) {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+    
+    // Set the new values in the dealer object
+    
+    self.dealer.fullName = self.fullName.text;
+    self.dealer.about = self.about.text;
+    self.dealer.location = self.location.text;
+    
+    if ([self.dateOfBirth.text isEqualToString:@"Date of Birth"]) {
+        self.dealer.dateOfBirth = nil;
+    } else {
+        self.dealer.dateOfBirth = self.datePicker.date;
+    }
+    
+    if ([self.dealer.gender isEqualToString:@"Gender"]) {
+        self.dealer.gender = @"Unspecified";
+    } else {
+        self.dealer.gender = self.gender.text;
+    }
+    
+    if (self.didChangeProfilePic) {
+        self.dealer.photo = self.profilePicButton.imageView.image;
+    }
+    
+    [uploading show:YES];
+    
+    [self uploadChanges];
+}
+
+- (void)uploadChanges
+{
+    
+}
+
+- (BOOL)didProfileChange
+{
+    if (![self.fullName.text isEqualToString:self.dealer.fullName]) {
+        
+        return YES;
+    }
+    
+    if (![self.about.text isEqualToString:self.dealer.about]) {
+        
+        if (!(self.about.text.length > 0) && !self.dealer.about) {
+            
+            // Still no changes
+        
+        } else {
+            
+            return YES;
+        }
+    }
+    
+    if (![self.location.text isEqualToString:self.dealer.location]) {
+        
+        if (!(self.location.text.length > 0) && !self.dealer.location) {
+            
+            // Still no changes
+            
+        } else {
+            
+            return YES;
+        }
+    }
+    
+    if (!([self.dateOfBirth.text isEqualToString:@"Date of Birth"] && !self.dealer.dateOfBirth)) {
+        
+        if (![self.datePicker.date isEqualToDate:self.dealer.dateOfBirth]) {
+            
+            return YES;
+        }
+    }
+    
+    if (!([self.gender.text isEqualToString:@"Gender"] && !self.dealer.gender)) {
+        
+        if (![self.gender.text isEqualToString:self.dealer.gender]) {
+            
+            return YES;
+        }
+    }
+    
+    if (![self.email.text isEqualToString:self.dealer.email]) {
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
 
 @end

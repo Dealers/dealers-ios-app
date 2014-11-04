@@ -9,6 +9,7 @@
 #import "Signup2ViewController.h"
 #import "Functions.h"
 #import "MyFeedsViewController.h"
+#import "KeychainItemWrapper.h"
 
 @interface Signup2ViewController ()
 
@@ -85,15 +86,16 @@
     
     // Filling the information on the user:
     
-    dealer.userID = strResult;
-    dealer.fullName = Fullname.text;
-    dealer.userPassword = Password.text;
+    dealer.url = strResult;
     dealer.email = Email.text;
+    dealer.fullName = Fullname.text;
     dealer.dateOfBirth = self.selectedDate;
     dealer.gender = gender;
     dealer.photoID = Photoid;
     
-    appDelegate.dealerClass = dealer;
+    appDelegate.dealer = dealer;
+    
+    [self saveUserDetails];
 }
 
 -(void) initialize
@@ -158,6 +160,8 @@
     self.app.networkActivityIndicatorVisible = NO;
 }
 
+
+
 - (void)setElementsLocation
 {
     PurpImage.center = CGPointMake(PurpImage.center.x, CGRectGetMaxY(self.textFieldsFrame.frame) + 42);
@@ -174,8 +178,11 @@
 -(void)StartLoading
 {
     self.app.networkActivityIndicatorVisible = YES;
-    [UIView animateWithDuration:0.3 animations:^{SignupButton.alpha=0.0; SignupButton.transform =CGAffineTransformMakeScale(1,1);
-        SignupButton.transform =CGAffineTransformMakeScale(0,0);}];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         SignupButton.alpha = 0;
+                         SignupButton.transform = CGAffineTransformMakeScale(0.01, 0.01);
+                     }];
     
     LoadingImage.animationImages = [NSArray arrayWithObjects:
                                     [UIImage imageNamed:@"Loadingwhite.png"],
@@ -197,19 +204,44 @@
                                     [UIImage imageNamed:@"Loading80white.png"],
                                     [UIImage imageNamed:@"Loading85white.png"],
                                     nil];
+    
     LoadingImage.animationDuration = 0.3;
     [LoadingImage startAnimating];
-    [UIView animateWithDuration:0.3 animations:^{LoadingImage.alpha=1.0; LoadingImage.transform =CGAffineTransformMakeScale(0,0);
-        LoadingImage.transform =CGAffineTransformMakeScale(1,1);}];
+    LoadingImage.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         LoadingImage.alpha = 1.0;
+                         LoadingImage.transform = CGAffineTransformMakeScale(1,1);
+                     }];
 }
 
 -(void) StopLoading
 {
     self.app.networkActivityIndicatorVisible = NO;
-    [UIView animateWithDuration:0.3 animations:^{LoadingImage.alpha=0.0; LoadingImage.transform =CGAffineTransformMakeScale(1,1); LoadingImage.transform =CGAffineTransformMakeScale(0,0);}];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         LoadingImage.alpha = 0;
+                         LoadingImage.transform = CGAffineTransformMakeScale(0.01, 0.01);}];
     [LoadingImage stopAnimating];
-    [UIView animateWithDuration:0.3 animations:^{SignupButton.alpha=1.0; SignupButton.transform =CGAffineTransformMakeScale(0,0);
-        SignupButton.transform =CGAffineTransformMakeScale(1,1);}];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         SignupButton.alpha = 1.0;
+                         SignupButton.transform = CGAffineTransformMakeScale(1,1);
+                     }];
+}
+
+- (void)saveUserDetails
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSData *imageData = UIImageJPEGRepresentation(self.appDelegate.dealer.photo, 1.0);
+    
+    [defaults setObject:appDelegate.dealer.fullName forKey:@"fullName"];
+    [defaults setObject:appDelegate.dealer.dateOfBirth forKey:@"dateOfBirth"];
+    [defaults setObject:appDelegate.dealer.gender forKey:@"gender"];
+    [defaults setObject:imageData forKey:@"image"];
+    
+    [defaults synchronize];
 }
 
 - (IBAction)SignUpButton:(id)sender
@@ -260,18 +292,23 @@
 
                         dispatch_async(dispatch_get_main_queue(), ^{
 
-                            NSLog(@"usrid=%@",appDelegate.dealerClass.userID);
+                            NSLog(@"usrid=%@",appDelegate.dealer.url);
                             
-                            if (([appDelegate.dealerClass.userID isEqualToString:@"0"]) || (appDelegate.dealerClass.userID == nil) || ([appDelegate.dealerClass.userID isEqualToString:@""])) {
+                            if (([appDelegate.dealer.url isEqualToString:@"0"]) || (appDelegate.dealer.url == nil) || ([appDelegate.dealer.url isEqualToString:@""])) {
                                 registerAgain = YES;
                                 [self StopLoading];
                                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
                                 [alert show];
                                 
-                            } else if ([appDelegate.dealerClass.userID rangeOfString:@"fail"].location == NSNotFound) {
+                            } else if ([appDelegate.dealer.url rangeOfString:@"fail"].location == NSNotFound) {
                                 
                                 if (!isPopping) {
                                     self.app.networkActivityIndicatorVisible = NO;
+                                    
+                                    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+                                    [keychain setObject:Email.text forKey:(__bridge id)(kSecAttrAccount)];
+                                    [keychain setObject:Password.text forKey:(__bridge id)(kSecValueData)];
+                                    
                                     [appDelegate setTabBarController];
                                 }
                                 

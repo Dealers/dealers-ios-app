@@ -13,6 +13,8 @@
 
 @property NSString *storeID;
 @property NSString *name;
+
+@property NSString *categoryID;
 @property NSArray *categories;
 
 @property NSNumber *latitude;

@@ -9,7 +9,6 @@
 #import "ExploreDealsViewController.h"
 #import "ProfileViewController.h"
 #import "ViewonedealViewController.h"
-#import "MoreViewController.h"
 #import "ExploretableViewController.h"
 #import "AppDelegate.h"
 #import "WhereIsTheDeal.h"

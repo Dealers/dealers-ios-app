@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "Signup2ViewController.h"
 #import "SigninViewController.h"
+#import "KeychainItemWrapper.h"
 
 @interface MainViewController ()
 @end
@@ -32,10 +33,13 @@
     backwhite.hidden = YES;
 }
 - (void)viewDidLoad
-{    
+{
+    appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    
+    [self checkIfUserLoggedIn];
+    
     ScreenHeight = self.view.frame.size.height/10;
     
-    appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if (([appDelegate.Animate_first isEqualToString:@"first"]) || (appDelegate.Animate_first == nil))  {
         appDelegate.Animate_first = @"notfirst";
@@ -95,6 +99,23 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (IBAction)getInWithoutSigning:(id)sender {
+    
+    Dealer *dealer = [[Dealer alloc]init];
+    
+    dealer.url = @"1234";
+    dealer.email = @"gullumbroso@gmail.com";
+    dealer.fullName = @"Gilad Lumbroso";
+    dealer.dateOfBirth = [NSDate date];
+    dealer.gender = @"Male";
+    dealer.photo = nil;
+    dealer.userLikesList = nil;
+    
+    appDelegate.dealer = dealer;
+        
+    [appDelegate setTabBarController];
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [self.screenShot setImage:nil];
@@ -117,6 +138,28 @@
         self.screenShot.hidden = YES;
         self.screenShot.center = self.view.center;
     }];
+}
+
+- (void)checkIfUserLoggedIn
+{
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    
+    NSString *email = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString *password = [keychain objectForKey:(__bridge id)(kSecValueData)];
+    
+    if (email.length > 0 && password.length > 0) {
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        self.appDelegate.dealer = [[Dealer alloc]init];
+        
+        self.appDelegate.dealer.fullName = [userDefaults objectForKey:@"fullName"];
+        self.appDelegate.dealer.dateOfBirth = [userDefaults objectForKey:@"dateOfBirth"];
+        self.appDelegate.dealer.gender = [userDefaults objectForKey:@"gender"];
+        self.appDelegate.dealer.photo = [UIImage imageWithData:[userDefaults objectForKey:@"image"]];
+
+        [appDelegate setTabBarController];
+    }
 }
 
 -(void) deallocMemory

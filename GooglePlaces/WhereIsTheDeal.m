@@ -7,7 +7,7 @@
 //
 
 #import "WhereIsTheDeal.h"
-#import "WhatIsTheDeal.h"
+#import "WhatIsTheDeal1.h"
 #import "StoresTableCell.h"
 #import "Functions.h"
 #import <mach/mach.h>
@@ -27,7 +27,7 @@
 
 
 @implementation WhereIsTheDeal {
-    WhatIsTheDeal *witdvc;
+    WhatIsTheDeal1 *witd1vc;
 }
 
 @synthesize foursquareManager;
@@ -220,11 +220,11 @@
     [UIView animateWithDuration:0.3
                      animations:^{
                          self.loadingImage.alpha = 1.0;
-                         self.loadingImage.transform = CGAffineTransformMakeScale(0,0);
+                         self.loadingImage.transform = CGAffineTransformMakeScale(0.1, 0.1);
                      }];
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.loadingLabel.alpha=0.0;
+                         self.loadingLabel.alpha = 0.0;
                          self.loadingLabel.center = CGPointMake(self.loadingLabel.center.x,self.loadingLabel.center.y+10);
                      }];
     
@@ -319,8 +319,12 @@
                                          nil];
     self.loadingImage.animationDuration = 0.3;
     [self.loadingImage startAnimating];
-    [UIView animateWithDuration:0.3 animations:^{self.loadingImage.alpha=1.0; self.loadingImage.transform =CGAffineTransformMakeScale(0,0);
-        self.loadingImage.transform =CGAffineTransformMakeScale(1,1);}];
+    self.loadingImage.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.loadingImage.alpha = 1.0;
+                         self.loadingImage.transform = CGAffineTransformMakeScale(1,1);
+                     }];
 }
 
 -(void) initialize {
@@ -333,16 +337,16 @@
 - (void)viewDidLoad
 {
     self.title = @"Where is the Deal?";
-    
+        
     // This is the size of the venues table view in the initial display of the view:
     self.venuesTableInitialFrame = CGRectMake(0, barTableGap, 320, [[UIScreen mainScreen]bounds].size.height - 64 - 44 - barTableGap);
     
     // If came frome Edit Deal, no need for dismiss button:
-    if ([self.cameFrom isEqualToString:@"editDeal"]) {
-        self.navigationItem.leftBarButtonItem = NO;
+    if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
+        self.navigationItem.leftBarButtonItem = nil;
     }
     
-    witdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"whatIsTheDealID"];
+    witd1vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhatIsTheDeal1ID"];
     
     self.collapseMapButton.hidden = YES;
     currentVC = 1;
@@ -555,12 +559,12 @@
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    if ([[segue identifier] isEqualToString:@"StoreSearchSeq"]) {
-        NSIndexPath *indexpath = [self.storeSearchTableView indexPathForSelectedRow];
-        NSString *string = [self.storeSearchNameArray objectAtIndex:indexpath.row];
-        [[segue destinationViewController] setStoreName:string];
-        [[segue destinationViewController] setSegcategory:@"No Category"];
-    }
+//    if ([[segue identifier] isEqualToString:@"StoreSearchSeq"]) {
+//        NSIndexPath *indexpath = [self.storeSearchTableView indexPathForSelectedRow];
+//        NSString *string = [self.storeSearchNameArray objectAtIndex:indexpath.row];
+//        [[segue destinationViewController] setStoreName:string];
+//        [[segue destinationViewController] setSegcategory:@"No Category"];
+//    }
 }
 
 - (void)passingStoreToOptionals
@@ -590,12 +594,6 @@
     if (indexpath.row<[self.storeLocationArraySort count]) {
         string5 = [self.storeLocationArraySort objectAtIndex:indexpath.row];
     } else string5=@"Unknown";
-    
-    [witdvc setStoreName:string];
-    [witdvc setSegcategory:string2];
-    [witdvc setSeglat:string3];
-    [witdvc setSeglong:string4];
-    [witdvc setSegstoreAddress:string5];
 }
 
 - (IBAction)Dismiss:(id)sender {
@@ -761,33 +759,34 @@
 {
     if (tableView == self.venuesTableView) {
         
-        // Need to fix this when getting to Edit Deal
-        
-        if ([self.cameFrom isEqualToString:@"editDeal"]) {
+        if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
+            
             EditDealTableViewController *edtvc = (EditDealTableViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
-            edtvc.currentDeal.store = [self.storeNameArraySort objectAtIndex:indexPath.row];
-            edtvc.currentDeal.dealStoreAddress = [self.storeLocationArraySort objectAtIndex:indexPath.row];
-            edtvc.currentDeal.dealStoreLatitude = [self.storeLatArraySort objectAtIndex:indexPath.row];
-            edtvc.currentDeal.dealStoreLongitude = [self.storeLongArraySort objectAtIndex:indexPath.row];
+            edtvc.store = [self.storesNearby objectAtIndex:indexPath.row];
+            edtvc.dealStore.text = edtvc.store.name;
             edtvc.didChangeOriginalDeal = YES;
             [self.navigationController popViewControllerAnimated:YES];
             
-        } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
+        } else if ([self.cameFrom isEqualToString:@"Add Deal"]) {
             
-            witdvc.store = [self.storesNearby objectAtIndex:indexPath.row];
-            [self.navigationController pushViewController:witdvc animated:YES];
+            witd1vc.store = [self.storesNearby objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:witd1vc animated:YES];
         }
         
     } else if (tableView == self.storeSearchTableView) {
         
-        if ([self.cameFrom isEqualToString:@"editDeal"]) {
+        if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
             
-            // Need to fix this when getting to Edit Deal
+            EditDealTableViewController *edtvc = (EditDealTableViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+            edtvc.store = [self.storesSearched objectAtIndex:indexPath.row];
+            edtvc.dealStore.text = edtvc.store.name;
+            edtvc.didChangeOriginalDeal = YES;
+            [self.navigationController popViewControllerAnimated:YES];
+        
+        } else if ([self.cameFrom isEqualToString:@"Add Deal"]) {
             
-        } else if ([self.cameFrom isEqualToString:@"addDeal"]) {
-            
-            witdvc.store = [self.storesSearched objectAtIndex:indexPath.row];
-            [self.navigationController pushViewController:witdvc animated:YES];
+            witd1vc.store = [self.storesSearched objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:witd1vc animated:YES];
         }
     }
 }
@@ -851,10 +850,16 @@
 }
 
 -(void) initMapView {
+    
     self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 0, 320, self.scrollView.bounds.size.height)];
     self.mapView.center = CGPointMake(160, barTableGap / 2);
     _locationManager = [[CLLocationManager alloc]init];
     _locationManager.delegate = self;
+    
+    if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [_locationManager requestWhenInUseAuthorization];
+    }
+    
     _locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
     _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
     [_locationManager startUpdatingLocation];

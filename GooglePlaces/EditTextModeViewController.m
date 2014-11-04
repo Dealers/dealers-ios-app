@@ -20,46 +20,73 @@
     EditDealTableViewController *edtvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
     
     if ([self.title isEqualToString:@"Title"]) {
-        if ([self.textView.text isEqualToString:@""]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Title Can't Be Empty" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-        } else {
-            edtvc.currentDeal.title = self.textView.text;
+        
+        if ([self titleValidation]) {
+            edtvc.dealTitle.text = self.textView.text;
             [self.navigationController popViewControllerAnimated:YES];
         }
-    
+        
     } else if ([self.title isEqualToString:@"Price"]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.currentDeal.price = @"0";
+            edtvc.dealPrice.text = @"Price";
+            edtvc.dealPrice.textColor = [UIColor lightGrayColor];
         } else {
-            edtvc.currentDeal.price = self.textView.text;
+            NSString *currency;
+            if (self.shekel.selected) currency = @"₪";
+            if (self.dollar.selected) currency = @"$";
+            if (self.pound.selected) currency = @"£";
+            edtvc.dealPrice.text = [currency stringByAppendingString:self.textView.text];
+            edtvc.selectedCurrency = currency;
+            edtvc.dealPrice.textColor = [UIColor blackColor];
         }
-        if (self.shekel.selected) edtvc.currentDeal.currency = @"₪";
-        if (self.dollar.selected) edtvc.currentDeal.currency = @"$";
-        if (self.pound.selected) edtvc.currentDeal.currency = @"£";
-    
+        
         [self.navigationController popViewControllerAnimated:YES];
         
     } else if ([self.title isEqualToString:@"Discount"]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.currentDeal.discountValue = @"0";
+            edtvc.dealDiscount.text = @"Discount or Last Price";
+            edtvc.dealDiscount.textColor = [UIColor lightGrayColor];
         } else {
-            edtvc.currentDeal.discountValue = self.textView.text;
+            NSString *discountType;
+            if (self.percentage.selected) {
+                discountType = @"%";
+                edtvc.dealDiscount.text = [self.textView.text stringByAppendingString:discountType];
+            } else if (self.lastPrice.selected) {
+                discountType = @"lastPrice";
+                NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
+                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.textView.text attributes:attributes];
+                edtvc.dealDiscount.attributedText = attrText;
+            }
+            edtvc.selectedDiscountType = discountType;
+            edtvc.dealDiscount.textColor = [UIColor blackColor];
         }
-        if (self.percentage.selected) edtvc.currentDeal.discountType = @"%";
-        if (self.lastPrice.selected) edtvc.currentDeal.discountType = @"lastPrice";
+        
         [self.navigationController popViewControllerAnimated:YES];
-    
+        
     } else if ([self.title isEqualToString:@"Description"]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.currentDeal.moreDescription = @"0";
+            edtvc.dealDescription.text = @"Description";
+            edtvc.dealDescription.textColor = [UIColor lightGrayColor];
         } else {
-            edtvc.currentDeal.moreDescription = self.textView.text;
+            edtvc.dealDescription.text = self.textView.text;
+            edtvc.dealDescription.textColor = [UIColor blackColor];
         }
+        
         [self.navigationController popViewControllerAnimated:YES];
     }
     
     edtvc.didChangeOriginalDeal = YES;
+}
+
+- (BOOL)titleValidation
+{
+    if (!(self.textView.text.length > 0)) {
+        
+        [blankTitleIndicator show:YES];
+        [blankTitleIndicator hide:YES afterDelay:1.5];
+        return NO;
+    }
+    return YES;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -78,6 +105,7 @@
     self.textView.text = self.currentValue;
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
+    [self setProgressIndicator];
     [self positionBarsInPlace];
 }
 
@@ -151,7 +179,7 @@
     } else {
         self.shekel.selected = YES;
     }
-
+    
     [UIView animateWithDuration:0.4 animations:^{self.priceBar.alpha = 1.0;}];
 }
 
@@ -163,7 +191,7 @@
     
     self.discountBar.hidden = NO;
     self.discountBar.alpha = 0;
-
+    
     if ([self.discountType isEqualToString:@"lastPrice"]) {
         self.lastPrice.selected = YES;
     } else {
@@ -180,7 +208,7 @@
     } else if (![self.currency isEqualToString:@""] && [self.currentValue isEqualToString:self.textView.text]) {
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
-
+    
     self.shekel.selected = YES;
     self.dollar.selected = NO;
     self.pound.selected = NO;
@@ -234,6 +262,30 @@
     
     self.percentage.selected = NO;
     self.lastPrice.selected = YES;
+}
+
+- (void)setProgressIndicator
+{
+    blankTitleIndicator = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    blankTitleIndicator.delegate = self;
+    blankTitleIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
+    blankTitleIndicator.mode = MBProgressHUDModeCustomView;
+    blankTitleIndicator.labelText = @"Title can't be blank!";
+    blankTitleIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    blankTitleIndicator.animationType = MBProgressHUDAnimationZoomIn;
+    
+    tooMuchIndicator = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    tooMuchIndicator.delegate = self;
+    tooMuchIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
+    tooMuchIndicator.mode = MBProgressHUDModeCustomView;
+    tooMuchIndicator.labelText = @"Title is too long";
+    tooMuchIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    tooMuchIndicator.detailsLabelText = @"120 characters max";
+    tooMuchIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    tooMuchIndicator.animationType = MBProgressHUDAnimationZoomIn;
+    
+    [self.navigationController.view addSubview:blankTitleIndicator];
+    [self.navigationController.view addSubview:tooMuchIndicator];
 }
 
 /*
