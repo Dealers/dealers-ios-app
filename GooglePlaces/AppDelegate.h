@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
+#import <FacebookSDK/
 #import "Deal.h"
 #import "Store.h"
 #import "Dealer.h"
