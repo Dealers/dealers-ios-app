@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "WhereIsTheDeal.h"
 #import "KeychainItemWrapper.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @implementation AppDelegate
 
