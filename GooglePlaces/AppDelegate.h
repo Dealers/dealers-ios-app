@@ -33,5 +33,6 @@
 - (void)setTabBarController;
 - (NSArray *)getCategories;
 - (NSArray *)getCategoriesIcons;
+- (void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI;
 
 @end

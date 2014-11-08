@@ -57,9 +57,6 @@
     [[UIPickerView appearance] setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
     [[UIDatePicker appearance] setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
     
-    [FBLoginView class];
-    [FBProfilePictureView class];
-    
     return YES;
 }
 
@@ -89,28 +86,6 @@
     [dealersManager addResponseDescriptor:responseDescriptor];
     
     [dealersManager.HTTPClient setAuthorizationHeaderWithUsername:@"uzi" password:@"090909"];
-}
-
-- (void)getTokenString
-{
-    NSString *username = @"uzi";
-    NSString *password = @"090909";
-    
-    NSDictionary *queryParams = @{@"username" : username,
-                                  @"password" : password
-                                  };
-    
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"/api-auth"
-                                           parameters:queryParams
-                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                  self.token = [mappingResult.array objectAtIndex:0];
-                                                  NSLog(@"\nToken is:%@", self.token);
-                                              }
-                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                  NSLog(@"There was an error with the loading of the store search: %@", error);
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                  [alert show];
-                                              }];
 }
 
 - (void)setTabBarController
@@ -181,6 +156,26 @@
     
     return icons;
 }
+
+- (void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI
+{
+    [FBSession openActiveSessionWithReadPermissions:permissions
+                                       allowLoginUI:allowLoginUI
+                                  completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                      
+                                      // Create a NSDictionary object and set the parameter values.
+                                      NSDictionary *sessionStateInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                        session, @"session",
+                                                                        [NSNumber numberWithInteger:status], @"state",
+                                                                        error, @"error",
+                                                                        nil];
+                                      
+                                      // Create a new notification, add the sessionStateInfo dictionary to it and post it.
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionStateChangeNotification"
+                                                                                          object:nil
+                                                                                        userInfo:sessionStateInfo];
+                                  }];
+}
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -201,12 +196,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    /*_Animate_first= [[NSString alloc]init];
-    _Animate_first= [[NSString alloc]init];
-    _UserID = [[NSString alloc]init];
-    _AfterAddDeal = [[NSString alloc]init];
-    _onlineOrLocal = [[NSString alloc]init];*/
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
+        
+        [self openActiveSessionWithPermissions:nil allowLoginUI:NO];
+    }
+    
+    [FBAppCall handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

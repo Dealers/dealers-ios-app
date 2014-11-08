@@ -44,19 +44,19 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)toggleHiddenState:(BOOL)shouldHide{
+- (void)toggleHiddenState:(BOOL)shouldHide{
     self.lblUsername.hidden = shouldHide;
     self.lblEmail.hidden = shouldHide;
     self.profilePicture.hidden = shouldHide;
 }
 
--(void)loginViewShowingLoggedInUser:(FBLoginView *)loginView{
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView{
     self.lblLoginStatus.text = @"You are logged in.";
     
     [self toggleHiddenState:NO];
 }
 
--(void)updateDealerClass :(id<FBGraphUser>)user{
+- (void)updateDealerClass :(id<FBGraphUser>)user{
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     Dealer *dealer = [[Dealer alloc]init];
     
@@ -77,7 +77,7 @@
     app.dealerClass = dealer;
 }
 
--(void) mainFunction : (id<FBGraphUser>)user {
+- (void) mainFunction : (id<FBGraphUser>)user {
     AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     Functions *func = [[Functions alloc]init];
     if ([func checkIfUserExist:self.lblEmail.text]) {
@@ -96,7 +96,7 @@
     }
 }
 
--(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user{
+- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user{
     NSLog(@"%@", user);
 
     self.profilePicture.profileID = user.objectID;

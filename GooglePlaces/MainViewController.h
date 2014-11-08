@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
+#import "MBProgressHUD.h"
 
-@interface MainViewController : UIViewController <UINavigationBarDelegate,UINavigationBarDelegate>
+@interface MainViewController : UIViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
 {
-     float ScreenHeight;
+    float ScreenHeight;
+    MBProgressHUD *loggingInFacebook;
 }
 
 @property AppDelegate *appDelegate;
+
+@property Dealer *dealer;
 
 @property (weak, nonatomic) IBOutlet UIImageView *dealershead;
 @property (weak, nonatomic) IBOutlet UIImageView *backwhite;
