@@ -8,6 +8,8 @@
 
 #import "EditProfileTableViewController.h"
 
+#define AWS_S3_BUCKET_NAME @"dealers-app"
+
 @interface EditProfileTableViewController ()
 
 @end
@@ -19,21 +21,23 @@
 
 - (void)initialize
 {
-    self.appDelegate = [[UIApplication sharedApplication]delegate];
-    
-    self.dealer = self.appDelegate.dealer;
+    appDelegate = [[UIApplication sharedApplication]delegate];
     
     self.didChangeProfilePic = NO;
     self.datePickerIsShowing = NO;
+    self.didChangeEmail = NO;
     
-    if (self.dealer.photo) {
+    self.editedDealer = [[Dealer alloc]init];
+    
+    didUploadUserData = NO;
+    didPhotoFinishedUploading = NO;
+    shouldUploadPhoto = NO;
+    
+    if (appDelegate.dealer.photo) {
         userHaveProfilePic = YES;
     } else {
         userHaveProfilePic = NO;
     }
-    
-    [self signUpForKeyboardNotifications];
-    [self setProgressIndicator];
 }
 
 - (void)viewDidLoad
@@ -44,9 +48,29 @@
     
     [self initialize];
     
+    [self signUpForKeyboardNotifications];
     [self setSaveButton];
+    [self setProgressIndicator];
     [self setProfilePicSection];
+    [self saveOriginalValues];
     [self setKnownValues];
+    [self configureRestKit];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if (!didUploadUserData) {
+        
+        appDelegate.dealer.photoURL = self.originalPhotoURL;
+        appDelegate.dealer.photo = self.originalPhotoData;
+        appDelegate.dealer.fullName = self.originalFullName;
+        appDelegate.dealer.about = self.originalAbout;
+        appDelegate.dealer.location = self.originalLocation;
+        appDelegate.dealer.dateOfBirth = self.originalDateOfBirth;
+        appDelegate.dealer.gender = self.originalGender;
+        appDelegate.dealer.email = self.originalEmail;
+        appDelegate.dealer.username = self.originalEmail;
+    }
 }
 
 
@@ -64,7 +88,7 @@
 - (void)setProfilePicSection
 {
     if (userHaveProfilePic) {
-        [self.profilePicButton setImage:[appDelegate.dealer.photo copy] forState:UIControlStateNormal];
+        [self.profilePicButton setImage:[UIImage imageWithData:appDelegate.dealer.photo] forState:UIControlStateNormal];
     } else {
         [self.profilePicButton setImage:[UIImage imageNamed:@"Profile Pic Placeholder"] forState:UIControlStateNormal];
     }
@@ -72,18 +96,40 @@
     self.profilePicButton.layer.masksToBounds = YES;
 }
 
+- (void)saveOriginalValues
+{
+    self.originalPhotoURL = [appDelegate.dealer.photoURL mutableCopy];
+    self.originalPhotoData = [appDelegate.dealer.photo mutableCopy];
+    self.originalFullName = [appDelegate.dealer.fullName mutableCopy];
+    self.originalAbout = [appDelegate.dealer.about mutableCopy];
+    self.originalLocation = [appDelegate.dealer.location mutableCopy];
+    self.originalDateOfBirth = appDelegate.dealer.dateOfBirth;
+    self.originalGender = [appDelegate.dealer.gender mutableCopy];
+    self.originalEmail = [appDelegate.dealer.email mutableCopy];
+}
+
 - (void)setKnownValues
 {
     self.fullName.text = [appDelegate.dealer.fullName mutableCopy];
-    self.about.text = [appDelegate.dealer.about mutableCopy];
-    self.location.text = [appDelegate.dealer.location mutableCopy];
     self.email.text = [appDelegate.dealer.email mutableCopy];
+    
+    if (appDelegate.dealer.location.length > 0 && ![appDelegate.dealer.location isEqualToString:@"None"]) {
+        self.location.text = [appDelegate.dealer.location mutableCopy];
+    }
+    
+    if (appDelegate.dealer.about.length > 0 && ![appDelegate.dealer.about isEqualToString:@"None"]) {
+        self.about.text = [appDelegate.dealer.about mutableCopy];
+    }
     
     [self setDateOfBirthLabel];
     
     if (appDelegate.dealer.gender) {
-        self.gender.text = appDelegate.dealer.gender;
-        self.gender.textColor = [UIColor blackColor];
+        
+        if (![appDelegate.dealer.gender isEqualToString:@"Unspecified"]) {
+            
+            self.gender.text = appDelegate.dealer.gender;
+            self.gender.textColor = [UIColor blackColor];
+        }
     }
 }
 
@@ -123,9 +169,29 @@
     uploading.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     uploading.animationType = MBProgressHUDAnimationZoomIn;
     
+    saved = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    saved.delegate = self;
+    saved.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
+    saved.mode = MBProgressHUDModeCustomView;
+    saved.labelText = @"  Saved!  ";
+    saved.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    saved.animationType = MBProgressHUDAnimationZoomIn;
+    
+    couldntUpload = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    couldntUpload.delegate = self;
+    couldntUpload.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
+    couldntUpload.mode = MBProgressHUDModeCustomView;
+    couldntUpload.labelText = @"Couldn't upload the changes...";
+    couldntUpload.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    couldntUpload.detailsLabelText = @"Please try again";
+    couldntUpload.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
+    couldntUpload.animationType = MBProgressHUDAnimationZoomIn;
+    
     [self.navigationController.view addSubview:blankFullName];
     [self.navigationController.view addSubview:blankEmail];
     [self.navigationController.view addSubview:uploading];
+    [self.navigationController.view addSubview:saved];
+    [self.navigationController.view addSubview:couldntUpload];
 }
 
 
@@ -137,7 +203,7 @@
 #define genderActionSheetTag 2
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = self.tableView.rowHeight;
     
@@ -152,16 +218,23 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == dateOfBirthSection && indexPath.row == 0) {
+        
         if (self.datePickerIsShowing) {
+            
             [self hideDatePickerCell];
+            
         } else {
+            
             [self showDatePickerCell];
             [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
             [self performSelector:@selector(dateChanged:) withObject:self.datePicker];
             [self.view endEditing:YES];
         }
+        
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
     } else if (indexPath.section == 1 && indexPath.row == 2) {
+        
         UIActionSheet *genderOptions = [[UIActionSheet alloc]
                                         initWithTitle:@"What is your gender?"
                                         delegate:self
@@ -171,10 +244,13 @@
         genderOptions.tag = genderActionSheetTag;
         [genderOptions showFromTabBar:self.tabBarController.tabBar];
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
         if (self.datePickerIsShowing) {
             [self hideDatePickerCell];
         }
+        
     } else if (indexPath.section == 2 && indexPath.row == 1) {
+        
         PasswordTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"passwordID"];
         [self.navigationController pushViewController:ptvc animated:YES];
     }
@@ -205,6 +281,7 @@
     }
     actionSheet.tag = profilePicActionSheetTag;
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    
     if (self.datePickerIsShowing) {
         [self hideDatePickerCell];
     }
@@ -213,11 +290,11 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (actionSheet.tag) {
-        
+            
         case profilePicActionSheetTag:
             [self setProfilePicActionSheet:buttonIndex];
             break;
-        
+            
         case genderActionSheetTag:
             
             if (buttonIndex == 0) {
@@ -230,7 +307,7 @@
                 self.gender.text = @"Male";
                 self.gender.textColor = [UIColor blackColor];
             }
-             break;
+            break;
             
         default:
             break;
@@ -318,6 +395,7 @@
 #pragma mark - Basic Info
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
     [textField resignFirstResponder];
     return YES;
 }
@@ -333,12 +411,6 @@
         [self hideDatePickerCell];
 }
 
-/*
-- (void)handleTap:(UITapGestureRecognizer *)recognizer
-{
-    [self.view endEditing:YES];
-}
-*/
 
 #pragma mark - Private Info
 
@@ -356,6 +428,7 @@
         NSDate *defaultDate = [appDelegate.dealer.dateOfBirth copy];
         [self.datePicker setDate:defaultDate];
         self.dateOfBirth.text = [self.dateFormatter stringFromDate:defaultDate];
+        self.dateOfBirth.textColor = [UIColor blackColor];
     }
     
     self.datePicker.backgroundColor = [UIColor whiteColor];
@@ -410,7 +483,7 @@
 }
 
 - (IBAction)noDate:(id)sender {
-
+    
     self.dateOfBirth.text = @"Date of Birth";
     self.dateOfBirth.textColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     self.didCancelDate = YES;
@@ -420,6 +493,60 @@
 
 #pragma mark - Uploading and dismissing
 
+- (RKObjectMapping *)editProfileMapping
+{
+    RKObjectMapping *editProfileMapping = [RKObjectMapping requestMapping];
+    [editProfileMapping addAttributeMappingsFromDictionary: @{
+                                                              @"email" : @"email",
+                                                              @"fullName" : @"full_name",
+                                                              @"dateOfBirth" : @"date_of_birth",
+                                                              @"gender" : @"gender",
+                                                              @"about" : @"about",
+                                                              @"location" : @"location",
+                                                              @"username" : @"user.username",
+                                                              @"photoURL" : @"photo"
+                                                              }];
+    return editProfileMapping;
+}
+
+- (void)configureRestKit
+{
+    NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+    
+    self.editProfileManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+    self.editProfileManager.requestSerializationMIMEType = RKMIMETypeJSON;
+    
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
+    
+    RKResponseDescriptor *editProfileResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[appDelegate dealerMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:nil
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKRequestDescriptor *editProfileRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[self editProfileMapping]
+                                          objectClass:[Dealer class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+
+    NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+    self.password = [keychain objectForKey:(__bridge id)(kSecValueData)];
+    
+    [self.editProfileManager.HTTPClient setAuthorizationHeaderWithUsername:username password:self.password];
+    
+    RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
+    [errorMapping addPropertyMapping: [RKAttributeMapping attributeMappingFromKeyPath:@"detail" toKeyPath:@"errorMessage"]];
+    
+    [self.editProfileManager addResponseDescriptorsFromArray:@[editProfileResponseDescriptor]];
+    [self.editProfileManager addRequestDescriptor:editProfileRequestDescriptor];
+}
+
 - (void)saveChanges
 {
     if (!(self.fullName.text.length > 0)) {
@@ -427,7 +554,7 @@
         [blankFullName show:YES];
         [blankFullName hide:YES afterDelay:1.5];
         return;
-    
+        
     } else if (!(self.email.text.length > 0)) {
         
         [blankEmail show:YES];
@@ -435,7 +562,7 @@
         return;
     }
     
-    if (![self didProfileChange]) {
+    if (![self didProfileChange] && !self.didChangeProfilePic) {
         
         [self.navigationController popViewControllerAnimated:YES];
         return;
@@ -443,24 +570,38 @@
     
     // Set the new values in the dealer object
     
-    self.dealer.fullName = self.fullName.text;
-    self.dealer.about = self.about.text;
-    self.dealer.location = self.location.text;
+    appDelegate.dealer.fullName = self.fullName.text;
+    appDelegate.dealer.about = self.about.text;
+    appDelegate.dealer.location = self.location.text;
     
     if ([self.dateOfBirth.text isEqualToString:@"Date of Birth"]) {
-        self.dealer.dateOfBirth = nil;
+        appDelegate.dealer.dateOfBirth = nil;
     } else {
-        self.dealer.dateOfBirth = self.datePicker.date;
+        appDelegate.dealer.dateOfBirth = self.datePicker.date;
     }
     
-    if ([self.dealer.gender isEqualToString:@"Gender"]) {
-        self.dealer.gender = @"Unspecified";
+    if ([self.gender.text isEqualToString:@"Gender"]) {
+        appDelegate.dealer.gender = @"Unspecified";
     } else {
-        self.dealer.gender = self.gender.text;
+        appDelegate.dealer.gender = self.gender.text;
     }
+    
+    if (![self.email.text isEqualToString:self.originalEmail]) {
+        self.didChangeEmail = YES;
+    }
+    appDelegate.dealer.email = self.email.text;
+    appDelegate.dealer.username = self.email.text;
     
     if (self.didChangeProfilePic) {
-        self.dealer.photo = self.profilePicButton.imageView.image;
+        if (userHaveProfilePic) {
+            photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", appDelegate.dealer.email, [NSDate date]];
+            appDelegate.dealer.photoURL = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
+            shouldUploadPhoto = YES;
+            [self uploadPhoto:self.profilePicButton.imageView.image];
+        } else {
+            appDelegate.dealer.photoURL = @"";
+            appDelegate.dealer.photo = nil;
+        }
     }
     
     [uploading show:YES];
@@ -470,62 +611,162 @@
 
 - (void)uploadChanges
 {
+    NSString *path = [NSString stringWithFormat:@"/dealers/%@/", appDelegate.dealer.dealerID];
     
+    [self.editProfileManager patchObject:appDelegate.dealer
+                                    path:path
+                              parameters:nil
+                                 success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                     
+                                     NSLog(@"Profile was edited successfuly!");
+                                     
+                                     didUploadUserData = YES;
+                                     
+                                     
+                                     if (shouldUploadPhoto) {
+                                         if (didPhotoFinishedUploading) {
+                                             [uploading hide:NO];
+                                             [saved show:NO];
+                                             [saved hide:YES afterDelay:1.5];
+                                             [self performSelector:@selector(popViewController) withObject:nil afterDelay:1.5];
+                                         }
+                                     } else {
+                                         [appDelegate saveUserDetailsOnDevice];
+                                         if (self.didChangeEmail) [self updateUsername];
+                                         [uploading hide:NO];
+                                         [saved show:NO];
+                                         [saved hide:YES afterDelay:1.5];
+                                         [self performSelector:@selector(popViewController) withObject:nil afterDelay:1.5];
+                                     }
+                                 }
+                                 failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                     
+                                     [uploading hide:NO];
+                                     [couldntUpload show:NO];
+                                     [couldntUpload hide:YES afterDelay:2.0];
+                                     [[AWSS3TransferManager defaultS3TransferManager] cancelAll];
+                                 }];
+}
+
+- (void)uploadPhoto:(UIImage *)image
+{
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    NSString *key = self.appDelegate.dealer.photoURL;
+    UIImage *sizedProfilPic = [appDelegate resizeImage:image toSize:CGSizeMake(100,100)];
+    appDelegate.dealer.photo = UIImageJPEGRepresentation(sizedProfilPic, 0.6);
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:photoFileName];
+    [appDelegate.dealer.photo writeToFile:filePath atomically:YES];
+    
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.bucket = AWS_S3_BUCKET_NAME;
+    uploadRequest.key = key;
+    uploadRequest.body = fileURL;
+    
+    [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
+                                                       withBlock:^id(BFTask *task) {
+                                                           if (task.error) {
+                                                               if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                   switch (task.error.code) {
+                                                                           
+                                                                       case AWSS3TransferManagerErrorCancelled:
+                                                                           NSLog(@"Profile photo upload cancelled");
+                                                                           break;
+                                                                           
+                                                                       case AWSS3TransferManagerErrorPaused:
+                                                                           NSLog(@"Profile photo upload paused");
+                                                                           break;
+                                                                           
+                                                                       default:
+                                                                           NSLog(@"Error: %@", task.error);
+                                                                           break;
+                                                                   }
+                                                               } else {
+                                                                   // Unknown error.
+                                                                   NSLog(@"Error: %@", task.error);
+                                                               }
+                                                           }
+                                                           
+                                                           if (task.result) {
+                                                               
+                                                               NSLog(@"Profile photo uploaded successfuly!");
+                                                               didPhotoFinishedUploading = YES;
+                                                               if (didUploadUserData) {
+                                                                   [appDelegate saveUserDetailsOnDevice];
+                                                                   if (self.didChangeEmail) [self updateUsername];
+                                                                   [uploading hide:NO];
+                                                                   [saved show:NO];
+                                                                   [saved hide:YES afterDelay:1.5];
+                                                                   [self performSelector:@selector(popViewController) withObject:nil afterDelay:1.5];
+                                                               }
+                                                           }
+                                                           return nil;
+                                                       }];
+}
+
+- (void)updateUsername
+{
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    
+    [keychain setObject:self.email.text forKey:(__bridge id)(kSecAttrAccount)];
+    
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:self.email.text password:self.password];
 }
 
 - (BOOL)didProfileChange
 {
-    if (![self.fullName.text isEqualToString:self.dealer.fullName]) {
+    // Checking if Photo has been changed separately in self.didChangeProfilePic
+    
+    if (![self.fullName.text isEqualToString:self.originalFullName]) {
         
         return YES;
     }
     
-    if (![self.about.text isEqualToString:self.dealer.about]) {
+    if (![self.about.text isEqualToString:self.originalAbout]) {
         
-        if (!(self.about.text.length > 0) && !self.dealer.about) {
-            
-            // Still no changes
-        
-        } else {
+        if (![appDelegate.dealer.about isEqualToString:@"None"]) {
             
             return YES;
         }
     }
     
-    if (![self.location.text isEqualToString:self.dealer.location]) {
+    if (![self.location.text isEqualToString:self.originalLocation]) {
         
-        if (!(self.location.text.length > 0) && !self.dealer.location) {
-            
-            // Still no changes
-            
-        } else {
+        if (![appDelegate.dealer.location isEqualToString:@"None"]) {
             
             return YES;
         }
     }
     
-    if (!([self.dateOfBirth.text isEqualToString:@"Date of Birth"] && !self.dealer.dateOfBirth)) {
+    if (!([self.dateOfBirth.text isEqualToString:@"Date of Birth"] && !self.originalDateOfBirth)) {
         
-        if (![self.datePicker.date isEqualToDate:self.dealer.dateOfBirth]) {
+        if (![self.datePicker.date isEqualToDate:self.originalDateOfBirth]) {
             
             return YES;
         }
     }
     
-    if (!([self.gender.text isEqualToString:@"Gender"] && !self.dealer.gender)) {
+    if (!([self.gender.text isEqualToString:@"Gender"] && !self.originalGender)) {
         
-        if (![self.gender.text isEqualToString:self.dealer.gender]) {
+        if (![self.gender.text isEqualToString:self.originalGender]) {
             
             return YES;
         }
     }
     
-    if (![self.email.text isEqualToString:self.dealer.email]) {
+    if (![self.email.text isEqualToString:self.originalEmail]) {
         
         return YES;
     }
     
     return NO;
+}
+
+- (void)popViewController
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

@@ -9,6 +9,9 @@
 #import "SettingsTableViewController.h"
 #import "KeychainItemWrapper.h"
 
+#define confirmDisconnectTag 12341234
+#define confirmConnectTag 43214321
+
 @interface SettingsTableViewController ()
 
 @end
@@ -22,13 +25,30 @@
     self.title = @"Settings";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
+    self.appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleFBSessionStateChangeWithNotification:)
+                                                 name:@"SessionStateChangeNotification"
+                                               object:nil];
+    
     [self setProgressIndicator];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+    
+    if ([self.appDelegate isFacebookConnected]) {
+        
+        self.facebookConnectionIndicator.text = @"Connected";
+        self.facebookConnectionIndicator.textColor = [UIColor blackColor];
+        
+    } else {
+        
+        self.facebookConnectionIndicator.text = @"Not Connected";
+        self.facebookConnectionIndicator.textColor = [UIColor lightGrayColor];
+    }
 }
 
 - (void)setProgressIndicator
@@ -41,7 +61,19 @@
     progressIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     progressIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
+    UIImageView *customView = [self.appDelegate loadingAnimationWhite];
+    [customView startAnimating];
+    
+    loggingInFacebook = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    loggingInFacebook.delegate = self;
+    loggingInFacebook.customView = customView;
+    loggingInFacebook.mode = MBProgressHUDModeCustomView;
+    loggingInFacebook.labelText = @"Logging In";
+    loggingInFacebook.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    loggingInFacebook.animationType = MBProgressHUDAnimationZoomIn;
+    
     [self.tabBarController.view addSubview:progressIndicator];
+    [self.tabBarController.view addSubview:loggingInFacebook];
 }
 
 #pragma mark - Table view data source
@@ -54,7 +86,37 @@
             [self pushEditProfileView];
             break;
         case 1:
-            if (indexPath.row == 1) {
+            // Facebook Connection:
+            if (indexPath.row == 0) {
+                
+                if (![self.appDelegate isFacebookConnected]) {
+                    
+                    // Connect Facebook
+                    UIActionSheet *confirmConnection = [[UIActionSheet alloc]initWithTitle:@"Do you want to connect Facebook?"
+                                                                                     delegate:self
+                                                                            cancelButtonTitle:@"Cancel"
+                                                                       destructiveButtonTitle:nil
+                                                                            otherButtonTitles:@"Connect Facebook", nil];
+                    
+                    confirmConnection.tag = confirmConnectTag;
+                    [confirmConnection showFromTabBar:self.tabBarController.tabBar];
+                    
+                } else {
+                    
+                    // Disconnect Facebook
+                    UIActionSheet *confirmDisconnection = [[UIActionSheet alloc]initWithTitle:@"Do you want to disconnect Facebook?"
+                                                                                     delegate:self
+                                                                            cancelButtonTitle:@"Cancel"
+                                                                       destructiveButtonTitle:@"Disconnect"
+                                                                            otherButtonTitles:nil];
+                    
+                    confirmDisconnection.tag = confirmDisconnectTag;
+                    [confirmDisconnection showFromTabBar:self.tabBarController.tabBar];
+                }
+                
+                [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+                
+            } else if (indexPath.row == 1) {
                 // Push Notifications:
                 [self pushPushNotificationsView];
             }
@@ -82,16 +144,76 @@
 }
 
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - Social Connections methods
+
+- (void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    // Get the session, state and error values from the notification's userInfo dictionary.
+    NSDictionary *userInfo = [notification userInfo];
     
-    // Configure the cell...
+    FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
+    NSError *error = [userInfo objectForKey:@"error"];
     
-    return cell;
+    if (!error) {
+        
+        // In case that there's not any error, then check if the session opened or closed.
+        
+        if (sessionState == FBSessionStateOpen) {
+            
+            // The session is open. Get the user information and update the UI.
+            
+            [loggingInFacebook show:YES];
+            
+            [FBRequestConnection startWithGraphPath:@"me"
+                                         parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(normal), email"}
+                                         HTTPMethod:@"GET"
+                                  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                      
+                                      if (!error) {
+                                          
+                                          Dealer *dealer = self.appDelegate.dealer;
+                                          
+                                          if (!dealer.dateOfBirth) {
+                                              
+                                              NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+                                              dateFormatter.dateFormat = @"MM/dd/yyyy";
+                                              dealer.dateOfBirth = [dateFormatter dateFromString:[result objectForKey:@"birthday"]];
+                                          }
+                                          
+                                          if (!(dealer.gender.length > 0)) {
+                                              dealer.gender = [result objectForKey:@"gender"];
+                                          }
+                                          
+                                          if (!dealer.photo) {
+                                              NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
+                                              dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
+                                          }
+                                          
+                                          // Upload all the data to Dealers database.
+                                          
+                                          [loggingInFacebook hide:YES];
+                                          
+                                          self.facebookConnectionIndicator.text = @"Connected";
+                                          self.facebookConnectionIndicator.textColor = [UIColor blackColor];
+                                          
+                                      } else {
+                                          
+                                          NSLog(@"%@", [error localizedDescription]);
+                                      }
+                                  }];
+            
+        } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
+            
+            // A session was closed or the login was failed or canceled. Update the UI accordingly.
+        }
+        
+    } else {
+        
+        // In case an error has occured, then just log the error and update the UI accordingly.
+        NSLog(@"Error: %@", [error localizedDescription]);
+        [loggingInFacebook hide:YES];
+    }
 }
-*/
 
 #pragma mark - Navigation methods
 
@@ -121,16 +243,12 @@
     UIGraphicsEndImageContext();
     
     appDelegate.dealer = nil;
+    [appDelegate removeUserDetailsFromDevice];
     
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
-    [keychain resetKeychainItem];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    [defaults removeObjectForKey:@"fullName"];
-    [defaults removeObjectForKey:@"dateOfBirth"];
-    [defaults removeObjectForKey:@"gender"];
-    [defaults removeObjectForKey:@"image"];
+    if ([self.appDelegate isFacebookConnected]) {
+        
+        [[FBSession activeSession] closeAndClearTokenInformation];
+    }
     
     appDelegate.Animate_first = @"notfirst";
     appDelegate.screenShot = screenShot;
@@ -172,7 +290,7 @@
         case MFMailComposeResultSent:   {
             [progressIndicator show:YES];
             [progressIndicator hide:YES afterDelay:2.5];
-
+            
             break;
         }
         case MFMailComposeResultFailed: {
@@ -181,7 +299,7 @@
             [alert show];
         }
             break;
-        
+            
         default:
             break;
     }
@@ -206,6 +324,25 @@
     
     // Present mail view controller on screen
     [self presentViewController:mc animated:YES completion:nil];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == confirmDisconnectTag) {
+        
+        if (buttonIndex == 0) {
+            [[FBSession activeSession] closeAndClearTokenInformation];
+            self.facebookConnectionIndicator.text = @"Not Connected";
+            self.facebookConnectionIndicator.textColor = [UIColor lightGrayColor];
+        }
+    
+    } else if (actionSheet.tag == confirmConnectTag) {
+        
+        if (buttonIndex == 0) {
+            
+            [self.appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email"] allowLoginUI:YES];
+        }
+    }
 }
 
 @end

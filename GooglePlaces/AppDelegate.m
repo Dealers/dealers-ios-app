@@ -9,9 +9,15 @@
 //itzikb
 
 #import "AppDelegate.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import <AWSiOSSDKv2/S3.h>
+#import <AWSiOSSDKv2/AWSCore.h>
 #import "WhereIsTheDeal.h"
 #import "KeychainItemWrapper.h"
-#import <FacebookSDK/FacebookSDK.h>
+
+#define AWS_ACCESS_KEY_ID @"AKIAIWJFJX72FWKD2LYQ"
+#define AWS_SECRET_ACCESS_KEY @"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"
+#define AWS_S3_BUCKET_NAME @"dealers-app"
 
 @implementation AppDelegate
 
@@ -19,6 +25,11 @@
 @synthesize storyboard;
 @synthesize tabBarController;
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -35,7 +46,7 @@
                                                           [UIColor colorWithRed:150.0/255.0 green:0.0/255.0 blue:180.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
                                                           [UIFont fontWithName:@"Avenir-Roman" size:20.0], NSFontAttributeName, nil]];
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
-        
+    
     // Customizing the Tab Bar:
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
@@ -46,6 +57,17 @@
     [[UIPickerView appearance] setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
     [[UIDatePicker appearance] setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
     
+    // Configuring RestKit:
+    [self configureRestKit];
+    
+    // Configuting Amazon Web Service SDK:
+    AWSStaticCredentialsProvider *credentialsProvider = [AWSStaticCredentialsProvider credentialsWithAccessKey:AWS_ACCESS_KEY_ID
+                                                                                                     secretKey:AWS_SECRET_ACCESS_KEY];
+    AWSServiceConfiguration *configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionEUWest1
+                                                                          credentialsProvider:credentialsProvider];
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+    
+    
     // For showing the network activity indicator whenever communicating with the web:
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     
@@ -54,6 +76,9 @@
     
     return YES;
 }
+
+
+#pragma mark - Tab Bar Controller
 
 - (void)setTabBarController
 {
@@ -135,29 +160,249 @@
     UIImageView *loadingAnimationView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
     
     loadingAnimationView.animationImages = [NSArray arrayWithObjects:
-                                    [UIImage imageNamed:@"Loadingwhite"],
-                                    [UIImage imageNamed:@"Loading5white"],
-                                    [UIImage imageNamed:@"Loading10white"],
-                                    [UIImage imageNamed:@"Loading15white"],
-                                    [UIImage imageNamed:@"Loading20white"],
-                                    [UIImage imageNamed:@"Loading25white"],
-                                    [UIImage imageNamed:@"Loading30white"],
-                                    [UIImage imageNamed:@"Loading35white"],
-                                    [UIImage imageNamed:@"Loading40white"],
-                                    [UIImage imageNamed:@"Loading45white"],
-                                    [UIImage imageNamed:@"Loading50white"],
-                                    [UIImage imageNamed:@"Loading55white"],
-                                    [UIImage imageNamed:@"Loading60white"],
-                                    [UIImage imageNamed:@"Loading65white"],
-                                    [UIImage imageNamed:@"Loading70white"],
-                                    [UIImage imageNamed:@"Loading75white"],
-                                    [UIImage imageNamed:@"Loading80white"],
-                                    [UIImage imageNamed:@"Loading85white"],
-                                    nil];
+                                            [UIImage imageNamed:@"Loadingwhite"],
+                                            [UIImage imageNamed:@"Loading5white"],
+                                            [UIImage imageNamed:@"Loading10white"],
+                                            [UIImage imageNamed:@"Loading15white"],
+                                            [UIImage imageNamed:@"Loading20white"],
+                                            [UIImage imageNamed:@"Loading25white"],
+                                            [UIImage imageNamed:@"Loading30white"],
+                                            [UIImage imageNamed:@"Loading35white"],
+                                            [UIImage imageNamed:@"Loading40white"],
+                                            [UIImage imageNamed:@"Loading45white"],
+                                            [UIImage imageNamed:@"Loading50white"],
+                                            [UIImage imageNamed:@"Loading55white"],
+                                            [UIImage imageNamed:@"Loading60white"],
+                                            [UIImage imageNamed:@"Loading65white"],
+                                            [UIImage imageNamed:@"Loading70white"],
+                                            [UIImage imageNamed:@"Loading75white"],
+                                            [UIImage imageNamed:@"Loading80white"],
+                                            [UIImage imageNamed:@"Loading85white"],
+                                            nil];
     loadingAnimationView.animationDuration = 0.3;
     
     return loadingAnimationView;
 }
+
+- (UIImageView *)loadingAnimationPurple
+{
+    UIImageView *loadingAnimationView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
+    
+    loadingAnimationView.animationImages = [NSArray arrayWithObjects:
+                                            [UIImage imageNamed:@"loading.png"],
+                                            [UIImage imageNamed:@"loading5.png"],
+                                            [UIImage imageNamed:@"loading10.png"],
+                                            [UIImage imageNamed:@"loading15.png"],
+                                            [UIImage imageNamed:@"loading20.png"],
+                                            [UIImage imageNamed:@"loading25.png"],
+                                            [UIImage imageNamed:@"loading30.png"],
+                                            [UIImage imageNamed:@"loading35.png"],
+                                            [UIImage imageNamed:@"loading40.png"],
+                                            [UIImage imageNamed:@"loading45.png"],
+                                            [UIImage imageNamed:@"loading50.png"],
+                                            [UIImage imageNamed:@"loading55.png"],
+                                            [UIImage imageNamed:@"loading60.png"],
+                                            [UIImage imageNamed:@"loading65.png"],
+                                            [UIImage imageNamed:@"loading70.png"],
+                                            [UIImage imageNamed:@"loading75.png"],
+                                            [UIImage imageNamed:@"loading80.png"],
+                                            [UIImage imageNamed:@"loading85.png"],
+                                            nil];
+    loadingAnimationView.animationDuration = 0.3;
+    
+    return loadingAnimationView;
+}
+
+
+#pragma mark - Helper Methods
+
+- (void)saveUserDetailsOnDevice
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:self.dealer.dealerID forKey:@"dealerID"];
+    [defaults setObject:self.dealer.email forKey:@"email"];
+    [defaults setObject:self.dealer.fullName forKey:@"fullName"];
+    [defaults setObject:self.dealer.dateOfBirth forKey:@"dateOfBirth"];
+    [defaults setObject:self.dealer.gender forKey:@"gender"];
+    [defaults setObject:self.dealer.registerDate forKey:@"registerDate"];
+    [defaults setObject:self.dealer.location forKey:@"location"];
+    [defaults setObject:self.dealer.about forKey:@"about"];
+    [defaults setObject:self.dealer.photoURL forKey:@"photoURL"];
+    [defaults setObject:self.dealer.photo forKey:@"photo"];
+    [defaults setObject:self.dealer.uploadedDeals forKey:@"uploadedDeals"];
+    [defaults setObject:self.dealer.likedDeals forKey:@"likedDeals"];
+    [defaults setObject:self.dealer.sharedDeals forKey:@"sharedDeals"];
+    [defaults setObject:self.dealer.followedBy forKey:@"followedBy"];
+    [defaults setObject:self.dealer.followings forKey:@"followings"];
+    [defaults setObject:self.dealer.badReportsCounter forKey:@"badReportsCounter"];
+    [defaults setObject:self.dealer.score forKey:@"score"];
+    [defaults setObject:self.dealer.rank forKey:@"rank"];
+    [defaults setObject:self.dealer.reliability forKey:@"reliability"];
+
+    [defaults synchronize];
+}
+
+- (void)removeUserDetailsFromDevice
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults removeObjectForKey:@"dealerID"];
+    [defaults removeObjectForKey:@"email"];
+    [defaults removeObjectForKey:@"fullName"];
+    [defaults removeObjectForKey:@"dateOfBirth"];
+    [defaults removeObjectForKey:@"gender"];
+    [defaults removeObjectForKey:@"registerDate"];
+    [defaults removeObjectForKey:@"location"];
+    [defaults removeObjectForKey:@"about"];
+    [defaults removeObjectForKey:@"photoURL"];
+    [defaults removeObjectForKey:@"photo"];
+    [defaults removeObjectForKey:@"uploadedDeals"];
+    [defaults removeObjectForKey:@"likedDeals"];
+    [defaults removeObjectForKey:@"sharedDeals"];
+    [defaults removeObjectForKey:@"followedBy"];
+    [defaults removeObjectForKey:@"followings"];
+    [defaults removeObjectForKey:@"badReportsCounter"];
+    [defaults removeObjectForKey:@"score"];
+    [defaults removeObjectForKey:@"rank"];
+    [defaults removeObjectForKey:@"reliability"];
+    
+    [defaults synchronize];
+    
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    [keychain resetKeychainItem];
+}
+
+- (UIImage *)myProfilePic
+{
+    if (self.dealer.photo) {
+        
+        return [UIImage imageWithData:self.dealer.photo];
+        
+    } else {
+        
+        return [UIImage imageNamed:@"Profile Pic Placeholder"];
+    }
+}
+
+- (void)otherProfilePic:(NSString *)photoURL forTarget:(NSString *)target inViewController:(NSString *)notificationCenterName inCell:(id)cell
+{
+    if (photoURL.length > 1) {
+        
+        AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+        
+        
+        NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:
+                                         [NSString stringWithFormat:@"profile_pic_tmp_%@_%i.jpg", target, arc4random_uniform(100000)]];
+        
+        NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+        
+        AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+        
+        downloadRequest.bucket = AWS_S3_BUCKET_NAME;
+        downloadRequest.key = photoURL;
+        downloadRequest.downloadingFileURL = downloadingFileURL;
+        
+        [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
+            
+            if (task.error){
+                if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                    switch (task.error.code) {
+                        case AWSS3TransferManagerErrorCancelled:
+                        case AWSS3TransferManagerErrorPaused:
+                            break;
+                            
+                        default:
+                            NSLog(@"Error: %@", task.error);
+                            return nil;
+                            break;
+                    }
+                } else {
+                    // Unknown error.
+                    NSLog(@"Error: %@", task.error);
+                    
+                }
+            }
+            
+            if (task.result) {
+                
+                __block UIImage *image = [UIImage imageWithContentsOfFile:downloadingFilePath];
+                __block NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                                  target, @"target",
+                                                  image, @"image",
+                                                  cell, @"cell",
+                                                  nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:notificationCenterName
+                                                                    object:nil
+                                                                  userInfo:userInfo];
+            }
+            
+            return nil;
+        }];
+        
+    } else {
+        
+        NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                  target, @"target",
+                                  [UIImage imageNamed:@"Profile Pic Placeholder"], @"image",
+                                  cell, @"cell",
+                                  nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationCenterName
+                                                            object:nil
+                                                          userInfo:userInfo];;
+    }
+}
+
+- (UIColor *)ourPurple
+{
+    UIColor *ourPurple = [UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0];
+    
+    return ourPurple;
+}
+
+- (UIColor *)textGrayColor
+{
+    UIColor *textGrayColor = [UIColor colorWithRed:155.0/255.0 green:155.0/255.0 blue:170.0/255.0 alpha:1.0];
+    
+    return textGrayColor;
+}
+
+- (UIColor *)darkTextGrayColor
+{
+    UIColor *darkTextGrayColor = [UIColor colorWithRed:110.0/255.0 green:110.0/255.0 blue:125.0/255.0 alpha:1.0];
+    
+    return darkTextGrayColor;
+}
+
+- (UIButton *)actionButton
+{
+    UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    
+    CGFloat x = 20;
+    CGFloat y = 20;
+    CGFloat width = self.window.frame.size.width - x * 2;
+    CGFloat height = 44;
+    
+    [actionButton setFrame:CGRectMake(x, y, width, height)];
+    [[actionButton layer] setCornerRadius:8.0];
+    [[actionButton layer] setMasksToBounds:YES];
+    [[actionButton titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:18.0]];
+    
+    return actionButton;
+}
+
+- (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContextWithOptions(newSize, YES, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
+
+#pragma mark - Dictionaries & Arrays
 
 - (NSDictionary *)getCurrenciesDictionary
 {
@@ -187,9 +432,9 @@
 - (NSDictionary *)getDiscountTypesDictionary
 {
     NSDictionary *discountTypes = @{
-                                 @"PP" : @"lastPrice",
-                                 @"PE" : @"%"
-                                 };
+                                    @"PP" : @"lastPrice",
+                                    @"PE" : @"%"
+                                    };
     return discountTypes;
 }
 
@@ -260,11 +505,14 @@
     return [categories valueForKey:key];
 }
 
-- (RKObjectMapping *)getTempDealMapping
+
+#pragma mark - RestKit
+
+- (RKObjectMapping *)dealMapping
 {
     RKObjectMapping *dealMapping = [RKObjectMapping mappingForClass:[Deal class]];
     [dealMapping addAttributeMappingsFromDictionary: @{
-                                                       @"url" : @"url",
+                                                       @"id" : @"dealID",
                                                        @"type" : @"type",
                                                        @"title" : @"title",
                                                        @"price" : @"price",
@@ -275,36 +523,122 @@
                                                        @"expiration" : @"expiration",
                                                        @"more_description" : @"moreDescription",
                                                        @"upload_date" : @"uploadDate",
-                                                       @"photo1" : @"photoID1",
-                                                       @"photo2" : @"photoID2",
-                                                       @"photo3" : @"photoID3",
-                                                       @"photo4" : @"photoID4"
+                                                       @"photo1" : @"photoURL1",
+                                                       @"photo2" : @"photoURL2",
+                                                       @"photo3" : @"photoURL3",
+                                                       @"photo4" : @"photoURL4"
                                                        }];
+    
+    RKObjectMapping *storeMapping = [self storeMapping];
+    [dealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"store"
+                                                                                toKeyPath:@"store"
+                                                                              withMapping:storeMapping]];
+    
+    RKObjectMapping *dealerMapping = [RKObjectMapping mappingForClass:[Dealer class]];
+    [dealerMapping addAttributeMappingsFromDictionary: @{
+                                                         @"id" : @"dealerID",
+                                                         @"email" : @"email",
+                                                         @"full_name" : @"fullName",
+                                                         @"date_of_birth" : @"dateOfBirth",
+                                                         @"gender" : @"gender",
+                                                         @"location" : @"location",
+                                                         @"about" : @"about",
+                                                         @"photo" : @"photoURL",
+                                                         @"register_date" : @"registerDate",
+                                                         @"uploaded_deals" : @"uploadedDeals",
+                                                         @"bad_reports_counter" : @"badReportsCounter",
+                                                         @"score" : @"score",
+                                                         @"rank" : @"rank",
+                                                         @"reliability" : @"reliability",
+                                                         @"uploaded_deals" : @"uploadedDeals",
+                                                         @"liked_deals" : @"likedDeals",
+                                                         @"shared_deals" : @"sharedDeals",
+                                                         @"followings" : @"followings",
+                                                         @"followed_by" : @"followedBy"
+                                                         }];
+    
+    [dealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"dealer"
+                                                                                toKeyPath:@"dealer"
+                                                                              withMapping:dealerMapping]];
+    
+    RKObjectMapping *dealAttribMapping = [self dealAttribMapping];
+    
+    [dealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"dealattribs"
+                                                                                toKeyPath:@"dealAttrib"
+                                                                              withMapping:dealAttribMapping]];
+    
+    RKObjectMapping *commentMapping = [self commentMapping];
+    
+    [dealMapping addRelationshipMappingWithSourceKeyPath:@"comments" mapping:commentMapping];
     
     return dealMapping;
 }
 
-- (RKObjectMapping *)getDealMapping
+- (RKObjectMapping *)addDealMapping
 {
-    RKObjectMapping *dealMapping = [RKObjectMapping mappingForClass:[Deal class]];
-    [dealMapping addAttributeMappingsFromDictionary: @{
-                                                       @"url" : @"url",
-                                                       @"type" : @"type",
-                                                       @"title" : @"title",
-                                                       @"price" : @"price",
-                                                       @"currency" : @"currency",
-                                                       @"discount_value" : @"discountValue",
-                                                       @"discount_type" : @"discountType",
-                                                       @"category" : @"category",
-                                                       @"expiration" : @"expiration",
-                                                       @"more_description" : @"moreDescription",
-                                                       @"upload_date" : @"uploadDate",
-                                                       @"photo1" : @"photoID1",
-                                                       @"photo2" : @"photoID2",
-                                                       @"photo3" : @"photoID3",
-                                                       @"photo4" : @"photoID4"
-                                                       }];
+    RKObjectMapping *addDealMapping = [RKObjectMapping mappingForClass:[Deal class]];
+    [addDealMapping addAttributeMappingsFromDictionary: @{
+                                                          @"id" : @"dealID",
+                                                          @"type" : @"type",
+                                                          @"title" : @"title",
+                                                          @"dealer" : @"dealer.dealerID",
+                                                          @"price" : @"price",
+                                                          @"currency" : @"currency",
+                                                          @"discount_value" : @"discountValue",
+                                                          @"discount_type" : @"discountType",
+                                                          @"category" : @"category",
+                                                          @"expiration" : @"expiration",
+                                                          @"more_description" : @"moreDescription",
+                                                          @"upload_date" : @"uploadDate",
+                                                          @"photo1" : @"photoURL1",
+                                                          @"photo2" : @"photoURL2",
+                                                          @"photo3" : @"photoURL3",
+                                                          @"photo4" : @"photoURL4"
+                                                          }];
     
+    RKObjectMapping *dealAttribMapping = [self dealAttribMapping];
+    [addDealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"dealattribs"
+                                                                                   toKeyPath:@"dealAttrib"
+                                                                                 withMapping:dealAttribMapping]];
+    
+    RKObjectMapping *storeMapping = [self storeMapping];
+    [addDealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"store"
+                                                                                   toKeyPath:@"store"
+                                                                                 withMapping:storeMapping]];
+    
+    return addDealMapping;
+}
+
+- (RKObjectMapping *)dealerMapping
+{
+    RKObjectMapping *dealerMapping = [RKObjectMapping mappingForClass:[Dealer class]];
+    [dealerMapping addAttributeMappingsFromDictionary: @{
+                                                         @"id" : @"dealerID",
+                                                         @"email" : @"email",
+                                                         @"full_name" : @"fullName",
+                                                         @"date_of_birth" : @"dateOfBirth",
+                                                         @"gender" : @"gender",
+                                                         @"about" : @"about",
+                                                         @"location" : @"location",
+                                                         @"register_date" : @"registerDate",
+                                                         @"user.username" : @"username",
+                                                         @"user.password" : @"userPassword",
+                                                         @"photo" : @"photoURL",
+                                                         @"bad_reports_counter" : @"badReportsCounter",
+                                                         @"score" : @"score",
+                                                         @"rank" : @"rank",
+                                                         @"reliability" : @"reliability",
+                                                         @"uploaded_deals" : @"uploadedDeals",
+                                                         @"liked_deals" : @"likedDeals",
+                                                         @"shared_deals" : @"sharedDeals",
+                                                         @"followings" : @"followings",
+                                                         @"followed_by" : @"followedBy"
+                                                         }];
+    return dealerMapping;
+}
+
+- (RKObjectMapping *)storeMapping
+{
     RKObjectMapping *storeMapping = [RKObjectMapping mappingForClass:[Store class]];
     [storeMapping addAttributeMappingsFromDictionary: @{
                                                         @"store_id" : @"storeID",
@@ -321,45 +655,206 @@
                                                         @"phone" : @"phone",
                                                         @"verified_by_foursquare" : @"verifiedByFoursquare"
                                                         }];
-    
-    [dealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"store"
-                                                                                toKeyPath:@"store"
-                                                                              withMapping:storeMapping]];
-    
-        RKObjectMapping *dealerMapping = [RKObjectMapping mappingForClass:[Dealer class]];
-    [dealerMapping addAttributeMappingsFromDictionary: @{
-                                                         @"id" : @"dealerID",
-                                                         @"email" : @"email",
-                                                         @"full_Name" : @"fullName",
-                                                         @"date_of_birth" : @"dateOfBirth",
-                                                         @"gender" : @"gender",
-                                                         @"location" : @"location",
-                                                         @"about" : @"about",
-                                                         @"photo" : @"photoID",
-                                                         @"register_date" : @"registerDate"
-                                                         }];
-    
-    [dealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"dealer"
-                                                                                toKeyPath:@"dealer"
-                                                                              withMapping:dealerMapping]];
-    
+    return storeMapping;
+}
+
+- (RKObjectMapping *)dealAttribMapping
+{
     RKObjectMapping *dealAttribMapping = [RKObjectMapping mappingForClass:[DealAttrib class]];
+    
     [dealAttribMapping addAttributeMappingsFromDictionary: @{
                                                              @"id" : @"dealAttribID",
-                                                             @"url" : @"url",
-                                                             @"like_counter" : @"likeCounter",
-                                                             @"share_counter" : @"shareCounter",
+                                                             @"deal" : @"dealID",
+                                                             @"dealers_that_liked" : @"dealersThatLiked",
+                                                             @"dealers_that_shared" : @"dealersThatShared",
                                                              @"deal_reliability" : @"dealReliability",
                                                              @"objective_rank" : @"objectiveRank"
                                                              }];
     
-    [dealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"dealattrib"
-                                                                                toKeyPath:@"dealAttrib"
-                                                                              withMapping:dealAttribMapping]];
-    
-    
-    return dealMapping;
+    return dealAttribMapping;
 }
+
+- (RKObjectMapping *)commentMapping
+{
+    RKObjectMapping *commentMapping = [RKObjectMapping mappingForClass:[Comment class]];
+    [commentMapping addAttributeMappingsFromDictionary: @{
+                                                          @"id" : @"commentID",
+                                                          @"text" : @"text",
+                                                          @"deal" : @"dealID",
+                                                          @"dealer.id" : @"dealerID",
+                                                          @"dealer.full_name" : @"dealerFullName",
+                                                          @"dealer.photo" : @"dealerPhotoURL",
+                                                          @"upload_date" : @"uploadDate",
+                                                          @"type" : @"type"
+                                                          }];
+    
+    return commentMapping;
+}
+
+- (RKObjectMapping *)addCommentMapping
+{
+    RKObjectMapping *addCommentMapping = [RKObjectMapping mappingForClass:[Comment class]];
+    [addCommentMapping addAttributeMappingsFromDictionary: @{
+                                                             @"id" : @"commentID",
+                                                             @"text" : @"text",
+                                                             @"deal" : @"dealID",
+                                                             @"dealer" : @"dealerID",
+                                                             @"upload_date" : @"uploadDate",
+                                                             @"type" : @"type"
+                                                             }];
+    
+    return addCommentMapping;
+}
+
+- (void)setHTTPClientUsername:(NSString *)username andPassword:(NSString *)password
+{
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:username password:password];
+}
+
+- (void)resetHTTPClientUsernameAndPassword
+{
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"09"];
+}
+
+- (void)configureRestKit
+{
+    // initialize AFNetworking HTTPClient
+    NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+    
+    // initialize RestKit
+    RKObjectManager *manager = [[RKObjectManager alloc] initWithHTTPClient:client];
+    manager.requestSerializationMIMEType = RKMIMETypeJSON;
+    
+    // validate with username and password
+    NSString *username = @"ubuntu";
+    NSString *password = @"09";
+    [manager.HTTPClient setAuthorizationHeaderWithUsername:username password:password];
+    
+    // other modifications to the object manager
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
+    
+    // register mappings with the provider using response descriptors
+    RKResponseDescriptor *dealsResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/deals/"
+                                                keyPath:@"results"
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *addDealResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/adddeals/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *specificDealResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/adddeals/:adddealID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *dealersResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealerMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealers/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *specificDealerResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealerMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealers/:dealerID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *dealAttribResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealAttribMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealattribs/:dealattribID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *commentsResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self commentMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/comments/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *addCommentResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self addCommentMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/addcomments/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    // register mappings with the provider using respnose discriptors for errors
+    RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
+    [errorMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"user"
+                                                                                 toKeyPath:@"errorMessage"
+                                                                               withMapping:errorMapping]];
+    
+    RKResponseDescriptor *errorResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:errorMapping
+                                                 method:RKRequestMethodAny
+                                            pathPattern:nil
+                                                keyPath:nil
+                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
+    
+    // register mappings with the provider using request descriptors
+    
+    // for user registration
+    RKRequestDescriptor *signUpRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self dealerMapping] inverseMapping]
+                                          objectClass:[Dealer class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    // for Add Deal & Edit Deal
+    RKRequestDescriptor *addDealRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self addDealMapping] inverseMapping]
+                                          objectClass:[Deal class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    // for Deal Attrib Update
+    RKRequestDescriptor *dealAttribRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self dealAttribMapping] inverseMapping]
+                                          objectClass:[DealAttrib class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    // for adding comment
+    RKRequestDescriptor *addCommentRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self addCommentMapping] inverseMapping]
+                                          objectClass:[Comment class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    [manager addResponseDescriptorsFromArray:@[dealsResponseDescriptor,
+                                               addDealResponseDescriptor,
+                                               specificDealResponseDescriptor,
+                                               dealersResponseDescriptor,
+                                               specificDealerResponseDescriptor,
+                                               dealAttribResponseDescriptor,
+                                               commentsResponseDescriptor,
+                                               addCommentResponseDescriptor,
+                                               errorResponseDescriptor
+                                               ]];
+    
+    [manager addRequestDescriptorsFromArray:@[
+                                              signUpRequestDescriptor,
+                                              addDealRequestDescriptor,
+                                              dealAttribRequestDescriptor,
+                                              addCommentRequestDescriptor
+                                              ]];
+}
+
+
+#pragma mark - Facebook
 
 - (void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI
 {
@@ -367,20 +862,43 @@
                                        allowLoginUI:allowLoginUI
                                   completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
                                       
-                                      // Create a NSDictionary object and set the parameter values.
-                                      NSDictionary *sessionStateInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                        session, @"session",
-                                                                        [NSNumber numberWithInteger:status], @"state",
-                                                                        error, @"error",
-                                                                        nil];
-                                      
-                                      // Create a new notification, add the sessionStateInfo dictionary to it and post it.
-                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionStateChangeNotification"
-                                                                                          object:nil
-                                                                                        userInfo:sessionStateInfo];
+                                      if (!error) {
+                                          
+                                          // Create a NSDictionary object and set the parameter values.
+                                          NSDictionary *sessionStateInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                            session, @"session",
+                                                                            [NSNumber numberWithInteger:status], @"state",
+                                                                            error, @"error",
+                                                                            nil];
+                                          
+                                          // Create a new notification, add the sessionStateInfo dictionary to it and post it.
+                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionStateChangeNotification"
+                                                                                              object:nil
+                                                                                            userInfo:sessionStateInfo];
+                                          
+                                      } else {
+                                          
+                                          NSLog(@"Error: %@", [error localizedDescription]);
+                                          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Can't connect Facebook"
+                                                                                         message:nil
+                                                                                        delegate:nil
+                                                                               cancelButtonTitle:@"Ok"
+                                                                               otherButtonTitles:nil];
+                                          [alert show];
+                                      }
                                   }];
 }
 
+- (BOOL)isFacebookConnected
+{
+    if ([FBSession activeSession].state == FBSessionStateOpen || [FBSession activeSession].state == FBSessionStateOpenTokenExtended) {
+        return YES;
+    }
+    return NO;
+}
+
+
+#pragma mark - Other App Delegate Methods
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -401,12 +919,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    /*_Animate_first= [[NSString alloc]init];
-     _Animate_first= [[NSString alloc]init];
-     _UserID = [[NSString alloc]init];
-     _AfterAddDeal = [[NSString alloc]init];
-     _onlineOrLocal = [[NSString alloc]init];*/
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
+        
+        [self openActiveSessionWithPermissions:nil allowLoginUI:NO];
+    }
+    
+    [FBAppCall handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

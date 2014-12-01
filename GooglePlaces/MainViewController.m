@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import "Signup2ViewController.h"
-#import "SigninViewController.h"
+#import "SignInTableViewController.h"
 #import "KeychainItemWrapper.h"
 
 @interface MainViewController ()
@@ -29,7 +29,9 @@
 {
     appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
-    [self checkIfUserLoggedIn];
+    if ([self checkIfUserLoggedIn]) {
+        return;
+    }
     
     ScreenHeight = self.view.frame.size.height/10;
     
@@ -54,6 +56,8 @@
     } else {
         [self objectInPlace];
     }
+    
+    [appDelegate resetHTTPClientUsernameAndPassword];
     
     [super viewDidLoad];
 }
@@ -104,7 +108,7 @@
 }
 
 -(IBAction)SigninButton:(id)sender{
-    SigninViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"signin"];
+    SignInTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SignInID"];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -112,7 +116,7 @@
     
     Dealer *dealer = [[Dealer alloc]init];
     
-    dealer.url = @"1234";
+    dealer.dealerID = [NSNumber numberWithInt:1234];
     dealer.email = @"gullumbroso@gmail.com";
     dealer.fullName = @"Gilad Lumbroso";
     dealer.dateOfBirth = [NSDate date];
@@ -127,17 +131,14 @@
 
 - (IBAction)facebookButtonClicked:(id)sender{
     
-    if ([FBSession activeSession].state != FBSessionStateOpen &&
-        [FBSession activeSession].state != FBSessionStateOpenTokenExtended) {
+    if (![appDelegate isFacebookConnected]) {
         
-        [self.appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email"] allowLoginUI:YES];
+        [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email"] allowLoginUI:YES];
     }
     
     else {
         
-        [[FBSession activeSession] closeAndClearTokenInformation];
-        [loggingInFacebook show:YES];
-        [loggingInFacebook hide:YES afterDelay:1.5];
+        NSLog(@"Error - connected to facebook when suppose to be disconnected");
     }
 }
 
@@ -165,25 +166,50 @@
     }];
 }
 
-- (void)checkIfUserLoggedIn
+- (BOOL)checkIfUserLoggedIn
 {
     KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
     [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
     
-    NSString *email = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
     NSString *password = [keychain objectForKey:(__bridge id)(kSecValueData)];
     
-    if (email.length > 0 && password.length > 0) {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *fullName = [userDefaults objectForKey:@"fullName"];
+
+    if (username.length > 0 && password.length > 0 && fullName.length > 0) {
         
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [appDelegate setHTTPClientUsername:username andPassword:password];
+        
         self.appDelegate.dealer = [[Dealer alloc]init];
         
+        self.appDelegate.dealer.dealerID = [userDefaults objectForKey:@"dealerID"];
+        self.appDelegate.dealer.email = [userDefaults objectForKey:@"email"];
         self.appDelegate.dealer.fullName = [userDefaults objectForKey:@"fullName"];
         self.appDelegate.dealer.dateOfBirth = [userDefaults objectForKey:@"dateOfBirth"];
         self.appDelegate.dealer.gender = [userDefaults objectForKey:@"gender"];
-        self.appDelegate.dealer.photo = [UIImage imageWithData:[userDefaults objectForKey:@"image"]];
-
+        self.appDelegate.dealer.registerDate = [userDefaults objectForKey:@"registerDate"];
+        self.appDelegate.dealer.location = [userDefaults objectForKey:@"location"];
+        self.appDelegate.dealer.about = [userDefaults objectForKey:@"about"];
+        self.appDelegate.dealer.photoURL = [userDefaults objectForKey:@"photoURL"];
+        self.appDelegate.dealer.photo = [userDefaults objectForKey:@"photo"];
+        self.appDelegate.dealer.uploadedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"uploadedDeals"]];
+        self.appDelegate.dealer.likedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"likedDeals"]];
+        self.appDelegate.dealer.sharedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"sharedDeals"]];
+        self.appDelegate.dealer.followedBy = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"followedBy"]];
+        self.appDelegate.dealer.followings = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"followings"]];
+        self.appDelegate.dealer.badReportsCounter = [userDefaults objectForKey:@"badReportsCounter"];
+        self.appDelegate.dealer.score = [userDefaults objectForKey:@"score"];
+        self.appDelegate.dealer.rank = [userDefaults objectForKey:@"rank"];
+        self.appDelegate.dealer.reliability = [userDefaults objectForKey:@"reliability"];
+        
         [appDelegate setTabBarController];
+        
+        return YES;
+    
+    } else {
+        
+        return NO;
     }
 }
 
@@ -201,7 +227,7 @@
         
         // In case that there's not any error, then check if the session opened or closed.
         
-        if (sessionState == FBSessionStateOpen) {
+        if ([appDelegate isFacebookConnected]) {
             
             // The session is open. Get the user information and update the UI.
             
@@ -221,16 +247,25 @@
                                           
                                           self.dealer.email = [result objectForKey:@"email"];
                                           
-                                          self.dealer.dateOfBirth = [result objectForKey:@"birthday"];
+                                          
+                                          NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+                                          dateFormatter.dateFormat = @"MM/dd/yyyy";
+                                          self.dealer.dateOfBirth = [dateFormatter dateFromString:[result objectForKey:@"birthday"]];
                                           
                                           self.dealer.gender = [result objectForKey:@"gender"];
                                           
                                           NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
-                                          self.dealer.photo = [UIImage imageWithData:[NSData dataWithContentsOfURL:pictureURL]];
+                                          self.dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
+                                          
+                                          self.appDelegate.dealer = self.dealer;
                                           
                                           // Upload all the data to Dealers database.
                                           
+                                          // Enter the user to Dealers.
+                                          
                                           [loggingInFacebook hide:YES];
+                                          
+                                          [appDelegate setTabBarController];
                                       
                                       } else {
                                           
@@ -255,15 +290,18 @@
 
 - (void)setProgressIndicator
 {
-    loggingInFacebook = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    UIImageView *customView = [appDelegate loadingAnimationWhite];
+    [customView startAnimating];
+    
+    loggingInFacebook = [[MBProgressHUD alloc]initWithView:self.view];
     loggingInFacebook.delegate = self;
-    loggingInFacebook.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
+    loggingInFacebook.customView = customView;
     loggingInFacebook.mode = MBProgressHUDModeCustomView;
     loggingInFacebook.labelText = @"Logging In";
     loggingInFacebook.labelFont = [UIFont fontWithName:@"Avenir-Light" size:19.0];
     loggingInFacebook.animationType = MBProgressHUDAnimationZoomIn;
     
-    [self.navigationController.view addSubview:loggingInFacebook];
+    [self.view addSubview:loggingInFacebook];
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "ExploretableViewController.h"
-#import "ExploreCell.h"
 #import "ViewonedealViewController.h"
 #import "ProfileViewController.h"
 #import "AppDelegate.h"
@@ -76,7 +75,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Explorecell";
-    ExploreCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     Cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17.0];
     

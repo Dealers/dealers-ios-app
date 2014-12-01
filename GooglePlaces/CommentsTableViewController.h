@@ -33,5 +33,7 @@
 @property UILabel *placeholder;
 @property UIButton *postButton;
 
+@property BOOL didChanges;
+
 
 @end

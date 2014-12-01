@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import <AWSiOSSDKv2/S3.h>
 #import "ChooseCategoryTableViewController.h"
 #import "ThankYouViewController.h"
 #import "Deal.h"
@@ -21,7 +23,7 @@
     BOOL isWhatsAppSelected;
     UIColor *placeholder;
     
-    MBProgressHUD *illogicalPercentage, *lastPriceWithoutPrice;
+    MBProgressHUD *illogicalPercentage, *lastPriceWithoutPrice, *loggingInFacebook;
 }
 
 @property AppDelegate *appDelegate;
@@ -56,10 +58,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *whatsAppIcon;
 @property (weak, nonatomic) IBOutlet UILabel *whatsAppLabel;
 
+@property NSMutableArray *photosFileName;
+
 @property (weak, nonatomic) IBOutlet UIView *addDealView;
 
 @property UIImage *sharedImage;
-
 
 // The Description Field (obsolete)
 @property (weak, nonatomic) IBOutlet UILabel *moreDescriptionPlaceholder;

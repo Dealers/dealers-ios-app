@@ -51,6 +51,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *addPhoto;
 @property (nonatomic) NSMutableArray *photosArray;
+@property (nonatomic) NSMutableArray *photosFileName;
 
 @property BOOL tooMuchText;
 

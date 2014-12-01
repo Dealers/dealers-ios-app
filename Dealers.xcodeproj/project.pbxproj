@@ -114,7 +114,6 @@
 		B055C72C17FE806900FBDFCC /* Explore_Sports & Outdoor icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C71417FE801F00FBDFCC /* Explore_Sports & Outdoor icon@2x.png */; };
 		B055C72D17FE806900FBDFCC /* Explore_Travel icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C71517FE803900FBDFCC /* Explore_Travel icon@2x.png */; };
 		B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B055C73017FE878B00FBDFCC /* ExploretableViewController.m */; };
-		B055C73417FE882700FBDFCC /* ExploreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B055C73317FE880900FBDFCC /* ExploreCell.m */; };
 		B055C73617FE95CC00FBDFCC /* Explore_Music icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B055C73517FE95AF00FBDFCC /* Explore_Music icon.png */; };
 		B0691CB1191BEE270052DCCF /* Add Deal_Done button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0691CB0191BEE270052DCCF /* Add Deal_Done button@2x.png */; };
 		B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B06F806B181275E30032CE68 /* BackgroundLayer.m */; };
@@ -200,18 +199,19 @@
 		B0E4F6F2190A6F240080CD32 /* My Feed+View Deal - New Version_Shares View Deal icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E4F6F1190A6F240080CD32 /* My Feed+View Deal - New Version_Shares View Deal icon@2x.png */; };
 		B0E4F6F6190A6F500080CD32 /* My Feed+View Deal - New Version_Likes & Shares border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E4F6F5190A6F500080CD32 /* My Feed+View Deal - New Version_Likes & Shares border@2x.png */; };
 		B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E4F6FA191015F50080CD32 /* CheckConnection.m */; };
-		B0E4F6FE1910171E0080CD32 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E4F6FD1910171E0080CD32 /* Reachability.m */; };
 		B0E62D0019C575810038FCDF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E62CFF19C575810038FCDF /* FacebookSDK.framework */; };
 		B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */; };
 		B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9518B913D700AD2929 /* CoreText.framework */; };
 		B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9718B913EC00AD2929 /* Security.framework */; };
 		B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */; };
-		B0F1BB9D18DB83D300AD2929 /* LikesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F1BB9C18DB83D300AD2929 /* LikesCell.m */; };
 		B0F1BBA318F16E3B00AD2929 /* My Feed+View Deal - New Version_No Pic Deal Dark background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F1BBA218F16E3B00AD2929 /* My Feed+View Deal - New Version_No Pic Deal Dark background@2x.png */; };
 		B0FB2E5C191CA8D800C6227F /* More list_Tutorial icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0FB2E58191CA8D800C6227F /* More list_Tutorial icon@2x.png */; };
 		B0FB2E5D191CA8D800C6227F /* More list_Score Guide icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0FB2E59191CA8D800C6227F /* More list_Score Guide icon@2x.png */; };
 		B0FB2E5E191CA8D800C6227F /* More list_Groups icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0FB2E5A191CA8D800C6227F /* More list_Groups icon@2x.png */; };
 		B0FB2E5F191CA8D800C6227F /* More list_Follows icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0FB2E5B191CA8D800C6227F /* More list_Follows icon@2x.png */; };
+		C80123301A2C4A8800C40A37 /* DealsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C801232F1A2C4A8700C40A37 /* DealsTableViewController.m */; };
+		C80123371A2C4BC000C40A37 /* DealsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C80123351A2C4BC000C40A37 /* DealsTableCell.m */; };
+		C80123381A2C4BC000C40A37 /* DealsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C80123361A2C4BC000C40A37 /* DealsTableCell.xib */; };
 		C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */; };
 		C8273A2F18959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2618959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png */; };
 		C8273A3018959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2718959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png */; };
@@ -421,6 +421,7 @@
 		C87B6D12192DF52C0026DA66 /* Add Deal (Final)_More Details button (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C87B6D0F192DF52C0026DA66 /* Add Deal (Final)_More Details button (selected)@2x.png */; };
 		C87B6D13192DF52C0026DA66 /* Add Deal (Final)_More Details button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C87B6D10192DF52C0026DA66 /* Add Deal (Final)_More Details button@2x.png */; };
 		C87B6D15192DF6C40026DA66 /* Add Deal (Final)_Other Social Networks boxes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C87B6D14192DF6C40026DA66 /* Add Deal (Final)_Other Social Networks boxes@2x.png */; };
+		C882D7A01A279AE200C4F0DD /* SignInTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C882D79F1A279AE200C4F0DD /* SignInTableViewController.m */; };
 		C884E18419EC082100C83A3F /* DealAttrib.m in Sources */ = {isa = PBXBuildFile; fileRef = C884E18319EC082100C83A3F /* DealAttrib.m */; };
 		C88B3F5A192101D2009252DD /* Add Deal (Final)_Local button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C88B3F58192101D2009252DD /* Add Deal (Final)_Local button@2x.png */; };
 		C88B3F5B192101D2009252DD /* Add Deal (Final)_Online button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C88B3F59192101D2009252DD /* Add Deal (Final)_Online button@2x.png */; };
@@ -460,6 +461,29 @@
 		C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */; };
 		C8A6EBE4191BB99600887C34 /* Registration_Sign Up Mail button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */; };
 		C8A6EBE5191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */; };
+		C8A9EE061A221034002EE682 /* AWSiOSSDKv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE051A221034002EE682 /* AWSiOSSDKv2.framework */; };
+		C8A9EE0B1A221196002EE682 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE0A1A221196002EE682 /* libz.dylib */; };
+		C8A9EE141A2212F7002EE682 /* GZIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE0E1A2212F6002EE682 /* GZIP.framework */; };
+		C8A9EE151A2212F7002EE682 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE0F1A2212F7002EE682 /* Mantle.framework */; };
+		C8A9EE171A2212F7002EE682 /* TMCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE111A2212F7002EE682 /* TMCache.framework */; };
+		C8A9EE181A2212F7002EE682 /* UICKeyChainStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE121A2212F7002EE682 /* UICKeyChainStore.framework */; };
+		C8A9EE191A2212F7002EE682 /* XMLDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE131A2212F7002EE682 /* XMLDictionary.framework */; };
+		C8A9EE2A1A2213B9002EE682 /* autoscaling-2011-01-01.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE1B1A2213B9002EE682 /* autoscaling-2011-01-01.json */; };
+		C8A9EE2B1A2213B9002EE682 /* cib-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE1C1A2213B9002EE682 /* cib-2014-06-30.json */; };
+		C8A9EE2C1A2213B9002EE682 /* css-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE1D1A2213B9002EE682 /* css-2014-06-30.json */; };
+		C8A9EE2D1A2213B9002EE682 /* dynamodb-2012-08-10.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE1E1A2213B9002EE682 /* dynamodb-2012-08-10.json */; };
+		C8A9EE2E1A2213B9002EE682 /* ec2-2014-06-15.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE1F1A2213B9002EE682 /* ec2-2014-06-15.json */; };
+		C8A9EE2F1A2213B9002EE682 /* elasticloadbalancing-2012-06-01.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE201A2213B9002EE682 /* elasticloadbalancing-2012-06-01.json */; };
+		C8A9EE301A2213B9002EE682 /* email-2010-12-01.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE211A2213B9002EE682 /* email-2010-12-01.json */; };
+		C8A9EE311A2213B9002EE682 /* kinesis-2013-12-02.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE221A2213B9002EE682 /* kinesis-2013-12-02.json */; };
+		C8A9EE321A2213B9002EE682 /* mobileanalytics-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE231A2213B9002EE682 /* mobileanalytics-2014-06-30.json */; };
+		C8A9EE331A2213B9002EE682 /* monitoring-2010-08-01.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE241A2213B9002EE682 /* monitoring-2010-08-01.json */; };
+		C8A9EE341A2213B9002EE682 /* s3-2006-03-01.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE251A2213B9002EE682 /* s3-2006-03-01.json */; };
+		C8A9EE351A2213B9002EE682 /* sdb-2009-04-15.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE261A2213B9002EE682 /* sdb-2009-04-15.json */; };
+		C8A9EE361A2213B9002EE682 /* sns-2010-03-31.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE271A2213B9002EE682 /* sns-2010-03-31.json */; };
+		C8A9EE371A2213B9002EE682 /* sqs-2012-11-05.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE281A2213B9002EE682 /* sqs-2012-11-05.json */; };
+		C8A9EE381A2213B9002EE682 /* sts-2011-06-15.json in Resources */ = {isa = PBXBuildFile; fileRef = C8A9EE291A2213B9002EE682 /* sts-2011-06-15.json */; };
+		C8A9EE3C1A221ABA002EE682 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE3B1A221ABA002EE682 /* Reachability.framework */; };
 		C8AC887E19BD9A5D002A2C16 /* CommentsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AC887C19BD9A5C002A2C16 /* CommentsTableCell.m */; };
 		C8AC887F19BD9A5D002A2C16 /* CommentsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8AC887D19BD9A5C002A2C16 /* CommentsTableCell.xib */; };
 		C8B7C2351920FCF60032726E /* Registration_Purple button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8B7C2301920FCF60032726E /* Registration_Purple button@2x.png */; };
@@ -732,8 +756,6 @@
 		B055C71517FE803900FBDFCC /* Explore_Travel icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore_Travel icon@2x.png"; sourceTree = "<group>"; };
 		B055C72F17FE877800FBDFCC /* ExploretableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploretableViewController.h; sourceTree = "<group>"; };
 		B055C73017FE878B00FBDFCC /* ExploretableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploretableViewController.m; sourceTree = "<group>"; };
-		B055C73217FE87F600FBDFCC /* ExploreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreCell.h; sourceTree = "<group>"; };
-		B055C73317FE880900FBDFCC /* ExploreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreCell.m; sourceTree = "<group>"; };
 		B055C73517FE95AF00FBDFCC /* Explore_Music icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Explore_Music icon.png"; sourceTree = "<group>"; };
 		B0691CB0191BEE270052DCCF /* Add Deal_Done button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal_Done button@2x.png"; sourceTree = "<group>"; };
 		B06F806A181275E20032CE68 /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
@@ -830,21 +852,22 @@
 		B0E4F6F5190A6F500080CD32 /* My Feed+View Deal - New Version_Likes & Shares border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_Likes & Shares border@2x.png"; sourceTree = "<group>"; };
 		B0E4F6F9191015F50080CD32 /* CheckConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckConnection.h; path = ../CheckConnection.h; sourceTree = "<group>"; };
 		B0E4F6FA191015F50080CD32 /* CheckConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckConnection.m; path = ../CheckConnection.m; sourceTree = "<group>"; };
-		B0E4F6FC1910171E0080CD32 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		B0E4F6FD1910171E0080CD32 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		B0E62CFF19C575810038FCDF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signup2ViewController.h; sourceTree = "<group>"; };
 		B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signup2ViewController.m; sourceTree = "<group>"; };
 		B0F1BB9518B913D700AD2929 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B0F1BB9718B913EC00AD2929 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		B0F1BB9B18DB83D200AD2929 /* LikesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesCell.h; sourceTree = "<group>"; };
-		B0F1BB9C18DB83D300AD2929 /* LikesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesCell.m; sourceTree = "<group>"; };
 		B0F1BBA218F16E3B00AD2929 /* My Feed+View Deal - New Version_No Pic Deal Dark background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_No Pic Deal Dark background@2x.png"; sourceTree = "<group>"; };
 		B0FB2E58191CA8D800C6227F /* More list_Tutorial icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "More list_Tutorial icon@2x.png"; path = "GooglePlaces/More list_Tutorial icon@2x.png"; sourceTree = "<group>"; };
 		B0FB2E59191CA8D800C6227F /* More list_Score Guide icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "More list_Score Guide icon@2x.png"; path = "GooglePlaces/More list_Score Guide icon@2x.png"; sourceTree = "<group>"; };
 		B0FB2E5A191CA8D800C6227F /* More list_Groups icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "More list_Groups icon@2x.png"; path = "GooglePlaces/More list_Groups icon@2x.png"; sourceTree = "<group>"; };
 		B0FB2E5B191CA8D800C6227F /* More list_Follows icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "More list_Follows icon@2x.png"; path = "GooglePlaces/More list_Follows icon@2x.png"; sourceTree = "<group>"; };
+		C801232E1A2C4A8700C40A37 /* DealsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsTableViewController.h; sourceTree = "<group>"; };
+		C801232F1A2C4A8700C40A37 /* DealsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsTableViewController.m; sourceTree = "<group>"; };
+		C80123341A2C4BC000C40A37 /* DealsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsTableCell.h; sourceTree = "<group>"; };
+		C80123351A2C4BC000C40A37 /* DealsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsTableCell.m; sourceTree = "<group>"; };
+		C80123361A2C4BC000C40A37 /* DealsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealsTableCell.xib; sourceTree = "<group>"; };
 		C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewController.h; sourceTree = "<group>"; };
 		C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCategoryTableViewController.m; sourceTree = "<group>"; };
 		C8273A2618959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser Back button (highlighted)@2x.png"; sourceTree = "<group>"; };
@@ -1060,6 +1083,8 @@
 		C87B6D0F192DF52C0026DA66 /* Add Deal (Final)_More Details button (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_More Details button (selected)@2x.png"; sourceTree = "<group>"; };
 		C87B6D10192DF52C0026DA66 /* Add Deal (Final)_More Details button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_More Details button@2x.png"; sourceTree = "<group>"; };
 		C87B6D14192DF6C40026DA66 /* Add Deal (Final)_Other Social Networks boxes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Other Social Networks boxes@2x.png"; sourceTree = "<group>"; };
+		C882D79E1A279AE200C4F0DD /* SignInTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInTableViewController.h; sourceTree = "<group>"; };
+		C882D79F1A279AE200C4F0DD /* SignInTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInTableViewController.m; sourceTree = "<group>"; };
 		C884E18219EC082100C83A3F /* DealAttrib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealAttrib.h; sourceTree = "<group>"; };
 		C884E18319EC082100C83A3F /* DealAttrib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealAttrib.m; sourceTree = "<group>"; };
 		C88B3F58192101D2009252DD /* Add Deal (Final)_Local button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Local button@2x.png"; sourceTree = "<group>"; };
@@ -1113,6 +1138,29 @@
 		C8A6EBE0191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Facebook button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE1191BB99600887C34 /* Registration_Sign Up Mail button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Mail button@2x.png"; sourceTree = "<group>"; };
 		C8A6EBE2191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Registration_Sign Up Twitter button@2x.png"; sourceTree = "<group>"; };
+		C8A9EE051A221034002EE682 /* AWSiOSSDKv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDKv2.framework; sourceTree = "<group>"; };
+		C8A9EE0A1A221196002EE682 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		C8A9EE0E1A2212F6002EE682 /* GZIP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GZIP.framework; sourceTree = "<group>"; };
+		C8A9EE0F1A2212F7002EE682 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mantle.framework; sourceTree = "<group>"; };
+		C8A9EE111A2212F7002EE682 /* TMCache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TMCache.framework; sourceTree = "<group>"; };
+		C8A9EE121A2212F7002EE682 /* UICKeyChainStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UICKeyChainStore.framework; sourceTree = "<group>"; };
+		C8A9EE131A2212F7002EE682 /* XMLDictionary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = XMLDictionary.framework; sourceTree = "<group>"; };
+		C8A9EE1B1A2213B9002EE682 /* autoscaling-2011-01-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "autoscaling-2011-01-01.json"; sourceTree = "<group>"; };
+		C8A9EE1C1A2213B9002EE682 /* cib-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cib-2014-06-30.json"; sourceTree = "<group>"; };
+		C8A9EE1D1A2213B9002EE682 /* css-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "css-2014-06-30.json"; sourceTree = "<group>"; };
+		C8A9EE1E1A2213B9002EE682 /* dynamodb-2012-08-10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "dynamodb-2012-08-10.json"; sourceTree = "<group>"; };
+		C8A9EE1F1A2213B9002EE682 /* ec2-2014-06-15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ec2-2014-06-15.json"; sourceTree = "<group>"; };
+		C8A9EE201A2213B9002EE682 /* elasticloadbalancing-2012-06-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "elasticloadbalancing-2012-06-01.json"; sourceTree = "<group>"; };
+		C8A9EE211A2213B9002EE682 /* email-2010-12-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "email-2010-12-01.json"; sourceTree = "<group>"; };
+		C8A9EE221A2213B9002EE682 /* kinesis-2013-12-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "kinesis-2013-12-02.json"; sourceTree = "<group>"; };
+		C8A9EE231A2213B9002EE682 /* mobileanalytics-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mobileanalytics-2014-06-30.json"; sourceTree = "<group>"; };
+		C8A9EE241A2213B9002EE682 /* monitoring-2010-08-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "monitoring-2010-08-01.json"; sourceTree = "<group>"; };
+		C8A9EE251A2213B9002EE682 /* s3-2006-03-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "s3-2006-03-01.json"; sourceTree = "<group>"; };
+		C8A9EE261A2213B9002EE682 /* sdb-2009-04-15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sdb-2009-04-15.json"; sourceTree = "<group>"; };
+		C8A9EE271A2213B9002EE682 /* sns-2010-03-31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sns-2010-03-31.json"; sourceTree = "<group>"; };
+		C8A9EE281A2213B9002EE682 /* sqs-2012-11-05.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sqs-2012-11-05.json"; sourceTree = "<group>"; };
+		C8A9EE291A2213B9002EE682 /* sts-2011-06-15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sts-2011-06-15.json"; sourceTree = "<group>"; };
+		C8A9EE3B1A221ABA002EE682 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reachability.framework; sourceTree = "<group>"; };
 		C8AC887B19BD9A5C002A2C16 /* CommentsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableCell.h; sourceTree = "<group>"; };
 		C8AC887C19BD9A5C002A2C16 /* CommentsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableCell.m; sourceTree = "<group>"; };
 		C8AC887D19BD9A5C002A2C16 /* CommentsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsTableCell.xib; sourceTree = "<group>"; };
@@ -1237,8 +1285,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8A9EE0B1A221196002EE682 /* libz.dylib in Frameworks */,
+				C8A9EE151A2212F7002EE682 /* Mantle.framework in Frameworks */,
+				B0E0A943189C43BB00EF0641 /* libsqlite3.dylib in Frameworks */,
 				B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */,
 				C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */,
+				C8A9EE141A2212F7002EE682 /* GZIP.framework in Frameworks */,
 				B0E62D0019C575810038FCDF /* FacebookSDK.framework in Frameworks */,
 				C898FE6819A617AE00F1C11A /* CFNetwork.framework in Frameworks */,
 				C898FE6919A617AE00F1C11A /* CoreData.framework in Frameworks */,
@@ -1246,7 +1298,7 @@
 				B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */,
 				C898FE6419A6177800F1C11A /* libRestKit.a in Frameworks */,
 				B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */,
-				B0E0A943189C43BB00EF0641 /* libsqlite3.dylib in Frameworks */,
+				C8A9EE171A2212F7002EE682 /* TMCache.framework in Frameworks */,
 				B03F6B8A18676F6C000ACC13 /* Accounts.framework in Frameworks */,
 				B03F6B8B18676F6C000ACC13 /* AdSupport.framework in Frameworks */,
 				B03F6B8C18676F6C000ACC13 /* Social.framework in Frameworks */,
@@ -1254,9 +1306,13 @@
 				B024374B17F47D9000FB24CC /* QuartzCore.framework in Frameworks */,
 				568497A1154C0116001601A2 /* CoreLocation.framework in Frameworks */,
 				5684979F154C010C001601A2 /* MapKit.framework in Frameworks */,
+				C8A9EE061A221034002EE682 /* AWSiOSSDKv2.framework in Frameworks */,
+				C8A9EE181A2212F7002EE682 /* UICKeyChainStore.framework in Frameworks */,
 				56849782154C00BF001601A2 /* UIKit.framework in Frameworks */,
 				56849784154C00BF001601A2 /* Foundation.framework in Frameworks */,
+				C8A9EE191A2212F7002EE682 /* XMLDictionary.framework in Frameworks */,
 				56849786154C00BF001601A2 /* CoreGraphics.framework in Frameworks */,
+				C8A9EE3C1A221ABA002EE682 /* Reachability.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1286,6 +1342,15 @@
 		56849780154C00BF001601A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C8A9EE0A1A221196002EE682 /* libz.dylib */,
+				C8A9EE3B1A221ABA002EE682 /* Reachability.framework */,
+				C8A9EE0E1A2212F6002EE682 /* GZIP.framework */,
+				C8A9EE0F1A2212F7002EE682 /* Mantle.framework */,
+				C8A9EE111A2212F7002EE682 /* TMCache.framework */,
+				C8A9EE121A2212F7002EE682 /* UICKeyChainStore.framework */,
+				C8A9EE131A2212F7002EE682 /* XMLDictionary.framework */,
+				C8A9EE051A221034002EE682 /* AWSiOSSDKv2.framework */,
+				C8A9EE1A1A2213B9002EE682 /* service-definitions (AWS) */,
 				C8A10B9919E710FE0090F1D9 /* KeyChainWrapper */,
 				B0E62CFF19C575810038FCDF /* FacebookSDK.framework */,
 				C8DC1D8919BC892B0062E184 /* MBProgressHUD */,
@@ -1332,6 +1397,7 @@
 				C869CB76191A135A00DF2C19 /* View Deal */,
 				C848B67119B4A247000F138D /* Custom Cells */,
 				C8DC1D8219B863680062E184 /* Activities */,
+				C871A5321A25D58500A9A2D1 /* Old Classes */,
 				B034B8B41804765500625392 /* DB2-Prefix.pch */,
 				56849788154C00BF001601A2 /* Supporting Files */,
 			);
@@ -1698,6 +1764,9 @@
 		C848B67119B4A247000F138D /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C80123341A2C4BC000C40A37 /* DealsTableCell.h */,
+				C80123351A2C4BC000C40A37 /* DealsTableCell.m */,
+				C80123361A2C4BC000C40A37 /* DealsTableCell.xib */,
 				C848B67619B4AB76000F138D /* StoresTableCell.h */,
 				C848B67719B4AB76000F138D /* StoresTableCell.m */,
 				C848B67919B4ACA4000F138D /* StoresTableCell.xib */,
@@ -1716,10 +1785,6 @@
 			children = (
 				B055C72F17FE877800FBDFCC /* ExploretableViewController.h */,
 				B055C73017FE878B00FBDFCC /* ExploretableViewController.m */,
-				B055C73217FE87F600FBDFCC /* ExploreCell.h */,
-				B055C73317FE880900FBDFCC /* ExploreCell.m */,
-				B0907D5E18F95A7500ED54F2 /* ExploreDealsViewController.h */,
-				B0907D5F18F95A7500ED54F2 /* ExploreDealsViewController.m */,
 			);
 			name = Explore;
 			sourceTree = "<group>";
@@ -1729,6 +1794,8 @@
 			children = (
 				B0294C7118B0CC0900699107 /* MyFeedsViewController.h */,
 				B0294C7218B0CC0900699107 /* MyFeedsViewController.m */,
+				C801232E1A2C4A8700C40A37 /* DealsTableViewController.h */,
+				C801232F1A2C4A8700C40A37 /* DealsTableViewController.m */,
 			);
 			name = "My Feed";
 			sourceTree = "<group>";
@@ -1773,8 +1840,8 @@
 		C869CB75191A131B00DF2C19 /* Sign In */ = {
 			isa = PBXGroup;
 			children = (
-				B0930C0C17F40B78004EB3CA /* SigninViewController.h */,
-				B0930C0D17F40B78004EB3CA /* SigninViewController.m */,
+				C882D79E1A279AE200C4F0DD /* SignInTableViewController.h */,
+				C882D79F1A279AE200C4F0DD /* SignInTableViewController.m */,
 			);
 			name = "Sign In";
 			sourceTree = "<group>";
@@ -1799,10 +1866,6 @@
 			children = (
 				C891901E19FE57D9005E85FB /* AddDealNavigationController.h */,
 				C891901F19FE57D9005E85FB /* AddDealNavigationController.m */,
-				B0DBB1C418AB59BA001F8FDB /* OnlineViewController.h */,
-				B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */,
-				B0930BFA17F3807D004EB3CA /* WhatIsTheDeal.h */,
-				B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */,
 				B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */,
 				B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */,
 				C8A012ED19DD52E100C1D973 /* WhatIsTheDeal1.h */,
@@ -1822,18 +1885,29 @@
 			children = (
 				B0862124186FF1450017099E /* Functions.h */,
 				B0862125186FF1450017099E /* Functions.m */,
-				B06F806A181275E20032CE68 /* BackgroundLayer.h */,
-				B06F806B181275E30032CE68 /* BackgroundLayer.m */,
-				B0F1BB9B18DB83D200AD2929 /* LikesCell.h */,
-				B0F1BB9C18DB83D300AD2929 /* LikesCell.m */,
-				B0E4F6FC1910171E0080CD32 /* Reachability.h */,
-				B0E4F6FD1910171E0080CD32 /* Reachability.m */,
 				B0E4F6F9191015F50080CD32 /* CheckConnection.h */,
 				B0E4F6FA191015F50080CD32 /* CheckConnection.m */,
 				C8C43E7E198F6CDD00409DD2 /* BetterScrollView.h */,
 				C8C43E7F198F6CDD00409DD2 /* BetterScrollView.m */,
 			);
 			name = General;
+			sourceTree = "<group>";
+		};
+		C871A5321A25D58500A9A2D1 /* Old Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B0930C0C17F40B78004EB3CA /* SigninViewController.h */,
+				B0930C0D17F40B78004EB3CA /* SigninViewController.m */,
+				B0907D5E18F95A7500ED54F2 /* ExploreDealsViewController.h */,
+				B0907D5F18F95A7500ED54F2 /* ExploreDealsViewController.m */,
+				B0930BFA17F3807D004EB3CA /* WhatIsTheDeal.h */,
+				B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */,
+				B0DBB1C418AB59BA001F8FDB /* OnlineViewController.h */,
+				B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */,
+				B06F806A181275E20032CE68 /* BackgroundLayer.h */,
+				B06F806B181275E30032CE68 /* BackgroundLayer.m */,
+			);
+			name = "Old Classes";
 			sourceTree = "<group>";
 		};
 		C873D3711851040700B913CD /* My Feed+View Deal */ = {
@@ -1933,6 +2007,29 @@
 				C8A10B9B19E711210090F1D9 /* KeychainItemWrapper.m */,
 			);
 			name = KeyChainWrapper;
+			sourceTree = "<group>";
+		};
+		C8A9EE1A1A2213B9002EE682 /* service-definitions (AWS) */ = {
+			isa = PBXGroup;
+			children = (
+				C8A9EE1B1A2213B9002EE682 /* autoscaling-2011-01-01.json */,
+				C8A9EE1C1A2213B9002EE682 /* cib-2014-06-30.json */,
+				C8A9EE1D1A2213B9002EE682 /* css-2014-06-30.json */,
+				C8A9EE1E1A2213B9002EE682 /* dynamodb-2012-08-10.json */,
+				C8A9EE1F1A2213B9002EE682 /* ec2-2014-06-15.json */,
+				C8A9EE201A2213B9002EE682 /* elasticloadbalancing-2012-06-01.json */,
+				C8A9EE211A2213B9002EE682 /* email-2010-12-01.json */,
+				C8A9EE221A2213B9002EE682 /* kinesis-2013-12-02.json */,
+				C8A9EE231A2213B9002EE682 /* mobileanalytics-2014-06-30.json */,
+				C8A9EE241A2213B9002EE682 /* monitoring-2010-08-01.json */,
+				C8A9EE251A2213B9002EE682 /* s3-2006-03-01.json */,
+				C8A9EE261A2213B9002EE682 /* sdb-2009-04-15.json */,
+				C8A9EE271A2213B9002EE682 /* sns-2010-03-31.json */,
+				C8A9EE281A2213B9002EE682 /* sqs-2012-11-05.json */,
+				C8A9EE291A2213B9002EE682 /* sts-2011-06-15.json */,
+			);
+			name = "service-definitions (AWS)";
+			path = "service-definitions";
 			sourceTree = "<group>";
 		};
 		C8B01FB518F3F18300DB6584 /* Bars Icons */ = {
@@ -2432,6 +2529,7 @@
 				C8D7CADF1934879D00841C22 /* Profile_Location icon@2x.png in Resources */,
 				C83EAE6818690AC40084E0E1 /* Food & Groceries_butcher@2x.png in Resources */,
 				C8A6EBE5191BB99600887C34 /* Registration_Sign Up Twitter button@2x.png in Resources */,
+				C8A9EE331A2213B9002EE682 /* monitoring-2010-08-01.json in Resources */,
 				C83EAF2718690AC40084E0E1 /* Travel_Travel@2x.png in Resources */,
 				B055C72817FE806900FBDFCC /* Explore_Restaurants & Bars icon@2x.png in Resources */,
 				B055C72917FE806900FBDFCC /* Explore_Search bar@2x.png in Resources */,
@@ -2534,6 +2632,7 @@
 				C83EAE5118690AC40084E0E1 /* Entertainment @ Events_museum@2x.png in Resources */,
 				C88B3F751921F883009252DD /* My Feed+View Deal (final)_Likes icon@2x.png in Resources */,
 				C83EAEE618690AC40084E0E1 /* Other_general@2x.png in Resources */,
+				C8A9EE311A2213B9002EE682 /* kinesis-2013-12-02.json in Resources */,
 				C8A6EBE4191BB99600887C34 /* Registration_Sign Up Mail button@2x.png in Resources */,
 				C83EAF0918690AC40084E0E1 /* Restaurants & Bars_vegeterian@2x.png in Resources */,
 				C83EAE6C18690AC40084E0E1 /* Food & Groceries_fish_market@2x.png in Resources */,
@@ -2551,6 +2650,7 @@
 				C83EAE2F18690AC40084E0E1 /* Automotive_EV_charging_station@2x.png in Resources */,
 				C83EAE7018690AC40084E0E1 /* Food & Groceries_market@2x.png in Resources */,
 				C87B6D15192DF6C40026DA66 /* Add Deal (Final)_Other Social Networks boxes@2x.png in Resources */,
+				C8A9EE341A2213B9002EE682 /* s3-2006-03-01.json in Resources */,
 				C8DADE4A18FDF3CB0056AC9F /* Explore-Black_Kids & Babies icon@2x.png in Resources */,
 				B034B9871804780B00625392 /* My Feed+View Deal_Profile button (selected)@2X.png in Resources */,
 				B034B9881804780B00625392 /* My Feed+View Deal_Profile button@2X.png in Resources */,
@@ -2573,6 +2673,7 @@
 				C83EAEF118690AC40084E0E1 /* Pets_Pets@2x.png in Resources */,
 				C8B7C2391920FCF60032726E /* Registration_Sign Up button@2x.png in Resources */,
 				B034B9961804780B00625392 /* My Feed+View Deal_Tab Bar@2X.png in Resources */,
+				C8A9EE361A2213B9002EE682 /* sns-2010-03-31.json in Resources */,
 				C8D2E480185B781D00398873 /* Add Deal (Final)_Take Photo! button (selected)@2x.png in Resources */,
 				C83EAE7518690AC40084E0E1 /* Home & Furniture_hardware_store@2x.png in Resources */,
 				C8BFD9D118723016007E7E07 /* Profile_Notifications button@2x.png in Resources */,
@@ -2612,6 +2713,7 @@
 				B034B9C71804788900625392 /* Registration_Password icon@2x.png in Resources */,
 				B034B9C91804788900625392 /* Registration_Profile Pic Mask@2x.png in Resources */,
 				B034B9CA1804788900625392 /* Registration_Registration Fill Boxes@2x.png in Resources */,
+				C8A9EE381A2213B9002EE682 /* sts-2011-06-15.json in Resources */,
 				C83EAE6A18690AC40084E0E1 /* Food & Groceries_cheese_shop@2x.png in Resources */,
 				C8273A3518959A3300A412FC /* Add Deal (Final)_Browser Forward button@2x.png in Resources */,
 				B034B9CB1804788900625392 /* Registration_Shopping Bag@2x.png in Resources */,
@@ -2641,16 +2743,19 @@
 				B034B9EB1806C77D00625392 /* My Feed+View Deal_Local icon@2X.png in Resources */,
 				C8B7C2381920FCF60032726E /* Registration_Sign Up button (highlighted)@2x.png in Resources */,
 				C87B6D07192DED8A0026DA66 /* Add Deal (Final)_Title & Price fields@2x.png in Resources */,
+				C80123381A2C4BC000C40A37 /* DealsTableCell.xib in Resources */,
 				B034B9EC1806C77D00625392 /* My Feed+View Deal_Online icon@2X.png in Resources */,
 				B0D6545018111EA4000DB9AF /* Add Deal_Crossed button (pushed)@2x.png in Resources */,
 				C8DADE4618FDF3CB0056AC9F /* Explore-Black_Fashion icon@2x.png in Resources */,
 				B0D6545118111EA4000DB9AF /* Add Deal_Crossed button (selected)@2x.png in Resources */,
 				B0D6545218111EA4000DB9AF /* Add Deal_Crossed button@2x.png in Resources */,
+				C8A9EE2A1A2213B9002EE682 /* autoscaling-2011-01-01.json in Resources */,
 				B0D6545318111EA4000DB9AF /* Add Deal_Dollar button (pushed)@2x.png in Resources */,
 				C869CB88191A6E5B00DF2C19 /* Profile_Likes List tab@2x.png in Resources */,
 				C83EAE4918690AC40084E0E1 /* Entertainment @ Events_Entertainment & Events@2x.png in Resources */,
 				C83EAE7918690AC40084E0E1 /* Home & Furniture_office@2x.png in Resources */,
 				C83EAE3A18690AC40084E0E1 /* Books & Magazines_news_stand@2x.png in Resources */,
+				C8A9EE371A2213B9002EE682 /* sqs-2012-11-05.json in Resources */,
 				C8DADE4718FDF3CB0056AC9F /* Explore-Black_Food & Groceries icon@2x.png in Resources */,
 				B0D6545418111EA4000DB9AF /* Add Deal_Dollar button (selected)@2x.png in Resources */,
 				C8DADE4D18FDF3CB0056AC9F /* Explore-Black_Other icon@2x.png in Resources */,
@@ -2664,11 +2769,13 @@
 				B0D6545818111EA4000DB9AF /* Add Deal_Euro button@2x.png in Resources */,
 				B0D6545918111EA4000DB9AF /* Add Deal_Options bar@2x.png in Resources */,
 				B0D6545A18111EA4000DB9AF /* Add Deal_Percentage button (pushed)@2x.png in Resources */,
+				C8A9EE301A2213B9002EE682 /* email-2010-12-01.json in Resources */,
 				B0D6545B18111EA4000DB9AF /* Add Deal_Percentage button (selected)@2x.png in Resources */,
 				C83EAE5418690AC40084E0E1 /* Entertainment @ Events_racetrack@2x.png in Resources */,
 				B0D6545C18111EA4000DB9AF /* Add Deal_Percentage button@2x.png in Resources */,
 				B0D6545D18111EA4000DB9AF /* Add Deal_Pound button (pushed)@2x.png in Resources */,
 				B0D6545E18111EA4000DB9AF /* Add Deal_Pound button (selected)@2x.png in Resources */,
+				C8A9EE2D1A2213B9002EE682 /* dynamodb-2012-08-10.json in Resources */,
 				C8D2E483185B781D00398873 /* Add Deal (Final)_Taken Photo shade@2x.png in Resources */,
 				C8D7CADE1934879D00841C22 /* Profile_About Yourself icon@2x.png in Resources */,
 				B0D6545F18111EA4000DB9AF /* Add Deal_Pound button@2x.png in Resources */,
@@ -2690,6 +2797,7 @@
 				B0D6546818111EA4000DB9AF /* Add Deal_Specific Hour button@2x.png in Resources */,
 				C83EAE6618690AC40084E0E1 /* Fashion_womens_store@2x.png in Resources */,
 				C873D3A81851040700B913CD /* My Feed+View Deal_Expiration Date (final) icon@2x.png in Resources */,
+				C8A9EE2C1A2213B9002EE682 /* css-2014-06-30.json in Resources */,
 				C83EAEE418690AC40084E0E1 /* Other_bank@2x.png in Resources */,
 				C8BFD9DA18723016007E7E07 /* Profile_Senior Dealer@2x.png in Resources */,
 				C83EAE2518690AC40084E0E1 /* Art_art_museum@2x.png in Resources */,
@@ -2750,6 +2858,7 @@
 				B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */,
 				B0691CB1191BEE270052DCCF /* Add Deal_Done button@2x.png in Resources */,
 				B0274804186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png in Resources */,
+				C8A9EE2F1A2213B9002EE682 /* elasticloadbalancing-2012-06-01.json in Resources */,
 				C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */,
 				B0C7FB4D183375F900B3B740 /* loading10@2x.png in Resources */,
 				C83EAE3E18690AC40084E0E1 /* Electronics_electronics_store@2x.png in Resources */,
@@ -2764,6 +2873,8 @@
 				C83EAE3218690AC40084E0E1 /* Beauty & Personal Care_Beauty & Personal Care@2x.png in Resources */,
 				C8DADE4118FDF3CB0056AC9F /* Explore-Black_Automotive icon@2x.png in Resources */,
 				B0C7FB52183375F900B3B740 /* loading35@2x.png in Resources */,
+				C8A9EE321A2213B9002EE682 /* mobileanalytics-2014-06-30.json in Resources */,
+				C8A9EE2E1A2213B9002EE682 /* ec2-2014-06-15.json in Resources */,
 				C83EAE6B18690AC40084E0E1 /* Food & Groceries_farmers_market@2x.png in Resources */,
 				B0C7FB53183375F900B3B740 /* loading40@2x.png in Resources */,
 				C83EAEF318690AC40084E0E1 /* Pets_veterinary_care@2x.png in Resources */,
@@ -2772,6 +2883,7 @@
 				B0C7FB54183375F900B3B740 /* loading45@2x.png in Resources */,
 				C83EAE2B18690AC40084E0E1 /* Automotive_car_dealer@2x.png in Resources */,
 				C8D2E46B185B781D00398873 /* Add Deal (Final)_Other Social Networks box@2x.png in Resources */,
+				C8A9EE2B1A2213B9002EE682 /* cib-2014-06-30.json in Resources */,
 				B0C7FB55183375F900B3B740 /* loading50@2x.png in Resources */,
 				B0C7FB56183375F900B3B740 /* loading55@2x.png in Resources */,
 				C83EAE5B18690AC40084E0E1 /* Fashion_accessories_store@2x.png in Resources */,
@@ -2818,6 +2930,7 @@
 				B0C7FB7B1838B78D00B3B740 /* Loading65white@2x.png in Resources */,
 				C87B6D0A192DEF5C0026DA66 /* Add Deal (Final)_Add the Deal button (selected)@2x.png in Resources */,
 				B0C7FB7C1838B78D00B3B740 /* Loading70white@2x.png in Resources */,
+				C8A9EE351A2213B9002EE682 /* sdb-2009-04-15.json in Resources */,
 				B0C7FB7D1838B78D00B3B740 /* Loading75white@2x.png in Resources */,
 				C8D7CAD71934794600841C22 /* My Feed+View Deal - New Version_Edit Deal fields@2x.png in Resources */,
 				B0C7FB7E1838B78D00B3B740 /* Loading80white@2x.png in Resources */,
@@ -2886,6 +2999,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */,
+				C80123301A2C4A8800C40A37 /* DealsTableViewController.m in Sources */,
 				C8C43E80198F6CDD00409DD2 /* BetterScrollView.m in Sources */,
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
 				C891902019FE57D9005E85FB /* AddDealNavigationController.m in Sources */,
@@ -2901,7 +3015,6 @@
 				B09FBAD5193F0764006CB986 /* Dealer.m in Sources */,
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
-				B0F1BB9D18DB83D300AD2929 /* LikesCell.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,
@@ -2909,10 +3022,10 @@
 				B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */,
 				B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */,
 				C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */,
+				C882D7A01A279AE200C4F0DD /* SignInTableViewController.m in Sources */,
 				C8A012F219DD52F700C1D973 /* WhatIsTheDeal2.m in Sources */,
 				B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */,
 				B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */,
-				B055C73417FE882700FBDFCC /* ExploreCell.m in Sources */,
 				B0294C7318B0CC0900699107 /* MyFeedsViewController.m in Sources */,
 				C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */,
 				C8AC887E19BD9A5D002A2C16 /* CommentsTableCell.m in Sources */,
@@ -2926,7 +3039,6 @@
 				B034B8B6180476AC00625392 /* main.m in Sources */,
 				C848B67819B4AB76000F138D /* StoresTableCell.m in Sources */,
 				B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */,
-				B0E4F6FE1910171E0080CD32 /* Reachability.m in Sources */,
 				C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */,
 				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
 				C8A10BA619E96B100090F1D9 /* NotificationTableCell.m in Sources */,
@@ -2934,6 +3046,7 @@
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
 				C8A10B9C19E711220090F1D9 /* KeychainItemWrapper.m in Sources */,
 				C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */,
+				C80123371A2C4BC000C40A37 /* DealsTableCell.m in Sources */,
 				C884E18419EC082100C83A3F /* DealAttrib.m in Sources */,
 				C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */,
 				B0862126186FF1450017099E /* Functions.m in Sources */,
@@ -3051,7 +3164,10 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_RESOURCE_RULES_PATH[sdk=*]" = "";
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"/Users/gullumbroso/Downloads/aws-ios-sdk-2.0.12/third-party",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3082,7 +3198,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Uzi Lumbroso (KRLZZN4NG9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"/Users/gullumbroso/Downloads/aws-ios-sdk-2.0.12/third-party",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

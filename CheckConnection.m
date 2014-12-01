@@ -7,7 +7,7 @@
 //
 
 #import "CheckConnection.h"
-#import "Reachability.h"
+#import <Reachability/Reachability.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
 @implementation CheckConnection

@@ -7,8 +7,11 @@
 //
 
 #import "CommentsTableViewController.h"
+#import "ViewonedealViewController.h"
 
 #define keybaordHeight 216
+#define NO_COMMENTS_MESSAGE_TAG 54325
+#define NAME_FOR_NOTIFICATIONS @"Comments Photos Notifications"
 
 @interface CommentsTableViewController () {
     
@@ -32,11 +35,17 @@
     
     appDelegate = [[UIApplication sharedApplication] delegate];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadPhotosToView:)
+                                                 name:NAME_FOR_NOTIFICATIONS
+                                               object:nil];
+    
     loadedForFirstTime = YES;
     
     [self setTextToolbar];
     [self setTableViewSettings];
     [self setProgressIndicator];
+    [self setNoCommentsMessage];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -53,6 +62,10 @@
     if (plusButton.alpha == 0) {
         [appDelegate showPlusButton];
     }
+    
+    ViewonedealViewController *vodvc = [[self.navigationController viewControllers] objectAtIndex:self.navigationController.viewControllers.count -  1];
+    vodvc.didChangesInComments = self.didChanges;
+    vodvc.deal.comments = self.comments;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -63,6 +76,37 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setNoCommentsMessage
+{
+    if (self.comments.count == 0) {
+        
+        UILabel *noCommentsMessage = [[UILabel alloc]initWithFrame:CGRectMake(0,
+                                                                              100.0,
+                                                                              self.tableView.frame.size.width,
+                                                                              30.0)];
+        noCommentsMessage.text = @"No Comments...";
+        noCommentsMessage.textAlignment = NSTextAlignmentCenter;
+        noCommentsMessage.font = [UIFont fontWithName:@"Avenir-Roman" size:22.0];
+        noCommentsMessage.textColor = [UIColor colorWithRed:190.0/255.0 green:190.0/255.0 blue:205.0/255.0 alpha:1.0];
+        noCommentsMessage.tag = NO_COMMENTS_MESSAGE_TAG;
+        
+        [self.tableView addSubview:noCommentsMessage];
+        
+    }
+}
+
+- (void)removeNoCommentMessage
+{
+    if ([self.tableView viewWithTag:NO_COMMENTS_MESSAGE_TAG]) {
+        
+        UILabel *noCommentsMessage = (UILabel *)[self.tableView viewWithTag:NO_COMMENTS_MESSAGE_TAG];
+        
+        [UIView animateWithDuration:0.3
+                         animations:^{ noCommentsMessage.alpha = 0; }
+                         completion:^(BOOL finished) { [noCommentsMessage removeFromSuperview]; }];
+    }
 }
 
 - (void)setTextToolbar
@@ -134,7 +178,9 @@
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.comments.count - 1 inSection:0];
     
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (self.comments.count > 0) {
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 -(void)textViewDidEndEditing:(UITextView *)textView {
@@ -148,7 +194,7 @@
         
         self.placeholder.hidden = YES;
         self.postButton.enabled = YES;
-    
+        
     } else {
         
         self.placeholder.hidden = NO;
@@ -163,41 +209,41 @@
     
     /*
      
-    CGFloat textViewFixedWidth = textView.frame.size.width;
-    CGSize newSize = [textView sizeThatFits:CGSizeMake(textViewFixedWidth, CGFLOAT_MAX)];
-    CGRect newFrame = textView.frame;
-    newFrame.size = CGSizeMake(fmaxf(newSize.width, textViewFixedWidth), newSize.height);
-    
-    [UIView animateWithDuration:0.3 animations:^{ textView.frame = newFrame; }];
-    
-    if (textViewOldHeight == 0) {
-        textViewOldHeight = textView.frame.size.height;
-    }
-    
-    if (textInputFrame.size.height == 0) {
-        textInputFrame = self.textInputView.frame;
-    }
-    
-    if (textViewOldHeight != textView.frame.size.height) {
-        
-//        if (textViewOldHeight < textView.frame.size.height) {
-//            
-//            textInputFrame.origin.y -= 22.0;
-//        
-//        } else {
-//            
-//            textInputFrame.origin.y += 22.0;
-//        }
-        
-        textInputFrame.size.height = textView.frame.size.height + 12.0;
-        
-        textViewOldHeight = textView.frame.size.height;
-                
-        [UIView animateWithDuration:0.3 animations:^{
-            textView.inputAccessoryView.frame = textInputFrame;
-            self.textInputView.frame = textInputFrame;
-        }];
-    }
+     CGFloat textViewFixedWidth = textView.frame.size.width;
+     CGSize newSize = [textView sizeThatFits:CGSizeMake(textViewFixedWidth, CGFLOAT_MAX)];
+     CGRect newFrame = textView.frame;
+     newFrame.size = CGSizeMake(fmaxf(newSize.width, textViewFixedWidth), newSize.height);
+     
+     [UIView animateWithDuration:0.3 animations:^{ textView.frame = newFrame; }];
+     
+     if (textViewOldHeight == 0) {
+     textViewOldHeight = textView.frame.size.height;
+     }
+     
+     if (textInputFrame.size.height == 0) {
+     textInputFrame = self.textInputView.frame;
+     }
+     
+     if (textViewOldHeight != textView.frame.size.height) {
+     
+     //        if (textViewOldHeight < textView.frame.size.height) {
+     //
+     //            textInputFrame.origin.y -= 22.0;
+     //
+     //        } else {
+     //
+     //            textInputFrame.origin.y += 22.0;
+     //        }
+     
+     textInputFrame.size.height = textView.frame.size.height + 12.0;
+     
+     textViewOldHeight = textView.frame.size.height;
+     
+     [UIView animateWithDuration:0.3 animations:^{
+     textView.inputAccessoryView.frame = textInputFrame;
+     self.textInputView.frame = textInputFrame;
+     }];
+     }
      
      */
 }
@@ -218,28 +264,29 @@
     Comment *comment = [[Comment alloc]init];
     
     comment.text = self.textView.text;
-    comment.dealer = appDelegate.dealer;
-    comment.deal = self.deal;
+    comment.dealerID = appDelegate.dealer.dealerID;
+    comment.dealID = self.deal.dealID;
+    comment.dealerFullName = appDelegate.dealer.fullName;
+    comment.dealerPhotoURL = appDelegate.dealer.photoURL;
     comment.uploadDate = [NSDate date];
     comment.type = @"Deal";
     
-    [self.comments addObject:comment];
-    
-    /*
-    [[RKObjectManager sharedManager] patchObject:self.deal
-                                            path:@"/deals/"
-                                      parameters:nil
-                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mapping) {
-                                             
-                                             [self addCommentToTableView];
-                                         }
-                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        
-                                             
-                                         }];
-     */
-    
-    [self addCommentToTableView];
+    [[RKObjectManager sharedManager] postObject:comment
+                                           path:@"/addcomments/"
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mapping) {
+                                            
+                                            NSLog(@"Comment uploaded successfuly!");
+                                            [self removeNoCommentMessage];
+                                            [self.comments addObject:comment];
+                                            [self addCommentToTableView];
+                                            self.didChanges = YES;
+                                        }
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            [unableToPostComment show:YES];
+                                            [unableToPostComment hide:YES afterDelay:1.5];
+                                        }];
 }
 
 - (void)setProgressIndicator
@@ -256,6 +303,21 @@
     [self.navigationController.view addSubview:unableToPostComment];
 }
 
+- (void)loadPhotosToView:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    
+    if ([[info objectForKey:@"target"] isEqualToString:@"Commenter's Photo"]) {
+        
+        CommentsTableCell *cell = [info objectForKey:@"cell"];
+        cell.dealerProfilePic.alpha = 0;
+        cell.dealerProfilePic.image = [info objectForKey:@"image"];
+        [UIView animateWithDuration:0.3 animations:^{
+            cell.dealerProfilePic.alpha = 1;
+        }];
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -267,7 +329,9 @@
     
     self.cellPrototype = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 44.0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 74.0, 0);
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)addCommentToTableView
@@ -280,11 +344,11 @@
     self.textView.text = nil;
     self.postButton.enabled = NO;
     
-    [self.tableView reloadData];
+    //    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+    
     return self.comments.count;
 }
 
@@ -295,7 +359,7 @@
     label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y, requiredSize.width, requiredSize.height);
     
     // Calculate cell height
-    CGFloat height = 10.0f + self.cellPrototype.dealerName.frame.size.height + 6.0f + 10.0f + label.frame.size.height;
+    CGFloat height = 12.0f + self.cellPrototype.dealerName.frame.size.height + 6.0f + 12.0f + label.frame.size.height;
     
     return height;
 }
@@ -308,21 +372,34 @@
     
     CGFloat commentBodyHeight = [self labelHeight:self.cellPrototype.commentBody];
     
-    return MAX(commentBodyHeight, 60.0f);
+    return MAX(commentBodyHeight, 64.0f);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    static NSString *CellIdentifier = @"CommentsTableCell";
-    CommentsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    static NSString *CellIdentifier = @"CommentsTableCell";
+    CommentsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     Comment *comment = [self.comments objectAtIndex:indexPath.row];
     
-    cell.dealerProfilePic.image = appDelegate.dealer.photo;
-    cell.dealerName.text = comment.dealer.fullName;
+    if (!cell) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:nil options:nil];
+        cell = [nib objectAtIndex:0];
+    }
+    
+    if (!cell.dealerProfilePic.image) {
+        if (comment.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
+            cell.dealerProfilePic.image = [appDelegate myProfilePic];
+        } else {
+            [appDelegate otherProfilePic:comment.dealerPhotoURL forTarget:@"Commenter's Photo" inViewController:NAME_FOR_NOTIFICATIONS inCell:cell];
+        }
+    }
+    
+    cell.dealerName.text = comment.dealerFullName;
     cell.commentDate.text = [comment.dateFormatter stringFromDate:comment.uploadDate];
     cell.commentBody.text = comment.text;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    [cell.contentView layoutIfNeeded];
     
     return cell;
 }

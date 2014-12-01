@@ -10,8 +10,6 @@
 
 @implementation CommentsTableCell
 
-@synthesize requiredCellHeight;
-
 - (void)awakeFromNib
 {
     // Initialization code
@@ -31,14 +29,17 @@
     self.dealerProfilePic.layer.cornerRadius = self.dealerProfilePic.frame.size.width / 2;
     self.dealerProfilePic.layer.masksToBounds = YES;
     
-    CGSize maxSize = CGSizeMake(250.0f, CGFLOAT_MAX);
-    CGSize requiredSize = [self.commentBody sizeThatFits:maxSize];
-    self.commentBody.frame = CGRectMake(self.commentBody.frame.origin.x, self.commentBody.frame.origin.y, requiredSize.width, requiredSize.height);
+    NSDictionary *attributes = @{NSFontAttributeName : self.commentBody.font};
+    CGSize boundingRect = CGSizeMake(250.0 ,MAXFLOAT);
+    CGRect commentBodyFrame = [self.commentBody.text boundingRectWithSize:boundingRect
+                                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                                         attributes:attributes
+                                                            context:nil];
     
-    // Calculate cell height
-    
-    requiredCellHeight = 10.0f + self.dealerName.frame.size.height + 6.0f + 10.0f;
-    requiredCellHeight += self.commentBody.frame.size.height;
+    self.commentBody.frame = CGRectMake(self.commentBody.frame.origin.x,
+                                        self.commentBody.frame.origin.y,
+                                        self.commentBody.frame.size.width,
+                                        commentBodyFrame.size.height);
 }
 
 @end

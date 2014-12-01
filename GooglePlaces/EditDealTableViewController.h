@@ -19,7 +19,7 @@
 @interface EditDealTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate> {
     
     BOOL isFrontCamera, isSessionRunning, shouldDealloc;
-    MBProgressHUD *illogicalPercentage, *uploadingDeal;
+    MBProgressHUD *illogicalPercentage, *lastPriceWithoutPrice, *uploadingDeal;
     UIColor *placeholderColor;
 }
 

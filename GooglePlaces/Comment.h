@@ -13,9 +13,12 @@
 
 @interface Comment : NSObject
 
+@property NSNumber *commentID;
 @property NSString *text;
-@property Deal *deal;
-@property Dealer *dealer;
+@property NSNumber *dealID;
+@property NSNumber *dealerID;
+@property NSString *dealerFullName;
+@property NSString *dealerPhotoURL;
 @property NSDate *uploadDate;
 @property NSString *type; // Deal or Post. Currently only Deal type exists.
 

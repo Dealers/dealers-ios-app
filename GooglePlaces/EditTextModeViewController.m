@@ -10,7 +10,10 @@
 
 #define keyboardHeight 216
 
-@interface EditTextModeViewController ()
+@interface EditTextModeViewController () {
+    
+    UIColor *placeholderColor;
+}
 
 @end
 
@@ -29,7 +32,7 @@
     } else if ([self.title isEqualToString:@"Price"]) {
         if ([self.textView.text isEqualToString:@""]) {
             edtvc.dealPrice.text = @"Price";
-            edtvc.dealPrice.textColor = [UIColor lightGrayColor];
+            edtvc.dealPrice.textColor = placeholderColor;
         } else {
             NSString *currency;
             if (self.shekel.selected) currency = @"₪";
@@ -45,7 +48,7 @@
     } else if ([self.title isEqualToString:@"Discount"]) {
         if ([self.textView.text isEqualToString:@""]) {
             edtvc.dealDiscount.text = @"Discount or Last Price";
-            edtvc.dealDiscount.textColor = [UIColor lightGrayColor];
+            edtvc.dealDiscount.textColor = placeholderColor;
         } else {
             NSString *discountType;
             if (self.percentage.selected) {
@@ -66,7 +69,7 @@
     } else if ([self.title isEqualToString:@"Description"]) {
         if ([self.textView.text isEqualToString:@""]) {
             edtvc.dealDescription.text = @"Description";
-            edtvc.dealDescription.textColor = [UIColor lightGrayColor];
+            edtvc.dealDescription.textColor = placeholderColor;
         } else {
             edtvc.dealDescription.text = self.textView.text;
             edtvc.dealDescription.textColor = [UIColor blackColor];
@@ -104,6 +107,7 @@
     
     self.textView.text = self.currentValue;
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    placeholderColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1.0];
     
     [self setProgressIndicator];
     [self positionBarsInPlace];
@@ -121,10 +125,10 @@
     if ([self.title isEqualToString:@"Title"]) {
         self.textView.keyboardType = UIKeyboardTypeDefault;
         self.textView.returnKeyType = UIReturnKeyDone;
+        self.textView.font = [UIFont fontWithName:@"Avenir-Roman" size:20.0];
     } else if ([self.title isEqualToString:@"Price"] || [self.title isEqualToString:@"Discount"]) {
         self.textView.keyboardType = UIKeyboardTypeDecimalPad;
-        self.textView.keyboardType = UIKeyboardTypeDecimalPad;
-        self.textView.font = [UIFont fontWithName:@"Avenir-Light" size:22.0];
+        self.textView.font = [UIFont fontWithName:@"Avenir-Light" size:25.0];
     } else if ([self.title isEqualToString:@"Description"]) {
         self.textView.keyboardType = UIKeyboardTypeDefault;
         self.textView.returnKeyType = UIReturnKeyDefault;
@@ -281,7 +285,7 @@
     tooMuchIndicator.labelText = @"Title is too long";
     tooMuchIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     tooMuchIndicator.detailsLabelText = @"120 characters max";
-    tooMuchIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    tooMuchIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     tooMuchIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
     [self.navigationController.view addSubview:blankTitleIndicator];

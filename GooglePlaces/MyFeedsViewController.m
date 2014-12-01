@@ -13,6 +13,9 @@
 #import "WhereIsTheDeal.h"
 #import "OnlineViewController.h"
 #import <mach/mach.h>
+#import <AWSiOSSDKv2/S3.h>
+#import <AWSiOSSDKv2/AWSCore.h>
+#import <Bolts/Bolts.h>
 #import "WhatIsTheDeal.h"
 #import "CheckConnection.h"
 #import "Deal.h"
@@ -51,45 +54,6 @@
             [v removeFromSuperview];
         }
     }
-}
-
-- (void)configureRestKit
-{
-    // initialize AFNetworking HTTPClient
-    NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
-    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
-    
-    // initialize RestKit
-    RKObjectManager *dealsManager = [[RKObjectManager alloc] initWithHTTPClient:client];
-    
-    // validate with username and password
-    NSString *username = @"admin";
-    NSString *password = @"admin";
-    [dealsManager.HTTPClient setAuthorizationHeaderWithUsername:username password:password];
-    
-    // other modifications to the object manager
-    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);    
-    
-    // setup object mappings
-    RKObjectMapping *dealMapping = [appDelegate getDealMapping];
-    
-    // register mappings with the provider using a response descriptor
-    RKResponseDescriptor *responseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:dealMapping
-                                                 method:RKRequestMethodAny
-                                            pathPattern:@"/deals/"
-                                                keyPath:@"results"
-                                            statusCodes:statusCodes];
-    
-    // register mappings with the provider using a request descriptor
-    RKRequestDescriptor *requestDescriptor =
-    [RKRequestDescriptor requestDescriptorWithMapping:[[appDelegate getDealMapping] inverseMapping]
-                                          objectClass:[Deal class]
-                                          rootKeyPath:nil
-                                               method:RKRequestMethodAny];
-    
-    [dealsManager addResponseDescriptor:responseDescriptor];
-    [dealsManager addRequestDescriptor:requestDescriptor];
 }
 
 - (void)loadDeals
@@ -200,7 +164,7 @@
     
     for (int i = cellNumberInScrollView; ((i < numberOfDealsLoadingAtATime + cellNumberInScrollView) && (i < [self.deals count])); i++) {
         dealClass = [self.deals objectAtIndex:i];
-        NSString *imageID = [dealClass photoID1];
+        NSString *imageID = [dealClass photoURL1];
         
         dealClass.photoSum = [self setPhotoSum:dealClass];
         
@@ -244,14 +208,6 @@
         }
         [[self scrollView] addSubview:titleBackground];
         
-        UIImageView *likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Likes icon.png"]];
-        [likeIcon setFrame:CGRectMake(274, 124+(GAP)-(offSetShortCell*isShortCell), 13, 12)];
-        [[self scrollView] addSubview:likeIcon];
-        
-        UIImageView *commentIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Comments icon.png"]];
-        [commentIcon setFrame:CGRectMake(274, 143+(GAP)-(offSetShortCell*isShortCell), 12, 14)];
-        [[self scrollView] addSubview:commentIcon];
-        
         dealClass.currency = [appDelegate getCurrencySign:dealClass.currency];
         dealClass.discountType = [appDelegate getDiscountType:dealClass.discountType];
         
@@ -263,21 +219,20 @@
         title.numberOfLines = 2;
         [[self scrollView] addSubview:title];
         
-        UILabel *likes = [[UILabel alloc]initWithFrame:CGRectMake(291, 121+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
-        [likes setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        likes.text = [[dealClass likeCounter] stringValue];
-        likes.backgroundColor = [UIColor clearColor];
-        likes.textColor = [UIColor whiteColor];
-        [likes sizeToFit];
-        [[self scrollView] addSubview:likes];
+        if (dealClass.dealAttrib.dealersThatLiked.count > 0) {
         
-        UILabel *comments = [[UILabel alloc]initWithFrame:CGRectMake(291, 141+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
-        [comments setFont:[UIFont fontWithName:@"Avenir-Roman" size:13.0]];
-        comments.text = [[dealClass commentCounter] stringValue];
-        comments.backgroundColor = [UIColor clearColor];
-        comments.textColor = [UIColor whiteColor];
-        [comments sizeToFit];
-        [[self scrollView] addSubview:comments];
+            UIImageView *likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"My Feed+View Deal (final)_Likes icon.png"]];
+            [likeIcon setFrame:CGRectMake(270, 132+(GAP)-(offSetShortCell*isShortCell), 18, 16)];
+            [[self scrollView] addSubview:likeIcon];
+            
+            UILabel *likes = [[UILabel alloc]initWithFrame:CGRectMake(291, 130+(GAP)-(offSetShortCell*isShortCell), 21, 21)];
+            [likes setFont:[UIFont fontWithName:@"Avenir-Roman" size:15.0]];
+            likes.text = [NSNumber numberWithInteger:dealClass.dealAttrib.dealersThatLiked.count].stringValue;
+            likes.backgroundColor = [UIColor clearColor];
+            likes.textColor = [UIColor whiteColor];
+            [likes sizeToFit];
+            [[self scrollView] addSubview:likes];
+        }
         
         UIButton *selectDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectDealButton setTitle:@"" forState:UIControlStateNormal];
@@ -303,7 +258,7 @@
         label2.textColor = [UIColor blackColor];
         [[self scrollView] addSubview:label2];
         
-        if (dealClass.price.stringValue.length > 0 && !(dealClass.discountValue.stringValue > 0)) {
+        if (dealClass.price.intValue > 0 && !(dealClass.discountValue.intValue > 0)) {
             UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
             label3.text = [dealClass.currency stringByAppendingString:dealClass.price.stringValue];
@@ -314,7 +269,7 @@
             [[self scrollView] addSubview:label3];
         }
         
-        if (dealClass.price.stringValue.length > 0 && dealClass.discountValue.stringValue.length > 0) {
+        if (dealClass.price.intValue > 0 && dealClass.discountValue.intValue > 0) {
             UILabel *label4=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label4 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
             label4.text = [[dealClass discountValue] stringValue];
@@ -344,7 +299,7 @@
             [[self scrollView] addSubview:label3];
         }
         
-        if (!(dealClass.price.stringValue.length > 0) && dealClass.discountValue.stringValue.length > 0) {
+        if (!(dealClass.price.intValue > 0) && dealClass.discountValue.intValue > 0) {
             UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(265, 169+(GAP)-(offSetShortCell*isShortCell), 53, 21)];
             [label3 setFont:[UIFont fontWithName:@"Avenir-Light" size:17.0]];
             label3.text = [[dealClass discountValue] stringValue];
@@ -405,6 +360,67 @@
     
     for (int i = cellsNumbersInFillWithImages; ((i < cellNumberInScrollView) && (i < [self.deals count])); i++) {
         
+        Deal *deal = [self.deals objectAtIndex:i];
+        
+        NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"downloaded_image_%@.jpg", deal.dealID]];
+        NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+        
+        AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+                
+        downloadRequest.bucket = @"dealers-app";
+        downloadRequest.key = deal.photoURL1;
+        downloadRequest.downloadingFileURL = downloadingFileURL;
+        
+        [[[AWSS3TransferManager defaultS3TransferManager] download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
+            
+            if (task.error){
+                if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                    switch (task.error.code) {
+                        case AWSS3TransferManagerErrorCancelled:
+                        case AWSS3TransferManagerErrorPaused:
+                            break;
+                            
+                        default:
+                            NSLog(@"Error: %@", task.error);
+                            break;
+                    }
+                } else {
+                    // Unknown error.
+                    NSLog(@"Error: %@", task.error);
+                }
+            }
+            
+            if (task.result) {
+                
+                deal.photo1 = [UIImage imageWithContentsOfFile:downloadingFilePath];
+                UIImageView *imageView = [[UIImageView alloc]initWithImage:deal.photo1];
+                
+                UIImageView *imageViewBackground = (UIImageView *)[self.scrollView viewWithTag:(i + 1) * imageViewBackgroundTag];
+                [imageView setFrame:imageViewBackground.frame];
+                
+                CALayer *mask = [CALayer layer];
+                mask.contents = (id)[[UIImage imageNamed:@"Deal Pic Mask"]CGImage];
+                mask.frame = CGRectMake(0, 0, 300, 155);
+                imageView.layer.mask = mask;
+                imageView.layer.masksToBounds = YES;
+                imageView.tag = (i + 1) * imageViewTag;
+                imageView.alpha = 0;
+                UIImageView *titlebackground = (UIImageView *)[self.scrollView viewWithTag:(i + 1) * titleBackgroundTag];
+                [[self scrollView] insertSubview:imageView belowSubview:titlebackground];
+                UIActivityIndicatorView *loading = (UIActivityIndicatorView *)[self.scrollView viewWithTag:(i + 1) * loadingIndicatorTag];
+                
+                [UIView animateWithDuration:0.5 animations:^{
+                    loading.alpha = 0;
+                    imageView.alpha = 1.0;
+                } completion:^(BOOL finished){
+                    [loading stopAnimating];
+                }];
+            }
+            return nil;
+        }];
+        
+        /*
+
         if (!photosQueue) {
             photosQueue = dispatch_queue_create("com.MyQueue", NULL);
         }
@@ -465,6 +481,7 @@
                 NSLog(@"\n cellNumbersInFillWithImages: %i \n cellNumberInScrollView: %i \n i: %i", cellsNumbersInFillWithImages, cellNumberInScrollView, i);
             }
         });
+         */
     } // End of for loop
     
     cellsNumbersInFillWithImages += numberOfDealsLoadingAtATime;
@@ -474,15 +491,16 @@
     
     ViewonedealViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
     UIButton *button = (UIButton *)sender;
-    Deal *dealClass = [[Deal alloc]init];
-    dealClass = [self.deals objectAtIndex:(button.tag)];
-    controller.deal = dealClass;
+    Deal *deal = [[Deal alloc]init];
+    deal = [self.deals objectAtIndex:(button.tag)];
+    controller.deal = deal;
     
-    if (dealClass.photoID1.length > 0) {
+    if (deal.photoURL1.length > 0) {
         controller.isShortCell = @"no";
     } else controller.isShortCell = @"yes";
     
-    if ([appDelegate.dealer.userLikesList containsObject:dealClass.url]) {
+    if ([deal.dealAttrib.dealersThatLiked containsObject:appDelegate.dealer.dealerID]) {
+        
         controller.isDealLikedByUser = @"yes";
     } else {
         controller.isDealLikedByUser = @"no";
@@ -521,22 +539,22 @@
 
 - (NSNumber *)setPhotoSum:(Deal *)deal {
     
-    if (deal.photoID1.length > 0)
+    if (deal.photoURL1.length > 0 && ![deal.photoURL1 isEqualToString:@"None"])
         deal.photoSum = @(deal.photoSum.intValue + 1);
     else
         return [NSNumber numberWithInt:0];
     
-    if (deal.photoID2.length > 0)
+    if (deal.photoURL2.length > 0 && ![deal.photoURL2 isEqualToString:@"None"])
         deal.photoSum = @(deal.photoSum.intValue + 1);
     else
         return [NSNumber numberWithInt:1];
     
-    if (deal.photoID3.length > 0)
+    if (deal.photoURL3.length > 0 && ![deal.photoURL3 isEqualToString:@"None"])
         deal.photoSum = @(deal.photoSum.intValue + 1);
     else
         return [NSNumber numberWithInt:2];
     
-    if (deal.photoID4.length > 0)
+    if (deal.photoURL4.length > 0 && ![deal.photoURL4 isEqualToString:@"None"])
         deal.photoSum = @(deal.photoSum.intValue + 1);
     else
         return [NSNumber numberWithInt:3];
@@ -668,15 +686,13 @@
     [self allocArrays];
     [self removeCellsFromSuperview];
     [self setRefreshControl];
-    
-    [self configureRestKit];
-    
+        
     CheckConnection *checkconnection = [[CheckConnection alloc]init];
     
     if ([checkconnection connected]){
         
         [self loadDeals];
-        //        [self loadDBandUpdateCells];
+//        [self loadDBandUpdateCells];
         
     } else {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Check Internet Connection" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];

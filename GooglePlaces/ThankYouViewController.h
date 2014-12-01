@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface ThankYouViewController : UIViewController <UIDocumentInteractionControllerDelegate>
 
@@ -16,5 +17,8 @@
 @property UIImage *sharedImage;
 
 @property (retain) UIDocumentInteractionController * documentInteractionController;
+
+
+- (IBAction)okay:(id)sender;
 
 @end

@@ -71,7 +71,7 @@
     
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     NSString *photoID = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-    dealer.photo = tempImage;
+    dealer.photo = UIImageJPEGRepresentation(tempImage, 1.0);
     
     ////////////////
     // end photo uploading //

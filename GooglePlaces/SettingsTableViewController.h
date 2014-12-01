@@ -14,10 +14,12 @@
 #import "PushNotificationsTableViewController.h"
 #import "MBProgressHUD.h"
 
-@interface SettingsTableViewController : UITableViewController <MFMailComposeViewControllerDelegate, MBProgressHUDDelegate> {
+@interface SettingsTableViewController : UITableViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, MBProgressHUDDelegate> {
     
-    MBProgressHUD *progressIndicator;
-    
+    MBProgressHUD *progressIndicator, *loggingInFacebook;
 }
+
+@property AppDelegate *appDelegate;
+@property (weak, nonatomic) IBOutlet UILabel *facebookConnectionIndicator;
 
 @end

@@ -15,10 +15,14 @@
     self = [super init];
     if (self) {
         
-        _likeCounter = [NSNumber numberWithInt:0];
-        _shareCounter = [NSNumber numberWithInt:0];
+        _dealAttribID = nil;
+        _dealID = nil;
+        
         _objectiveRank = [NSNumber numberWithInt:0];
-        _dealReliability = nil;
+        _dealReliability = [NSNumber numberWithInt:100];
+        
+        _dealersThatLiked = [[NSMutableArray alloc]init];
+        _dealersThatShared = [[NSMutableArray alloc]init];
     }
     return self;
 }

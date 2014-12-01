@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class DealerAttrib;
+
 @interface Dealer : NSObject
 
-@property NSString *dealerID;
-@property NSString *url;
+@property NSNumber *dealerID;
+
+@property NSString *username;
 @property NSString *email;
 @property NSString *userPassword;
 
@@ -22,12 +25,21 @@
 @property NSString *location;
 
 @property NSMutableArray *userLikesList;
-@property NSString *photoID;
-@property UIImage *photo;
+@property NSString *photoURL;
+@property NSData *photo;
 @property NSDate *registerDate;
 
-@property NSMutableArray *notifications;
+@property NSNumber *badReportsCounter;
+@property NSNumber *score;
+@property NSString *rank;
+@property NSNumber *reliability;
 
--(int) dealerEmpty: (NSString *) check;
+@property NSMutableArray *uploadedDeals;
+@property NSMutableArray *likedDeals;
+@property NSMutableArray *sharedDeals;
+@property NSMutableArray *followings;
+@property NSMutableArray *followedBy;
+
+@property NSMutableArray *notifications;
 
 @end

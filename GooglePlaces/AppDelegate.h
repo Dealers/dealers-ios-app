@@ -12,6 +12,7 @@
 #import "Store.h"
 #import "Dealer.h"
 #import "DealAttrib.h"
+#import "Comment.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
@@ -29,8 +30,7 @@
 @property (strong, nonatomic)  NSString *dealerName;
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
 @property (strong, nonatomic)  Dealer *dealer;
-
-@property (nonatomic) NSString *token;
+@property BOOL shouldUpdateProfile;
 
 @property (weak) UIImage *screenShot;
 
@@ -39,7 +39,18 @@
 - (void)showPlusButton;
 - (void)hidePlusButton;
 
+- (void)saveUserDetailsOnDevice;
+- (void)removeUserDetailsFromDevice;
+- (UIImage *)myProfilePic;
+- (void)otherProfilePic:(NSString *)photoURL forTarget:(NSString *)target inViewController:(NSString *)notificationCenterName inCell:(id)cell;
+- (UIColor *)ourPurple;
+- (UIColor *)textGrayColor;
+- (UIColor *)darkTextGrayColor;
+- (UIButton *)actionButton;
+- (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
+
 - (UIImageView *)loadingAnimationWhite;
+- (UIImageView *)loadingAnimationPurple;
 
 - (NSDictionary *)getCurrenciesDictionary;
 - (NSString *)getCurrencySign:(NSString *)currencyKey;
@@ -55,9 +66,16 @@
 - (NSString *)getCategoryKeyForValue:(NSString *)value;
 - (NSString *)getCategoryValueForKey:(NSString *)key;
 
-- (RKObjectMapping *)getTempDealMapping;
-- (RKObjectMapping *)getDealMapping;
+- (RKObjectMapping *)dealMapping;
+- (RKObjectMapping *)addDealMapping;
+- (RKObjectMapping *)dealerMapping;
+- (RKObjectMapping *)storeMapping;
+- (RKObjectMapping *)dealAttribMapping;
+- (RKObjectMapping *)commentMapping;
+- (void)setHTTPClientUsername:(NSString *)username andPassword:(NSString *)password;
+- (void)resetHTTPClientUsernameAndPassword;
 
 - (void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI;
+- (BOOL)isFacebookConnected;
 
 @end

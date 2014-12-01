@@ -7,7 +7,6 @@
 //
 
 #import "SigninViewController.h"
-#import "AppDelegate.h"
 #import "MyFeedsViewController.h"
 #import "CheckConnection.h"
 #import "KeychainItemWrapper.h"
@@ -39,6 +38,7 @@
         NSString *url2 = [NSString stringWithFormat:@"http://www.dealers.co.il/setLikeToDeal.php?Userid=%@&Indicator=%@",appDelegate.UserID,@"whatdealstheuserlikes"];
         NSData *URLData2 = [NSData dataWithContentsOfURL:[NSURL URLWithString:url2]];
         NSString *DataLikes = [[NSString alloc] initWithData:URLData2 encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", DataLikes);
         
         NSArray *array;
         array = [DataResult componentsSeparatedByString:@"."];
@@ -52,10 +52,9 @@
             if (!isPopping) {
                 
                 Dealer *dealer = [[Dealer alloc]init];
-                dealer.url = appDelegate.UserID;
                 dealer.email = EmailText.text;
                 dealer.fullName = [array objectAtIndex:0];
-                dealer.photo = [UIImage imageWithData:URLData];
+                dealer.photo = URLData;
                 dealer.userLikesList = nil;
                 
                 appDelegate.dealer = dealer;
@@ -136,12 +135,12 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    NSData *imageData = UIImageJPEGRepresentation(self.appDelegate.dealer.photo, 1.0);
+    NSData *imageData = self.appDelegate.dealer.photo;
     
     [defaults setObject:appDelegate.dealer.fullName forKey:@"fullName"];
     [defaults setObject:appDelegate.dealer.dateOfBirth forKey:@"dateOfBirth"];
     [defaults setObject:appDelegate.dealer.gender forKey:@"gender"];
-    [defaults setObject:imageData forKey:@"image"];
+    [defaults setObject:imageData forKey:@"photo"];
     
     [defaults synchronize];
 }

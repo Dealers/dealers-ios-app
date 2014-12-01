@@ -15,6 +15,8 @@
 #define iconsLeftMargin 12
 #define labelsLeftMargin 52
 
+#define AWS_S3_BUCKET_NAME @"dealers-app"
+
 @interface WhatIsTheDeal2 ()
 
 @end
@@ -25,15 +27,6 @@
 @synthesize shekel, dollar, pound, percentage, lastPrice;
 
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,13 +35,16 @@
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleFBSessionStateChangeWithNotification:)
+                                                 name:@"SessionStateChangeNotification"
+                                               object:nil];
+    
     [self initialize];
-    [self configureRestKit];
     [self setupExpirationDateCellContentView];
     [self setAddDealButton];
     [self setProgressIndicator];
     [self createInputAccessoryViews];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -205,10 +201,7 @@
                 
             } else {
                 
-                self.facebookIcon.selected = YES;
-                self.facebookLabel.textColor = [UIColor colorWithRed:59.0/255.0 green:87.0/255.0 blue:157.0/255.0 alpha:1.0];
-                [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
-                isFacebookSelectd = YES;
+                [self setFacebookConnection];
             }
         }
         
@@ -575,14 +568,14 @@
     // Setting the shared view content:
     
     UIImageView *dealPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 165.0)];
-
+    
     if (self.deal.photo1) {
         
         dealPic.image = self.deal.photo1;
-    
+        
     } else {
         
-        dealPic.image = [UIImage imageNamed:@""];
+        dealPic.image = [UIImage imageNamed:@"Shared Image Background"];
     }
     
     [sharedView addSubview:dealPic];
@@ -590,7 +583,13 @@
     CGFloat titleBackgroundHeight = 78.0;
     UIImageView *titleBackground = [[UIImageView alloc]initWithFrame:CGRectMake(0, dealPic.frame.size.height - titleBackgroundHeight, screenWidth, titleBackgroundHeight)];
     titleBackground.image = [UIImage imageNamed:@"Title Background"];
-    titleBackground.alpha = 0.65;
+    
+    if (self.deal.photo1) {
+        titleBackground.alpha = 0.65;
+    } else {
+        titleBackground.alpha = 0.3;
+    }
+    
     [sharedView addSubview:titleBackground];
     
     CGFloat titleLabelHeight = 48.0;
@@ -674,7 +673,7 @@
                 NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
                 NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.discountTextField.text attributes:attributes];
                 [discountLabel setAttributedText:attrText];
-            
+                
             } else if ([selectedDiscountType isEqualToString:@"%"]) {
                 
                 discountLabel.text = self.discountTextField.text;
@@ -732,7 +731,7 @@
         expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
         expirationLabel.textColor = detailsTextColor;
         expirationLabel.numberOfLines = 1;
-        expirationLabel.text = self.expirationDateLabel.text;
+        expirationLabel.text = [@"Expires on " stringByAppendingString:self.expirationDateLabel.text];
         [sharedView addSubview:expirationLabel];
         
         detailsLowestYPoint = CGRectGetMaxY(expirationLabel.frame);
@@ -772,11 +771,23 @@
     lastPriceWithoutPrice.labelText = @"Price is empty!";
     lastPriceWithoutPrice.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     lastPriceWithoutPrice.detailsLabelText = @"Required if there's previous price";
-    lastPriceWithoutPrice.detailsLabelFont = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    lastPriceWithoutPrice.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     lastPriceWithoutPrice.animationType = MBProgressHUDAnimationZoomIn;
+    
+    UIImageView *customView = [self.appDelegate loadingAnimationWhite];
+    [customView startAnimating];
+    
+    loggingInFacebook = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    loggingInFacebook.delegate = self;
+    loggingInFacebook.customView = customView;
+    loggingInFacebook.mode = MBProgressHUDModeCustomView;
+    loggingInFacebook.labelText = @"Logging In";
+    loggingInFacebook.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    loggingInFacebook.animationType = MBProgressHUDAnimationZoomIn;
     
     [self.navigationController.view addSubview:illogicalPercentage];
     [self.navigationController.view addSubview:lastPriceWithoutPrice];
+    [self.navigationController.view addSubview:loggingInFacebook];
 }
 
 
@@ -853,17 +864,17 @@
 
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 //{
-//    
+//
 //    if (textField == self.priceTextField) {
-//        
+//
 //        if (range.location < 1) {
-//            
+//
 //            UITextPosition *start = [textField positionFromPosition:textField.beginningOfDocument offset:range.location];
 //            UITextPosition *end = [textField positionFromPosition:start offset:range.length];
 //            UITextRange *textRange = [textField textRangeFromPosition:start toPosition:end];
-//            
+//
 //            textField.selectedTextRange = textRange;
-//            
+//
 //            return YES;
 //        }
 //    }
@@ -912,6 +923,178 @@
     cctvc.cameFrom = @"Add Deal";
     [self.navigationController pushViewController:cctvc animated:YES];
 }
+
+- (void)setFacebookConnection
+{
+    if ([appDelegate isFacebookConnected]) {
+        
+        // Present the permissions dialog and ask for publish_actions
+        
+        [FBRequestConnection startWithGraphPath:@"/me/permissions"
+                              completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                  
+                                  if (!error){
+                                      
+                                      NSDictionary *permissions = [(NSArray *)[result data] objectAtIndex:2]; // object at index 2 is the publish_actions permission
+                                      
+                                      if ([[permissions objectForKey:@"permission"] isEqualToString:@"publish_actions"]
+                                          && [[permissions objectForKey:@"status"] isEqualToString:@"granted"]) {
+                                          
+                                          // Publish permissions found, turn on facebook
+                                          [self turnOnFacebook];
+                                          
+                                      } else {
+                                          
+                                          // Publish permissions not found, ask for publish_actions
+                                          [self requestPublishPermissions];
+                                          
+                                      }
+                                      
+                                  } else {
+                                      // There was an error, handle it
+                                      
+                                  }
+                              }];
+        
+    } else {
+        
+        // Connect with Facebook Login and ask for all the necessary permissions, including publish_actions
+        
+        [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email"] allowLoginUI:YES];
+    }
+}
+
+- (void)requestPublishPermissions
+{
+    [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                          defaultAudience:FBSessionDefaultAudienceFriends
+                                        completionHandler:^(FBSession *session, NSError *error) {
+                                            
+                                            __block NSString *alertText;
+                                            __block NSString *alertTitle;
+                                            
+                                            if (!error) {
+                                                
+                                                if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
+                                                    
+                                                    // Permission not granted, tell the user we will not publish
+                                                    alertTitle = @"Permission not granted";
+                                                    alertText = @"Your action will not be published to Facebook.";
+                                                    
+                                                    [[[UIAlertView alloc] initWithTitle:alertTitle
+                                                                                message:alertText
+                                                                               delegate:self
+                                                                      cancelButtonTitle:@"Ok"
+                                                                      otherButtonTitles:nil] show];
+                                                    
+                                                } else {
+                                                    
+                                                    // Permission granted, turn on facebook
+                                                    [self turnOnFacebook];
+                                                }
+                                                
+                                            } else {
+                                                
+                                                // There was an error, handle it
+                                                NSLog(@"error! %@", [error localizedDescription]);
+                                            }
+                                        }];
+}
+
+- (void)turnOnFacebook
+{
+    NSIndexPath *facebookIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+    self.facebookIcon.selected = YES;
+    self.facebookLabel.textColor = [UIColor colorWithRed:59.0/255.0 green:87.0/255.0 blue:157.0/255.0 alpha:1.0];
+    [self.tableView cellForRowAtIndexPath:facebookIndexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+    isFacebookSelectd = YES;
+}
+
+- (void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification
+{
+    // Get the session, state and error values from the notification's userInfo dictionary.
+    NSDictionary *userInfo = [notification userInfo];
+    
+    FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
+    NSError *error = [userInfo objectForKey:@"error"];
+    
+    [loggingInFacebook show:YES];
+    
+    if (!error) {
+        
+        // In case that there's not any error, then check if the session opened or closed.
+        
+        if ([appDelegate isFacebookConnected]) {
+            
+            // The session is open. Get the user information and update the UI.
+            
+            [FBRequestConnection startWithGraphPath:@"me"
+                                         parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(normal), email"}
+                                         HTTPMethod:@"GET"
+                                  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                      
+                                      if (!error) {
+                                          
+                                          __block Dealer *dealer = appDelegate.dealer;
+                                          __block BOOL didChange = NO;
+                                          __block NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+                                          
+                                          if (!dealer.dateOfBirth) {
+                                              
+                                              dateFormatter.dateFormat = @"MM/dd/yyyy";
+                                              dealer.dateOfBirth = [dateFormatter dateFromString:[result objectForKey:@"birthday"]];
+                                              didChange = YES;
+                                          }
+                                          
+                                          if (!(dealer.gender.length > 0)) {
+                                              
+                                              dealer.gender = [result objectForKey:@"gender"];
+                                              didChange = YES;
+                                          }
+                                          
+                                          if (!dealer.photo) {
+                                              
+                                              NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
+                                              dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
+                                              didChange = YES;
+                                          }
+                                          
+                                          appDelegate.dealer = dealer;
+                                          
+                                          // Upload all the data to Dealers database.
+                                          
+                                          if (didChange) {
+                                              
+                                              // Upload
+                                          }
+                                          
+                                          [loggingInFacebook hide:YES];
+                                          
+                                          [self requestPublishPermissions];
+                                          
+                                      } else {
+                                          
+                                          NSLog(@"%@", [error localizedDescription]);
+                                      }
+                                  }];
+            
+        } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
+            
+            // A session was closed or the login was failed or canceled. Update the UI accordingly.
+            
+            [loggingInFacebook hide:YES];
+        }
+        
+    } else {
+        
+        // In case an error has occured, then just log the error and update the UI accordingly.
+        NSLog(@"Error: %@", [error localizedDescription]);
+        [loggingInFacebook hide:YES];
+    }
+}
+
+
+#pragma mark - Upload Deal
 
 - (void)addDeal
 {
@@ -966,6 +1149,7 @@
     // upload the deal to the server
     
     [self uploadDeal];
+    if (self.deal.photoSum > 0) [self uploadDealPhotos];
 }
 
 - (BOOL)validation
@@ -977,7 +1161,7 @@
         
         return NO;
         
-    } else if ([selectedDiscountType isEqualToString:@"lastPrice"] && !(self.priceTextField.text.length > 0)) {
+    } else if ([selectedDiscountType isEqualToString:@"lastPrice"] && self.discountTextField.text.length > 0 && !(self.priceTextField.text.length > 0)) {
         
         [lastPriceWithoutPrice show:YES];
         [lastPriceWithoutPrice hide:YES afterDelay:2.0];
@@ -988,68 +1172,114 @@
     return YES;
 }
 
-- (void)configureRestKit
-{
-    
-}
-
-
 - (void)uploadDeal
 {
-    if (self.deal.photo1) {
-        NSMutableURLRequest *request = [[RKObjectManager sharedManager] multipartFormRequestWithObject:self.deal
-                                                                                                method:RKRequestMethodPOST
-                                                                                                  path:@"/deals/"
-                                                                                            parameters:nil
-                                                                             constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                                                                                 [formData appendPartWithFileData:UIImagePNGRepresentation(self.deal.photo1)
-                                                                                                             name:@"deal[image]"
-                                                                                                         fileName:@"Gilad"
-                                                                                                         mimeType:@"image/png"];
-                                                                             }];
-        
-        RKObjectRequestOperation *operation = [[RKObjectManager sharedManager] objectRequestOperationWithRequest:request
-                                                                                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                                                                             
-                                                                                                             NSLog(@"Deal was uploaded successfuly!");
-                                                                                                             ThankYouViewController *tyvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ThankYouID"];
-                                                                                                             
-                                                                                                             tyvc.wasFacebookSelected = isFacebookSelectd;
-                                                                                                             tyvc.wasWhatsAppSelected = isWhatsAppSelected;
-                                                                                                             tyvc.sharedImage = self.sharedImage;
-                                                                                                             
-                                                                                                             [self.navigationController pushViewController:tyvc animated:YES];
-                                                                                                         }
-                                                                                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                                                                             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                                                                             [alert show];
-                                                                                                         }];
-        
-        ThankYouViewController *tyvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ThankYouID"];
-        
-        tyvc.wasFacebookSelected = isFacebookSelectd;
-        tyvc.wasWhatsAppSelected = isWhatsAppSelected;
-        tyvc.sharedImage = self.sharedImage;
-        
-        [self.navigationController pushViewController:tyvc animated:YES];
-        
-        [[RKObjectManager sharedManager] enqueueObjectRequestOperation:operation]; // NOTE: Must be enqueued rather than started
-        
-    } else {
-        
-        [[RKObjectManager sharedManager] postObject:self.deal
-                                               path:@"/deals/"
-                                         parameters:nil
-                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                
-                                                NSLog(@"Deal was uploaded successfuly!");
-                                                ThankYouViewController *tyvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ThankYouID"];
-                                                [self.navigationController pushViewController:tyvc animated:YES];
-                                            }
-                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                [alert show];
+    // Posting the deal
+    [[RKObjectManager sharedManager] postObject:self.deal
+                                           path:@"/adddeals/"
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            
+                                            NSLog(@"Deal was uploaded successfuly!");
+                                            
+                                            self.deal = mappingResult.firstObject;
+                                            
+                                            ThankYouViewController *tyvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ThankYouID"];
+                                            
+                                            tyvc.wasFacebookSelected = isFacebookSelectd;
+                                            tyvc.wasWhatsAppSelected = isWhatsAppSelected;
+                                            tyvc.sharedImage = self.sharedImage;
+                                            
+                                            [self.navigationController pushViewController:tyvc animated:YES]; }
+     
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Couldn't upload the deal :(" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                            [alert show];
+                                            
+                                            [[[AWSS3TransferManager defaultS3TransferManager] cancelAll] continueWithBlock:^id(BFTask *task) {
+                                                if (task.error) {
+                                                    NSLog(@"Error with cancelling uploads: %@",task.error);
+                                                } else {
+                                                    NSLog(@"Upload cancelled");
+                                                }
+                                                return nil;
                                             }];
+                                        }];
+}
+
+- (void)uploadDealPhotos
+{
+    // Post Photos to S3
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    for (int i = 0; i < self.deal.photoSum.intValue; i++) {
+        
+        NSString *fileName = [self.photosFileName objectAtIndex:i];
+        NSURL *fileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingString:fileName]];
+        NSData *photoData = [NSData dataWithContentsOfURL:fileURL];
+        NSString *key;
+        
+        switch (i) {
+            case 0:
+                key = self.deal.photoURL1;
+                break;
+            case 1:
+                key = self.deal.photoURL2;
+                break;
+            case 2:
+                key = self.deal.photoURL3;
+                break;
+            case 3:
+                key = self.deal.photoURL4;
+                break;
+                
+            default:
+                break;
+        }
+        
+        AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+        uploadRequest.bucket = AWS_S3_BUCKET_NAME;
+        uploadRequest.key = key;
+        uploadRequest.body = fileURL;
+        uploadRequest.contentLength = [NSNumber numberWithUnsignedLongLong:photoData.length];
+//        uploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend){
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //Update progress.
+//
+//            });
+        
+        [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
+                                                           withBlock:^id(BFTask *task) {
+                                                               if (task.error) {
+                                                                   if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                       switch (task.error.code) {
+                                                                           
+                                                                           case AWSS3TransferManagerErrorCancelled:
+                                                                               NSLog(@"Photo number %i upload cancelled", i + 1);
+                                                                               break;
+                                                                               
+                                                                           case AWSS3TransferManagerErrorPaused:
+                                                                               NSLog(@"Photo number %i upload paused", i + 1);
+                                                                               break;
+                                                                               
+                                                                           default:
+                                                                               NSLog(@"Error: %@", task.error);
+                                                                               break;
+                                                                       }
+                                                                   } else {
+                                                                       // Unknown error.
+                                                                       NSLog(@"Error: %@", task.error);
+                                                                   }
+                                                               }
+                                                               
+                                                               if (task.result) {
+                                                                   
+                                                                   NSLog(@"Photo number %i uploaded successfuly!", i + 1);
+
+                                                               }
+                                                               return nil;
+                                                           }];
     }
 }
 

@@ -25,8 +25,6 @@
 @property (strong, nonatomic)  UIImage *image2;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImage;
 
-- (IBAction)returnButtonClicked:(id)sender;
-
 @property (nonatomic, strong) NSMutableArray *dealsArray;
 @property (nonatomic, strong) NSMutableArray *dealPhotosArray;
 

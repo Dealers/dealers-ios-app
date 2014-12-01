@@ -11,6 +11,8 @@
 #import "MyFeedsViewController.h"
 #import "KeychainItemWrapper.h"
 
+#define AWS_S3_BUCKET_NAME @"dealers-app"
+
 @interface Signup2ViewController ()
 
 @end
@@ -18,22 +20,21 @@
 @implementation Signup2ViewController
 
 @synthesize appDelegate;
-@synthesize Fullname;
-@synthesize Email;
-@synthesize Password;
-@synthesize Datebirth;
-@synthesize Genger;
-@synthesize ImageAdded;
-@synthesize addphotobutton;
-@synthesize datepick,NavBar,ImageFrame,scroll,GenderNavBar,GenderPicker,ReturnButton,list,ReturnButtonFull,LoadingImage,PurpImage,SignupButton;
+@synthesize fullNameTextField;
+@synthesize emailTextField;
+@synthesize passwordTextField;
+@synthesize dateOfBirthTextField;
+@synthesize genderTextField;
+@synthesize profilePic;
+@synthesize datepick,NavBar,scroll,GenderNavBar,GenderPicker,list,LoadingImage,PurpImage,SignupButton;
 
 
 -(void) BackgroundMethod {
     
     Dealer *dealer = [[Dealer alloc]init];
     
-    if (didAddPhoto) {
-        NSData *imageData = UIImageJPEGRepresentation(ImageAdded.image, 2);
+    if (!profilePic.image) {
+        NSData *imageData = UIImageJPEGRepresentation(profilePic.image, 2);
         NSString *urlString = @"http://www.dealers.co.il/uploadphpFile.php";
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -56,25 +57,23 @@
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
         Photoid = returnString;
         
-        dealer.photo = ImageAdded.image;
+        dealer.photo = UIImageJPEGRepresentation(profilePic.image, 1.0);
         
-        didAddPhoto = NO;
-    
     } else {
-        dealer.photo = [UIImage imageNamed:@"Profile_noPic.jpg"];
+
     }
     
     NSString *date;
-    if ([Datebirth.text length] == 0) {
+    if ([dateOfBirthTextField.text length] == 0) {
         date = @"0";
-    } else date = Datebirth.text;
+    } else date = dateOfBirthTextField.text;
     
     NSString *gender;
-    if ([Genger.text length] == 0) {
+    if ([genderTextField.text length] == 0) {
         gender = @"0";
-    } else gender = Genger.text;
+    } else gender = genderTextField.text;
     
-    NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",Fullname.text,Password.text,Email.text,date,gender,Photoid];
+    NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",fullNameTextField.text,passwordTextField.text,emailTextField.text,date,gender,Photoid];
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@",strURL);
     
@@ -86,47 +85,43 @@
     
     // Filling the information on the user:
     
-    dealer.url = strResult;
-    dealer.email = Email.text;
-    dealer.fullName = Fullname.text;
+    dealer.dealerID = [NSNumber numberWithInt:strResult.intValue];
+    dealer.email = emailTextField.text;
+    dealer.fullName = fullNameTextField.text;
     dealer.dateOfBirth = self.selectedDate;
-    dealer.gender = gender;
-    dealer.photoID = Photoid;
+    dealer.gender = genderTextField.text;
+    dealer.photoURL = Photoid;
     
     appDelegate.dealer = dealer;
-    
-    [self saveUserDetails];
 }
 
 -(void) initialize
 {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    ReturnButtonFull.alpha=0.0;
-    ImageFrame.hidden = YES;
     isPopping = NO;
     [scroll setScrollEnabled:NO];
     [scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(SignupButton.frame)+10+216+44)))];
     scrollOriginOffset = scroll.contentOffset;
-    [self.Fullname setDelegate:self];
-    [self.Fullname setReturnKeyType:UIReturnKeyNext];
-    [self.Fullname addTarget:self action:@selector(Fullname) forControlEvents:UIControlEventEditingDidEndOnExit];
-    self.Fullname.tag = 1;
-    [self.Email setDelegate:self];
-    [self.Email setReturnKeyType:UIReturnKeyNext];
-    [self.Email addTarget:self action:@selector(Email) forControlEvents:UIControlEventEditingDidEndOnExit];
-    self.Email.tag = 2;
-    [self.Password setDelegate:self];
-    [self.Password setReturnKeyType:UIReturnKeyNext];
-    [self.Password addTarget:self action:@selector(Password) forControlEvents:UIControlEventEditingDidEndOnExit];
-    self.Password.tag = 3;
-    [self.Datebirth setDelegate:self];
-    [self.Datebirth setReturnKeyType:UIReturnKeyNext];
-    [self.Datebirth addTarget:self action:@selector(Datebirth) forControlEvents:UIControlEventEditingDidEndOnExit];
-    self.Datebirth.tag = 4;
-    [self.Genger setDelegate:self];
-    [self.Genger setReturnKeyType:UIReturnKeyDone];
-    [self.Genger addTarget:self action:@selector(Genger) forControlEvents:UIControlEventEditingDidEndOnExit];
-    self.Genger.tag = 5;
+    [self.fullNameTextField setDelegate:self];
+    [self.fullNameTextField setReturnKeyType:UIReturnKeyNext];
+    [self.fullNameTextField addTarget:self action:@selector(fullNameTextField) forControlEvents:UIControlEventEditingDidEndOnExit];
+    self.fullNameTextField.tag = 1;
+    [self.emailTextField setDelegate:self];
+    [self.emailTextField setReturnKeyType:UIReturnKeyNext];
+    [self.emailTextField addTarget:self action:@selector(emailTextField) forControlEvents:UIControlEventEditingDidEndOnExit];
+    self.emailTextField.tag = 2;
+    [self.passwordTextField setDelegate:self];
+    [self.passwordTextField setReturnKeyType:UIReturnKeyNext];
+    [self.passwordTextField addTarget:self action:@selector(passwordTextField) forControlEvents:UIControlEventEditingDidEndOnExit];
+    self.passwordTextField.tag = 3;
+    [self.dateOfBirthTextField setDelegate:self];
+    [self.dateOfBirthTextField setReturnKeyType:UIReturnKeyNext];
+    [self.dateOfBirthTextField addTarget:self action:@selector(dateOfBirthTextField) forControlEvents:UIControlEventEditingDidEndOnExit];
+    self.dateOfBirthTextField.tag = 4;
+    [self.genderTextField setDelegate:self];
+    [self.genderTextField setReturnKeyType:UIReturnKeyDone];
+    [self.genderTextField addTarget:self action:@selector(passwordTextField) forControlEvents:UIControlEventEditingDidEndOnExit];
+    self.genderTextField.tag = 5;
     [self.NavBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [self.NavBar setBarTintColor:[UIColor lightGrayColor]];
     [self.NavBar setTranslucent:YES];
@@ -134,10 +129,13 @@
     [self.GenderNavBar setBarTintColor:[UIColor lightGrayColor]];
     [self.GenderNavBar setTranslucent:YES];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow) name:UIKeyboardWillShowNotification object:nil];
     list = [[NSMutableArray alloc] initWithObjects:@"Gender",@"Male",@"Female", nil];
     Photoid=@"0";
-    registerAgain=NO;
+    
+    profilePic.layer.cornerRadius = profilePic.frame.size.width / 2;
+    profilePic.layer.masksToBounds = YES;
+    didUploadUserData = NO;
+    didPhotoFinishedUploading = NO;
 }
 
 - (void)viewDidLoad
@@ -159,8 +157,6 @@
     isPopping = YES;
     self.app.networkActivityIndicatorVisible = NO;
 }
-
-
 
 - (void)setElementsLocation
 {
@@ -232,138 +228,253 @@
 
 - (void)saveUserDetails
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.dealer = [[Dealer alloc]init];
     
-    NSData *imageData = UIImageJPEGRepresentation(self.appDelegate.dealer.photo, 1.0);
+    self.dealer.email = emailTextField.text;
+    self.dealer.username = emailTextField.text;
+    self.dealer.userPassword = passwordTextField.text;
+    self.dealer.fullName = fullNameTextField.text;
+    self.dealer.dateOfBirth = self.selectedDate;
+    self.dealer.gender = genderTextField.text;
+    self.dealer.registerDate = [NSDate date];
     
-    [defaults setObject:appDelegate.dealer.fullName forKey:@"fullName"];
-    [defaults setObject:appDelegate.dealer.dateOfBirth forKey:@"dateOfBirth"];
-    [defaults setObject:appDelegate.dealer.gender forKey:@"gender"];
-    [defaults setObject:imageData forKey:@"image"];
+    if (profilePic.image) {
+        
+        hasPhoto = YES;
+        UIImage *sizedProfilPic = [appDelegate resizeImage:profilePic.image toSize:CGSizeMake(100,100)];
+        self.dealer.photo = UIImageJPEGRepresentation(sizedProfilPic, 0.6);
+        photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", self.dealer.email, [NSDate date]];
+        NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
+        self.dealer.photoURL = filePathAtS3;
     
-    [defaults synchronize];
+    } else {
+        
+        hasPhoto = NO;
+    }
+}
+
+- (void)saveUsernameAndPassword
+{
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    
+    [keychain setObject:self.emailTextField.text forKey:(__bridge id)(kSecAttrAccount)];
+    [keychain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];
 }
 
 - (IBAction)SignUpButton:(id)sender
 {
     self.app = [UIApplication sharedApplication];
     
-    if (([Fullname.text isEqual:@""]) || ([Fullname.text isEqual:@"Fullname"])) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter your name." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    if (([fullNameTextField.text isEqual:@""]) || ([fullNameTextField.text isEqual:@"Fullname"])) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter your name." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
-    } else if (([Email.text isEqual:@""]) || ([Email.text isEqual:@"Email"])) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter an email address." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    } else if (([emailTextField.text isEqual:@""]) || ([emailTextField.text isEqual:@"Email"])) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter an email address." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
-    } else if ([Email.text rangeOfString:@"@"].location == NSNotFound) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Please enter a valid email address." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    } else if ([emailTextField.text rangeOfString:@"@"].location == NSNotFound) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Please enter a valid email address." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
-    
-    } else if (([Password.text isEqual:@""]) || ([Password.text isEqual:@"Password"])) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter a password." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        
+    } else if (([passwordTextField.text isEqual:@""]) || ([passwordTextField.text isEqual:@"Password"])) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"You must enter a password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
-    
+        
     } else {
         
         [self StartLoading];
         [self resignFirstResponder];
+        [self saveUserDetails];
         [self CleanScreen:@"all"];
         
-        dispatch_queue_t queue = dispatch_queue_create("com.MyQueueLoading", NULL);
-        dispatch_async(queue, ^{
-            NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/registercheck.php?var1=%@",Email.text];
-            NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
-            NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if ([DataResult isEqualToString:@"exist"]){
-                    [self StopLoading];
-                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Email already exist." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-                    [alert show];
-                
-                } else {
-                    
-                    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-                    dispatch_async(queue, ^{
-
-                        [self BackgroundMethod];
-
-                        dispatch_async(dispatch_get_main_queue(), ^{
-
-                            NSLog(@"usrid=%@",appDelegate.dealer.url);
-                            
-                            if (([appDelegate.dealer.url isEqualToString:@"0"]) || (appDelegate.dealer.url == nil) || ([appDelegate.dealer.url isEqualToString:@""])) {
-                                registerAgain = YES;
-                                [self StopLoading];
-                                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-                                [alert show];
-                                
-                            } else if ([appDelegate.dealer.url rangeOfString:@"fail"].location == NSNotFound) {
-                                
-                                if (!isPopping) {
-                                    self.app.networkActivityIndicatorVisible = NO;
-                                    
-                                    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
-                                    [keychain setObject:Email.text forKey:(__bridge id)(kSecAttrAccount)];
-                                    [keychain setObject:Password.text forKey:(__bridge id)(kSecValueData)];
-                                    
-                                    [appDelegate setTabBarController];
-                                }
-                                
-                            } else {
-                                registerAgain = YES;
-                                [self StopLoading];
-                                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-                                [alert show];
-                            }
-                        });
-                    });
-                }
-            });
-        });
+        [self uploadData];
     }
 }
+
+- (void)uploadData
+{
+    [[RKObjectManager sharedManager] postObject:self.dealer
+                                           path:@"/dealers/"
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            
+                                            NSLog(@"Dealer signed up successfuly!");
+                                            
+                                            didUploadUserData = YES;
+                                            appDelegate.dealer = mappingResult.firstObject;
+                                            
+                                            if (!hasPhoto) {
+                                                
+                                                [self enterDealers];
+                                            
+                                            } else if (didPhotoFinishedUploading) {
+                                             
+                                                [self enterDealers];
+                                            }
+                                        }
+     
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            NSString *errorMessage = [error localizedDescription];
+                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Email already exists" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                            [alert show];
+                                            [[AWSS3TransferManager defaultS3TransferManager] cancelAll];
+                                            [self StopLoading];
+                                        }];
+    
+    if (profilePic.image) {
+        
+        [self uploadPhoto];
+    }
+}
+
+- (void)uploadPhoto
+{
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    NSString *key = self.dealer.photoURL;
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:photoFileName];
+    [self.dealer.photo writeToFile:filePath atomically:YES];
+    
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.bucket = AWS_S3_BUCKET_NAME;
+    uploadRequest.key = key;
+    uploadRequest.body = fileURL;
+    
+    [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
+                                                       withBlock:^id(BFTask *task) {
+                                                           if (task.error) {
+                                                               if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                   switch (task.error.code) {
+                                                                           
+                                                                       case AWSS3TransferManagerErrorCancelled:
+                                                                           NSLog(@"Profile photo upload cancelled");
+                                                                           break;
+                                                                           
+                                                                       case AWSS3TransferManagerErrorPaused:
+                                                                           NSLog(@"Profile photo upload paused");
+                                                                           break;
+                                                                           
+                                                                       default:
+                                                                           NSLog(@"Error: %@", task.error);
+                                                                           break;
+                                                                   }
+                                                               } else {
+                                                                   // Unknown error.
+                                                                   NSLog(@"Error: %@", task.error);
+                                                               }
+                                                           }
+                                                           
+                                                           if (task.result) {
+                                                               
+                                                               NSLog(@"Profile photo uploaded successfuly!");
+                                                               didPhotoFinishedUploading = YES;
+                                                               if (didUploadUserData) {
+                                                                   [self enterDealers];
+                                                               }
+                                                               
+                                                           }
+                                                           return nil;
+                                                       }];
+}
+
+- (void)enterDealers
+{
+    [appDelegate setHTTPClientUsername:self.dealer.username andPassword:self.passwordTextField.text];
+    [self saveUsernameAndPassword];
+    [appDelegate saveUserDetailsOnDevice];
+    [appDelegate setTabBarController];
+}
+
+
+/*
+ - (void)uploadDataOldVersion
+ {
+ dispatch_queue_t queue = dispatch_queue_create("com.MyQueueLoading", NULL);
+ dispatch_async(queue, ^{
+ NSString *FindURL = [NSString stringWithFormat:@"http://www.dealers.co.il/registercheck.php?var1=%@",emailTextField.text];
+ NSData *URLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:FindURL]];
+ NSString *DataResult = [[NSString alloc] initWithData:URLData encoding:NSUTF8StringEncoding];
+ 
+ dispatch_async(dispatch_get_main_queue(), ^{
+ 
+ if ([DataResult isEqualToString:@"exist"]){
+ [self StopLoading];
+ UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Email already exist." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+ [alert show];
+ 
+ } else {
+ 
+ dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+ dispatch_async(queue, ^{
+ 
+ [self BackgroundMethod];
+ 
+ dispatch_async(dispatch_get_main_queue(), ^{
+ 
+ NSLog(@"usrid=%@",appDelegate.dealer.dealerID);
+ 
+ if (([appDelegate.dealer.dealerID isEqualToString:@"0"]) || (appDelegate.dealer.dealerID == nil) || ([appDelegate.dealer.dealerID isEqualToString:@""])) {
+ registerAgain = YES;
+ [self StopLoading];
+ UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again." delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+ [alert show];
+ 
+ } else if ([appDelegate.dealer.dealerID rangeOfString:@"fail"].location == NSNotFound) {
+ 
+ if (!isPopping) {
+ self.app.networkActivityIndicatorVisible = NO;
+ 
+ KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+ [keychain setObject:emailTextField.text forKey:(__bridge id)(kSecAttrAccount)];
+ [keychain setObject:passwordTextField.text forKey:(__bridge id)(kSecValueData)];
+ 
+ [appDelegate setTabBarController];
+ }
+ 
+ } else {
+ registerAgain = YES;
+ [self StopLoading];
+ UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Oops!" message:@"Register fail, please try again" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+ [alert show];
+ }
+ });
+ });
+ }
+ });
+ });
+ }
+ */
 
 - (IBAction)AddphotoButton:(id)sender
 {
-    UIActionSheet *alert;
-    if (ImageAdded.image == nil) {
-        alert = [[UIActionSheet alloc]
-                 initWithTitle:@"Please Choose"
-                 delegate:self
-                 cancelButtonTitle:@"Cancel"
-                 destructiveButtonTitle:nil
-                 otherButtonTitles:@"Camera", @"Library", nil];
+    UIActionSheet *actionSheet;
+    if (!profilePic.image) {
+        actionSheet = [[UIActionSheet alloc]
+                       initWithTitle:@"Please Choose"
+                       delegate:self
+                       cancelButtonTitle:@"Cancel"
+                       destructiveButtonTitle:nil
+                       otherButtonTitles:@"Camera", @"Library", nil];
         
     } else {
-        alert = [[UIActionSheet alloc]
-                 initWithTitle:@"Please Choose"
-                 delegate:self
-                 cancelButtonTitle:@"Cancel"
-                 destructiveButtonTitle:@"Remove Photo"
-                 otherButtonTitles:@"Camera", @"Library", nil];
+        actionSheet = [[UIActionSheet alloc]
+                       initWithTitle:@"Please Choose"
+                       delegate:self
+                       cancelButtonTitle:@"Cancel"
+                       destructiveButtonTitle:@"Remove Photo"
+                       otherButtonTitles:@"Camera", @"Library", nil];
     }
-    [alert showInView:self.view];
-}
-
--(void)MaskImage
-{
-    CALayer *mask = [CALayer layer];
-    mask.contents=(id)[[UIImage imageNamed:@"Registration_Profile Pic Mask.png"]CGImage];
-    mask.frame = CGRectMake(0, 0, 100, 100);
-    ImageAdded.layer.mask = mask;
-    ImageAdded.layer.masksToBounds = YES;
-    addphotobutton.hidden = YES;
-    ImageFrame.hidden = NO;
+    [actionSheet showInView:self.view];
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    ImageAdded.image = [info objectForKey:UIImagePickerControllerEditedImage];
+    
+    profilePic.image = [info objectForKey:UIImagePickerControllerEditedImage];
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self MaskImage];
-    didAddPhoto = YES;
 }
 
 -(void)CleanScreen:(NSString*)string
@@ -376,9 +487,9 @@
     [scroll setScrollEnabled:NO];
     
     if (![string isEqualToString:@"text"]) {
-        [Fullname resignFirstResponder];
-        [Email resignFirstResponder];
-        [Password resignFirstResponder];
+        [fullNameTextField resignFirstResponder];
+        [emailTextField resignFirstResponder];
+        [passwordTextField resignFirstResponder];
     }
 }
 
@@ -405,23 +516,16 @@
     [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
-    self.Datebirth.text = [self.dateFormatter stringFromDate:self.selectedDate];
+    self.dateOfBirthTextField.text = [self.dateFormatter stringFromDate:self.selectedDate];
     
-    self.optional_date.hidden = YES;
     [self performSelector:@selector(GenderButton:) withObject:nil];
-}
-
--(void) keyboardWillShow {
-}
-
--(void) keyboardWillHide {
 }
 
 -(BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
     [self CleanScreen:@"text"];
     [scroll setScrollEnabled:YES ];
     [scroll setContentSize:((CGSizeMake(320, CGRectGetMaxY(SignupButton.frame)+10+216+44)))];
-    float shouldScrollTo = CGRectGetMinY(Fullname.frame) - self.navigationController.navigationBar.frame.size.height - 40;
+    float shouldScrollTo = CGRectGetMinY(fullNameTextField.frame) - self.navigationController.navigationBar.frame.size.height - 40;
     if ([self isIphone5]==0) {
         [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = CGPointMake(0, shouldScrollTo);}];
     } else {
@@ -434,10 +538,10 @@
     
     switch (textField.tag) {
         case 1:
-            [Email becomeFirstResponder];
+            [emailTextField becomeFirstResponder];
             break;
         case 2:
-            [Password becomeFirstResponder];
+            [passwordTextField becomeFirstResponder];
             break;
         case 3:
             [textField resignFirstResponder];
@@ -471,7 +575,7 @@
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
-    if (ImageAdded.image == nil)
+    if (!profilePic.image)
     {
         if (buttonIndex == 0) {
             
@@ -509,9 +613,8 @@
             
             [self presentViewController:picker animated:YES completion:nil];
         }
-        if (buttonIndex==0) {
-            ImageAdded.image=NULL;
-            didAddPhoto = NO;
+        if (buttonIndex == 0) {
+            profilePic.image = nil;
         }
     }
     
@@ -524,23 +627,12 @@
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = scrollOriginOffset;}];
 }
 
-- (IBAction)ReturnButtonAction:(id)sender
-{
-    ReturnButtonFull.alpha=1.0;
-    ReturnButton.alpha=0.0;
-    [UIView animateWithDuration:0.2 animations:^{self.ReturnButtonFull.alpha=0.0;}];
-    [UIView animateWithDuration:0.2 animations:^{self.ReturnButton.alpha=1.0;}];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if ([[list objectAtIndex:row] isEqualToString:@"Gender"]) {
-        Genger.text=NULL;
-        self.optional_gender.hidden=NO;
+        genderTextField.text = nil;
     } else {
-        Genger.text = [list objectAtIndex:row];
-        self.optional_gender.hidden=YES;
+        genderTextField.text = [list objectAtIndex:row];
     }
 }
 
@@ -560,9 +652,9 @@
 }
 
 - (IBAction)tapGesturePressed:(id)sender {
-    [Fullname resignFirstResponder];
-    [Email resignFirstResponder];
-    [Password resignFirstResponder];
+    [fullNameTextField resignFirstResponder];
+    [emailTextField resignFirstResponder];
+    [passwordTextField resignFirstResponder];
     [self CleanScreen:@"GenderPicker"];
     [scroll setScrollEnabled:NO];
     [UIView animateWithDuration:0.4 animations:^{scroll.contentOffset = scrollOriginOffset;}];

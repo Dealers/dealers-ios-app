@@ -124,7 +124,7 @@
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         
-        NSString *profilePicID = notification.dealer.photoID;
+        NSString *profilePicID = notification.dealer.photoURL;
         
         if (profilePicID.length > 0) {
             

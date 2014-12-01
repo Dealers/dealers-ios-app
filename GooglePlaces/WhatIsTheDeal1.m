@@ -64,6 +64,8 @@
         
         [self.dealTitle becomeFirstResponder];
     }
+    
+    self.photosFileName = nil;
 }
 
 #pragma mark - Table view delegate
@@ -187,7 +189,7 @@
     tooMuchIndicator.labelText = @"Title is too long";
     tooMuchIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     tooMuchIndicator.detailsLabelText = @"120 characters max";
-    tooMuchIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    tooMuchIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     tooMuchIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
     [self.navigationController.view addSubview:blankTitleIndicator];
@@ -762,25 +764,62 @@
     
     self.deal.dealAttrib = [[DealAttrib alloc]init];
     
-    self.deal.type = @"L";
+    self.deal.type = @"Local";
     
     self.deal.title = self.dealTitle.text;
     
-    if (self.photosArray.count == 1) {
-        self.deal.photo1 = [self.photosArray objectAtIndex:0];
-    } else if (self.photosArray.count == 2) {
-        self.deal.photo1 = [self.photosArray objectAtIndex:0];
-        self.deal.photo2 = [self.photosArray objectAtIndex:1];
-    } else if (self.photosArray.count == 3) {
-        self.deal.photo1 = [self.photosArray objectAtIndex:0];
-        self.deal.photo2 = [self.photosArray objectAtIndex:1];
-        self.deal.photo3 = [self.photosArray objectAtIndex:2];
-    } else if (self.photosArray.count == 4) {
-        self.deal.photo1 = [self.photosArray objectAtIndex:0];
-        self.deal.photo2 = [self.photosArray objectAtIndex:1];
-        self.deal.photo3 = [self.photosArray objectAtIndex:2];
-        self.deal.photo4 = [self.photosArray objectAtIndex:3];
+    // Prepering photos (if exist) for upload
+    for (int i = 0; i < self.photosArray.count; i++) {
+        
+        if (!self.photosFileName) {
+            self.photosFileName = [[NSMutableArray alloc]init];
+        }
+        
+        NSString *fileName = [NSString stringWithFormat:@"%@_%@_%i.jpg", self.deal.dealer.dealerID, [NSDate date], i + 1];
+        NSString *key = [NSString stringWithFormat:@"media/Deals_Photos/%@", fileName];
+        [self.photosFileName addObject:fileName];
+        
+        switch (i) {
+            case 0:
+                self.deal.photoURL1 = key;
+                break;
+            case 1:
+                self.deal.photoURL2 = key;
+                break;
+            case 2:
+                self.deal.photoURL3 = key;
+                break;
+            case 3:
+                self.deal.photoURL4 = key;
+                break;
+            default:
+                break;
+        }
+        
+        NSData *binaryImageData = UIImageJPEGRepresentation([self.photosArray objectAtIndex:i], 0.55);
+        NSString *bodyFileURL = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+        [binaryImageData writeToFile:bodyFileURL atomically:YES];
     }
+    
+    /*
+     if (self.photosArray.count == 1) {
+         self.deal.photo1 = [self.photosArray objectAtIndex:0];
+     } else if (self.photosArray.count == 2) {
+         self.deal.photo1 = [self.photosArray objectAtIndex:0];
+         self.deal.photo2 = [self.photosArray objectAtIndex:1];
+     } else if (self.photosArray.count == 3) {
+         self.deal.photo1 = [self.photosArray objectAtIndex:0];
+         self.deal.photo2 = [self.photosArray objectAtIndex:1];
+         self.deal.photo3 = [self.photosArray objectAtIndex:2];
+     } else if (self.photosArray.count == 4) {
+         self.deal.photo1 = [self.photosArray objectAtIndex:0];
+         self.deal.photo2 = [self.photosArray objectAtIndex:1];
+         self.deal.photo3 = [self.photosArray objectAtIndex:2];
+         self.deal.photo4 = [self.photosArray objectAtIndex:3];
+     }
+    */
+    
+    self.deal.photoSum = [NSNumber numberWithLong:self.photosArray.count];
     
     [self pushNextView];
 }
@@ -808,6 +847,7 @@
     WhatIsTheDeal2 *witd2vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhatIsTheDeal2ID"];
     
     witd2vc.deal = self.deal;
+    witd2vc.photosFileName = self.photosFileName;
     
     [self.navigationController pushViewController:witd2vc animated:YES];
 }

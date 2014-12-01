@@ -16,6 +16,4 @@
 @property (strong, nonatomic) IBOutlet UILabel *commentDate;
 @property NSDateFormatter *dateFormatter;
 
-@property (nonatomic) float requiredCellHeight;
-
 @end

@@ -40,7 +40,7 @@
     [self setProgressIndicator];
     
     [self setupExpirationDateCellContentView];
-
+    
     [self loadingParameters];
     
     [self bundlePhotosInArray];
@@ -123,10 +123,10 @@
         self.dealExpirationDate.textColor = [UIColor blackColor];
     } else {
         self.dealExpirationDate.text = @"Expiration Date";
-        self.dealCategory.textColor = placeholderColor;
+        self.dealExpirationDate.textColor = placeholderColor;
     }
     
-    if (self.deal.moreDescription.length > 0) {
+    if (self.deal.moreDescription.length > 0 && ![self.deal.moreDescription isEqualToString:@"None"]) {
         self.dealDescription.text = [self.deal.moreDescription mutableCopy];
         self.dealDescription.textColor = [UIColor blackColor];
     } else {
@@ -826,13 +826,7 @@
 
 - (void)saveChanges
 {
-    // First validate if there is no discount > 100%
-    
-    if ([self.selectedDiscountType isEqualToString:@"%"] && [self.dealDiscount.text intValue] > 100) {
-        
-        [illogicalPercentage show:YES];
-        [illogicalPercentage hide:YES afterDelay:2.0];
-        
+    if (![self validation]) {
         return;
     }
     
@@ -863,7 +857,7 @@
     } else {
         float price = [self.dealPrice.text substringFromIndex:1].floatValue;
         self.deal.price = [NSNumber numberWithFloat:price];
-        self.deal.currency = self.selectedCurrency;
+        self.deal.currency = [appDelegate getCurrencyKey:self.selectedCurrency];
     }
     
     if ([self.dealDiscount.text isEqualToString:@"Discount or Last Price"]) {
@@ -872,16 +866,16 @@
     } else if ([self.selectedDiscountType isEqualToString:@"%"]) {
         float discount = [self.dealDiscount.text substringToIndex:self.dealDiscount.text.length - 1].floatValue;
         self.deal.discountValue = [NSNumber numberWithFloat:discount];
-        self.deal.discountType = self.selectedDiscountType;
+        self.deal.discountType = [appDelegate getDiscountKey:self.selectedDiscountType];
     } else {
         self.deal.discountValue = [NSNumber numberWithFloat:self.dealDiscount.text.floatValue];
-        self.deal.discountType = self.selectedDiscountType;
+        self.deal.discountType = [appDelegate getDiscountKey:self.selectedDiscountType];
     }
     
     if ([self.dealCategory.text isEqualToString:@"Category"]) {
         self.deal.category = nil;
     } else {
-        self.deal.category = self.dealCategory.text;
+        self.deal.category = [appDelegate getCategoryKeyForValue:self.dealCategory.text];
     }
     
     if ([self.dealExpirationDate.text isEqualToString:@"Expiration Date"]) {
@@ -897,50 +891,53 @@
     }
     
     // Passing the photos
-    
-    NSInteger numberOfPics = (unsigned long)(self.photosArray.count);
-    
-    switch (numberOfPics) {
-        case 0:
-            self.deal.photo1 = nil;
-            self.deal.photo2 = nil;
-            self.deal.photo3 = nil;
-            self.deal.photo4 = nil;
-            break;
-            
+    if (self.photosArray.count > 0) {
+        
+        NSInteger numberOfPics = (unsigned long)(self.photosArray.count);
+        
+        switch (numberOfPics) {
+            case 0:
+                self.deal.photo1 = nil;
+                self.deal.photo2 = nil;
+                self.deal.photo3 = nil;
+                self.deal.photo4 = nil;
+                break;
+                
             case 1:
-            self.deal.photo1 = [self.photosArray objectAtIndex:0];
-            self.deal.photo2 = nil;
-            self.deal.photo3 = nil;
-            self.deal.photo4 = nil;
-            break;
-            
+                self.deal.photo1 = [self.photosArray objectAtIndex:0];
+                self.deal.photo2 = nil;
+                self.deal.photo3 = nil;
+                self.deal.photo4 = nil;
+                break;
+                
             case 2:
-            self.deal.photo1 = [self.photosArray objectAtIndex:0];
-            self.deal.photo2 = [self.photosArray objectAtIndex:1];
-            self.deal.photo3 = nil;
-            self.deal.photo4 = nil;
-            break;
-            
-        case 3:
-            self.deal.photo1 = [self.photosArray objectAtIndex:0];
-            self.deal.photo2 = [self.photosArray objectAtIndex:1];
-            self.deal.photo3 = [self.photosArray objectAtIndex:2];
-            self.deal.photo4 = nil;
-            break;
-            
-        case 4:
-            self.deal.photo1 = [self.photosArray objectAtIndex:0];
-            self.deal.photo2 = [self.photosArray objectAtIndex:1];
-            self.deal.photo3 = [self.photosArray objectAtIndex:2];
-            self.deal.photo4 = [self.photosArray objectAtIndex:3];
-            break;
-            
-        default:
-            break;
+                self.deal.photo1 = [self.photosArray objectAtIndex:0];
+                self.deal.photo2 = [self.photosArray objectAtIndex:1];
+                self.deal.photo3 = nil;
+                self.deal.photo4 = nil;
+                break;
+                
+            case 3:
+                self.deal.photo1 = [self.photosArray objectAtIndex:0];
+                self.deal.photo2 = [self.photosArray objectAtIndex:1];
+                self.deal.photo3 = [self.photosArray objectAtIndex:2];
+                self.deal.photo4 = nil;
+                break;
+                
+            case 4:
+                self.deal.photo1 = [self.photosArray objectAtIndex:0];
+                self.deal.photo2 = [self.photosArray objectAtIndex:1];
+                self.deal.photo3 = [self.photosArray objectAtIndex:2];
+                self.deal.photo4 = [self.photosArray objectAtIndex:3];
+                break;
+                
+            default:
+                break;
+        }
+        
+        self.deal.photoSum = [NSNumber numberWithInteger:numberOfPics];
     }
     
-    self.deal.photoSum = [NSNumber numberWithInteger:numberOfPics];
     
     ViewonedealViewController *vodvc = self.delegate;
     vodvc.afterEditing = YES;
@@ -954,7 +951,7 @@
 
 - (void)uploadChanges
 {
-    NSString *path = [@"/deals/" stringByAppendingString:self.deal.dealID];
+    NSString *path = [NSString stringWithFormat:@"/adddeals/%@/", self.deal.dealID];
     
     [[RKObjectManager sharedManager] patchObject:self.deal
                                             path:path
@@ -1015,6 +1012,26 @@
     }
 }
 
+- (BOOL)validation
+{
+    if ([self.selectedDiscountType isEqualToString:@"%"] && [self.dealDiscount.text intValue] > 100) {
+        
+        [illogicalPercentage show:YES];
+        [illogicalPercentage hide:YES afterDelay:2.0];
+        
+        return NO;
+        
+    } else if ([self.selectedDiscountType isEqualToString:@"lastPrice"] && [self.dealPrice.text isEqualToString:@"Price"]) {
+        
+        [lastPriceWithoutPrice show:YES];
+        [lastPriceWithoutPrice hide:YES afterDelay:2.0];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (void)setProgressIndicator
 {
     
@@ -1025,6 +1042,16 @@
     illogicalPercentage.labelText = @"Discount above 100%!";
     illogicalPercentage.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     illogicalPercentage.animationType = MBProgressHUDAnimationZoomIn;
+    
+    lastPriceWithoutPrice = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    lastPriceWithoutPrice.delegate = self;
+    lastPriceWithoutPrice.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
+    lastPriceWithoutPrice.mode = MBProgressHUDModeCustomView;
+    lastPriceWithoutPrice.labelText = @"Price is empty!";
+    lastPriceWithoutPrice.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    lastPriceWithoutPrice.detailsLabelText = @"Required if there's previous price";
+    lastPriceWithoutPrice.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
+    lastPriceWithoutPrice.animationType = MBProgressHUDAnimationZoomIn;
     
     
     UIImageView *loadingAnimation = [appDelegate loadingAnimationWhite];
@@ -1039,8 +1066,10 @@
     uploadingDeal.animationType = MBProgressHUDAnimationZoomIn;
     
     [self.navigationController.view addSubview:illogicalPercentage];
+    [self.navigationController.view addSubview:lastPriceWithoutPrice];
     [self.navigationController.view addSubview:uploadingDeal];
 }
+
 
 /*
  #pragma mark - Navigation

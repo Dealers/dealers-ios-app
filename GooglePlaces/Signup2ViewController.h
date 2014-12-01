@@ -8,13 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import <AWSiOSSDKv2/S3.h>
 #import "AppDelegate.h"
 
 @interface Signup2ViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIActionSheetDelegate,UINavigationBarDelegate,UINavigationControllerDelegate>
 {
     NSString *Photoid;
-    BOOL didAddPhoto;
-    BOOL registerAgain;
+    NSString *photoFileName;
+    BOOL didUploadUserData;
+    BOOL didPhotoFinishedUploading;
+    BOOL hasPhoto;
     BOOL isPopping;
     CGPoint scrollOriginOffset;
 }
@@ -23,29 +26,20 @@
 
 @property (strong, nonatomic) NSMutableArray *list;
 
-@property (weak, nonatomic) IBOutlet UIButton *ReturnButton;
-@property (weak, nonatomic) IBOutlet UIButton *ReturnButtonFull;
-@property (weak, nonatomic) IBOutlet UIButton *addphotobutton;
+@property Dealer *dealer;
+
 @property (weak, nonatomic) IBOutlet UIButton *SignupButton;
 
-@property (weak, nonatomic) IBOutlet UITextField *Fullname;
-@property (weak, nonatomic) IBOutlet UITextField *Email;
-@property (weak, nonatomic) IBOutlet UITextField *Password;
-@property (weak, nonatomic) IBOutlet UITextField *Datebirth;
-@property (weak, nonatomic) IBOutlet UITextField *Genger;
+@property (weak, nonatomic) IBOutlet UITextField *fullNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *dateOfBirthTextField;
+@property (weak, nonatomic) IBOutlet UITextField *genderTextField;
 
-- (IBAction)SignUpButton:(id)sender;
-- (IBAction)AddphotoButton:(id)sender;
-- (IBAction)HideDatePicker;
-- (IBAction)ShowDatePicker;
-- (IBAction)GenderButton:(id)sender;
-- (IBAction)ReturnButtonAction:(id)sender;
-- (IBAction)GenderDoneButton:(id)sender;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGesturePressed;
 - (IBAction)tapGesturePressed:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIImageView *ImageAdded;
-@property (weak, nonatomic) IBOutlet UIImageView *ImageFrame;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePic;
 @property (weak, nonatomic) IBOutlet UIImageView *LoadingImage;
 @property (weak, nonatomic) IBOutlet UIImageView *PurpImage;
 @property (weak, nonatomic) IBOutlet UIImageView *textFieldsFrame;
@@ -58,7 +52,13 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *GenderPicker;
 @property (weak, nonatomic) IBOutlet UINavigationBar *GenderNavBar;
 
-@property (weak, nonatomic) IBOutlet UILabel *optional_date;
-@property (weak, nonatomic) IBOutlet UILabel *optional_gender;
+@property NSData *profilePicData;
+
+- (IBAction)SignUpButton:(id)sender;
+- (IBAction)AddphotoButton:(id)sender;
+- (IBAction)HideDatePicker;
+- (IBAction)ShowDatePicker;
+- (IBAction)GenderButton:(id)sender;
+- (IBAction)GenderDoneButton:(id)sender;
 
 @end

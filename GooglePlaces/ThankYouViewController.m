@@ -16,16 +16,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    if (self.wasFacebookSelected) {
+        
+        [self facebookShare];
+    }
+    
     if (self.wasWhatsAppSelected) {
         
         [self whatsAppShare];
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)facebookShare
+{
+    FBRequest *request = [FBRequest requestForUploadPhoto:self.sharedImage];
+    FBRequestConnection *requestConnection = [[FBRequestConnection alloc]init];
+    
+    [requestConnection addRequest:request
+                completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                    
+                    if (!error) {
+                        
+                        NSLog(@"Image uploaded to facebook successfuly!");
+                        
+                    } else {
+                        
+                        NSLog(@"Image didn't uploaded... Check out what's wrong");
+                    }
+                }];
+    [requestConnection start];
 }
 
 - (void)whatsAppShare
@@ -45,9 +65,14 @@
         
         
     } else {
+        
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"WhatsApp not installed." message:@"Your device should have WhatsApp installed." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
 }
 
+- (IBAction)okay:(id)sender {
+
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

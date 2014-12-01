@@ -10,11 +10,13 @@
 
 @interface DealAttrib : NSObject
 
-@property NSString *dealAttribID;
-@property NSString *url;
-@property NSNumber *likeCounter;
-@property NSNumber *shareCounter;
+@property NSNumber *dealAttribID;
+@property NSNumber *dealID;
+
 @property NSNumber *objectiveRank;
 @property NSNumber *dealReliability;
+
+@property NSMutableArray *dealersThatLiked;
+@property NSMutableArray *dealersThatShared;
 
 @end

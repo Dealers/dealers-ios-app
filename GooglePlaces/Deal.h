@@ -12,10 +12,9 @@
 @class Dealer;
 @class DealAttrib;
 
-@interface Deal : NSObject <NSCopying> 
+@interface Deal : NSObject 
 
-@property (nonatomic) NSString *dealID;
-@property (nonatomic) NSString *url;
+@property (nonatomic) NSNumber *dealID;
 @property (nonatomic) NSString *title;
 @property (nonatomic) Store *store;
 @property (nonatomic) NSNumber *price;
@@ -35,10 +34,10 @@
 @property (nonatomic) NSString *dealStoreLatitude;
 @property (nonatomic) NSString *dealStoreLongitude;
 
-@property (nonatomic) NSString *photoID1;
-@property (nonatomic) NSString *photoID2;
-@property (nonatomic) NSString *photoID3;
-@property (nonatomic) NSString *photoID4;
+@property (nonatomic) NSString *photoURL1;
+@property (nonatomic) NSString *photoURL2;
+@property (nonatomic) NSString *photoURL3;
+@property (nonatomic) NSString *photoURL4;
 @property (nonatomic) UIImage *photo1;
 @property (nonatomic) UIImage *photo2;
 @property (nonatomic) UIImage *photo3;
@@ -48,22 +47,9 @@
 @property (nonatomic) NSDate *uploadDate;
 @property DealAttrib *dealAttrib;
 @property Dealer *dealer;
+
 @property (nonatomic) NSMutableArray *comments;
 
 @property (nonatomic) NSString *dealUserID;
-
-// Only our setters which override the default ones are mentioned here:
-
-- (void)setTitle:(NSString *)title;
-- (void)setMoreDescription:(NSString *)description;
-- (void)setCategory:(NSString *)category;
-- (void)setCurrency:(NSString *)currency;
-- (void)setDealStoreAddress:(NSString *)storeaddress;
-
-- (void)printClass;
-
-- (id)copyWithZone:(NSZone *)zone;
-- (id)mutableCopyWithZone:(NSZone *)zone;
-
 
 @end
