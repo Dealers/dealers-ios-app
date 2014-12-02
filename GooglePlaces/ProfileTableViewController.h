@@ -1,8 +1,8 @@
 //
-//  DealsTableViewController.h
+//  ProfileTableViewController.h
 //  Dealers
 //
-//  Created by Gilad Lumbroso on 12/1/14.
+//  Created by Gilad Lumbroso on 12/2/14.
 //
 //
 
@@ -17,16 +17,19 @@
 #import "DealsTableCell.h"
 #import "DealsNoPhotoTableCell.h"
 
-@interface DealsTableViewController : UITableViewController {
+@interface ProfileTableViewController : UITableViewController {
     
-    NSString *selfViewController;
     UIView *loadingView;
 }
 
 @property AppDelegate *appDelegate;
 
-@property NSMutableArray *deals;
+@property Dealer *dealer;
+
+@property NSMutableArray *uploadedDeals;
+@property NSMutableArray *likedDeals;
 
 @property NSString *categoryFromExplore;
+
 
 @end

@@ -1116,7 +1116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FFO-B4-lJR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="29" y="-1341"/>
+            <point key="canvasLocation" x="483" y="-1341"/>
         </scene>
         <!--Deals Table View Controller-->
         <scene sceneID="FHb-Xm-W4r">
@@ -1125,30 +1125,17 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="I8c-zm-Xy2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6a9-3f-84j">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6a9-3f-84j" id="zhV-za-REd">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="c97-HW-mVa">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c97-HW-mVa" id="paa-ae-TQO">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="3Ks-On-q35" id="vRR-ih-pvj"/>
                             <outlet property="delegate" destination="3Ks-On-q35" id="tqH-Zx-ur8"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="OoL-rT-fKi"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a2f-cS-gjn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="483" y="-1341"/>
+            <point key="canvasLocation" x="29" y="-1341"/>
         </scene>
         <!--Signin View Controller-->
         <scene sceneID="LVa-iI-ekt">
@@ -1820,7 +1807,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" id="2yL-3i-HdI">
-                                                    <rect key="frame" x="-2" y="0.0" width="321" height="162"/>
+                                                    <rect key="frame" x="-3" y="0.0" width="322" height="162"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="434294952.28969002">
                                                         <!--2014-10-06 13:29:12 +0000-->
@@ -2011,14 +1998,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mo9-Bg-Omv">
-                                        <rect key="frame" x="33" y="511.99999773977646" width="230" height="29"/>
+                                        <rect key="frame" x="33" y="512" width="230" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                         <color key="textColor" red="0.58682139598540151" green="0.0" blue="0.70834283759124084" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ygy-aP-Bva">
-                                        <rect key="frame" x="231" y="511.99999773977646" width="55" height="29"/>
+                                        <rect key="frame" x="231" y="512" width="55" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
                                         <color key="textColor" red="0.58682139600000005" green="0.0" blue="0.70834283760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -2321,25 +2308,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="prominent" placeholder="Search deals, dealers or stores" id="0Th-NG-Snf">
-                                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                    <connections>
-                                        <outlet property="delegate" destination="e2E-fl-Oh0" id="Sjw-Zi-TJw"/>
-                                    </connections>
-                                </searchBar>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Explorecell" id="31k-wL-fcX" customClass="ExploreCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Explorecell" id="31k-wL-fcX">
                                         <rect key="frame" x="0.0" y="130" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="31k-wL-fcX" id="mCd-ek-Hrl">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="2p8-yL-ySm" kind="push" id="z0o-Hc-Huk"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -2351,7 +2327,6 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="thm-fH-E4Y"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="SearchBar" destination="0Th-NG-Snf" id="SOp-Ks-88a"/>
                         <outlet property="myTableView" destination="pms-J4-kWT" id="AY5-mt-Yfl"/>
                         <outlet property="searchDisplayController" destination="ovD-H4-QZe" id="xLg-y7-8k6"/>
                     </connections>
@@ -2360,7 +2335,6 @@
                 <searchDisplayController id="ovD-H4-QZe">
                     <connections>
                         <outlet property="delegate" destination="e2E-fl-Oh0" id="h8S-5X-PTr"/>
-                        <outlet property="searchBar" destination="0Th-NG-Snf" id="g32-jm-Ot0"/>
                         <outlet property="searchContentsController" destination="e2E-fl-Oh0" id="NT3-HQ-sHg"/>
                         <outlet property="searchResultsDataSource" destination="e2E-fl-Oh0" id="QiE-5w-Lkk"/>
                         <outlet property="searchResultsDelegate" destination="e2E-fl-Oh0" id="V59-4V-MnX"/>
@@ -3671,7 +3645,7 @@
         <!--Item-->
         <scene sceneID="AuG-Y2-hIS">
             <objects>
-                <navigationController storyboardIdentifier="feedNavController" automaticallyAdjustsScrollViewInsets="NO" id="FHh-5t-DVb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="feedNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FHh-5t-DVb" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="d3D-C2-b2I"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nbL-nY-IXW">
@@ -3680,7 +3654,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="2p8-yL-ySm" kind="relationship" relationship="rootViewController" id="nqr-Yd-xhy"/>
+                        <segue destination="3Ks-On-q35" kind="relationship" relationship="rootViewController" id="f9C-Hf-iAF"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OEe-zr-aWS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3690,7 +3664,7 @@
         <!--Item-->
         <scene sceneID="GWz-xP-sFK">
             <objects>
-                <navigationController storyboardIdentifier="exploreNavController" automaticallyAdjustsScrollViewInsets="NO" id="0ut-hS-XQV" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="exploreNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0ut-hS-XQV" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="Qgj-sA-4iB"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wco-qf-TYc">
@@ -3727,7 +3701,7 @@
         <!--Navigation Controller-->
         <scene sceneID="K0R-cA-xp9">
             <objects>
-                <navigationController storyboardIdentifier="profileNavController" automaticallyAdjustsScrollViewInsets="NO" id="gzz-gy-2y3" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="profileNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gzz-gy-2y3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5WW-pB-M1L"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BP6-eT-BSo">
@@ -3935,8 +3909,5 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="z0o-Hc-Huk"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.58823529409999997" green="0.0" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -232,7 +232,7 @@
             // The session is open. Get the user information and update the UI.
             
             [FBRequestConnection startWithGraphPath:@"me"
-                                         parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(normal), email"}
+                                         parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(normal), location, email"}
                                          HTTPMethod:@"GET"
                                   completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                                       
@@ -253,6 +253,8 @@
                                           self.dealer.dateOfBirth = [dateFormatter dateFromString:[result objectForKey:@"birthday"]];
                                           
                                           self.dealer.gender = [result objectForKey:@"gender"];
+                                          
+                                          self.dealer.location = [result objectForKey:@"loaction"];
                                           
                                           NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
                                           self.dealer.photo = [NSData dataWithContentsOfURL:pictureURL];

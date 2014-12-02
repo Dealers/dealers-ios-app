@@ -239,7 +239,7 @@
     [defaults setObject:self.dealer.score forKey:@"score"];
     [defaults setObject:self.dealer.rank forKey:@"rank"];
     [defaults setObject:self.dealer.reliability forKey:@"reliability"];
-
+    
     [defaults synchronize];
 }
 
@@ -305,7 +305,7 @@
         
         [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
             
-            if (task.error){
+            if (task.error) {
                 if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
                     switch (task.error.code) {
                         case AWSS3TransferManagerErrorCancelled:
@@ -349,8 +349,59 @@
                                   nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationCenterName
                                                             object:nil
-                                                          userInfo:userInfo];;
+                                                          userInfo:userInfo];
     }
+}
+
+- (void)downloadPhotosForDeal:(Deal *)deal atIndexPath:(NSIndexPath *)indexPath
+{
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:
+                                     [NSString stringWithFormat:@"deal_photo_tmp_%@.jpg", deal.dealID]];
+    
+    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+    
+    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+    
+    downloadRequest.bucket = AWS_S3_BUCKET_NAME;
+    downloadRequest.key = deal.photoURL1;
+    downloadRequest.downloadingFileURL = downloadingFileURL;
+    
+    [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
+        
+        if (task.error) {
+            if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                switch (task.error.code) {
+                    case AWSS3TransferManagerErrorCancelled:
+                    case AWSS3TransferManagerErrorPaused:
+                        break;
+                        
+                    default:
+                        NSLog(@"Error: %@", task.error);
+                        return nil;
+                        break;
+                }
+            } else {
+                // Unknown error.
+                NSLog(@"Error: %@", task.error);
+            }
+        }
+        
+        if (task.result) {
+            
+            deal.photo1 = [UIImage imageWithContentsOfFile:downloadingFilePath];
+            __block NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                              deal.photo1, @"image",
+                                              indexPath, @"indexPath",
+                                              nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Deals Photos Notifications"
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
+        
+        return nil;
+    }];
 }
 
 - (UIColor *)ourPurple
@@ -372,6 +423,13 @@
     UIColor *darkTextGrayColor = [UIColor colorWithRed:110.0/255.0 green:110.0/255.0 blue:125.0/255.0 alpha:1.0];
     
     return darkTextGrayColor;
+}
+
+- (UIColor *)blackColor
+{
+    UIColor *blackColor = [UIColor colorWithRed:50.0/255.0 green:50.0/255.0 blue:65.0/255.0 alpha:1.0];
+    
+    return blackColor;
 }
 
 - (UIButton *)actionButton
@@ -742,6 +800,13 @@
                                                 keyPath:@"results"
                                             statusCodes:statusCodes];
     
+    RKResponseDescriptor *categoryResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealfilter/"
+                                                keyPath:@"results"
+                                            statusCodes:statusCodes];
+    
     RKResponseDescriptor *addDealResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
                                                  method:RKRequestMethodAny
@@ -835,6 +900,7 @@
                                                method:RKRequestMethodAny];
     
     [manager addResponseDescriptorsFromArray:@[dealsResponseDescriptor,
+                                               categoryResponseDescriptor,
                                                addDealResponseDescriptor,
                                                specificDealResponseDescriptor,
                                                dealersResponseDescriptor,

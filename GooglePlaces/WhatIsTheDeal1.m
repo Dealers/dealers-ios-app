@@ -782,15 +782,19 @@
         switch (i) {
             case 0:
                 self.deal.photoURL1 = key;
+                self.deal.photo1 = [self.photosArray objectAtIndex:i];
                 break;
             case 1:
                 self.deal.photoURL2 = key;
+                self.deal.photo2 = [self.photosArray objectAtIndex:i];
                 break;
             case 2:
                 self.deal.photoURL3 = key;
+                self.deal.photo3 = [self.photosArray objectAtIndex:i];
                 break;
             case 3:
                 self.deal.photoURL4 = key;
+                self.deal.photo4 = [self.photosArray objectAtIndex:i];
                 break;
             default:
                 break;

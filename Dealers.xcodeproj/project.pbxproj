@@ -221,6 +221,8 @@
 		C8273A3418959A3300A412FC /* Add Deal (Final)_Browser Forward button (highlighted)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2B18959A3300A412FC /* Add Deal (Final)_Browser Forward button (highlighted)@2x.png */; };
 		C8273A3518959A3300A412FC /* Add Deal (Final)_Browser Forward button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2C18959A3300A412FC /* Add Deal (Final)_Browser Forward button@2x.png */; };
 		C83714EC18F5C1FA0079D3F9 /* My Feed+View Deal - New Version_Local icon_Grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83714EA18F5C1FA0079D3F9 /* My Feed+View Deal - New Version_Local icon_Grey@2x.png */; };
+		C83B93C41A2D08BE00AC666B /* DealsNoPhotoTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C83B93C21A2D08BE00AC666B /* DealsNoPhotoTableCell.m */; };
+		C83B93C51A2D08BE00AC666B /* DealsNoPhotoTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C83B93C31A2D08BE00AC666B /* DealsNoPhotoTableCell.xib */; };
 		C83EAE2218690AC40084E0E1 /* Art_antique_shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EACFB18690AC30084E0E1 /* Art_antique_shop@2x.png */; };
 		C83EAE2318690AC40084E0E1 /* Art_Art@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EACFC18690AC30084E0E1 /* Art_Art@2x.png */; };
 		C83EAE2418690AC40084E0E1 /* Art_art_gallery@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EACFD18690AC30084E0E1 /* Art_art_gallery@2x.png */; };
@@ -392,6 +394,7 @@
 		C848B66D19ADB92A000F138D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B66C19ADB92A000F138D /* Comment.m */; };
 		C848B67819B4AB76000F138D /* StoresTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B67719B4AB76000F138D /* StoresTableCell.m */; };
 		C848B67A19B4ACA4000F138D /* StoresTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C848B67919B4ACA4000F138D /* StoresTableCell.xib */; };
+		C862AF2B1A2E0B5F00352831 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C862AF2A1A2E0B5F00352831 /* ProfileTableViewController.m */; };
 		C869CB85191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */; };
 		C869CB86191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */; };
 		C869CB87191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */; };
@@ -878,6 +881,9 @@
 		C8273A2B18959A3300A412FC /* Add Deal (Final)_Browser Forward button (highlighted)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser Forward button (highlighted)@2x.png"; sourceTree = "<group>"; };
 		C8273A2C18959A3300A412FC /* Add Deal (Final)_Browser Forward button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser Forward button@2x.png"; sourceTree = "<group>"; };
 		C83714EA18F5C1FA0079D3F9 /* My Feed+View Deal - New Version_Local icon_Grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "My Feed+View Deal - New Version_Local icon_Grey@2x.png"; sourceTree = "<group>"; };
+		C83B93C11A2D08BE00AC666B /* DealsNoPhotoTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsNoPhotoTableCell.h; sourceTree = "<group>"; };
+		C83B93C21A2D08BE00AC666B /* DealsNoPhotoTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsNoPhotoTableCell.m; sourceTree = "<group>"; };
+		C83B93C31A2D08BE00AC666B /* DealsNoPhotoTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealsNoPhotoTableCell.xib; sourceTree = "<group>"; };
 		C83EACFB18690AC30084E0E1 /* Art_antique_shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Art_antique_shop@2x.png"; sourceTree = "<group>"; };
 		C83EACFC18690AC30084E0E1 /* Art_Art@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Art_Art@2x.png"; sourceTree = "<group>"; };
 		C83EACFD18690AC30084E0E1 /* Art_art_gallery@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Art_art_gallery@2x.png"; sourceTree = "<group>"; };
@@ -1053,6 +1059,8 @@
 		C848B67619B4AB76000F138D /* StoresTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoresTableCell.h; sourceTree = "<group>"; };
 		C848B67719B4AB76000F138D /* StoresTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoresTableCell.m; sourceTree = "<group>"; };
 		C848B67919B4ACA4000F138D /* StoresTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoresTableCell.xib; sourceTree = "<group>"; };
+		C862AF291A2E0B5F00352831 /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewController.h; sourceTree = "<group>"; };
+		C862AF2A1A2E0B5F00352831 /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewController.m; sourceTree = "<group>"; };
 		C869CB81191A6E5B00DF2C19 /* Profile_Deals List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab (selected)@2x.png"; sourceTree = "<group>"; };
 		C869CB82191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Deals List tab@2x.png"; sourceTree = "<group>"; };
 		C869CB83191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_Likes List tab (selected)@2x.png"; sourceTree = "<group>"; };
@@ -1767,6 +1775,9 @@
 				C80123341A2C4BC000C40A37 /* DealsTableCell.h */,
 				C80123351A2C4BC000C40A37 /* DealsTableCell.m */,
 				C80123361A2C4BC000C40A37 /* DealsTableCell.xib */,
+				C83B93C11A2D08BE00AC666B /* DealsNoPhotoTableCell.h */,
+				C83B93C21A2D08BE00AC666B /* DealsNoPhotoTableCell.m */,
+				C83B93C31A2D08BE00AC666B /* DealsNoPhotoTableCell.xib */,
 				C848B67619B4AB76000F138D /* StoresTableCell.h */,
 				C848B67719B4AB76000F138D /* StoresTableCell.m */,
 				C848B67919B4ACA4000F138D /* StoresTableCell.xib */,
@@ -1792,8 +1803,6 @@
 		C869CB71191A129A00DF2C19 /* My Feed */ = {
 			isa = PBXGroup;
 			children = (
-				B0294C7118B0CC0900699107 /* MyFeedsViewController.h */,
-				B0294C7218B0CC0900699107 /* MyFeedsViewController.m */,
 				C801232E1A2C4A8700C40A37 /* DealsTableViewController.h */,
 				C801232F1A2C4A8700C40A37 /* DealsTableViewController.m */,
 			);
@@ -1805,6 +1814,8 @@
 			children = (
 				B012D94E182AA320006288CA /* ProfileViewController.h */,
 				B012D94F182AA321006288CA /* ProfileViewController.m */,
+				C862AF291A2E0B5F00352831 /* ProfileTableViewController.h */,
+				C862AF2A1A2E0B5F00352831 /* ProfileTableViewController.m */,
 				C84846FA19A2617B00BC6ACE /* SettingsTableViewController.h */,
 				C84846FB19A2617B00BC6ACE /* SettingsTableViewController.m */,
 				C84846FD19A2620C00BC6ACE /* EditProfileTableViewController.h */,
@@ -1896,6 +1907,8 @@
 		C871A5321A25D58500A9A2D1 /* Old Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B0294C7118B0CC0900699107 /* MyFeedsViewController.h */,
+				B0294C7218B0CC0900699107 /* MyFeedsViewController.m */,
 				B0930C0C17F40B78004EB3CA /* SigninViewController.h */,
 				B0930C0D17F40B78004EB3CA /* SigninViewController.m */,
 				B0907D5E18F95A7500ED54F2 /* ExploreDealsViewController.h */,
@@ -2767,6 +2780,7 @@
 				C88B3F6B1921F5CB009252DD /* My Feed+View Deal (final)_Comment button (selected)@2x.png in Resources */,
 				C8D7CAE419350A0400841C22 /* profile_Edit Profile button@2x.png in Resources */,
 				B0D6545818111EA4000DB9AF /* Add Deal_Euro button@2x.png in Resources */,
+				C83B93C51A2D08BE00AC666B /* DealsNoPhotoTableCell.xib in Resources */,
 				B0D6545918111EA4000DB9AF /* Add Deal_Options bar@2x.png in Resources */,
 				B0D6545A18111EA4000DB9AF /* Add Deal_Percentage button (pushed)@2x.png in Resources */,
 				C8A9EE301A2213B9002EE682 /* email-2010-12-01.json in Resources */,
@@ -3013,11 +3027,13 @@
 				B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */,
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
 				B09FBAD5193F0764006CB986 /* Dealer.m in Sources */,
+				C83B93C41A2D08BE00AC666B /* DealsNoPhotoTableCell.m in Sources */,
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
 				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,
+				C862AF2B1A2E0B5F00352831 /* ProfileTableViewController.m in Sources */,
 				B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */,
 				B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */,
 				B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */,

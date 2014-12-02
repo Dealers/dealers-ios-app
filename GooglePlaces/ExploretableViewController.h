@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
+#import "DealsTableViewController.h"
+#import "ViewonedealViewController.h"
+#import "ProfileViewController.h"
+#import "WhereIsTheDeal.h"
+#import "ExploreDealsViewController.h"
+#import "OnlineViewController.h"
 
 @interface ExploretableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
-{
-    bool cancelKey;
-    bool flagWhiteCover;
-}
+
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 
 @property (nonatomic, strong) NSMutableArray *types;
@@ -20,9 +24,5 @@
 
 @property (nonatomic, strong) NSMutableArray *filteredtypes;
 @property (nonatomic, strong) NSMutableArray *filteredtypes_icons;
-@property BOOL filtered;
-@property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
-
--(IBAction)BackButton:(id)sender;
 
 @end

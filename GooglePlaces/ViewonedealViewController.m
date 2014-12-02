@@ -643,8 +643,10 @@
         
         if (self.deal.dealer.dealerID.intValue == appDelegate.dealer.dealerID.intValue) {
             self.dealerImage.image = [appDelegate myProfilePic];
-        } else {
+        } else if (dealer.photoURL.length > 1 && ![dealer.photoURL isEqualToString:@"None"]) {
             [appDelegate otherProfilePic:dealer.photoURL forTarget:@"Deal Dealer's Photo" inViewController:NAME_FOR_NOTIFICATIONS inCell:nil];
+        } else {
+            self.dealerImage.image = [UIImage imageNamed:@"Profile Pic Placeholder"];
         }
     }
 }
@@ -1030,7 +1032,7 @@
                                                                    dealPic.frame.size.height - titleLabelHeight - 5,
                                                                    screenWidth - iconsLeftMargin * 2,
                                                                    titleLabelHeight)];
-    titleLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    titleLabel.font = [UIFont fontWithName:@"Avenir-Medium" size:17.0];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.numberOfLines = 2;
     titleLabel.text = self.titlelabel.text;

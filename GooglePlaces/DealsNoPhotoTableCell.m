@@ -1,16 +1,16 @@
 //
-//  DealsTableCell.m
+//  DealsNoPhotoTableCell.m
 //  Dealers
 //
 //  Created by Gilad Lumbroso on 12/1/14.
 //
 //
 
-#import "DealsTableCell.h"
+#import "DealsNoPhotoTableCell.h"
 
 #define SIDE_MARGIN 15
 
-@implementation DealsTableCell
+@implementation DealsNoPhotoTableCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -93,6 +93,17 @@
     CGRect storeFrame = self.store.frame;
     storeFrame.size.width = xPointDetails - self.store.frame.origin.x;
     self.store.frame = storeFrame;
+    
+    
+    // Setting the separator inset
+    
+    if ([self respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 @end

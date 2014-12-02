@@ -20,6 +20,7 @@
 #import "CheckConnection.h"
 #import "Deal.h"
 #import "Functions.h"
+#import "DealsTableViewController.h"
 
 
 #define offSetShortCell 109
@@ -678,6 +679,12 @@
     
     if ([selfViewController isEqualToString:@"My Feed"]) {
         self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        [button setFrame:CGRectMake(0, 0, 44.0, 44.0)];
+        [button setBackgroundColor:[UIColor redColor]];
+        [button addTarget:self action:@selector(pushDealsTableViewController) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationItem.titleView addSubview:button];
+        [self.navigationItem.titleView setUserInteractionEnabled:YES];
     } else if ([selfViewController isEqualToString:@"Explore"]) {
         self.title = self.categoryFromExplore;
     }
@@ -703,6 +710,12 @@
     [self setDateFormatter];
 
     [super viewDidLoad];
+}
+
+- (void)pushDealsTableViewController
+{
+    DealsTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealsID"];
+    [self.navigationController pushViewController:dtvc animated:YES];
 }
 
 - (void)setDummyDeals

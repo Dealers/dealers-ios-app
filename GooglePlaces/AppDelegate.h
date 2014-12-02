@@ -43,9 +43,11 @@
 - (void)removeUserDetailsFromDevice;
 - (UIImage *)myProfilePic;
 - (void)otherProfilePic:(NSString *)photoURL forTarget:(NSString *)target inViewController:(NSString *)notificationCenterName inCell:(id)cell;
+- (void)downloadPhotosForDeal:(Deal *)deal atIndexPath:(NSIndexPath *)indexPath;
 - (UIColor *)ourPurple;
 - (UIColor *)textGrayColor;
 - (UIColor *)darkTextGrayColor;
+- (UIColor *)blackColor;
 - (UIButton *)actionButton;
 - (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
 
