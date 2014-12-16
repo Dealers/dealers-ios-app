@@ -144,7 +144,7 @@
 }
 
 
-#pragma mark - Social Connections methods
+#pragma mark - Facebook
 
 - (void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification
 {
@@ -160,47 +160,14 @@
         
         if (sessionState == FBSessionStateOpen) {
             
-            // The session is open. Get the user information and update the UI.
+            // Check if the user already exists
+            [self signInWithToken];
             
-            [loggingInFacebook show:YES];
+            // If exists, get him in and add all the new information received by Facebook
+            [self updateInfoReceivedByFacebook];
             
-            [FBRequestConnection startWithGraphPath:@"me"
-                                         parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(normal), email"}
-                                         HTTPMethod:@"GET"
-                                  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                      
-                                      if (!error) {
-                                          
-                                          Dealer *dealer = self.appDelegate.dealer;
-                                          
-                                          if (!dealer.dateOfBirth) {
-                                              
-                                              NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-                                              dateFormatter.dateFormat = @"MM/dd/yyyy";
-                                              dealer.dateOfBirth = [dateFormatter dateFromString:[result objectForKey:@"birthday"]];
-                                          }
-                                          
-                                          if (!(dealer.gender.length > 0)) {
-                                              dealer.gender = [result objectForKey:@"gender"];
-                                          }
-                                          
-                                          if (!dealer.photo) {
-                                              NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
-                                              dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
-                                          }
-                                          
-                                          // Upload all the data to Dealers database.
-                                          
-                                          [loggingInFacebook hide:YES];
-                                          
-                                          self.facebookConnectionIndicator.text = @"Connected";
-                                          self.facebookConnectionIndicator.textColor = [UIColor blackColor];
-                                          
-                                      } else {
-                                          
-                                          NSLog(@"%@", [error localizedDescription]);
-                                      }
-                                  }];
+            // If doesn't exists, add him as a new dealer
+            [self addAsNewDealer];
             
         } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
             
@@ -215,6 +182,22 @@
     }
 }
 
+- (void)signInWithToken
+{
+    
+
+}
+
+- (void)updateInfoReceivedByFacebook
+{
+    
+}
+
+- (void)addAsNewDealer
+{
+    
+}
+
 #pragma mark - Navigation methods
 
 - (void)pushEditProfileView
@@ -225,8 +208,10 @@
 
 - (void)pushPushNotificationsView
 {
-    PushNotificationsTableViewController *pntvc = [self.storyboard instantiateViewControllerWithIdentifier:@"pushNotificationsID"];
-    [self.navigationController pushViewController:pntvc animated:YES];
+    ComingSoonViewController *csvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ComingSoonID"];
+    csvc.title = @"Push Notifications";
+    csvc.messageContent = @"Here you will be able to determine in which cases you will be notified regarding your activity at Dealers.";
+    [self.navigationController pushViewController:csvc animated:YES];
 }
 
 - (void)logOut

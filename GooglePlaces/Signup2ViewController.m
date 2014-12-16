@@ -253,14 +253,6 @@
     }
 }
 
-- (void)saveUsernameAndPassword
-{
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
-    
-    [keychain setObject:self.emailTextField.text forKey:(__bridge id)(kSecAttrAccount)];
-    [keychain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];
-}
-
 - (IBAction)SignUpButton:(id)sender
 {
     self.app = [UIApplication sharedApplication];
@@ -306,11 +298,11 @@
                                             
                                             if (!hasPhoto) {
                                                 
-                                                [self enterDealers];
+                                                [self getToken];
                                             
                                             } else if (didPhotoFinishedUploading) {
                                              
-                                                [self enterDealers];
+                                                [self getToken];
                                             }
                                         }
      
@@ -373,18 +365,51 @@
                                                                NSLog(@"Profile photo uploaded successfuly!");
                                                                didPhotoFinishedUploading = YES;
                                                                if (didUploadUserData) {
-                                                                   [self enterDealers];
+                                                                   
+                                                                   appDelegate.dealer.photo = self.dealer.photo;
+                                                                   [self getToken];
                                                                }
-                                                               
                                                            }
                                                            return nil;
                                                        }];
 }
 
+- (void)getToken
+{
+    NSString *username = self.appDelegate.dealer.username;
+    NSString *password = self.passwordTextField.text;
+    NSDictionary *parameters = @{@"username": username,
+                                 @"password": password
+                                 };
+    
+    AFHTTPClient* client = [AFHTTPClient clientWithBaseURL:[RKObjectManager sharedManager].baseURL];
+    [client setAuthorizationHeaderWithUsername:username password:password];
+    [client postPath:@"/dealers-token-auth/"
+          parameters:parameters
+             success:^(AFHTTPRequestOperation *operation, id result) {
+                 
+                 NSError *error;
+                 NSDictionary *tokenDictionary = [NSJSONSerialization JSONObjectWithData:result
+                                                                      options:kNilOptions
+                                                                        error:&error];
+                 NSString *token = [tokenDictionary objectForKey:@"token"];
+                 [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:token];
+                 
+                 KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+                 [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
+                 [keychain setObject:token forKey:(__bridge id)(kSecAttrAccount)];
+                 [keychain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];
+                 
+                 [self enterDealers];
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 
+                 NSLog(@"\n\nFailed to fetch token. Error: %@", error.localizedDescription);
+             }];
+}
+
 - (void)enterDealers
 {
-    [appDelegate setHTTPClientUsername:self.dealer.username andPassword:self.passwordTextField.text];
-    [self saveUsernameAndPassword];
     [appDelegate saveUserDetailsOnDevice];
     [appDelegate setTabBarController];
 }

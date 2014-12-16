@@ -94,7 +94,6 @@
     storeFrame.size.width = xPointDetails - self.store.frame.origin.x;
     self.store.frame = storeFrame;
     
-    
     // Setting the separator inset
     
     if ([self respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -105,5 +104,51 @@
         [self setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
++ (UIImage *)randomBackgroundImages
+{
+    int random = arc4random_uniform(4);
+    switch (random) {
+        case 0:
+            return [UIImage imageNamed:@"Background 1"];
+            break;
+        case 1:
+            return [UIImage imageNamed:@"Background 2"];
+            break;
+        case 2:
+            return [UIImage imageNamed:@"Background 3"];
+            break;
+        case 3:
+            return [UIImage imageNamed:@"Background 4"];
+            break;
+            
+        default:
+            return nil;
+            break;
+    }
+}
+
++ (UIColor *)randomBackgroundColors:(NSString *)colorNumber
+{
+    switch (colorNumber.intValue) {
+        case 0:
+            return [UIColor colorWithRed:79.0/255.0 green:195.0/255.0 blue:247.0/255.0 alpha:1.0]; // Blue
+            break;
+        case 1:
+            return [UIColor colorWithRed:129.0/255.0 green:216.0/255.0 blue:132.0/255.0 alpha:1.0]; // Green
+            break;
+        case 2:
+            return [UIColor colorWithRed:255.0/255.0 green:100.0/255.0 blue:105.0/255.0 alpha:1.0]; // Red
+            break;
+        case 3:
+            return [UIColor colorWithRed:190.0/255.0 green:158.0/255.0 blue:131.0/255.0 alpha:1.0]; // Brown
+            break;
+            
+        default:
+            return nil;
+            break;
+    }
+}
+
 
 @end

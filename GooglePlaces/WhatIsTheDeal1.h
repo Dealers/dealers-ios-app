@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "WhatIsTheDeal2.h"
+#import "GKImagePicker.h"
 #import "Deal.h"
 #import "Store.h"
 #import "Dealer.h"
+
 #import "MBProgressHUD.h"
 
-@interface WhatIsTheDeal1 : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UITextViewDelegate, UITextFieldDelegate, MBProgressHUDDelegate> {
+@interface WhatIsTheDeal1 : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UITextViewDelegate, UITextFieldDelegate, MBProgressHUDDelegate, GKImagePickerDelegate> {
     
     BOOL isFrontCamera, isSessionRunning, shouldDealloc;
     MBProgressHUD *blankTitleIndicator, *tooMuchIndicator, *illogicalPercentage;
@@ -49,9 +51,18 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIView *cameraBlackCover;
 
+@property (nonatomic, strong) GKImagePicker *imagePicker;
+
 @property (weak, nonatomic) IBOutlet UIButton *addPhoto;
 @property (nonatomic) NSMutableArray *photosArray;
 @property (nonatomic) NSMutableArray *photosFileName;
+
+@property NSString *cashedPrice;
+@property NSString *cashedCurrency;
+@property NSNumber *cashedDiscountValue;
+@property NSString *cashedDiscountType;
+@property NSString *cashedCategory;
+@property NSDate *cashedExpirationDate;
 
 @property BOOL tooMuchText;
 
@@ -60,5 +71,6 @@
 - (IBAction)addPhoto:(id)sender;
 - (IBAction)rotateCamera:(id)sender;
 - (IBAction)exitCameraMode:(id)sender;
+- (IBAction)addFromLibrary:(id)sender;
 
 @end

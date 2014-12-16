@@ -17,11 +17,14 @@
     
     UIImageView *loadingAnimation;
     MBProgressHUD *blankEmail, *blankPassword, *noConnection, *wrongEmailPassword;
+    BOOL didDownloadUserData;
+    BOOL didPhotoFinishedDownloading;
+    BOOL hasPhoto;
 }
 
 @property AppDelegate *appDelegate;
 
-@property RKObjectManager *signInManager;
+//@property RKObjectManager *signInManager;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;

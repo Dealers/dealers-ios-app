@@ -19,27 +19,6 @@
 @synthesize appDelegate;
 
 
-- (void)initialize
-{
-    appDelegate = [[UIApplication sharedApplication]delegate];
-    
-    self.didChangeProfilePic = NO;
-    self.datePickerIsShowing = NO;
-    self.didChangeEmail = NO;
-    
-    self.editedDealer = [[Dealer alloc]init];
-    
-    didUploadUserData = NO;
-    didPhotoFinishedUploading = NO;
-    shouldUploadPhoto = NO;
-    
-    if (appDelegate.dealer.photo) {
-        userHaveProfilePic = YES;
-    } else {
-        userHaveProfilePic = NO;
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -73,6 +52,29 @@
     }
 }
 
+- (void)initialize
+{
+    appDelegate = [[UIApplication sharedApplication]delegate];
+    
+    self.didChangeProfilePic = NO;
+    self.datePickerIsShowing = NO;
+    self.didChangeEmail = NO;
+    
+    self.editedDealer = [[Dealer alloc]init];
+    
+    self.delegate = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3];
+    
+    didUploadUserData = NO;
+    didPhotoFinishedUploading = NO;
+    shouldUploadPhoto = NO;
+    
+    if (appDelegate.dealer.photo) {
+        userHaveProfilePic = YES;
+    } else {
+        userHaveProfilePic = NO;
+    }
+}
+
 
 #pragma mark - Setting the view and sections
 
@@ -98,14 +100,35 @@
 
 - (void)saveOriginalValues
 {
-    self.originalPhotoURL = [appDelegate.dealer.photoURL mutableCopy];
-    self.originalPhotoData = [appDelegate.dealer.photo mutableCopy];
     self.originalFullName = [appDelegate.dealer.fullName mutableCopy];
-    self.originalAbout = [appDelegate.dealer.about mutableCopy];
-    self.originalLocation = [appDelegate.dealer.location mutableCopy];
-    self.originalDateOfBirth = appDelegate.dealer.dateOfBirth;
-    self.originalGender = [appDelegate.dealer.gender mutableCopy];
     self.originalEmail = [appDelegate.dealer.email mutableCopy];
+    self.originalDateOfBirth = appDelegate.dealer.dateOfBirth;
+
+    if ([appDelegate.dealer.location isEqualToString:@"None"]) {
+        self.originalLocation = @"";
+    } else {
+        self.originalLocation = [appDelegate.dealer.location mutableCopy];
+    }
+    
+    if ([appDelegate.dealer.about isEqualToString:@"None"]) {
+        self.originalAbout = @"";
+    } else {
+        self.originalAbout = [appDelegate.dealer.about mutableCopy];
+    }
+    
+    if ([appDelegate.dealer.gender isEqualToString:@"None"]) {
+        self.originalGender = @"";
+    } else {
+        self.originalGender = [appDelegate.dealer.gender mutableCopy];
+    }
+    
+    if ([appDelegate.dealer.photoURL isEqualToString:@"None"]) {
+        self.originalPhotoURL = @"";
+    } else {
+        self.originalPhotoURL = [appDelegate.dealer.photoURL mutableCopy];
+    }
+    
+    self.originalPhotoData = [appDelegate.dealer.photo mutableCopy];
 }
 
 - (void)setKnownValues
@@ -173,7 +196,7 @@
     saved.delegate = self;
     saved.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
     saved.mode = MBProgressHUDModeCustomView;
-    saved.labelText = @"  Saved!  ";
+    saved.labelText = @" Saved! ";
     saved.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     saved.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -533,12 +556,12 @@
                                                method:RKRequestMethodAny];
     
     KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
     [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
 
-    NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
-    self.password = [keychain objectForKey:(__bridge id)(kSecValueData)];
+    NSString *token = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
     
-    [self.editProfileManager.HTTPClient setAuthorizationHeaderWithUsername:username password:self.password];
+    [self.editProfileManager.HTTPClient setAuthorizationHeaderWithToken:token];
     
     RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
     [errorMapping addPropertyMapping: [RKAttributeMapping attributeMappingFromKeyPath:@"detail" toKeyPath:@"errorMessage"]];
@@ -622,7 +645,6 @@
                                      
                                      didUploadUserData = YES;
                                      
-                                     
                                      if (shouldUploadPhoto) {
                                          if (didPhotoFinishedUploading) {
                                              [uploading hide:NO];
@@ -632,7 +654,6 @@
                                          }
                                      } else {
                                          [appDelegate saveUserDetailsOnDevice];
-                                         if (self.didChangeEmail) [self updateUsername];
                                          [uploading hide:NO];
                                          [saved show:NO];
                                          [saved hide:YES afterDelay:1.5];
@@ -695,7 +716,6 @@
                                                                didPhotoFinishedUploading = YES;
                                                                if (didUploadUserData) {
                                                                    [appDelegate saveUserDetailsOnDevice];
-                                                                   if (self.didChangeEmail) [self updateUsername];
                                                                    [uploading hide:NO];
                                                                    [saved show:NO];
                                                                    [saved hide:YES afterDelay:1.5];
@@ -704,15 +724,6 @@
                                                            }
                                                            return nil;
                                                        }];
-}
-
-- (void)updateUsername
-{
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
-    
-    [keychain setObject:self.email.text forKey:(__bridge id)(kSecAttrAccount)];
-    
-    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:self.email.text password:self.password];
 }
 
 - (BOOL)didProfileChange
@@ -726,18 +737,12 @@
     
     if (![self.about.text isEqualToString:self.originalAbout]) {
         
-        if (![appDelegate.dealer.about isEqualToString:@"None"]) {
-            
-            return YES;
-        }
+        return YES;
     }
     
     if (![self.location.text isEqualToString:self.originalLocation]) {
         
-        if (![appDelegate.dealer.location isEqualToString:@"None"]) {
-            
-            return YES;
-        }
+        return YES;
     }
     
     if (!([self.dateOfBirth.text isEqualToString:@"Date of Birth"] && !self.originalDateOfBirth)) {
@@ -748,7 +753,7 @@
         }
     }
     
-    if (!([self.gender.text isEqualToString:@"Gender"] && !self.originalGender)) {
+    if (!([self.gender.text isEqualToString:@"Gender"] && !(self.originalGender.length > 0))) {
         
         if (![self.gender.text isEqualToString:self.originalGender]) {
             
@@ -766,7 +771,9 @@
 
 - (void)popViewController
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    ProfileTableViewController *ptvc = self.delegate;
+    ptvc.afterEditing = YES;
+    [self.navigationController popToViewController:ptvc animated:YES];
 }
 
 

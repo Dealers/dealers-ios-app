@@ -12,8 +12,8 @@
 #define expirationDateSheetTag 7777
 
 #define sharedViewTag 8888
-#define iconsLeftMargin 12
-#define labelsLeftMargin 52
+#define iconsLeftMargin 18
+#define labelsLeftMargin 58
 
 #define AWS_S3_BUCKET_NAME @"dealers-app"
 
@@ -45,11 +45,46 @@
     [self setAddDealButton];
     [self setProgressIndicator];
     [self createInputAccessoryViews];
+    [self setCashedData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    
+    if ([viewControllers indexOfObject:self] == NSNotFound) {
+        // View is disappearing because it was popped from the stack
+        WhatIsTheDeal1 *witd1 = viewControllers.lastObject;
+        if (self.priceTextField.text.length > 0) {
+            witd1.cashedPrice = self.priceTextField.text;
+            witd1.cashedCurrency = self.selectedCurrency;
+        } else {
+            witd1.cashedPrice = nil;
+            witd1.cashedCurrency = nil;
+        }
+        if (self.discountTextField.text.length > 0) {
+            witd1.cashedDiscountValue = [NSNumber numberWithFloat:self.discountValue];
+            witd1.cashedDiscountType = self.selectedDiscountType;
+        } else {
+            witd1.cashedDiscountValue = nil;
+            witd1.cashedDiscountType = nil;
+        }
+        if (self.categoryLabel.text.length > 0 && ![self.categoryLabel.text isEqualToString:@"Choose Category"]) {
+            witd1.cashedCategory = self.categoryLabel.text;
+        } else {
+            witd1.cashedCategory = nil;
+        }
+        if (self.expirationDateLabel.text.length > 0) {
+            witd1.cashedExpirationDate = self.datePicker.date;
+        } else {
+            witd1.cashedExpirationDate = nil;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,8 +99,8 @@
     isFacebookSelectd = NO;
     isWhatsAppSelected = NO;
     self.didTouchDatePicker = NO;
-    self.priceValue = 0;
-    self.discountValue = 0;
+    didUploadDealData = NO;
+    didDealPhotosFinishedUploading = NO;
     placeholder = [UIColor colorWithRed:180.0/255.0 green:180.0/255.0 blue:186.0/255.0 alpha:1.0];
 }
 
@@ -151,7 +186,7 @@
                                                         destructiveButtonTitle:@"Remove Category"
                                                              otherButtonTitles:@"Pick a New Category", nil];
             categorySheet.tag = categorySheetTag;
-            [categorySheet showFromTabBar:self.tabBarController.tabBar];
+            [categorySheet showInView:self.view];
         }
         
         [self.priceTextField resignFirstResponder];
@@ -179,7 +214,7 @@
                                                                   destructiveButtonTitle:@"Remove Date"
                                                                        otherButtonTitles:@"Change Date", nil];
                 expirationDateSheet.tag = expirationDateSheetTag;
-                [expirationDateSheet showFromTabBar:self.tabBarController.tabBar];
+                [expirationDateSheet showInView:self.view];
             }
         }
         
@@ -401,9 +436,25 @@
     [priceBar addSubview:pound];
     [priceBar addSubview:done1];
     
-    // default choise:
-    [shekel setSelected:YES];
-    selectedCurrency = @"₪";
+    if (self.cashedCurrency.length > 0) {
+        
+        self.selectedCurrency = self.cashedCurrency;
+        if ([self.selectedCurrency isEqualToString:@"₪"]) {
+            [shekel setSelected:YES];
+            
+        } else if ([self.selectedCurrency isEqualToString:@"$"]) {
+            [dollar setSelected:YES];
+            
+        } else if ([self.selectedCurrency isEqualToString:@"£"]) {
+            [pound setSelected:YES];
+        }
+        
+    } else {
+        
+        // default choise:
+        [shekel setSelected:YES];
+        self.selectedCurrency = @"₪";
+    }
     
     [self.priceTextField setInputAccessoryView:priceBar];
     
@@ -443,9 +494,22 @@
     [discountBar addSubview:lastPrice];
     [discountBar addSubview:done2];
     
-    // default choise:
-    [percentage setSelected:YES];
-    selectedDiscountType = @"%";
+    if (self.cashedDiscountType.length > 0) {
+        
+        self.selectedDiscountType = self.cashedDiscountType;
+        if ([self.selectedDiscountType isEqualToString:@"%"]) {
+            [percentage setSelected:YES];
+            
+        } else {
+            [lastPrice setSelected:YES];
+        }
+        
+    } else {
+        
+        // default choise:
+        [percentage setSelected:YES];
+        self.selectedDiscountType = @"%";
+    }
     
     [self.discountTextField setInputAccessoryView:discountBar];
     
@@ -478,7 +542,11 @@
     pound.selected = NO;
     
     sender.selected = YES;
-    selectedCurrency = sender.titleLabel.text;
+    self.selectedCurrency = sender.titleLabel.text;
+    
+    if (self.priceTextField.text.length > 0) {
+        [self.priceTextField resignFirstResponder];
+    }
 }
 
 - (void)selectDiscountType:(UIButton *)sender
@@ -489,9 +557,13 @@
     sender.selected = YES;
     
     if (percentage.selected) {
-        selectedDiscountType = @"%";
+        self.selectedDiscountType = @"%";
     } else {
-        selectedDiscountType = @"lastPrice";
+        self.selectedDiscountType = @"lastPrice";
+    }
+    
+    if (self.discountTextField.text.length > 0) {
+        [self.discountTextField resignFirstResponder];
     }
 }
 
@@ -503,11 +575,11 @@
 
 - (NSString *)convertCurrency {
     
-    if ([selectedCurrency isEqualToString:@"₪"]) {
+    if ([self.selectedCurrency isEqualToString:@"₪"]) {
         return @"SH";
-    } else if ([selectedCurrency isEqualToString:@"$"]) {
+    } else if ([self.selectedCurrency isEqualToString:@"$"]) {
         return @"DO";
-    } else if ([selectedCurrency isEqualToString:@"£"]) {
+    } else if ([self.selectedCurrency isEqualToString:@"£"]) {
         return @"PO";
     } else {
         return nil;
@@ -516,9 +588,9 @@
 
 - (NSString *)convertDiscountType {
     
-    if ([selectedDiscountType isEqualToString:@"%"]) {
+    if ([self.selectedDiscountType isEqualToString:@"%"]) {
         return @"PE";
-    } else if ([selectedDiscountType isEqualToString:@"lastPrice"]) {
+    } else if ([self.selectedDiscountType isEqualToString:@"lastPrice"]) {
         return @"PP";
     } else {
         return nil;
@@ -532,22 +604,55 @@
 
 - (void)setAddDealButton
 {
-    UIButton *addDeal = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (!self.addDealButton) {
+        self.addDealButton = [appDelegate actionButton];
+        CGRect addDealButtonFrame = self.addDealButton.frame;
+        addDealButtonFrame.origin.y = 18.0;
+        self.addDealButton.frame = addDealButtonFrame;
+        self.addDealButton.backgroundColor = [appDelegate ourPurple];
+        [self.addDealButton setTitle:@"Add the Deal" forState:UIControlStateNormal];
+        [self.addDealButton setTintColor:[UIColor whiteColor]];
+        [self.addDealButton addTarget:self action:@selector(addDeal) forControlEvents:UIControlEventTouchUpInside];
+        [self.addDealView addSubview:self.addDealButton];
+    }
     
-    CGFloat x = 20;
-    CGFloat y = 18;
-    CGFloat width = self.view.frame.size.width - x * 2;
-    CGFloat height = 44;
+    if (!self.addDealButtonBackground) {
+        self.addDealButtonBackground = [[UIView alloc]initWithFrame:self.addDealButton.frame];
+        self.addDealButtonBackground.layer.cornerRadius = 8.0;
+        self.addDealButtonBackground.layer.masksToBounds = YES;
+        self.addDealButtonBackground.backgroundColor = [appDelegate ourPurple];
+        [self.addDealView insertSubview:self.addDealButtonBackground belowSubview:self.addDealButton];
+    }
     
-    [addDeal setFrame:CGRectMake(x, y, width, height)];
-    [addDeal setBackgroundColor:[UIColor colorWithRed:150.0/250.0 green:0 blue:180.0/250.0 alpha:1.0]];
-    [addDeal setTitle:@"Add the Deal" forState:UIControlStateNormal];
-    [[addDeal titleLabel]setFont:[UIFont fontWithName:@"Avenir-Medium" size:19.0]];
-    [[addDeal layer]setCornerRadius:8.0];
-    [[addDeal layer]setMasksToBounds:YES];
-    [addDeal addTarget:self action:@selector(addDeal) forControlEvents:UIControlEventTouchUpInside];
+    if (!self.loadingAnimation) {
+        self.loadingAnimation = [appDelegate loadingAnimationWhite];
+        self.loadingAnimation.center = self.addDealButton.center;
+        [self.addDealView addSubview:self.loadingAnimation];
+        self.loadingAnimation.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    }
+}
+
+- (void)startLoading
+{
+    [self.loadingAnimation startAnimating];
     
-    [self.addDealView addSubview:addDeal];
+    [UIView animateWithDuration:0.2 animations:^{
+        
+        self.addDealButton.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        self.addDealButton.alpha = 0.5;
+        self.loadingAnimation.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    }];
+}
+
+- (void)stopLoading
+{
+    [self.loadingAnimation stopAnimating];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.loadingAnimation.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        self.addDealButton.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        self.addDealButton.alpha = 1.0;
+    }];
 }
 
 - (void)setSharedView
@@ -568,17 +673,25 @@
     // Setting the shared view content:
     
     UIImageView *dealPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 165.0)];
-    
+    [sharedView addSubview:dealPic];
+
     if (self.deal.photo1) {
         
         dealPic.image = self.deal.photo1;
         
     } else {
         
-        dealPic.image = [UIImage imageNamed:@"Shared Image Background"];
+        dealPic.backgroundColor = [DealsNoPhotoTableCell randomBackgroundColors:self.deal.photoURL1];
+        
+        UIImageView *logo = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"White Logo"]];
+        CGSize logoSize = CGSizeMake(45.0, 64.0);
+        CGFloat x = sharedView.center.x - logoSize.width / 2;
+        CGFloat y = 33.0;
+        logo.frame = CGRectMake(x, y, logoSize.width, logoSize.height);
+        
+        [sharedView addSubview:logo];
     }
     
-    [sharedView addSubview:dealPic];
     
     CGFloat titleBackgroundHeight = 78.0;
     UIImageView *titleBackground = [[UIImageView alloc]initWithFrame:CGRectMake(0, dealPic.frame.size.height - titleBackgroundHeight, screenWidth, titleBackgroundHeight)];
@@ -587,7 +700,7 @@
     if (self.deal.photo1) {
         titleBackground.alpha = 0.65;
     } else {
-        titleBackground.alpha = 0.3;
+        titleBackground.alpha = 0;
     }
     
     [sharedView addSubview:titleBackground];
@@ -597,7 +710,7 @@
                                                                    dealPic.frame.size.height - titleLabelHeight - 5,
                                                                    screenWidth - iconsLeftMargin * 2,
                                                                    titleLabelHeight)];
-    titleLabel.font = [UIFont fontWithName:@"Avenir-Medium" size:17.0];
+    titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17.0];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.numberOfLines = 2;
     titleLabel.text = self.deal.title;
@@ -607,7 +720,7 @@
     CGFloat detailsLowestYPoint;
     CGFloat priceXPoint = labelsLeftMargin;
     CGSize iconSize = CGSizeMake(30, 30);
-    CGFloat labelWidth = self.view.frame.size.width - labelsLeftMargin - 10;
+    CGFloat labelWidth = self.view.frame.size.width - labelsLeftMargin - iconsLeftMargin;
     UIColor *detailsTextColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:160.0/255.0 alpha:1.0];
     
     UIImageView *storeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
@@ -621,7 +734,7 @@
                                                                    storeIcon.frame.origin.y,
                                                                    labelWidth,
                                                                    storeIcon.frame.size.height)];
-    storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     storeLabel.textColor = detailsTextColor;
     storeLabel.numberOfLines = 1;
     storeLabel.text = [@"At " stringByAppendingString:self.deal.store.name];
@@ -635,7 +748,11 @@
                                                                               detailsLowestYPoint + detailsVerticalGap,
                                                                               iconSize.width,
                                                                               iconSize.height)];
-        priceIcon.image = [UIImage imageNamed:@"Price Icon"];
+        if (!(self.priceValue > 0) && self.discountValue > 0) {
+            priceIcon.image = [UIImage imageNamed:@"Discount Icon"];
+        } else {
+            priceIcon.image = [UIImage imageNamed:@"Price Icon"];
+        }
         [sharedView addSubview:priceIcon];
         
         if (self.priceValue > 0) {
@@ -645,7 +762,7 @@
                                                                            labelWidth,
                                                                            priceIcon.frame.size.height)];
             priceLabel.text = self.priceTextField.text;
-            priceLabel.font = [UIFont fontWithName:@"Avenir-Light" size:18.0];
+            priceLabel.font = [UIFont fontWithName:@"Avenir-Light" size:19.0];
             [priceLabel sizeToFit];
             priceLabel.center = priceIcon.center;
             CGRect priceLabelFrame = priceLabel.frame;
@@ -666,15 +783,15 @@
                                                                               labelWidth,
                                                                               priceIcon.frame.size.height)];
             
-            discountLabel.font = [UIFont fontWithName:@"Avenir-Light" size:18.0];
+            discountLabel.font = [UIFont fontWithName:@"Avenir-Light" size:19.0];
             
-            if ([selectedDiscountType isEqualToString:@"lastPrice"]) {
+            if ([self.selectedDiscountType isEqualToString:@"lastPrice"]) {
                 
                 NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.discountTextField.text attributes:attributes];
+                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:[self.selectedCurrency stringByAppendingString:self.discountTextField.text] attributes:attributes];
                 [discountLabel setAttributedText:attrText];
                 
-            } else if ([selectedDiscountType isEqualToString:@"%"]) {
+            } else if ([self.selectedDiscountType isEqualToString:@"%"]) {
                 
                 discountLabel.text = self.discountTextField.text;
             }
@@ -706,7 +823,7 @@
                                                                           categoryIcon.frame.origin.y,
                                                                           labelWidth,
                                                                           categoryIcon.frame.size.height)];
-        categoryLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+        categoryLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
         categoryLabel.textColor = detailsTextColor;
         categoryLabel.numberOfLines = 1;
         categoryLabel.text = self.categoryLabel.text;
@@ -728,7 +845,7 @@
                                                                             expirationIcon.frame.origin.y,
                                                                             labelWidth,
                                                                             expirationIcon.frame.size.height)];
-        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
         expirationLabel.textColor = detailsTextColor;
         expirationLabel.numberOfLines = 1;
         expirationLabel.text = [@"Expires on " stringByAppendingString:self.expirationDateLabel.text];
@@ -793,12 +910,59 @@
 
 #pragma mark - General methods
 
+- (void)setCashedData
+{
+    if (self.cashedPrice.length > 0) {
+        
+        self.priceTextField.text = self.cashedPrice;
+        // Cashed currency has already been set in the createInputAccessoryViews method
+    }
+    
+    if (self.cashedDiscountValue.floatValue > 0) {
+        
+        self.discountValue = self.cashedDiscountValue.floatValue;
+        // Cashed discount type has already been set in the createInputAccessoryViews method
+        
+        NSString *discountValue = [[NSNumber numberWithFloat:self.discountValue] stringValue];
+        
+        if ([self.selectedDiscountType isEqualToString:@"%"]) {
+            self.discountTextField.text = [discountValue stringByAppendingString:self.selectedDiscountType];
+            
+        } else {
+            NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
+            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:discountValue attributes:attributes];
+            [self.discountTextField setAttributedText:attrText];
+        }
+    }
+    
+    if (self.cashedCategory.length > 0) {
+        self.categoryLabel.text = self.cashedCategory;
+        self.categoryLabel.textColor = [UIColor blackColor];
+        
+    } else if (self.deal.store.categoryID) {
+        // No cashed category, determine category according to the store
+        NSString *categoryFullString = [appDelegate connectOldCategoryToNewCategory:self.deal.store.categoryID];
+        NSRange endRange = [categoryFullString rangeOfString:@"_"];
+        NSRange searchRange = NSMakeRange(0 , endRange.location);
+        NSString *category = [categoryFullString substringWithRange:searchRange];
+        
+        self.categoryLabel.text = category;
+        self.categoryLabel.textColor = [UIColor blackColor];
+    }
+    
+    if (self.cashedExpirationDate) {
+        [self.datePicker setDate:self.cashedExpirationDate];
+        self.expirationDateLabel.text = [self.dateFormatter stringFromDate:self.cashedExpirationDate];
+        self.expirationDateLabel.textColor = [UIColor blackColor];
+    }
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if (textField == self.priceTextField) {
         
-        if (textField.text.length > 0 && [textField.text rangeOfString:selectedCurrency].location != NSNotFound) {
-            textField.text = [textField.text stringByReplacingOccurrencesOfString:selectedCurrency withString:@""];
+        if (textField.text.length > 0 && [textField.text rangeOfString:self.selectedCurrency].location != NSNotFound) {
+            textField.text = [textField.text stringByReplacingOccurrencesOfString:self.selectedCurrency withString:@""];
             
         }
         
@@ -827,7 +991,7 @@
             
             self.priceValue = [self.priceTextField.text floatValue];
             
-            self.priceTextField.text = [selectedCurrency stringByAppendingString:[[NSNumber numberWithFloat:self.priceValue] stringValue]];
+            self.priceTextField.text = [self.selectedCurrency stringByAppendingString:[[NSNumber numberWithFloat:self.priceValue] stringValue]];
             
         } else {
             
@@ -1098,6 +1262,8 @@
 
 - (void)addDeal
 {
+    [self startLoading];
+    
     [self.priceTextField resignFirstResponder];
     [self.discountTextField resignFirstResponder];
     
@@ -1154,14 +1320,14 @@
 
 - (BOOL)validation
 {
-    if ([selectedDiscountType isEqualToString:@"%"] && [self.discountTextField.text intValue] > 100) {
+    if ([self.selectedDiscountType isEqualToString:@"%"] && [self.discountTextField.text intValue] > 100) {
         
         [illogicalPercentage show:YES];
         [illogicalPercentage hide:YES afterDelay:2.0];
         
         return NO;
         
-    } else if ([selectedDiscountType isEqualToString:@"lastPrice"] && self.discountTextField.text.length > 0 && !(self.priceTextField.text.length > 0)) {
+    } else if ([self.selectedDiscountType isEqualToString:@"lastPrice"] && self.discountTextField.text.length > 0 && !(self.priceTextField.text.length > 0)) {
         
         [lastPriceWithoutPrice show:YES];
         [lastPriceWithoutPrice hide:YES afterDelay:2.0];
@@ -1181,21 +1347,28 @@
                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                             
                                             NSLog(@"Deal was uploaded successfuly!");
+                                            didUploadDealData = YES;
                                             
                                             self.deal = mappingResult.firstObject;
                                             
-                                            ThankYouViewController *tyvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ThankYouID"];
-                                            
-                                            tyvc.wasFacebookSelected = isFacebookSelectd;
-                                            tyvc.wasWhatsAppSelected = isWhatsAppSelected;
-                                            tyvc.sharedImage = self.sharedImage;
-                                            
-                                            [self.navigationController pushViewController:tyvc animated:YES]; }
+                                            if (self.deal.photoSum.intValue > 0) {
+                                                
+                                                if (didDealPhotosFinishedUploading) {
+                                                    [self uploadFinishedSuccessfuly];
+                                                }
+                                                
+                                            } else {
+                                                
+                                                [self uploadFinishedSuccessfuly];
+                                            }
+                                        }
      
                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                             
                                             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Couldn't upload the deal :(" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                                             [alert show];
+                                            
+                                            [self stopLoading];
                                             
                                             [[[AWSS3TransferManager defaultS3TransferManager] cancelAll] continueWithBlock:^id(BFTask *task) {
                                                 if (task.error) {
@@ -1243,46 +1416,91 @@
         uploadRequest.key = key;
         uploadRequest.body = fileURL;
         uploadRequest.contentLength = [NSNumber numberWithUnsignedLongLong:photoData.length];
-//        uploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend){
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //Update progress.
-//
-//            });
         
         [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
                                                            withBlock:^id(BFTask *task) {
                                                                if (task.error) {
                                                                    if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
                                                                        switch (task.error.code) {
-                                                                           
+                                                                               
                                                                            case AWSS3TransferManagerErrorCancelled:
                                                                                NSLog(@"Photo number %i upload cancelled", i + 1);
+                                                                               [self stopLoading];
                                                                                break;
                                                                                
                                                                            case AWSS3TransferManagerErrorPaused:
                                                                                NSLog(@"Photo number %i upload paused", i + 1);
+                                                                               [self stopLoading];
                                                                                break;
                                                                                
                                                                            default:
                                                                                NSLog(@"Error: %@", task.error);
+                                                                               [self stopLoading];
                                                                                break;
                                                                        }
                                                                    } else {
                                                                        // Unknown error.
                                                                        NSLog(@"Error: %@", task.error);
+                                                                       [self stopLoading];
+                                                                       UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Couldn't upload the deal's photos. Please try again :(" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                                       [alert show];
+                                                                       if (didUploadDealData) {
+                                                                           [self deleteDamagedDeal];
+                                                                           [self stopLoading];
+                                                                       } else {
+                                                                           [[RKObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodAny matchingPathPattern:nil];
+                                                                           [self stopLoading];
+                                                                       }
                                                                    }
                                                                }
                                                                
                                                                if (task.result) {
                                                                    
                                                                    NSLog(@"Photo number %i uploaded successfuly!", i + 1);
-
+                                                                   if (i + 1 == self.deal.photoSum.intValue) {
+                                                                       // All photos were uploaded successfuly
+                                                                       didDealPhotosFinishedUploading = YES;
+                                                                       if (didUploadDealData) {
+                                                                           [self uploadFinishedSuccessfuly];
+                                                                       }
+                                                                   }
                                                                }
                                                                return nil;
                                                            }];
     }
 }
 
+- (void)deleteDamagedDeal
+{
+    NSString *path = [NSString stringWithFormat:@"/deals/%@", self.deal.dealID];
+    [[RKObjectManager sharedManager] deleteObject:self.deal
+                                             path:path
+                                       parameters:nil
+                                          success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                              
+                                              NSLog(@"Deal was deleted successfuly.");
+                                          }
+                                          failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                              
+                                              NSLog(@"\n\nCouldn't delete the deal...");
+                                          }];
+}
+
+- (void)uploadFinishedSuccessfuly
+{
+    ThankYouViewController *tyvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ThankYouID"];
+    
+    tyvc.wasFacebookSelected = isFacebookSelectd;
+    tyvc.wasWhatsAppSelected = isWhatsAppSelected;
+    tyvc.sharedImage = self.sharedImage;
+    
+    appDelegate.shouldUpdateMyFeed = YES;
+    appDelegate.shouldUpdateProfile = YES;
+    
+    [appDelegate updateUserInfo];
+    
+    [self.navigationController pushViewController:tyvc animated:YES];
+}
 
 // All the text view delegate methods for the description (obsolete):
 

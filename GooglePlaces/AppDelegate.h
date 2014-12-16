@@ -18,6 +18,7 @@
 {
     int picsNumbers;
 }
+
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) UIStoryboard *storyboard;
 @property (nonatomic) UITabBarController *tabBarController;
@@ -30,6 +31,7 @@
 @property (strong, nonatomic)  NSString *dealerName;
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
 @property (strong, nonatomic)  Dealer *dealer;
+@property BOOL shouldUpdateMyFeed;
 @property BOOL shouldUpdateProfile;
 
 @property (weak) UIImage *screenShot;
@@ -41,15 +43,19 @@
 
 - (void)saveUserDetailsOnDevice;
 - (void)removeUserDetailsFromDevice;
+- (NSData *)loadProfilePic;
+- (void)updateUserInfo;
 - (UIImage *)myProfilePic;
-- (void)otherProfilePic:(NSString *)photoURL forTarget:(NSString *)target inViewController:(NSString *)notificationCenterName inCell:(id)cell;
-- (void)downloadPhotosForDeal:(Deal *)deal atIndexPath:(NSIndexPath *)indexPath;
+- (void)otherProfilePic:(NSString *)photoURL forTarget:(NSString *)target notificationName:(NSString *)notificationName inCell:(id)cell;
+- (void)downloadPhotosForDeal:(Deal *)deal notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath mode:(NSString *)mode;
 - (UIColor *)ourPurple;
 - (UIColor *)textGrayColor;
 - (UIColor *)darkTextGrayColor;
 - (UIColor *)blackColor;
 - (UIButton *)actionButton;
 - (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
+- (NSNumber *)setPhotoSum:(Deal *)deal;
+- (NSString *)connectOldCategoryToNewCategory:(NSString *)string;
 
 - (UIImageView *)loadingAnimationWhite;
 - (UIImageView *)loadingAnimationPurple;

@@ -51,12 +51,12 @@
 - (void)_setupNavigationBar{
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                                          target:self 
+                                                                                          target:self
                                                                                           action:@selector(_actionCancel)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Crop", @"")
-                                                                              style:UIBarButtonItemStyleBordered 
-                                                                             target:self 
+                                                                              style:UIBarButtonItemStyleBordered
+                                                                             target:self
                                                                              action:@selector(_actionUse)];
 }
 
@@ -71,50 +71,48 @@
 }
 
 - (void)_setupCancelButton{
-	
-        self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-		
-        [[self.cancelButton titleLabel] setFont:[UIFont boldSystemFontOfSize:16]];
-        [[self.cancelButton titleLabel] setShadowOffset:CGSizeMake(0, -1)];
-        [self.cancelButton setFrame:CGRectMake(0, 0, 58, 30)];
-        [self.cancelButton setTitle:NSLocalizedString(@"Cancel",@"") forState:UIControlStateNormal];
-        [self.cancelButton setTitleShadowColor:[UIColor colorWithRed:0.118 green:0.247 blue:0.455 alpha:1] forState:UIControlStateNormal];
-        [self.cancelButton  addTarget:self action:@selector(_actionCancel) forControlEvents:UIControlEventTouchUpInside];
-
+    
+    self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    
+    [[self.cancelButton titleLabel] setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
+    [self.cancelButton setTintColor:[UIColor whiteColor]];
+    [self.cancelButton setFrame:CGRectMake(0, 0, 58, 30)];
+    [self.cancelButton setTitle:NSLocalizedString(@"Cancel",@"") forState:UIControlStateNormal];
+    [self.cancelButton  addTarget:self action:@selector(_actionCancel) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
 - (void)_setupUseButton{
     
-        self.useButton = [UIButton buttonWithType:UIButtonTypeCustom];
-		
-        [[self.useButton titleLabel] setFont:[UIFont boldSystemFontOfSize:16]];
-        [[self.useButton titleLabel] setShadowOffset:CGSizeMake(0, -1)];
-        [self.useButton setFrame:CGRectMake(0, 0, 58, 30)];
-        [self.useButton setTitle:NSLocalizedString(@"Crop",@"") forState:UIControlStateNormal];
-        [self.useButton setTitleShadowColor:[UIColor colorWithRed:0.118 green:0.247 blue:0.455 alpha:1] forState:UIControlStateNormal];
-        [self.useButton  addTarget:self action:@selector(_actionUse) forControlEvents:UIControlEventTouchUpInside];
-   }
+    self.useButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    
+    [[self.useButton titleLabel] setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
+    [self.useButton setTintColor:[UIColor whiteColor]];
+    [self.useButton setFrame:CGRectMake(0, 0, 44, 30)];
+    [self.useButton setTitle:NSLocalizedString(@"Crop",@"") forState:UIControlStateNormal];
+    [self.useButton  addTarget:self action:@selector(_actionUse) forControlEvents:UIControlEventTouchUpInside];
+}
 
 - (UIImage *)_toolbarBackgroundImage{
     CGFloat components[] = {
         1., 1., 1., 1.,
         123./255., 125/255., 132./255., 1.
     };
-	
+    
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 54), YES, 0.0);
-	
+    
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, components, NULL, 2);
-	
+    
     CGContextDrawLinearGradient(ctx, gradient, CGPointMake(0, 0), CGPointMake(0, 54), kCGImageAlphaNoneSkipFirst);
-	
+    
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
-	
+    
     CGGradientRelease(gradient);
     CGColorSpaceRelease(colorSpace);
     UIGraphicsEndImageContext();
-	
+    
     return viewImage;
 }
 
@@ -122,16 +120,16 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
         
-		
-            self.toolbar.translucent = YES;
-            self.toolbar.barStyle = UIBarStyleBlackOpaque;
+        
+        self.toolbar.translucent = YES;
+        self.toolbar.barStyle = UIBarStyleBlackOpaque;
         [self.view addSubview:self.toolbar];
         
         [self _setupCancelButton];
         [self _setupUseButton];
         
         UILabel *info = [[UILabel alloc] initWithFrame:CGRectZero];
-            info.text = @"";
+        info.text = @"";
         
         info.textColor = [UIColor colorWithRed:0.173 green:0.173 blue:0.173 alpha:1];
         info.backgroundColor = [UIColor clearColor];
@@ -146,7 +144,7 @@
         UIBarButtonItem *use = [[UIBarButtonItem alloc] initWithCustomView:self.useButton];
         
         [self.toolbar setItems:[NSArray arrayWithObjects:cancel, flex, lbl, flex, use, nil]];
-
+        
     }
 }
 
@@ -166,11 +164,11 @@
     // Do any additional setup after loading the view.
     
     self.title = NSLocalizedString(@"Pick you'r photo", @"");
-
+    
     [self _setupNavigationBar];
     [self _setupCropView];
     [self _setupToolbar];
-
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [self.navigationController setNavigationBarHidden:YES];
     } else {

@@ -12,6 +12,7 @@
 #import "MainViewController.h"
 #import "EditProfileTableViewController.h"
 #import "PushNotificationsTableViewController.h"
+#import "ComingSoonViewController.h"
 #import "MBProgressHUD.h"
 
 @interface SettingsTableViewController : UITableViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, MBProgressHUDDelegate> {

@@ -19,7 +19,7 @@
     self.title = @"Sign In";
     
     [self initialize];
-    [self configureRestKit];
+//    [self configureRestKit];
     [self setProgressIndicator];
 }
 
@@ -44,49 +44,10 @@
     self.signInBackground.layer.masksToBounds = YES;
 }
 
-- (void)downloadUesrPhoto
-{
-    NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"downloaded_image_%@.jpg", appDelegate.dealer.dealerID]];
-    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
-    
-    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
-    
-    downloadRequest.bucket = @"dealers-app";
-    downloadRequest.key = appDelegate.dealer.photoURL;
-    downloadRequest.downloadingFileURL = downloadingFileURL;
-    
-    [[[AWSS3TransferManager defaultS3TransferManager] download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-        
-        if (task.error){
-            if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                switch (task.error.code) {
-                    case AWSS3TransferManagerErrorCancelled:
-                    case AWSS3TransferManagerErrorPaused:
-                        break;
-                        
-                    default:
-                        NSLog(@"Error: %@", task.error);
-                        break;
-                }
-            } else {
-                // Unknown error.
-                NSLog(@"Error: %@", task.error);
-            }
-        }
-        
-        if (task.result) {
-            
-            self.appDelegate.dealer.photo = [NSData dataWithContentsOfFile:downloadingFilePath];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSData dataWithContentsOfFile:downloadingFilePath] forKey:@"photo"];
-        }
-        return nil;
-    }];
-}
-
 - (void)startLoading
 {
     [loadingAnimation startAnimating];
-
+    
     [UIView animateWithDuration:0.2 animations:^{
         
         self.signInButton.transform = CGAffineTransformMakeScale(0.01, 0.01);
@@ -111,7 +72,7 @@
     if (indexPath.row == 0) {
         
         [self.emailTextField becomeFirstResponder];
-    
+        
     } else {
         
         [self.passwordTextField becomeFirstResponder];
@@ -178,6 +139,7 @@
     [self.view addSubview:wrongEmailPassword];
 }
 
+/*
 - (void)configureRestKit
 {
     // initialize AFNetworking HTTPClient
@@ -211,6 +173,7 @@
     
     [self.signInManager addResponseDescriptorsFromArray:@[dealsResponseDescriptor, errorResponseDescriptor]];
 }
+*/
 
 - (BOOL)validation
 {
@@ -220,7 +183,7 @@
         [blankEmail hide:YES afterDelay:1.5];
         
         return NO;
-    
+        
     } else if (self.passwordTextField.text.length == 0) {
         
         [blankPassword show:YES];
@@ -229,14 +192,6 @@
         return NO;
     }
     return YES;
-}
-
-- (void)saveUsernameAndPassword
-{
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
-    
-    [keychain setObject:self.emailTextField.text forKey:(__bridge id)(kSecAttrAccount)];
-    [keychain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];
 }
 
 - (IBAction)signIn:(id)sender {
@@ -248,25 +203,21 @@
     
     [self startLoading];
     
-    [self.signInManager.HTTPClient setAuthorizationHeaderWithUsername:self.emailTextField.text
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:self.emailTextField.text
                                                              password:self.passwordTextField.text];
     
-    [self.signInManager getObjectsAtPath:@"/dealerlogins/"
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/dealerlogins/"
                               parameters:nil
                                  success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        
+                                     
                                      self.appDelegate.dealer = mappingResult.firstObject;
                                      
-                                     [self saveUsernameAndPassword];
-                                     [appDelegate saveUserDetailsOnDevice];
-                                     
-                                     if (appDelegate.dealer.photoURL.length > 1) {
-                                         
+                                     if (appDelegate.dealer.photoURL.length > 2) {
+                                         hasPhoto = YES;
                                          [self downloadUesrPhoto];
                                      }
                                      
-                                     [appDelegate setTabBarController];
-                                     
+                                     [self getToken];
                                  }
                                  failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                      
@@ -275,13 +226,13 @@
                                          // No connection to the server error
                                          [noConnection show:YES];
                                          [noConnection hide:YES afterDelay:2.0];
-                                     
+                                         
                                      } else if ([error.localizedDescription isEqualToString:@"Invalid username/password"]) {
                                          
                                          // Wrong email or password error
                                          [wrongEmailPassword show:YES];
                                          [wrongEmailPassword hide:YES afterDelay:1.5];
-                                     
+                                         
                                      } else {
                                          
                                          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign in" message:@"Sorry for that, please try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -290,6 +241,93 @@
                                      
                                      [self stopLoading];
                                  }];
+}
+
+- (void)downloadUesrPhoto
+{
+    NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"downloaded_image_%@.jpg", appDelegate.dealer.dealerID]];
+    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+    
+    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+    
+    downloadRequest.bucket = @"dealers-app";
+    downloadRequest.key = appDelegate.dealer.photoURL;
+    downloadRequest.downloadingFileURL = downloadingFileURL;
+    
+    [[[AWSS3TransferManager defaultS3TransferManager] download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
+                                                                                           withBlock:^id(BFTask *task) {
+        
+        if (task.error){
+            if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                switch (task.error.code) {
+                    case AWSS3TransferManagerErrorCancelled:
+                    case AWSS3TransferManagerErrorPaused:
+                        break;
+                        
+                    default:
+                        NSLog(@"Error: %@", task.error);
+                        break;
+                }
+            } else {
+                // Unknown error.
+                NSLog(@"Error: %@", task.error);
+            }
+        }
+        
+        if (task.result) {
+            
+            didPhotoFinishedDownloading = YES;
+            appDelegate.dealer.photo = [NSData dataWithContentsOfFile:downloadingFilePath];
+            [self enterDealers];
+        }
+        return nil;
+    }];
+}
+
+- (void)getToken
+{
+    NSString *username = self.appDelegate.dealer.username;
+    NSString *password = self.passwordTextField.text;
+    NSDictionary *parameters = @{@"username": username,
+                                 @"password": password
+                                 };
+    
+    AFHTTPClient* client = [AFHTTPClient clientWithBaseURL:[RKObjectManager sharedManager].baseURL];
+    [client setAuthorizationHeaderWithUsername:username password:password];
+    [client postPath:@"/dealers-token-auth/"
+          parameters:parameters
+             success:^(AFHTTPRequestOperation *operation, id result) {
+                 
+                 NSError *error;
+                 NSDictionary *tokenDictionary = [NSJSONSerialization JSONObjectWithData:result
+                                                                                 options:kNilOptions
+                                                                                   error:&error];
+                 NSString *token = [tokenDictionary objectForKey:@"token"];
+                 [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:token];
+
+                 KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+                 [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
+                 [keychain setObject:token forKey:(__bridge id)(kSecAttrAccount)];
+                 [keychain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];
+                 
+                 didDownloadUserData = YES;
+                 
+                 if (!hasPhoto) {
+                     [self enterDealers];
+                 } else if (didPhotoFinishedDownloading) {
+                     [self enterDealers];
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 
+                 NSLog(@"\n\nFailed to fetch token. Error: %@", error.localizedDescription);
+             }];
+}
+
+- (void)enterDealers
+{
+    [appDelegate saveUserDetailsOnDevice];
+    [appDelegate setTabBarController];
 }
 
 

@@ -231,9 +231,15 @@
     CGFloat height = tableView.rowHeight;
     
     if (indexPath.row == pictureCell && indexPath.section == pictureSection) {
-        height = 165.0f;
+        height = 0; // We don't want to allow photo editing for now...
     } else if (indexPath.row == expirationDateCell && indexPath.section == expirationDateSection) {
         height = self.datePickerIsShowing ? expirationDateCellHeight : 0.0f;
+    }
+    
+    if (indexPath.section == 4) {
+        if (!self.canDeleteDeal) {
+            height = 0;
+        }
     }
     
     return height;
@@ -327,6 +333,18 @@
                 default:
                     break;
             }
+            break;
+            
+        case 4: {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Deal"
+                                                            message:@"Are you sure you want to delete this deal? This action cannot be undone."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:@"Delete", nil];
+            alert.tag = 33;
+            [alert show];
+        }
             break;
             
         default:
@@ -1009,6 +1027,35 @@
                 [self setCapturedSectionAfterDelete];
                 break;
             }
+            
+        case 33:
+            
+            if (buttonIndex == 0) {
+                
+                [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+            
+            } else if (buttonIndex == 1) {
+                
+                NSString *path = [NSString stringWithFormat:@"/deals/%@/", self.deal.dealID];
+                
+                [[RKObjectManager sharedManager] deleteObject:self.deal
+                                                         path:path
+                                                   parameters:nil
+                                                      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                          
+                                                          NSLog(@"Deal was deleted successfuly.");
+                                                          [self dismissViewControllerAnimated:YES completion:nil];
+                                                          ViewonedealViewController *vodvc = self.delegate;
+                                                          appDelegate.shouldUpdateMyFeed = YES;
+                                                          appDelegate.shouldUpdateProfile = YES;
+                                                          [vodvc.navigationController popToRootViewControllerAnimated:YES];
+                                                      }
+                                                      failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                          
+                                                          NSLog(@"\n\nCouldn't delete the deal...");
+                                                      }];
+            }
+            break;
     }
 }
 

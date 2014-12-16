@@ -41,7 +41,7 @@
                                                object:nil];
     
     loadedForFirstTime = YES;
-    
+    [self setHidesBottomBarWhenPushed:NO];
     [self setTextToolbar];
     [self setTableViewSettings];
     [self setProgressIndicator];
@@ -54,6 +54,9 @@
     if (plusButton.alpha == 1.0) {
         [appDelegate hidePlusButton];
     }
+    if (self.tabBarController.tabBar.hidden == NO) {
+        self.tabBarController.tabBar.hidden = YES;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -63,9 +66,12 @@
         [appDelegate showPlusButton];
     }
     
-    ViewonedealViewController *vodvc = [[self.navigationController viewControllers] objectAtIndex:self.navigationController.viewControllers.count -  1];
-    vodvc.didChangesInComments = self.didChanges;
-    vodvc.deal.comments = self.comments;
+    id viewController = [[self.navigationController viewControllers] objectAtIndex:self.navigationController.viewControllers.count -  1];
+    if ([viewController isKindOfClass:[ViewonedealViewController class]]) {
+        ViewonedealViewController *vodvc = viewController;
+        vodvc.didChangesInComments = self.didChanges;
+        vodvc.deal.comments = self.comments;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -311,11 +317,33 @@
         
         CommentsTableCell *cell = [info objectForKey:@"cell"];
         cell.dealerProfilePic.alpha = 0;
-        cell.dealerProfilePic.image = [info objectForKey:@"image"];
+        [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
         [UIView animateWithDuration:0.3 animations:^{
             cell.dealerProfilePic.alpha = 1;
         }];
     }
+}
+
+- (void)commenterProfileButtonClicked:(id)sender {
+    
+    UIButton *button = (UIButton *)sender;
+    Comment *comment = [self.comments objectAtIndex:button.tag];
+    ProfileTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileID"];
+    ptvc.dealerID = comment.dealerID;
+    [self.navigationController pushViewController:ptvc animated:YES];
+}
+
+- (CGFloat)setCommentBodyHeightWithText:(NSString *)text font:(UIFont *)font
+{
+    NSDictionary *attributes = @{NSFontAttributeName : font};
+    CGSize boundingRect = CGSizeMake(250.0 ,MAXFLOAT);
+    CGRect commentBodyFrame = [text boundingRectWithSize:boundingRect
+                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                              attributes:attributes
+                                                 context:nil];
+    
+    CGFloat height = ceil(commentBodyFrame.size.height);
+    return height;
 }
 
 
@@ -343,8 +371,6 @@
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     self.textView.text = nil;
     self.postButton.enabled = NO;
-    
-    //    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -386,26 +412,31 @@
         cell = [nib objectAtIndex:0];
     }
     
-    if (!cell.dealerProfilePic.image) {
+    if (!cell.dealerProfilePic.imageView.image) {
         if (comment.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
-            cell.dealerProfilePic.image = [appDelegate myProfilePic];
+            [cell.dealerProfilePic setImage:[appDelegate myProfilePic] forState:UIControlStateNormal];
         } else {
-            [appDelegate otherProfilePic:comment.dealerPhotoURL forTarget:@"Commenter's Photo" inViewController:NAME_FOR_NOTIFICATIONS inCell:cell];
+            [appDelegate otherProfilePic:comment.dealerPhotoURL forTarget:@"Commenter's Photo" notificationName:NAME_FOR_NOTIFICATIONS inCell:cell];
         }
     }
     
-    cell.dealerName.text = comment.dealerFullName;
+    [cell.dealerProfilePic setTag:indexPath.row];
+    [cell.dealerProfilePic addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell.dealerName setTitle:comment.dealerFullName forState:UIControlStateNormal];
+    [cell.dealerName setTag:indexPath.row];
+    [cell.dealerName addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
     cell.commentDate.text = [comment.dateFormatter stringFromDate:comment.uploadDate];
     cell.commentBody.text = comment.text;
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    [cell.contentView layoutIfNeeded];
+    [cell.contentView layoutSubviews];
+    
+    NSLog(@"\n\nComment body size: %f, %f", cell.commentBody.frame.size.width, cell.commentBody.frame.size.height);
     
     return cell;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
 }
 
 

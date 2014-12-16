@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "CommentsTableCell.h"
+#import "ProfileTableViewController.h"
 #import "Comment.h"
 #import "Dealer.h"
 #import "MBProgressHUD.h"

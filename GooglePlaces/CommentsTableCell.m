@@ -26,6 +26,8 @@
 {
     [super layoutSubviews];
     
+    self.dealerProfilePicPlaceholder.layer.cornerRadius = self.dealerProfilePicPlaceholder.frame.size.width / 2;
+    self.dealerProfilePicPlaceholder.layer.masksToBounds = YES;
     self.dealerProfilePic.layer.cornerRadius = self.dealerProfilePic.frame.size.width / 2;
     self.dealerProfilePic.layer.masksToBounds = YES;
     
@@ -36,10 +38,13 @@
                                                          attributes:attributes
                                                             context:nil];
     
-    self.commentBody.frame = CGRectMake(self.commentBody.frame.origin.x,
-                                        self.commentBody.frame.origin.y,
-                                        self.commentBody.frame.size.width,
-                                        commentBodyFrame.size.height);
+    CGFloat x = self.commentBody.frame.origin.x;
+    CGFloat y = self.commentBody.frame.origin.y;
+    CGFloat width = self.commentBody.frame.size.width;
+    CGFloat height = ceil(commentBodyFrame.size.height);
+
+    self.commentBody.frame = CGRectMake(x, y, width, height);
 }
+
 
 @end

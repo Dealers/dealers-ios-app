@@ -252,33 +252,6 @@
 		C83EAE3D18690AC40084E0E1 /* Electronics_Electronics@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD1A18690AC30084E0E1 /* Electronics_Electronics@2x.png */; };
 		C83EAE3E18690AC40084E0E1 /* Electronics_electronics_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD1B18690AC30084E0E1 /* Electronics_electronics_store@2x.png */; };
 		C83EAE3F18690AC40084E0E1 /* Electronics_mobile_phone_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD1C18690AC30084E0E1 /* Electronics_mobile_phone_store@2x.png */; };
-		C83EAE4018690AC40084E0E1 /* Entertainment @ Events_adults@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD1E18690AC30084E0E1 /* Entertainment @ Events_adults@2x.png */; };
-		C83EAE4118690AC40084E0E1 /* Entertainment @ Events_amusement_park@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD1F18690AC30084E0E1 /* Entertainment @ Events_amusement_park@2x.png */; };
-		C83EAE4218690AC40084E0E1 /* Entertainment @ Events_aquarium@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2018690AC30084E0E1 /* Entertainment @ Events_aquarium@2x.png */; };
-		C83EAE4318690AC40084E0E1 /* Entertainment @ Events_arcade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2118690AC30084E0E1 /* Entertainment @ Events_arcade@2x.png */; };
-		C83EAE4418690AC40084E0E1 /* Entertainment @ Events_auditorium@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2218690AC30084E0E1 /* Entertainment @ Events_auditorium@2x.png */; };
-		C83EAE4518690AC40084E0E1 /* Entertainment @ Events_bowling_alley@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2318690AC30084E0E1 /* Entertainment @ Events_bowling_alley@2x.png */; };
-		C83EAE4618690AC40084E0E1 /* Entertainment @ Events_casino@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2418690AC30084E0E1 /* Entertainment @ Events_casino@2x.png */; };
-		C83EAE4718690AC40084E0E1 /* Entertainment @ Events_conference@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2518690AC30084E0E1 /* Entertainment @ Events_conference@2x.png */; };
-		C83EAE4818690AC40084E0E1 /* Entertainment @ Events_dance_studio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2618690AC30084E0E1 /* Entertainment @ Events_dance_studio@2x.png */; };
-		C83EAE4918690AC40084E0E1 /* Entertainment @ Events_Entertainment & Events@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2718690AC30084E0E1 /* Entertainment @ Events_Entertainment & Events@2x.png */; };
-		C83EAE4A18690AC40084E0E1 /* Entertainment @ Events_entertainment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2818690AC30084E0E1 /* Entertainment @ Events_entertainment@2x.png */; };
-		C83EAE4B18690AC40084E0E1 /* Entertainment @ Events_event@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2918690AC30084E0E1 /* Entertainment @ Events_event@2x.png */; };
-		C83EAE4C18690AC40084E0E1 /* Entertainment @ Events_gay_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2A18690AC30084E0E1 /* Entertainment @ Events_gay_bar@2x.png */; };
-		C83EAE4D18690AC40084E0E1 /* Entertainment @ Events_hot_spring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2B18690AC30084E0E1 /* Entertainment @ Events_hot_spring@2x.png */; };
-		C83EAE4E18690AC40084E0E1 /* Entertainment @ Events_karaoke_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2C18690AC30084E0E1 /* Entertainment @ Events_karaoke_bar@2x.png */; };
-		C83EAE4F18690AC40084E0E1 /* Entertainment @ Events_movie_rental@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2D18690AC30084E0E1 /* Entertainment @ Events_movie_rental@2x.png */; };
-		C83EAE5018690AC40084E0E1 /* Entertainment @ Events_movie_theater@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2E18690AC30084E0E1 /* Entertainment @ Events_movie_theater@2x.png */; };
-		C83EAE5118690AC40084E0E1 /* Entertainment @ Events_museum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD2F18690AC30084E0E1 /* Entertainment @ Events_museum@2x.png */; };
-		C83EAE5218690AC40084E0E1 /* Entertainment @ Events_night_club@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3018690AC30084E0E1 /* Entertainment @ Events_night_club@2x.png */; };
-		C83EAE5318690AC40084E0E1 /* Entertainment @ Events_pool_hall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3118690AC30084E0E1 /* Entertainment @ Events_pool_hall@2x.png */; };
-		C83EAE5418690AC40084E0E1 /* Entertainment @ Events_racetrack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3218690AC30084E0E1 /* Entertainment @ Events_racetrack@2x.png */; };
-		C83EAE5518690AC40084E0E1 /* Entertainment @ Events_science@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3318690AC30084E0E1 /* Entertainment @ Events_science@2x.png */; };
-		C83EAE5618690AC40084E0E1 /* Entertainment @ Events_spa@2x-12.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3418690AC30084E0E1 /* Entertainment @ Events_spa@2x-12.png */; };
-		C83EAE5718690AC40084E0E1 /* Entertainment @ Events_student_center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3518690AC30084E0E1 /* Entertainment @ Events_student_center@2x.png */; };
-		C83EAE5818690AC40084E0E1 /* Entertainment @ Events_vineyard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3618690AC30084E0E1 /* Entertainment @ Events_vineyard@2x.png */; };
-		C83EAE5918690AC40084E0E1 /* Entertainment @ Events_water_park@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3718690AC30084E0E1 /* Entertainment @ Events_water_park@2x.png */; };
-		C83EAE5A18690AC40084E0E1 /* Entertainment @ Events_zoo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3818690AC30084E0E1 /* Entertainment @ Events_zoo@2x.png */; };
 		C83EAE5B18690AC40084E0E1 /* Fashion_accessories_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3A18690AC30084E0E1 /* Fashion_accessories_store@2x.png */; };
 		C83EAE5C18690AC40084E0E1 /* Fashion_bridal_shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3B18690AC30084E0E1 /* Fashion_bridal_shop@2x.png */; };
 		C83EAE5D18690AC40084E0E1 /* Fashion_clothing_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83EAD3C18690AC30084E0E1 /* Fashion_clothing_store@2x.png */; };
@@ -596,6 +569,34 @@
 		C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */; };
 		C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */; };
 		C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */; };
+		C8EE6D741A305FD500D53893 /* ComingSoonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */; };
+		C8EE6D931A30971100D53893 /* Entertainment & Events_adults@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D781A30971000D53893 /* Entertainment & Events_adults@2x.png */; };
+		C8EE6D941A30971100D53893 /* Entertainment & Events_amusement_park@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D791A30971100D53893 /* Entertainment & Events_amusement_park@2x.png */; };
+		C8EE6D951A30971100D53893 /* Entertainment & Events_aquarium@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D7A1A30971100D53893 /* Entertainment & Events_aquarium@2x.png */; };
+		C8EE6D961A30971100D53893 /* Entertainment & Events_arcade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D7B1A30971100D53893 /* Entertainment & Events_arcade@2x.png */; };
+		C8EE6D971A30971100D53893 /* Entertainment & Events_auditorium@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D7C1A30971100D53893 /* Entertainment & Events_auditorium@2x.png */; };
+		C8EE6D981A30971100D53893 /* Entertainment & Events_bowling_alley@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D7D1A30971100D53893 /* Entertainment & Events_bowling_alley@2x.png */; };
+		C8EE6D991A30971100D53893 /* Entertainment & Events_casino@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D7E1A30971100D53893 /* Entertainment & Events_casino@2x.png */; };
+		C8EE6D9A1A30971100D53893 /* Entertainment & Events_conference@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D7F1A30971100D53893 /* Entertainment & Events_conference@2x.png */; };
+		C8EE6D9B1A30971100D53893 /* Entertainment & Events_dance_studio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D801A30971100D53893 /* Entertainment & Events_dance_studio@2x.png */; };
+		C8EE6D9C1A30971100D53893 /* Entertainment & Events_Entertainment & Events@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D811A30971100D53893 /* Entertainment & Events_Entertainment & Events@2x.png */; };
+		C8EE6D9D1A30971100D53893 /* Entertainment & Events_entertainment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D821A30971100D53893 /* Entertainment & Events_entertainment@2x.png */; };
+		C8EE6D9E1A30971100D53893 /* Entertainment & Events_event@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D831A30971100D53893 /* Entertainment & Events_event@2x.png */; };
+		C8EE6D9F1A30971100D53893 /* Entertainment & Events_gay_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D841A30971100D53893 /* Entertainment & Events_gay_bar@2x.png */; };
+		C8EE6DA01A30971100D53893 /* Entertainment & Events_hot_spring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D851A30971100D53893 /* Entertainment & Events_hot_spring@2x.png */; };
+		C8EE6DA11A30971100D53893 /* Entertainment & Events_karaoke_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D861A30971100D53893 /* Entertainment & Events_karaoke_bar@2x.png */; };
+		C8EE6DA21A30971100D53893 /* Entertainment & Events_movie_rental@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D871A30971100D53893 /* Entertainment & Events_movie_rental@2x.png */; };
+		C8EE6DA31A30971100D53893 /* Entertainment & Events_movie_theater@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D881A30971100D53893 /* Entertainment & Events_movie_theater@2x.png */; };
+		C8EE6DA41A30971100D53893 /* Entertainment & Events_museum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D891A30971100D53893 /* Entertainment & Events_museum@2x.png */; };
+		C8EE6DA51A30971100D53893 /* Entertainment & Events_night_club@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D8A1A30971100D53893 /* Entertainment & Events_night_club@2x.png */; };
+		C8EE6DA61A30971100D53893 /* Entertainment & Events_pool_hall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D8B1A30971100D53893 /* Entertainment & Events_pool_hall@2x.png */; };
+		C8EE6DA71A30971100D53893 /* Entertainment & Events_racetrack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D8C1A30971100D53893 /* Entertainment & Events_racetrack@2x.png */; };
+		C8EE6DA81A30971100D53893 /* Entertainment & Events_science@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D8D1A30971100D53893 /* Entertainment & Events_science@2x.png */; };
+		C8EE6DA91A30971100D53893 /* Entertainment & Events_spa@2x-12.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D8E1A30971100D53893 /* Entertainment & Events_spa@2x-12.png */; };
+		C8EE6DAA1A30971100D53893 /* Entertainment & Events_student_center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D8F1A30971100D53893 /* Entertainment & Events_student_center@2x.png */; };
+		C8EE6DAB1A30971100D53893 /* Entertainment & Events_vineyard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D901A30971100D53893 /* Entertainment & Events_vineyard@2x.png */; };
+		C8EE6DAC1A30971100D53893 /* Entertainment & Events_water_park@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D911A30971100D53893 /* Entertainment & Events_water_park@2x.png */; };
+		C8EE6DAD1A30971100D53893 /* Entertainment & Events_zoo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D921A30971100D53893 /* Entertainment & Events_zoo@2x.png */; };
 		C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FFF56B197C437600D01744 /* EditDealTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -913,33 +914,6 @@
 		C83EAD1A18690AC30084E0E1 /* Electronics_Electronics@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Electronics_Electronics@2x.png"; sourceTree = "<group>"; };
 		C83EAD1B18690AC30084E0E1 /* Electronics_electronics_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Electronics_electronics_store@2x.png"; sourceTree = "<group>"; };
 		C83EAD1C18690AC30084E0E1 /* Electronics_mobile_phone_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Electronics_mobile_phone_store@2x.png"; sourceTree = "<group>"; };
-		C83EAD1E18690AC30084E0E1 /* Entertainment @ Events_adults@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_adults@2x.png"; sourceTree = "<group>"; };
-		C83EAD1F18690AC30084E0E1 /* Entertainment @ Events_amusement_park@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_amusement_park@2x.png"; sourceTree = "<group>"; };
-		C83EAD2018690AC30084E0E1 /* Entertainment @ Events_aquarium@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_aquarium@2x.png"; sourceTree = "<group>"; };
-		C83EAD2118690AC30084E0E1 /* Entertainment @ Events_arcade@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_arcade@2x.png"; sourceTree = "<group>"; };
-		C83EAD2218690AC30084E0E1 /* Entertainment @ Events_auditorium@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_auditorium@2x.png"; sourceTree = "<group>"; };
-		C83EAD2318690AC30084E0E1 /* Entertainment @ Events_bowling_alley@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_bowling_alley@2x.png"; sourceTree = "<group>"; };
-		C83EAD2418690AC30084E0E1 /* Entertainment @ Events_casino@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_casino@2x.png"; sourceTree = "<group>"; };
-		C83EAD2518690AC30084E0E1 /* Entertainment @ Events_conference@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_conference@2x.png"; sourceTree = "<group>"; };
-		C83EAD2618690AC30084E0E1 /* Entertainment @ Events_dance_studio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_dance_studio@2x.png"; sourceTree = "<group>"; };
-		C83EAD2718690AC30084E0E1 /* Entertainment @ Events_Entertainment & Events@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_Entertainment & Events@2x.png"; sourceTree = "<group>"; };
-		C83EAD2818690AC30084E0E1 /* Entertainment @ Events_entertainment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_entertainment@2x.png"; sourceTree = "<group>"; };
-		C83EAD2918690AC30084E0E1 /* Entertainment @ Events_event@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_event@2x.png"; sourceTree = "<group>"; };
-		C83EAD2A18690AC30084E0E1 /* Entertainment @ Events_gay_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_gay_bar@2x.png"; sourceTree = "<group>"; };
-		C83EAD2B18690AC30084E0E1 /* Entertainment @ Events_hot_spring@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_hot_spring@2x.png"; sourceTree = "<group>"; };
-		C83EAD2C18690AC30084E0E1 /* Entertainment @ Events_karaoke_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_karaoke_bar@2x.png"; sourceTree = "<group>"; };
-		C83EAD2D18690AC30084E0E1 /* Entertainment @ Events_movie_rental@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_movie_rental@2x.png"; sourceTree = "<group>"; };
-		C83EAD2E18690AC30084E0E1 /* Entertainment @ Events_movie_theater@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_movie_theater@2x.png"; sourceTree = "<group>"; };
-		C83EAD2F18690AC30084E0E1 /* Entertainment @ Events_museum@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_museum@2x.png"; sourceTree = "<group>"; };
-		C83EAD3018690AC30084E0E1 /* Entertainment @ Events_night_club@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_night_club@2x.png"; sourceTree = "<group>"; };
-		C83EAD3118690AC30084E0E1 /* Entertainment @ Events_pool_hall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_pool_hall@2x.png"; sourceTree = "<group>"; };
-		C83EAD3218690AC30084E0E1 /* Entertainment @ Events_racetrack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_racetrack@2x.png"; sourceTree = "<group>"; };
-		C83EAD3318690AC30084E0E1 /* Entertainment @ Events_science@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_science@2x.png"; sourceTree = "<group>"; };
-		C83EAD3418690AC30084E0E1 /* Entertainment @ Events_spa@2x-12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_spa@2x-12.png"; sourceTree = "<group>"; };
-		C83EAD3518690AC30084E0E1 /* Entertainment @ Events_student_center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_student_center@2x.png"; sourceTree = "<group>"; };
-		C83EAD3618690AC30084E0E1 /* Entertainment @ Events_vineyard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_vineyard@2x.png"; sourceTree = "<group>"; };
-		C83EAD3718690AC30084E0E1 /* Entertainment @ Events_water_park@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_water_park@2x.png"; sourceTree = "<group>"; };
-		C83EAD3818690AC30084E0E1 /* Entertainment @ Events_zoo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Entertainment @ Events_zoo@2x.png"; sourceTree = "<group>"; };
 		C83EAD3A18690AC30084E0E1 /* Fashion_accessories_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Fashion_accessories_store@2x.png"; sourceTree = "<group>"; };
 		C83EAD3B18690AC30084E0E1 /* Fashion_bridal_shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Fashion_bridal_shop@2x.png"; sourceTree = "<group>"; };
 		C83EAD3C18690AC30084E0E1 /* Fashion_clothing_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Fashion_clothing_store@2x.png"; sourceTree = "<group>"; };
@@ -1284,6 +1258,35 @@
 		C8DC1D8A19BC89410062E184 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		C8EE6D721A305FD500D53893 /* ComingSoonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComingSoonViewController.h; sourceTree = "<group>"; };
+		C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComingSoonViewController.m; sourceTree = "<group>"; };
+		C8EE6D781A30971000D53893 /* Entertainment & Events_adults@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_adults@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_adults@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D791A30971100D53893 /* Entertainment & Events_amusement_park@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_amusement_park@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_amusement_park@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D7A1A30971100D53893 /* Entertainment & Events_aquarium@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_aquarium@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_aquarium@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D7B1A30971100D53893 /* Entertainment & Events_arcade@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_arcade@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_arcade@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D7C1A30971100D53893 /* Entertainment & Events_auditorium@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_auditorium@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_auditorium@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D7D1A30971100D53893 /* Entertainment & Events_bowling_alley@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_bowling_alley@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_bowling_alley@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D7E1A30971100D53893 /* Entertainment & Events_casino@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_casino@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_casino@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D7F1A30971100D53893 /* Entertainment & Events_conference@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_conference@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_conference@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D801A30971100D53893 /* Entertainment & Events_dance_studio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_dance_studio@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_dance_studio@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D811A30971100D53893 /* Entertainment & Events_Entertainment & Events@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_Entertainment & Events@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_Entertainment & Events@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D821A30971100D53893 /* Entertainment & Events_entertainment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_entertainment@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_entertainment@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D831A30971100D53893 /* Entertainment & Events_event@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_event@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_event@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D841A30971100D53893 /* Entertainment & Events_gay_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_gay_bar@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_gay_bar@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D851A30971100D53893 /* Entertainment & Events_hot_spring@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_hot_spring@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_hot_spring@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D861A30971100D53893 /* Entertainment & Events_karaoke_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_karaoke_bar@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_karaoke_bar@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D871A30971100D53893 /* Entertainment & Events_movie_rental@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_movie_rental@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_movie_rental@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D881A30971100D53893 /* Entertainment & Events_movie_theater@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_movie_theater@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_movie_theater@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D891A30971100D53893 /* Entertainment & Events_museum@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_museum@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_museum@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D8A1A30971100D53893 /* Entertainment & Events_night_club@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_night_club@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_night_club@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D8B1A30971100D53893 /* Entertainment & Events_pool_hall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_pool_hall@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_pool_hall@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D8C1A30971100D53893 /* Entertainment & Events_racetrack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_racetrack@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_racetrack@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D8D1A30971100D53893 /* Entertainment & Events_science@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_science@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_science@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D8E1A30971100D53893 /* Entertainment & Events_spa@2x-12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_spa@2x-12.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_spa@2x-12.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D8F1A30971100D53893 /* Entertainment & Events_student_center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_student_center@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_student_center@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D901A30971100D53893 /* Entertainment & Events_vineyard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_vineyard@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_vineyard@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D911A30971100D53893 /* Entertainment & Events_water_park@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_water_park@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_water_park@2x.png"; sourceTree = SOURCE_ROOT; };
+		C8EE6D921A30971100D53893 /* Entertainment & Events_zoo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_zoo@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_zoo@2x.png"; sourceTree = SOURCE_ROOT; };
 		C8FFF56A197C437600D01744 /* EditDealTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDealTableViewController.h; sourceTree = "<group>"; };
 		C8FFF56B197C437600D01744 /* EditDealTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDealTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1558,33 +1561,33 @@
 		C83EAD1D18690AC30084E0E1 /* Entertainment @ Events */ = {
 			isa = PBXGroup;
 			children = (
-				C83EAD1E18690AC30084E0E1 /* Entertainment @ Events_adults@2x.png */,
-				C83EAD1F18690AC30084E0E1 /* Entertainment @ Events_amusement_park@2x.png */,
-				C83EAD2018690AC30084E0E1 /* Entertainment @ Events_aquarium@2x.png */,
-				C83EAD2118690AC30084E0E1 /* Entertainment @ Events_arcade@2x.png */,
-				C83EAD2218690AC30084E0E1 /* Entertainment @ Events_auditorium@2x.png */,
-				C83EAD2318690AC30084E0E1 /* Entertainment @ Events_bowling_alley@2x.png */,
-				C83EAD2418690AC30084E0E1 /* Entertainment @ Events_casino@2x.png */,
-				C83EAD2518690AC30084E0E1 /* Entertainment @ Events_conference@2x.png */,
-				C83EAD2618690AC30084E0E1 /* Entertainment @ Events_dance_studio@2x.png */,
-				C83EAD2718690AC30084E0E1 /* Entertainment @ Events_Entertainment & Events@2x.png */,
-				C83EAD2818690AC30084E0E1 /* Entertainment @ Events_entertainment@2x.png */,
-				C83EAD2918690AC30084E0E1 /* Entertainment @ Events_event@2x.png */,
-				C83EAD2A18690AC30084E0E1 /* Entertainment @ Events_gay_bar@2x.png */,
-				C83EAD2B18690AC30084E0E1 /* Entertainment @ Events_hot_spring@2x.png */,
-				C83EAD2C18690AC30084E0E1 /* Entertainment @ Events_karaoke_bar@2x.png */,
-				C83EAD2D18690AC30084E0E1 /* Entertainment @ Events_movie_rental@2x.png */,
-				C83EAD2E18690AC30084E0E1 /* Entertainment @ Events_movie_theater@2x.png */,
-				C83EAD2F18690AC30084E0E1 /* Entertainment @ Events_museum@2x.png */,
-				C83EAD3018690AC30084E0E1 /* Entertainment @ Events_night_club@2x.png */,
-				C83EAD3118690AC30084E0E1 /* Entertainment @ Events_pool_hall@2x.png */,
-				C83EAD3218690AC30084E0E1 /* Entertainment @ Events_racetrack@2x.png */,
-				C83EAD3318690AC30084E0E1 /* Entertainment @ Events_science@2x.png */,
-				C83EAD3418690AC30084E0E1 /* Entertainment @ Events_spa@2x-12.png */,
-				C83EAD3518690AC30084E0E1 /* Entertainment @ Events_student_center@2x.png */,
-				C83EAD3618690AC30084E0E1 /* Entertainment @ Events_vineyard@2x.png */,
-				C83EAD3718690AC30084E0E1 /* Entertainment @ Events_water_park@2x.png */,
-				C83EAD3818690AC30084E0E1 /* Entertainment @ Events_zoo@2x.png */,
+				C8EE6D781A30971000D53893 /* Entertainment & Events_adults@2x.png */,
+				C8EE6D791A30971100D53893 /* Entertainment & Events_amusement_park@2x.png */,
+				C8EE6D7A1A30971100D53893 /* Entertainment & Events_aquarium@2x.png */,
+				C8EE6D7B1A30971100D53893 /* Entertainment & Events_arcade@2x.png */,
+				C8EE6D7C1A30971100D53893 /* Entertainment & Events_auditorium@2x.png */,
+				C8EE6D7D1A30971100D53893 /* Entertainment & Events_bowling_alley@2x.png */,
+				C8EE6D7E1A30971100D53893 /* Entertainment & Events_casino@2x.png */,
+				C8EE6D7F1A30971100D53893 /* Entertainment & Events_conference@2x.png */,
+				C8EE6D801A30971100D53893 /* Entertainment & Events_dance_studio@2x.png */,
+				C8EE6D811A30971100D53893 /* Entertainment & Events_Entertainment & Events@2x.png */,
+				C8EE6D821A30971100D53893 /* Entertainment & Events_entertainment@2x.png */,
+				C8EE6D831A30971100D53893 /* Entertainment & Events_event@2x.png */,
+				C8EE6D841A30971100D53893 /* Entertainment & Events_gay_bar@2x.png */,
+				C8EE6D851A30971100D53893 /* Entertainment & Events_hot_spring@2x.png */,
+				C8EE6D861A30971100D53893 /* Entertainment & Events_karaoke_bar@2x.png */,
+				C8EE6D871A30971100D53893 /* Entertainment & Events_movie_rental@2x.png */,
+				C8EE6D881A30971100D53893 /* Entertainment & Events_movie_theater@2x.png */,
+				C8EE6D891A30971100D53893 /* Entertainment & Events_museum@2x.png */,
+				C8EE6D8A1A30971100D53893 /* Entertainment & Events_night_club@2x.png */,
+				C8EE6D8B1A30971100D53893 /* Entertainment & Events_pool_hall@2x.png */,
+				C8EE6D8C1A30971100D53893 /* Entertainment & Events_racetrack@2x.png */,
+				C8EE6D8D1A30971100D53893 /* Entertainment & Events_science@2x.png */,
+				C8EE6D8E1A30971100D53893 /* Entertainment & Events_spa@2x-12.png */,
+				C8EE6D8F1A30971100D53893 /* Entertainment & Events_student_center@2x.png */,
+				C8EE6D901A30971100D53893 /* Entertainment & Events_vineyard@2x.png */,
+				C8EE6D911A30971100D53893 /* Entertainment & Events_water_park@2x.png */,
+				C8EE6D921A30971100D53893 /* Entertainment & Events_zoo@2x.png */,
 			);
 			path = "Entertainment @ Events";
 			sourceTree = "<group>";
@@ -1812,8 +1815,6 @@
 		C869CB72191A12C900DF2C19 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				B012D94E182AA320006288CA /* ProfileViewController.h */,
-				B012D94F182AA321006288CA /* ProfileViewController.m */,
 				C862AF291A2E0B5F00352831 /* ProfileTableViewController.h */,
 				C862AF2A1A2E0B5F00352831 /* ProfileTableViewController.m */,
 				C84846FA19A2617B00BC6ACE /* SettingsTableViewController.h */,
@@ -1900,6 +1901,8 @@
 				B0E4F6FA191015F50080CD32 /* CheckConnection.m */,
 				C8C43E7E198F6CDD00409DD2 /* BetterScrollView.h */,
 				C8C43E7F198F6CDD00409DD2 /* BetterScrollView.m */,
+				C8EE6D721A305FD500D53893 /* ComingSoonViewController.h */,
+				C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -1907,6 +1910,8 @@
 		C871A5321A25D58500A9A2D1 /* Old Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B012D94E182AA320006288CA /* ProfileViewController.h */,
+				B012D94F182AA321006288CA /* ProfileViewController.m */,
 				B0294C7118B0CC0900699107 /* MyFeedsViewController.h */,
 				B0294C7218B0CC0900699107 /* MyFeedsViewController.m */,
 				B0930C0C17F40B78004EB3CA /* SigninViewController.h */,
@@ -2498,7 +2503,6 @@
 				C8D2E478185B781D00398873 /* Add Deal (Final)_Share via WhatsApp button (pushed)@2x.png in Resources */,
 				56849795154C00BF001601A2 /* MainStoryboard.storyboard in Resources */,
 				B02436D717F4237D00FB24CC /* Launch App Icons_AppStore (high resolution).png in Resources */,
-				C83EAE5818690AC40084E0E1 /* Entertainment @ Events_vineyard@2x.png in Resources */,
 				B02436D817F4237D00FB24CC /* Launch App Icons_AppStore.png in Resources */,
 				B02436D917F4237D00FB24CC /* Launch App Icons_iPad (high resolution).png in Resources */,
 				B02436DA17F4237D00FB24CC /* Launch App Icons_iPad.png in Resources */,
@@ -2506,6 +2510,7 @@
 				C8BFD9C718723016007E7E07 /* Profile_Export List button@2x.png in Resources */,
 				B024374D17F47F5400FB24CC /* mask.PNG in Resources */,
 				C83EAF2818690AC40084E0E1 /* Travel_travel_agent@2x.png in Resources */,
+				C8EE6DA21A30971100D53893 /* Entertainment & Events_movie_rental@2x.png in Resources */,
 				B055C71717FE806900FBDFCC /* Explore_Amusment & Entertainment icon@2x.png in Resources */,
 				B055C71817FE806900FBDFCC /* Explore_Art icon@2x.png in Resources */,
 				C88B3F701921F7A5009252DD /* My Feed+View Deal (final)_Like button (pushed)@2x.png in Resources */,
@@ -2523,6 +2528,7 @@
 				C83EAE7418690AC40084E0E1 /* Home & Furniture_furniture_store@2x.png in Resources */,
 				C83EAE6518690AC40084E0E1 /* Fashion_shopping_mall@2x.png in Resources */,
 				B055C71E17FE806900FBDFCC /* Explore_Fashion icon@2x.png in Resources */,
+				C8EE6D951A30971100D53893 /* Entertainment & Events_aquarium@2x.png in Resources */,
 				B055C71F17FE806900FBDFCC /* Explore_Food & Groceries icon@2x.png in Resources */,
 				B055C72017FE806900FBDFCC /* Explore_Home & Furniture icon@2x.png in Resources */,
 				C83EAE2418690AC40084E0E1 /* Art_art_gallery@2x.png in Resources */,
@@ -2547,14 +2553,12 @@
 				B055C72817FE806900FBDFCC /* Explore_Restaurants & Bars icon@2x.png in Resources */,
 				B055C72917FE806900FBDFCC /* Explore_Search bar@2x.png in Resources */,
 				B055C72A17FE806900FBDFCC /* Explore_Search fill-box@2x.png in Resources */,
-				C83EAE4B18690AC40084E0E1 /* Entertainment @ Events_event@2x.png in Resources */,
 				B055C72B17FE806900FBDFCC /* Explore_Search icon@2x.png in Resources */,
 				C83EAE7218690AC40084E0E1 /* Food & Groceries_take_away@2x.png in Resources */,
 				C8D2E485185B781D00398873 /* Add Deal (Final)_Title box@2x.png in Resources */,
 				C8273A3418959A3300A412FC /* Add Deal (Final)_Browser Forward button (highlighted)@2x.png in Resources */,
 				B055C72C17FE806900FBDFCC /* Explore_Sports & Outdoor icon@2x.png in Resources */,
 				C83EAEEA18690AC40084E0E1 /* Other_Other@2x.png in Resources */,
-				C83EAE4E18690AC40084E0E1 /* Entertainment @ Events_karaoke_bar@2x.png in Resources */,
 				B055C72D17FE806900FBDFCC /* Explore_Travel icon@2x.png in Resources */,
 				C8DADE4C18FDF3CB0056AC9F /* Explore-Black_Music icon@2x.png in Resources */,
 				C8D2E470185B781D00398873 /* Add Deal (Final)_Share via Facebook button (selected)@2x.png in Resources */,
@@ -2568,10 +2572,10 @@
 				C8D2E474185B781D00398873 /* Add Deal (Final)_Share via Groups button@2x.png in Resources */,
 				B034B8FF1804777F00625392 /* Add Deal_Cancel Adding button (selected)@2x.png in Resources */,
 				C88B3F6D1921F5CB009252DD /* My Feed+View Deal (final)_Comments icon@2x.png in Resources */,
+				C8EE6D9C1A30971100D53893 /* Entertainment & Events_Entertainment & Events@2x.png in Resources */,
 				C83EAE2D18690AC40084E0E1 /* Automotive_car_repair@2x.png in Resources */,
 				B0FB2E5C191CA8D800C6227F /* More list_Tutorial icon@2x.png in Resources */,
 				B034B9001804777F00625392 /* Add Deal_Cancel Adding button@2x.png in Resources */,
-				C83EAE5018690AC40084E0E1 /* Entertainment @ Events_movie_theater@2x.png in Resources */,
 				C83EAEEF18690AC40084E0E1 /* Other_real_estate_agent@2x.png in Resources */,
 				C8BFD9D018723016007E7E07 /* Profile_Notifications button (selected)@2x.png in Resources */,
 				C8D7CAD51934759300841C22 /* My Feed+View Deal - New Version_Done button@2x.png in Resources */,
@@ -2595,37 +2599,39 @@
 				C83EAF2518690AC40084E0E1 /* Travel_tourist_infospot@2x.png in Resources */,
 				C83EAF0E18690AC40084E0E1 /* Sports & Outdoor_bike@2x.png in Resources */,
 				C83EAF1818690AC40084E0E1 /* Sports & Outdoor_ski@2x.png in Resources */,
-				C83EAE5A18690AC40084E0E1 /* Entertainment @ Events_zoo@2x.png in Resources */,
 				C83EAEF718690AC40084E0E1 /* Restaurants & Bars_bbq@2x.png in Resources */,
 				C8D2E476185B781D00398873 /* Add Deal (Final)_Share via Twitter button (selected)@2x.png in Resources */,
+				C8EE6D971A30971100D53893 /* Entertainment & Events_auditorium@2x.png in Resources */,
 				C83EAEE518690AC40084E0E1 /* Other_financial@2x.png in Resources */,
 				C88B3F5F19210ECF009252DD /* My Feed+View Deal - New Version_Online icon_Grey@2x.png in Resources */,
 				C8D2E473185B781D00398873 /* Add Deal (Final)_Share via Groups button (selected)@2x.png in Resources */,
-				C83EAE4A18690AC40084E0E1 /* Entertainment @ Events_entertainment@2x.png in Resources */,
-				C83EAE4D18690AC40084E0E1 /* Entertainment @ Events_hot_spring@2x.png in Resources */,
+				C8EE6D9F1A30971100D53893 /* Entertainment & Events_gay_bar@2x.png in Resources */,
 				C8D7CADA1934852E00841C22 /* profile_2 Fields@2x.png in Resources */,
 				C8BFD9D518723016007E7E07 /* Profile_Options button@2x.png in Resources */,
 				C873D38E1851040700B913CD /* My Feed+View Dea (final)_Price-Discount icon@2x.png in Resources */,
+				C8EE6DAD1A30971100D53893 /* Entertainment & Events_zoo@2x.png in Resources */,
 				C83EAF1418690AC40084E0E1 /* Sports & Outdoor_outdoor@2x.png in Resources */,
 				C8D2E471185B781D00398873 /* Add Deal (Final)_Share via Facebook button@2x.png in Resources */,
 				C83EAE6318690AC40084E0E1 /* Fashion_mens_store@2x.png in Resources */,
 				C8BFD9CA18723016007E7E07 /* Profile_Follow button (selected)@2x.png in Resources */,
-				C83EAE5218690AC40084E0E1 /* Entertainment @ Events_night_club@2x.png in Resources */,
 				C83EAEFF18690AC40084E0E1 /* Restaurants & Bars_hot_dog@2x.png in Resources */,
+				C8EE6D931A30971100D53893 /* Entertainment & Events_adults@2x.png in Resources */,
+				C8EE6DA51A30971100D53893 /* Entertainment & Events_night_club@2x.png in Resources */,
 				C873D39E1851040700B913CD /* My Feed+View Deal (final)_Report button (selected)@2x.png in Resources */,
 				B0274803186B291B005A52F0 /* PLCameraSheetDoneButton.png in Resources */,
 				B034B9661804780B00625392 /* My Feed+View Deal_Add Deal button (selected)@2X.png in Resources */,
 				C88B3F5A192101D2009252DD /* Add Deal (Final)_Local button@2x.png in Resources */,
 				C83EAF2118690AC40084E0E1 /* Travel_airport@2x.png in Resources */,
 				B034B9671804780B00625392 /* My Feed+View Deal_Add Deal button@2X.png in Resources */,
+				C8EE6DA31A30971100D53893 /* Entertainment & Events_movie_theater@2x.png in Resources */,
 				C83EAF2618690AC40084E0E1 /* Travel_train@2x.png in Resources */,
 				C8273A3118959A3300A412FC /* Add Deal (Final)_Browser bar@2x.png in Resources */,
 				B034B9731804780B00625392 /* My Feed+View Deal_Explore button (selected)@2X.png in Resources */,
 				C83EAE6418690AC40084E0E1 /* Fashion_shoe_store@2x.png in Resources */,
 				C873D39D1851040700B913CD /* My Feed+View Deal (final)_Report button (pushed)@2x.png in Resources */,
+				C8EE6D961A30971100D53893 /* Entertainment & Events_arcade@2x.png in Resources */,
 				B034B9741804780B00625392 /* My Feed+View Deal_Explore button@2X.png in Resources */,
 				C83EAE3018690AC40084E0E1 /* Automotive_gas_station@2x.png in Resources */,
-				C83EAE4118690AC40084E0E1 /* Entertainment @ Events_amusement_park@2x.png in Resources */,
 				C83EAE6018690AC40084E0E1 /* Fashion_gift_shop@2x.png in Resources */,
 				C8D2E477185B781D00398873 /* Add Deal (Final)_Share via Twitter button@2x.png in Resources */,
 				C8BFD9D818723016007E7E07 /* Profile_Report User button (selected)@2x.png in Resources */,
@@ -2636,13 +2642,13 @@
 				B034B97D1804780B00625392 /* My Feed+View Deal_My Feed button(selected)@2X.png in Resources */,
 				B034B97E1804780B00625392 /* My Feed+View Deal_My Feed button@2X.png in Resources */,
 				B09FBACF19320F57006CB986 /* My Feed+View Deal - New Version_Store Map mask@2x.png in Resources */,
+				C8EE6D9D1A30971100D53893 /* Entertainment & Events_entertainment@2x.png in Resources */,
 				C8B7C2351920FCF60032726E /* Registration_Purple button@2x.png in Resources */,
 				C83EAF0D18690AC40084E0E1 /* Sports & Outdoor_beach@2x.png in Resources */,
 				C8D7CAD1193474BF00841C22 /* My Feed+View Deal_Navigation Bar@2X.png in Resources */,
 				C83EAEFC18690AC40084E0E1 /* Restaurants & Bars_cupcake@2x.png in Resources */,
 				B034B97F1804780B00625392 /* My Feed+View Deal_Navigation Bar (with logo)@2X.png in Resources */,
 				C83EAF0518690AC40084E0E1 /* Restaurants & Bars_Restaurants & Bars@2x.png in Resources */,
-				C83EAE5118690AC40084E0E1 /* Entertainment @ Events_museum@2x.png in Resources */,
 				C88B3F751921F883009252DD /* My Feed+View Deal (final)_Likes icon@2x.png in Resources */,
 				C83EAEE618690AC40084E0E1 /* Other_general@2x.png in Resources */,
 				C8A9EE311A2213B9002EE682 /* kinesis-2013-12-02.json in Resources */,
@@ -2670,17 +2676,16 @@
 				C873D3A31851040700B913CD /* My Feed+View Deal (final)_Title & Store shade@2x.png in Resources */,
 				C8BFD9C618723016007E7E07 /* Profile_Export List button (selected)@2x.png in Resources */,
 				C83EAF2418690AC40084E0E1 /* Travel_hotel@2x.png in Resources */,
-				C83EAE5918690AC40084E0E1 /* Entertainment @ Events_water_park@2x.png in Resources */,
 				C83EAF1718690AC40084E0E1 /* Sports & Outdoor_skateboard@2x.png in Resources */,
 				B0E4F6F2190A6F240080CD32 /* My Feed+View Deal - New Version_Shares View Deal icon@2x.png in Resources */,
 				B034B98D1804780B00625392 /* My Feed+View Deal_SaveToFav button (selected)@2X.png in Resources */,
+				C8EE6DA11A30971100D53893 /* Entertainment & Events_karaoke_bar@2x.png in Resources */,
 				B034B98E1804780B00625392 /* My Feed+View Deal_SaveToFav button@2X.png in Resources */,
 				C8BFD9D918723016007E7E07 /* Profile_Report User button@2x.png in Resources */,
 				C83EAE7C18690AC40084E0E1 /* Kids & Babies_Kids & Babies@2x.png in Resources */,
 				B034B9911804780B00625392 /* My Feed+View Deal_Send Comment button (selected)@2X.png in Resources */,
 				B034B9921804780B00625392 /* My Feed+View Deal_Send Comment button@2X.png in Resources */,
 				C8DADE5118FDF3CB0056AC9F /* Explore-Black_Travel icon@2x.png in Resources */,
-				C83EAE4318690AC40084E0E1 /* Entertainment @ Events_arcade@2x.png in Resources */,
 				C8DADE4818FDF3CB0056AC9F /* Explore-Black_Home & Furniture icon@2x.png in Resources */,
 				C8D2E47D185B781D00398873 /* Add Deal (Final)_Snap button (selected)@2x.png in Resources */,
 				C83EAEF118690AC40084E0E1 /* Pets_Pets@2x.png in Resources */,
@@ -2716,6 +2721,7 @@
 				C83EAE3F18690AC40084E0E1 /* Electronics_mobile_phone_store@2x.png in Resources */,
 				B034B9C11804788900625392 /* Registration_Gender icon@2x.png in Resources */,
 				B034B9C21804788900625392 /* Registration_Launch Image (4)@2x.png in Resources */,
+				C8EE6DAA1A30971100D53893 /* Entertainment & Events_student_center@2x.png in Resources */,
 				B034B9C31804788900625392 /* Registration_Launch Image (5)@2x.png in Resources */,
 				C8D2E486185B781D00398873 /* Add Deal (Final)_Trash button@2x.png in Resources */,
 				B034B9C41804788900625392 /* Registration_Log In Top Title@2x.png in Resources */,
@@ -2725,21 +2731,23 @@
 				B034B9C51804788900625392 /* Registration_Name icon@2x.png in Resources */,
 				B034B9C71804788900625392 /* Registration_Password icon@2x.png in Resources */,
 				B034B9C91804788900625392 /* Registration_Profile Pic Mask@2x.png in Resources */,
+				C8EE6DA41A30971100D53893 /* Entertainment & Events_museum@2x.png in Resources */,
 				B034B9CA1804788900625392 /* Registration_Registration Fill Boxes@2x.png in Resources */,
 				C8A9EE381A2213B9002EE682 /* sts-2011-06-15.json in Resources */,
 				C83EAE6A18690AC40084E0E1 /* Food & Groceries_cheese_shop@2x.png in Resources */,
 				C8273A3518959A3300A412FC /* Add Deal (Final)_Browser Forward button@2x.png in Resources */,
 				B034B9CB1804788900625392 /* Registration_Shopping Bag@2x.png in Resources */,
 				C83EAE7E18690AC40084E0E1 /* Kids & Babies_toys@2x.png in Resources */,
-				C83EAE4818690AC40084E0E1 /* Entertainment @ Events_dance_studio@2x.png in Resources */,
 				B02747FF186B291B005A52F0 /* PLCameraSheetButton.png in Resources */,
 				C83EAF1C18690AC40084E0E1 /* Sports & Outdoor_stadium@2x.png in Resources */,
 				B034B9CE1804788900625392 /* Registration_Sign In Fill Boxes@2x.png in Resources */,
 				C83EAE5C18690AC40084E0E1 /* Fashion_bridal_shop@2x.png in Resources */,
 				B034B9D11804788900625392 /* Registration_Twitter button (selected)@2x.png in Resources */,
 				B034B9D21804788900625392 /* Registration_Twitter button@2x.png in Resources */,
+				C8EE6D9B1A30971100D53893 /* Entertainment & Events_dance_studio@2x.png in Resources */,
 				C8DADE4218FDF3CB0056AC9F /* Explore-Black_Beauty & Personal Care icon@2x.png in Resources */,
 				C83EAEE718690AC40084E0E1 /* Other_health@2x.png in Resources */,
+				C8EE6DA71A30971100D53893 /* Entertainment & Events_racetrack@2x.png in Resources */,
 				C87B6D0B192DEF5C0026DA66 /* Add Deal (Final)_Add the Deal button@2x.png in Resources */,
 				C8D7CADB1934852E00841C22 /* profile_3 Fields@2x.png in Resources */,
 				C848B67A19B4ACA4000F138D /* StoresTableCell.xib in Resources */,
@@ -2765,8 +2773,8 @@
 				C8A9EE2A1A2213B9002EE682 /* autoscaling-2011-01-01.json in Resources */,
 				B0D6545318111EA4000DB9AF /* Add Deal_Dollar button (pushed)@2x.png in Resources */,
 				C869CB88191A6E5B00DF2C19 /* Profile_Likes List tab@2x.png in Resources */,
-				C83EAE4918690AC40084E0E1 /* Entertainment @ Events_Entertainment & Events@2x.png in Resources */,
 				C83EAE7918690AC40084E0E1 /* Home & Furniture_office@2x.png in Resources */,
+				C8EE6DA81A30971100D53893 /* Entertainment & Events_science@2x.png in Resources */,
 				C83EAE3A18690AC40084E0E1 /* Books & Magazines_news_stand@2x.png in Resources */,
 				C8A9EE371A2213B9002EE682 /* sqs-2012-11-05.json in Resources */,
 				C8DADE4718FDF3CB0056AC9F /* Explore-Black_Food & Groceries icon@2x.png in Resources */,
@@ -2785,10 +2793,10 @@
 				B0D6545A18111EA4000DB9AF /* Add Deal_Percentage button (pushed)@2x.png in Resources */,
 				C8A9EE301A2213B9002EE682 /* email-2010-12-01.json in Resources */,
 				B0D6545B18111EA4000DB9AF /* Add Deal_Percentage button (selected)@2x.png in Resources */,
-				C83EAE5418690AC40084E0E1 /* Entertainment @ Events_racetrack@2x.png in Resources */,
 				B0D6545C18111EA4000DB9AF /* Add Deal_Percentage button@2x.png in Resources */,
 				B0D6545D18111EA4000DB9AF /* Add Deal_Pound button (pushed)@2x.png in Resources */,
 				B0D6545E18111EA4000DB9AF /* Add Deal_Pound button (selected)@2x.png in Resources */,
+				C8EE6D9A1A30971100D53893 /* Entertainment & Events_conference@2x.png in Resources */,
 				C8A9EE2D1A2213B9002EE682 /* dynamodb-2012-08-10.json in Resources */,
 				C8D2E483185B781D00398873 /* Add Deal (Final)_Taken Photo shade@2x.png in Resources */,
 				C8D7CADE1934879D00841C22 /* Profile_About Yourself icon@2x.png in Resources */,
@@ -2818,22 +2826,22 @@
 				C83EAF0F18690AC40084E0E1 /* Sports & Outdoor_football@2x.png in Resources */,
 				C83EAF0618690AC40084E0E1 /* Restaurants & Bars_sea_food@2x.png in Resources */,
 				C83EAF1318690AC40084E0E1 /* Sports & Outdoor_marina@2x.png in Resources */,
-				C83EAE5718690AC40084E0E1 /* Entertainment @ Events_student_center@2x.png in Resources */,
 				C83EAEF818690AC40084E0E1 /* Restaurants & Bars_breakfast_spot@2x.png in Resources */,
 				C83EAEE318690AC40084E0E1 /* Other_academy@2x.png in Resources */,
 				C869CB87191A6E5B00DF2C19 /* Profile_Likes List tab (selected)@2x.png in Resources */,
 				C83EAE7A18690AC40084E0E1 /* Home & Furniture_painter@2x.png in Resources */,
 				C8D2E482185B781D00398873 /* Add Deal (Final)_Take Pic From Library button@2x.png in Resources */,
-				C83EAE4518690AC40084E0E1 /* Entertainment @ Events_bowling_alley@2x.png in Resources */,
 				C83EAEF018690AC40084E0E1 /* Other_store@2x.png in Resources */,
 				C8BFD9D718723016007E7E07 /* Profile_Pro Dealer@2x.png in Resources */,
 				C8BFD9D418723016007E7E07 /* Profile_Options button (selected)@2x.png in Resources */,
 				C869CB86191A6E5B00DF2C19 /* Profile_Deals List tab@2x.png in Resources */,
 				C83EAE8118690AC40084E0E1 /* Music_opera@2x.png in Resources */,
 				C8D2E47A185B781D00398873 /* Add Deal (Final)_Share via WhatsApp button@2x.png in Resources */,
+				C8EE6DA01A30971100D53893 /* Entertainment & Events_hot_spring@2x.png in Resources */,
 				C8D2E45B185B781D00398873 /* Add Deal (Final)_Exit Camera Mode button@2x.png in Resources */,
 				C83EAF1618690AC40084E0E1 /* Sports & Outdoor_skate@2x.png in Resources */,
 				C83EAEFB18690AC40084E0E1 /* Restaurants & Bars_Cocktail@2x.png in Resources */,
+				C8EE6D9E1A30971100D53893 /* Entertainment & Events_event@2x.png in Resources */,
 				C83EAE2A18690AC40084E0E1 /* Automotive_automotive_shop@2x.png in Resources */,
 				C83EAF1F18690AC40084E0E1 /* Sports & Outdoor_track@2x.png in Resources */,
 				C8DADE4018FDF3CB0056AC9F /* Explore-Black_Art icon@2x.png in Resources */,
@@ -2848,6 +2856,8 @@
 				C83EAE7B18690AC40084E0E1 /* Kids & Babies_daycare@2x.png in Resources */,
 				C83EAE7618690AC40084E0E1 /* Home & Furniture_Home & Furniture@2x.png in Resources */,
 				C8D2E462185B781D00398873 /* Add Deal (Final)_Minimize Map button (selected)@2x.png in Resources */,
+				C8EE6D981A30971100D53893 /* Entertainment & Events_bowling_alley@2x.png in Resources */,
+				C8EE6D991A30971100D53893 /* Entertainment & Events_casino@2x.png in Resources */,
 				C8D2E481185B781D00398873 /* Add Deal (Final)_Take Photo! button@2x.png in Resources */,
 				C8D2E45C185B781D00398873 /* Add Deal (Final)_Facebook Switch background(selected)@2x.png in Resources */,
 				C83EAE2218690AC40084E0E1 /* Art_antique_shop@2x.png in Resources */,
@@ -2858,19 +2868,18 @@
 				C88B3F5D1921085D009252DD /* Add Deal (Final)_Blue Buttons background@2x.png in Resources */,
 				C8D2E45F185B781D00398873 /* Add Deal (Final)_Groups switch@2x.png in Resources */,
 				C873D3931851040700B913CD /* My Feed+View Deal (final)_Current Picture@2x.png in Resources */,
-				C83EAE4418690AC40084E0E1 /* Entertainment @ Events_auditorium@2x.png in Resources */,
 				C83EAF0818690AC40084E0E1 /* Restaurants & Bars_tea_room@2x.png in Resources */,
 				C8DADE4E18FDF3CB0056AC9F /* Explore-Black_Pets icon@2x.png in Resources */,
 				C83EAE2818690AC40084E0E1 /* Art_photography_lab@2x.png in Resources */,
 				C8D2E455185B781D00398873 /* Add Deal (Final)_Add Another Photo button@2x.png in Resources */,
 				C83EAE2C18690AC40084E0E1 /* Automotive_car_rental@2x.png in Resources */,
-				C83EAE4618690AC40084E0E1 /* Entertainment @ Events_casino@2x.png in Resources */,
 				C8BFD9C418723016007E7E07 /* Profile_Deals List button (selected)@2x.png in Resources */,
 				C88B3F6C1921F5CB009252DD /* My Feed+View Deal (final)_Comment button@2x.png in Resources */,
 				B012D9341828F583006288CA /* Uploading-the-Deal Graphic@2x.png in Resources */,
 				B0C7FB4B183375F900B3B740 /* loading@2x.png in Resources */,
 				B0C7FB4C183375F900B3B740 /* loading5@2x.png in Resources */,
 				B0691CB1191BEE270052DCCF /* Add Deal_Done button@2x.png in Resources */,
+				C8EE6DAB1A30971100D53893 /* Entertainment & Events_vineyard@2x.png in Resources */,
 				B0274804186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png in Resources */,
 				C8A9EE2F1A2213B9002EE682 /* elasticloadbalancing-2012-06-01.json in Resources */,
 				C8A6EBE3191BB99600887C34 /* Registration_Sign Up Facebook button@2x.png in Resources */,
@@ -2884,6 +2893,7 @@
 				B0C7FB50183375F900B3B740 /* loading25@2x.png in Resources */,
 				B0C7FB51183375F900B3B740 /* loading30@2x.png in Resources */,
 				C83EAF2318690AC40084E0E1 /* Travel_ferry@2x.png in Resources */,
+				C8EE6DAC1A30971100D53893 /* Entertainment & Events_water_park@2x.png in Resources */,
 				C83EAE3218690AC40084E0E1 /* Beauty & Personal Care_Beauty & Personal Care@2x.png in Resources */,
 				C8DADE4118FDF3CB0056AC9F /* Explore-Black_Automotive icon@2x.png in Resources */,
 				B0C7FB52183375F900B3B740 /* loading35@2x.png in Resources */,
@@ -2906,10 +2916,10 @@
 				B0C7FB58183375F900B3B740 /* loading65@2x.png in Resources */,
 				B0C7FB59183375F900B3B740 /* loading70@2x.png in Resources */,
 				C8DADE4918FDF3CB0056AC9F /* Explore-Black_Jewelry & Watches icon@2x.png in Resources */,
+				C8EE6D941A30971100D53893 /* Entertainment & Events_amusement_park@2x.png in Resources */,
 				C83EAE3C18690AC40084E0E1 /* Electronics_camera_store@2x.png in Resources */,
 				B0C7FB5A183375F900B3B740 /* loading75@2x.png in Resources */,
 				C83714EC18F5C1FA0079D3F9 /* My Feed+View Deal - New Version_Local icon_Grey@2x.png in Resources */,
-				C83EAE5618690AC40084E0E1 /* Entertainment @ Events_spa@2x-12.png in Resources */,
 				C8D2E464185B781D00398873 /* Add Deal (Final)_More Details background(selected)@2x.png in Resources */,
 				C8D2E459185B781D00398873 /* Add Deal (Final)_Camera Window mask@2x.png in Resources */,
 				C83EAF1A18690AC40084E0E1 /* Sports & Outdoor_sport_field@2x.png in Resources */,
@@ -2934,7 +2944,6 @@
 				C88B3F6319211C6D009252DD /* My Feed+View Deal (final)_Local icon@2x.png in Resources */,
 				C8B7C2361920FCF60032726E /* Registration_Sign In button (highlighted)@2x.png in Resources */,
 				B0C7FB761838B78D00B3B740 /* Loading40white@2x.png in Resources */,
-				C83EAE4018690AC40084E0E1 /* Entertainment @ Events_adults@2x.png in Resources */,
 				B0C7FB771838B78D00B3B740 /* Loading45white@2x.png in Resources */,
 				B0C7FB781838B78D00B3B740 /* Loading50white@2x.png in Resources */,
 				C8273A2F18959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png in Resources */,
@@ -2963,6 +2972,7 @@
 				C8DADE3F18FDF3CB0056AC9F /* Explore-Black_Amusment & Entertainment icon@2x.png in Resources */,
 				C83EAF1518690AC40084E0E1 /* Sports & Outdoor_rec@2x.png in Resources */,
 				C873D3A71851040700B913CD /* My Feed+View Deal_Category (final) icon@2x.png in Resources */,
+				C8EE6DA91A30971100D53893 /* Entertainment & Events_spa@2x-12.png in Resources */,
 				C873D39F1851040700B913CD /* My Feed+View Deal (final)_Report button@2x.png in Resources */,
 				B0274805186B291B005A52F0 /* PLCameraSheetDoneButtonPressed.png in Resources */,
 				C83EAF0318690AC40084E0E1 /* Restaurants & Bars_pizza@2x.png in Resources */,
@@ -2975,10 +2985,9 @@
 				C8BFD9CF18723016007E7E07 /* Profile_Master Dealer@2x.png in Resources */,
 				C87B6D11192DF52C0026DA66 /* Add Deal (Final)_More Details button (pushed)@2x.png in Resources */,
 				B08A3668187B3C82005B72D8 /* Images.xcassets in Resources */,
-				C83EAE4718690AC40084E0E1 /* Entertainment @ Events_conference@2x.png in Resources */,
 				C83EAEED18690AC40084E0E1 /* Other_post_office@2x.png in Resources */,
-				C83EAE5318690AC40084E0E1 /* Entertainment @ Events_pool_hall@2x.png in Resources */,
 				C83EAE2318690AC40084E0E1 /* Art_Art@2x.png in Resources */,
+				C8EE6DA61A30971100D53893 /* Entertainment & Events_pool_hall@2x.png in Resources */,
 				C88B3F5B192101D2009252DD /* Add Deal (Final)_Online button@2x.png in Resources */,
 				C83EAE7D18690AC40084E0E1 /* Kids & Babies_kids_store@2x.png in Resources */,
 				C8BFD9D618723016007E7E07 /* Profile_Out of Date icon@2x.png in Resources */,
@@ -2990,16 +2999,12 @@
 				C83EAE6718690AC40084E0E1 /* Food & Groceries_bakery@2x.png in Resources */,
 				C8D2E47E185B781D00398873 /* Add Deal (Final)_Snap button@2x.png in Resources */,
 				C83EAEFA18690AC40084E0E1 /* Restaurants & Bars_café@2x.png in Resources */,
-				C83EAE5518690AC40084E0E1 /* Entertainment @ Events_science@2x.png in Resources */,
 				C83EAE3318690AC40084E0E1 /* Beauty & Personal Care_beauty_salon@2x.png in Resources */,
-				C83EAE4F18690AC40084E0E1 /* Entertainment @ Events_movie_rental@2x.png in Resources */,
 				C83EAEEC18690AC40084E0E1 /* Other_parking@2x.png in Resources */,
-				C83EAE4218690AC40084E0E1 /* Entertainment @ Events_aquarium@2x.png in Resources */,
 				C8D2E45D185B781D00398873 /* Add Deal (Final)_Facebook switch@2x.png in Resources */,
 				C873D3A01851040700B913CD /* My Feed+View Deal (final)_Share button (pushed)@2x.png in Resources */,
 				C83EAEF518690AC40084E0E1 /* Restaurants & Bars_bagel_shop@2x.png in Resources */,
 				C8BFD9D318723016007E7E07 /* Profile_Notifications Like icon@2x.png in Resources */,
-				C83EAE4C18690AC40084E0E1 /* Entertainment @ Events_gay_bar@2x.png in Resources */,
 				C83EAF1B18690AC40084E0E1 /* Sports & Outdoor_Sports & Outdoor@2x.png in Resources */,
 				C8DADE4B18FDF3CB0056AC9F /* Explore-Black_Kitchen icon@2x.png in Resources */,
 			);
@@ -3058,6 +3063,7 @@
 				C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */,
 				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
 				C8A10BA619E96B100090F1D9 /* NotificationTableCell.m in Sources */,
+				C8EE6D741A305FD500D53893 /* ComingSoonViewController.m in Sources */,
 				C8A10B9F19E95B330090F1D9 /* Notification.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
 				C8A10B9C19E711220090F1D9 /* KeychainItemWrapper.m in Sources */,
@@ -3198,7 +3204,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Dealers;
-				PROVISIONING_PROFILE = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -3232,8 +3238,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Dealers;
-				PROVISIONING_PROFILE = "5862ED47-EC3F-4CEF-8159-F963E78EECBE";
-				"PROVISIONING_PROFILE[sdk=*]" = "5862ED47-EC3F-4CEF-8159-F963E78EECBE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=*]" = "35bcd955-579e-463e-ad07-523ad583d8a3";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

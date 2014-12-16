@@ -8,8 +8,11 @@
 
 #import "DealsTableViewController.h"
 
-#define DEAL_CELL_HEIGHT 209.0f
-#define DEAL_CELL_HEIGHT_NO_PHOTO 98.0f
+#define NOTIFICATION_CENTER_NAME @"Deals Photos Notifications"
+#define NOTIFICATION_FIRST_THREE @"First Three Deals Photos Notifications"
+
+#define DEAL_CELL_HEIGHT 214.0f
+#define DEAL_CELL_HEIGHT_NO_PHOTO 159.0f
 
 @implementation DealsTableViewController
 
@@ -36,15 +39,26 @@
         self.title = self.categoryFromExplore;
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loadPhotosInVisibleCells:)
-                                                 name:@"Deals Photos Notifications"
-                                               object:nil];
-    
     [self initialize];
+    [self setNotificationObservers];
     [self setRefreshControl];
-    [self downloadDeals];
+    [self configurePaginator];
     [self setLoadingView];
+    
+    NSLog(@"\n\n%@\n%@",[NSNumber numberWithInteger:self.paginator.perPage], [NSNumber numberWithInteger:self.paginator.objectCount]);
+    
+    [self.paginator loadPage:1];
+    self.pageIsLoading = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (appDelegate.shouldUpdateMyFeed) {
+        [self.tableView setContentOffset:CGPointMake(0, -64.0)];
+        [self setLoadingView];
+        [self refresh];
+        appDelegate.shouldUpdateMyFeed = NO;
+    }
 }
 
 - (void)checkFeature
@@ -59,40 +73,25 @@
 - (void)initialize
 {
     appDelegate = [[UIApplication sharedApplication] delegate];
-    self.deals = [[NSMutableArray alloc]init];
+    self.deals = [[NSMutableArray alloc] init];
+    self.pageIsLoading = NO;
+    firstPhotosCounter = 0;
 }
+
 
 # pragma mark - General methods
 
-- (void)setUpDummyDeals
+- (void)setNotificationObservers
 {
-    self.deals = [[NSMutableArray alloc]init];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadPhotosInVisibleCells:)
+                                                 name:NOTIFICATION_CENTER_NAME
+                                               object:nil];
     
-    Deal *deal = [[Deal alloc]init];
-    deal.store = [[Store alloc]init];
-    
-    deal.title = @"Wow great deal go check it out now! :)";
-    deal.store.name = @"Castro Raanana Shop";
-    deal.price = @(59);
-    deal.currency = @"$";
-    deal.discountValue = @(20);
-    deal.discountType = @"%";
-    deal.photoURL1 = @"url";
-    
-    [self.deals addObject:deal];
-    
-    deal = [[Deal alloc]init];
-    deal.store = [[Store alloc]init];
-    
-    deal.title = @"Shoes at a really low price! amazing! :)";
-    deal.store.name = @"Mango Shop Raanana (1st floor)";
-    deal.price = @(59);
-    deal.currency = @"$";
-    deal.discountValue = @(20);
-    deal.discountType = @"%";
-    deal.photoURL1 = @"";
-    
-    [self.deals addObject:deal];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(photoDownloaded:)
+                                                 name:NOTIFICATION_FIRST_THREE
+                                               object:nil];
 }
 
 - (void)setRefreshControl
@@ -106,29 +105,83 @@
 
 - (void)refresh
 {
-    self.deals = [[NSMutableArray alloc]init];
-    [self downloadDeals];
+    self.tableView.backgroundView = [[UIView alloc] init];
+    
+    if (self.pageIsLoading) {
+        [self.paginator cancel];
+        self.pageIsLoading = NO;
+    }
+    
+    [self.paginator loadPage:1];
+    self.pageIsLoading = YES;
 }
 
-- (void)downloadDeals
+- (void)configurePaginator
 {
-    NSString *path;
+    __weak typeof(self) weakSelf = self;
+    
+    if (!self.paginator) {
+        
+        NSString *requestString;
+        
+        if ([selfViewController isEqualToString:@"My Feed"]) {
+            
+            requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage"];
+            
+        } else if ([selfViewController isEqualToString:@"Explore"]) {
+            
+            requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage&category=%@", [appDelegate getCategoryKeyForValue:self.categoryFromExplore]];
+        }
+        
+        self.paginator = [[RKObjectManager sharedManager] paginatorWithPathPattern:requestString];
+        self.paginator.perPage = 10;
+        [self.paginator setCompletionBlockWithSuccess:^(RKPaginator *paginator, NSArray *deals, NSUInteger page) {
+            
+            weakSelf.pageIsLoading = NO;
+            
+            if (page == 1) {
+                [weakSelf.deals removeAllObjects];
+            }
+            
+            [weakSelf.deals addObjectsFromArray:deals];
+            
+            if (!weakSelf.deals || weakSelf.deals.count == 0) {
+                [weakSelf stopLoadingAnimation];
+                [weakSelf noDealMessage];
+                
+            } else if (page == 1) {
+                [weakSelf loadFirstThreePhotos];
+                
+            } else {
+                [weakSelf.tableView reloadData];
+            }
+            
+        } failure:^(RKPaginator *paginator, NSError *error) {
+            NSLog(@"Failure: %@", error);
+            [weakSelf stopLoadingAnimation];
+            [weakSelf errorMessage];
+            [weakSelf.refreshControl endRefreshing];
+            weakSelf.pageIsLoading = NO;
+        }];
+    }
+}
+
+- (void)downloadDealsOld
+{
     NSDictionary *parameters;
     
     if ([selfViewController isEqualToString:@"My Feed"]) {
-        path = @"/deals/";
         parameters = nil;
     } else {
-        path = @"/dealfilter/";
         parameters = @{@"category": [appDelegate getCategoryKeyForValue:self.categoryFromExplore]};
     }
     
-    [[RKObjectManager sharedManager] getObjectsAtPath:path
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/deals/"
                                            parameters:parameters
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   
                                                   [self.deals addObjectsFromArray:mappingResult.array];
-
+                                                  
                                                   if (!self.deals || self.deals.count == 0) {
                                                       [self stopLoadingAnimation];
                                                       [self noDealMessage];
@@ -144,15 +197,84 @@
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"There was an error with the loading of the store search: %@", error);
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                  [alert show];
+                                                  [self stopLoadingAnimation];
+                                                  [self errorMessage];
+                                                  [self.refreshControl endRefreshing];
                                               }];
+}
+
+- (void)loadFirstThreePhotos
+{
+    if (self.deals.count > 0) {
+        
+        for (int i = 0; i < self.deals.count; i++) {
+            
+            Deal *deal = [self.deals objectAtIndex:i];
+            
+            if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
+                deal.downloadingPhoto = YES;
+                [appDelegate downloadPhotosForDeal:deal notificationName:NOTIFICATION_FIRST_THREE atIndexPath:nil mode:nil];
+            } else {
+                [self photoDownloaded:nil];
+            }
+            
+            if (i == 2) {
+                // Breaking after 3 photos have been downloaded
+                break;
+            }
+        }
+        
+    } else {
+        
+        NSLog(@"No deals in the array, so no photos...");
+    }
+}
+
+- (void)photoDownloaded:(NSNotification *)notification
+{
+    firstPhotosCounter++;
+    if (firstPhotosCounter == 3 || firstPhotosCounter == self.deals.count) {
+        [self reloadTableView];
+    }
+}
+
+- (void)checkIfIndexRowTooBig
+{
+    NSIndexPath *lastVisibleRow = self.tableView.indexPathsForVisibleRows.lastObject;
+    
+    if (lastVisibleRow.row > (self.deals.count - 1)) {
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    }
+}
+
+- (void)reloadTableView
+{
+    [self.tableView reloadData];
+    [self stopLoadingAnimation];
+    [self.refreshControl endRefreshing];
+    if (![self.paginator hasNextPage] && self.deals.count > 0) {
+        self.tableView.tableFooterView = [self setFooterView];
+    }
+    // Load photo of next deal in the array
+    [self downloadNextPhotoAfterIndexPath:[NSIndexPath indexPathForRow:firstPhotosCounter - 1 inSection:0]];
+    firstPhotosCounter = 0;
 }
 
 - (void)setLoadingView
 {
-    loadingView = [[UIView alloc]initWithFrame:self.view.frame];
-    loadingView.backgroundColor = [UIColor whiteColor];
+    if (self.tableView.contentSize.height > 0) {
+        
+        loadingView = [[UIView alloc]initWithFrame:CGRectMake(self.tableView.frame.origin.x,
+                                                              self.tableView.frame.origin.y,
+                                                              self.tableView.contentSize.width,
+                                                              self.tableView.contentSize.height)];
+    } else {
+        
+        loadingView = [[UIView alloc]initWithFrame:self.view.frame];
+    }
+    
+    
+    loadingView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     UIImageView *loadingAnimation = [appDelegate loadingAnimationPurple];
     loadingAnimation.tag = 13212;
     [loadingAnimation startAnimating];
@@ -172,19 +294,52 @@
 
 - (void)noDealMessage
 {
-    UILabel *noDealsMessage = [[UILabel alloc]initWithFrame:CGRectMake(0, self.tableView.center.y - 60, 320, 30)];
-    [noDealsMessage setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
-    [noDealsMessage setTextAlignment:NSTextAlignmentCenter];
-    noDealsMessage.numberOfLines = 0;
-    noDealsMessage.center = self.tableView.center;
-    noDealsMessage.text = @"There are no deals at this moment!";
-    noDealsMessage.textColor = [appDelegate textGrayColor];
-    noDealsMessage.alpha = 0;
+    UILabel *error = [[UILabel alloc]initWithFrame:self.tableView.frame];
+    error.font = [UIFont fontWithName:@"Avenir-Roman" size:18.0];
+    error.textAlignment = NSTextAlignmentCenter;
+    error.textColor = [appDelegate textGrayColor];
+    error.alpha = 0;
+    error.text = @"There are no deals at this moment!";
+    
+    UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, error.center.y - 80, self.tableView.frame.size.width, 50)];
+    sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];
+    sadSmiley.textAlignment = NSTextAlignmentCenter;
+    sadSmiley.textColor = [appDelegate textGrayColor];
+    sadSmiley.alpha = 0;
+    sadSmiley.text = @":(";
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundView = error;
+    [self.tableView.backgroundView addSubview:sadSmiley];
+    [UIView animateWithDuration:0.3 animations:^{
+        error.alpha = 1.0;
+        sadSmiley.alpha = 1.0;
+    }];
+}
+
+- (void)errorMessage
+{
+    UILabel *error = [[UILabel alloc]initWithFrame:self.tableView.frame];
+    error.font = [UIFont fontWithName:@"Avenir-Roman" size:18.0];
+    error.textAlignment = NSTextAlignmentCenter;
+    error.textColor = [appDelegate textGrayColor];
+    error.alpha = 0;
+    error.text = @"Couldn't load the deals...";
     
-    self.tableView.backgroundView = noDealsMessage;
+    UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, error.center.y - 80, self.tableView.frame.size.width, 50)];
+    sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];
+    sadSmiley.textAlignment = NSTextAlignmentCenter;
+    sadSmiley.textColor = [appDelegate textGrayColor];
+    sadSmiley.alpha = 0;
+    sadSmiley.text = @":(";
     
-    [UIView animateWithDuration:0.3 animations:^{ noDealsMessage.alpha = 1.0; }];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundView = error;
+    [self.tableView.backgroundView addSubview:sadSmiley];
+    [UIView animateWithDuration:0.3 animations:^{
+        error.alpha = 1.0;
+        sadSmiley.alpha = 1.0;
+    }];
 }
 
 - (void)loadPhotosInVisibleCells:(NSNotification *)notification
@@ -199,48 +354,61 @@
         if ([indexPathes[i] isEqual:receivedIndexPath]) {
             
             DealsTableCell *cell = cells[i];
+            
             cell.photo.image = [notification.userInfo objectForKey:@"image"];
             [UIView animateWithDuration:0.5 animations:^{ cell.photo.alpha = 1.0; }];
             break;
         }
     }
+    
+    // Load photo of next deal in the array
+    [self downloadNextPhotoAfterIndexPath:receivedIndexPath];
 }
 
-- (NSNumber *)setPhotoSum:(Deal *)deal {
-    
-    if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"])
-        deal.photoSum = @(deal.photoSum.intValue + 1);
-    else
-        return [NSNumber numberWithInt:0];
-    
-    if (deal.photoURL2.length > 1 && ![deal.photoURL2 isEqualToString:@"None"])
-        deal.photoSum = @(deal.photoSum.intValue + 1);
-    else
-        return [NSNumber numberWithInt:1];
-    
-    if (deal.photoURL3.length > 1 && ![deal.photoURL3 isEqualToString:@"None"])
-        deal.photoSum = @(deal.photoSum.intValue + 1);
-    else
-        return [NSNumber numberWithInt:2];
-    
-    if (deal.photoURL4.length > 1 && ![deal.photoURL4 isEqualToString:@"None"])
-        deal.photoSum = @(deal.photoSum.intValue + 1);
-    else
-        return [NSNumber numberWithInt:3];
-    
-    return [NSNumber numberWithInt:4];
+- (void)downloadNextPhotoAfterIndexPath:(NSIndexPath *)indexPath
+{
+    for (NSInteger i = indexPath.row + 1; i < self.deals.count; i++) {
+        
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        Deal *nextDeal = [self.deals objectAtIndex:nextIndexPath.row];
+        
+        if (nextDeal.photoURL1.length > 2 && ![nextDeal.photoURL1 isEqualToString:@"None"]) {
+            if (!nextDeal.photo1 && !nextDeal.downloadingPhoto) {
+                nextDeal.downloadingPhoto = YES;
+                [appDelegate downloadPhotosForDeal:nextDeal notificationName:NOTIFICATION_CENTER_NAME atIndexPath:nextIndexPath mode:nil];
+                break;
+            }
+        } else {
+            continue;
+        }
+    }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    int scrollOffset = scrollView.contentOffset.y + self.view.frame.size.height;
-//    if (((GAP - scrollOffset) < 200) && (GAP != 0)) {
-//        
-//        if (!isUpdatingNow) {
-//            isUpdatingNow = YES;
-//            [self stopWheelAndPresentDeals];
-//            
-//        }
-//    }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (self.tableView.contentSize.height > 0) {
+        int nextPageTriggerPoint = self.tableView.contentSize.height / 1.5;
+        int contentOffset = self.tableView.contentOffset.y + self.tableView.frame.size.height;
+        if (contentOffset > nextPageTriggerPoint) {
+            
+            if (!self.pageIsLoading) {
+                
+                if ([self.paginator hasNextPage] ) {
+                    
+                    [self.paginator loadNextPage];
+                    self.pageIsLoading = YES;
+                    self.tableView.tableFooterView = [self setFooterView];
+                    needToSetFooter = YES;
+                    
+                } else {
+                    
+                    if (needToSetFooter) {
+                        self.tableView.tableFooterView = [self setFooterView];
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -256,7 +424,7 @@
     Deal *deal = [self.deals objectAtIndex:indexPath.row];
     
     if (!deal.photoSum) {
-        deal.photoSum = [self setPhotoSum:deal];
+        deal.photoSum = [appDelegate setPhotoSum:deal];
     }
     
     if (deal.currency.length == 2) {
@@ -266,12 +434,12 @@
     if (deal.discountType.length == 2) {
         deal.discountType = [appDelegate getDiscountType:deal.discountType];
     }
-
-    if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"]) {
+    
+    if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
         
         static NSString *cellIdentifier = @"DealsTableCellID";
         DealsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-
+        
         if (!cell) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DealsTableCell" owner:nil options:nil];
             cell = [nib objectAtIndex:0];
@@ -281,7 +449,10 @@
         
         if (!deal.photo1) {
             cell.photo.alpha = 0;
-            [appDelegate downloadPhotosForDeal:deal atIndexPath:indexPath];
+            if (!deal.downloadingPhoto) {
+                deal.downloadingPhoto = YES;
+                [appDelegate downloadPhotosForDeal:deal notificationName:NOTIFICATION_CENTER_NAME atIndexPath:indexPath mode:nil];
+            }
         } else {
             cell.photo.alpha = 1.0;
             cell.photo.image = deal.photo1;
@@ -321,18 +492,26 @@
         } else {
             cell.discount.hidden = YES;
         }
-    
+        
         return cell;
-
+        
     } else {
-    
+        
         static NSString *cellIdentifier = @"DealsNoPhotoTableCellID";
-        DealsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        DealsNoPhotoTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if (!cell) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DealsNoPhotoTableCell" owner:nil options:nil];
             cell = [nib objectAtIndex:0];
         }
+        
+        // Setting random background image to cell
+        
+        if (!deal.photoURL1) {
+            int random = arc4random_uniform(4);
+            deal.photoURL1 = [NSNumber numberWithInt:random].stringValue;
+        }
+        cell.backgroundWithColor.backgroundColor = [DealsNoPhotoTableCell randomBackgroundColors:deal.photoURL1];
         
         // Loading the deal's details to the cell
         
@@ -340,6 +519,8 @@
         cell.store.text = deal.store.name;
         
         if (deal.dealAttrib.dealersThatLiked.count > 0) {
+            cell.likesCounter.hidden = NO;
+            cell.likesIcon.hidden = NO;
             cell.likesCounter.text = [NSNumber numberWithUnsignedInteger:deal.dealAttrib.dealersThatLiked.count].stringValue;
         } else {
             cell.likesCounter.hidden = YES;
@@ -347,12 +528,14 @@
         }
         
         if (deal.price.floatValue > 0) {
+            cell.price.hidden = NO;
             cell.price.text = [deal.currency stringByAppendingString:deal.price.stringValue];
         } else {
             cell.price.hidden = YES;
         }
         
         if (deal.discountValue.floatValue > 0) {
+            cell.discount.hidden = NO;
             if ([deal.discountType isEqualToString:@"%"]) {
                 cell.discount.text = [deal.discountValue.stringValue stringByAppendingString:deal.discountType];
             } else if ([deal.discountType isEqualToString:@"lastPrice"]){
@@ -367,7 +550,7 @@
         
         return cell;
     }
-
+    
     return nil;
 }
 
@@ -375,10 +558,10 @@
 {
     Deal *deal = [self.deals objectAtIndex:indexPath.row];
     
-    if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"]) {
+    if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
         
         return DEAL_CELL_HEIGHT;
-    
+        
     } else {
         
         return DEAL_CELL_HEIGHT_NO_PHOTO;
@@ -391,7 +574,7 @@
     Deal *deal = [self.deals objectAtIndex:indexPath.row];
     vodvc.deal = deal;
     
-    if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"]) {
+    if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
         vodvc.isShortCell = @"no";
     } else vodvc.isShortCell = @"yes";
     
@@ -404,18 +587,35 @@
     [self.navigationController pushViewController:vodvc animated:YES];
 }
 
-/*
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
+- (UIView *)setFooterView
+{
+    if (!self.footerView) {
+        self.footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 64.0)];
     }
     
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
+    if (self.footerImageView) {
+        [self.footerImageView removeFromSuperview];
     }
+    
+    if (self.pageIsLoading) {
+        
+        self.footerImageView = [appDelegate loadingAnimationPurple];
+        self.footerImageView.frame = CGRectMake(self.tableView.center.x - 15.0, 15.0, 30.0, 30.0);
+        [self.footerImageView startAnimating];
+        [self.footerView addSubview:self.footerImageView];
+        
+    } else {
+        
+        self.footerImageView = [[UIImageView alloc]init];
+        self.footerImageView.frame = CGRectMake(self.tableView.center.x - 13.0, 12.0, 24.0, 34.0);
+        self.footerImageView.image = [UIImage imageNamed:@"Bottom Logo"];
+        self.footerImageView.alpha = 0.6;
+        needToSetFooter = NO;
+        [self.footerView addSubview:self.footerImageView];
+    }
+    
+    return self.footerView;
 }
- */
 
 - (void)viewDidLayoutSubviews
 {

@@ -71,40 +71,40 @@
 #pragma mark - Table view delegate
 
 /*
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *container = [[UIView alloc]init];
-    UILabel *labelHeader = [[UILabel alloc] initWithFrame:CGRectMake (0, 21, tableView.bounds.size.width, 22)];
-    
-    if (section == 1) {
-        
-        labelHeader.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
-//        labelHeader.textColor = [UIColor colorWithRed:130.0/255.0 green:130.0/255.0 blue:136.0/255.0 alpha:1.0];
-        labelHeader.textColor = [UIColor blackColor];
-        labelHeader.text = @"Tell us about the deal";
-        labelHeader.textAlignment = NSTextAlignmentCenter;
-    }
-    
-    [container addSubview:labelHeader];
-    
-    return container;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section == 0) {
-        
-        return 0.1;
-    
-    } else if (section == 1) {
-
-        return 56.0;
-    }
-    
-    return 0.1;
-}
-
-*/
+ - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+ {
+ UIView *container = [[UIView alloc]init];
+ UILabel *labelHeader = [[UILabel alloc] initWithFrame:CGRectMake (0, 21, tableView.bounds.size.width, 22)];
+ 
+ if (section == 1) {
+ 
+ labelHeader.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
+ //        labelHeader.textColor = [UIColor colorWithRed:130.0/255.0 green:130.0/255.0 blue:136.0/255.0 alpha:1.0];
+ labelHeader.textColor = [UIColor blackColor];
+ labelHeader.text = @"Tell us about the deal";
+ labelHeader.textAlignment = NSTextAlignmentCenter;
+ }
+ 
+ [container addSubview:labelHeader];
+ 
+ return container;
+ }
+ 
+ - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+ {
+ if (section == 0) {
+ 
+ return 0.1;
+ 
+ } else if (section == 1) {
+ 
+ return 56.0;
+ }
+ 
+ return 0.1;
+ }
+ 
+ */
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -206,15 +206,11 @@
     captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
     [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
     captureVideoPreviewLayer.frame = self.cameraView.bounds;
     [self.cameraView.layer addSublayer:captureVideoPreviewLayer];
-    
-    UIView *view = [self cameraView];
-    CALayer *viewLayer = [view layer];
-    [viewLayer setMasksToBounds:YES];
-    
-    CGRect bounds = [view bounds];
-    [captureVideoPreviewLayer setFrame:bounds];
+    self.cameraView.layer.masksToBounds = YES;
+    });
     
     NSArray *devices = [AVCaptureDevice devices];
     AVCaptureDevice *frontCamera;
@@ -263,6 +259,8 @@
     
     [session startRunning];
     
+//    NSLog(@"Camera View hidden: %hhd, and Frame: %f, %f, %f, %f", self.cameraView.hidden, self.cameraView.frame.origin.x,self.cameraView.frame.origin.y,self.cameraView.frame.size.width,self.cameraView.frame.size.height);
+    
     isSessionRunning = YES;
 }
 
@@ -285,11 +283,13 @@
     
     if (!self.photosArray) {
         
+        self.cameraSection.hidden = NO;
         self.capturedImagesSection.hidden = YES;
         self.addPhoto.hidden = NO;
         
     } else {
         
+        self.cameraSection.hidden = YES;
         self.capturedImagesSection.hidden = NO;
         self.addPhoto.hidden = YES;
         
@@ -350,7 +350,7 @@
     
     [UIView animateWithDuration: 0.1 animations:^{ self.flash.alpha = 1.0; }];
     [self capImage];
-    [self performSelector:@selector(hideFlash) withObject:nil afterDelay:0.7];
+    [self performSelector:@selector(hideFlash) withObject:nil afterDelay:0.5];
 }
 
 - (void)hideFlash {
@@ -414,10 +414,14 @@
 - (void)showCapturedSection
 {
     CGPoint center = self.cameraCell.contentView.center;
-    self.cameraSection.hidden = NO;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.capturedImagesSection.center = center;
-    }];
+    self.capturedImagesSection.hidden = NO;
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.capturedImagesSection.center = center;
+                     }
+                     completion:^(BOOL finished) {
+                         self.cameraSection.hidden = YES;
+                     }];
 }
 
 - (void)hideCapturedSection
@@ -461,49 +465,32 @@
 
 - (void) processImage:(UIImage *)image // Process captured image, crop, resize and rotate
 {
-    UIGraphicsBeginImageContext(CGSizeMake(image.size.width, image.size.height));
-    [image drawInRect: CGRectMake(0, 0, image.size.width, image.size.height)];
-    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    // Photo Handling Process Explination:
     
-    float imageSizeMultiplier; // The front camera is 3, the back is 7.65.
+    // The "Image Divider" is the number determining how many times smaller the resized photo
+    // will be after shrinking it. The smaller it'll be, the faster it will be downloaded.
+    // After the shrinking, the photo is still too big to fit the iPhone screen, so we need
+    // to modify the croping rect so it'll fit the size of the resized photo, that's being done by
+    // the "Image Mulitplier". The Image Multiplier needs to be multiplied by 2, probably
+    // because of the retina display.
     
-    if (isFrontCamera == NO) {
-        imageSizeMultiplier = 7.65;
-    } else {
-        imageSizeMultiplier = 3;
-    }
+    CGFloat imageSizeMultiplier = 2;
+    CGFloat imageSizeDivider = image.size.width / 320.0;
     
-    float originX = self.cameraCell.frame.origin.x * imageSizeMultiplier;
-    float originY = 132 * imageSizeMultiplier;
-    float sizeWidth = self.captureImage.frame.size.width * imageSizeMultiplier;
-    float sizeHeight = self.captureImage.frame.size.height * imageSizeMultiplier;
+    UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider, image.size.height / imageSizeDivider)];
+    
+    NSLog(@"\n\nThe size of the resized photo is: %f, %f", resizedImage.size.width, resizedImage.size.height);
+    
+    CGFloat originX = self.cameraCell.frame.origin.x * imageSizeMultiplier;
+    CGFloat originY = 131 * imageSizeMultiplier;
+    CGFloat sizeWidth = self.captureImage.frame.size.width * imageSizeMultiplier;
+    CGFloat sizeHeight = self.captureImage.frame.size.height * imageSizeMultiplier;
     
     CGRect cropRect = CGRectMake(originX, originY, sizeWidth, sizeHeight);
     
-    CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
+    UIImage *finalImage = [UIImage imageWithCGImage:CGImageCreateWithImageInRect([resizedImage CGImage], cropRect)];
     
-    if (!self.photosArray) {
-        self.captureImage.image = [UIImage imageWithCGImage:imageRef];
-        self.photosArray = [NSMutableArray arrayWithObjects:self.captureImage.image, nil];
-        self.pageControl.numberOfPages = 1;
-        
-    } else {
-        [self.photosArray addObject:[UIImage imageWithCGImage:imageRef]];
-        [self setCapturedSectionAfterSnap];
-    }
-    
-    CGImageRelease(imageRef);
-    
-    self.cameraSection.hidden = YES;
-    self.capturedImagesSection.hidden = NO;
-    self.capturedImagesSection.center = self.cameraCell.contentView.center;
-    //    self.addPhoto.center = self.cameraCell.contentView.center;
-    
-    if (shouldDealloc) {
-        [self deallocCameraSession];
-        shouldDealloc = NO;
-    }
+    [self addNewPhotoToList:finalImage];
     
     //  [self deallocCameraSession];
     
@@ -543,6 +530,28 @@
      [UIView commitAnimations];
      }
      */
+}
+
+- (void)addNewPhotoToList:(UIImage *)image
+{
+    if (!self.photosArray) {
+        self.captureImage.image = image;
+        self.photosArray = [NSMutableArray arrayWithObjects:self.captureImage.image, nil];
+        self.pageControl.numberOfPages = 1;
+        
+    } else {
+        [self.photosArray addObject:image];
+        [self setCapturedSectionAfterSnap];
+    }
+    
+    self.cameraSection.hidden = YES;
+    self.capturedImagesSection.hidden = NO;
+    self.capturedImagesSection.center = self.cameraCell.contentView.center;
+    
+    if (shouldDealloc) {
+        [self deallocCameraSession];
+        shouldDealloc = NO;
+    }
 }
 
 - (void)setCapturedSectionAfterSnap
@@ -646,6 +655,23 @@
     self.addAnotherPhoto.hidden = NO;
 }
 
+- (IBAction)addFromLibrary:(id)sender {
+    
+    self.imagePicker = [[GKImagePicker alloc] init];
+    self.imagePicker.delegate = self;
+    [self presentViewController:self.imagePicker.imagePickerController animated:YES completion:nil];
+}
+
+- (void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image {
+
+    CGFloat imageSizeDivider = image.size.width / 320.0;
+    UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider,
+                                                                           image.size.height / imageSizeDivider)];
+
+    [self addNewPhotoToList:resizedImage];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 #pragma mark - General methods
 
@@ -659,7 +685,7 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     int maxLength = 120;
-    
+        
     NSString *stringlength = [NSString stringWithString:self.dealTitle.text];
     self.countLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(maxLength - stringlength.length)];
     
@@ -728,7 +754,7 @@
 }
 
 /*
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+ - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
  {
  if (textField == self.priceTextField) {
  
@@ -769,59 +795,51 @@
     self.deal.title = self.dealTitle.text;
     
     // Prepering photos (if exist) for upload
-    for (int i = 0; i < self.photosArray.count; i++) {
-        
-        if (!self.photosFileName) {
-            self.photosFileName = [[NSMutableArray alloc]init];
-        }
-        
-        NSString *fileName = [NSString stringWithFormat:@"%@_%@_%i.jpg", self.deal.dealer.dealerID, [NSDate date], i + 1];
-        NSString *key = [NSString stringWithFormat:@"media/Deals_Photos/%@", fileName];
-        [self.photosFileName addObject:fileName];
-        
-        switch (i) {
-            case 0:
-                self.deal.photoURL1 = key;
-                self.deal.photo1 = [self.photosArray objectAtIndex:i];
-                break;
-            case 1:
-                self.deal.photoURL2 = key;
-                self.deal.photo2 = [self.photosArray objectAtIndex:i];
-                break;
-            case 2:
-                self.deal.photoURL3 = key;
-                self.deal.photo3 = [self.photosArray objectAtIndex:i];
-                break;
-            case 3:
-                self.deal.photoURL4 = key;
-                self.deal.photo4 = [self.photosArray objectAtIndex:i];
-                break;
-            default:
-                break;
-        }
-        
-        NSData *binaryImageData = UIImageJPEGRepresentation([self.photosArray objectAtIndex:i], 0.55);
-        NSString *bodyFileURL = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
-        [binaryImageData writeToFile:bodyFileURL atomically:YES];
-    }
     
-    /*
-     if (self.photosArray.count == 1) {
-         self.deal.photo1 = [self.photosArray objectAtIndex:0];
-     } else if (self.photosArray.count == 2) {
-         self.deal.photo1 = [self.photosArray objectAtIndex:0];
-         self.deal.photo2 = [self.photosArray objectAtIndex:1];
-     } else if (self.photosArray.count == 3) {
-         self.deal.photo1 = [self.photosArray objectAtIndex:0];
-         self.deal.photo2 = [self.photosArray objectAtIndex:1];
-         self.deal.photo3 = [self.photosArray objectAtIndex:2];
-     } else if (self.photosArray.count == 4) {
-         self.deal.photo1 = [self.photosArray objectAtIndex:0];
-         self.deal.photo2 = [self.photosArray objectAtIndex:1];
-         self.deal.photo3 = [self.photosArray objectAtIndex:2];
-         self.deal.photo4 = [self.photosArray objectAtIndex:3];
-     }
-    */
+    if (self.photosArray.count > 0) {
+        
+        for (int i = 0; i < self.photosArray.count; i++) {
+            
+            if (!self.photosFileName) {
+                self.photosFileName = [[NSMutableArray alloc]init];
+            }
+            
+            NSString *fileName = [NSString stringWithFormat:@"%@_%@_%i.jpg", self.deal.dealer.dealerID, [NSDate date], i + 1];
+            NSString *key = [NSString stringWithFormat:@"media/Deals_Photos/%@", fileName];
+            [self.photosFileName addObject:fileName];
+            
+            switch (i) {
+                case 0:
+                    self.deal.photoURL1 = key;
+                    self.deal.photo1 = [self.photosArray objectAtIndex:i];
+                    break;
+                case 1:
+                    self.deal.photoURL2 = key;
+                    self.deal.photo2 = [self.photosArray objectAtIndex:i];
+                    break;
+                case 2:
+                    self.deal.photoURL3 = key;
+                    self.deal.photo3 = [self.photosArray objectAtIndex:i];
+                    break;
+                case 3:
+                    self.deal.photoURL4 = key;
+                    self.deal.photo4 = [self.photosArray objectAtIndex:i];
+                    break;
+                default:
+                    break;
+            }
+            
+            NSData *binaryImageData = UIImageJPEGRepresentation([self.photosArray objectAtIndex:i], 0.6);
+            NSString *bodyFileURL = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+            [binaryImageData writeToFile:bodyFileURL atomically:YES];
+        }
+    
+    } else {
+        
+        // There are now photos. Randomly pick a color number and save it in the photoURL1 attribute
+        int random = arc4random_uniform(4);
+        self.deal.photoURL1 = [NSNumber numberWithInt:random].stringValue;
+    }
     
     self.deal.photoSum = [NSNumber numberWithLong:self.photosArray.count];
     
@@ -852,6 +870,13 @@
     
     witd2vc.deal = self.deal;
     witd2vc.photosFileName = self.photosFileName;
+    
+    witd2vc.cashedPrice = self.cashedPrice;
+    witd2vc.cashedCurrency = self.cashedCurrency;
+    witd2vc.cashedDiscountValue = self.cashedDiscountValue;
+    witd2vc.cashedDiscountType = self.cashedDiscountType;
+    witd2vc.cashedCategory = self.cashedCategory;
+    witd2vc.cashedExpirationDate = self.cashedExpirationDate;
     
     [self.navigationController pushViewController:witd2vc animated:YES];
 }

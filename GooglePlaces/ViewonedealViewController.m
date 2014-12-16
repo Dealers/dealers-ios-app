@@ -7,7 +7,7 @@
 //
 
 #import "ViewonedealViewController.h"
-#import "ProfileViewController.h"
+#import "ProfileTableViewController.h"
 #import "ExploretableViewController.h"
 #import "AppDelegate.h"
 #import "WhereIsTheDeal.h"
@@ -23,6 +23,8 @@
 
 #define iconsLeftMargin 12
 #define labelsLeftMargin 52
+#define iconsLeftMarginSharedView 18
+#define labelsLeftMarginSharedView 58
 
 #define AWS_S3_BUCKET_NAME @"dealers-app"
 #define NAME_FOR_NOTIFICATIONS @"View Deal Photos Notifications"
@@ -53,8 +55,7 @@
     [super viewDidLoad];
     
     [self initialize];
-    
-    self.navigationItem.titleView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
+    [self setNavigationBar];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loadPhotosToView:)
@@ -64,7 +65,7 @@
     [self loadVarsFromDeal];
     [self setImagesSection];
     [self setPageControlView];
-    [self locateIconsInPlace];
+    [self setBasicDetailsSection];
     [self setDealerSection];
     [self setLikesAndButtonsSection];
     [self setCommentsSection];
@@ -81,11 +82,15 @@
         [self loadVarsFromDeal];
         [self setImagesSection];
         [self setPageControlView];
-        [self locateIconsInPlace];
+        [self setBasicDetailsSection];
         [self setDealerSection];
         [self setLikesAndButtonsSection];
         [self setCommentsSection];
         [self setMapAndStoreInfo];
+    }
+    
+    if (self.tabBarController.tabBar.hidden == YES) {
+        self.tabBarController.tabBar.hidden = NO;
     }
 }
 
@@ -134,7 +139,7 @@
         
         self.deal.dealAttrib.dealersThatLiked = dealersThatLikedArray;
         
-        NSString *path = [NSString stringWithFormat:@"/dealattribs/%@/", self.deal.dealID];
+        NSString *path = [NSString stringWithFormat:@"/dealattribs/%@/", self.deal.dealAttrib.dealAttribID];
         
         [[RKObjectManager sharedManager] patchObject:self.deal.dealAttrib
                                                 path:path
@@ -150,6 +155,16 @@
                                                  
                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                                                  [alert show];
+                                                 
+                                                 NSMutableArray *dealersThatLikedArray = self.deal.dealAttrib.dealersThatLiked;
+                                                 if (shouldAddID) {
+                                                     [dealersThatLikedArray removeObject:self.appDelegate.dealer.dealerID];
+                                                     shouldAddID = NO;
+                                                 
+                                                 } else if (shouldRemoveID) {
+                                                     [dealersThatLikedArray addObject:self.appDelegate.dealer.dealerID];
+                                                     shouldRemoveID = NO;
+                                                 }
                                              }];
     }
 }
@@ -157,7 +172,9 @@
 - (void)updateDealersLikedDealsArray
 {
     if (shouldAddID) {
-        [self.appDelegate.dealer.likedDeals addObject:self.deal.dealID];
+        NSMutableArray *likedDeals = [NSMutableArray arrayWithArray:appDelegate.dealer.likedDeals];
+        [likedDeals addObject:self.deal.dealID];
+        appDelegate.dealer.likedDeals = likedDeals;
     }
     
     if (shouldRemoveID) {
@@ -165,12 +182,14 @@
         for (NSNumber *dealID in self.appDelegate.dealer.likedDeals) {
             
             if (dealID.intValue == self.deal.dealID.intValue) {
-                [self.appDelegate.dealer.likedDeals removeObject:dealID];
+                NSMutableArray *likedDeals = [NSMutableArray arrayWithArray:appDelegate.dealer.likedDeals];
+                [likedDeals removeObject:dealID];
+                appDelegate.dealer.likedDeals = likedDeals;
                 break;
             }
         }
     }
-
+    
     shouldAddID = NO;
     shouldRemoveID = NO;
 }
@@ -196,10 +215,22 @@
     textGray = [appDelegate textGrayColor];
 }
 
+- (void)setNavigationBar
+{
+    self.navigationItem.titleView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
+    
+    UIBarButtonItem *options = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Options Button"]
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:self
+                                                              action:@selector(optionsAction:)];
+    [options setImageInsets:UIEdgeInsetsMake(1, -10, -1, 10)];
+    self.navigationItem.rightBarButtonItem = options;
+}
+
 -(void)setDateFormatter
 {
     self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
 }
 
@@ -499,7 +530,7 @@
  }
  */
 
-- (void)locateIconsInPlace
+- (void)setBasicDetailsSection
 {
     int offset;
     if ([[_deal photoSum]intValue] == 0) {
@@ -576,6 +607,11 @@
     } else {
         self.PriceIcon.hidden = NO;
     }
+    if (pricelabel.hidden == YES && discountlabel.hidden == NO) {
+        self.PriceIcon.image = [UIImage imageNamed:@"Discount Icon"];
+    } else {
+        self.PriceIcon.image = [UIImage imageNamed:@"Price Icon"];
+    }
     
     if (self.categorylabel.text.length > 0 && [self.categorylabel.text rangeOfString:@"No Category"].location == NSNotFound) {
         
@@ -630,6 +666,8 @@
     
     Dealer *dealer = self.deal.dealer;
     
+    self.dealerImagePlaceholder.layer.cornerRadius = self.dealerImagePlaceholder.frame.size.width / 2;
+    self.dealerImagePlaceholder.layer.masksToBounds = YES;
     self.dealerImage.layer.cornerRadius = self.dealerImage.frame.size.width / 2;
     self.dealerImage.layer.masksToBounds = YES;
     
@@ -642,11 +680,10 @@
     if (!self.dealerImage.image) {
         
         if (self.deal.dealer.dealerID.intValue == appDelegate.dealer.dealerID.intValue) {
+            self.deal.dealer = self.appDelegate.dealer;
             self.dealerImage.image = [appDelegate myProfilePic];
-        } else if (dealer.photoURL.length > 1 && ![dealer.photoURL isEqualToString:@"None"]) {
-            [appDelegate otherProfilePic:dealer.photoURL forTarget:@"Deal Dealer's Photo" inViewController:NAME_FOR_NOTIFICATIONS inCell:nil];
         } else {
-            self.dealerImage.image = [UIImage imageNamed:@"Profile Pic Placeholder"];
+            [appDelegate otherProfilePic:dealer.photoURL forTarget:@"Deal Dealer's Photo" notificationName:NAME_FOR_NOTIFICATIONS inCell:nil];
         }
     }
 }
@@ -1018,21 +1055,43 @@
     // Setting the shared view content:
     
     UIImageView *dealPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, self.captureImage.frame.size.height)];
-    dealPic.image = self.captureImage.image;
     [sharedView addSubview:dealPic];
+
+    if (self.deal.photo1) {
+        
+        dealPic.image = self.deal.photo1;
+        
+    } else {
+        
+        dealPic.backgroundColor = [DealsNoPhotoTableCell randomBackgroundColors:self.deal.photoURL1];
+        
+        UIImageView *logo = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"White Logo"]];
+        CGSize logoSize = CGSizeMake(45.0, 64.0);
+        CGFloat x = sharedView.center.x - logoSize.width / 2;
+        CGFloat y = 33.0;
+        logo.frame = CGRectMake(x, y, logoSize.width, logoSize.height);
+        
+        [sharedView addSubview:logo];
+    }
     
     CGFloat titleBackgroundHeight = 78.0;
     UIImageView *titleBackground = [[UIImageView alloc]initWithFrame:CGRectMake(0, dealPic.frame.size.height - titleBackgroundHeight, screenWidth, titleBackgroundHeight)];
     titleBackground.image = [UIImage imageNamed:@"Title Background"];
-    titleBackground.alpha = 0.65;
+    
+    if (self.deal.photo1) {
+        titleBackground.alpha = 0.65;
+    } else {
+        titleBackground.alpha = 0;
+    }
+    
     [sharedView addSubview:titleBackground];
     
     CGFloat titleLabelHeight = 48.0;
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                    dealPic.frame.size.height - titleLabelHeight - 5,
-                                                                   screenWidth - iconsLeftMargin * 2,
+                                                                   screenWidth - iconsLeftMarginSharedView * 2,
                                                                    titleLabelHeight)];
-    titleLabel.font = [UIFont fontWithName:@"Avenir-Medium" size:17.0];
+    titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17.0];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.numberOfLines = 2;
     titleLabel.text = self.titlelabel.text;
@@ -1040,21 +1099,21 @@
     
     CGFloat detailsVerticalGap = 7.0;
     CGFloat detailsLowestYPoint;
-    CGFloat priceXPoint = labelsLeftMargin;
+    CGFloat priceXPoint = labelsLeftMarginSharedView;
     UIColor *detailsTextColor = textGray;
     
-    UIImageView *storeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+    UIImageView *storeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                           dealPic.frame.size.height + detailsVerticalGap,
                                                                           self.StoreIcon.frame.size.width,
                                                                           self.StoreIcon.frame.size.height)];
     storeIcon.image = [UIImage imageNamed:@"Store Icon"];
     [sharedView addSubview:storeIcon];
     
-    UILabel *storeLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+    UILabel *storeLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
                                                                    storeIcon.frame.origin.y,
-                                                                   self.storelabel.frame.size.width,
+                                                                   self.storelabel.frame.size.width - 18.0,
                                                                    storeIcon.frame.size.height)];
-    storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     storeLabel.textColor = detailsTextColor;
     storeLabel.numberOfLines = 1;
     storeLabel.text = self.storelabel.text;
@@ -1064,28 +1123,28 @@
     
     if (self.pricelabel.text.length > 0 || self.discountlabel.text.length > 0) {
         
-        UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+        UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                               detailsLowestYPoint + detailsVerticalGap,
                                                                               self.PriceIcon.frame.size.width,
                                                                               self.PriceIcon.frame.size.height)];
-        priceIcon.image = [UIImage imageNamed:@"Price Icon"];
+        priceIcon.image = self.PriceIcon.image;
         [sharedView addSubview:priceIcon];
         
         if (self.pricelabel.text.length > 0) {
             
-            UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+            UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
                                                                            priceIcon.frame.origin.y,
                                                                            self.pricelabel.frame.size.width,
                                                                            priceIcon.frame.size.height)];
             priceLabel.text = self.pricelabel.text;
+            priceLabel.font = [UIFont fontWithName:@"Avenir-Light" size:19.0];
             [priceLabel sizeToFit];
             priceLabel.center = priceIcon.center;
             CGRect priceLabelFrame = priceLabel.frame;
-            priceLabelFrame.origin.x = labelsLeftMargin;
+            priceLabelFrame.origin.x = labelsLeftMarginSharedView;
             priceLabel.frame = priceLabelFrame;
             
-            priceLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
-            priceLabel.textColor = detailsTextColor;
+            priceLabel.textColor = [UIColor blackColor];
             priceLabel.numberOfLines = 1;
             [sharedView addSubview:priceLabel];
             
@@ -1098,14 +1157,18 @@
                                                                               priceIcon.frame.origin.y,
                                                                               self.pricelabel.frame.size.width,
                                                                               priceIcon.frame.size.height)];
-            discountLabel.text = self.discountlabel.text;
+            if ([self.deal.discountType isEqualToString:@"lastPrice"]) {
+                discountLabel.attributedText = self.discountlabel.attributedText;
+            } else {
+                discountLabel.text = self.discountlabel.text;
+            }
+            discountLabel.font = [UIFont fontWithName:@"Avenir-Light" size:19.0];
             [discountLabel sizeToFit];
             discountLabel.center = priceIcon.center;
             CGRect discountLabelFrame = discountLabel.frame;
             discountLabelFrame.origin.x = priceXPoint;
             discountLabel.frame = discountLabelFrame;
             
-            discountLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
             discountLabel.textColor = detailsTextColor;
             discountLabel.numberOfLines = 1;
             [sharedView addSubview:discountLabel];
@@ -1116,18 +1179,18 @@
     
     if (self.categorylabel.text.length > 0 && [self.categorylabel.text rangeOfString:@"No Category"].location == NSNotFound) {
         
-        UIImageView *categoryIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+        UIImageView *categoryIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                                  detailsLowestYPoint + detailsVerticalGap,
                                                                                  self.CategoryIcon.frame.size.width,
                                                                                  self.CategoryIcon.frame.size.height)];
         categoryIcon.image = [UIImage imageNamed:@"Category Icon"];
         [sharedView addSubview:categoryIcon];
         
-        UILabel *categoryLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+        UILabel *categoryLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
                                                                           categoryIcon.frame.origin.y,
-                                                                          self.categorylabel.frame.size.width,
+                                                                          self.categorylabel.frame.size.width - 18.0,
                                                                           categoryIcon.frame.size.height)];
-        categoryLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+        categoryLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
         categoryLabel.textColor = detailsTextColor;
         categoryLabel.numberOfLines = 1;
         categoryLabel.text = self.categorylabel.text;
@@ -1138,18 +1201,18 @@
     
     if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"] && ![expirelabel.text isEqualToString:@"0"] && expirelabel.text.length > 0) {
         
-        UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+        UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                                    detailsLowestYPoint + detailsVerticalGap,
                                                                                    self.ExpireIcon.frame.size.width,
                                                                                    self.ExpireIcon.frame.size.height)];
-        storeIcon.image = [UIImage imageNamed:@"Expiration Date Icon"];
+        expirationIcon.image = [UIImage imageNamed:@"Expiration Date Icon"];
         [sharedView addSubview:expirationIcon];
         
-        UILabel *expirationLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+        UILabel *expirationLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
                                                                             expirationIcon.frame.origin.y,
-                                                                            self.expirelabel.frame.size.width,
+                                                                            self.expirelabel.frame.size.width - 18.0,
                                                                             expirationIcon.frame.size.height)];
-        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
         expirationLabel.textColor = detailsTextColor;
         expirationLabel.numberOfLines = 1;
         expirationLabel.text = self.expirelabel.text;
@@ -1285,7 +1348,7 @@
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
-- (IBAction)optionsAction:(id)sender {
+- (void)optionsAction:(id)sender {
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil
                                                             delegate:self
@@ -1294,20 +1357,23 @@
                                                    otherButtonTitles:@"Edit Deal", @"Report as Spam", nil];
     
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
-    
-    self.optionsButtonSelected.hidden = NO;
-    self.optionsButtonSelected.alpha = 0;
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         self.optionsButtonSelected.alpha = 1.0;
-                         self.optionsButton.alpha = 0; }
-                     completion:^(BOOL finished){
-                         self.optionsButton.hidden = YES; }];
 }
 
 - (IBAction)dealerProfileButtonClicked:(id)sender {
-    ProfileViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"profile"];
     
+    ProfileTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileID"];
+    ptvc.dealer = self.deal.dealer;
+    ptvc.dealer.photo = UIImageJPEGRepresentation(self.dealerImage.image, 1.0);
+    [self.navigationController pushViewController:ptvc animated:YES];
+}
+
+- (void)commenterProfileButtonClicked:(id)sender {
+    
+    UIButton *button = (UIButton *)sender;
+    Comment *comment = [self.commentsForPreview objectAtIndex:button.tag];
+    ProfileTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileID"];
+    ptvc.dealerID = comment.dealerID;
+    [self.navigationController pushViewController:ptvc animated:YES];
 }
 
 - (IBAction)urlSiteButtonClicked:(id)sender {
@@ -1356,16 +1422,24 @@
             }
             
             if (comment.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
-                cell.dealerProfilePic.image = [appDelegate myProfilePic];
+                [cell.dealerProfilePic setImage:[appDelegate myProfilePic] forState:UIControlStateNormal];
             } else {
-                [appDelegate otherProfilePic:comment.dealerPhotoURL forTarget:@"Commenter's Photo" inViewController:NAME_FOR_NOTIFICATIONS inCell:cell];
+                [appDelegate otherProfilePic:comment.dealerPhotoURL forTarget:@"Commenter's Photo" notificationName:NAME_FOR_NOTIFICATIONS inCell:cell];
             }
             
-            cell.dealerName.text = comment.dealerFullName;
+            [cell.dealerProfilePic setTag:indexPath.row];
+            [cell.dealerProfilePic addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [cell.dealerName setTitle:comment.dealerFullName forState:UIControlStateNormal];
+            [cell.dealerName setTag:indexPath.row];
+            [cell.dealerName addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            
             cell.commentDate.text = [comment.dateFormatter stringFromDate:comment.uploadDate];
             cell.commentBody.text = comment.text;
             
             [cell.contentView layoutIfNeeded];
+            
+            NSLog(@"\n\nComment body size: %f, %f", cell.commentBody.frame.size.width, cell.commentBody.frame.size.height);
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
@@ -1518,12 +1592,12 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.dealerImage.alpha = 1;
         }];
-    
+        
     } else if ([[info objectForKey:@"target"] isEqualToString:@"Commenter's Photo"]) {
         
         CommentsTableCell *cell = [info objectForKey:@"cell"];
         cell.dealerProfilePic.alpha = 0;
-        cell.dealerProfilePic.image = [info objectForKey:@"image"];
+        [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
         [UIView animateWithDuration:0.3 animations:^{
             cell.dealerProfilePic.alpha = 1;
         }];
@@ -1541,7 +1615,7 @@
     
     downloadRequest.bucket = AWS_S3_BUCKET_NAME;
     
-
+    
     downloadRequest.key = self.deal.dealer.photoURL;
     downloadRequest.downloadingFileURL = downloadingFileURL;
     
@@ -1692,6 +1766,11 @@
             EditDealTableViewController *edtvc = (EditDealTableViewController *)[navigationController topViewController];
             edtvc.deal = self.deal;
             edtvc.delegate = self;
+            if (self.deal.dealer.dealerID.intValue == appDelegate.dealer.dealerID.intValue || appDelegate.dealer.dealerID.intValue == 1) {
+                edtvc.canDeleteDeal = YES;
+            } else {
+                edtvc.canDeleteDeal = NO;
+            }
             
             [self presentViewController:navigationController animated:YES completion:nil];
         }
@@ -1708,14 +1787,14 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    self.optionsButton.hidden = NO;
-    self.optionsButton.alpha = 0;
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         self.optionsButtonSelected.alpha = 0;
-                         self.optionsButton.alpha = 1.0; }
-                     completion:^(BOOL finished){
-                         self.optionsButtonSelected.hidden = YES; }];
+//    self.optionsButton.hidden = NO;
+//    self.optionsButton.alpha = 0;
+//    [UIView animateWithDuration:0.3
+//                     animations:^{
+//                         self.optionsButtonSelected.alpha = 0;
+//                         self.optionsButton.alpha = 1.0; }
+//                     completion:^(BOOL finished){
+//                         self.optionsButtonSelected.hidden = YES; }];
 }
 
 @end

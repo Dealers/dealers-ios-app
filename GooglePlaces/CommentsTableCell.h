@@ -10,8 +10,9 @@
 
 @interface CommentsTableCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UIImageView *dealerProfilePic;
-@property (strong, nonatomic) IBOutlet UILabel *dealerName;
+@property (weak, nonatomic) IBOutlet UIView *dealerProfilePicPlaceholder;
+@property (strong, nonatomic) IBOutlet UIButton *dealerProfilePic;
+@property (strong, nonatomic) IBOutlet UIButton *dealerName;
 @property (strong, nonatomic) IBOutlet UILabel *commentBody;
 @property (strong, nonatomic) IBOutlet UILabel *commentDate;
 @property NSDateFormatter *dateFormatter;

@@ -25,15 +25,6 @@
 @property (nonatomic) NSDate *expiration;
 @property (nonatomic) NSString *moreDescription;
 
-@property (nonatomic) NSNumber *likeCounter;
-@property (nonatomic) NSNumber *commentCounter;
-
-@property (nonatomic) NSString *type;
-@property (nonatomic) NSString *dealUrlSite;
-@property (nonatomic) NSString *dealStoreAddress;
-@property (nonatomic) NSString *dealStoreLatitude;
-@property (nonatomic) NSString *dealStoreLongitude;
-
 @property (nonatomic) NSString *photoURL1;
 @property (nonatomic) NSString *photoURL2;
 @property (nonatomic) NSString *photoURL3;
@@ -43,13 +34,21 @@
 @property (nonatomic) UIImage *photo3;
 @property (nonatomic) UIImage *photo4;
 @property (nonatomic) NSNumber *photoSum;
+@property BOOL downloadingPhoto;
 
+@property (nonatomic) NSString *type;
 @property (nonatomic) NSDate *uploadDate;
 @property DealAttrib *dealAttrib;
 @property Dealer *dealer;
 
 @property (nonatomic) NSMutableArray *comments;
 
-@property (nonatomic) NSString *dealUserID;
+// Need to delete
+@property (nonatomic) NSNumber *likeCounter;
+@property (nonatomic) NSNumber *commentCounter;
+@property (nonatomic) NSString *dealUrlSite;
+@property (nonatomic) NSString *dealStoreAddress;
+@property (nonatomic) NSString *dealStoreLatitude;
+@property (nonatomic) NSString *dealStoreLongitude;
 
 @end

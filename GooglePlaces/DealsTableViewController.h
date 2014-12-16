@@ -17,10 +17,12 @@
 #import "DealsTableCell.h"
 #import "DealsNoPhotoTableCell.h"
 
-@interface DealsTableViewController : UITableViewController {
+@interface DealsTableViewController : UITableViewController <UIScrollViewDelegate> {
     
+    int firstPhotosCounter;
     NSString *selfViewController;
     UIView *loadingView;
+    BOOL needToSetFooter;
 }
 
 @property AppDelegate *appDelegate;
@@ -28,5 +30,12 @@
 @property NSMutableArray *deals;
 
 @property NSString *categoryFromExplore;
+
+@property RKPaginator *paginator;
+
+@property UIView *footerView;
+@property UIImageView *footerImageView;
+
+@property BOOL pageIsLoading;
 
 @end

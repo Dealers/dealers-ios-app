@@ -46,6 +46,7 @@
 @property (strong,nonatomic) NSString *urlImage4;
 
 @property (nonatomic) IBOutlet UIScrollView *scroll;
+@property (weak, nonatomic) IBOutlet UIView *dealerImagePlaceholder;
 @property (weak, nonatomic) IBOutlet UIImageView *dealerImage;
 @property (weak, nonatomic) IBOutlet UILabel *titlelabel;
 @property (weak, nonatomic) IBOutlet UILabel *storelabel;
@@ -75,8 +76,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *likeButtonSelected;
 @property (weak, nonatomic) IBOutlet UIButton *CommentButton;
 @property (weak, nonatomic) IBOutlet UIButton *ShareButton;
-@property (weak, nonatomic) IBOutlet UIButton *optionsButton;
-@property (weak, nonatomic) IBOutlet UIButton *optionsButtonSelected;
 
 @property NSNumber *likeCounter;
 @property NSNumber *shareCounter;

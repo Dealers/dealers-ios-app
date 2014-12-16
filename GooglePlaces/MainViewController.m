@@ -19,10 +19,9 @@
 
 @synthesize appDelegate;
 @synthesize facebookicon;
-@synthesize twittericon;
 @synthesize emailicon;
 @synthesize i;
-@synthesize backwhite,dealershead,already,signin;
+@synthesize backwhite,dealershead,dealersWhiteHead,already,signin;
 
 
 - (void)viewDidLoad
@@ -32,10 +31,6 @@
     if ([self checkIfUserLoggedIn]) {
         return;
     }
-    
-    ScreenHeight = self.view.frame.size.height/10;
-    
-    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleFBSessionStateChangeWithNotification:)
@@ -50,9 +45,11 @@
         already.alpha=0.0;
         backwhite.alpha=1.0;
         dealershead.alpha=1.0;
+        dealersWhiteHead.alpha = 1.0;
         dealershead.center = CGPointMake(160,(CGRectGetMidY(appDelegate.window.bounds)-dealershead.frame.size.height/2-16));
+        dealersWhiteHead.center = CGPointMake(160,(CGRectGetMidY(appDelegate.window.bounds)-dealershead.frame.size.height/2-16));
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(anim2) userInfo:nil repeats:NO];
-    
+        
     } else {
         [self objectInPlace];
     }
@@ -66,6 +63,7 @@
 {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self stylesTransitionButton];
     
     if (appDelegate.screenShot) {
         [self.screenShot setImage:appDelegate.screenShot];
@@ -73,10 +71,63 @@
     }
 }
 
+- (void)stylesTransitionButton {
+    
+    UIButton *switchStyles = [UIButton buttonWithType:UIButtonTypeCustom];
+    switchStyles.tag = 321321321;
+    [switchStyles setFrame:CGRectMake(0, 0, 150, 150)];
+    [switchStyles addTarget:self action:@selector(switchStyle) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.view addSubview:switchStyles];
+}
+
+- (void)switchStyle
+{
+    if (self.regularView.hidden) {
+        
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             
+                             self.darkCollageView.alpha = 0;
+                             
+                         }
+                         completion:^(BOOL finished) {
+                             
+                             self.darkCollageView.hidden = YES;
+                             self.regularView.hidden = NO;
+                             self.regularView.alpha = 0;
+                             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+                             [UIView animateWithDuration:0.5 animations:^{
+                                 
+                                 self.regularView.alpha = 1.0;
+                             }];
+                         }];
+        
+    } else {
+        
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             
+                             self.regularView.alpha = 0;
+                             
+                         }
+                         completion:^(BOOL finished) {
+                             
+                             self.regularView.hidden = YES;
+                             self.darkCollageView.hidden = NO;
+                             self.darkCollageView.alpha = 0;
+                             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+                             [UIView animateWithDuration:0.5 animations:^{
+                                 
+                                 self.darkCollageView.alpha = 1.0;
+                             }];
+                         }];
+    }
+}
+
 - (void)objectInPlace {
     dealershead.center = CGPointMake(160, 55);
+    dealersWhiteHead.center = CGPointMake(160, 75);
     facebookicon.alpha=1.0;
-    twittericon.alpha=1.0;
     emailicon.alpha=1.0;
     already.alpha=1.0;
     signin.alpha=1.0;
@@ -85,18 +136,19 @@
 
 -(void) anim2 {
     
-    [UIView animateWithDuration:1.0 animations:^{dealershead.center = CGPointMake(160, 55);}];
+    [UIView animateWithDuration:1.0 animations:^{
+        dealershead.center = CGPointMake(160, 55);
+        dealersWhiteHead.center = CGPointMake(160, 75);
+    }];
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(anim) userInfo:nil repeats:NO];
 }
 
 -(void) anim {
     
-    [UIView animateWithDuration:0.1 animations:^{backwhite.alpha=0.0;}];
+    [UIView animateWithDuration:0.5 animations:^{backwhite.alpha=0.0;}];
     facebookicon.alpha=0.0;
-    twittericon.alpha=0.0;
     emailicon.alpha=0.0;
     [UIView animateWithDuration:0.5 animations:^{facebookicon.alpha=1.0;}];
-    [UIView animateWithDuration:0.5 animations:^{twittericon.alpha=1.0;}];
     [UIView animateWithDuration:0.5 animations:^{emailicon.alpha=1.0;}];
     [UIView animateWithDuration:0.5 animations:^{already.alpha=1.0;}];
     [UIView animateWithDuration:0.5 animations:^{signin.alpha=1.0;}];
@@ -110,23 +162,6 @@
 -(IBAction)SigninButton:(id)sender{
     SignInTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SignInID"];
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (IBAction)getInWithoutSigning:(id)sender {
-    
-    Dealer *dealer = [[Dealer alloc]init];
-    
-    dealer.dealerID = [NSNumber numberWithInt:1234];
-    dealer.email = @"gullumbroso@gmail.com";
-    dealer.fullName = @"Gilad Lumbroso";
-    dealer.dateOfBirth = [NSDate date];
-    dealer.gender = @"Male";
-    dealer.photo = nil;
-    dealer.userLikesList = nil;
-    
-    appDelegate.dealer = dealer;
-        
-    [appDelegate setTabBarController];
 }
 
 - (IBAction)facebookButtonClicked:(id)sender{
@@ -145,6 +180,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [self.screenShot setImage:nil];
+    [[self.navigationController.view viewWithTag:321321321] removeFromSuperview];
 }
 
 -(int) isIphone5 {
@@ -170,43 +206,48 @@
 {
     KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
     [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
     
-    NSString *username = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString *token = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
     NSString *password = [keychain objectForKey:(__bridge id)(kSecValueData)];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *fullName = [userDefaults objectForKey:@"fullName"];
-
-    if (username.length > 0 && password.length > 0 && fullName.length > 0) {
+    
+    if (token.length > 0 && password.length > 0 && fullName.length > 0) {
         
-        [appDelegate setHTTPClientUsername:username andPassword:password];
+        [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:token];
         
-        self.appDelegate.dealer = [[Dealer alloc]init];
+        appDelegate.dealer = [[Dealer alloc]init];
         
-        self.appDelegate.dealer.dealerID = [userDefaults objectForKey:@"dealerID"];
-        self.appDelegate.dealer.email = [userDefaults objectForKey:@"email"];
-        self.appDelegate.dealer.fullName = [userDefaults objectForKey:@"fullName"];
-        self.appDelegate.dealer.dateOfBirth = [userDefaults objectForKey:@"dateOfBirth"];
-        self.appDelegate.dealer.gender = [userDefaults objectForKey:@"gender"];
-        self.appDelegate.dealer.registerDate = [userDefaults objectForKey:@"registerDate"];
-        self.appDelegate.dealer.location = [userDefaults objectForKey:@"location"];
-        self.appDelegate.dealer.about = [userDefaults objectForKey:@"about"];
-        self.appDelegate.dealer.photoURL = [userDefaults objectForKey:@"photoURL"];
-        self.appDelegate.dealer.photo = [userDefaults objectForKey:@"photo"];
-        self.appDelegate.dealer.uploadedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"uploadedDeals"]];
-        self.appDelegate.dealer.likedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"likedDeals"]];
-        self.appDelegate.dealer.sharedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"sharedDeals"]];
-        self.appDelegate.dealer.followedBy = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"followedBy"]];
-        self.appDelegate.dealer.followings = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"followings"]];
-        self.appDelegate.dealer.badReportsCounter = [userDefaults objectForKey:@"badReportsCounter"];
-        self.appDelegate.dealer.score = [userDefaults objectForKey:@"score"];
-        self.appDelegate.dealer.rank = [userDefaults objectForKey:@"rank"];
-        self.appDelegate.dealer.reliability = [userDefaults objectForKey:@"reliability"];
+        appDelegate.dealer.dealerID = [userDefaults objectForKey:@"dealerID"];
+        appDelegate.dealer.email = [userDefaults objectForKey:@"email"];
+        appDelegate.dealer.username = [userDefaults objectForKey:@"username"];
+        appDelegate.dealer.fullName = [userDefaults objectForKey:@"fullName"];
+        appDelegate.dealer.dateOfBirth = [userDefaults objectForKey:@"dateOfBirth"];
+        appDelegate.dealer.gender = [userDefaults objectForKey:@"gender"];
+        appDelegate.dealer.registerDate = [userDefaults objectForKey:@"registerDate"];
+        appDelegate.dealer.location = [userDefaults objectForKey:@"location"];
+        appDelegate.dealer.about = [userDefaults objectForKey:@"about"];
+        appDelegate.dealer.photoURL = [userDefaults objectForKey:@"photoURL"];
+        appDelegate.dealer.uploadedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"uploadedDeals"]];
+        appDelegate.dealer.likedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"likedDeals"]];
+        appDelegate.dealer.sharedDeals = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"sharedDeals"]];
+        appDelegate.dealer.followedBy = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"followedBy"]];
+        appDelegate.dealer.followings = [NSMutableArray arrayWithArray:[userDefaults objectForKey:@"followings"]];
+        appDelegate.dealer.badReportsCounter = [userDefaults objectForKey:@"badReportsCounter"];
+        appDelegate.dealer.score = [userDefaults objectForKey:@"score"];
+        appDelegate.dealer.rank = [userDefaults objectForKey:@"rank"];
+        appDelegate.dealer.reliability = [userDefaults objectForKey:@"reliability"];
+        
+        if (appDelegate.dealer.photoURL.length > 1 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
+            appDelegate.dealer.photo = [appDelegate loadProfilePic];
+        }
         
         [appDelegate setTabBarController];
         
         return YES;
-    
+        
     } else {
         
         return NO;
@@ -229,7 +270,7 @@
         
         if ([appDelegate isFacebookConnected]) {
             
-            // The session is open. Get the user information and update the UI.
+            // The session is open. Get the user information and check if the user already exists.
             
             [FBRequestConnection startWithGraphPath:@"me"
                                          parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(normal), location, email"}
@@ -237,38 +278,14 @@
                                   completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                                       
                                       if (!error) {
-
-                                          self.dealer = [[Dealer alloc]init];
                                           
-                                          self.dealer.fullName = [NSString stringWithFormat:@"%@ %@",
-                                                                   [result objectForKey:@"first_name"],
-                                                                   [result objectForKey:@"last_name"]
-                                                                   ];
+                                          FBSession *session = [userInfo objectForKey:@"session"];
+                                          facebookToken = session.accessTokenData.accessToken;
+                                          facebookInfo = (FBGraphObject *)result;
+                                          facebookUserEmail = [result objectForKey:@"email"];
                                           
-                                          self.dealer.email = [result objectForKey:@"email"];
+                                          [self signInWithToken];
                                           
-                                          
-                                          NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-                                          dateFormatter.dateFormat = @"MM/dd/yyyy";
-                                          self.dealer.dateOfBirth = [dateFormatter dateFromString:[result objectForKey:@"birthday"]];
-                                          
-                                          self.dealer.gender = [result objectForKey:@"gender"];
-                                          
-                                          self.dealer.location = [result objectForKey:@"loaction"];
-                                          
-                                          NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
-                                          self.dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
-                                          
-                                          self.appDelegate.dealer = self.dealer;
-                                          
-                                          // Upload all the data to Dealers database.
-                                          
-                                          // Enter the user to Dealers.
-                                          
-                                          [loggingInFacebook hide:YES];
-                                          
-                                          [appDelegate setTabBarController];
-                                      
                                       } else {
                                           
                                           NSLog(@"%@", [error localizedDescription]);
@@ -281,13 +298,144 @@
             
             [loggingInFacebook hide:YES];
         }
-    
+        
     } else {
         
         // In case an error has occured, then just log the error and update the UI accordingly.
         NSLog(@"Error: %@", [error localizedDescription]);
         [loggingInFacebook hide:YES];
     }
+}
+
+- (void)signInWithToken
+{
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:facebookToken];
+    
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/dealerlogins/"
+                                           parameters:nil
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  
+                                                  // The user is an existing user at Dealer. Need to save his info and update it if necessary
+                                                  didDownloadUserData = YES;
+                                                  self.appDelegate.dealer = mappingResult.firstObject;
+                                                  [self updateInfoReceivedByFacebook];
+                                                  
+                                                  if (appDelegate.dealer.photoURL.length > 1) {
+                                                      hasPhoto = YES;
+                                                      [self downloadUesrPhoto];
+                                                  }
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  
+                                                  if (error.code == -1004) {
+                                                      
+                                                      // No connection to the server error
+                                                      [noConnection show:YES];
+                                                      [noConnection hide:YES afterDelay:2.0];
+                                                      
+                                                  } else if ([error.localizedDescription isEqualToString:@"Invalid username/password"]) {
+                                                      
+                                                      // The user is not an existing user at Dealers. Need to add him as a dealer
+                                                      [self addAsNewDealer];
+                                                      
+                                                  } else {
+                                                      
+                                                      UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign in" message:@"Sorry for that, please try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                      [alert show];
+                                                  }
+                                                  
+                                                  [loggingInFacebook hide:YES];
+                                              }];
+}
+
+- (void)addAsNewDealer
+{
+    
+}
+
+- (void)updateInfoReceivedByFacebook
+{
+    
+    self.dealer = [[Dealer alloc]init];
+    
+    self.dealer.email = [facebookInfo objectForKey:@"email"];
+    
+    self.dealer.fullName = [NSString stringWithFormat:@"%@ %@",
+                            [facebookInfo objectForKey:@"first_name"],
+                            [facebookInfo objectForKey:@"last_name"]
+                            ];
+    
+
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yyyy";
+    self.dealer.dateOfBirth = [dateFormatter dateFromString:[facebookInfo objectForKey:@"birthday"]];
+    
+    self.dealer.gender = [facebookInfo objectForKey:@"gender"];
+    
+    self.dealer.location = [facebookInfo objectForKey:@"loaction"];
+    
+    NSURL *pictureURL = [NSURL URLWithString:[[[facebookInfo objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
+    self.dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
+    
+    self.appDelegate.dealer = self.dealer;
+    
+    // Upload all the data to Dealers database.
+    
+    // Enter the user to Dealers.
+    
+    [loggingInFacebook hide:YES];
+    
+    [appDelegate setTabBarController];
+}
+
+- (void)downloadUesrPhoto
+{
+    NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"downloaded_image_%@.jpg", appDelegate.dealer.dealerID]];
+    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+    
+    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+    
+    downloadRequest.bucket = @"dealers-app";
+    downloadRequest.key = appDelegate.dealer.photoURL;
+    downloadRequest.downloadingFileURL = downloadingFileURL;
+    
+    [[[AWSS3TransferManager defaultS3TransferManager] download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
+                                                                                           withBlock:^id(BFTask *task) {
+                                                                                               
+                                                                                               if (task.error){
+                                                                                                   if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                                                       switch (task.error.code) {
+                                                                                                           case AWSS3TransferManagerErrorCancelled:
+                                                                                                           case AWSS3TransferManagerErrorPaused:
+                                                                                                               break;
+                                                                                                               
+                                                                                                           default:
+                                                                                                               NSLog(@"Error: %@", task.error);
+                                                                                                               break;
+                                                                                                       }
+                                                                                                   } else {
+                                                                                                       // Unknown error.
+                                                                                                       NSLog(@"Error: %@", task.error);
+                                                                                                   }
+                                                                                               }
+                                                                                               
+                                                                                               if (task.result) {
+                                                                                                   
+                                                                                                   didPhotoFinishedDownloading = YES;
+                                                                                                   if (didDownloadUserData) {
+                                                                                                       [self updateInfoReceivedByFacebook];
+                                                                                                       [self enterDealers];
+                                                                                                   }
+                                                                                               }
+                                                                                               return nil;
+                                                                                           }];
+}
+
+- (void)enterDealers
+{
+    [appDelegate saveUserDetailsOnDevice];
+    [appDelegate setTabBarController];
 }
 
 - (void)setProgressIndicator
@@ -303,7 +451,18 @@
     loggingInFacebook.labelFont = [UIFont fontWithName:@"Avenir-Light" size:19.0];
     loggingInFacebook.animationType = MBProgressHUDAnimationZoomIn;
     
-    [self.view addSubview:loggingInFacebook];
+    noConnection = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    noConnection.delegate = self;
+    noConnection.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
+    noConnection.mode = MBProgressHUDModeCustomView;
+    noConnection.labelText = @"Can't connect the server";
+    noConnection.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    noConnection.detailsLabelText = @"Check your connection";
+    noConnection.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
+    noConnection.animationType = MBProgressHUDAnimationZoomIn;
+    
+    [self.navigationController.view addSubview:loggingInFacebook];
+    [self.navigationController.view addSubview:noConnection];
 }
 
 @end

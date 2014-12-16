@@ -71,6 +71,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *addPhoto;
 @property (nonatomic) NSMutableArray *photosArray;
 
+@property BOOL canDeleteDeal;
 @property BOOL didChangeOriginalDeal;
 
 

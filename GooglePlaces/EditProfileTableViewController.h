@@ -10,6 +10,7 @@
 #import <AWSiOSSDKv2/S3.h>
 #import "AppDelegate.h"
 #import "PasswordTableViewController.h"
+#import "ProfileTableViewController.h"
 #import "MBProgressHUD.h"
 #import "KeychainItemWrapper.h"
 
@@ -28,6 +29,8 @@
 @property RKObjectManager *editProfileManager;
 
 @property Dealer *editedDealer;
+
+@property id delegate;
 
 @property (weak, nonatomic) IBOutlet UIButton *profilePicButton;
 @property (nonatomic) NSData *profilePicData;
