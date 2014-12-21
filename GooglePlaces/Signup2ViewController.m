@@ -286,6 +286,7 @@
 
 - (void)uploadData
 {
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"09"];
     [[RKObjectManager sharedManager] postObject:self.dealer
                                            path:@"/dealers/"
                                      parameters:nil

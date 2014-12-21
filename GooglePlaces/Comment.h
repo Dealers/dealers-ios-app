@@ -16,9 +16,7 @@
 @property NSNumber *commentID;
 @property NSString *text;
 @property NSNumber *dealID;
-@property NSNumber *dealerID;
-@property NSString *dealerFullName;
-@property NSString *dealerPhotoURL;
+@property Dealer *dealer;
 @property NSDate *uploadDate;
 @property NSString *type; // Deal or Post. Currently only Deal type exists.
 

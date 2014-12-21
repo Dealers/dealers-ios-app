@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Deal.h"
 
 @interface DealAttrib : NSObject
 
@@ -18,5 +19,7 @@
 
 @property NSMutableArray *dealersThatLiked;
 @property NSMutableArray *dealersThatShared;
+
+@property Deal *deal;
 
 @end

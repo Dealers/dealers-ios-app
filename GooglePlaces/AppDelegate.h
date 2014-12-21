@@ -13,6 +13,7 @@
 #import "Dealer.h"
 #import "DealAttrib.h"
 #import "Comment.h"
+#import "Error.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
@@ -46,7 +47,7 @@
 - (NSData *)loadProfilePic;
 - (void)updateUserInfo;
 - (UIImage *)myProfilePic;
-- (void)otherProfilePic:(NSString *)photoURL forTarget:(NSString *)target notificationName:(NSString *)notificationName inCell:(id)cell;
+- (void)otherProfilePic:(Dealer *)dealer forTarget:(NSString *)target notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath;
 - (void)downloadPhotosForDeal:(Deal *)deal notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath mode:(NSString *)mode;
 - (UIColor *)ourPurple;
 - (UIColor *)textGrayColor;

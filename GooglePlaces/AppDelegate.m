@@ -52,11 +52,7 @@
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                        [UIFont fontWithName:@"Avenir-Roman" size:11.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
-    
-    // Customizing other elements:
-    [[UIPickerView appearance] setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
-    [[UIDatePicker appearance] setBackgroundColor: [UIColor groupTableViewBackgroundColor]];
-    
+        
     // Configuring RestKit:
     [self configureRestKit];
     
@@ -298,7 +294,7 @@
                                                          NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString* path = [documentsDirectory stringByAppendingPathComponent:
-                      [NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.username]];
+                      [NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.email]];
     NSData *profilePic = [NSData dataWithContentsOfFile:path];
     
     return profilePic;
@@ -309,7 +305,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.username]];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.email]];
     NSError *error;
     BOOL success = [fileManager removeItemAtPath:filePath error:&error];
     if (success) {
@@ -350,21 +346,21 @@
     }
 }
 
-- (void)otherProfilePic:(NSString *)photoURL forTarget:(NSString *)target notificationName:(NSString *)notificationName inCell:(id)cell
+- (void)otherProfilePic:(Dealer *)dealer forTarget:(NSString *)target notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath
 {
-    if (photoURL.length > 1 && ![photoURL isEqualToString:@"None"]) {
+    if (dealer.photoURL.length > 1 && ![dealer.photoURL isEqualToString:@"None"]) {
         
         AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
         
         NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:
-                                         [NSString stringWithFormat:@"profile_pic_tmp_%@_%i.jpg", target, arc4random_uniform(100000)]];
+                                         [NSString stringWithFormat:@"profile_pic_tmp_%@_%@.jpg", target, dealer.dealerID]];
         
         NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
         
         AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
         
         downloadRequest.bucket = AWS_S3_BUCKET_NAME;
-        downloadRequest.key = photoURL;
+        downloadRequest.key = dealer.photoURL;
         downloadRequest.downloadingFileURL = downloadingFileURL;
         
         [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
@@ -390,11 +386,13 @@
             
             if (task.result) {
                 
-                __block UIImage *image = [UIImage imageWithContentsOfFile:downloadingFilePath];
+                dealer.photo = [NSData dataWithContentsOfFile:downloadingFilePath];
+                dealer.downloadingPhoto = NO;
                 __block NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
-                                                  image, @"image",
+                                                  [UIImage imageWithData:dealer.photo], @"image",
+                                                  notificationName, @"notificationName",
                                                   target, @"target",
-                                                  cell, @"cell",
+                                                  indexPath, @"indexPath",
                                                   nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                                     object:nil
@@ -406,15 +404,23 @@
         
     } else {
         
+        dealer.downloadingPhoto = NO;
         NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
                                   [UIImage imageNamed:@"Profile Pic Placeholder"], @"image",
+                                  notificationName, @"notificationName",
                                   target, @"target",
-                                  cell, @"cell",
+                                  indexPath, @"indexPath",
                                   nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                            object:nil
-                                                          userInfo:userInfo];
+        // We need to delay the post of the notification so the cell will have sufficient time to be created.
+        [self performSelector:@selector(sendNotificationAfterDelay:) withObject:userInfo afterDelay:0.1];
     }
+}
+
+- (void)sendNotificationAfterDelay:(NSDictionary *)userInfo
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:[userInfo objectForKey:@"notificationName"]
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 - (void)downloadPhotosForDeal:(Deal *)deal notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath mode:(NSString *)mode
@@ -1216,12 +1222,13 @@
                                                           @"id" : @"commentID",
                                                           @"text" : @"text",
                                                           @"deal" : @"dealID",
-                                                          @"dealer.id" : @"dealerID",
-                                                          @"dealer.full_name" : @"dealerFullName",
-                                                          @"dealer.photo" : @"dealerPhotoURL",
                                                           @"upload_date" : @"uploadDate",
                                                           @"type" : @"type"
                                                           }];
+    
+    [commentMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"dealer"
+                                                                                   toKeyPath:@"dealer"
+                                                                                 withMapping:[self dealerMapping]]];
     
     return commentMapping;
 }
@@ -1233,7 +1240,7 @@
                                                              @"id" : @"commentID",
                                                              @"text" : @"text",
                                                              @"deal" : @"dealID",
-                                                             @"dealer" : @"dealerID",
+                                                             @"dealer" : @"dealer.dealerID",
                                                              @"upload_date" : @"uploadDate",
                                                              @"type" : @"type"
                                                              }];
@@ -1241,6 +1248,15 @@
     return addCommentMapping;
 }
 
+- (RKObjectMapping *)likedDealsMapping
+{
+    RKObjectMapping *likedDealsMapping = [RKObjectMapping mappingForClass:[DealAttrib class]];
+    [likedDealsMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"deal"
+                                                                                   toKeyPath:@"deal"
+                                                                                 withMapping:[self dealMapping]]];
+    
+    return likedDealsMapping;
+}
 - (RKObjectMapping *)paginationMapping
 {
     RKObjectMapping *paginationMapping = [RKObjectMapping mappingForClass:[RKPaginator class]];
@@ -1254,6 +1270,19 @@
     return paginationMapping;
 }
 
+- (RKObjectMapping *)errorMapping
+{
+    RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[Error class]];
+    
+    [errorMapping addAttributeMappingsFromDictionary:@{
+                                                            @"detail": @"detail",
+                                                            @"user": @"user",
+                                                            @"email": @"email",
+                                                            }];
+    
+    return errorMapping;
+}
+    
 - (void)setHTTPClientUsername:(NSString *)username andPassword:(NSString *)password
 {
     [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:username password:password];
@@ -1329,7 +1358,7 @@
                                             statusCodes:statusCodes];
     
     RKResponseDescriptor *likedDealsResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
+    [RKResponseDescriptor responseDescriptorWithMapping:[self likedDealsMapping]
                                                  method:RKRequestMethodGET
                                             pathPattern:@"/likeddeals/:likeddealID/"
                                                 keyPath:@"liked_deals"
@@ -1340,6 +1369,13 @@
                                                  method:RKRequestMethodAny
                                             pathPattern:@"/dealers/:dealerID/"
                                                 keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *likersResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealerMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealerslikeddeals/:dealerslikeddealID/"
+                                                keyPath:@"dealers_that_liked"
                                             statusCodes:statusCodes];
     
     RKResponseDescriptor *dealAttribResponseDescriptor =
@@ -1363,13 +1399,17 @@
                                                 keyPath:nil
                                             statusCodes:statusCodes];
     
-    RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
-    [errorMapping addPropertyMapping: [RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"errorMessage"]];
+    RKResponseDescriptor *signUpErrorResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self errorMapping]
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"/dealers/"
+                                                keyPath:nil
+                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
     
-    RKResponseDescriptor *errorResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:errorMapping
-                                                 method:RKRequestMethodAny
-                                            pathPattern:nil
+    RKResponseDescriptor *signInErrorResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self errorMapping]
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"/dealerlogins/"
                                                 keyPath:@"detail"
                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
     
@@ -1411,10 +1451,10 @@
                                                uploadedDealsResponseDescriptor,
                                                likedDealsResponseDescriptor,
                                                specificDealerResponseDescriptor,
+                                               likersResponseDescriptor,
                                                dealAttribResponseDescriptor,
                                                commentsResponseDescriptor,
-                                               addCommentResponseDescriptor,
-                                               errorResponseDescriptor
+                                               addCommentResponseDescriptor
                                                ]];
     
     [manager addRequestDescriptorsFromArray:@[

@@ -20,6 +20,7 @@
     
     [self initialize];
 //    [self configureRestKit];
+    [self setLoadingAnimation];
     [self setProgressIndicator];
 }
 
@@ -28,12 +29,15 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     appDelegate = [[UIApplication sharedApplication] delegate];
     
+    [self setRoundCornersToButton];
+}
+
+- (void)setLoadingAnimation
+{
     loadingAnimation = [appDelegate loadingAnimationWhite];
     loadingAnimation.center = self.signInButton.center;
     [self.bottomView addSubview:loadingAnimation];
     loadingAnimation.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    
-    [self setRoundCornersToButton];
 }
 
 - (void)setRoundCornersToButton
@@ -212,7 +216,7 @@
                                      
                                      self.appDelegate.dealer = mappingResult.firstObject;
                                      
-                                     if (appDelegate.dealer.photoURL.length > 2) {
+                                     if (appDelegate.dealer.photoURL.length > 2 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
                                          hasPhoto = YES;
                                          [self downloadUesrPhoto];
                                      }

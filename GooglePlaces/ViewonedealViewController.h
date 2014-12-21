@@ -16,6 +16,7 @@
 #import "Comment.h"
 #import "CommentsTableCell.h"
 #import "EditDealTableViewController.h"
+#import "DealersTableViewController.h"
 #import "Notification.h"
 
 @interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate>

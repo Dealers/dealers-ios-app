@@ -2034,7 +2034,7 @@ Shared by people like you</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY" userLabel="Sign In button">
-                                        <rect key="frame" x="24" y="495.0000024143884" width="274" height="31"/>
+                                        <rect key="frame" x="24" y="495.00000099288712" width="274" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -2126,7 +2126,7 @@ Shared by people like you</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0KA-81-Cgg" userLabel="Sign In button">
-                                        <rect key="frame" x="24" y="515.00000027029466" width="274" height="31"/>
+                                        <rect key="frame" x="24" y="515.00000104570893" width="274" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -2165,6 +2165,8 @@ Shared by people like you</string>
                         <outlet property="regularView" destination="044-8X-zCA" id="woE-1f-GjT"/>
                         <outlet property="screenShot" destination="M6k-rI-nfG" id="rIY-mi-DGx"/>
                         <outlet property="signin" destination="Ygy-aP-Bva" id="ETM-Gu-UI1"/>
+                        <outlet property="slogen" destination="d0a-io-i0E" id="pbM-dW-uU9"/>
+                        <outlet property="slogenDark" destination="yVz-3k-zxQ" id="qFT-oF-Vt5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eu8-6I-VzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2405,7 +2407,207 @@ Shared by people like you</string>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1139" y="-314"/>
+            <point key="canvasLocation" x="-1675" y="-655"/>
+        </scene>
+        <!--Sign Up Table View Controller-->
+        <scene sceneID="0vz-zz-cQG">
+            <objects>
+                <tableViewController storyboardIdentifier="SignUpID" id="7Oo-M6-Lwa" customClass="SignUpTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="rIH-4h-clZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <inset key="separatorInset" minX="53" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="yfl-Qz-9oQ" userLabel="Profile Pic View">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bJs-gU-7bt" userLabel="Change Profile Pic Button">
+                                    <rect key="frame" x="115" y="20" width="90" height="90"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="changeProfilePic:" destination="7Oo-M6-Lwa" eventType="touchUpInside" id="bcF-vW-anL"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="oXq-PA-Ji1" userLabel="Bottom View">
+                            <rect key="frame" x="0.0" y="522" width="320" height="84"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" id="Kjp-MO-Sjl" userLabel="Sign Up Button Background">
+                                    <rect key="frame" x="20" y="20" width="280" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.58823529409999997" green="0.0" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Muc-PO-MtV">
+                                    <rect key="frame" x="20" y="20" width="280" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.58823529409999997" green="0.0" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="19"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Sign Up!">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="signUp:" destination="7Oo-M6-Lwa" eventType="touchUpInside" id="yl7-m3-zlt"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </view>
+                        <sections>
+                            <tableViewSection id="SGA-Ec-4gn">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="JFq-aV-81j" userLabel="Full Name Cell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JFq-aV-81j" id="aHg-mO-4CJ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Title Icon" id="bVb-xO-zQa" userLabel="Full Name Icon">
+                                                    <rect key="frame" x="15" y="7" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <textField opaque="NO" clipsSubviews="YES" tag="11111" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" minimumFontSize="17" id="s9r-el-Tr9" userLabel="Full Name Text Field">
+                                                    <rect key="frame" x="53" y="0.0" width="253" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="7Oo-M6-Lwa" id="TgX-xE-FEK"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="3tb-Yk-EhV" userLabel="Email Cell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3tb-Yk-EhV" id="hEX-BI-xft">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Email For Registration Icon" id="h2o-Fh-Hd4" userLabel="Email Icon">
+                                                    <rect key="frame" x="15" y="7" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <textField opaque="NO" clipsSubviews="YES" tag="22222" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" id="1Lk-Oa-NkF" userLabel="Email Text Field">
+                                                    <rect key="frame" x="53" y="0.0" width="253" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="7Oo-M6-Lwa" id="xeV-ht-Qup"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="IZn-nA-eOk" userLabel="Password Cell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IZn-nA-eOk" id="i3K-Wi-zCB">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Password For Registration Icon" id="YXu-oQ-jqn" userLabel="Password Icon">
+                                                    <rect key="frame" x="15" y="7" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <textField opaque="NO" clipsSubviews="YES" tag="33333" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" id="0BT-8X-Ld3" userLabel="Password Text Field">
+                                                    <rect key="frame" x="53" y="0.0" width="253" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="7Oo-M6-Lwa" id="QjW-7R-ShJ"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pWr-eW-w4L" userLabel="Date Of Birth Cell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pWr-eW-w4L" id="wqV-pk-Tyb">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Date of Birth Icon" id="EbC-xx-y7W">
+                                                    <rect key="frame" x="15" y="7" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Of Birth (optional)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fgN-mQ-SKu" userLabel="Date Of Birth Label">
+                                                    <rect key="frame" x="53" y="0.0" width="253" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <color key="textColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="162" id="VfM-Gy-d2e" userLabel="Date Picker Cell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VfM-Gy-d2e" id="3Gi-yz-uSw">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" id="dTb-Or-0iF">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="430128861.54030198">
+                                                        <!--2014-08-19 08:14:21 +0000-->
+                                                    </date>
+                                                    <connections>
+                                                        <action selector="dateChanged:" destination="7Oo-M6-Lwa" eventType="valueChanged" id="xkj-Ib-tgO"/>
+                                                    </connections>
+                                                </datePicker>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="fSE-ZV-jXa" userLabel="Gender Cell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fSE-ZV-jXa" id="WwE-Z3-cyg">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gender Icon" id="gn8-06-QJq">
+                                                    <rect key="frame" x="15" y="7" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender (optional)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Oic-Fw-qy0" userLabel="Gender Label">
+                                                    <rect key="frame" x="53" y="0.0" width="253" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <color key="textColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="7Oo-M6-Lwa" id="5uf-xq-Kss"/>
+                            <outlet property="delegate" destination="7Oo-M6-Lwa" id="i1p-hn-yej"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="bottomView" destination="oXq-PA-Ji1" id="bV1-LI-Dhw"/>
+                        <outlet property="changeProfilePicButton" destination="bJs-gU-7bt" id="5Pu-p4-ZbN"/>
+                        <outlet property="dateOfBirthLabel" destination="fgN-mQ-SKu" id="s7o-pb-AMr"/>
+                        <outlet property="datePicker" destination="dTb-Or-0iF" id="zx4-eq-cxf"/>
+                        <outlet property="datePickerCell" destination="VfM-Gy-d2e" id="I4k-7g-xB1"/>
+                        <outlet property="emailTextField" destination="1Lk-Oa-NkF" id="0f4-yX-YWl"/>
+                        <outlet property="fullNameTextField" destination="s9r-el-Tr9" id="EKb-ST-MJa"/>
+                        <outlet property="genderLabel" destination="Oic-Fw-qy0" id="0Uu-QY-phj"/>
+                        <outlet property="passwordTextField" destination="0BT-8X-Ld3" id="SRV-1f-brA"/>
+                        <outlet property="profilePicView" destination="yfl-Qz-9oQ" id="Ta7-3K-esP"/>
+                        <outlet property="signUpButton" destination="Muc-PO-MtV" id="fQ4-4H-ckT"/>
+                        <outlet property="signUpButtonBackground" destination="Kjp-MO-Sjl" id="s2C-1f-NBi"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IEY-Pc-n7E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1139" y="-313"/>
         </scene>
         <!--Exploretable View Controller-->
         <scene sceneID="lZA-jp-ccy">
@@ -3792,6 +3994,24 @@ Shared by people like you</string>
             </objects>
             <point key="canvasLocation" x="483" y="-655"/>
         </scene>
+        <!--Dealers Table View Controller-->
+        <scene sceneID="7yD-pQ-KX7">
+            <objects>
+                <tableViewController storyboardIdentifier="DealersTableViewController" id="uHp-UH-Ij0" customClass="DealersTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ESo-lT-wl6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="uHp-UH-Ij0" id="Yco-dO-9Yu"/>
+                            <outlet property="delegate" destination="uHp-UH-Ij0" id="djz-Nh-zd1"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yJj-dw-zV2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="945" y="-655"/>
+        </scene>
         <!--Item-->
         <scene sceneID="AuG-Y2-hIS">
             <objects>
@@ -3958,6 +4178,16 @@ Shared by people like you</string>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rvj-Qy-HqN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bpA-JY-ngV">
+                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </imageView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="ty7-kb-SHC">
+                    <rect key="frame" x="0.0" y="0.0" width="253" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </objects>
             <point key="canvasLocation" x="1433" y="-655"/>
         </scene>

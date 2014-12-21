@@ -44,6 +44,7 @@
     } else {
         
         [self setTopView];
+        [self setLoadingDealsAnimation];
         [self setRefreshControl];
         [self downloadUploadedDeals];
         
@@ -67,6 +68,10 @@
         [self.tableView reloadData];
         self.afterEditing = NO;
     }
+    
+    if (self.tabBarController.tabBar.hidden == YES) {
+        self.tabBarController.tabBar.hidden = NO;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -82,7 +87,8 @@
     appDelegate = [[UIApplication sharedApplication] delegate];
     self.uploadedDeals = [[NSMutableArray alloc]init];
     self.likedDeals = [[NSMutableArray alloc]init];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     isLoading = NO;
     isRefreshing = NO;
     self.afterEditing = NO;
@@ -141,6 +147,7 @@
                                                   self.dealer = mappingResult.firstObject;
                                                   
                                                   [self setTopView];
+                                                  [self setLoadingDealsAnimation];
                                                   [self setRefreshControl];
                                                   [self downloadUploadedDeals];
                                                   
@@ -191,7 +198,7 @@
                     self.profilePic.image = [UIImage imageWithData:self.dealer.photo];
                 } else {
                     self.profilePic.backgroundColor = [UIColor groupTableViewBackgroundColor];
-                    [appDelegate otherProfilePic:self.dealer.photoURL forTarget:nil notificationName:PROFILE_PICTURE_NOTIFICATION inCell:nil];
+                    [appDelegate otherProfilePic:self.dealer forTarget:nil notificationName:PROFILE_PICTURE_NOTIFICATION atIndexPath:nil];
                 }
             }
         }
@@ -381,9 +388,7 @@
     //    self.likedButtonSelectionIndicator.frame = frame;
     
     lowestYPoint = CGRectGetMaxY(self.uploadedButton.frame);
-    topViewHeight = lowestYPoint;
-    
-    [self setLoadingDealsAnimation];
+    self.topView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, lowestYPoint);
     
     if (!self.tableView.tableHeaderView) {
         self.tableView.tableHeaderView = self.topView;
@@ -432,14 +437,27 @@
         
         self.uploadedButton.selected = YES;
         self.likedButton.selected = NO;
-        
-        self.currentDeals = self.uploadedDeals;
-        
         self.uploadedButton.backgroundColor = [UIColor whiteColor];
         self.likedButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
-        [self.tableView reloadData];
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        if (didDownloadUploadedDeals) {
+            self.currentDeals = self.uploadedDeals;
+            [self.tableView reloadData];
+            
+        } else {
+            [self setLoadingDealsAnimation];
+            [self downloadUploadedDeals];
+            [self.tableView reloadData];
+        }
+    }
+    
+    if ([whatIsLoading isEqualToString:@"uploaded"]) {
+        self.loadingDealsAnimation.hidden = NO;
+        if (didDownloadUploadedDeals) {
+            [self stopLoadingDealsAnimation];
+        }
+    } else if ([whatIsLoading isEqualToString:@"liked"]) {
+        self.loadingDealsAnimation.hidden = YES;
     }
 }
 
@@ -449,14 +467,29 @@
         
         self.likedButton.selected = YES;
         self.uploadedButton.selected = NO;
-        
-        self.currentDeals = self.likedDeals;
-        
         self.likedButton.backgroundColor = [UIColor whiteColor];
         self.uploadedButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
         
-        [self.tableView reloadData];
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.currentDeals = self.likedDeals;
+        
+        if (didDownloadLikedDeals) {
+            self.currentDeals = self.likedDeals;
+            [self.tableView reloadData];
+        
+        } else {
+            [self setLoadingDealsAnimation];
+            [self downloadLikedDeals];
+            [self.tableView reloadData];
+        }
+    }
+    
+    if ([whatIsLoading isEqualToString:@"liked"]) {
+        self.loadingDealsAnimation.hidden = NO;
+        if (didDownloadLikedDeals) {
+            [self stopLoadingDealsAnimation];
+        }
+    } else if ([whatIsLoading isEqualToString:@"uploaded"]) {
+        self.loadingDealsAnimation.hidden = YES;
     }
 }
 
@@ -472,11 +505,11 @@
 - (void)refresh
 {
     isRefreshing = YES;
+    didDownloadUploadedDeals = NO;
+    didDownloadLikedDeals = NO;
     [self.uploadedDeals removeAllObjects];
     [self.likedDeals removeAllObjects];
     self.tableView.backgroundView = [[UIView alloc] init];
-    
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     if (self.uploadedButton.selected) {
         [self downloadUploadedDeals];
@@ -516,6 +549,7 @@
                                                   } else {
                                                       [self loadFirstTwoPhotos];
                                                   }
+                                                  
                                                   didDownloadUploadedDeals = YES;
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -532,10 +566,14 @@
     NSString *path = [NSString stringWithFormat:@"/likeddeals/%@/", self.dealer.dealerID];
     
     [[RKObjectManager sharedManager] getObjectsAtPath:path
-                                           parameters:@{@"ordering" : @"-upload_date"}
+                                           parameters:nil
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   
-                                                  [self.likedDeals addObjectsFromArray:mappingResult.array];
+                                                  NSArray *temp = mappingResult.array;
+                                                  
+                                                  for (DealAttrib *dealAttrib in temp) {
+                                                      [self.likedDeals insertObject:dealAttrib.deal atIndex:0];
+                                                  }
                                                   
                                                   if (!self.likedDeals || self.likedDeals.count == 0) {
                                                       [self noDealMessage];
@@ -545,7 +583,6 @@
                                                       [self loadFirstTwoPhotos];
                                                   }
                                                   
-                                                  [self.refreshControl endRefreshing];
                                                   didDownloadLikedDeals = YES;
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -604,8 +641,6 @@
 - (void)reloadTableView
 {
     [self.tableView reloadData];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     if ([self.tableView viewWithTag:NO_DEALS_TAG]) {
         [[self.tableView viewWithTag:NO_DEALS_TAG] removeFromSuperview];
@@ -645,7 +680,6 @@
     loadingAnimation.frame = CGRectMake(self.view.center.x - 15.0, 15.0, 30.0, 30.0);
     [loadingView addSubview:loadingAnimation];
     [self.tableView addSubview:loadingView];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)stopLoadingAnimation
@@ -653,14 +687,13 @@
     UIImageView *loadingAnimation = (UIImageView *)[loadingView viewWithTag:13212];
     [loadingAnimation stopAnimating];
     [UIView animateWithDuration:0.3 animations:^{ loadingView.alpha = 0; }];
-    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     isLoading = NO;
 }
 
 - (void)setLoadingDealsAnimation
 {
-    if (!isRefreshing) {
+    if (!isRefreshing && !self.loadingDealsAnimation) {
         
         self.loadingDealsAnimation = [appDelegate loadingAnimationPurple];
         CGRect loadingFrame = self.loadingDealsAnimation.frame;
@@ -669,6 +702,12 @@
         self.loadingDealsAnimation.frame = loadingFrame;
         [self.loadingDealsAnimation startAnimating];
         [self.tableView addSubview:self.loadingDealsAnimation];
+        
+        if (self.uploadedButton.selected) {
+            whatIsLoading = @"uploaded";
+        } else {
+            whatIsLoading = @"liked";
+        }
     }
 }
 
@@ -678,6 +717,8 @@
     [self.loadingDealsAnimation stopAnimating];
     self.loadingDealsAnimation.transform = CGAffineTransformMakeScale(1.0, 1.0);
     [self.loadingDealsAnimation removeFromSuperview];
+    self.loadingDealsAnimation = nil;
+    whatIsLoading = nil;
 }
 
 - (void)noDealMessage
@@ -709,7 +750,6 @@
     if ([[notification.userInfo objectForKey:@"mode"] isEqualToString:self.profileMode]) {
         
         NSArray *indexPathes = [self.tableView indexPathsForVisibleRows];
-        NSArray *cells = [self.tableView visibleCells];
         
         NSIndexPath *receivedIndexPath = [notification.userInfo objectForKey:@"indexPath"];
         
@@ -717,7 +757,8 @@
             
             if ([indexPathes[i] isEqual:receivedIndexPath]) {
                 
-                DealsTableCell *cell = cells[i];
+                DealsTableCell *cell = (DealsTableCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
+                
                 cell.photo.image = [notification.userInfo objectForKey:@"image"];
                 [UIView animateWithDuration:0.5 animations:^{ cell.photo.alpha = 1.0; }];
                 break;
@@ -779,10 +820,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Deal *deal;
-    
-    if (self.tableView.separatorStyle == UITableViewCellSeparatorStyleNone) {
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    }
     
     if (self.uploadedButton.selected) {
         
@@ -970,16 +1007,6 @@
     }
     
     [self.navigationController pushViewController:vodvc animated:YES];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return self.topView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return topViewHeight;
 }
 
 - (void)viewDidLayoutSubviews

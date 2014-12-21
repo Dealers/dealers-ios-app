@@ -560,6 +560,12 @@
     self.StoreIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP + 5, self.StoreIcon.frame.size.width, self.StoreIcon.frame.size.height);
     storelabel.frame = CGRectMake(labelsLeftMargin, lowestYPoint + 3 + GAP + 5, fieldsWidth, storelabel.frame.size.height);
     
+    // Toggle the store icon
+    UIButton *toggleStoreIcon = [UIButton buttonWithType:UIButtonTypeCustom];
+    [toggleStoreIcon setFrame:self.StoreIcon.frame];
+    [toggleStoreIcon addTarget:self action:@selector(toggleStoreIcon) forControlEvents:UIControlEventTouchUpInside];
+    [self.scroll addSubview:toggleStoreIcon];
+    
     if ([[_deal type] isEqualToString:@"online"]) {
         _urlSiteButton.frame = CGRectMake(labelsLeftMargin, lowestYPoint+3+GAP, storelabel.frame.size.width, storelabel.frame.size.height);
     } else _urlSiteButton.hidden=YES;
@@ -655,6 +661,31 @@
     }
 }
 
+- (void)toggleStoreIcon
+{
+    if ([self.StoreIcon.image isEqual:[UIImage imageNamed:@"Store Icon"]]) {
+        
+        [UIView animateWithDuration:0.3
+                         animations:^{ self.StoreIcon.transform = CGAffineTransformMakeScale(0.1, 0.1); }
+                         completion:^(BOOL finished) {
+                             self.StoreIcon.image = [UIImage imageNamed:@"Store Icon 2"];
+                             [UIView animateWithDuration:0.3
+                                              animations:^{ self.StoreIcon.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                                              }];
+                         }];
+    } else {
+        
+        [UIView animateWithDuration:0.3
+                         animations:^{ self.StoreIcon.transform = CGAffineTransformMakeScale(0.1, 0.1); }
+                         completion:^(BOOL finished) {
+                             self.StoreIcon.image = [UIImage imageNamed:@"Store Icon"];
+                             [UIView animateWithDuration:0.3
+                                              animations:^{ self.StoreIcon.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                                              }];
+                         }];
+    }
+}
+
 - (void)setDealerSection
 {
     CGRect dealerSectionFrame = self.dealerSection.frame;
@@ -683,7 +714,7 @@
             self.deal.dealer = self.appDelegate.dealer;
             self.dealerImage.image = [appDelegate myProfilePic];
         } else {
-            [appDelegate otherProfilePic:dealer.photoURL forTarget:@"Deal Dealer's Photo" notificationName:NAME_FOR_NOTIFICATIONS inCell:nil];
+            [appDelegate otherProfilePic:self.deal.dealer forTarget:@"Deal Dealer's Photo" notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:nil];
         }
     }
 }
@@ -718,11 +749,10 @@
         
         self.likesCountLabel.text = [NSString stringWithFormat:@"%lu people like this deal", (unsigned long)self.deal.dealAttrib.dealersThatLiked.count];
         
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:@"" forState:UIControlStateNormal];
-        button.frame = self.likesCountLabel.frame;
-        //        [button addTarget:self action:@selector(whoLikesTheDeal:) forControlEvents: UIControlEventTouchUpInside];
-        [self.likesAndButtonsSection addSubview:button];
+        UIButton *likersButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        likersButton.frame = self.likesCountLabel.frame;
+        [likersButton addTarget:self action:@selector(presentLikers) forControlEvents:UIControlEventTouchUpInside];
+        [self.likesAndButtonsSection addSubview:likersButton];
         
     } else {
         self.likesCountImage.hidden = YES;
@@ -764,6 +794,14 @@
     [self.scroll addSubview:self.commentsSection];
     
     lowestYPoint = CGRectGetMaxY(self.commentsSection.frame);
+}
+
+- (void)presentLikers
+{
+    DealersTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealersTableViewController"];
+    dtvc.mode = @"Likers";
+    dtvc.dealID = self.deal.dealID;
+    [self.navigationController pushViewController:dtvc animated:YES];
 }
 
 - (void)setCommentsOverview
@@ -1372,7 +1410,7 @@
     UIButton *button = (UIButton *)sender;
     Comment *comment = [self.commentsForPreview objectAtIndex:button.tag];
     ProfileTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileID"];
-    ptvc.dealerID = comment.dealerID;
+    ptvc.dealerID = comment.dealer.dealerID;
     [self.navigationController pushViewController:ptvc animated:YES];
 }
 
@@ -1421,16 +1459,21 @@
                 cell = [nib objectAtIndex:0];
             }
             
-            if (comment.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
+            if (comment.dealer.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
                 [cell.dealerProfilePic setImage:[appDelegate myProfilePic] forState:UIControlStateNormal];
+            } else if (!comment.dealer.photo) {
+                if (!comment.dealer.downloadingPhoto) {
+                    comment.dealer.downloadingPhoto = YES;
+                    [appDelegate otherProfilePic:comment.dealer forTarget:@"Commenter's Photo" notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:indexPath];
+                }
             } else {
-                [appDelegate otherProfilePic:comment.dealerPhotoURL forTarget:@"Commenter's Photo" notificationName:NAME_FOR_NOTIFICATIONS inCell:cell];
+                [cell.dealerProfilePic setImage:[UIImage imageWithData:comment.dealer.photo] forState:UIControlStateNormal];
             }
             
             [cell.dealerProfilePic setTag:indexPath.row];
             [cell.dealerProfilePic addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             
-            [cell.dealerName setTitle:comment.dealerFullName forState:UIControlStateNormal];
+            [cell.dealerName setTitle:comment.dealer.fullName forState:UIControlStateNormal];
             [cell.dealerName setTag:indexPath.row];
             [cell.dealerName addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -1595,12 +1638,21 @@
         
     } else if ([[info objectForKey:@"target"] isEqualToString:@"Commenter's Photo"]) {
         
-        CommentsTableCell *cell = [info objectForKey:@"cell"];
-        cell.dealerProfilePic.alpha = 0;
-        [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
-        [UIView animateWithDuration:0.3 animations:^{
-            cell.dealerProfilePic.alpha = 1;
-        }];
+        NSArray *indexPathes = [self.commentsTableView indexPathsForVisibleRows];
+        
+        NSIndexPath *receivedIndexPath = [info objectForKey:@"indexPath"];
+        
+        for (int i = 0; i < indexPathes.count; i++) {
+            
+            if ([indexPathes[i] isEqual:receivedIndexPath]) {
+                
+                CommentsTableCell *cell = (CommentsTableCell *)[self.commentsTableView cellForRowAtIndexPath:indexPathes[i]];
+                
+                [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
+                [UIView animateWithDuration:0.3 animations:^{ cell.dealerProfilePic.alpha = 1.0; }];
+                break;
+            }
+        }
     }
 }
 

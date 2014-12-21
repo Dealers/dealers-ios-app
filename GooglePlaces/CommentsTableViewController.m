@@ -270,10 +270,8 @@
     Comment *comment = [[Comment alloc]init];
     
     comment.text = self.textView.text;
-    comment.dealerID = appDelegate.dealer.dealerID;
     comment.dealID = self.deal.dealID;
-    comment.dealerFullName = appDelegate.dealer.fullName;
-    comment.dealerPhotoURL = appDelegate.dealer.photoURL;
+    comment.dealer = appDelegate.dealer;
     comment.uploadDate = [NSDate date];
     comment.type = @"Deal";
     
@@ -315,12 +313,21 @@
     
     if ([[info objectForKey:@"target"] isEqualToString:@"Commenter's Photo"]) {
         
-        CommentsTableCell *cell = [info objectForKey:@"cell"];
-        cell.dealerProfilePic.alpha = 0;
-        [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
-        [UIView animateWithDuration:0.3 animations:^{
-            cell.dealerProfilePic.alpha = 1;
-        }];
+        NSArray *indexPathes = [self.tableView indexPathsForVisibleRows];
+        
+        NSIndexPath *receivedIndexPath = [info objectForKey:@"indexPath"];
+        
+        for (int i = 0; i < indexPathes.count; i++) {
+            
+            if ([indexPathes[i] isEqual:receivedIndexPath]) {
+                
+                CommentsTableCell *cell = (CommentsTableCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
+                
+                [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
+                [UIView animateWithDuration:0.3 animations:^{ cell.dealerProfilePic.alpha = 1.0; }];
+                break;
+            }
+        }
     }
 }
 
@@ -329,7 +336,7 @@
     UIButton *button = (UIButton *)sender;
     Comment *comment = [self.comments objectAtIndex:button.tag];
     ProfileTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileID"];
-    ptvc.dealerID = comment.dealerID;
+    ptvc.dealerID = comment.dealer.dealerID;
     [self.navigationController pushViewController:ptvc animated:YES];
 }
 
@@ -412,18 +419,21 @@
         cell = [nib objectAtIndex:0];
     }
     
-    if (!cell.dealerProfilePic.imageView.image) {
-        if (comment.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
-            [cell.dealerProfilePic setImage:[appDelegate myProfilePic] forState:UIControlStateNormal];
-        } else {
-            [appDelegate otherProfilePic:comment.dealerPhotoURL forTarget:@"Commenter's Photo" notificationName:NAME_FOR_NOTIFICATIONS inCell:cell];
+    if (comment.dealer.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
+        [cell.dealerProfilePic setImage:[appDelegate myProfilePic] forState:UIControlStateNormal];
+    } else if (!comment.dealer.photo) {
+        if (!comment.dealer.downloadingPhoto) {
+            comment.dealer.downloadingPhoto = YES;
+            [appDelegate otherProfilePic:comment.dealer forTarget:@"Commenter's Photo" notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:indexPath];
         }
+    } else {
+        [cell.dealerProfilePic setImage:[UIImage imageWithData:comment.dealer.photo] forState:UIControlStateNormal];
     }
     
     [cell.dealerProfilePic setTag:indexPath.row];
     [cell.dealerProfilePic addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    [cell.dealerName setTitle:comment.dealerFullName forState:UIControlStateNormal];
+    [cell.dealerName setTitle:comment.dealer.fullName forState:UIControlStateNormal];
     [cell.dealerName setTag:indexPath.row];
     [cell.dealerName addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -433,9 +443,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     [cell.contentView layoutSubviews];
-    
-    NSLog(@"\n\nComment body size: %f, %f", cell.commentBody.frame.size.width, cell.commentBody.frame.size.height);
-    
+        
     return cell;
 }
 

@@ -28,6 +28,7 @@
     BOOL isRefreshing;
     BOOL didDownloadUploadedDeals;
     BOOL didDownloadLikedDeals;
+    NSString *whatIsLoading;
 }
 
 @property AppDelegate *appDelegate;

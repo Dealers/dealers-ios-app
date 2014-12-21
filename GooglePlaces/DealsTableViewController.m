@@ -8,7 +8,7 @@
 
 #import "DealsTableViewController.h"
 
-#define NOTIFICATION_CENTER_NAME @"Deals Photos Notifications"
+#define NAME_FOR_NOTIFICATIONS @"Deals Photos Notifications"
 #define NOTIFICATION_FIRST_THREE @"First Three Deals Photos Notifications"
 
 #define DEAL_CELL_HEIGHT 214.0f
@@ -85,7 +85,7 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loadPhotosInVisibleCells:)
-                                                 name:NOTIFICATION_CENTER_NAME
+                                                 name:NAME_FOR_NOTIFICATIONS
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -148,7 +148,10 @@
             if (!weakSelf.deals || weakSelf.deals.count == 0) {
                 [weakSelf stopLoadingAnimation];
                 [weakSelf noDealMessage];
-                
+                [weakSelf.tableView reloadData];
+                weakSelf.tableView.tableFooterView = nil;
+                [weakSelf.refreshControl endRefreshing];
+
             } else if (page == 1) {
                 [weakSelf loadFirstThreePhotos];
                 
@@ -345,7 +348,6 @@
 - (void)loadPhotosInVisibleCells:(NSNotification *)notification
 {
     NSArray *indexPathes = [self.tableView indexPathsForVisibleRows];
-    NSArray *cells = [self.tableView visibleCells];
     
     NSIndexPath *receivedIndexPath = [notification.userInfo objectForKey:@"indexPath"];
     
@@ -353,7 +355,7 @@
         
         if ([indexPathes[i] isEqual:receivedIndexPath]) {
             
-            DealsTableCell *cell = cells[i];
+            DealsTableCell *cell = (DealsTableCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
             
             cell.photo.image = [notification.userInfo objectForKey:@"image"];
             [UIView animateWithDuration:0.5 animations:^{ cell.photo.alpha = 1.0; }];
@@ -375,7 +377,7 @@
         if (nextDeal.photoURL1.length > 2 && ![nextDeal.photoURL1 isEqualToString:@"None"]) {
             if (!nextDeal.photo1 && !nextDeal.downloadingPhoto) {
                 nextDeal.downloadingPhoto = YES;
-                [appDelegate downloadPhotosForDeal:nextDeal notificationName:NOTIFICATION_CENTER_NAME atIndexPath:nextIndexPath mode:nil];
+                [appDelegate downloadPhotosForDeal:nextDeal notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:nextIndexPath mode:nil];
                 break;
             }
         } else {
@@ -451,7 +453,7 @@
             cell.photo.alpha = 0;
             if (!deal.downloadingPhoto) {
                 deal.downloadingPhoto = YES;
-                [appDelegate downloadPhotosForDeal:deal notificationName:NOTIFICATION_CENTER_NAME atIndexPath:indexPath mode:nil];
+                [appDelegate downloadPhotosForDeal:deal notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:indexPath mode:nil];
             }
         } else {
             cell.photo.alpha = 1.0;

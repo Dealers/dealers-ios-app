@@ -27,8 +27,9 @@
 @property NSMutableArray *userLikesList;
 @property NSString *photoURL;
 @property NSData *photo;
-@property NSDate *registerDate;
+@property BOOL downloadingPhoto;
 
+@property NSDate *registerDate;
 @property NSNumber *badReportsCounter;
 @property NSNumber *score;
 @property NSString *rank;

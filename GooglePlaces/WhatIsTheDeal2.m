@@ -325,9 +325,6 @@
     [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
-    NSDate *today = [NSDate date];
-    [self.datePicker setMinimumDate:today];
-    
     self.datePicker.backgroundColor = [UIColor whiteColor];
     
     self.datePickerIsShowing = NO;
@@ -370,6 +367,14 @@
 }
 
 - (IBAction)dateChanged:(UIDatePicker *)sender {
+    
+    NSDate *date = sender.date;
+    
+    while ([date timeIntervalSinceNow] < -86400) {
+        date = [date dateByAddingTimeInterval: (31536000)];
+    }
+    
+    [sender setDate:date animated:YES];
     
     if (!self.didCancelDate) {
         self.expirationDateLabel.text = [self.dateFormatter stringFromDate:sender.date];

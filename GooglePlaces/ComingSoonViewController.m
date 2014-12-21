@@ -27,7 +27,7 @@
         
     } else {
         
-        self.message.text = @"In Activity you will see notifications regarding your recent activity at Dealers.";
+        self.message.text = @"Here you will see notifications regarding your recent activity at Dealers.";
     }
 }
 

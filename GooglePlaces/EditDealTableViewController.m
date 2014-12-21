@@ -149,9 +149,6 @@
     [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
-    NSDate *today = [NSDate date];
-    [self.datePicker setMinimumDate:today];
-    
     self.datePicker.backgroundColor = [UIColor whiteColor];
     
     self.datePickerIsShowing = NO;
@@ -392,8 +389,16 @@
 
 - (IBAction)dateChanged:(UIDatePicker *)sender {
     
+    NSDate *date = sender.date;
+    
+    while ([date timeIntervalSinceNow] < -86400) {
+        date = [date dateByAddingTimeInterval: (31536000)];
+    }
+    
+    [sender setDate:date animated:YES];
+    
     if (!self.didCancelDate) {
-        self.dealExpirationDate.text = [@"Expires on " stringByAppendingString:[self.dateFormatter stringFromDate:sender.date]];
+        self.dealExpirationDate.text = [self.dateFormatter stringFromDate:sender.date];
     }
 }
 
@@ -1053,6 +1058,13 @@
                                                       failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                           
                                                           NSLog(@"\n\nCouldn't delete the deal...");
+                                                          [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+                                                          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Couldn't delete the deal"
+                                                                                                          message:@"This deal could not be deleted... Please try again later."
+                                                                                                         delegate:self
+                                                                                                cancelButtonTitle:@"OK"
+                                                                                                otherButtonTitles:nil];
+                                                          [alert show];
                                                       }];
             }
             break;

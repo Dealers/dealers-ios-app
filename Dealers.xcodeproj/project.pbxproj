@@ -212,6 +212,8 @@
 		C80123301A2C4A8800C40A37 /* DealsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C801232F1A2C4A8700C40A37 /* DealsTableViewController.m */; };
 		C80123371A2C4BC000C40A37 /* DealsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C80123351A2C4BC000C40A37 /* DealsTableCell.m */; };
 		C80123381A2C4BC000C40A37 /* DealsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C80123361A2C4BC000C40A37 /* DealsTableCell.xib */; };
+		C8051BF01A41DB9B008FBA40 /* SignUpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8051BEF1A41DB9B008FBA40 /* SignUpTableViewController.m */; };
+		C819F89C1A43352E00908726 /* Error.m in Sources */ = {isa = PBXBuildFile; fileRef = C819F89B1A43352E00908726 /* Error.m */; };
 		C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */; };
 		C8273A2F18959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2618959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png */; };
 		C8273A3018959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8273A2718959A3300A412FC /* Add Deal (Final)_Browser Back button@2x.png */; };
@@ -569,6 +571,9 @@
 		C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */; };
 		C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */; };
 		C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */; };
+		C8E43AA11A40A72B00B035BC /* DealersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E43AA01A40A72B00B035BC /* DealersTableViewController.m */; };
+		C8E43AA51A40A78A00B035BC /* DealersTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E43AA31A40A78A00B035BC /* DealersTableCell.m */; };
+		C8E43AA61A40A78A00B035BC /* DealersTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8E43AA41A40A78A00B035BC /* DealersTableCell.xib */; };
 		C8EE6D741A305FD500D53893 /* ComingSoonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */; };
 		C8EE6D931A30971100D53893 /* Entertainment & Events_adults@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D781A30971000D53893 /* Entertainment & Events_adults@2x.png */; };
 		C8EE6D941A30971100D53893 /* Entertainment & Events_amusement_park@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8EE6D791A30971100D53893 /* Entertainment & Events_amusement_park@2x.png */; };
@@ -872,6 +877,10 @@
 		C80123341A2C4BC000C40A37 /* DealsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsTableCell.h; sourceTree = "<group>"; };
 		C80123351A2C4BC000C40A37 /* DealsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsTableCell.m; sourceTree = "<group>"; };
 		C80123361A2C4BC000C40A37 /* DealsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealsTableCell.xib; sourceTree = "<group>"; };
+		C8051BEE1A41DB9B008FBA40 /* SignUpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpTableViewController.h; sourceTree = "<group>"; };
+		C8051BEF1A41DB9B008FBA40 /* SignUpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpTableViewController.m; sourceTree = "<group>"; };
+		C819F89A1A43352E00908726 /* Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
+		C819F89B1A43352E00908726 /* Error.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Error.m; sourceTree = "<group>"; };
 		C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewController.h; sourceTree = "<group>"; };
 		C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCategoryTableViewController.m; sourceTree = "<group>"; };
 		C8273A2618959A3300A412FC /* Add Deal (Final)_Browser Back button (highlighted)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Deal (Final)_Browser Back button (highlighted)@2x.png"; sourceTree = "<group>"; };
@@ -1258,6 +1267,11 @@
 		C8DC1D8A19BC89410062E184 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		C8E43A9F1A40A72B00B035BC /* DealersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealersTableViewController.h; sourceTree = "<group>"; };
+		C8E43AA01A40A72B00B035BC /* DealersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealersTableViewController.m; sourceTree = "<group>"; };
+		C8E43AA21A40A78A00B035BC /* DealersTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealersTableCell.h; sourceTree = "<group>"; };
+		C8E43AA31A40A78A00B035BC /* DealersTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealersTableCell.m; sourceTree = "<group>"; };
+		C8E43AA41A40A78A00B035BC /* DealersTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealersTableCell.xib; sourceTree = "<group>"; };
 		C8EE6D721A305FD500D53893 /* ComingSoonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComingSoonViewController.h; sourceTree = "<group>"; };
 		C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComingSoonViewController.m; sourceTree = "<group>"; };
 		C8EE6D781A30971000D53893 /* Entertainment & Events_adults@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Entertainment & Events_adults@2x.png"; path = "Categories Icons/Entertainment & Events/Entertainment & Events_adults@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -1400,7 +1414,7 @@
 				C87B6D05192DDC810026DA66 /* Opening Screen */,
 				C869CB74191A12EF00DF2C19 /* Sign Up */,
 				C869CB75191A131B00DF2C19 /* Sign In */,
-				C869CB71191A129A00DF2C19 /* My Feed */,
+				C869CB71191A129A00DF2C19 /* Objects Table View Controllers */,
 				C869CB70191A126400DF2C19 /* Explore */,
 				C869CB72191A12C900DF2C19 /* Profile */,
 				C869CB73191A12D900DF2C19 /* Activity */,
@@ -1781,6 +1795,9 @@
 				C83B93C11A2D08BE00AC666B /* DealsNoPhotoTableCell.h */,
 				C83B93C21A2D08BE00AC666B /* DealsNoPhotoTableCell.m */,
 				C83B93C31A2D08BE00AC666B /* DealsNoPhotoTableCell.xib */,
+				C8E43AA21A40A78A00B035BC /* DealersTableCell.h */,
+				C8E43AA31A40A78A00B035BC /* DealersTableCell.m */,
+				C8E43AA41A40A78A00B035BC /* DealersTableCell.xib */,
 				C848B67619B4AB76000F138D /* StoresTableCell.h */,
 				C848B67719B4AB76000F138D /* StoresTableCell.m */,
 				C848B67919B4ACA4000F138D /* StoresTableCell.xib */,
@@ -1803,13 +1820,15 @@
 			name = Explore;
 			sourceTree = "<group>";
 		};
-		C869CB71191A129A00DF2C19 /* My Feed */ = {
+		C869CB71191A129A00DF2C19 /* Objects Table View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				C801232E1A2C4A8700C40A37 /* DealsTableViewController.h */,
 				C801232F1A2C4A8700C40A37 /* DealsTableViewController.m */,
+				C8E43A9F1A40A72B00B035BC /* DealersTableViewController.h */,
+				C8E43AA01A40A72B00B035BC /* DealersTableViewController.m */,
 			);
-			name = "My Feed";
+			name = "Objects Table View Controllers";
 			sourceTree = "<group>";
 		};
 		C869CB72191A12C900DF2C19 /* Profile */ = {
@@ -1845,6 +1864,8 @@
 			children = (
 				B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */,
 				B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */,
+				C8051BEE1A41DB9B008FBA40 /* SignUpTableViewController.h */,
+				C8051BEF1A41DB9B008FBA40 /* SignUpTableViewController.m */,
 			);
 			name = "Sign Up";
 			sourceTree = "<group>";
@@ -2014,6 +2035,8 @@
 				C8A10B9E19E95B330090F1D9 /* Notification.m */,
 				C884E18219EC082100C83A3F /* DealAttrib.h */,
 				C884E18319EC082100C83A3F /* DealAttrib.m */,
+				C819F89A1A43352E00908726 /* Error.h */,
+				C819F89B1A43352E00908726 /* Error.m */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -2689,6 +2712,7 @@
 				C8DADE4818FDF3CB0056AC9F /* Explore-Black_Home & Furniture icon@2x.png in Resources */,
 				C8D2E47D185B781D00398873 /* Add Deal (Final)_Snap button (selected)@2x.png in Resources */,
 				C83EAEF118690AC40084E0E1 /* Pets_Pets@2x.png in Resources */,
+				C8E43AA61A40A78A00B035BC /* DealersTableCell.xib in Resources */,
 				C8B7C2391920FCF60032726E /* Registration_Sign Up button@2x.png in Resources */,
 				B034B9961804780B00625392 /* My Feed+View Deal_Tab Bar@2X.png in Resources */,
 				C8A9EE361A2213B9002EE682 /* sns-2010-03-31.json in Resources */,
@@ -3043,6 +3067,7 @@
 				B0930C1417F40BD2004EB3CA /* MainViewController.m in Sources */,
 				B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */,
 				C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */,
+				C819F89C1A43352E00908726 /* Error.m in Sources */,
 				C882D7A01A279AE200C4F0DD /* SignInTableViewController.m in Sources */,
 				C8A012F219DD52F700C1D973 /* WhatIsTheDeal2.m in Sources */,
 				B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */,
@@ -3064,13 +3089,16 @@
 				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
 				C8A10BA619E96B100090F1D9 /* NotificationTableCell.m in Sources */,
 				C8EE6D741A305FD500D53893 /* ComingSoonViewController.m in Sources */,
+				C8051BF01A41DB9B008FBA40 /* SignUpTableViewController.m in Sources */,
 				C8A10B9F19E95B330090F1D9 /* Notification.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
 				C8A10B9C19E711220090F1D9 /* KeychainItemWrapper.m in Sources */,
+				C8E43AA51A40A78A00B035BC /* DealersTableCell.m in Sources */,
 				C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */,
 				C80123371A2C4BC000C40A37 /* DealsTableCell.m in Sources */,
 				C884E18419EC082100C83A3F /* DealAttrib.m in Sources */,
 				C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */,
+				C8E43AA11A40A72B00B035BC /* DealersTableViewController.m in Sources */,
 				B0862126186FF1450017099E /* Functions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

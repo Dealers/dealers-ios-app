@@ -7,7 +7,7 @@
 //
 
 #import "MainViewController.h"
-#import "Signup2ViewController.h"
+#import "SignUpTableViewController.h"
 #import "SignInTableViewController.h"
 #import "KeychainItemWrapper.h"
 
@@ -28,6 +28,8 @@
 {
     appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
+    firstSlogen = YES;
+    
     if ([self checkIfUserLoggedIn]) {
         return;
     }
@@ -38,6 +40,7 @@
                                                object:nil];
     
     [self setProgressIndicator];
+    [self createToggleSlogenButton];
     
     if (([appDelegate.Animate_first isEqualToString:@"first"]) || (appDelegate.Animate_first == nil))  {
         appDelegate.Animate_first = @"notfirst";
@@ -124,6 +127,42 @@
     }
 }
 
+- (void)createToggleSlogenButton
+{
+    UIButton *toggleSlogen = [UIButton buttonWithType:UIButtonTypeCustom];
+    [toggleSlogen setFrame:self.slogen.frame];
+    [toggleSlogen addTarget:self action:@selector(toggleSlogen) forControlEvents:UIControlEventTouchUpInside];
+    [self.regularView addSubview:toggleSlogen];
+}
+
+- (void)toggleSlogen
+{
+    if (firstSlogen) {
+        
+        [UIView animateWithDuration:0.3
+                         animations:^{ self.slogen.alpha = 0; }
+                         completion:^(BOOL finished) {
+                             self.slogen.text = @"Share deals with others \nHelp reduce prices";
+                             [UIView animateWithDuration:0.3
+                                              animations:^{ self.slogen.alpha = 1.0;
+                                              }];
+                         }];
+        firstSlogen = NO;
+        
+    } else {
+        
+        [UIView animateWithDuration:0.3
+                         animations:^{ self.slogen.alpha = 0; }
+                         completion:^(BOOL finished) {
+                             self.slogen.text = @"Find great deals \nShared by people like you";
+                             [UIView animateWithDuration:0.3
+                                              animations:^{ self.slogen.alpha = 1.0;
+                                              }];
+                         }];
+        firstSlogen = YES;
+    }
+}
+
 - (void)objectInPlace {
     dealershead.center = CGPointMake(160, 55);
     dealersWhiteHead.center = CGPointMake(160, 75);
@@ -155,7 +194,7 @@
 }
 
 -(IBAction)EmailimageButton:(id)sender{
-    Signup2ViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"Signup2ViewController"];
+    SignUpTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SignUpID"];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -165,7 +204,7 @@
 }
 
 - (IBAction)facebookButtonClicked:(id)sender{
-    
+    /*
     if (![appDelegate isFacebookConnected]) {
         
         [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email"] allowLoginUI:YES];
@@ -175,6 +214,7 @@
         
         NSLog(@"Error - connected to facebook when suppose to be disconnected");
     }
+     */
 }
 
 - (void)viewDidDisappear:(BOOL)animated

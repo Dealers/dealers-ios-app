@@ -238,7 +238,7 @@
     return height;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == dateOfBirthSection && indexPath.row == 0) {
         
@@ -443,9 +443,6 @@
     [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
-    NSDate *today = [NSDate date];
-    [self.datePicker setMaximumDate:today];
-    
     if (appDelegate.dealer.dateOfBirth) {
         
         NSDate *defaultDate = [appDelegate.dealer.dateOfBirth copy];
@@ -499,6 +496,14 @@
 }
 
 - (IBAction)dateChanged:(UIDatePicker *)sender {
+    
+    NSDate *date = sender.date;
+    
+    while ([date timeIntervalSinceNow] > 0) {
+        date = [date dateByAddingTimeInterval: -(31536000)];
+    }
+    
+    [sender setDate:date animated:YES];
     
     if (!self.didCancelDate) {
         self.dateOfBirth.text = [self.dateFormatter stringFromDate:sender.date];
