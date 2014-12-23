@@ -34,7 +34,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"What is the Deal?";
+    self.title = @"What is the deal?";
     
     self.deal = [[Deal alloc]init];
     appDelegate = [[UIApplication sharedApplication] delegate];

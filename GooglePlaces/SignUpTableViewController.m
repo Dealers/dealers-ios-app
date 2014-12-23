@@ -213,7 +213,7 @@
                                             destructiveButtonTitle:nil
                                             otherButtonTitles:@"Unspecified", @"Female", @"Male", nil];
             genderOptions.tag = GENDER_ACTION_SHEET_TAG;
-            [genderOptions showFromTabBar:self.tabBarController.tabBar];
+            [genderOptions showInView:self.view];
             [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
             
             if (self.datePickerIsShowing) {

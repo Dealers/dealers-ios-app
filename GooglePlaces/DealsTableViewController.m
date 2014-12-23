@@ -575,6 +575,8 @@
     ViewonedealViewController *vodvc = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
     Deal *deal = [self.deals objectAtIndex:indexPath.row];
     vodvc.deal = deal;
+    vodvc.delegate = self;
+    vodvc.dealIndexPath = indexPath;
     
     if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
         vodvc.isShortCell = @"no";

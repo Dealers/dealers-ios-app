@@ -34,6 +34,9 @@
 
 @property AppDelegate *appDelegate;
 
+@property id delegate;
+@property NSIndexPath *dealIndexPath;
+
 @property (nonatomic, strong) MKMapView *mapView;
 
 @property (strong,nonatomic) Deal *deal;

@@ -336,7 +336,7 @@
 
 - (void)viewDidLoad
 {
-    self.title = @"Where is the Deal?";
+    self.title = @"Where is the deal?";
         
     // This is the size of the venues table view in the initial display of the view:
     self.venuesTableInitialFrame = CGRectMake(0, barTableGap, 320, [[UIScreen mainScreen]bounds].size.height - 64 - 44 - barTableGap);

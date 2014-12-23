@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Add the Deal";
+    self.title = @"Have more details?";
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
@@ -120,6 +120,7 @@
     return height;
 }
 
+/*
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *container = [[UIView alloc]init];
@@ -152,6 +153,7 @@
     
     return 0;
 }
+ */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -615,7 +617,7 @@
         addDealButtonFrame.origin.y = 18.0;
         self.addDealButton.frame = addDealButtonFrame;
         self.addDealButton.backgroundColor = [appDelegate ourPurple];
-        [self.addDealButton setTitle:@"Add the Deal" forState:UIControlStateNormal];
+        [self.addDealButton setTitle:@"Share the Deal" forState:UIControlStateNormal];
         [self.addDealButton setTintColor:[UIColor whiteColor]];
         [self.addDealButton addTarget:self action:@selector(addDeal) forControlEvents:UIControlEventTouchUpInside];
         [self.addDealView addSubview:self.addDealButton];

@@ -14,20 +14,54 @@
 
 @implementation ThankYouViewController
 
+@synthesize appDelegate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self setThankYouMessage];
+    [self setOkButton];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    
+    self.shouldDismiss = YES;
     
     if (self.wasFacebookSelected) {
         
         [self facebookShare];
+        self.shouldDismiss = NO;
+        
     }
     
     if (self.wasWhatsAppSelected) {
         
         [self whatsAppShare];
+        self.shouldDismiss = NO;
     }
+    
+    if (self.shouldDismiss) {
+        [self performSelector:@selector(okay:) withObject:nil afterDelay:3.0];
+    }
+}
+
+- (void)appWillResignActive:(NSNotification *)notification
+{
+    [self performSelector:@selector(okay:) withObject:nil afterDelay:1.0];
+}
+
+- (void)setThankYouMessage
+{
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    self.thankYou.text = [NSString stringWithFormat:@"Thank You\n%@!", appDelegate.dealer.fullName];
+}
+
+- (void)setOkButton
+{
+    self.okButton.layer.cornerRadius = self.okButton.frame.size.width / 2;
+    self.okButton.layer.masksToBounds = YES;
+    self.okButton.layer.borderColor = [[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:0.9] CGColor];
+    self.okButton.layer.borderWidth = 2.0;
 }
 
 - (void)facebookShare

@@ -104,7 +104,7 @@
     [self performSelector:@selector(bringPlusButtonToFront:) withObject:plusButton afterDelay:0.01];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
     // Check if should update the dealAttrib
     if (self.likeCounter.integerValue != self.deal.dealAttrib.dealersThatLiked.count) {
@@ -166,6 +166,10 @@
                                                      shouldRemoveID = NO;
                                                  }
                                              }];
+    }
+    
+    if (self.delegate) {
+        [[self.delegate tableView] reloadRowsAtIndexPaths:@[self.dealIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
@@ -238,6 +242,7 @@
 {
     if ([[self.deal photoSum]intValue] >= 2) {
         self.pageControl.hidden = NO;
+        lowestYPoint = CGRectGetMaxY(self.pageControl.frame) - 10;
     } else {
         self.pageControl.hidden = YES;
     }
@@ -289,9 +294,11 @@
 {
     if ([self.isShortCell isEqualToString:@"yes"]) {
         self.cameraScrollView.hidden = YES;
+        lowestYPoint = 10;
         
     } else {
         self.captureImage.image = self.deal.photo1;
+        lowestYPoint = CGRectGetMaxY(self.captureImage.frame) + 10;
         
         if (!self.captureImage.image) { // In case the photo didn't downloaded in the my feed yet.
             UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -532,11 +539,6 @@
 
 - (void)setBasicDetailsSection
 {
-    int offset;
-    if ([[_deal photoSum]intValue] == 0) {
-        offset = 10;
-    } else offset = 184;
-    
     UIFont *font = titlelabel.font;
     
     NSDictionary *attributes = @{NSFontAttributeName : font};
@@ -547,7 +549,7 @@
                                                             context:nil];
     
     titlelabel.frame = CGRectMake(iconsLeftMargin,
-                                  offset + GAP,
+                                  lowestYPoint + GAP,
                                   self.view.frame.size.width - iconsLeftMargin * 2,
                                   titleLabelBounds.size.height);
     titlelabel.numberOfLines = 0;
@@ -1648,9 +1650,11 @@
                 
                 CommentsTableCell *cell = (CommentsTableCell *)[self.commentsTableView cellForRowAtIndexPath:indexPathes[i]];
                 
-                [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
-                [UIView animateWithDuration:0.3 animations:^{ cell.dealerProfilePic.alpha = 1.0; }];
-                break;
+                if ([cell isMemberOfClass:[CommentsTableCell class]]) {
+                    [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
+                    [UIView animateWithDuration:0.3 animations:^{ cell.dealerProfilePic.alpha = 1.0; }];
+                    break;
+                }
             }
         }
     }

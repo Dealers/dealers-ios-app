@@ -275,6 +275,10 @@
     comment.uploadDate = [NSDate date];
     comment.type = @"Deal";
     
+    self.textView.text = nil;
+    self.placeholder.hidden = NO;
+    self.postButton.enabled = NO;
+    
     [[RKObjectManager sharedManager] postObject:comment
                                            path:@"/addcomments/"
                                      parameters:nil
@@ -376,7 +380,6 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.comments.count - 1 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    self.textView.text = nil;
     self.postButton.enabled = NO;
 }
 

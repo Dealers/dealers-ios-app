@@ -218,12 +218,14 @@
     
     lowestYPoint = CGRectGetMaxY(self.profilePic.frame) + GAP;
     
-    self.fullName = [[UILabel alloc]initWithFrame:CGRectMake(0, lowestYPoint, self.tableView.frame.size.width, 22.0)];
+    if (!self.fullName) {
+        self.fullName = [[UILabel alloc]initWithFrame:CGRectMake(0, lowestYPoint, self.tableView.frame.size.width, 22.0)];
+        self.fullName.textAlignment = NSTextAlignmentCenter;
+        self.fullName.font = [UIFont fontWithName:@"Avenir-Heavy" size:20.0];
+        self.fullName.textColor = [appDelegate blackColor];
+        [self.topView addSubview:self.fullName];
+    }
     self.fullName.text = self.dealer.fullName;
-    self.fullName.textAlignment = NSTextAlignmentCenter;
-    self.fullName.font = [UIFont fontWithName:@"Avenir-Heavy" size:20.0];
-    self.fullName.textColor = [appDelegate blackColor];
-    [self.topView addSubview:self.fullName];
     
     lowestYPoint = CGRectGetMaxY(self.fullName.frame);
     
@@ -390,9 +392,7 @@
     lowestYPoint = CGRectGetMaxY(self.uploadedButton.frame);
     self.topView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, lowestYPoint);
     
-    if (!self.tableView.tableHeaderView) {
-        self.tableView.tableHeaderView = self.topView;
-    }
+    self.tableView.tableHeaderView = self.topView;
 }
 
 - (void)setSettingsButton
@@ -592,6 +592,15 @@
                                                   [self stopLoadingDealsAnimation];
                                                   [self.refreshControl endRefreshing];
                                               }];
+}
+
+- (void)checkForDuplicates:(NSMutableArray *)array
+{
+//    for (Deal *deal in array) {
+//        for (int i = 0; i < array.count; i++) {
+//            if (deal.dealID.intValue =
+//        }
+//    }
 }
 
 - (void)loadFirstTwoPhotos
@@ -995,6 +1004,8 @@
         deal = [self.likedDeals objectAtIndex:indexPath.row];
     }
     vodvc.deal = deal;
+    vodvc.delegate = self;
+    vodvc.dealIndexPath = indexPath;
     
     if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"]) {
         vodvc.isShortCell = @"no";
