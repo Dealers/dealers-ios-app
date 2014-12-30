@@ -16,12 +16,9 @@
     float ScreenHeight;
     MBProgressHUD *loggingInFacebook, *noConnection;
     FBGraphObject *facebookInfo;
-    NSString *facebookUserEmail;
-    NSString *facebookToken;
-    BOOL hasPhoto;
-    BOOL didDownloadUserData;
-    BOOL didPhotoFinishedDownloading;
-    BOOL firstSlogen;
+    NSString *facebookUserEmail, *facebookToken, *photoFileName;
+    BOOL hasPhoto, didDownloadUserData, didPhotoFinishedDownloading, didPhotoFinishedUploading, firstSlogen;
+    
 }
 
 @property AppDelegate *appDelegate;

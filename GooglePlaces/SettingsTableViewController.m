@@ -11,12 +11,15 @@
 
 #define confirmDisconnectTag 12341234
 #define confirmConnectTag 43214321
+#define AWS_S3_BUCKET_NAME @"dealers-app"
 
 @interface SettingsTableViewController ()
 
 @end
 
 @implementation SettingsTableViewController
+
+@synthesize appDelegate;
 
 - (void)viewDidLoad
 {
@@ -25,13 +28,14 @@
     self.title = @"Settings";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
-    self.appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appDelegate = [[UIApplication sharedApplication] delegate];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleFBSessionStateChangeWithNotification:)
                                                  name:@"SessionStateChangeNotification"
                                                object:nil];
     
+    [self configureRestKit];
     [self setProgressIndicator];
 }
 
@@ -39,7 +43,7 @@
 {
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
     
-    if ([self.appDelegate isFacebookConnected]) {
+    if ([appDelegate isFacebookConnected]) {
         
         self.facebookConnectionIndicator.text = @"Connected";
         self.facebookConnectionIndicator.textColor = [UIColor blackColor];
@@ -61,14 +65,14 @@
     progressIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     progressIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
-    UIImageView *customView = [self.appDelegate loadingAnimationWhite];
+    UIImageView *customView = [appDelegate loadingAnimationWhite];
     [customView startAnimating];
     
     loggingInFacebook = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     loggingInFacebook.delegate = self;
     loggingInFacebook.customView = customView;
     loggingInFacebook.mode = MBProgressHUDModeCustomView;
-    loggingInFacebook.labelText = @"Logging In";
+    loggingInFacebook.labelText = @"Connecting";
     loggingInFacebook.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     loggingInFacebook.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -89,14 +93,14 @@
             // Facebook Connection:
             if (indexPath.row == 0) {
                 
-                if (![self.appDelegate isFacebookConnected]) {
+                if (![appDelegate isFacebookConnected]) {
                     
                     // Connect Facebook
                     UIActionSheet *confirmConnection = [[UIActionSheet alloc]initWithTitle:@"Do you want to connect Facebook?"
-                                                                                     delegate:self
-                                                                            cancelButtonTitle:@"Cancel"
-                                                                       destructiveButtonTitle:nil
-                                                                            otherButtonTitles:@"Connect Facebook", nil];
+                                                                                  delegate:self
+                                                                         cancelButtonTitle:@"Cancel"
+                                                                    destructiveButtonTitle:nil
+                                                                         otherButtonTitles:@"Connect Facebook", nil];
                     
                     confirmConnection.tag = confirmConnectTag;
                     [confirmConnection showFromTabBar:self.tabBarController.tabBar];
@@ -154,24 +158,45 @@
     FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
     NSError *error = [userInfo objectForKey:@"error"];
     
+    [loggingInFacebook show:YES];
+    
     if (!error) {
         
         // In case that there's not any error, then check if the session opened or closed.
         
-        if (sessionState == FBSessionStateOpen) {
+        if ([appDelegate isFacebookConnected]) {
             
-            // Check if the user already exists
-            [self signInWithToken];
+            self.facebookConnectionIndicator.text = @"Connected";
+            self.facebookConnectionIndicator.textColor = [UIColor blackColor];
             
-            // If exists, get him in and add all the new information received by Facebook
-            [self updateInfoReceivedByFacebook];
-            
-            // If doesn't exists, add him as a new dealer
-            [self addAsNewDealer];
+            [FBRequestConnection startWithGraphPath:@"me"
+                                         parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(large), location, email"}
+                                         HTTPMethod:@"GET"
+                                  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                      
+                                      if (!error) {
+                                          
+                                          [loggingInFacebook hide:YES];
+                                          appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:(FBGraphObject *)result withPhoto:YES];
+                                          
+                                          if (appDelegate.dealer.photoURL.length > 1) {
+                                              // If the dealer already has a photo, don't use Facebook's profile pic and just update the info. If else, use it.
+                                              [self updateDealerInfo];
+                                          } else {
+                                              [self uploadPhoto];
+                                          }
+                                          
+                                      } else {
+                                          
+                                          NSLog(@"%@", [error localizedDescription]);
+                                          [loggingInFacebook hide:YES];
+                                      }
+                                  }];
             
         } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
             
             // A session was closed or the login was failed or canceled. Update the UI accordingly.
+            [loggingInFacebook hide:YES];
         }
         
     } else {
@@ -182,21 +207,114 @@
     }
 }
 
-- (void)signInWithToken
+- (void)configureRestKit
 {
+    NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
-
+    self.updateFromFacebookManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+    self.updateFromFacebookManager.requestSerializationMIMEType = RKMIMETypeJSON;
+    
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
+    
+    RKResponseDescriptor *updateProfileResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[appDelegate dealerMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:nil
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKRequestDescriptor *updateProfileRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[appDelegate editProfileMapping]
+                                          objectClass:[Dealer class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
+    [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    
+    NSString *token = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    [self.updateFromFacebookManager.HTTPClient setAuthorizationHeaderWithToken:token];
+    
+    [self.updateFromFacebookManager addResponseDescriptor:updateProfileResponseDescriptor];
+    [self.updateFromFacebookManager addRequestDescriptor:updateProfileRequestDescriptor];
 }
 
-- (void)updateInfoReceivedByFacebook
+- (void)updateDealerInfo
 {
+    NSString *path = [NSString stringWithFormat:@"/dealers/%@/", appDelegate.dealer.dealerID];
     
+    [self.updateFromFacebookManager patchObject:appDelegate.dealer
+                                           path:path
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            
+                                            NSLog(@"Dealer updated successfully!");
+                                        }
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            NSLog(@"Couldn't update dealer, Error: %@", error);
+                                        }];
 }
 
-- (void)addAsNewDealer
+- (void)uploadPhoto
 {
+    NSString *photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", appDelegate.dealer.email, [NSDate date]];
+    NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
+    appDelegate.dealer.photoURL = filePathAtS3;
     
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    NSString *key = appDelegate.dealer.photoURL;
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:photoFileName];
+    [appDelegate.dealer.photo writeToFile:filePath atomically:YES];
+    
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.bucket = AWS_S3_BUCKET_NAME;
+    uploadRequest.key = key;
+    uploadRequest.body = fileURL;
+    
+    [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
+                                                       withBlock:^id(BFTask *task) {
+                                                           if (task.error) {
+                                                               if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                   switch (task.error.code) {
+                                                                           
+                                                                       case AWSS3TransferManagerErrorCancelled:
+                                                                           NSLog(@"Profile photo upload cancelled");
+                                                                           break;
+                                                                           
+                                                                       case AWSS3TransferManagerErrorPaused:
+                                                                           NSLog(@"Profile photo upload paused");
+                                                                           break;
+                                                                           
+                                                                       default:
+                                                                           NSLog(@"Error: %@", task.error);
+                                                                           break;
+                                                                   }
+                                                               } else {
+                                                                   // Unknown error.
+                                                                   NSLog(@"Error: %@", task.error);
+                                                               }
+                                                           }
+                                                           
+                                                           if (task.result) {
+                                                               
+                                                               NSLog(@"Profile photo uploaded successfuly!");
+                                                               
+                                                               [self updateDealerInfo];
+                                                               
+                                                               ProfileTableViewController *ptvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+                                                               ptvc.afterEditing = YES;
+                                                           }
+                                                           return nil;
+                                                       }];
 }
+
 
 #pragma mark - Navigation methods
 
@@ -216,7 +334,6 @@
 
 - (void)logOut
 {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     UINavigationController *nc = [self.storyboard instantiateViewControllerWithIdentifier:@"openingScreenID"];
     
     CGRect screenShotRect = self.view.bounds;
@@ -230,7 +347,7 @@
     appDelegate.dealer = nil;
     [appDelegate removeUserDetailsFromDevice];
     
-    if ([self.appDelegate isFacebookConnected]) {
+    if ([appDelegate isFacebookConnected]) {
         
         [[FBSession activeSession] closeAndClearTokenInformation];
     }
@@ -320,12 +437,12 @@
             self.facebookConnectionIndicator.text = @"Not Connected";
             self.facebookConnectionIndicator.textColor = [UIColor lightGrayColor];
         }
-    
+        
     } else if (actionSheet.tag == confirmConnectTag) {
         
         if (buttonIndex == 0) {
             
-            [self.appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email"] allowLoginUI:YES];
+            [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email", @"user_birthday", @"user_location"] allowLoginUI:YES];
         }
     }
 }

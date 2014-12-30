@@ -66,6 +66,10 @@
     if (self.afterEditing) {
         [self setTopView];
         [self.tableView reloadData];
+        if ([self.tableView viewWithTag:NO_DEALS_TAG]) {
+            [[self.tableView viewWithTag:NO_DEALS_TAG] removeFromSuperview];
+            [self noDealMessage];
+        }
         self.afterEditing = NO;
     }
     
@@ -732,6 +736,10 @@
 
 - (void)noDealMessage
 {
+    if ([self.tableView viewWithTag:NO_DEALS_TAG]) {
+        [[self.tableView viewWithTag:NO_DEALS_TAG] removeFromSuperview];
+    }
+    
     CGFloat originY = self.topView.frame.size.height + 50.0;
     UILabel *noDealsMessage = [[UILabel alloc]initWithFrame:CGRectMake(0, originY, self.tableView.frame.size.width, 20.0)];
     [noDealsMessage setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
@@ -741,8 +749,6 @@
     noDealsMessage.textColor = [appDelegate textGrayColor];
     noDealsMessage.alpha = 0;
     noDealsMessage.tag = NO_DEALS_TAG;
-    
-    
     
     if (isRefreshing) {
         [self.refreshControl endRefreshing];

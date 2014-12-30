@@ -11,7 +11,9 @@
 @interface Error : NSObject
 
 @property NSString *detail;
-@property NSString *user;
-@property NSArray *email;
+@property NSArray *emailFormat;
+@property NSArray *emailExists;
+
+- (NSString *)messagesString;
 
 @end

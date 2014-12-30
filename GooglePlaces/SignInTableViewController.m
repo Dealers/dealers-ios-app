@@ -19,7 +19,7 @@
     self.title = @"Sign In";
     
     [self initialize];
-//    [self configureRestKit];
+    //    [self configureRestKit];
     [self setLoadingAnimation];
     [self setProgressIndicator];
 }
@@ -144,40 +144,40 @@
 }
 
 /*
-- (void)configureRestKit
-{
-    // initialize AFNetworking HTTPClient
-    NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
-    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
-    
-    // initialize RestKit
-    self.signInManager = [[RKObjectManager alloc] initWithHTTPClient:client];
-    self.signInManager.requestSerializationMIMEType = RKMIMETypeJSON;
-    
-    // other modifications to the object manager
-    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
-    
-    // register mappings with the provider using response descriptors
-    RKResponseDescriptor *dealsResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:[appDelegate dealerMapping]
-                                                 method:RKRequestMethodAny
-                                            pathPattern:@"/dealerlogins/"
-                                                keyPath:@"results"
-                                            statusCodes:statusCodes];
-    
-    RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
-    [errorMapping addPropertyMapping: [RKAttributeMapping attributeMappingFromKeyPath:@"detail" toKeyPath:@"errorMessage"]];
-    
-    RKResponseDescriptor *errorResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:errorMapping
-                                                 method:RKRequestMethodAny
-                                            pathPattern:nil
-                                                keyPath:nil
-                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
-    
-    [self.signInManager addResponseDescriptorsFromArray:@[dealsResponseDescriptor, errorResponseDescriptor]];
-}
-*/
+ - (void)configureRestKit
+ {
+ // initialize AFNetworking HTTPClient
+ NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
+ AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+ 
+ // initialize RestKit
+ self.signInManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+ self.signInManager.requestSerializationMIMEType = RKMIMETypeJSON;
+ 
+ // other modifications to the object manager
+ NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
+ 
+ // register mappings with the provider using response descriptors
+ RKResponseDescriptor *dealsResponseDescriptor =
+ [RKResponseDescriptor responseDescriptorWithMapping:[appDelegate dealerMapping]
+ method:RKRequestMethodAny
+ pathPattern:@"/dealerlogins/"
+ keyPath:@"results"
+ statusCodes:statusCodes];
+ 
+ RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
+ [errorMapping addPropertyMapping: [RKAttributeMapping attributeMappingFromKeyPath:@"detail" toKeyPath:@"errorMessage"]];
+ 
+ RKResponseDescriptor *errorResponseDescriptor =
+ [RKResponseDescriptor responseDescriptorWithMapping:errorMapping
+ method:RKRequestMethodAny
+ pathPattern:nil
+ keyPath:nil
+ statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
+ 
+ [self.signInManager addResponseDescriptorsFromArray:@[dealsResponseDescriptor, errorResponseDescriptor]];
+ }
+ */
 
 - (BOOL)validation
 {
@@ -208,43 +208,36 @@
     [self startLoading];
     
     [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:self.emailTextField.text
-                                                             password:self.passwordTextField.text];
+                                                                          password:self.passwordTextField.text];
     
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/dealerlogins/"
-                              parameters:nil
-                                 success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                     
-                                     self.appDelegate.dealer = mappingResult.firstObject;
-                                     
-                                     if (appDelegate.dealer.photoURL.length > 2 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
-                                         hasPhoto = YES;
-                                         [self downloadUesrPhoto];
-                                     }
-                                     
-                                     [self getToken];
-                                 }
-                                 failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                     
-                                     if (error.code == -1004) {
-                                         
-                                         // No connection to the server error
-                                         [noConnection show:YES];
-                                         [noConnection hide:YES afterDelay:2.0];
-                                         
-                                     } else if ([error.localizedDescription isEqualToString:@"Invalid username/password"]) {
-                                         
-                                         // Wrong email or password error
-                                         [wrongEmailPassword show:YES];
-                                         [wrongEmailPassword hide:YES afterDelay:1.5];
-                                         
-                                     } else {
-                                         
-                                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign in" message:@"Sorry for that, please try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                         [alert show];
-                                     }
-                                     
-                                     [self stopLoading];
-                                 }];
+                                           parameters:nil
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  
+                                                  self.appDelegate.dealer = mappingResult.firstObject;
+                                                  
+                                                  if (appDelegate.dealer.photoURL.length > 2 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
+                                                      hasPhoto = YES;
+                                                      [self downloadUesrPhoto];
+                                                  }
+                                                  
+                                                  [self getToken];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  
+                                                  Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
+                                                  NSLog(@"%@", [errors messagesString]);
+                                                  
+                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign in..."
+                                                                                                 message:[NSString stringWithFormat:@"\n%@", [errors messagesString]]
+                                                                                                delegate:nil
+                                                                                       cancelButtonTitle:@"OK"
+                                                                                       otherButtonTitles:nil];
+                                                  [alert show];
+                                                  [alert show];
+                                                  
+                                                  [self stopLoading];
+                                              }];
 }
 
 - (void)downloadUesrPhoto
@@ -260,32 +253,32 @@
     
     [[[AWSS3TransferManager defaultS3TransferManager] download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
                                                                                            withBlock:^id(BFTask *task) {
-        
-        if (task.error){
-            if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                switch (task.error.code) {
-                    case AWSS3TransferManagerErrorCancelled:
-                    case AWSS3TransferManagerErrorPaused:
-                        break;
-                        
-                    default:
-                        NSLog(@"Error: %@", task.error);
-                        break;
-                }
-            } else {
-                // Unknown error.
-                NSLog(@"Error: %@", task.error);
-            }
-        }
-        
-        if (task.result) {
-            
-            didPhotoFinishedDownloading = YES;
-            appDelegate.dealer.photo = [NSData dataWithContentsOfFile:downloadingFilePath];
-            [self enterDealers];
-        }
-        return nil;
-    }];
+                                                                                               
+                                                                                               if (task.error){
+                                                                                                   if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                                                       switch (task.error.code) {
+                                                                                                           case AWSS3TransferManagerErrorCancelled:
+                                                                                                           case AWSS3TransferManagerErrorPaused:
+                                                                                                               break;
+                                                                                                               
+                                                                                                           default:
+                                                                                                               NSLog(@"Error: %@", task.error);
+                                                                                                               break;
+                                                                                                       }
+                                                                                                   } else {
+                                                                                                       // Unknown error.
+                                                                                                       NSLog(@"Error: %@", task.error);
+                                                                                                   }
+                                                                                               }
+                                                                                               
+                                                                                               if (task.result) {
+                                                                                                   
+                                                                                                   didPhotoFinishedDownloading = YES;
+                                                                                                   appDelegate.dealer.photo = [NSData dataWithContentsOfFile:downloadingFilePath];
+                                                                                                   [self enterDealers];
+                                                                                               }
+                                                                                               return nil;
+                                                                                           }];
 }
 
 - (void)getToken
@@ -308,7 +301,7 @@
                                                                                    error:&error];
                  NSString *token = [tokenDictionary objectForKey:@"token"];
                  [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:token];
-
+                 
                  KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
                  [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
                  [keychain setObject:token forKey:(__bridge id)(kSecAttrAccount)];

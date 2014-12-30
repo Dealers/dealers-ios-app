@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "Deal.h"
 #import "Store.h"
 #import "Dealer.h"
@@ -56,6 +57,7 @@
 - (UIButton *)actionButton;
 - (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
 - (NSNumber *)setPhotoSum:(Deal *)deal;
+- (Dealer *)updateDealer:(Dealer *)dealer withFacebookInfo:(FBGraphObject *)facebookInfo withPhoto:(BOOL)withPhoto;
 - (NSString *)connectOldCategoryToNewCategory:(NSString *)string;
 
 - (UIImageView *)loadingAnimationWhite;
@@ -78,6 +80,7 @@
 - (RKObjectMapping *)dealMapping;
 - (RKObjectMapping *)addDealMapping;
 - (RKObjectMapping *)dealerMapping;
+- (RKObjectMapping *)editProfileMapping;
 - (RKObjectMapping *)storeMapping;
 - (RKObjectMapping *)dealAttribMapping;
 - (RKObjectMapping *)commentMapping;

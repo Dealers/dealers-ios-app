@@ -1862,8 +1862,6 @@
 		C869CB74191A12EF00DF2C19 /* Sign Up */ = {
 			isa = PBXGroup;
 			children = (
-				B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */,
-				B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */,
 				C8051BEE1A41DB9B008FBA40 /* SignUpTableViewController.h */,
 				C8051BEF1A41DB9B008FBA40 /* SignUpTableViewController.m */,
 			);
@@ -1931,6 +1929,8 @@
 		C871A5321A25D58500A9A2D1 /* Old Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */,
+				B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */,
 				B012D94E182AA320006288CA /* ProfileViewController.h */,
 				B012D94F182AA321006288CA /* ProfileViewController.m */,
 				B0294C7118B0CC0900699107 /* MyFeedsViewController.h */,

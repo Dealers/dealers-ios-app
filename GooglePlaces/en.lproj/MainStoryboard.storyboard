@@ -1649,7 +1649,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <inset key="contentInset" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="20"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="5fh-Db-rGC" id="ebf-Ih-Aco"/>
                                                     </connections>
@@ -1809,7 +1809,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expires on" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EgK-1R-reI">
-                                                    <rect key="frame" x="55" y="0.0" width="90" height="44"/>
+                                                    <rect key="frame" x="53" y="0.0" width="90" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
@@ -1870,6 +1870,10 @@
                                                     </state>
                                                     <state key="selected" image="Facebook Logo Selected"/>
                                                 </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="RIU-mY-KHW">
+                                                    <rect key="frame" x="284" y="11" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="tintColor" red="0.23137254901960785" green="0.3411764705882353" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
@@ -1916,6 +1920,7 @@
                         <outlet property="datePickerCell" destination="lz9-8r-R4W" id="LM0-RZ-M4r"/>
                         <outlet property="discountTextField" destination="a9e-WO-B1Y" id="t2u-py-PU3"/>
                         <outlet property="expirationDateLabel" destination="MZp-WF-ikk" id="tgV-Bw-RLE"/>
+                        <outlet property="facebookActivityIndicator" destination="RIU-mY-KHW" id="do1-nC-q96"/>
                         <outlet property="facebookIcon" destination="WRN-5L-8kY" id="1Hn-8w-WDv"/>
                         <outlet property="facebookLabel" destination="wGd-Ve-qMr" id="DDP-sd-eBD"/>
                         <outlet property="priceTextField" destination="DRW-Jf-jmw" id="bnO-Az-aUF"/>
@@ -2038,7 +2043,7 @@ Shared by people like you</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY" userLabel="Sign In button">
-                                        <rect key="frame" x="24" y="495.00000223301561" width="274" height="31"/>
+                                        <rect key="frame" x="24" y="495.00000205634535" width="274" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -2130,7 +2135,7 @@ Shared by people like you</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0KA-81-Cgg" userLabel="Sign In button">
-                                        <rect key="frame" x="24" y="515.00000122003132" width="274" height="31"/>
+                                        <rect key="frame" x="24" y="515" width="274" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -3137,6 +3142,7 @@ Shared by people like you</string>
                         <outlet property="location" destination="da7-LK-I96" id="upN-J5-rN0"/>
                         <outlet property="noDateButton" destination="UzQ-v9-v5a" id="Yg4-Gy-Ico"/>
                         <outlet property="profilePicButton" destination="LSx-16-KXU" id="b88-Ha-NG7"/>
+                        <outlet property="profilePicView" destination="1ef-mN-dYQ" id="jTC-Mv-WqT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1xK-zp-iS2" userLabel="First Responder" sceneMemberID="firstResponder"/>

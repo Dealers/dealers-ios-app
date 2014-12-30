@@ -54,7 +54,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     if (appDelegate.shouldUpdateMyFeed) {
-        [self.tableView setContentOffset:CGPointMake(0, -64.0)];
+        [self.tableView setContentOffset:CGPointMake(0, -64)];
         [self setLoadingView];
         [self refresh];
         appDelegate.shouldUpdateMyFeed = NO;

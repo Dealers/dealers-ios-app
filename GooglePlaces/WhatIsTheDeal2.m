@@ -45,6 +45,7 @@
     [self setAddDealButton];
     [self setProgressIndicator];
     [self createInputAccessoryViews];
+    [self configureRestKit];
     [self setCashedData];
 }
 
@@ -121,38 +122,38 @@
 }
 
 /*
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *container = [[UIView alloc]init];
-    UILabel *labelHeader = [[UILabel alloc] initWithFrame:CGRectMake (0, 21, tableView.bounds.size.width, 22)];
-    
-    if (section == 0) {
-        
-        labelHeader.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
-        //        labelHeader.textColor = [UIColor colorWithRed:130.0/255.0 green:130.0/255.0 blue:136.0/255.0 alpha:1.0];
-        labelHeader.textColor = [UIColor blackColor];
-        labelHeader.text = @"Great! Have more details?";
-        labelHeader.textAlignment = NSTextAlignmentCenter;
-    }
-    
-    [container addSubview:labelHeader];
-    
-    return container;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section == 0) {
-        
-        return 56.0;
-        
-    } else if (section == 3) {
-        
-        return 30.0;
-    }
-    
-    return 0;
-}
+ - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+ {
+ UIView *container = [[UIView alloc]init];
+ UILabel *labelHeader = [[UILabel alloc] initWithFrame:CGRectMake (0, 21, tableView.bounds.size.width, 22)];
+ 
+ if (section == 0) {
+ 
+ labelHeader.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
+ //        labelHeader.textColor = [UIColor colorWithRed:130.0/255.0 green:130.0/255.0 blue:136.0/255.0 alpha:1.0];
+ labelHeader.textColor = [UIColor blackColor];
+ labelHeader.text = @"Great! Have more details?";
+ labelHeader.textAlignment = NSTextAlignmentCenter;
+ }
+ 
+ [container addSubview:labelHeader];
+ 
+ return container;
+ }
+ 
+ - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+ {
+ if (section == 0) {
+ 
+ return 56.0;
+ 
+ } else if (section == 3) {
+ 
+ return 30.0;
+ }
+ 
+ return 0;
+ }
  */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -681,7 +682,7 @@
     
     UIImageView *dealPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 165.0)];
     [sharedView addSubview:dealPic];
-
+    
     if (self.deal.photo1) {
         
         dealPic.image = self.deal.photo1;
@@ -905,7 +906,7 @@
     loggingInFacebook.delegate = self;
     loggingInFacebook.customView = customView;
     loggingInFacebook.mode = MBProgressHUDModeCustomView;
-    loggingInFacebook.labelText = @"Logging In";
+    loggingInFacebook.labelText = @"Connecting";
     loggingInFacebook.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     loggingInFacebook.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -1099,39 +1100,48 @@
 {
     if ([appDelegate isFacebookConnected]) {
         
-        // Present the permissions dialog and ask for publish_actions
+        [self.facebookActivityIndicator startAnimating];
         
-        [FBRequestConnection startWithGraphPath:@"/me/permissions"
-                              completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                  
-                                  if (!error){
+        if (self.hasPublishPermissions) {
+            [self turnOnFacebook];
+            
+        } else {
+            
+            // Present the permissions dialog and ask for publish_actions
+            [FBRequestConnection startWithGraphPath:@"/me/permissions"
+                                  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                                       
-                                      NSDictionary *permissions = [(NSArray *)[result data] objectAtIndex:2]; // object at index 2 is the publish_actions permission
-                                      
-                                      if ([[permissions objectForKey:@"permission"] isEqualToString:@"publish_actions"]
-                                          && [[permissions objectForKey:@"status"] isEqualToString:@"granted"]) {
+                                      if (!error){
                                           
-                                          // Publish permissions found, turn on facebook
-                                          [self turnOnFacebook];
+                                          NSDictionary *permissions = [(NSArray *)[result data] objectAtIndex:2]; // object at index 2 is the publish_actions permission
+                                          
+                                          if ([[permissions objectForKey:@"permission"] isEqualToString:@"publish_actions"]
+                                              && [[permissions objectForKey:@"status"] isEqualToString:@"granted"]) {
+                                              
+                                              // Publish permissions found, turn on facebook
+                                              self.hasPublishPermissions = YES;
+                                              [self turnOnFacebook];
+                                              
+                                          } else {
+                                              
+                                              // Publish permissions not found, ask for publish_actions
+                                              self.hasPublishPermissions = NO;
+                                              [self requestPublishPermissions];
+                                              
+                                          }
                                           
                                       } else {
-                                          
-                                          // Publish permissions not found, ask for publish_actions
-                                          [self requestPublishPermissions];
-                                          
+                                          // There was an error, handle it
+                                          [self.facebookActivityIndicator stopAnimating];
                                       }
-                                      
-                                  } else {
-                                      // There was an error, handle it
-                                      
-                                  }
-                              }];
+                                  }];
+        }
         
     } else {
         
         // Connect with Facebook Login and ask for all the necessary permissions, including publish_actions
         
-        [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email"] allowLoginUI:YES];
+        [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email", @"user_birthday", @"user_location", @"publish_actions"] allowLoginUI:YES];
     }
 }
 
@@ -1141,39 +1151,45 @@
                                           defaultAudience:FBSessionDefaultAudienceFriends
                                         completionHandler:^(FBSession *session, NSError *error) {
                                             
-                                            __block NSString *alertText;
-                                            __block NSString *alertTitle;
-                                            
                                             if (!error) {
                                                 
-                                                if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
-                                                    
-                                                    // Permission not granted, tell the user we will not publish
-                                                    alertTitle = @"Permission not granted";
-                                                    alertText = @"Your action will not be published to Facebook.";
-                                                    
-                                                    [[[UIAlertView alloc] initWithTitle:alertTitle
-                                                                                message:alertText
-                                                                               delegate:self
-                                                                      cancelButtonTitle:@"Ok"
-                                                                      otherButtonTitles:nil] show];
-                                                    
-                                                } else {
-                                                    
-                                                    // Permission granted, turn on facebook
-                                                    [self turnOnFacebook];
-                                                }
+                                                [self checkPublishPermissions];
                                                 
                                             } else {
                                                 
                                                 // There was an error, handle it
                                                 NSLog(@"error! %@", [error localizedDescription]);
+                                                [self.facebookActivityIndicator stopAnimating];
                                             }
                                         }];
 }
 
+- (void)checkPublishPermissions
+{
+    if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
+        
+        // Permission not granted, tell the user we will not publish
+        
+        [[[UIAlertView alloc] initWithTitle:@"Permission not granted"
+                                    message:@"Your deal will not be published to Facebook."
+                                   delegate:self
+                          cancelButtonTitle:@"Ok"
+                          otherButtonTitles:nil] show];
+        
+        self.hasPublishPermissions = NO;
+        [self.facebookActivityIndicator stopAnimating];
+        
+    } else {
+        
+        // Permission granted, turn on facebook
+        self.hasPublishPermissions = YES;
+        [self turnOnFacebook];
+    }
+}
+
 - (void)turnOnFacebook
 {
+    [self.facebookActivityIndicator stopAnimating];
     NSIndexPath *facebookIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
     self.facebookIcon.selected = YES;
     self.facebookLabel.textColor = [UIColor colorWithRed:59.0/255.0 green:87.0/255.0 blue:157.0/255.0 alpha:1.0];
@@ -1183,85 +1199,96 @@
 
 - (void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification
 {
-    // Get the session, state and error values from the notification's userInfo dictionary.
-    NSDictionary *userInfo = [notification userInfo];
-    
-    FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
-    NSError *error = [userInfo objectForKey:@"error"];
-    
-    [loggingInFacebook show:YES];
-    
-    if (!error) {
+    if (!self.hasPublishPermissions) { // Otherwise there is no need to fetch the user's info, because we already have it.
         
-        // In case that there's not any error, then check if the session opened or closed.
+        // Get the session, state and error values from the notification's userInfo dictionary.
+        NSDictionary *userInfo = [notification userInfo];
         
-        if ([appDelegate isFacebookConnected]) {
+        FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
+        NSError *error = [userInfo objectForKey:@"error"];
+        
+        if (!error) {
             
-            // The session is open. Get the user information and update the UI.
+            // In case that there's not any error, then check if the session opened or closed.
             
-            [FBRequestConnection startWithGraphPath:@"me"
-                                         parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(normal), email"}
-                                         HTTPMethod:@"GET"
-                                  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                      
-                                      if (!error) {
+            if ([appDelegate isFacebookConnected]) {
+                
+                // The session is open. Get the user information and update the UI.
+                
+                [FBRequestConnection startWithGraphPath:@"me"
+                                             parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(large), location, email"}
+                                             HTTPMethod:@"GET"
+                                      completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                                           
-                                          __block Dealer *dealer = appDelegate.dealer;
-                                          __block BOOL didChange = NO;
-                                          __block NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-                                          
-                                          if (!dealer.dateOfBirth) {
+                                          if (!error) {
                                               
-                                              dateFormatter.dateFormat = @"MM/dd/yyyy";
-                                              dealer.dateOfBirth = [dateFormatter dateFromString:[result objectForKey:@"birthday"]];
-                                              didChange = YES;
-                                          }
-                                          
-                                          if (!(dealer.gender.length > 0)) {
+                                              appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:(FBGraphObject *)result withPhoto:NO];
                                               
-                                              dealer.gender = [result objectForKey:@"gender"];
-                                              didChange = YES;
-                                          }
-                                          
-                                          if (!dealer.photo) {
+                                              [self updateDealerInfo];
+                                              [self checkPublishPermissions];
                                               
-                                              NSURL *pictureURL = [NSURL URLWithString:[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
-                                              dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
-                                              didChange = YES;
-                                          }
-                                          
-                                          appDelegate.dealer = dealer;
-                                          
-                                          // Upload all the data to Dealers database.
-                                          
-                                          if (didChange) {
+                                          } else {
                                               
-                                              // Upload
+                                              NSLog(@"%@", [error localizedDescription]);
+                                              [self.facebookActivityIndicator stopAnimating];
                                           }
-                                          
-                                          [loggingInFacebook hide:YES];
-                                          
-                                          [self requestPublishPermissions];
-                                          
-                                      } else {
-                                          
-                                          NSLog(@"%@", [error localizedDescription]);
-                                      }
-                                  }];
+                                      }];
+                
+            } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
+                
+                // A session was closed or the login was failed or canceled. Update the UI accordingly.
+                
+                [self.facebookActivityIndicator stopAnimating];
+            }
             
-        } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
+        } else {
             
-            // A session was closed or the login was failed or canceled. Update the UI accordingly.
-            
-            [loggingInFacebook hide:YES];
+            // In case an error has occured, then just log the error and update the UI accordingly.
+            NSLog(@"Error: %@", [error localizedDescription]);
+            [self.facebookActivityIndicator stopAnimating];
         }
-        
-    } else {
-        
-        // In case an error has occured, then just log the error and update the UI accordingly.
-        NSLog(@"Error: %@", [error localizedDescription]);
-        [loggingInFacebook hide:YES];
     }
+}
+
+- (void)configureRestKit
+{
+    self.updateFromFacebookManager = [[RKObjectManager alloc] initWithHTTPClient:[RKObjectManager sharedManager].HTTPClient];
+    self.updateFromFacebookManager.requestSerializationMIMEType = RKMIMETypeJSON;
+    
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
+    
+    RKResponseDescriptor *updateProfileResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[appDelegate dealerMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:nil
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKRequestDescriptor *updateProfileRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[appDelegate editProfileMapping]
+                                          objectClass:[Dealer class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    [self.updateFromFacebookManager addResponseDescriptor:updateProfileResponseDescriptor];
+    [self.updateFromFacebookManager addRequestDescriptor:updateProfileRequestDescriptor];
+}
+
+- (void)updateDealerInfo
+{
+    NSString *path = [NSString stringWithFormat:@"/dealers/%@/", appDelegate.dealer.dealerID];
+    
+    [self.updateFromFacebookManager patchObject:appDelegate.dealer
+                                           path:path
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            
+                                            NSLog(@"Dealer updated successfully!");
+                                        }
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            NSLog(@"Couldn't update dealer, Error: %@", error);
+                                        }];
 }
 
 

@@ -9,7 +9,6 @@
 //itzikb
 
 #import "AppDelegate.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import <AWSiOSSDKv2/S3.h>
 #import <AWSiOSSDKv2/AWSCore.h>
 #import "WhereIsTheDeal.h"
@@ -52,7 +51,7 @@
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                        [UIFont fontWithName:@"Avenir-Roman" size:11.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
-        
+    
     // Configuring RestKit:
     [self configureRestKit];
     
@@ -554,6 +553,52 @@
         return [NSNumber numberWithInt:3];
     
     return [NSNumber numberWithInt:4];
+}
+
+- (Dealer *)updateDealer:(Dealer *)dealer withFacebookInfo:(FBGraphObject *)facebookInfo withPhoto:(BOOL)withPhoto
+{
+    if (!dealer) {
+        dealer = [[Dealer alloc]init];
+        dealer.fullName = [NSString stringWithFormat:@"%@ %@",
+                           [facebookInfo objectForKey:@"first_name"],
+                           [facebookInfo objectForKey:@"last_name"]];
+        dealer.email = [facebookInfo objectForKey:@"email"];
+        dealer.username = dealer.email;
+        dealer.userPassword = [NSString stringWithFormat:@"facebook_user_%@", dealer.email];
+        dealer.registerDate = [NSDate date];
+    }
+    
+    if (!dealer.dateOfBirth) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.dateFormat = @"MM/dd/yyyy";
+        dealer.dateOfBirth = [dateFormatter dateFromString:[facebookInfo objectForKey:@"birthday"]];
+    }
+    
+    if (!dealer.gender || [dealer.gender isEqualToString:@"Unspecified"]) {
+        dealer.gender = [facebookInfo objectForKey:@"gender"];
+        if ([dealer.gender isEqualToString:@"male"] || [self.dealer.gender isEqualToString:@"female"]) {
+            
+            NSString *capitalisedGender = [self.dealer.gender stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                                      withString:[[self.dealer.gender substringToIndex:1] capitalizedString]];
+            dealer.gender = capitalisedGender;
+        } else {
+            dealer.gender = nil;
+        }
+    }
+    
+    if (!(dealer.location.length > 1) || [dealer.location isEqualToString:@"None"]) {
+        NSString *location = [[facebookInfo objectForKey:@"location"] objectForKey:@"name"];
+        dealer.location = location;
+    }
+    
+    if (withPhoto) {
+        if (!(dealer.photoURL.length > 1) || [dealer.photoURL isEqualToString:@"None"]) {
+            NSURL *pictureURL = [NSURL URLWithString:[[[facebookInfo objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
+            dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
+        }
+    }
+    
+    return dealer;
 }
 
 - (NSString *)connectOldCategoryToNewCategory:(NSString *)string
@@ -1178,6 +1223,22 @@
     return dealerMapping;
 }
 
+- (RKObjectMapping *)editProfileMapping
+{
+    RKObjectMapping *editProfileMapping = [RKObjectMapping requestMapping];
+    [editProfileMapping addAttributeMappingsFromDictionary: @{
+                                                              @"email" : @"email",
+                                                              @"fullName" : @"full_name",
+                                                              @"dateOfBirth" : @"date_of_birth",
+                                                              @"gender" : @"gender",
+                                                              @"about" : @"about",
+                                                              @"location" : @"location",
+                                                              @"username" : @"user.username",
+                                                              @"photoURL" : @"photo"
+                                                              }];
+    return editProfileMapping;
+}
+
 - (RKObjectMapping *)storeMapping
 {
     RKObjectMapping *storeMapping = [RKObjectMapping mappingForClass:[Store class]];
@@ -1252,8 +1313,8 @@
 {
     RKObjectMapping *likedDealsMapping = [RKObjectMapping mappingForClass:[DealAttrib class]];
     [likedDealsMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"deal"
-                                                                                   toKeyPath:@"deal"
-                                                                                 withMapping:[self dealMapping]]];
+                                                                                      toKeyPath:@"deal"
+                                                                                    withMapping:[self dealMapping]]];
     
     return likedDealsMapping;
 }
@@ -1274,15 +1335,13 @@
 {
     RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[Error class]];
     
-    [errorMapping addAttributeMappingsFromDictionary:@{
-                                                            @"detail": @"detail",
-                                                            @"user": @"user",
-                                                            @"email": @"email",
-                                                            }];
+    [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"email" toKeyPath:@"emailFormat"]];
+    [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"user" toKeyPath:@"emailExists"]];
+    [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"detail" toKeyPath:@"detail"]];
     
     return errorMapping;
 }
-    
+
 - (void)setHTTPClientUsername:(NSString *)username andPassword:(NSString *)password
 {
     [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:username password:password];
@@ -1401,16 +1460,9 @@
     
     RKResponseDescriptor *signUpErrorResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self errorMapping]
-                                                 method:RKRequestMethodGET
-                                            pathPattern:@"/dealers/"
+                                                 method:RKRequestMethodAny
+                                            pathPattern:nil
                                                 keyPath:nil
-                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
-    
-    RKResponseDescriptor *signInErrorResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:[self errorMapping]
-                                                 method:RKRequestMethodGET
-                                            pathPattern:@"/dealerlogins/"
-                                                keyPath:@"detail"
                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
     
     // register mappings with the provider using request descriptors
@@ -1454,7 +1506,8 @@
                                                likersResponseDescriptor,
                                                dealAttribResponseDescriptor,
                                                commentsResponseDescriptor,
-                                               addCommentResponseDescriptor
+                                               addCommentResponseDescriptor,
+                                               signUpErrorResponseDescriptor
                                                ]];
     
     [manager addRequestDescriptorsFromArray:@[
@@ -1476,17 +1529,23 @@
                                       
                                       if (!error) {
                                           
-                                          // Create a NSDictionary object and set the parameter values.
-                                          NSDictionary *sessionStateInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                            session, @"session",
-                                                                            [NSNumber numberWithInteger:status], @"state",
-                                                                            error, @"error",
-                                                                            nil];
+                                          if (permissions) {
+                                              
+                                              // Create a NSDictionary object and set the parameter values.
+                                              NSDictionary *sessionStateInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                                session, @"session",
+                                                                                [NSNumber numberWithInteger:status], @"state",
+                                                                                error, @"error",
+                                                                                nil];
+                                              
+                                              // Create a new notification, add the sessionStateInfo dictionary to it and post it.
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionStateChangeNotification"
+                                                                                                  object:nil
+                                                                                                userInfo:sessionStateInfo];
                                           
-                                          // Create a new notification, add the sessionStateInfo dictionary to it and post it.
-                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionStateChangeNotification"
-                                                                                              object:nil
-                                                                                            userInfo:sessionStateInfo];
+                                          } else {
+                                              
+                                          }
                                           
                                       } else {
                                           

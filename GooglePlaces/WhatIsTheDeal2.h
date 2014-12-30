@@ -72,8 +72,13 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *facebookIcon;
 @property (weak, nonatomic) IBOutlet UILabel *facebookLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *facebookActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *whatsAppIcon;
 @property (weak, nonatomic) IBOutlet UILabel *whatsAppLabel;
+
+@property BOOL hasPublishPermissions;
+
+@property RKObjectManager *updateFromFacebookManager;
 
 @property NSMutableArray *photosFileName;
 

@@ -1041,7 +1041,7 @@
             
             } else if (buttonIndex == 1) {
                 
-                NSString *path = [NSString stringWithFormat:@"/deals/%@/", self.deal.dealID];
+                NSString *path = [NSString stringWithFormat:@"/adddeals/%@/", self.deal.dealID];
                 
                 [[RKObjectManager sharedManager] deleteObject:self.deal
                                                          path:path

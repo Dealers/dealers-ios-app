@@ -560,9 +560,16 @@
      
                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                             
-                                            NSString *errorMessage = [error localizedDescription];
-                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign up..." message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                            Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
+                                            NSLog(@"%@", [errors messagesString]);
+                                            
+                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign up..."
+                                                                                           message:[NSString stringWithFormat:@"\n%@", [errors messagesString]]
+                                                                                          delegate:nil
+                                                                                 cancelButtonTitle:@"OK"
+                                                                                 otherButtonTitles:nil];
                                             [alert show];
+                                            
                                             [[AWSS3TransferManager defaultS3TransferManager] cancelAll];
                                             [self stopLoading];
                                         }];

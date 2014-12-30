@@ -64,6 +64,9 @@
     
     self.delegate = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self.profilePicView addGestureRecognizer:tap];
+    
     didUploadUserData = NO;
     didPhotoFinishedUploading = NO;
     shouldUploadPhoto = NO;
@@ -434,6 +437,11 @@
         [self hideDatePickerCell];
 }
 
+- (void)handleTap:(UITapGestureRecognizer *)recognizer
+{
+    [self.view endEditing:YES];
+}
+
 
 #pragma mark - Private Info
 
@@ -521,22 +529,6 @@
 
 #pragma mark - Uploading and dismissing
 
-- (RKObjectMapping *)editProfileMapping
-{
-    RKObjectMapping *editProfileMapping = [RKObjectMapping requestMapping];
-    [editProfileMapping addAttributeMappingsFromDictionary: @{
-                                                              @"email" : @"email",
-                                                              @"fullName" : @"full_name",
-                                                              @"dateOfBirth" : @"date_of_birth",
-                                                              @"gender" : @"gender",
-                                                              @"about" : @"about",
-                                                              @"location" : @"location",
-                                                              @"username" : @"user.username",
-                                                              @"photoURL" : @"photo"
-                                                              }];
-    return editProfileMapping;
-}
-
 - (void)configureRestKit
 {
     NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
@@ -555,7 +547,7 @@
                                             statusCodes:statusCodes];
     
     RKRequestDescriptor *editProfileRequestDescriptor =
-    [RKRequestDescriptor requestDescriptorWithMapping:[self editProfileMapping]
+    [RKRequestDescriptor requestDescriptorWithMapping:[appDelegate editProfileMapping]
                                           objectClass:[Dealer class]
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
@@ -567,9 +559,6 @@
     NSString *token = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
     
     [self.editProfileManager.HTTPClient setAuthorizationHeaderWithToken:token];
-    
-    RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
-    [errorMapping addPropertyMapping: [RKAttributeMapping attributeMappingFromKeyPath:@"detail" toKeyPath:@"errorMessage"]];
     
     [self.editProfileManager addResponseDescriptorsFromArray:@[editProfileResponseDescriptor]];
     [self.editProfileManager addRequestDescriptor:editProfileRequestDescriptor];

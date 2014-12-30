@@ -32,6 +32,7 @@
 
 @property id delegate;
 
+@property (weak, nonatomic) IBOutlet UIView *profilePicView;
 @property (weak, nonatomic) IBOutlet UIButton *profilePicButton;
 @property (nonatomic) NSData *profilePicData;
 
