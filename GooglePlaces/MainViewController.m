@@ -472,7 +472,7 @@
 
 - (void)createPseudoUserForToken
 {
-    
+    [loggingInFacebook hide:YES];
 }
 
 - (void)uploadPhoto

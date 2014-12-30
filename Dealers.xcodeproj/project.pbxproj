@@ -571,6 +571,7 @@
 		C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */; };
 		C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */; };
 		C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */; };
+		C8DD1AC21A532AC6002843E8 /* DealersTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DD1AC11A532AC6002843E8 /* DealersTabBarController.m */; };
 		C8E43AA11A40A72B00B035BC /* DealersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E43AA01A40A72B00B035BC /* DealersTableViewController.m */; };
 		C8E43AA51A40A78A00B035BC /* DealersTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E43AA31A40A78A00B035BC /* DealersTableCell.m */; };
 		C8E43AA61A40A78A00B035BC /* DealersTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8E43AA41A40A78A00B035BC /* DealersTableCell.xib */; };
@@ -1267,6 +1268,8 @@
 		C8DC1D8A19BC89410062E184 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		C8DD1AC01A532AC6002843E8 /* DealersTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealersTabBarController.h; sourceTree = "<group>"; };
+		C8DD1AC11A532AC6002843E8 /* DealersTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealersTabBarController.m; sourceTree = "<group>"; };
 		C8E43A9F1A40A72B00B035BC /* DealersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealersTableViewController.h; sourceTree = "<group>"; };
 		C8E43AA01A40A72B00B035BC /* DealersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealersTableViewController.m; sourceTree = "<group>"; };
 		C8E43AA21A40A78A00B035BC /* DealersTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealersTableCell.h; sourceTree = "<group>"; };
@@ -1922,6 +1925,8 @@
 				C8C43E7F198F6CDD00409DD2 /* BetterScrollView.m */,
 				C8EE6D721A305FD500D53893 /* ComingSoonViewController.h */,
 				C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */,
+				C8DD1AC01A532AC6002843E8 /* DealersTabBarController.h */,
+				C8DD1AC11A532AC6002843E8 /* DealersTabBarController.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -3041,6 +3046,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8DD1AC21A532AC6002843E8 /* DealersTabBarController.m in Sources */,
 				B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */,
 				C80123301A2C4A8800C40A37 /* DealsTableViewController.m in Sources */,
 				C8C43E80198F6CDD00409DD2 /* BetterScrollView.m in Sources */,

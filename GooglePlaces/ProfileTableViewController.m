@@ -479,7 +479,7 @@
         if (didDownloadLikedDeals) {
             self.currentDeals = self.likedDeals;
             [self.tableView reloadData];
-        
+            
         } else {
             [self setLoadingDealsAnimation];
             [self downloadLikedDeals];
@@ -582,7 +582,7 @@
                                                   if (!self.likedDeals || self.likedDeals.count == 0) {
                                                       [self noDealMessage];
                                                       [self stopLoadingDealsAnimation];
-
+                                                      
                                                   } else {
                                                       [self loadFirstTwoPhotos];
                                                   }
@@ -600,11 +600,11 @@
 
 - (void)checkForDuplicates:(NSMutableArray *)array
 {
-//    for (Deal *deal in array) {
-//        for (int i = 0; i < array.count; i++) {
-//            if (deal.dealID.intValue =
-//        }
-//    }
+    //    for (Deal *deal in array) {
+    //        for (int i = 0; i < array.count; i++) {
+    //            if (deal.dealID.intValue =
+    //        }
+    //    }
 }
 
 - (void)loadFirstTwoPhotos
@@ -812,6 +812,28 @@
         self.profilePic.image = [userInfo objectForKey:@"image"];
         self.profilePic.alpha = 0;
         [UIView animateWithDuration:0.3 animations:^{ self.profilePic.alpha = 1.0; }];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSArray *visibleIndexPathes = self.tableView.indexPathsForVisibleRows;
+    
+    for (NSIndexPath *indexPath in visibleIndexPathes) {
+        
+        if ([[self.tableView cellForRowAtIndexPath:indexPath] isMemberOfClass:[DealsTableCell class]]) {
+            
+            if (indexPath.row >= self.currentDeals.count) {
+                return;
+            }
+              
+            DealsTableCell *cell = (DealsTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            Deal *deal = [self.currentDeals objectAtIndex:indexPath.row];
+            
+            if (deal.photo1 && cell.photo.alpha == 0) {
+                [UIView animateWithDuration:0.5 animations:^{ cell.photo.alpha = 1.0; }];
+            }
+        }
     }
 }
 

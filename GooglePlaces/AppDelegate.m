@@ -79,7 +79,7 @@
 {
     storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
-    tabBarController = [[UITabBarController alloc]init];
+    tabBarController = [[DealersTabBarController alloc]init];
     
     UINavigationController *navigationControllerFeed = [storyboard instantiateViewControllerWithIdentifier:@"feedNavController"];
     UINavigationController *navigationControllerExplore = [storyboard instantiateViewControllerWithIdentifier:@"exploreNavController"];
@@ -148,64 +148,6 @@
     WhereIsTheDeal *tvc = (WhereIsTheDeal *)[navigationController topViewController];
     tvc.cameFrom = @"Add Deal";
     [tabBarController presentViewController:navigationController animated:YES completion:nil];
-}
-
-- (UIImageView *)loadingAnimationWhite
-{
-    UIImageView *loadingAnimationView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
-    
-    loadingAnimationView.animationImages = [NSArray arrayWithObjects:
-                                            [UIImage imageNamed:@"Loadingwhite"],
-                                            [UIImage imageNamed:@"Loading5white"],
-                                            [UIImage imageNamed:@"Loading10white"],
-                                            [UIImage imageNamed:@"Loading15white"],
-                                            [UIImage imageNamed:@"Loading20white"],
-                                            [UIImage imageNamed:@"Loading25white"],
-                                            [UIImage imageNamed:@"Loading30white"],
-                                            [UIImage imageNamed:@"Loading35white"],
-                                            [UIImage imageNamed:@"Loading40white"],
-                                            [UIImage imageNamed:@"Loading45white"],
-                                            [UIImage imageNamed:@"Loading50white"],
-                                            [UIImage imageNamed:@"Loading55white"],
-                                            [UIImage imageNamed:@"Loading60white"],
-                                            [UIImage imageNamed:@"Loading65white"],
-                                            [UIImage imageNamed:@"Loading70white"],
-                                            [UIImage imageNamed:@"Loading75white"],
-                                            [UIImage imageNamed:@"Loading80white"],
-                                            [UIImage imageNamed:@"Loading85white"],
-                                            nil];
-    loadingAnimationView.animationDuration = 0.3;
-    
-    return loadingAnimationView;
-}
-
-- (UIImageView *)loadingAnimationPurple
-{
-    UIImageView *loadingAnimationView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
-    
-    loadingAnimationView.animationImages = [NSArray arrayWithObjects:
-                                            [UIImage imageNamed:@"loading.png"],
-                                            [UIImage imageNamed:@"loading5.png"],
-                                            [UIImage imageNamed:@"loading10.png"],
-                                            [UIImage imageNamed:@"loading15.png"],
-                                            [UIImage imageNamed:@"loading20.png"],
-                                            [UIImage imageNamed:@"loading25.png"],
-                                            [UIImage imageNamed:@"loading30.png"],
-                                            [UIImage imageNamed:@"loading35.png"],
-                                            [UIImage imageNamed:@"loading40.png"],
-                                            [UIImage imageNamed:@"loading45.png"],
-                                            [UIImage imageNamed:@"loading50.png"],
-                                            [UIImage imageNamed:@"loading55.png"],
-                                            [UIImage imageNamed:@"loading60.png"],
-                                            [UIImage imageNamed:@"loading65.png"],
-                                            [UIImage imageNamed:@"loading70.png"],
-                                            [UIImage imageNamed:@"loading75.png"],
-                                            [UIImage imageNamed:@"loading80.png"],
-                                            [UIImage imageNamed:@"loading85.png"],
-                                            nil];
-    loadingAnimationView.animationDuration = 0.3;
-    
-    return loadingAnimationView;
 }
 
 
@@ -986,6 +928,65 @@
     NSString *CategoryPicture = [dic objectForKey:[NSString stringWithFormat:@"%@",string]];
     return CategoryPicture;
 }
+
+- (UIImageView *)loadingAnimationWhite
+{
+    UIImageView *loadingAnimationView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
+    
+    loadingAnimationView.animationImages = [NSArray arrayWithObjects:
+                                            [UIImage imageNamed:@"Loadingwhite"],
+                                            [UIImage imageNamed:@"Loading5white"],
+                                            [UIImage imageNamed:@"Loading10white"],
+                                            [UIImage imageNamed:@"Loading15white"],
+                                            [UIImage imageNamed:@"Loading20white"],
+                                            [UIImage imageNamed:@"Loading25white"],
+                                            [UIImage imageNamed:@"Loading30white"],
+                                            [UIImage imageNamed:@"Loading35white"],
+                                            [UIImage imageNamed:@"Loading40white"],
+                                            [UIImage imageNamed:@"Loading45white"],
+                                            [UIImage imageNamed:@"Loading50white"],
+                                            [UIImage imageNamed:@"Loading55white"],
+                                            [UIImage imageNamed:@"Loading60white"],
+                                            [UIImage imageNamed:@"Loading65white"],
+                                            [UIImage imageNamed:@"Loading70white"],
+                                            [UIImage imageNamed:@"Loading75white"],
+                                            [UIImage imageNamed:@"Loading80white"],
+                                            [UIImage imageNamed:@"Loading85white"],
+                                            nil];
+    loadingAnimationView.animationDuration = 0.3;
+    
+    return loadingAnimationView;
+}
+
+- (UIImageView *)loadingAnimationPurple
+{
+    UIImageView *loadingAnimationView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
+    
+    loadingAnimationView.animationImages = [NSArray arrayWithObjects:
+                                            [UIImage imageNamed:@"loading.png"],
+                                            [UIImage imageNamed:@"loading5.png"],
+                                            [UIImage imageNamed:@"loading10.png"],
+                                            [UIImage imageNamed:@"loading15.png"],
+                                            [UIImage imageNamed:@"loading20.png"],
+                                            [UIImage imageNamed:@"loading25.png"],
+                                            [UIImage imageNamed:@"loading30.png"],
+                                            [UIImage imageNamed:@"loading35.png"],
+                                            [UIImage imageNamed:@"loading40.png"],
+                                            [UIImage imageNamed:@"loading45.png"],
+                                            [UIImage imageNamed:@"loading50.png"],
+                                            [UIImage imageNamed:@"loading55.png"],
+                                            [UIImage imageNamed:@"loading60.png"],
+                                            [UIImage imageNamed:@"loading65.png"],
+                                            [UIImage imageNamed:@"loading70.png"],
+                                            [UIImage imageNamed:@"loading75.png"],
+                                            [UIImage imageNamed:@"loading80.png"],
+                                            [UIImage imageNamed:@"loading85.png"],
+                                            nil];
+    loadingAnimationView.animationDuration = 0.3;
+    
+    return loadingAnimationView;
+}
+
 
 
 #pragma mark - Dictionaries & Arrays
