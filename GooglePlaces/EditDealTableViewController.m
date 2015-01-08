@@ -984,6 +984,12 @@
                                              [uploadingDeal hide:YES];
                                              NSLog(@"Deal was edited successfuly!");
                                              [self dismissViewControllerAnimated:YES completion:nil];
+                                             
+                                             if (self.deal.dealer.dealerID.intValue != appDelegate.dealer.dealerID.intValue) {
+                                                 [appDelegate sendNotificationOfType:@"Edit"
+                                                                        toRecipients:@[self.deal.dealer.dealerID]
+                                                                    regardingTheDeal:self.deal.dealID];
+                                             }
                                          }
                                          failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                              

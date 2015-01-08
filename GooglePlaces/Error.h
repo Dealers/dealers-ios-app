@@ -13,6 +13,7 @@
 @property NSString *detail;
 @property NSArray *emailFormat;
 @property NSArray *emailExists;
+@property NSArray *pseudoUserExists;
 
 - (NSString *)messagesString;
 

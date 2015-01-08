@@ -45,7 +45,6 @@
     [self setAddDealButton];
     [self setProgressIndicator];
     [self createInputAccessoryViews];
-    [self configureRestKit];
     [self setCashedData];
 }
 
@@ -922,6 +921,7 @@
 {
     if (self.cashedPrice.length > 0) {
         
+        self.priceValue = [self.cashedPrice substringFromIndex:1].floatValue;
         self.priceTextField.text = self.cashedPrice;
         // Cashed currency has already been set in the createInputAccessoryViews method
     }
@@ -1224,7 +1224,6 @@
                                               
                                               appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:(FBGraphObject *)result withPhoto:NO];
                                               
-                                              [self updateDealerInfo];
                                               [self checkPublishPermissions];
                                               
                                           } else {
@@ -1248,47 +1247,6 @@
             [self.facebookActivityIndicator stopAnimating];
         }
     }
-}
-
-- (void)configureRestKit
-{
-    self.updateFromFacebookManager = [[RKObjectManager alloc] initWithHTTPClient:[RKObjectManager sharedManager].HTTPClient];
-    self.updateFromFacebookManager.requestSerializationMIMEType = RKMIMETypeJSON;
-    
-    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
-    
-    RKResponseDescriptor *updateProfileResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:[appDelegate dealerMapping]
-                                                 method:RKRequestMethodAny
-                                            pathPattern:nil
-                                                keyPath:nil
-                                            statusCodes:statusCodes];
-    
-    RKRequestDescriptor *updateProfileRequestDescriptor =
-    [RKRequestDescriptor requestDescriptorWithMapping:[appDelegate editProfileMapping]
-                                          objectClass:[Dealer class]
-                                          rootKeyPath:nil
-                                               method:RKRequestMethodAny];
-    
-    [self.updateFromFacebookManager addResponseDescriptor:updateProfileResponseDescriptor];
-    [self.updateFromFacebookManager addRequestDescriptor:updateProfileRequestDescriptor];
-}
-
-- (void)updateDealerInfo
-{
-    NSString *path = [NSString stringWithFormat:@"/dealers/%@/", appDelegate.dealer.dealerID];
-    
-    [self.updateFromFacebookManager patchObject:appDelegate.dealer
-                                           path:path
-                                     parameters:nil
-                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                            
-                                            NSLog(@"Dealer updated successfully!");
-                                        }
-                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                            
-                                            NSLog(@"Couldn't update dealer, Error: %@", error);
-                                        }];
 }
 
 

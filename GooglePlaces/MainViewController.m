@@ -310,6 +310,7 @@
         appDelegate.dealer.score = [userDefaults objectForKey:@"score"];
         appDelegate.dealer.rank = [userDefaults objectForKey:@"rank"];
         appDelegate.dealer.reliability = [userDefaults objectForKey:@"reliability"];
+        appDelegate.dealer.facebookPseudoUserID = [userDefaults objectForKey:@"facebookPseudoUserID"];
         
         if (appDelegate.dealer.photoURL.length > 1 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
             appDelegate.dealer.photo = [appDelegate loadProfilePic];
@@ -386,45 +387,6 @@
     }
 }
 
-- (void)signInWithToken
-{
-    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:facebookToken];
-    
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"/dealerlogins/"
-                                           parameters:nil
-                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                  
-                                                  // The user is an existing user at Dealer. Need to save his info and update it if necessary
-                                                  didDownloadUserData = YES;
-                                                  self.appDelegate.dealer = mappingResult.firstObject;
-                                                  
-                                                  if (appDelegate.dealer.photoURL.length > 1) {
-                                                      hasPhoto = YES;
-                                                      [self downloadUesrPhoto];
-                                                  }
-                                              }
-                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                  
-                                                  if (error.code == -1004) {
-                                                      
-                                                      // No connection to the server error
-                                                      [noConnection show:YES];
-                                                      [noConnection hide:YES afterDelay:2.0];
-                                                      
-                                                  } else if ([error.localizedDescription isEqualToString:@"Invalid username/password"]) {
-                                                      
-                                                      // The user is not an existing user at Dealers. Need to add him as a dealer
-                                                      
-                                                  } else {
-                                                      
-                                                      UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign in" message:@"Sorry for that, please try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                      [alert show];
-                                                  }
-                                                  
-                                                  [loggingInFacebook hide:YES];
-                                              }];
-}
-
 - (void)signUpUser
 {
     self.dealer = [appDelegate updateDealer:nil withFacebookInfo:facebookInfo withPhoto:YES];
@@ -440,7 +402,7 @@
                                             appDelegate.dealer = mappingResult.firstObject;
                                             appDelegate.dealer.photo = self.dealer.photo;
                                             
-                                            if (self.dealer.photo) {
+                                            if (appDelegate.dealer.photo) {
                                                 [self uploadPhoto];
                                             } else {
                                                 [self enterDealers];
@@ -454,16 +416,16 @@
                                             
                                             if ([[errors messagesString] isEqualToString:@"Email already exists!"]) {
                                                 
-                                                // User already exists, need to download his info and get him in
+                                                // User already exists, need to get him a token, download his info and get him in
                                                 [self createPseudoUserForToken];
                                                 
                                             } else {
-                                            
+                                                
                                                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign up..."
-                                                                                           message:[NSString stringWithFormat:@"\n%@", [errors messagesString]]
-                                                                                          delegate:nil
-                                                                                 cancelButtonTitle:@"OK"
-                                                                                 otherButtonTitles:nil];
+                                                                                               message:[NSString stringWithFormat:@"\n%@", [errors messagesString]]
+                                                                                              delegate:nil
+                                                                                     cancelButtonTitle:@"OK"
+                                                                                     otherButtonTitles:nil];
                                                 [alert show];
                                                 [loggingInFacebook hide:YES];
                                             }
@@ -472,20 +434,68 @@
 
 - (void)createPseudoUserForToken
 {
-    [loggingInFacebook hide:YES];
+    self.pseudoUser = [[User alloc]init];
+    self.pseudoUser.username = [NSString stringWithFormat:@"fb_%@", self.dealer.email];
+    self.pseudoUser.userPassword = [NSString stringWithFormat:@"pass_%@_key", self.dealer.fullName];
+    
+    if (triedAddingNumber) {
+        self.pseudoUser.username = [NSString stringWithFormat:@"fb_2_%@", self.dealer.email];
+    }
+    
+    if (self.pseudoUser.username.length > 30) {
+        self.pseudoUser.username = [self.pseudoUser.username substringToIndex:30];
+    }
+    
+    [[RKObjectManager sharedManager] postObject:self.pseudoUser
+                                           path:@"/users/"
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            
+                                            NSLog(@"Pseudo user created successfully!");
+                                            [self getTokenForUser:self.pseudoUser];
+                                            User *user = mappingResult.firstObject;
+                                            pseudoUserID = user.userID;
+                                        }
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            NSLog(@"Pseudo user couldn't be created...");
+                                            Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
+                                            
+                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign in with facebook"
+                                                                                           message:@"Pleae try again later"
+                                                                                          delegate:nil
+                                                                                 cancelButtonTitle:@"OK"
+                                                                                 otherButtonTitles:nil];
+                                            
+                                            if ([[errors messagesString] isEqualToString:@"Pseudo user already exists"]) {
+                                                
+                                                if (!triedAddingNumber) {
+                                                    triedAddingNumber = YES;
+                                                    [self createPseudoUserForToken];
+                                                } else {
+                                                    [alert show];
+                                                    [loggingInFacebook hide:YES];
+                                                    [[FBSession activeSession] closeAndClearTokenInformation];
+                                                }
+                                                
+                                            } else {
+                                                
+                                                [alert show];
+                                                [loggingInFacebook hide:YES];
+                                                [[FBSession activeSession] closeAndClearTokenInformation];
+                                            }
+                                        }];
 }
 
 - (void)uploadPhoto
 {
-    photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", self.dealer.email, [NSDate date]];
-    NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
-    self.dealer.photoURL = filePathAtS3;
+    NSString *photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", appDelegate.dealer.email, [NSDate date]];
     
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
     
-    NSString *key = self.dealer.photoURL;
+    NSString *key = appDelegate.dealer.photoURL;
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:photoFileName];
-    [self.dealer.photo writeToFile:filePath atomically:YES];
+    [appDelegate.dealer.photo writeToFile:filePath atomically:YES];
     
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
     
@@ -513,8 +523,12 @@
                                                                            break;
                                                                    }
                                                                } else {
-                                                                   // Unknown error.
+                                                                   // Unknown error. Try again at least once
                                                                    NSLog(@"Error: %@", task.error);
+                                                                   if (!triedUploadingPhoto) {
+                                                                       triedUploadingPhoto = YES;
+                                                                       [self uploadPhoto];
+                                                                   }
                                                                }
                                                            }
                                                            
@@ -522,8 +536,11 @@
                                                                
                                                                NSLog(@"Profile photo uploaded successfuly!");
                                                                didPhotoFinishedUploading = YES;
-                                                               appDelegate.dealer.photo = self.dealer.photo;
-                                                               [self getToken];
+                                                               if (gotToken) {
+                                                                   [self enterDealers];
+                                                               } else {
+                                                                   [self getTokenForUser:appDelegate.dealer];
+                                                               }
                                                            }
                                                            return nil;
                                                        }];
@@ -557,25 +574,45 @@
                                                                                                    } else {
                                                                                                        // Unknown error.
                                                                                                        NSLog(@"Error: %@", task.error);
+                                                                                                       
+                                                                                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Couldn't Sign In" message:@"Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                                                                       [alert show];
+                                                                                                       
+                                                                                                       [[FBSession activeSession] closeAndClearTokenInformation];
+                                                                                                       [appDelegate deletePseudoUser];
+                                                                                                       
+                                                                                                       [loggingInFacebook hide:YES];
                                                                                                    }
                                                                                                }
                                                                                                
                                                                                                if (task.result) {
                                                                                                    
-                                                                                                   didPhotoFinishedDownloading = YES;
-                                                                                                   if (didDownloadUserData) {
-                                                                                                       appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:facebookInfo withPhoto:YES];
-                                                                                                       [self enterDealers];
-                                                                                                   }
+                                                                                                   appDelegate.dealer.photo = [NSData dataWithContentsOfFile:downloadingFilePath];
+                                                                                                   appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:facebookInfo withPhoto:YES];
+                                                                                                   [self enterDealers];
+                                                                                                   
                                                                                                }
                                                                                                return nil;
                                                                                            }];
 }
 
-- (void)getToken
+- (void)getTokenForUser:(id)user
 {
-    NSString *username = appDelegate.dealer.username;
-    NSString *password = appDelegate.dealer.userPassword;
+    NSString *username;
+    NSString *password;
+    BOOL newDealer;
+    
+    if ([user isMemberOfClass:[Dealer class]]) {
+        username = appDelegate.dealer.username;
+        password = appDelegate.dealer.userPassword;
+        newDealer = YES;
+        
+    } else {
+        username = self.pseudoUser.username;
+        password = self.pseudoUser.userPassword;
+        newDealer = NO;
+    }
+    
     NSDictionary *parameters = @{@"username": username,
                                  @"password": password
                                  };
@@ -585,6 +622,7 @@
     [client postPath:@"/dealers-token-auth/"
           parameters:parameters
              success:^(AFHTTPRequestOperation *operation, id result) {
+
                  
                  NSError *error;
                  NSDictionary *tokenDictionary = [NSJSONSerialization JSONObjectWithData:result
@@ -598,12 +636,45 @@
                  [keychain setObject:token forKey:(__bridge id)(kSecAttrAccount)];
                  [keychain setObject:password forKey:(__bridge id)(kSecValueData)];
                  
-                 [self enterDealers];
+                 gotToken = YES;
+                 
+                 if (newDealer) {
+                     [self enterDealers];
+                 } else {
+                     [self getDealerInfo];
+                 }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  
                  NSLog(@"\n\nFailed to fetch token. Error: %@", error.localizedDescription);
              }];
+}
+
+- (void)getDealerInfo
+{
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/dealerfbs/"
+                                           parameters:@{@"email" : self.dealer.email}
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  
+                                                  NSLog(@"Dealer's info downloaded successfully!");
+                                                  
+                                                  self.appDelegate.dealer = mappingResult.firstObject;
+                                                  
+                                                  self.appDelegate.dealer.facebookPseudoUserID = pseudoUserID;
+                                                  
+                                                  if (appDelegate.dealer.photoURL.length > 2 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
+                                                      [self downloadUesrPhoto];
+                                                  } else {
+                                                      appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:facebookInfo withPhoto:YES];
+                                                      [self uploadPhoto];
+                                                  }
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  
+                                                  NSLog(@"Dealer's info downloaded couldn't be downloaded...");
+                                                  [[FBSession activeSession] closeAndClearTokenInformation];
+                                                  [appDelegate deletePseudoUser];
+                                              }];
 }
 
 - (void)enterDealers

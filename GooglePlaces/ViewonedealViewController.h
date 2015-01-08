@@ -28,6 +28,8 @@
     CLLocationCoordinate2D lastCoords;
     UIColor *textGray;
     
+    UIView *loadingView;
+    
     BOOL shouldAddID;
     BOOL shouldRemoveID;
 }
@@ -40,6 +42,7 @@
 @property (nonatomic, strong) MKMapView *mapView;
 
 @property (strong,nonatomic) Deal *deal;
+@property NSNumber *dealID;
 
 @property (strong,nonatomic) NSString *isShortCell;
 @property (strong,nonatomic) NSString *isDealLikedByUser;

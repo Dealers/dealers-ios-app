@@ -10,8 +10,11 @@
 
 @interface NotificationTableCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *notificationImagePlaceholder;
+@property (weak, nonatomic) IBOutlet UIButton *notificationImage;
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UILabel *date;
-@property (weak, nonatomic) IBOutlet UIImageView *image;
+
++ (NSString *)notificationStringForObject:(id)object;
 
 @end

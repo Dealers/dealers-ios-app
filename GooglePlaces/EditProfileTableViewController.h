@@ -56,6 +56,7 @@
 @property NSDate *originalDateOfBirth;
 @property NSString *originalGender;
 @property NSString *originalEmail;
+@property NSString *originalUsername;
 
 @property NSString *password;
 

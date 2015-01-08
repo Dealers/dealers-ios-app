@@ -15,6 +15,8 @@
 #import "Dealer.h"
 #import "DealAttrib.h"
 #import "Comment.h"
+#import "Notification.h"
+#import "User.h"
 #import "Error.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -37,6 +39,8 @@
 @property BOOL shouldUpdateMyFeed;
 @property BOOL shouldUpdateProfile;
 
+@property RKObjectManager *updateFromFacebookManager;
+
 @property (weak) UIImage *screenShot;
 
 
@@ -51,6 +55,7 @@
 - (UIImage *)myProfilePic;
 - (void)otherProfilePic:(Dealer *)dealer forTarget:(NSString *)target notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath;
 - (void)downloadPhotosForDeal:(Deal *)deal notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath mode:(NSString *)mode;
+- (void)sendNotificationOfType:(NSString *)type toRecipients:(NSArray *)recipients regardingTheDeal:(NSNumber *)dealID;
 - (UIColor *)ourPurple;
 - (UIColor *)textGrayColor;
 - (UIColor *)darkTextGrayColor;
@@ -59,6 +64,7 @@
 - (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
 - (NSNumber *)setPhotoSum:(Deal *)deal;
 - (Dealer *)updateDealer:(Dealer *)dealer withFacebookInfo:(FBGraphObject *)facebookInfo withPhoto:(BOOL)withPhoto;
+- (void)deletePseudoUser;
 - (NSString *)connectOldCategoryToNewCategory:(NSString *)string;
 
 - (UIImageView *)loadingAnimationWhite;

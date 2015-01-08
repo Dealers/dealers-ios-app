@@ -1035,16 +1035,6 @@
     vodvc.delegate = self;
     vodvc.dealIndexPath = indexPath;
     
-    if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"]) {
-        vodvc.isShortCell = @"no";
-    } else vodvc.isShortCell = @"yes";
-    
-    if ([deal.dealAttrib.dealersThatLiked containsObject:appDelegate.dealer.dealerID]) {
-        vodvc.isDealLikedByUser = @"yes";
-    } else {
-        vodvc.isDealLikedByUser = @"no";
-    }
-    
     [self.navigationController pushViewController:vodvc animated:YES];
 }
 

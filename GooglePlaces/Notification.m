@@ -12,18 +12,18 @@
 
 - (instancetype)init
 {
-    self = [self initWithRecipient:nil type:nil dealer:nil deal:nil date:nil];
+    self = [self initWithType:nil recipients:nil dealer:nil deal:nil date:nil];
     return self;
 }
 
-- (instancetype)initWithRecipient:(NSString *)recipient type:(NSString *)type dealer:(Dealer *)dealer deal:(Deal *)deal date:(NSDate *)date
+- (instancetype)initWithType:(NSString *)type recipients:(NSArray *)recipients dealer:(Dealer *)dealer deal:(NSNumber *)dealID date:(NSDate *)date
 {
     self = [super init];
     if (self) {
-        _recipient = recipient;
+        _recipients = recipients;
         _type = type;
         _dealer = dealer;
-        _deal = deal;
+        _dealID = dealID;
         _date = date;
         _wasRead = NO;
     }

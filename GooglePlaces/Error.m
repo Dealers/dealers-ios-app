@@ -23,6 +23,8 @@
             return @"Email already exists!";
         } else if (self.emailFormat) {
             return @"Please enter a valid email address.";
+        } else if (self.pseudoUserExists) {
+            return @"Pseudo user already exists";
         }
         
         

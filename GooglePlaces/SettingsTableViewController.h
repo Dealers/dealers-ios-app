@@ -23,6 +23,4 @@
 @property AppDelegate *appDelegate;
 @property (weak, nonatomic) IBOutlet UILabel *facebookConnectionIndicator;
 
-@property RKObjectManager *updateFromFacebookManager;
-
 @end

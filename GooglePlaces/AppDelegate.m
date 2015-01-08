@@ -122,6 +122,14 @@
     button.userInteractionEnabled = YES;
     button.tag = 123;
     [tabBarController.view addSubview:button];
+    
+    // Register for push notifications
+    UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    
+    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
 - (void)hidePlusButton
@@ -151,6 +159,24 @@
 }
 
 
+#pragma mark - Push notifications
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"Successfully Registered for Remote Notifications with Device Token (%@)", deviceToken);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to Register for Remote Notifications :(");
+    NSLog(@"%@, %@", error, error.localizedDescription);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:error.localizedDescription
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+
 #pragma mark - Helper Methods
 
 - (void)saveUserDetailsOnDevice
@@ -176,6 +202,7 @@
     [defaults setObject:self.dealer.score forKey:@"score"];
     [defaults setObject:self.dealer.rank forKey:@"rank"];
     [defaults setObject:self.dealer.reliability forKey:@"reliability"];
+    [defaults setObject:self.dealer.facebookPseudoUserID forKey:@"facebookPseudoUserID"];
     
     [defaults synchronize];
     
@@ -207,6 +234,7 @@
     [defaults removeObjectForKey:@"score"];
     [defaults removeObjectForKey:@"rank"];
     [defaults removeObjectForKey:@"reliability"];
+    [defaults removeObjectForKey:@"facebookPseudoUserID"];
     
     [defaults synchronize];
     
@@ -345,6 +373,7 @@
         
     } else {
         
+        dealer.photo = UIImageJPEGRepresentation([UIImage imageNamed:@"Profile Pic Placeholder"], 1.0);
         dealer.downloadingPhoto = NO;
         NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
                                   [UIImage imageNamed:@"Profile Pic Placeholder"], @"image",
@@ -417,6 +446,27 @@
     }];
 }
 
+- (void)sendNotificationOfType:(NSString *)type toRecipients:(NSArray *)recipients regardingTheDeal:(NSNumber *)dealID
+{
+    Notification *notification = [[Notification alloc]initWithType:type
+                                                        recipients:recipients
+                                                            dealer:self.dealer
+                                                              deal:dealID
+                                                              date:[NSDate date]];
+    
+    [[RKObjectManager sharedManager] postObject:notification
+                                           path:@"/addnotifications/"
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            
+                                            NSLog(@"Notification sent successfully!");
+                                        }
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            NSLog(@"Notification failed to be sent...");
+                                        }];
+}
+
 - (UIColor *)ourPurple
 {
     UIColor *ourPurple = [UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0];
@@ -474,73 +524,27 @@
 
 - (NSNumber *)setPhotoSum:(Deal *)deal {
     
-    if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"])
+    if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"])
         deal.photoSum = @(deal.photoSum.intValue + 1);
     else
         return [NSNumber numberWithInt:0];
     
-    if (deal.photoURL2.length > 1 && ![deal.photoURL2 isEqualToString:@"None"])
+    if (deal.photoURL2.length > 2 && ![deal.photoURL2 isEqualToString:@"None"])
         deal.photoSum = @(deal.photoSum.intValue + 1);
     else
         return [NSNumber numberWithInt:1];
     
-    if (deal.photoURL3.length > 1 && ![deal.photoURL3 isEqualToString:@"None"])
+    if (deal.photoURL3.length > 2 && ![deal.photoURL3 isEqualToString:@"None"])
         deal.photoSum = @(deal.photoSum.intValue + 1);
     else
         return [NSNumber numberWithInt:2];
     
-    if (deal.photoURL4.length > 1 && ![deal.photoURL4 isEqualToString:@"None"])
+    if (deal.photoURL4.length > 2 && ![deal.photoURL4 isEqualToString:@"None"])
         deal.photoSum = @(deal.photoSum.intValue + 1);
     else
         return [NSNumber numberWithInt:3];
     
     return [NSNumber numberWithInt:4];
-}
-
-- (Dealer *)updateDealer:(Dealer *)dealer withFacebookInfo:(FBGraphObject *)facebookInfo withPhoto:(BOOL)withPhoto
-{
-    if (!dealer) {
-        dealer = [[Dealer alloc]init];
-        dealer.fullName = [NSString stringWithFormat:@"%@ %@",
-                           [facebookInfo objectForKey:@"first_name"],
-                           [facebookInfo objectForKey:@"last_name"]];
-        dealer.email = [facebookInfo objectForKey:@"email"];
-        dealer.username = dealer.email;
-        dealer.userPassword = [NSString stringWithFormat:@"facebook_user_%@", dealer.email];
-        dealer.registerDate = [NSDate date];
-    }
-    
-    if (!dealer.dateOfBirth) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        dateFormatter.dateFormat = @"MM/dd/yyyy";
-        dealer.dateOfBirth = [dateFormatter dateFromString:[facebookInfo objectForKey:@"birthday"]];
-    }
-    
-    if (!dealer.gender || [dealer.gender isEqualToString:@"Unspecified"]) {
-        dealer.gender = [facebookInfo objectForKey:@"gender"];
-        if ([dealer.gender isEqualToString:@"male"] || [self.dealer.gender isEqualToString:@"female"]) {
-            
-            NSString *capitalisedGender = [self.dealer.gender stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                                                      withString:[[self.dealer.gender substringToIndex:1] capitalizedString]];
-            dealer.gender = capitalisedGender;
-        } else {
-            dealer.gender = nil;
-        }
-    }
-    
-    if (!(dealer.location.length > 1) || [dealer.location isEqualToString:@"None"]) {
-        NSString *location = [[facebookInfo objectForKey:@"location"] objectForKey:@"name"];
-        dealer.location = location;
-    }
-    
-    if (withPhoto) {
-        if (!(dealer.photoURL.length > 1) || [dealer.photoURL isEqualToString:@"None"]) {
-            NSURL *pictureURL = [NSURL URLWithString:[[[facebookInfo objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
-            dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
-        }
-    }
-    
-    return dealer;
 }
 
 - (NSString *)connectOldCategoryToNewCategory:(NSString *)string
@@ -1310,6 +1314,39 @@
     return addCommentMapping;
 }
 
+- (RKObjectMapping *)notificationMapping
+{
+    RKObjectMapping *notificationMapping = [RKObjectMapping mappingForClass:[Notification class]];
+    [notificationMapping addAttributeMappingsFromDictionary: @{
+                                                               @"id" : @"notificationID",
+                                                               @"type" : @"type",
+                                                               @"recipients" : @"recipients",
+                                                               @"deal" : @"dealID",
+                                                               @"date" : @"date"
+                                                               }];
+    
+    [notificationMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"notifying_dealer"
+                                                                                        toKeyPath:@"dealer"
+                                                                                      withMapping:[self dealerMapping]]];
+    
+    return notificationMapping;
+}
+
+- (RKObjectMapping *)addNotificationMapping
+{
+    RKObjectMapping *addNotificationMapping = [RKObjectMapping mappingForClass:[Notification class]];
+    [addNotificationMapping addAttributeMappingsFromDictionary: @{
+                                                                  @"id" : @"notificationID",
+                                                                  @"type" : @"type",
+                                                                  @"recipients" : @"recipients",
+                                                                  @"notifying_dealer" : @"dealer.dealerID",
+                                                                  @"deal" : @"dealID",
+                                                                  @"date" : @"date"
+                                                                  }];
+    
+    return addNotificationMapping;
+}
+
 - (RKObjectMapping *)likedDealsMapping
 {
     RKObjectMapping *likedDealsMapping = [RKObjectMapping mappingForClass:[DealAttrib class]];
@@ -1319,6 +1356,19 @@
     
     return likedDealsMapping;
 }
+
+- (RKObjectMapping *)userMapping
+{
+    RKObjectMapping *userMapping = [RKObjectMapping mappingForClass:[User class]];
+    [userMapping addAttributeMappingsFromDictionary: @{
+                                                       @"id" : @"userID",
+                                                       @"username" : @"username",
+                                                       @"password" : @"userPassword"
+                                                       }];
+    
+    return userMapping;
+}
+
 - (RKObjectMapping *)paginationMapping
 {
     RKObjectMapping *paginationMapping = [RKObjectMapping mappingForClass:[RKPaginator class]];
@@ -1338,6 +1388,7 @@
     
     [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"email" toKeyPath:@"emailFormat"]];
     [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"user" toKeyPath:@"emailExists"]];
+    [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"username" toKeyPath:@"pseudoUserExists"]];
     [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"detail" toKeyPath:@"detail"]];
     
     return errorMapping;
@@ -1382,6 +1433,13 @@
                                                 keyPath:@"results"
                                             statusCodes:statusCodes];
     
+    RKResponseDescriptor *specificDealResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/deals/:dealID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
     RKResponseDescriptor *addDealResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
                                                  method:RKRequestMethodAny
@@ -1389,7 +1447,7 @@
                                                 keyPath:nil
                                             statusCodes:statusCodes];
     
-    RKResponseDescriptor *specificDealResponseDescriptor =
+    RKResponseDescriptor *specificAddDealResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
                                                  method:RKRequestMethodAny
                                             pathPattern:@"/adddeals/:adddealID/"
@@ -1459,6 +1517,41 @@
                                                 keyPath:nil
                                             statusCodes:statusCodes];
     
+    RKResponseDescriptor *notificationResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self notificationMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealernotifications/:dealernotificationID/"
+                                                keyPath:@"notifications"
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *addNotificationResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self addNotificationMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/addnotifications/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *userResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self userMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/users/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *specificUserResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self userMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/users/:userID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *facebookDealerResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealerMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealerfbs/"
+                                                keyPath:@"results"
+                                            statusCodes:statusCodes];
+    
     RKResponseDescriptor *signUpErrorResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self errorMapping]
                                                  method:RKRequestMethodAny
@@ -1496,6 +1589,20 @@
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
+    // for adding notification
+    RKRequestDescriptor *addNotificationRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self addNotificationMapping] inverseMapping]
+                                          objectClass:[Notification class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    // for adding pseudo user
+    RKRequestDescriptor *userRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self userMapping] inverseMapping]
+                                          objectClass:[User class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
     [manager addResponseDescriptorsFromArray:@[dealsResponseDescriptor,
                                                addDealResponseDescriptor,
                                                specificDealResponseDescriptor,
@@ -1508,6 +1615,11 @@
                                                dealAttribResponseDescriptor,
                                                commentsResponseDescriptor,
                                                addCommentResponseDescriptor,
+                                               notificationResponseDescriptor,
+                                               addNotificationResponseDescriptor,
+                                               userResponseDescriptor,
+                                               specificUserResponseDescriptor,
+                                               facebookDealerResponseDescriptor,
                                                signUpErrorResponseDescriptor
                                                ]];
     
@@ -1515,7 +1627,9 @@
                                               signUpRequestDescriptor,
                                               addDealRequestDescriptor,
                                               dealAttribRequestDescriptor,
-                                              addCommentRequestDescriptor
+                                              addCommentRequestDescriptor,
+                                              addNotificationRequestDescriptor,
+                                              userRequestDescriptor
                                               ]];
 }
 
@@ -1543,7 +1657,7 @@
                                               [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionStateChangeNotification"
                                                                                                   object:nil
                                                                                                 userInfo:sessionStateInfo];
-                                          
+                                              
                                           } else {
                                               
                                           }
@@ -1567,6 +1681,142 @@
         return YES;
     }
     return NO;
+}
+
+- (void)configureFacebookRestKit
+{
+    self.updateFromFacebookManager = [[RKObjectManager alloc] initWithHTTPClient:[RKObjectManager sharedManager].HTTPClient];
+    
+    RKResponseDescriptor *updateProfileResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealerMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:nil
+                                                keyPath:nil
+                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    RKRequestDescriptor *updateProfileRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[self editProfileMapping]
+                                          objectClass:[Dealer class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+    [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
+    [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    
+    NSString *token = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    [self.updateFromFacebookManager.HTTPClient setAuthorizationHeaderWithToken:token];
+    
+    [self.updateFromFacebookManager addResponseDescriptor:updateProfileResponseDescriptor];
+    [self.updateFromFacebookManager addRequestDescriptor:updateProfileRequestDescriptor];
+}
+
+- (void)updateDealerInfo:(Dealer *)dealer
+{
+    if (!self.updateFromFacebookManager) {
+        [self configureFacebookRestKit];
+    }
+    
+    NSString *path = [NSString stringWithFormat:@"/dealers/%@/", dealer.dealerID];
+    
+    [self.updateFromFacebookManager patchObject:dealer
+                                           path:path
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            
+                                            NSLog(@"Dealer updated successfully!");
+                                        }
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            NSLog(@"Couldn't update dealer, Error: %@", error);
+                                        }];
+}
+
+- (Dealer *)updateDealer:(Dealer *)dealer withFacebookInfo:(FBGraphObject *)facebookInfo withPhoto:(BOOL)withPhoto
+{
+    BOOL newDealer;
+    
+    if (!dealer) {
+        newDealer = YES;
+        dealer = [[Dealer alloc]init];
+        dealer.fullName = [NSString stringWithFormat:@"%@ %@",
+                           [facebookInfo objectForKey:@"first_name"],
+                           [facebookInfo objectForKey:@"last_name"]];
+        dealer.email = [facebookInfo objectForKey:@"email"];
+        
+        if (dealer.email.length > 30) {
+            dealer.username = [dealer.email substringToIndex:30];
+        } else {
+            dealer.username = dealer.email;
+        }
+        
+        dealer.userPassword = [NSString stringWithFormat:@"facebook_user_%@", dealer.email];
+        dealer.registerDate = [NSDate date];
+        
+    } else {
+        newDealer = NO;
+    }
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yyyy";
+    dealer.dateOfBirth = [dateFormatter dateFromString:[facebookInfo objectForKey:@"birthday"]];
+    
+    if (!dealer.gender || [dealer.gender isEqualToString:@"Unspecified"]) {
+        dealer.gender = [facebookInfo objectForKey:@"gender"];
+        if ([dealer.gender isEqualToString:@"male"] || [dealer.gender isEqualToString:@"female"]) {
+            
+            NSString *capitalisedGender = [dealer.gender stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                                 withString:[[dealer.gender substringToIndex:1] capitalizedString]];
+            dealer.gender = capitalisedGender;
+        } else {
+            dealer.gender = nil;
+        }
+    }
+    
+    if (!(dealer.location.length > 1) || [dealer.location isEqualToString:@"None"]) {
+        NSString *location = [[facebookInfo objectForKey:@"location"] objectForKey:@"name"];
+        dealer.location = location;
+    }
+    
+    if (withPhoto) {
+        if (!(dealer.photoURL.length > 1) || [dealer.photoURL isEqualToString:@"None"]) {
+            
+            NSURL *pictureURL = [NSURL URLWithString:[[[facebookInfo objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
+            
+            NSString *photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", dealer.email, [NSDate date]];
+            NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
+            dealer.photoURL = filePathAtS3;
+            
+            dealer.photo = [NSData dataWithContentsOfURL:pictureURL];
+        }
+    }
+    
+    if (!newDealer) {
+        [self updateDealerInfo:dealer];
+    }
+    
+    return dealer;
+}
+
+- (void)deletePseudoUser
+{
+    if (self.dealer.facebookPseudoUserID) {
+        
+        NSString *path = [NSString stringWithFormat:@"/users/%@/", self.dealer.facebookPseudoUserID];
+        
+        [[RKObjectManager sharedManager] deleteObject:nil
+                                                 path:path
+                                           parameters:nil
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  
+                                                  NSLog(@"Pseudo user deleted successfully!");
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  
+                                                  NSLog(@"Couldn't delete pseudo user, Error: %@", error);
+                                              }];
+    }
 }
 
 

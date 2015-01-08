@@ -43,5 +43,7 @@
 
 @property NSMutableArray *notifications;
 
+@property NSNumber *facebookPseudoUserID;
+
 
 @end

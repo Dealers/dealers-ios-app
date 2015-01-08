@@ -2043,7 +2043,7 @@ Shared by people like you</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BdV-M2-qtY" userLabel="Sign In button">
-                                        <rect key="frame" x="24" y="495.00000205634535" width="274" height="31"/>
+                                        <rect key="frame" x="24" y="495.00000338138864" width="274" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -2135,7 +2135,7 @@ Shared by people like you</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0KA-81-Cgg" userLabel="Sign In button">
-                                        <rect key="frame" x="24" y="515" width="274" height="31"/>
+                                        <rect key="frame" x="24" y="515.00000013218767" width="274" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -4108,7 +4108,7 @@ Shared by people like you</string>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="bh0-Fl-Nyd" kind="relationship" relationship="rootViewController" id="n9z-cg-pxz"/>
+                        <segue destination="63O-W8-51s" kind="relationship" relationship="rootViewController" id="FVS-gB-uDm"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQy-I6-14d" userLabel="First Responder" sceneMemberID="firstResponder"/>

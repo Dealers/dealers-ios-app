@@ -62,14 +62,12 @@
                                                  name:NAME_FOR_NOTIFICATIONS
                                                object:nil];
     
-    [self loadVarsFromDeal];
-    [self setImagesSection];
-    [self setPageControlView];
-    [self setBasicDetailsSection];
-    [self setDealerSection];
-    [self setLikesAndButtonsSection];
-    [self setCommentsSection];
-    [self setMapAndStoreInfo];
+    if (!self.deal && self.dealID) {
+        [self downloadDeal];
+    } else {
+        [self setDealsDetails];
+        [self loadViewDealPage];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,14 +77,7 @@
         [self.scroll setNeedsLayout];
         
         [self initialize];
-        [self loadVarsFromDeal];
-        [self setImagesSection];
-        [self setPageControlView];
-        [self setBasicDetailsSection];
-        [self setDealerSection];
-        [self setLikesAndButtonsSection];
-        [self setCommentsSection];
-        [self setMapAndStoreInfo];
+        [self loadViewDealPage];
     }
     
     if (self.tabBarController.tabBar.hidden == YES) {
@@ -118,6 +109,8 @@
                 
                 [dealersThatLikedArray addObject:self.appDelegate.dealer.dealerID];
                 shouldAddID = YES;
+                
+                [appDelegate sendNotificationOfType:@"Like" toRecipients:@[self.deal.dealer.dealerID] regardingTheDeal:self.deal.dealID];
                 
             } else {
                 
@@ -160,7 +153,7 @@
                                                  if (shouldAddID) {
                                                      [dealersThatLikedArray removeObject:self.appDelegate.dealer.dealerID];
                                                      shouldAddID = NO;
-                                                 
+                                                     
                                                  } else if (shouldRemoveID) {
                                                      [dealersThatLikedArray addObject:self.appDelegate.dealer.dealerID];
                                                      shouldRemoveID = NO;
@@ -171,6 +164,84 @@
     if (self.delegate) {
         [[self.delegate tableView] reloadRowsAtIndexPaths:@[self.dealIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
+}
+
+- (void)loadViewDealPage
+{
+    [self loadVarsFromDeal];
+    [self setImagesSection];
+    [self setPageControlView];
+    [self setBasicDetailsSection];
+    [self setDealerSection];
+    [self setLikesAndButtonsSection];
+    [self setCommentsSection];
+    [self setMapAndStoreInfo];
+}
+
+- (void)downloadDeal
+{
+    NSString *path = [NSString stringWithFormat:@"/deals/%@/", self.dealID];
+    
+    [self setLoadingView];
+    
+    [[RKObjectManager sharedManager] getObjectsAtPath:path
+                                           parameters:nil
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        
+                                                  NSLog(@"Deal downloaded successfuly!");
+                                                  
+                                                  self.deal = mappingResult.firstObject;
+                                                  [self setDealsDetails];
+                                                  [self loadViewDealPage];
+                                                  [self stopLoadingAnimation];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+    
+                                                  NSLog(@"Deal failed to download...");
+                                                  
+                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
+                                                                                                 message:error.localizedDescription
+                                                                                                delegate:nil
+                                                                                       cancelButtonTitle:@"OK"
+                                                                                       otherButtonTitles:nil];
+                                                  [alert show];
+                                                  [self stopLoadingAnimation];
+                                              }];
+}
+
+- (void)setDealsDetails
+{
+    self.deal.photoSum = [appDelegate setPhotoSum:self.deal];
+
+    if (self.deal.photoURL1.length > 1 && ![self.deal.photoURL1 isEqualToString:@"None"]) {
+        self.isShortCell = @"no";
+    } else self.isShortCell = @"yes";
+    
+    if ([self.deal.dealAttrib.dealersThatLiked containsObject:appDelegate.dealer.dealerID]) {
+        self.isDealLikedByUser = @"yes";
+    } else {
+        self.isDealLikedByUser = @"no";
+    }
+}
+
+- (void)setLoadingView
+{
+    loadingView = [[UIView alloc]initWithFrame:scroll.frame];
+    
+    loadingView.backgroundColor = [UIColor whiteColor];
+    UIImageView *loadingAnimation = [appDelegate loadingAnimationPurple];
+    loadingAnimation.tag = 43434343434;
+    [loadingAnimation startAnimating];
+    loadingAnimation.frame = CGRectMake(self.view.center.x - 15.0, 15.0, 30.0, 30.0);
+    [loadingView addSubview:loadingAnimation];
+    [self.scroll addSubview:loadingView];
+}
+
+- (void)stopLoadingAnimation
+{
+    UIImageView *loadingAnimation = (UIImageView *)[loadingView viewWithTag:43434343434];
+    [loadingAnimation stopAnimating];
+    [UIView animateWithDuration:0.3 animations:^{ loadingView.alpha = 0; }];
 }
 
 - (void)updateDealersLikedDealsArray
@@ -301,7 +372,7 @@
         lowestYPoint = CGRectGetMaxY(self.captureImage.frame) + 10;
         
         if (!self.captureImage.image) { // In case the photo didn't downloaded in the my feed yet.
-            UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
             loadingIndicator.center = self.captureImage.center;
             loadingIndicator.tag = loadingIndicatorTag;
             [loadingIndicator startAnimating];
@@ -1096,7 +1167,7 @@
     
     UIImageView *dealPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, self.captureImage.frame.size.height)];
     [sharedView addSubview:dealPic];
-
+    
     if (self.deal.photo1) {
         
         dealPic.image = self.deal.photo1;
@@ -1304,46 +1375,6 @@
     self.likesCountLabel.text = [NSString stringWithFormat:@"%@ people like this deal", self.likeCounter];
 }
 
-- (void)performLikeAction
-{
-    if (!self.likeButtonSelected.hidden && !self.isDealLikedByUser) {
-        
-        // The deal wasn't liked by the user and now he likes it
-        
-        // Send the new dealAttrib
-        
-        NSString *path = [NSString stringWithFormat:@"/dealatribs/%@", self.deal.dealAttrib.dealAttribID];
-        
-        [[RKObjectManager sharedManager] patchObject:self.deal.dealAttrib
-                                                path:path
-                                          parameters:nil
-                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                 
-                                                 // is this returning 201...?
-                                             }
-                                             failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                 [alert show];
-                                             }];
-        
-        // Create and send a notification to the recipient
-        
-        Notification *notification = [[Notification alloc]init];
-        
-        [[RKObjectManager sharedManager] postObject:self.deal.dealAttrib
-                                               path:path
-                                         parameters:nil
-                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                
-                                                // is this returning 201...?
-                                            }
-                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                [alert show];
-                                            }];
-    }
-}
-
 - (IBAction)CommentButtonAction:(id)sender {
     
     CommentsTableViewController *ctvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Comments"];
@@ -1379,9 +1410,40 @@
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         
         if (completed) {
+            
             if ([activityType isEqualToString:@"WhatsApp Sharing"]) {
                 [weakSelf whatsAppShare];
             }
+            
+            // need to add the dealer's id to the shares array
+            NSMutableArray *dealersThatSharedArray = [[NSMutableArray alloc] initWithArray:self.deal.dealAttrib.dealersThatShared];
+            
+            if (![dealersThatSharedArray containsObject:appDelegate.dealer.dealerID]) {
+                
+                [dealersThatSharedArray addObject:appDelegate.dealer.dealerID];
+                [appDelegate sendNotificationOfType:@"Share" toRecipients:@[self.deal.dealer.dealerID] regardingTheDeal:self.deal.dealID];
+                self.deal.dealAttrib.dealersThatShared = dealersThatSharedArray;
+                
+                NSString *path = [NSString stringWithFormat:@"/dealattribs/%@/", self.deal.dealAttrib.dealAttribID];
+                
+                [[RKObjectManager sharedManager] patchObject:self.deal.dealAttrib
+                                                        path:path
+                                                  parameters:nil
+                                                     success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                         
+                                                         NSLog(@"Deal Attrib was updated successfuly!");
+                                                         DealAttrib *dealAttrib = mappingResult.firstObject;
+                                                         self.deal.dealAttrib = dealAttrib;
+                                                     }
+                                                     failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                         
+                                                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                         [alert show];
+                                                     }];
+            }
+            
+        } else {
+            NSLog(@"Activity view controller dismissed");
         }
     }];
     
@@ -1462,13 +1524,16 @@
             }
             
             if (comment.dealer.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
+                cell.dealerProfilePic.alpha = 1.0;
                 [cell.dealerProfilePic setImage:[appDelegate myProfilePic] forState:UIControlStateNormal];
             } else if (!comment.dealer.photo) {
                 if (!comment.dealer.downloadingPhoto) {
+                    cell.dealerProfilePic.alpha = 0;
                     comment.dealer.downloadingPhoto = YES;
                     [appDelegate otherProfilePic:comment.dealer forTarget:@"Commenter's Photo" notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:indexPath];
                 }
             } else {
+                cell.dealerProfilePic.alpha = 1.0;
                 [cell.dealerProfilePic setImage:[UIImage imageWithData:comment.dealer.photo] forState:UIControlStateNormal];
             }
             
@@ -1843,14 +1908,14 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-//    self.optionsButton.hidden = NO;
-//    self.optionsButton.alpha = 0;
-//    [UIView animateWithDuration:0.3
-//                     animations:^{
-//                         self.optionsButtonSelected.alpha = 0;
-//                         self.optionsButton.alpha = 1.0; }
-//                     completion:^(BOOL finished){
-//                         self.optionsButtonSelected.hidden = YES; }];
+    //    self.optionsButton.hidden = NO;
+    //    self.optionsButton.alpha = 0;
+    //    [UIView animateWithDuration:0.3
+    //                     animations:^{
+    //                         self.optionsButtonSelected.alpha = 0;
+    //                         self.optionsButton.alpha = 1.0; }
+    //                     completion:^(BOOL finished){
+    //                         self.optionsButtonSelected.hidden = YES; }];
 }
 
 @end

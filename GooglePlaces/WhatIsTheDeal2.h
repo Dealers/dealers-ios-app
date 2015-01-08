@@ -78,8 +78,6 @@
 
 @property BOOL hasPublishPermissions;
 
-@property RKObjectManager *updateFromFacebookManager;
-
 @property NSMutableArray *photosFileName;
 
 @property UIImage *sharedImage;

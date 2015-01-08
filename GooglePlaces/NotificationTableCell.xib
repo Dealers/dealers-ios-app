@@ -7,18 +7,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="90" id="KGk-i7-Jjw" customClass="NotificationTableCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="90" id="KGk-i7-Jjw" customClass="NotificationTableCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lme-lW-8fr">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dB5-gM-u4b" userLabel="Notification Image Placeholder">
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEK-Dh-M5b" userLabel="Notification Image">
                         <rect key="frame" x="10" y="10" width="70" height="70"/>
-                    </imageView>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Gilad Lumbroso edited your deal. Go check it out." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="156" translatesAutoresizingMaskIntoConstraints="NO" id="TlO-Hc-18t">
-                        <rect key="frame" x="90" y="12" width="156" height="69"/>
+                        <rect key="frame" x="90" y="13" width="197" height="69"/>
                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -31,12 +37,14 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="90" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="date" destination="V8k-ER-m1d" id="CPk-hQ-ti2"/>
-                <outlet property="image" destination="Lme-lW-8fr" id="IDo-h6-NbC"/>
                 <outlet property="label" destination="TlO-Hc-18t" id="T1n-V4-Z00"/>
+                <outlet property="notificationImage" destination="PEK-Dh-M5b" id="eTL-5B-VXP"/>
+                <outlet property="notificationImagePlaceholder" destination="dB5-gM-u4b" id="MkL-8S-YNi"/>
             </connections>
-            <point key="canvasLocation" x="536" y="349"/>
+            <point key="canvasLocation" x="536" y="348"/>
         </tableViewCell>
     </objects>
 </document>

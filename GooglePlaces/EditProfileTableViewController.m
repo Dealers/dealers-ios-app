@@ -48,7 +48,7 @@
         appDelegate.dealer.dateOfBirth = self.originalDateOfBirth;
         appDelegate.dealer.gender = self.originalGender;
         appDelegate.dealer.email = self.originalEmail;
-        appDelegate.dealer.username = self.originalEmail;
+        appDelegate.dealer.username = self.originalUsername;
     }
 }
 
@@ -105,6 +105,7 @@
 {
     self.originalFullName = [appDelegate.dealer.fullName mutableCopy];
     self.originalEmail = [appDelegate.dealer.email mutableCopy];
+    self.originalUsername = [appDelegate.dealer.username mutableCopy];
     self.originalDateOfBirth = appDelegate.dealer.dateOfBirth;
 
     if ([appDelegate.dealer.location isEqualToString:@"None"]) {
@@ -607,7 +608,12 @@
         self.didChangeEmail = YES;
     }
     appDelegate.dealer.email = self.email.text;
-    appDelegate.dealer.username = self.email.text;
+    
+    if (appDelegate.dealer.email.length > 30) {
+        appDelegate.dealer.username = [appDelegate.dealer.email substringToIndex:30];
+    } else {
+        appDelegate.dealer.username = appDelegate.dealer.email;
+    }
     
     if (self.didChangeProfilePic) {
         if (userHaveProfilePic) {

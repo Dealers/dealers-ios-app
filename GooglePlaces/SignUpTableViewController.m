@@ -512,7 +512,13 @@
     
     self.dealer.fullName = self.fullNameTextField.text;
     self.dealer.email = self.emailTextField.text;
-    self.dealer.username = self.emailTextField.text;
+    
+    if (self.dealer.email.length > 30) {
+        self.dealer.username = [self.dealer.email substringToIndex:30];
+    } else {
+        self.dealer.username = self.emailTextField.text;
+    }
+    
     self.dealer.userPassword = self.passwordTextField.text;
     
     if (![self.dateOfBirthLabel.text isEqualToString:@"Date Of Birth (optional)"]) {

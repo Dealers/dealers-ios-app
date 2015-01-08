@@ -11,14 +11,18 @@
 
 @interface Notification : NSObject
 
-@property NSString *recipient; // Recipient's email
-@property NSString *type; // Like, Comment, Share or Edit Deal
+@property NSNumber *notificationID;
+@property NSArray *recipients; // Recipient's id
+@property NSString *type; // Like, Comment, Also Commented, Share or Edit
 @property Dealer *dealer;
-@property Deal *deal;
-@property BOOL wasRead;
+@property NSNumber *dealID;
 @property NSDate *date;
 
-- (instancetype)initWithRecipient:(NSString *)recipient type:(NSString *)type dealer:(Dealer *)dealer deal:(Deal *)deal date:(NSDate *)date;
+@property BOOL wasRead;
+@property BOOL noDuplicates;
+@property BOOL grouped;
+
+- (instancetype)initWithType:(NSString *)type recipients:(NSArray *)recipients dealer:(Dealer *)dealer deal:(NSNumber *)dealID date:(NSDate *)date;
 
 @end
 

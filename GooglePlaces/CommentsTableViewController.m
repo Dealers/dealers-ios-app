@@ -289,12 +289,39 @@
                                             [self.comments addObject:comment];
                                             [self addCommentToTableView];
                                             self.didChanges = YES;
+                                            
+                                            if (self.deal.dealer.dealerID.intValue != appDelegate.dealer.dealerID.intValue) {
+                                                [appDelegate sendNotificationOfType:@"Comment"
+                                                                       toRecipients:@[self.deal.dealer.dealerID]
+                                                                   regardingTheDeal:self.deal.dealID];
+                                            }
+                                            
+                                            [self sendNotificationsToAllCommenters];
                                         }
                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                             
                                             [unableToPostComment show:YES];
                                             [unableToPostComment hide:YES afterDelay:1.5];
                                         }];
+}
+
+- (void)sendNotificationsToAllCommenters
+{
+    NSMutableArray *recipients = [[NSMutableArray alloc] init];
+
+    for (Comment *comment in self.comments) {
+        
+        if (comment.dealer.dealerID.intValue != appDelegate.dealer.dealerID.intValue
+            && comment.dealer.dealerID.intValue != self.deal.dealer.dealerID.intValue) {
+            [recipients addObject:comment.dealer.dealerID];
+        }
+    }
+    
+    if (recipients.count > 0) {
+        [appDelegate sendNotificationOfType:@"Also Commented"
+                               toRecipients:recipients
+                           regardingTheDeal:self.deal.dealID];
+    }
 }
 
 - (void)setProgressIndicator

@@ -10,20 +10,23 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
+#import "User.h"
 
 @interface MainViewController : UIViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
 {
     float ScreenHeight;
     MBProgressHUD *loggingInFacebook, *noConnection;
     FBGraphObject *facebookInfo;
-    NSString *facebookUserEmail, *facebookToken, *photoFileName;
-    BOOL hasPhoto, didDownloadUserData, didPhotoFinishedDownloading, didPhotoFinishedUploading, firstSlogen;
+    NSString *facebookUserEmail, *facebookToken;
+    NSNumber *pseudoUserID;
+    BOOL didDownloadUserData, didPhotoFinishedDownloading, didPhotoFinishedUploading, firstSlogen, triedAddingNumber, triedUploadingPhoto, gotToken;
     
 }
 
 @property AppDelegate *appDelegate;
 
 @property Dealer *dealer;
+@property User *pseudoUser;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *regularView;
 @property (weak, nonatomic) IBOutlet UIScrollView *darkCollageView;

@@ -35,7 +35,6 @@
                                                  name:@"SessionStateChangeNotification"
                                                object:nil];
     
-    [self configureRestKit];
     [self setProgressIndicator];
 }
 
@@ -179,9 +178,9 @@
                                           [loggingInFacebook hide:YES];
                                           appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:(FBGraphObject *)result withPhoto:YES];
                                           
-                                          if (appDelegate.dealer.photoURL.length > 1) {
-                                              // If the dealer already has a photo, don't use Facebook's profile pic and just update the info. If else, use it.
-                                              [self updateDealerInfo];
+                                          if (appDelegate.dealer.photoURL.length > 1 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
+                                              // If the dealer already has a photo, don't use Facebook's profile pic and get him in. If else, use it.
+                                              [self updateProfileView];
                                           } else {
                                               [self uploadPhoto];
                                           }
@@ -205,58 +204,6 @@
         NSLog(@"Error: %@", [error localizedDescription]);
         [loggingInFacebook hide:YES];
     }
-}
-
-- (void)configureRestKit
-{
-    NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
-    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
-    
-    self.updateFromFacebookManager = [[RKObjectManager alloc] initWithHTTPClient:client];
-    self.updateFromFacebookManager.requestSerializationMIMEType = RKMIMETypeJSON;
-    
-    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
-    
-    RKResponseDescriptor *updateProfileResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:[appDelegate dealerMapping]
-                                                 method:RKRequestMethodAny
-                                            pathPattern:nil
-                                                keyPath:nil
-                                            statusCodes:statusCodes];
-    
-    RKRequestDescriptor *updateProfileRequestDescriptor =
-    [RKRequestDescriptor requestDescriptorWithMapping:[appDelegate editProfileMapping]
-                                          objectClass:[Dealer class]
-                                          rootKeyPath:nil
-                                               method:RKRequestMethodAny];
-    
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
-    [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
-    [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
-    
-    NSString *token = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
-    
-    [self.updateFromFacebookManager.HTTPClient setAuthorizationHeaderWithToken:token];
-    
-    [self.updateFromFacebookManager addResponseDescriptor:updateProfileResponseDescriptor];
-    [self.updateFromFacebookManager addRequestDescriptor:updateProfileRequestDescriptor];
-}
-
-- (void)updateDealerInfo
-{
-    NSString *path = [NSString stringWithFormat:@"/dealers/%@/", appDelegate.dealer.dealerID];
-    
-    [self.updateFromFacebookManager patchObject:appDelegate.dealer
-                                           path:path
-                                     parameters:nil
-                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                            
-                                            NSLog(@"Dealer updated successfully!");
-                                        }
-                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                            
-                                            NSLog(@"Couldn't update dealer, Error: %@", error);
-                                        }];
 }
 
 - (void)uploadPhoto
@@ -306,13 +253,16 @@
                                                                
                                                                NSLog(@"Profile photo uploaded successfuly!");
                                                                
-                                                               [self updateDealerInfo];
-                                                               
-                                                               ProfileTableViewController *ptvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
-                                                               ptvc.afterEditing = YES;
+                                                               [self updateProfileView];
                                                            }
                                                            return nil;
                                                        }];
+}
+
+- (void)updateProfileView
+{
+    ProfileTableViewController *ptvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+    ptvc.afterEditing = YES;
 }
 
 
@@ -344,6 +294,7 @@
     UIImage *screenShot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
+    [appDelegate deletePseudoUser];
     appDelegate.dealer = nil;
     [appDelegate removeUserDetailsFromDevice];
     
@@ -356,6 +307,7 @@
     appDelegate.screenShot = screenShot;
     appDelegate.window.rootViewController = nc;
 }
+
 
 #pragma mark - Email methods
 

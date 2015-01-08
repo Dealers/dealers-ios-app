@@ -19,7 +19,6 @@
     self.title = @"Sign In";
     
     [self initialize];
-    //    [self configureRestKit];
     [self setLoadingAnimation];
     [self setProgressIndicator];
 }
@@ -142,42 +141,6 @@
     [self.view addSubview:noConnection];
     [self.view addSubview:wrongEmailPassword];
 }
-
-/*
- - (void)configureRestKit
- {
- // initialize AFNetworking HTTPClient
- NSURL *baseURL = [NSURL URLWithString:@"http://54.77.168.152"];
- AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
- 
- // initialize RestKit
- self.signInManager = [[RKObjectManager alloc] initWithHTTPClient:client];
- self.signInManager.requestSerializationMIMEType = RKMIMETypeJSON;
- 
- // other modifications to the object manager
- NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
- 
- // register mappings with the provider using response descriptors
- RKResponseDescriptor *dealsResponseDescriptor =
- [RKResponseDescriptor responseDescriptorWithMapping:[appDelegate dealerMapping]
- method:RKRequestMethodAny
- pathPattern:@"/dealerlogins/"
- keyPath:@"results"
- statusCodes:statusCodes];
- 
- RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
- [errorMapping addPropertyMapping: [RKAttributeMapping attributeMappingFromKeyPath:@"detail" toKeyPath:@"errorMessage"]];
- 
- RKResponseDescriptor *errorResponseDescriptor =
- [RKResponseDescriptor responseDescriptorWithMapping:errorMapping
- method:RKRequestMethodAny
- pathPattern:nil
- keyPath:nil
- statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
- 
- [self.signInManager addResponseDescriptorsFromArray:@[dealsResponseDescriptor, errorResponseDescriptor]];
- }
- */
 
 - (BOOL)validation
 {

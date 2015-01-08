@@ -10,12 +10,19 @@
 #import "AppDelegate.h"
 #import "NotificationTableCell.h"
 #import "Notification.h"
+#import "ViewonedealViewController.h"
+#import "ProfileTableViewController.h"
 
-@interface ActivityTableViewController : UITableViewController
+
+@interface ActivityTableViewController : UITableViewController {
+    
+    UIView *loadingView;
+}
 
 @property AppDelegate *appDelegate;
 
 @property NSMutableArray *notifications;
+@property NSMutableArray *groupedNotifications;
 
 @property UIImage *notificationPhoto;
 
