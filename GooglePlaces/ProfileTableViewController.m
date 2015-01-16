@@ -31,7 +31,7 @@
     
     [super viewDidLoad];
     
-    self.title = @"Profile";
+    self.title = NSLocalizedString(@"Profile", nil);
     
     [self initialize];
     [self determineProfileMode];
@@ -96,6 +96,14 @@
     isLoading = NO;
     isRefreshing = NO;
     self.afterEditing = NO;
+    
+    // Set Invite button
+    UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Invite Button"]
+                                                               style:UIBarButtonItemStyleBordered
+                                                              target:self
+                                                              action:@selector(pushInviteViewController:)];
+    [invite setImageInsets:UIEdgeInsetsMake(1, -5, -1, 5)];
+    self.navigationItem.rightBarButtonItem = invite;
 }
 
 - (void)determineProfileMode
@@ -169,7 +177,11 @@
                                                   
                                                   [self stopLoadingAnimation];
                                                   
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:error.localizedFailureReason delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                                  message:error.localizedFailureReason
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                        otherButtonTitles:nil];
                                                   [alert show];
                                                   
                                                   [self stopLoadingDealsAnimation];
@@ -406,7 +418,7 @@
         self.settings = [appDelegate actionButton];
         
         [self.settings setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-        [self.settings setTitle:@"Settings" forState:UIControlStateNormal];
+        [self.settings setTitle:NSLocalizedString(@"Settings", nil) forState:UIControlStateNormal];
         [[self.settings titleLabel] setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
         [self.settings setTitleColor:[appDelegate textGrayColor] forState:UIControlStateNormal];
         [self.settings addTarget:self action:@selector(pushSettingsView) forControlEvents:UIControlEventTouchUpInside];
@@ -558,7 +570,11 @@
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"Error: %@", error);
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:error.localizedFailureReason delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                                                  message:error.localizedFailureReason
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                        otherButtonTitles:nil];
                                                   [alert show];
                                                   [self stopLoadingDealsAnimation];
                                                   [self.refreshControl endRefreshing];
@@ -591,7 +607,11 @@
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"Error: %@", error);
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                                                  message:error.localizedDescription
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                        otherButtonTitles:nil];
                                                   [alert show];
                                                   [self stopLoadingDealsAnimation];
                                                   [self.refreshControl endRefreshing];
@@ -745,7 +765,7 @@
     [noDealsMessage setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
     [noDealsMessage setTextAlignment:NSTextAlignmentCenter];
     noDealsMessage.numberOfLines = 0;
-    noDealsMessage.text = @"There are no deals at this moment!";
+    noDealsMessage.text = NSLocalizedString(@"There are no deals at this moment!", nil);
     noDealsMessage.textColor = [appDelegate textGrayColor];
     noDealsMessage.alpha = 0;
     noDealsMessage.tag = NO_DEALS_TAG;
@@ -813,6 +833,12 @@
         self.profilePic.alpha = 0;
         [UIView animateWithDuration:0.3 animations:^{ self.profilePic.alpha = 1.0; }];
     }
+}
+
+- (void)pushInviteViewController:(id)sender
+{
+    InviteViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"Invite"];
+    [self.navigationController pushViewController:ivc animated:YES];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

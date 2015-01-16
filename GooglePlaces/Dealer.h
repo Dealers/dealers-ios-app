@@ -41,6 +41,8 @@
 @property NSMutableArray *followings;
 @property NSMutableArray *followedBy;
 
+@property NSNumber *invitationCounter;
+
 @property NSMutableArray *notifications;
 
 @property NSNumber *facebookPseudoUserID;

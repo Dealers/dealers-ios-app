@@ -31,7 +31,7 @@
     
     [super viewDidLoad];
     
-    self.title = @"Comments";
+    self.title = NSLocalizedString(@"Comments", nil);
     
     appDelegate = [[UIApplication sharedApplication] delegate];
     
@@ -92,7 +92,7 @@
                                                                               100.0,
                                                                               self.tableView.frame.size.width,
                                                                               30.0)];
-        noCommentsMessage.text = @"No Comments...";
+        noCommentsMessage.text = NSLocalizedString(@"No Comments...", nil);
         noCommentsMessage.textAlignment = NSTextAlignmentCenter;
         noCommentsMessage.font = [UIFont fontWithName:@"Avenir-Roman" size:22.0];
         noCommentsMessage.textColor = [UIColor colorWithRed:190.0/255.0 green:190.0/255.0 blue:205.0/255.0 alpha:1.0];
@@ -142,12 +142,12 @@
     
     self.placeholder = [[UILabel alloc]initWithFrame:CGRectMake(46, 0, self.view.frame.size.width - 44 * 2, 44)];
     self.placeholder.font = [UIFont fontWithName:@"Avenir-Roman" size:16.0];
-    self.placeholder.text = @"Write a comment...";
+    self.placeholder.text = NSLocalizedString(@"Write a comment...", nil);
     self.placeholder.textColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:206.0/255.0 alpha:1.0];
     
     self.postButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.postButton setFrame:CGRectMake(self.view.frame.size.width - 50.0, 0, 50.0, height)];
-    [self.postButton setTitle:@"Post" forState:UIControlStateNormal];
+    [self.postButton setTitle:NSLocalizedString(@"Post", nil) forState:UIControlStateNormal];
     [[self.postButton titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:16.0]];
     [self.postButton addTarget:self action:@selector(postComment) forControlEvents:UIControlEventTouchUpInside];
     self.postButton.enabled = NO;
@@ -331,7 +331,7 @@
     unableToPostComment.delegate = self;
     unableToPostComment.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     unableToPostComment.mode = MBProgressHUDModeCustomView;
-    unableToPostComment.labelText = @"Unable to post comment";
+    unableToPostComment.labelText = NSLocalizedString(@"Unable to post comment", nil);
     unableToPostComment.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     unableToPostComment.animationType = MBProgressHUDAnimationZoomIn;
     

@@ -29,7 +29,7 @@
 {
     AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
-    self.title = @"Choose Category";
+    self.title = NSLocalizedString(@"Choose Category", nil);
     
     self.categories = [[NSArray alloc]initWithArray:[app getCategories]];
     self.icons = [[NSArray alloc]initWithArray:[app getCategoriesIcons]];

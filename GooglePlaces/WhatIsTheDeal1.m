@@ -34,7 +34,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"What is the deal?";
+    self.title = NSLocalizedString(@"What is the deal?", nil);
     
     self.deal = [[Deal alloc]init];
     appDelegate = [[UIApplication sharedApplication] delegate];
@@ -178,7 +178,7 @@
     blankTitleIndicator.delegate = self;
     blankTitleIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     blankTitleIndicator.mode = MBProgressHUDModeCustomView;
-    blankTitleIndicator.labelText = @"Title can't be blank!";
+    blankTitleIndicator.labelText = NSLocalizedString(@"Title can't be blank!", nil);
     blankTitleIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     blankTitleIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -186,9 +186,9 @@
     tooMuchIndicator.delegate = self;
     tooMuchIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     tooMuchIndicator.mode = MBProgressHUDModeCustomView;
-    tooMuchIndicator.labelText = @"Title is too long";
+    tooMuchIndicator.labelText = NSLocalizedString(@"Title is too long", nil);
     tooMuchIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-    tooMuchIndicator.detailsLabelText = @"120 characters max";
+    tooMuchIndicator.detailsLabelText = NSLocalizedString(@"120 characters max", nil);
     tooMuchIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     tooMuchIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -379,7 +379,11 @@
 
 - (IBAction)deletePhoto:(id)sender {
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete Photo" message:@"Are you sure want to delete this photo?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Photo", nil)
+                                                    message:NSLocalizedString(@"Are you sure want to delete this photo?", nil)
+                                                   delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                          otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
     alert.tag = 22;
     [alert show];
 }

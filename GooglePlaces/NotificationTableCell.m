@@ -44,23 +44,23 @@
         
         if ([notification.type isEqualToString:@"Like"]) {
             
-            notificationString = @"likes your deal.";
+            notificationString = NSLocalizedString(@"likes your deal.", nil);
             
         } else if ([notification.type isEqualToString:@"Comment"]) {
             
-            notificationString = @"commented on your deal.";
+            notificationString = NSLocalizedString(@"commented on your deal.", nil);
             
         } else if ([notification.type isEqualToString:@"Also Commented"]) {
             
-            notificationString = @"also commented on this deal.";
+            notificationString = NSLocalizedString(@"also commented on this deal.", nil);
             
         } else if ([notification.type isEqualToString:@"Share"]) {
             
-            notificationString = @"shared your deal.";
+            notificationString = NSLocalizedString(@"shared your deal.", nil);
             
         } else if ([notification.type isEqualToString:@"Edit"]) {
             
-            notificationString = @"edited your deal.";
+            notificationString = NSLocalizedString(@"edited your deal.", nil);
         }
         
         return [NSString stringWithFormat:@"%@ %@", fullName, notificationString];
@@ -80,23 +80,32 @@
         
         if ([notification1.type isEqualToString:@"Like"]) {
             
-            notificationString = @"like your deal.";
+            notificationString = NSLocalizedString(@"like your deal.", nil);
             
         } else if ([notification1.type isEqualToString:@"Comment"]) {
             
-            notificationString = @"commented on your deal.";
+            notificationString = NSLocalizedString(@"commented on your deal.", nil);
+            if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+                notificationString = @"הגיבו על המבצע שלך";
+            }
             
         } else if ([notification1.type isEqualToString:@"Also Commented"]) {
             
-            notificationString = @"also commented on this deal.";
+            notificationString = NSLocalizedString(@"also commented on this deal.", nil);
+            if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+                notificationString = @"גם הגיבו על המבצע הזה";
+            }
             
         } else if ([notification1.type isEqualToString:@"Share"]) {
             
-            notificationString = @"shared your deal.";
+            notificationString = NSLocalizedString(@"shared your deal.", nil);
+            if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+                notificationString = @"שיתפו את המבצע שלך";
+            }
             
         } else if ([notification1.type isEqualToString:@"Edit"]) {
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"There is a problem!"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"There is a problem!", nil)
                                                             message:@"Notification of type \"Edit\" shouldn't be in a group."
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"

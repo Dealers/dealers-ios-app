@@ -41,6 +41,7 @@
                                                  name:@"SessionStateChangeNotification"
                                                object:nil];
     
+    self.authorized = [self isAuthorized];
     [self setProgressIndicator];
     [self createToggleSlogenButton];
     
@@ -69,6 +70,10 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self stylesTransitionButton];
+    
+    if (self.enteredPasscode) {
+        [self startFacebookLogin];
+    }
     
     if (appDelegate.screenShot) {
         [self.screenShot setImage:appDelegate.screenShot];
@@ -151,7 +156,7 @@
         [UIView animateWithDuration:0.3
                          animations:^{ self.slogen.alpha = 0; }
                          completion:^(BOOL finished) {
-                             self.slogen.text = @"Share deals with others \nHelp reduce prices";
+                             self.slogen.text = NSLocalizedString(@"Share deals with others\nHelp reduce prices", @"The slogan");
                              [UIView animateWithDuration:0.3
                                               animations:^{ self.slogen.alpha = 1.0;
                                               }];
@@ -163,7 +168,7 @@
         [UIView animateWithDuration:0.3
                          animations:^{ self.slogen.alpha = 0; }
                          completion:^(BOOL finished) {
-                             self.slogen.text = @"Find great deals \nShared by people like you";
+                             self.slogen.text = NSLocalizedString(@"Find great deals\nShared by people like you", @"The slogan");
                              [UIView animateWithDuration:0.3
                                               animations:^{ self.slogen.alpha = 1.0;
                                               }];
@@ -222,29 +227,56 @@
 
 #pragma mark - General methods
 
-- (IBAction)EmailimageButton:(id)sender{
+- (IBAction)EmailimageButton:(id)sender
+{
     SignUpTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SignUpID"];
-    [self.navigationController pushViewController:controller animated:YES];
+    
+    if (self.authorized) {
+        [self.navigationController pushViewController:controller animated:YES];
+        
+    } else {
+        EnterPasscodeViewController *epvc = [self.storyboard instantiateViewControllerWithIdentifier:@"EnterPasscode"];
+        epvc.navigationControllerDelegate = self.navigationController;
+        epvc.signUp = YES;
+        [self.navigationController presentViewController:epvc animated:YES completion:nil];
+    }
 }
 
-- (IBAction)SigninButton:(id)sender{
+- (IBAction)SigninButton:(id)sender
+{
     SignInTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SignInID"];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (IBAction)facebookButtonClicked:(id)sender{
     
-    if (![appDelegate isFacebookConnected]) {
+    if (self.authorized) {
+        [self startFacebookLogin];
         
-        [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email", @"user_birthday", @"user_location"] allowLoginUI:YES];
+    } else {
+        EnterPasscodeViewController *epvc = [self.storyboard instantiateViewControllerWithIdentifier:@"EnterPasscode"];
+        epvc.navigationControllerDelegate = self.navigationController;
+        epvc.facebook = YES;
+        [self.navigationController presentViewController:epvc animated:YES completion:nil];
     }
-    
-    else {
+}
+
+- (void)startFacebookLogin
+{
+    if (![appDelegate isFacebookConnected]) {
+        [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email", @"user_birthday", @"user_location"] allowLoginUI:YES];
         
+    } else {
         NSLog(@"Error - connected to facebook when suppose to be disconnected");
     }
 }
 
+- (BOOL)isAuthorized
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL authorized = [userDefaults objectForKey:@"Authorized"];
+    return authorized;
+}
 
 - (void)setProgressIndicator
 {
@@ -391,7 +423,7 @@
 {
     self.dealer = [appDelegate updateDealer:nil withFacebookInfo:facebookInfo withPhoto:YES];
     
-    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"09"];
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"090909deal"];
     [[RKObjectManager sharedManager] postObject:self.dealer
                                            path:@"/dealers/"
                                      parameters:nil
@@ -414,18 +446,18 @@
                                             Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
                                             NSLog(@"%@", [errors messagesString]);
                                             
-                                            if ([[errors messagesString] isEqualToString:@"Email already exists!"]) {
+                                            if ([[errors messagesString] isEqualToString:NSLocalizedString(@"Email already exists!", nil)]) {
                                                 
                                                 // User already exists, need to get him a token, download his info and get him in
                                                 [self createPseudoUserForToken];
                                                 
                                             } else {
                                                 
-                                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign up..."
-                                                                                               message:[NSString stringWithFormat:@"\n%@", [errors messagesString]]
-                                                                                              delegate:nil
-                                                                                     cancelButtonTitle:@"OK"
-                                                                                     otherButtonTitles:nil];
+                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Couldn't sign up...", nil)
+                                                                                                message:[NSString stringWithFormat:@"\n%@", [errors messagesString]]
+                                                                                               delegate:nil
+                                                                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                      otherButtonTitles:nil];
                                                 [alert show];
                                                 [loggingInFacebook hide:YES];
                                             }
@@ -461,10 +493,10 @@
                                             NSLog(@"Pseudo user couldn't be created...");
                                             Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
                                             
-                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign in with facebook"
-                                                                                           message:@"Pleae try again later"
+                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Couldn't sign in with facebook", nil)
+                                                                                           message:NSLocalizedString(@"Pleae try again later", nil)
                                                                                           delegate:nil
-                                                                                 cancelButtonTitle:@"OK"
+                                                                                 cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                                                  otherButtonTitles:nil];
                                             
                                             if ([[errors messagesString] isEqualToString:@"Pseudo user already exists"]) {
@@ -575,7 +607,7 @@
                                                                                                        // Unknown error.
                                                                                                        NSLog(@"Error: %@", task.error);
                                                                                                        
-                                                                                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Couldn't Sign In" message:@"Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                                                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Couldn't Sign In", nil) message:NSLocalizedString(@"Please try again", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
                                                                                                        [alert show];
                                                                                                        
                                                                                                        [[FBSession activeSession] closeAndClearTokenInformation];
@@ -622,7 +654,7 @@
     [client postPath:@"/dealers-token-auth/"
           parameters:parameters
              success:^(AFHTTPRequestOperation *operation, id result) {
-
+                 
                  
                  NSError *error;
                  NSDictionary *tokenDictionary = [NSJSONSerialization JSONObjectWithData:result

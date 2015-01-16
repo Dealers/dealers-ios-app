@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
+#import "EnterPasscodeViewController.h"
 #import "MBProgressHUD.h"
 #import "User.h"
 
@@ -47,7 +48,10 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *screenShot;
 
+@property BOOL authorized;
+@property BOOL enteredPasscode;
 @property BOOL didComeFromLogOut;
+
 
 - (IBAction)EmailimageButton:(id)sender;
 - (IBAction)SigninButton:(id)sender;

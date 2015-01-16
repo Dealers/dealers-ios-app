@@ -23,7 +23,7 @@
 - (void)layoutSubviews
 {
     xPointTitle = self.contentView.frame.size.width - SIDE_MARGIN;
-    xPointDetails = self.contentView.frame.size.width -SIDE_MARGIN;
+    xPointDetails = self.contentView.frame.size.width - SIDE_MARGIN;
     
     CGFloat x, y, width, height;
     
@@ -93,6 +93,13 @@
     CGRect storeFrame = self.store.frame;
     storeFrame.size.width = xPointDetails - self.store.frame.origin.x;
     self.store.frame = storeFrame;
+    
+    // Setting the exipred tag
+    self.expiredTag.layer.cornerRadius = 2.0;
+    self.expiredTag.layer.masksToBounds = YES;
+    self.expiredTag.layer.borderWidth = 2.0;
+    self.expiredTag.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.expiredTag.hidden = YES;
 }
 
 @end

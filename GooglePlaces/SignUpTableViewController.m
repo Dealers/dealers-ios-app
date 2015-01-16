@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Sign Up";
+    self.title = NSLocalizedString(@"Sign Up", nil);
     
     [self initialize];
     [self setLoadingAnimation];
@@ -72,7 +72,7 @@
     blankFullName.delegate = self;
     blankFullName.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     blankFullName.mode = MBProgressHUDModeCustomView;
-    blankFullName.labelText = @"Please enter your name!";
+    blankFullName.labelText = NSLocalizedString(@"Please enter your name!", nil);
     blankFullName.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     blankFullName.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -80,7 +80,7 @@
     blankEmail.delegate = self;
     blankEmail.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     blankEmail.mode = MBProgressHUDModeCustomView;
-    blankEmail.labelText = @"Email is blank!";
+    blankEmail.labelText = NSLocalizedString(@"Email is blank!", nil);
     blankEmail.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     blankEmail.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -88,7 +88,7 @@
     blankPassword.delegate = self;
     blankPassword.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     blankPassword.mode = MBProgressHUDModeCustomView;
-    blankPassword.labelText = @"Password is blank!";
+    blankPassword.labelText = NSLocalizedString(@"Password is blank!", nil);
     blankPassword.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     blankPassword.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -96,9 +96,9 @@
     noConnection.delegate = self;
     noConnection.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     noConnection.mode = MBProgressHUDModeCustomView;
-    noConnection.labelText = @"Can't connect the server";
+    noConnection.labelText = NSLocalizedString(@"Can't connect the server", nil);
     noConnection.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-    noConnection.detailsLabelText = @"Check your connection";
+    noConnection.detailsLabelText = NSLocalizedString(@"Check your connection", nil);
     noConnection.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     noConnection.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -186,7 +186,7 @@
                 [self hideDatePickerCell];
             
             } else {
-                if ([self.dateOfBirthLabel.text isEqualToString:@"Date Of Birth (optional)"] || !(self.dateOfBirthLabel.text.length > 0)) {
+                if ([self.dateOfBirthLabel.text isEqualToString:NSLocalizedString(@"Date Of Birth (optional)", nil)] || !(self.dateOfBirthLabel.text.length > 0)) {
                     
                     [self showDatePickerCell];
                     [self performSelector:@selector(dateChanged:) withObject:self.datePicker];
@@ -195,9 +195,9 @@
                     
                     UIActionSheet *expirationDateSheet = [[UIActionSheet alloc]initWithTitle:nil
                                                                                     delegate:self
-                                                                           cancelButtonTitle:@"Cancel"
-                                                                      destructiveButtonTitle:@"Remove Date"
-                                                                           otherButtonTitles:@"Change Date", nil];
+                                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                                      destructiveButtonTitle:NSLocalizedString(@"Remove Date", nil)
+                                                                           otherButtonTitles:NSLocalizedString(@"Change Date", nil), nil];
                     expirationDateSheet.tag = DATE_OF_BIRTH_ACTION_SHEET_TAG;
                     [expirationDateSheet showInView:self.view];
                 }
@@ -207,11 +207,11 @@
         case 5: {
             [self.view endEditing:YES];
             UIActionSheet *genderOptions = [[UIActionSheet alloc]
-                                            initWithTitle:@"What is your gender?"
+                                            initWithTitle:NSLocalizedString(@"What is your gender?", nil)
                                             delegate:self
-                                            cancelButtonTitle:@"Cancel"
+                                            cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                             destructiveButtonTitle:nil
-                                            otherButtonTitles:@"Unspecified", @"Female", @"Male", nil];
+                                            otherButtonTitles:NSLocalizedString(@"Unspecified", nil), NSLocalizedString(@"Female", nil), NSLocalizedString(@"Male", nil), nil];
             genderOptions.tag = GENDER_ACTION_SHEET_TAG;
             [genderOptions showInView:self.view];
             [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -309,7 +309,7 @@
                          self.dateOfBirthLabel.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-                         self.dateOfBirthLabel.text = @"Date Of Birth (optional)";
+                         self.dateOfBirthLabel.text = NSLocalizedString(@"Date Of Birth (optional)", nil) ;
                          self.dateOfBirthLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1.0];
                          self.didCancelDate = YES;
                          //    [self hideDatePickerCell];
@@ -356,18 +356,18 @@
     
     if (hasPhoto) {
         actionSheet = [[UIActionSheet alloc]
-                       initWithTitle:@"Change Profile Picture"
+                       initWithTitle:NSLocalizedString(@"Change Profile Picture", nil)
                        delegate:self
-                       cancelButtonTitle:@"Cancel"
-                       destructiveButtonTitle:@"Remove Photo"
-                       otherButtonTitles:@"Take a Picture", @"From Library", nil];
+                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                       destructiveButtonTitle:NSLocalizedString(@"Remove Photo", nil)
+                       otherButtonTitles: NSLocalizedString(@"Take a Picture", nil), NSLocalizedString(@"From Library", nil), nil];
     } else {
         actionSheet = [[UIActionSheet alloc]
-                       initWithTitle:@"Add Profile Picture"
+                       initWithTitle:NSLocalizedString(@"Add Profile Picture", nil)
                        delegate:self
-                       cancelButtonTitle:@"Cancel"
+                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                        destructiveButtonTitle:nil
-                       otherButtonTitles:@"Take a Picture", @"From Library", nil];
+                       otherButtonTitles:NSLocalizedString(@"Take a Picture", nil), NSLocalizedString(@"From Library", nil), nil];
     }
     actionSheet.tag = PROFILE_PIC_ACTION_SHEET_TAG;
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
@@ -411,13 +411,13 @@
         case GENDER_ACTION_SHEET_TAG:
             
             if (buttonIndex == 0) {
-                self.genderLabel.text = @"Gender (optional)";
+                self.genderLabel.text = NSLocalizedString(@"Gender (optional)", nil);
                 self.genderLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1.0];
             } else if (buttonIndex == 1) {
-                self.genderLabel.text = @"Female";
+                self.genderLabel.text = NSLocalizedString(@"Female", nil);
                 self.genderLabel.textColor = [UIColor blackColor];
             } else if (buttonIndex == 2) {
-                self.genderLabel.text = @"Male";
+                self.genderLabel.text = NSLocalizedString(@"Male", nil);
                 self.genderLabel.textColor = [UIColor blackColor];
             }
             break;
@@ -458,10 +458,10 @@
                 picker.allowsEditing = YES;
                 [self presentViewController:picker animated:YES completion:nil];
             } else {
-                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                      message:@"Device has no camera"
+                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                      message:NSLocalizedString(@"Device has no camera", nil)
                                                                      delegate:nil
-                                                            cancelButtonTitle:@"OK"
+                                                            cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                             otherButtonTitles: nil];
                 [myAlertView show];
             }
@@ -486,10 +486,10 @@
                 picker.allowsEditing = YES;
                 [self presentViewController:picker animated:YES completion:nil];
             } else {
-                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                      message:@"Device has no camera"
+                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                      message:NSLocalizedString(@"Device has no camera", nil)
                                                                      delegate:nil
-                                                            cancelButtonTitle:@"OK"
+                                                            cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                             otherButtonTitles: nil];
                 [myAlertView show];
             }
@@ -521,11 +521,11 @@
     
     self.dealer.userPassword = self.passwordTextField.text;
     
-    if (![self.dateOfBirthLabel.text isEqualToString:@"Date Of Birth (optional)"]) {
+    if (![self.dateOfBirthLabel.text isEqualToString:NSLocalizedString(@"Date Of Birth (optional)", nil)]) {
         self.dealer.dateOfBirth = self.datePicker.date;
     }
     
-    if (![self.genderLabel.text isEqualToString:@"Gender (optional)"]) {
+    if (![self.genderLabel.text isEqualToString:NSLocalizedString(@"Gender (optional)", nil)]) {
         self.dealer.gender = self.genderLabel.text;
     }
     
@@ -543,7 +543,7 @@
 
 - (void)uploadData
 {
-    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"09"];
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"090909deal"];
     [[RKObjectManager sharedManager] postObject:self.dealer
                                            path:@"/dealers/"
                                      parameters:nil
@@ -569,10 +569,10 @@
                                             Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
                                             NSLog(@"%@", [errors messagesString]);
                                             
-                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign up..."
+                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Couldn't sign up...", nil)
                                                                                            message:[NSString stringWithFormat:@"\n%@", [errors messagesString]]
                                                                                           delegate:nil
-                                                                                 cancelButtonTitle:@"OK"
+                                                                                 cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                                                  otherButtonTitles:nil];
                                             [alert show];
                                             

@@ -42,7 +42,11 @@
     selectDealButton9.alpha=0.7;
     [[self view] addSubview:selectDealButton9];
     [[self view] bringSubviewToFront:selectDealButton9];
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Connection Error" message:@"Check your network connection" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Connection Error", nil)
+                                                  message:NSLocalizedString(@"Check your network connection", nil)
+                                                 delegate:nil
+                                        cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                        otherButtonTitles:nil];
     [alert show];
 }
 
@@ -250,9 +254,9 @@
     noStoresLabel.tag = 4321;
     
     if ([error isEqualToString:@"No stores around"]) {
-        noStoresLabel.text = @"No stores were found around you";
+        noStoresLabel.text = NSLocalizedString(@"No stores were found around you", nil);
     } else if ([error isEqualToString:@"Connection error"]) {
-        noStoresLabel.text = @"Can't connect to the server";
+        noStoresLabel.text = NSLocalizedString(@"Can't connect to the server", nil);
     }
     
     UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, noStoresLabel.center.y - 80, 320, 50)];
@@ -271,7 +275,7 @@
     [tryAgain addTarget:self action:@selector(tryAgain) forControlEvents:UIControlEventTouchUpInside];
     tryAgain.tag = 4323;
     
-    [tryAgain setTitle:@"Try Again" forState:UIControlStateNormal];
+    [tryAgain setTitle:NSLocalizedString(@"Try Again", nil) forState:UIControlStateNormal];
     
     [self.scrollView insertSubview:noStoresLabel belowSubview:self.whiteCoverView];
     [self.scrollView insertSubview:sadSmiley belowSubview:self.whiteCoverView];
@@ -336,7 +340,7 @@
 
 - (void)viewDidLoad
 {
-    self.title = @"Where is the deal?";
+    self.title = NSLocalizedString(@"Where is the deal?", nil);
         
     // This is the size of the venues table view in the initial display of the view:
     self.venuesTableInitialFrame = CGRectMake(0, barTableGap, 320, [[UIScreen mainScreen]bounds].size.height - 64 - 44 - barTableGap);
@@ -963,13 +967,13 @@
     if( kerr == KERN_SUCCESS ) {
         NSLog(@"Memory in use (in bytes): %lu", (unsigned long)info.resident_size);
         NSString *a=[NSString stringWithFormat:@"%lu",(unsigned long)info.resident_size/1000000];
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"" message:a delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"" message:a delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
     } else {
         NSLog(@"Error with task_info(): %s", mach_error_string(kerr));
         NSString *a=[NSString stringWithFormat:@"%s",mach_error_string(kerr)];
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"" message:a delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"" message:a delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
     }

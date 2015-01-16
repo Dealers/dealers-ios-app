@@ -1,0 +1,180 @@
+/* 
+  Localizable.strings
+  Dealers
+
+  Created by Gilad Lumbroso on 1/15/15.
+
+*/
+
+"Share deals with others\nHelp reduce prices" = "שתף מבצעים עם אחרים\nעזור להוריד מחירים";
+"Find great deals\nShared by people like you" = "מצא מבצעים מדהימים\nששותפו על ידי אנשים כמוך";
+
+"My Feed" = "הפיד שלי";
+"Explore" = "חיפוש";
+"Profile" = "פרופיל";
+"Activity" = "פעילות";
+
+"Art" = "אומנות";
+"Automotive" = "מכוניות";
+"Beauty & Personal Care" = "יופי וטיפוח אישי";
+"Books & Magazines" = "ספרים ומגזינים";
+"Electronics" = "מוצרי חשמל";
+"Entertainment & Events" = "בידור וארועים";
+"Fashion" = "אופנה";
+"Food & Groceries" = "אוכל ומצרכים";
+"Home & Furniture" = "בית ורהיטים";
+"Kids & Babies" = "ילדים וטף";
+"Music" = "מוזיקה";
+"Pets" = "חיות מחמד";
+"Restaurants & Bars" = "מסעדות וברים";
+"Sports & Outdoor" = "ספורט";
+"Travel" = "טיולים ונסיעות";
+"Other" = "אחר";
+
+"Email already exists!" = "הדוא״ל כבר קיים במערכת!";
+"Please enter a valid email address." = "הכנס כתובת דוא״ל חוקית.";
+"OK" = "בסדר";
+"Couldn't sign in with facebook" = "לא מצליח להתחבר עם פייסבוק";
+"Pleae try again later" = "אנא נסה/י שוב מאוחר יותר";
+"Couldn't Sign In" = "לא מצליח להיכנס למערכת";
+"Sign In" = "כניסה";
+"Wrong email or password" = "שם משתמש ו/או סיסמה לא נכונים";
+"Couldn't sign in..." = "הכניסה נכשלה...";
+"Sign Up" = "הרשמה";
+"Please enter your name!" = "הכנס את שמך!";
+"Email is blank!" = "שדה הדוא״ל ריק!";
+"Password is blank!" = "שדה הסיסמה ריק!";
+"Can't connect the server" = "לא מצליח להתחבר לשרת";
+"Check your connection" = "כדאי לבדוק את החיבור לרשת";
+"Date Of Birth (optional)" = "תאריך לידה (אופציונלי)";
+"Cancel" = "ביטול";
+"Remove Date" = "הסר תאריך";
+"Change Date" = "שנה תאריך";
+"What is your gender?" = "מה המין שלך?";
+"Unspecified" = "השאר ריק";
+"Change Profile Picture" = "שנה תמונת פרופיל";
+"Take a Picture" = "צלם תמונה";
+"Add Profile Picture" = "הוסף תמונת פרופיל";
+"Gender (optional)" = "מין (אופציונלי)";
+"Female" = "נקבה";
+"Male" = "זכר";
+"Error" = "שגיאה";
+"Device has no camera" = "אין במכשיר מצלמה";
+
+"There are no deals at this moment!" = "אין מבצעים ברגע זה.";
+"Couldn't load the deals..." = "לא הצליח לטעון את המבצעים...";
+"Couldn't Download Dealers" = "לא הצליח לטעון את המשתמשים";
+"Sorry for that, please try again" = "סליחה, אנא נסה/י שוב";
+
+"Settings" = "הגדרות";
+"Connected" = "מחובר";
+"Not Connected" = "לא מחובר";
+"Email Sent" = "הדוא״ל נשלח";
+"Connecting" = "מתחבר";
+"Do you want to connect Facebook?" = "מעוניין/ת להתחבר לפייסבוק?";
+"Connect Facebook" = "התחבר לפייסבוק";
+"Do you want to disconnect Facebook?" = "מעוניין/ת להתנתק מפייסבוק?";
+"Disconnect" = "התנתק";
+"Push Notifications" = "התרעות";
+"Here you will be able to determine in which cases you will be notified regarding your activity at Dealers." = "כאן תוכל/י להגדיר באילו מקרים תקבל/י התרעה בנוגע לפעילות שלך ב-Dealers.";
+"Support" = "תמיכה";
+"Email Error" = "שגיאת דוא״ל";
+"Unable to send email. please try again" = "שליחת הדוא״ל נכשלה. אנא נסה/י שוב";
+"Feedback" = "חוות דעת";
+"Edit Profile" = "עריכת פרופיל";
+"Name can't be blank!" = "השם שלך לא יכול להיות ריק!";
+"Uploading" = "מעלה";
+"Saved" = "נשמר";
+"Couldn't upload the changes..." = "נכשלה שמירת השינויים בשרת";
+"Remove Photo" = "הסר תמונה";
+"Take a Picture" = "צילום תמונה";
+"From Library" = "תמונה מהספרייה";
+"Current password is blank!" = "שדה הסיסמה הנוכחית ריק!";
+"New password is blank!" = "שדה הסיסמה החדשה ריק!";
+"Wrong Password" = "סיסמה שגויה";
+"Your current password was entered incorrectly" = "הסיסמה הנוכחית שגויה";
+"New Passwords Doesn't Match" = "הסיסמאות החדשות לא תואמות";
+"Change Password" = "שינוי סיסמא";
+"You have no notifications yet!" = "עדין אין לך התרעות!";
+"Couldn't load the notifications..." = "טעינת ההתרעות נכשלה...";
+
+"Where is the deal?" = "איפה המבצע?";
+"Connection Error" = "בעיית התחברות";
+"Check your network connection" = "כדאי לבדוק את החיבור לרשת";
+"No stores were found around you" = "לא נמצאו חנויות באזורך";
+"Can't connect to the server" = "לא מצליח להתחבר לשרת";
+"Try Again" = "נסה שוב";
+"What is the deal?" = "על מה המבצע?";
+"Title can't be blank!" = "חייב להיות כותרת למבצע!";
+"Title is too long" = "הכותרת ארוכה מדי";
+"120 characters max" = "120 תוים מקסימום";
+"Delete Photo" = "מחק תמונה";
+"Are you sure want to delete this photo?" = "בטוח/ה שאת/ה רוצה למחוק את התמונה?";
+"Yes" = "כן";
+"Have more details?" = "יש פרטים נוספים?";
+"Choose Category" = "בחר/י קטגוריה";
+"Remove Category" = "הסר קטגוריה";
+"Pick a New Category" = "בחירת קטגוריה חדשה";
+"Choose Date" = "בחר/י תאריך";
+"Done" = "סיום";
+"Share the Deal" = "שתף את המבצע!";
+"At " = "";
+"Expires on " = "יפוג תוקף ב-";
+"Discount above 100%!" = "ההנחה מעל 100%!";
+"Price is empty!" = "שדה המחיר ריק!";
+"Required if there's previous price" = "חובה אם יש מחיר קודם";
+"Permission not granted" = "לא ניתן אישור";
+"Your deal will not be published to Facebook." = "המבצע לא יפורסם בפייסבוק";
+"Couldn't upload the deal :(" = "העלאת המבצע נכשלה :(";
+"Thank You\n%@!" = "תודה רבה\n%@";
+"WhatsApp not installed." = "לא מותקן וואטסאפ";
+"Your device should have WhatsApp installed." = "וואטסאפ צריך להיות מותקן במכשיר שלך.";
+
+"In " = "תחת ";
+"Description: " = "פרטים נוספים:";
+"Uploaded on " = "שותף בתאריך ";
+"Likers" = "אנשים שאהבו";
+"Comments" = "תגובות";
+"No Category" = "ללא קטגוריה";
+"%@ people like this deal" = "%@ אוהבים את המבצע הזה";
+"Hear from others about great deals at Dealers!" = "שמע/י מאנשים אחרים על מבצעים מדהימים ב-Dealers!";
+"Report as Spam" = "דווח כתוכן פוגעני";
+"  Be the first to comment..." = "  תהיה/י הראשון/ה להגיב";
+"  Add a comment..." = "הוסף תגובה...  ";
+"Edit Deal" = "עריכת המבצע";
+"Price" = "מחיר";
+"Discount or Last Price" = "הנחה או מחיר קודם";
+"Category" = "קטגוריה";
+"Expiration Date" = "תאריך תפוגה";
+"Description" = "פרטים נוספים";
+"Title" = "כותרת";
+"Discount" = "הנחה";
+"Delete Deal" = "מחק מבצע";
+"Are you sure you want to delete this deal? This action cannot be undone." = "בטוח/ה שברצונך למחוק את המבצע? פעולה זו אינה ניתנת לשחזור.";
+"Unsaved Changes" = "שינויים שלא נשמרו";
+"You have unsaved changes. Are you sure you want to exit?" = "ביצעת שינויים שלא נשמרו. בטוח/ה שברצונך לצאת?";
+"No" = "לא";
+"Couldn't delete the deal" = "לא ניתן למחוק את המבצע";
+"This deal could not be deleted... Please try again later." = "מחיקת המבצע נכשלה. אנא נסה/י שוב מאוחר יותר";
+"No Comments..." = "אין תגובות...";
+"Write a comment..." = "כתוב תגובה...";
+"Post" = "שלח";
+"Unable to post comment" = "העלאת התגובה נכשלה";
+
+"likes your deal." = "אוהב/ת את המבצע שלך.";
+"commented on your deal." = "הגיב/ה על המבצע שלך.";
+"also commented on this deal." = "גם הגיב/ה על המבצע הזה.";
+"shared your deal." = "שיתף/ה את המבצע שלך";
+"edited your deal." = "ערך/ה את המבצע שלך";
+"like your deal." = "אהבו את המבצע שלך";
+
+"Invite" = "הזמנה";
+"I'm sending you an entrence passcode for Dealers:\n%@\n\nDownload Dealers here:\nHere will be our link." = "אני שולח לך קוד כניסה ל-Dealers\n%@\n\nהורד את Dealers כאן:\nכאן יהיה הקישור באפסטור.";
+"Your device doesn't support SMS!" = "המכשיר אינו תומך ב-SMS!";
+"Dealers Invitation" = "הזמנה ל-Dealers";
+"SMS Error" = "שגיאת SMS";
+"Unable to send SMS. please try again" = "שליחת ה-SMS נכשלה. אנא נסה/י שוב";
+"Invitation Sent" = "ההזמנה נשלחה";
+"Next" = "הבא";
+"Dealers is an invite-only network. You must be invited by an existing member in order to get a passcode." = "Dealers היא רשת למוזמנים בלבד. אתה צריך להיות מוזמן על ידי משתמש קיים בכדי לקבל קוד כניסה.";
+"Got it" = "הבנתי";

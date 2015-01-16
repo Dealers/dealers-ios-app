@@ -68,7 +68,11 @@
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   NSLog(@"There was an error with loading the dealers: %@", error);
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't Download Dealers" message:@"Sorry for that, please try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Couldn't Download Dealers", nil)
+                                                                                                 message:NSLocalizedString(@"Sorry for that, please try again", nil)
+                                                                                                delegate:nil
+                                                                                       cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                       otherButtonTitles:nil];
                                                   [alert show];
                                                   [self stopLoadingAnimation];
                                               }];

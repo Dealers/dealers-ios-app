@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad
 {
-    self.title = @"Explore";
+    self.title = NSLocalizedString(@"Explore", nil);
     
     [super viewDidLoad];
     self.myTableView.dataSource = self;

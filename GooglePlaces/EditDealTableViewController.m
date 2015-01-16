@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Edit Deal";
+    self.title = NSLocalizedString(@"Edit Deal", nil);
     
     [self initialize];
     
@@ -61,7 +61,7 @@
 
 - (void)setSaveButton
 {
-    UIImage *saveImage = [[UIImage imageNamed:@"Save Button"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *saveImage = [[UIImage imageNamed:@"Save Button"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *save = [[UIBarButtonItem alloc]initWithImage:saveImage style:UIBarButtonItemStyleBordered target:self action:@selector(saveChanges)];
     [save setImageInsets:UIEdgeInsetsMake(0, -9, 0, 9)];
     
@@ -90,7 +90,7 @@
         self.dealPrice.textColor = [UIColor blackColor];
         self.selectedCurrency = [self.deal.currency mutableCopy];
     } else {
-        self.dealPrice.text = @"Price";
+        self.dealPrice.text = NSLocalizedString(@"Price", nil);
         self.dealPrice.textColor = placeholderColor;
     }
     
@@ -105,7 +105,7 @@
         self.dealDiscount.textColor = [UIColor blackColor];
         self.selectedDiscountType = [self.deal.discountType mutableCopy];
     } else {
-        self.dealDiscount.text = @"Discount or Last Price";
+        self.dealDiscount.text = NSLocalizedString(@"Discount or Last Price", nil);
         self.dealDiscount.textColor = placeholderColor;
     }
     
@@ -113,16 +113,16 @@
         self.dealCategory.text = [self.deal.category mutableCopy];
         self.dealCategory.textColor = [UIColor blackColor];
     } else {
-        self.dealCategory.text = @"Category";
+        self.dealCategory.text = NSLocalizedString(@"Category", nil);
         self.dealCategory.textColor = placeholderColor;
     }
     
     if (self.deal.expiration) {
-        self.dealExpirationDate.text = [@"Expires on " stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.expiration]];
+        self.dealExpirationDate.text = [NSLocalizedString(@"Expires on ", nil) stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.expiration]];
         self.datePicker.date = self.deal.expiration;
         self.dealExpirationDate.textColor = [UIColor blackColor];
     } else {
-        self.dealExpirationDate.text = @"Expiration Date";
+        self.dealExpirationDate.text = NSLocalizedString(@"Expiration Date", nil);
         self.dealExpirationDate.textColor = placeholderColor;
     }
     
@@ -130,7 +130,7 @@
         self.dealDescription.text = [self.deal.moreDescription mutableCopy];
         self.dealDescription.textColor = [UIColor blackColor];
     } else {
-        self.dealDescription.text = @"Description";
+        self.dealDescription.text = NSLocalizedString(@"Description", nil);
         self.dealDescription.textColor = placeholderColor;
     }
 }
@@ -255,7 +255,7 @@
     switch (indexPath.section) {
             
         case 1:
-            etmvc.title = @"Title";
+            etmvc.title = NSLocalizedString(@"Title", nil);
             etmvc.currentValue = self.dealTitle.text;
             etmvc.textView.returnKeyType = UIReturnKeyDone;
             [self.navigationController pushViewController:etmvc animated:YES];
@@ -265,23 +265,23 @@
             switch (indexPath.row) {
                     
                 case 0:
-                    witdvc.cameFrom = @"Edit Deal";
+                    witdvc.cameFrom = NSLocalizedString(@"Edit Deal", nil);
                     [self.navigationController pushViewController:witdvc animated:YES];
                     break;
                     
                 case 1:
-                    etmvc.title = @"Price";
+                    etmvc.title = NSLocalizedString(@"Price", nil);
                     etmvc.currency = self.selectedCurrency;
                     etmvc.currentValue = [self.dealPrice.text substringFromIndex:1];
-                    if ([self.dealPrice.text isEqualToString:@"Price"]) {
+                    if ([self.dealPrice.text isEqualToString:NSLocalizedString(@"Price", nil)]) {
                         etmvc.currentValue = @"";
                     }
                     [self.navigationController pushViewController:etmvc animated:YES];
                     break;
                     
                 case 2:
-                    etmvc.title = @"Discount";
-                    if ([self.dealDiscount.text isEqualToString:@"Discount or Last Price"]) {
+                    etmvc.title = NSLocalizedString(@"Discount", nil);
+                    if ([self.dealDiscount.text isEqualToString:NSLocalizedString(@"Discount or Last Price", nil)]) {
                         etmvc.currentValue = @"";
                     } else {
                         etmvc.discountType = self.selectedDiscountType;
@@ -318,8 +318,8 @@
                     break;
                     
                 case 3:
-                    etmvc.title = @"Description";
-                    if ([self.dealDescription.text isEqualToString:@"Description"]) {
+                    etmvc.title = NSLocalizedString(@"Description", nil);
+                    if ([self.dealDescription.text isEqualToString:NSLocalizedString(@"Description", nil)]) {
                         etmvc.currentValue = @"";
                     } else {
                         etmvc.currentValue = self.dealDescription.text;
@@ -334,11 +334,11 @@
             
         case 4: {
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Deal"
-                                                            message:@"Are you sure you want to delete this deal? This action cannot be undone."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Deal", nil)
+                                                            message:NSLocalizedString(@"Are you sure you want to delete this deal? This action cannot be undone.", nil)
                                                            delegate:self
-                                                  cancelButtonTitle:@"Cancel"
-                                                  otherButtonTitles:@"Delete", nil];
+                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                  otherButtonTitles:NSLocalizedString(@"Delete", nil), nil];
             alert.tag = 33;
             [alert show];
         }
@@ -404,7 +404,7 @@
 
 - (IBAction)noDate:(id)sender {
     
-    self.dealExpirationDate.text = @"Expiration Date";
+    self.dealExpirationDate.text = NSLocalizedString(@"Expiration Date", nil);
     self.dealExpirationDate.textColor = placeholderColor;
     self.didCancelDate = YES;
     [self hideDatePickerCell];
@@ -580,7 +580,11 @@
 
 - (IBAction)deletePhoto:(id)sender {
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete Photo" message:@"Are you sure want to delete this photo?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Photo", nil)
+                                                    message:NSLocalizedString(@"Are you sure want to delete this photo?", nil)
+                                                   delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                          otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
     alert.tag = 22;
     [alert show];
 }
@@ -874,7 +878,7 @@
         
     }
     
-    if ([self.dealPrice.text isEqualToString:@"Price"]) {
+    if ([self.dealPrice.text isEqualToString:NSLocalizedString(@"Price", nil)]) {
         self.deal.price = nil;
         self.deal.currency = nil;
     } else {
@@ -883,7 +887,7 @@
         self.deal.currency = [appDelegate getCurrencyKey:self.selectedCurrency];
     }
     
-    if ([self.dealDiscount.text isEqualToString:@"Discount or Last Price"]) {
+    if ([self.dealDiscount.text isEqualToString:NSLocalizedString(@"Discount or Last Price", nil)]) {
         self.deal.discountValue = nil;
         self.deal.discountType = nil;
     } else if ([self.selectedDiscountType isEqualToString:@"%"]) {
@@ -895,19 +899,19 @@
         self.deal.discountType = [appDelegate getDiscountKey:self.selectedDiscountType];
     }
     
-    if ([self.dealCategory.text isEqualToString:@"Category"]) {
+    if ([self.dealCategory.text isEqualToString:NSLocalizedString(@"Category", nil)]) {
         self.deal.category = nil;
     } else {
         self.deal.category = [appDelegate getCategoryKeyForValue:self.dealCategory.text];
     }
     
-    if ([self.dealExpirationDate.text isEqualToString:@"Expiration Date"]) {
+    if ([self.dealExpirationDate.text isEqualToString:NSLocalizedString(@"Expiration Date", nil)]) {
         self.deal.expiration = nil;
     } else {
         self.deal.expiration = self.datePicker.date;
     }
     
-    if ([self.dealDescription.text isEqualToString:@"Description"]) {
+    if ([self.dealDescription.text isEqualToString:NSLocalizedString(@"Description", nil)]) {
         self.deal.moreDescription = nil;
     } else {
         self.deal.moreDescription = self.dealDescription.text;
@@ -994,7 +998,10 @@
                                          failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                              
                                              [uploadingDeal hide:YES];
-                                             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                                             message:nil
+                                                                                            delegate:nil
+                                                                                   cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
                                              [alert show];
                                          }];
 }
@@ -1002,7 +1009,11 @@
 - (IBAction)Dismiss:(id)sender {
     
     if (self.didChangeOriginalDeal) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unsaved Changes" message:@"You have unsaved changes. Are you sure you want to cancel?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Unsaved Changes", nil)
+                                                        message:NSLocalizedString(@"You have unsaved changes. Are you sure you want to exit?", nil)
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
         alert.tag = 11;
         [alert show];
     } else {
@@ -1065,10 +1076,10 @@
                                                           
                                                           NSLog(@"\n\nCouldn't delete the deal...");
                                                           [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
-                                                          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Couldn't delete the deal"
-                                                                                                          message:@"This deal could not be deleted... Please try again later."
+                                                          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Couldn't delete the deal", nil)
+                                                                                                          message:NSLocalizedString(@"This deal could not be deleted... Please try again later.", nil)
                                                                                                          delegate:self
-                                                                                                cancelButtonTitle:@"OK"
+                                                                                                cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                                                                 otherButtonTitles:nil];
                                                           [alert show];
                                                       }];
@@ -1086,7 +1097,7 @@
         
         return NO;
         
-    } else if ([self.selectedDiscountType isEqualToString:@"lastPrice"] && [self.dealPrice.text isEqualToString:@"Price"]) {
+    } else if ([self.selectedDiscountType isEqualToString:@"lastPrice"] && [self.dealPrice.text isEqualToString:NSLocalizedString(@"Price", nil)]) {
         
         [lastPriceWithoutPrice show:YES];
         [lastPriceWithoutPrice hide:YES afterDelay:2.0];
@@ -1104,7 +1115,7 @@
     illogicalPercentage.delegate = self;
     illogicalPercentage.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     illogicalPercentage.mode = MBProgressHUDModeCustomView;
-    illogicalPercentage.labelText = @"Discount above 100%!";
+    illogicalPercentage.labelText = NSLocalizedString(@"Discount above 100%!", nil);
     illogicalPercentage.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     illogicalPercentage.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -1112,9 +1123,9 @@
     lastPriceWithoutPrice.delegate = self;
     lastPriceWithoutPrice.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     lastPriceWithoutPrice.mode = MBProgressHUDModeCustomView;
-    lastPriceWithoutPrice.labelText = @"Price is empty!";
+    lastPriceWithoutPrice.labelText = NSLocalizedString(@"Price is empty!", nil);
     lastPriceWithoutPrice.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-    lastPriceWithoutPrice.detailsLabelText = @"Required if there's previous price";
+    lastPriceWithoutPrice.detailsLabelText = NSLocalizedString(@"Required if there's previous price", nil);
     lastPriceWithoutPrice.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     lastPriceWithoutPrice.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -1122,11 +1133,11 @@
     UIImageView *loadingAnimation = [appDelegate loadingAnimationWhite];
     [loadingAnimation startAnimating];
     
-    uploadingDeal = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    uploadingDeal = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     uploadingDeal.delegate = self;
     uploadingDeal.customView = loadingAnimation;
     uploadingDeal.mode = MBProgressHUDModeCustomView;
-    uploadingDeal.labelText = @"Uploading";
+    uploadingDeal.labelText = NSLocalizedString(@"Uploading", nil);
     uploadingDeal.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     uploadingDeal.animationType = MBProgressHUDAnimationZoomIn;
     

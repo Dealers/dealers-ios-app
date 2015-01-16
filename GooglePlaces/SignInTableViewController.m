@@ -16,7 +16,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Sign In";
+    self.title = NSLocalizedString(@"Sign In", nil);
     
     [self initialize];
     [self setLoadingAnimation];
@@ -106,7 +106,7 @@
     blankEmail.delegate = self;
     blankEmail.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     blankEmail.mode = MBProgressHUDModeCustomView;
-    blankEmail.labelText = @"Email is blank!";
+    blankEmail.labelText = NSLocalizedString(@"Email is blank!", nil);
     blankEmail.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     blankEmail.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -114,7 +114,7 @@
     blankPassword.delegate = self;
     blankPassword.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     blankPassword.mode = MBProgressHUDModeCustomView;
-    blankPassword.labelText = @"Password is blank!";
+    blankPassword.labelText = NSLocalizedString(@"Password is blank!", nil);
     blankPassword.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     blankPassword.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -122,9 +122,9 @@
     noConnection.delegate = self;
     noConnection.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     noConnection.mode = MBProgressHUDModeCustomView;
-    noConnection.labelText = @"Can't connect the server";
+    noConnection.labelText = NSLocalizedString(@"Can't connect the server", nil);
     noConnection.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-    noConnection.detailsLabelText = @"Check your connection";
+    noConnection.detailsLabelText = NSLocalizedString(@"Check your connection", nil);
     noConnection.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     noConnection.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -132,7 +132,7 @@
     wrongEmailPassword.delegate = self;
     wrongEmailPassword.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     wrongEmailPassword.mode = MBProgressHUDModeCustomView;
-    wrongEmailPassword.labelText = @"Wrong email or password";
+    wrongEmailPassword.labelText = NSLocalizedString(@"Wrong email or password", nil);
     wrongEmailPassword.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     wrongEmailPassword.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -191,10 +191,10 @@
                                                   Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
                                                   NSLog(@"%@", [errors messagesString]);
                                                   
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Couldn't sign in..."
+                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Couldn't sign in...", nil)
                                                                                                  message:[NSString stringWithFormat:@"\n%@", [errors messagesString]]
                                                                                                 delegate:nil
-                                                                                       cancelButtonTitle:@"OK"
+                                                                                       cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                                                        otherButtonTitles:nil];
                                                   [alert show];
                                                   [alert show];

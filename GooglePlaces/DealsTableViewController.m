@@ -33,9 +33,9 @@
     
     [self checkFeature];
     
-    if ([selfViewController isEqualToString:@"My Feed"]) {
+    if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
         self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
-    } else if ([selfViewController isEqualToString:@"Explore"]) {
+    } else if ([selfViewController isEqualToString:NSLocalizedString(@"Explore", nil)]) {
         self.title = self.categoryFromExplore;
     }
     
@@ -64,9 +64,9 @@
 - (void)checkFeature
 {
     if ([self.navigationController.restorationIdentifier isEqualToString:@"feedNavController"]) {
-        selfViewController = @"My Feed";
+        selfViewController = NSLocalizedString(@"My Feed", nil);
     } else if ([self.navigationController.restorationIdentifier isEqualToString:@"exploreNavController"]) {
-        selfViewController = @"Explore";
+        selfViewController = NSLocalizedString(@"Explore", nil);
     }
 }
 
@@ -124,11 +124,11 @@
         
         NSString *requestString;
         
-        if ([selfViewController isEqualToString:@"My Feed"]) {
+        if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
             
             requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage"];
             
-        } else if ([selfViewController isEqualToString:@"Explore"]) {
+        } else if ([selfViewController isEqualToString:NSLocalizedString(@"Explore", nil)]) {
             
             requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage&category=%@", [appDelegate getCategoryKeyForValue:self.categoryFromExplore]];
         }
@@ -165,6 +165,7 @@
             [weakSelf errorMessage];
             [weakSelf.refreshControl endRefreshing];
             weakSelf.pageIsLoading = NO;
+            [weakSelf.paginator cancel];
         }];
     }
 }
@@ -173,7 +174,7 @@
 {
     NSDictionary *parameters;
     
-    if ([selfViewController isEqualToString:@"My Feed"]) {
+    if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
         parameters = nil;
     } else {
         parameters = @{@"category": [appDelegate getCategoryKeyForValue:self.categoryFromExplore]};
@@ -302,7 +303,7 @@
     error.textAlignment = NSTextAlignmentCenter;
     error.textColor = [appDelegate textGrayColor];
     error.alpha = 0;
-    error.text = @"There are no deals at this moment!";
+    error.text = NSLocalizedString(@"There are no deals at this moment!", nil);
     
     UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, error.center.y - 80, self.tableView.frame.size.width, 50)];
     sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];
@@ -327,7 +328,7 @@
     error.textAlignment = NSTextAlignmentCenter;
     error.textColor = [appDelegate textGrayColor];
     error.alpha = 0;
-    error.text = @"Couldn't load the deals...";
+    error.text = NSLocalizedString(@"Couldn't load the deals...", nil);
     
     UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, error.center.y - 80, self.tableView.frame.size.width, 50)];
     sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];
@@ -458,6 +459,18 @@
         } else {
             cell.photo.alpha = 1.0;
             cell.photo.image = deal.photo1;
+        }
+        
+        // Checking if the deal expired
+        
+        NSDate *today = [NSDate date];
+        NSDate *expirationDate = deal.expiration;
+        
+        [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit startDate:&today interval:nil forDate:today];
+        [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit startDate:&expirationDate interval:nil forDate:expirationDate];
+        
+        if ([today compare:expirationDate] == NSOrderedDescending) {
+            cell.expiredTag.hidden = NO;
         }
         
         // Loading the deal's details to the cell

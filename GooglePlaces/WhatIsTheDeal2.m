@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Have more details?";
+    self.title = NSLocalizedString(@"Have more details?", nil);
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
@@ -74,7 +74,7 @@
             witd1.cashedDiscountValue = nil;
             witd1.cashedDiscountType = nil;
         }
-        if (self.categoryLabel.text.length > 0 && ![self.categoryLabel.text isEqualToString:@"Choose Category"]) {
+        if (self.categoryLabel.text.length > 0 && ![self.categoryLabel.text isEqualToString:NSLocalizedString(@"Choose Category", nil)]) {
             witd1.cashedCategory = self.categoryLabel.text;
         } else {
             witd1.cashedCategory = nil;
@@ -176,7 +176,7 @@
     
     if (indexPath.section == 1) { // Category Section
         
-        if ([self.categoryLabel.text isEqualToString:@"Choose Category"] || !(self.categoryLabel.text.length > 0)) {
+        if ([self.categoryLabel.text isEqualToString:NSLocalizedString(@"Choose Category", nil)] || !(self.categoryLabel.text.length > 0)) {
             
             [self chooseCategoryView];
             
@@ -184,9 +184,9 @@
             
             UIActionSheet *categorySheet = [[UIActionSheet alloc]initWithTitle:nil
                                                                       delegate:self
-                                                             cancelButtonTitle:@"Cancel"
-                                                        destructiveButtonTitle:@"Remove Category"
-                                                             otherButtonTitles:@"Pick a New Category", nil];
+                                                             cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                        destructiveButtonTitle:NSLocalizedString(@"Remove Category", nil)
+                                                             otherButtonTitles:NSLocalizedString(@"Pick a New Category", nil), nil];
             categorySheet.tag = categorySheetTag;
             [categorySheet showInView:self.view];
         }
@@ -203,7 +203,7 @@
             
         } else {
             
-            if ([self.expirationDateLabel.text isEqualToString:@"Choose Date"] || !(self.expirationDateLabel.text.length > 0)) {
+            if ([self.expirationDateLabel.text isEqualToString:NSLocalizedString(@"Choose Date", nil)] || !(self.expirationDateLabel.text.length > 0)) {
                 
                 [self showDatePickerCell];
                 [self performSelector:@selector(dateChanged:) withObject:self.datePicker];
@@ -212,9 +212,9 @@
                 
                 UIActionSheet *expirationDateSheet = [[UIActionSheet alloc]initWithTitle:nil
                                                                                 delegate:self
-                                                                       cancelButtonTitle:@"Cancel"
-                                                                  destructiveButtonTitle:@"Remove Date"
-                                                                       otherButtonTitles:@"Change Date", nil];
+                                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                                  destructiveButtonTitle:NSLocalizedString(@"Remove Date", nil)
+                                                                       otherButtonTitles:NSLocalizedString(@"Change Date", nil), nil];
                 expirationDateSheet.tag = expirationDateSheetTag;
                 [expirationDateSheet showInView:self.view];
             }
@@ -432,7 +432,7 @@
     [pound addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *done1 = [UIButton buttonWithType:UIButtonTypeSystem];
-    [done1 setTitle:@"Done" forState:UIControlStateNormal];
+    [done1 setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
     [done1 setFrame:CGRectMake(260, 0, 60, 44)];
     [done1 setAlpha:0.9];
     [[done1 titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:17.0]];
@@ -491,7 +491,7 @@
     [lastPrice addTarget:self action:@selector(selectDiscountType:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *done2 = [UIButton buttonWithType:UIButtonTypeSystem];
-    [done2 setTitle:@"Done" forState:UIControlStateNormal];
+    [done2 setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
     [done2 setFrame:CGRectMake(260, 0, 60, 44)];
     [done2 setAlpha:0.9];
     [[done2 titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:17.0]];
@@ -617,7 +617,7 @@
         addDealButtonFrame.origin.y = 18.0;
         self.addDealButton.frame = addDealButtonFrame;
         self.addDealButton.backgroundColor = [appDelegate ourPurple];
-        [self.addDealButton setTitle:@"Share the Deal" forState:UIControlStateNormal];
+        [self.addDealButton setTitle:NSLocalizedString(@"Share the Deal", nil) forState:UIControlStateNormal];
         [self.addDealButton setTintColor:[UIColor whiteColor]];
         [self.addDealButton addTarget:self action:@selector(addDeal) forControlEvents:UIControlEventTouchUpInside];
         [self.addDealView addSubview:self.addDealButton];
@@ -744,7 +744,7 @@
     storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     storeLabel.textColor = detailsTextColor;
     storeLabel.numberOfLines = 1;
-    storeLabel.text = [@"At " stringByAppendingString:self.deal.store.name];
+    storeLabel.text = [NSLocalizedString(@"At ", nil) stringByAppendingString:self.deal.store.name];
     [sharedView addSubview:storeLabel];
     
     detailsLowestYPoint = CGRectGetMaxY(storeIcon.frame);
@@ -817,7 +817,7 @@
         detailsLowestYPoint = CGRectGetMaxY(priceIcon.frame);
     }
     
-    if (self.categoryLabel.text.length > 0 && [self.categoryLabel.text rangeOfString:@"Choose Category"].location == NSNotFound) {
+    if (self.categoryLabel.text.length > 0 && [self.categoryLabel.text rangeOfString:NSLocalizedString(@"Choose Category", nil)].location == NSNotFound) {
         
         UIImageView *categoryIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
                                                                                  detailsLowestYPoint + detailsVerticalGap,
@@ -839,7 +839,7 @@
         detailsLowestYPoint = CGRectGetMaxY(categoryIcon.frame);
     }
     
-    if (![self.expirationDateLabel.text isEqualToString:@"Choose Date"] && self.expirationDateLabel.text.length > 0) {
+    if (![self.expirationDateLabel.text isEqualToString:NSLocalizedString(@"Choose Date", nil)] && self.expirationDateLabel.text.length > 0) {
         
         UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
                                                                                    detailsLowestYPoint + detailsVerticalGap,
@@ -855,7 +855,7 @@
         expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
         expirationLabel.textColor = detailsTextColor;
         expirationLabel.numberOfLines = 1;
-        expirationLabel.text = [@"Expires on " stringByAppendingString:self.expirationDateLabel.text];
+        expirationLabel.text = [NSLocalizedString(@"Expires on ", nil) stringByAppendingString:self.expirationDateLabel.text];
         [sharedView addSubview:expirationLabel];
         
         detailsLowestYPoint = CGRectGetMaxY(expirationLabel.frame);
@@ -884,7 +884,7 @@
     illogicalPercentage.delegate = self;
     illogicalPercentage.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     illogicalPercentage.mode = MBProgressHUDModeCustomView;
-    illogicalPercentage.labelText = @"Discount above 100%!";
+    illogicalPercentage.labelText = NSLocalizedString(@"Discount above 100%!", nil);
     illogicalPercentage.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     illogicalPercentage.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -892,9 +892,9 @@
     lastPriceWithoutPrice.delegate = self;
     lastPriceWithoutPrice.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     lastPriceWithoutPrice.mode = MBProgressHUDModeCustomView;
-    lastPriceWithoutPrice.labelText = @"Price is empty!";
+    lastPriceWithoutPrice.labelText = NSLocalizedString(@"Price is empty!", nil);
     lastPriceWithoutPrice.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-    lastPriceWithoutPrice.detailsLabelText = @"Required if there's previous price";
+    lastPriceWithoutPrice.detailsLabelText = NSLocalizedString(@"Required if there's previous price", nil);
     lastPriceWithoutPrice.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     lastPriceWithoutPrice.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -905,7 +905,7 @@
     loggingInFacebook.delegate = self;
     loggingInFacebook.customView = customView;
     loggingInFacebook.mode = MBProgressHUDModeCustomView;
-    loggingInFacebook.labelText = @"Connecting";
+    loggingInFacebook.labelText = NSLocalizedString(@"Connecting", nil);
     loggingInFacebook.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     loggingInFacebook.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -1170,10 +1170,10 @@
         
         // Permission not granted, tell the user we will not publish
         
-        [[[UIAlertView alloc] initWithTitle:@"Permission not granted"
-                                    message:@"Your deal will not be published to Facebook."
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Permission not granted", nil)
+                                    message:NSLocalizedString(@"Your deal will not be published to Facebook.", nil)
                                    delegate:self
-                          cancelButtonTitle:@"Ok"
+                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
                           otherButtonTitles:nil] show];
         
         self.hasPublishPermissions = NO;
@@ -1290,7 +1290,7 @@
         self.deal.discountType = [self convertDiscountType];
     }
     
-    if (self.categoryLabel.text.length > 0 && ![self.categoryLabel.text isEqualToString:@"Choose Category"]) {
+    if (self.categoryLabel.text.length > 0 && ![self.categoryLabel.text isEqualToString:NSLocalizedString(@"Choose Category", nil)]) {
         
         NSDictionary *categoriesKeys = [appDelegate getCategoriesDictionary];
         NSArray *temp = [categoriesKeys allKeysForObject:self.categoryLabel.text];
@@ -1357,7 +1357,11 @@
      
                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                             
-                                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Couldn't upload the deal :(" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                                            message:NSLocalizedString(@"Couldn't upload the deal :(", nil)
+                                                                                           delegate:nil
+                                                                                  cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                  otherButtonTitles:nil];
                                             [alert show];
                                             
                                             [self stopLoading];

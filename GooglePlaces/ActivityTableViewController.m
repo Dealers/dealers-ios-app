@@ -23,8 +23,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Activity";
+    self.title = NSLocalizedString(@"Activity", nil);
     appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    // Set Invite button
+    UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Invite Button"]
+                                                               style:UIBarButtonItemStyleBordered
+                                                              target:self
+                                                              action:@selector(pushInviteViewController:)];
+    [invite setImageInsets:UIEdgeInsetsMake(1, -5, -1, 5)];
+    self.navigationItem.rightBarButtonItem = invite;
     
     [self setNotificationObservers];
     [self setTableViewSettings];
@@ -48,6 +56,12 @@
 - (void)setTableViewSettings
 {
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void)pushInviteViewController:(id)sender
+{
+    InviteViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"Invite"];
+    [self.navigationController pushViewController:ivc animated:YES];
 }
 
 - (void)downloadNotifications
@@ -144,7 +158,7 @@
     message.textAlignment = NSTextAlignmentCenter;
     message.textColor = [appDelegate textGrayColor];
     message.alpha = 0;
-    message.text = @"You have no notifications yet!";
+    message.text = NSLocalizedString(@"You have no notifications yet!", nil);
     
     UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, message.center.y - 80, self.tableView.frame.size.width, 50)];
     sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];
@@ -168,7 +182,7 @@
     error.textAlignment = NSTextAlignmentCenter;
     error.textColor = [appDelegate textGrayColor];
     error.alpha = 0;
-    error.text = @"Couldn't load the notifications...";
+    error.text = NSLocalizedString(@"Couldn't load the notifications...", nil);
     
     UILabel *sadSmiley = [[UILabel alloc] initWithFrame:CGRectMake(0, error.center.y - 80, self.tableView.frame.size.width, 50)];
     sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];

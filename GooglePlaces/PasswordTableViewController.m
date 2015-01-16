@@ -20,43 +20,43 @@
 {
     if ([self.passwordCurrent.text length] == 0) {
         UIAlertView *blank = [[UIAlertView alloc]
-                              initWithTitle:@"Current password is blank!"
+                              initWithTitle:NSLocalizedString(@"Current password is blank!", nil)
                               message:nil
                               delegate:nil
-                              cancelButtonTitle:@"Ok"
+                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                               otherButtonTitles:nil];
         [blank show];
     
     } else if ([self.passwordNew.text length] == 0) {
         UIAlertView *blank = [[UIAlertView alloc]
-                              initWithTitle:@"New password is blank!"
+                              initWithTitle:NSLocalizedString(@"New password is blank!", nil)
                               message:nil
                               delegate:nil
-                              cancelButtonTitle:@"Ok"
+                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                               otherButtonTitles:nil];
         [blank show];
     } else if ([self.passwordNewAgain.text length] == 0) {
         UIAlertView *blank = [[UIAlertView alloc]
-                              initWithTitle:@"New password repeat is blank!"
+                              initWithTitle:NSLocalizedString(@"OK", nil)
                               message:nil
                               delegate:nil
-                              cancelButtonTitle:@"Ok"
+                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                               otherButtonTitles:nil];
         [blank show];
     } else if (self.passwordCurrent.text != appDelegate.dealer.userPassword) {
         UIAlertView *blank = [[UIAlertView alloc]
-                              initWithTitle:@"Wrong Password"
-                              message:@"Your current password was entered incorrectly"
+                              initWithTitle:NSLocalizedString(@"Wrong Password", nil)
+                              message:NSLocalizedString(@"Your current password was entered incorrectly", nil)
                               delegate:nil
-                              cancelButtonTitle:@"Ok"
+                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                               otherButtonTitles:nil];
         [blank show];
     } else if (![self.passwordNew.text isEqualToString:self.passwordNewAgain.text]) {
         UIAlertView *blank = [[UIAlertView alloc]
-                              initWithTitle:@"New Passwords Doesn't Match"
+                              initWithTitle:NSLocalizedString(@"New Passwords Doesn't Match", nil)
                               message:nil
                               delegate:nil
-                              cancelButtonTitle:@"Ok"
+                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                               otherButtonTitles:nil];
         [blank show];
     
@@ -73,7 +73,7 @@
     
     appDelegate = [[UIApplication sharedApplication]delegate];
     
-    self.title = @"Change Password";
+    self.title = NSLocalizedString(@"Change Password", nil);
     
     UIImage *doneImage = [[UIImage imageNamed:@"Done Button"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *done = [[UIBarButtonItem alloc]initWithImage:doneImage style:UIBarButtonItemStyleBordered target:self action:@selector(done)];

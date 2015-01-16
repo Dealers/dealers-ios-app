@@ -17,6 +17,7 @@
 #import "DealsTableCell.h"
 #import "DealsNoPhotoTableCell.h"
 #import "SettingsTableViewController.h"
+#import "InviteViewController.h"
 
 @interface ProfileTableViewController : UITableViewController <UIScrollViewDelegate> {
     

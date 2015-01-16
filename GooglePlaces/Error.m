@@ -20,9 +20,9 @@
         NSArray *messages;
         
         if (self.emailExists) {
-            return @"Email already exists!";
+            return NSLocalizedString(@"Email already exists!", nil);
         } else if (self.emailFormat) {
-            return @"Please enter a valid email address.";
+            return NSLocalizedString(@"Please enter a valid email address.", nil);
         } else if (self.pseudoUserExists) {
             return @"Pseudo user already exists";
         }

@@ -22,16 +22,16 @@
 - (IBAction)done:(id)sender {
     EditDealTableViewController *edtvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
     
-    if ([self.title isEqualToString:@"Title"]) {
+    if ([self.title isEqualToString:NSLocalizedString(@"Title", nil)]) {
         
         if ([self titleValidation]) {
             edtvc.dealTitle.text = self.textView.text;
             [self.navigationController popViewControllerAnimated:YES];
         }
         
-    } else if ([self.title isEqualToString:@"Price"]) {
+    } else if ([self.title isEqualToString:NSLocalizedString(@"Price", nil)]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.dealPrice.text = @"Price";
+            edtvc.dealPrice.text = NSLocalizedString(@"Price", nil);
             edtvc.dealPrice.textColor = placeholderColor;
         } else {
             NSString *currency;
@@ -45,9 +45,9 @@
         
         [self.navigationController popViewControllerAnimated:YES];
         
-    } else if ([self.title isEqualToString:@"Discount"]) {
+    } else if ([self.title isEqualToString:NSLocalizedString(@"Discount", nil)]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.dealDiscount.text = @"Discount or Last Price";
+            edtvc.dealDiscount.text = NSLocalizedString(@"Discount or Last Price", nil);
             edtvc.dealDiscount.textColor = placeholderColor;
         } else {
             NSString *discountType;
@@ -66,9 +66,9 @@
         
         [self.navigationController popViewControllerAnimated:YES];
         
-    } else if ([self.title isEqualToString:@"Description"]) {
+    } else if ([self.title isEqualToString:NSLocalizedString(@"Description", nil)]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.dealDescription.text = @"Description";
+            edtvc.dealDescription.text = NSLocalizedString(@"Description", nil);
             edtvc.dealDescription.textColor = placeholderColor;
         } else {
             edtvc.dealDescription.text = self.textView.text;
@@ -116,20 +116,20 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.textView becomeFirstResponder];
-    if ([self.title isEqualToString:@"Price"]) [self showPriceBar];
-    if ([self.title isEqualToString:@"Discount"]) [self showDiscountBar];
+    if ([self.title isEqualToString:NSLocalizedString(@"Price", nil)]) [self showPriceBar];
+    if ([self.title isEqualToString:NSLocalizedString(@"Discount", nil)]) [self showDiscountBar];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if ([self.title isEqualToString:@"Title"]) {
+    if ([self.title isEqualToString:NSLocalizedString(@"Title", nil)]) {
         self.textView.keyboardType = UIKeyboardTypeDefault;
         self.textView.returnKeyType = UIReturnKeyDone;
         self.textView.font = [UIFont fontWithName:@"Avenir-Roman" size:20.0];
-    } else if ([self.title isEqualToString:@"Price"] || [self.title isEqualToString:@"Discount"]) {
+    } else if ([self.title isEqualToString:NSLocalizedString(@"Price", nil)] || [self.title isEqualToString:NSLocalizedString(@"Discount", nil)]) {
         self.textView.keyboardType = UIKeyboardTypeDecimalPad;
         self.textView.font = [UIFont fontWithName:@"Avenir-Light" size:25.0];
-    } else if ([self.title isEqualToString:@"Description"]) {
+    } else if ([self.title isEqualToString:NSLocalizedString(@"Description", nil)]) {
         self.textView.keyboardType = UIKeyboardTypeDefault;
         self.textView.returnKeyType = UIReturnKeyDefault;
     }
@@ -154,7 +154,7 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if([self.title isEqualToString:@"Title"] && [text isEqualToString:@"\n"]) {
+    if([self.title isEqualToString:NSLocalizedString(@"Title", nil)] && [text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
     }
@@ -274,7 +274,7 @@
     blankTitleIndicator.delegate = self;
     blankTitleIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     blankTitleIndicator.mode = MBProgressHUDModeCustomView;
-    blankTitleIndicator.labelText = @"Title can't be blank!";
+    blankTitleIndicator.labelText = NSLocalizedString(@"Title can't be blank!", nil);
     blankTitleIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     blankTitleIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -282,9 +282,9 @@
     tooMuchIndicator.delegate = self;
     tooMuchIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];
     tooMuchIndicator.mode = MBProgressHUDModeCustomView;
-    tooMuchIndicator.labelText = @"Title is too long";
+    tooMuchIndicator.labelText = NSLocalizedString(@"Title is too long", nil);
     tooMuchIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-    tooMuchIndicator.detailsLabelText = @"120 characters max";
+    tooMuchIndicator.detailsLabelText = NSLocalizedString(@"120 characters max", nil);
     tooMuchIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     tooMuchIndicator.animationType = MBProgressHUDAnimationZoomIn;
     

@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Settings";
+    self.title = NSLocalizedString(@"Settings", nil);
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
     appDelegate = [[UIApplication sharedApplication] delegate];
@@ -44,12 +44,12 @@
     
     if ([appDelegate isFacebookConnected]) {
         
-        self.facebookConnectionIndicator.text = @"Connected";
+        self.facebookConnectionIndicator.text = NSLocalizedString(@"Connected", nil);
         self.facebookConnectionIndicator.textColor = [UIColor blackColor];
         
     } else {
         
-        self.facebookConnectionIndicator.text = @"Not Connected";
+        self.facebookConnectionIndicator.text = NSLocalizedString(@"Not Connected", nil);
         self.facebookConnectionIndicator.textColor = [UIColor lightGrayColor];
     }
 }
@@ -60,7 +60,7 @@
     progressIndicator.delegate = self;
     progressIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
     progressIndicator.mode = MBProgressHUDModeCustomView;
-    progressIndicator.labelText = @"Email Sent";
+    progressIndicator.labelText = NSLocalizedString(@"Email Sent", nil);
     progressIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     progressIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -71,7 +71,7 @@
     loggingInFacebook.delegate = self;
     loggingInFacebook.customView = customView;
     loggingInFacebook.mode = MBProgressHUDModeCustomView;
-    loggingInFacebook.labelText = @"Connecting";
+    loggingInFacebook.labelText = NSLocalizedString(@"Connecting", nil);
     loggingInFacebook.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     loggingInFacebook.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -95,11 +95,11 @@
                 if (![appDelegate isFacebookConnected]) {
                     
                     // Connect Facebook
-                    UIActionSheet *confirmConnection = [[UIActionSheet alloc]initWithTitle:@"Do you want to connect Facebook?"
-                                                                                  delegate:self
-                                                                         cancelButtonTitle:@"Cancel"
-                                                                    destructiveButtonTitle:nil
-                                                                         otherButtonTitles:@"Connect Facebook", nil];
+                    UIActionSheet *confirmConnection = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Do you want to connect Facebook?", nil)
+                                                                                   delegate:self
+                                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                                     destructiveButtonTitle:nil
+                                                                          otherButtonTitles:NSLocalizedString(@"Connect Facebook", nil), nil];
                     
                     confirmConnection.tag = confirmConnectTag;
                     [confirmConnection showFromTabBar:self.tabBarController.tabBar];
@@ -107,10 +107,10 @@
                 } else {
                     
                     // Disconnect Facebook
-                    UIActionSheet *confirmDisconnection = [[UIActionSheet alloc]initWithTitle:@"Do you want to disconnect Facebook?"
+                    UIActionSheet *confirmDisconnection = [[UIActionSheet alloc]initWithTitle:NSLocalizedString(@"Do you want to disconnect Facebook?", nil)
                                                                                      delegate:self
-                                                                            cancelButtonTitle:@"Cancel"
-                                                                       destructiveButtonTitle:@"Disconnect"
+                                                                            cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                                       destructiveButtonTitle:NSLocalizedString(@"Disconnect", nil)
                                                                             otherButtonTitles:nil];
                     
                     confirmDisconnection.tag = confirmDisconnectTag;
@@ -165,7 +165,7 @@
         
         if ([appDelegate isFacebookConnected]) {
             
-            self.facebookConnectionIndicator.text = @"Connected";
+            self.facebookConnectionIndicator.text = NSLocalizedString(@"Connected", nil);
             self.facebookConnectionIndicator.textColor = [UIColor blackColor];
             
             [FBRequestConnection startWithGraphPath:@"me"
@@ -277,8 +277,8 @@
 - (void)pushPushNotificationsView
 {
     ComingSoonViewController *csvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ComingSoonID"];
-    csvc.title = @"Push Notifications";
-    csvc.messageContent = @"Here you will be able to determine in which cases you will be notified regarding your activity at Dealers.";
+    csvc.title = NSLocalizedString(@"Push Notifications", nil);
+    csvc.messageContent = NSLocalizedString(@"Here you will be able to determine in which cases you will be notified regarding your activity at Dealers.", nil);
     [self.navigationController pushViewController:csvc animated:YES];
 }
 
@@ -313,7 +313,7 @@
 
 - (void)sendReportProblem
 {
-    NSString *emailTitle = @"Support";
+    NSString *emailTitle = NSLocalizedString(@"Support", nil);
     // Email Content
     NSString *messageBody = @"";
     // To address
@@ -324,6 +324,7 @@
     [mc setSubject:emailTitle];
     [mc setMessageBody:messageBody isHTML:NO];
     [mc setToRecipients:toRecipents];
+    mc.view.tintColor = [appDelegate ourPurple];
     
     // Present mail view controller on screen
     [self presentViewController:mc animated:YES completion:nil];
@@ -349,7 +350,11 @@
         }
         case MFMailComposeResultFailed: {
             NSLog(@"Mail sent failure: %@", [error localizedDescription]);
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Email Error" message:@"Unable to send email. please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Email Error", nil)
+                                                            message:NSLocalizedString(@"Unable to send email. please try again", nil)
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                  otherButtonTitles:nil];
             [alert show];
         }
             break;
@@ -364,7 +369,7 @@
 
 - (void)sendFeedback
 {
-    NSString *emailTitle = @"Feedback";
+    NSString *emailTitle = NSLocalizedString(@"Feedback", nil);
     // Email Content
     NSString *messageBody = @"";
     // To address
@@ -375,6 +380,7 @@
     [mc setSubject:emailTitle];
     [mc setMessageBody:messageBody isHTML:NO];
     [mc setToRecipients:toRecipents];
+    mc.view.tintColor = [appDelegate ourPurple];
     
     // Present mail view controller on screen
     [self presentViewController:mc animated:YES completion:nil];
@@ -386,7 +392,7 @@
         
         if (buttonIndex == 0) {
             [[FBSession activeSession] closeAndClearTokenInformation];
-            self.facebookConnectionIndicator.text = @"Not Connected";
+            self.facebookConnectionIndicator.text = NSLocalizedString(@"Not Connected", nil);
             self.facebookConnectionIndicator.textColor = [UIColor lightGrayColor];
         }
         

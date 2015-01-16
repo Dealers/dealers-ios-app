@@ -37,6 +37,7 @@
     NSString *findURL = [NSString stringWithFormat:@"http://www.dealers.co.il/dbAsFacebookAccount.php?email=%@",[user objectForKey:@"email"]];
     NSData *urlData = [NSData dataWithContentsOfURL:[NSURL URLWithString:findURL]];
     NSString *dataResult = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", dataResult);
     return 1;
 }
 
@@ -81,12 +82,6 @@
     NSString *strURL = [NSString stringWithFormat:@"http://www.dealers.co.il/phpFile.php?Name=%@&Password=%@&Email=%@&Date=%@&Gender=%@&Photoid=%@",user.name,@"facebook123",[user objectForKey:@"email"],[user objectForKey:@"birthday"],@"unknown",photoID];
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@",strURL);
-    
-    // to execute php code
-    NSData *dataURL = [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
-    
-    // to receive the returend value
-    NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
 }
 
 -(NSString *) currencySymbol : (NSString *) sign {

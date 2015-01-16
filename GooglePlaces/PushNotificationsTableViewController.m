@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Push Notifications";
+    self.title = NSLocalizedString(@"Push Notifications", nil);
     self.tableView.scrollEnabled = NO;
 }
 

@@ -146,7 +146,11 @@
                                              }
                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                  
-                                                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                                                 message:nil
+                                                                                                delegate:nil
+                                                                                       cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                       otherButtonTitles:nil];
                                                  [alert show];
                                                  
                                                  NSMutableArray *dealersThatLikedArray = self.deal.dealAttrib.dealersThatLiked;
@@ -199,10 +203,10 @@
     
                                                   NSLog(@"Deal failed to download...");
                                                   
-                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
+                                                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Error", nil)
                                                                                                  message:error.localizedDescription
                                                                                                 delegate:nil
-                                                                                       cancelButtonTitle:@"OK"
+                                                                                       cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                                                        otherButtonTitles:nil];
                                                   [alert show];
                                                   [self stopLoadingAnimation];
@@ -326,7 +330,7 @@
 - (void)loadVarsFromDeal{
     
     titlelabel.text = [self.deal title];
-    storelabel.text = self.deal.store != nil ? [@"At " stringByAppendingString:self.deal.store.name] : @"No store";
+    storelabel.text = self.deal.store != nil ? [NSLocalizedString(@"At ", nil) stringByAppendingString:self.deal.store.name] : @"No store";
     
     [self checkForUnconvertedKeys];
     
@@ -335,18 +339,18 @@
     
     if (self.deal.category.length > 0 && ![self.deal.category isEqualToString:@"No Category"]) {
         
-        categorylabel.text = [@"In " stringByAppendingString:self.deal.category];
+        categorylabel.text = [NSLocalizedString(@"In ", nil) stringByAppendingString:self.deal.category];
         
     } else
         categorylabel.text = nil;
     
     if (self.deal.expiration)
-        expirelabel.text = [@"Expires on " stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.expiration]];
+        expirelabel.text = [NSLocalizedString(@"Expires on ", nil) stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.expiration]];
     else
         expirelabel.text = nil;
     
     if (self.deal.moreDescription.length > 0 && ![self.deal.moreDescription isEqualToString:@"None"])
-        descriptionlabel.text = [@"Description: " stringByAppendingString:self.deal.moreDescription];
+        descriptionlabel.text = [NSLocalizedString(@"Description: ", nil) stringByAppendingString:self.deal.moreDescription];
     else
         descriptionlabel.text = nil;
 }
@@ -778,7 +782,7 @@
     self.dealersNameLabel.text = dealer.fullName;
     
     if (self.deal.uploadDate) {
-        self.uploadDateLabel.text = [@"Uploaded on " stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.uploadDate]];
+        self.uploadDateLabel.text = [NSLocalizedString(@"Uploaded on ", nil) stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.uploadDate]];
     }
     
     if (!self.dealerImage.image) {
@@ -872,7 +876,7 @@
 - (void)presentLikers
 {
     DealersTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealersTableViewController"];
-    dtvc.mode = @"Likers";
+    dtvc.mode = NSLocalizedString(@"Likers", nil);
     dtvc.dealID = self.deal.dealID;
     [self.navigationController pushViewController:dtvc animated:YES];
 }
@@ -915,7 +919,7 @@
     } else {
         
         UILabel *commentsTitle = [[UILabel alloc]initWithFrame:overviewFrame];
-        commentsTitle.text = @"Comments";
+        commentsTitle.text = NSLocalizedString(@"Comments", nil);
         commentsTitle.font = font;
         commentsTitle.textColor = color;
         commentsTitle.textAlignment = NSTextAlignmentCenter;
@@ -1288,7 +1292,7 @@
         detailsLowestYPoint = CGRectGetMaxY(priceIcon.frame);
     }
     
-    if (self.categorylabel.text.length > 0 && [self.categorylabel.text rangeOfString:@"No Category"].location == NSNotFound) {
+    if (self.categorylabel.text.length > 0 && [self.categorylabel.text rangeOfString:NSLocalizedString(@"No Category", nil)].location == NSNotFound) {
         
         UIImageView *categoryIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                                  detailsLowestYPoint + detailsVerticalGap,
@@ -1372,7 +1376,7 @@
         self.likeCounter = [NSNumber numberWithInt:self.likeCounter.intValue - 1];
     }
     
-    self.likesCountLabel.text = [NSString stringWithFormat:@"%@ people like this deal", self.likeCounter];
+    self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ people like this deal", nil), self.likeCounter];
 }
 
 - (IBAction)CommentButtonAction:(id)sender {
@@ -1394,7 +1398,7 @@
 
 - (IBAction)ShareButtonAction:(id)sender {
     
-    NSString *messageText = @"Hear from others about great deals at Dealers!";
+    NSString *messageText = NSLocalizedString(@"Hear from others about great deals at Dealers!", nil);
     NSArray *activityItems = @[self.sharedImage, messageText];
     NSArray *excludedActivities = @[UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeSaveToCameraRoll];
     
@@ -1454,9 +1458,9 @@
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil
                                                             delegate:self
-                                                   cancelButtonTitle:@"Cancel"
+                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                               destructiveButtonTitle:nil
-                                                   otherButtonTitles:@"Edit Deal", @"Report as Spam", nil];
+                                                   otherButtonTitles:NSLocalizedString(@"Edit Deal", nil), NSLocalizedString(@"Report as Spam", nil), nil];
     
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
@@ -1572,9 +1576,9 @@
             addCommentTitle.font = [UIFont fontWithName:@"Avenir-Light" size:16.0];
             
             if (self.deal.comments.count == 0) {
-                addCommentTitle.text = @"  Be the first to comment...";
+                addCommentTitle.text = NSLocalizedString(@"  Be the first to comment...", nil);
             } else {
-                addCommentTitle.text = @"  Add a comment...";
+                addCommentTitle.text = NSLocalizedString(@"  Add a comment...", nil);
             }
             
             addCommentTitle.backgroundColor = [UIColor whiteColor];
@@ -1874,7 +1878,11 @@
         
         
     } else {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"WhatsApp not installed." message:@"Your device should have WhatsApp installed." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WhatsApp not installed.", nil)
+                                                         message:NSLocalizedString(@"Your device should have WhatsApp installed.", nil)
+                                                        delegate:self
+                                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                               otherButtonTitles:nil];
         [alert show];
     }
 }

@@ -356,9 +356,7 @@
 - (void)fillCellsImagesOneByOne {
     
     isUpdatingNow = YES;
-    
-    dispatch_queue_t photosQueue;
-    
+        
     for (int i = cellsNumbersInFillWithImages; ((i < cellNumberInScrollView) && (i < [self.deals count])); i++) {
         
         Deal *deal = [self.deals objectAtIndex:i];

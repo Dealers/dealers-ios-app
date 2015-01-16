@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -62,11 +62,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expired" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7G-ej-1QM" userLabel="Expired Tag">
+                        <rect key="frame" x="15" y="9" width="62" height="21"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" red="0.78431373834609985" green="0.78431373834609985" blue="0.84313726425170898" alpha="1" colorSpace="calibratedRGB"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="discount" destination="GHl-LM-YFd" id="h6i-AQ-CnY"/>
+                <outlet property="expiredTag" destination="f7G-ej-1QM" id="aSC-gA-0vC"/>
                 <outlet property="likesCounter" destination="Wxz-uP-bgI" id="Isa-mY-AYg"/>
                 <outlet property="likesIcon" destination="f4i-ph-gx2" id="AVP-AL-FDc"/>
                 <outlet property="photo" destination="CKX-Pg-3rl" id="7Ew-pU-MOa"/>
@@ -75,7 +83,7 @@
                 <outlet property="storeIcon" destination="8L5-bt-8OW" id="uWc-Ph-Tz0"/>
                 <outlet property="title" destination="EBS-t9-VXe" id="6ll-DB-0cu"/>
             </connections>
-            <point key="canvasLocation" x="161" y="151.5"/>
+            <point key="canvasLocation" x="161" y="150"/>
         </tableViewCell>
     </objects>
     <resources>

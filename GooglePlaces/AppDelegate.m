@@ -85,7 +85,7 @@
     UINavigationController *navigationControllerExplore = [storyboard instantiateViewControllerWithIdentifier:@"exploreNavController"];
     UINavigationController *navigationControllerProfile = [storyboard instantiateViewControllerWithIdentifier:@"profileNavController"];
     UINavigationController *navigationControllerMore = [storyboard instantiateViewControllerWithIdentifier:@"activityNavController"];
-    UIViewController *dummyViewController = [[UIViewController alloc]init]; // Just to create room for the Add Deal button in the middle of the tab bar.
+    UIViewController *dummyViewController = [[UIViewController alloc] init]; // Just to create room for the Add Deal button in the middle of the tab bar.
     
     NSArray* controllers = [NSArray arrayWithObjects:navigationControllerFeed, navigationControllerExplore, dummyViewController, navigationControllerProfile, navigationControllerMore, nil];
     tabBarController.viewControllers = controllers;
@@ -98,18 +98,18 @@
     UITabBarItem *profile = [tabBar.items objectAtIndex:3];
     UITabBarItem *activity = [tabBar.items objectAtIndex:4];
     
-    myFeed.title = @"My Feed";
+    myFeed.title = NSLocalizedString(@"My Feed", nil);
     myFeed.image = [UIImage imageNamed:@"My Feed Tab"];
     myFeed.selectedImage = [UIImage imageNamed:@"My Feed Tab Selected"];
-    explore.title = @"Explore";
+    explore.title = NSLocalizedString(@"Explore", nil);
     explore.image = [UIImage imageNamed:@"Explore Tab"];
     explore.selectedImage = [UIImage imageNamed:@"Explore Tab Selected"];
     explore.titlePositionAdjustment = UIOffsetMake(-6, 0);
-    profile.title = @"Profile";
+    profile.title = NSLocalizedString(@"Profile", nil);
     profile.image = [UIImage imageNamed:@"Profile Tab"];
     profile.selectedImage = [UIImage imageNamed:@"Profile Tab Selected"];
     profile.titlePositionAdjustment = UIOffsetMake(6, 0);
-    activity.title = @"Activity";
+    activity.title = NSLocalizedString(@"Activity", nil);;
     activity.image = [UIImage imageNamed:@"Activity Tab"];
     activity.selectedImage = [UIImage imageNamed:@"Activity Tab Selected"];
     
@@ -454,17 +454,26 @@
                                                               deal:dealID
                                                               date:[NSDate date]];
     
-    [[RKObjectManager sharedManager] postObject:notification
-                                           path:@"/addnotifications/"
-                                     parameters:nil
-                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                            
-                                            NSLog(@"Notification sent successfully!");
-                                        }
-                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                            
-                                            NSLog(@"Notification failed to be sent...");
-                                        }];
+    if ([recipients containsObject:self.dealer.dealerID]) {
+        NSMutableArray *recipientsMutable = [[NSMutableArray alloc] initWithArray:recipients];
+        [recipientsMutable removeObject:self.dealer.dealerID];
+        recipients = recipientsMutable;
+    }
+    
+    if (recipients.count > 0) {
+        
+        [[RKObjectManager sharedManager] postObject:notification
+                                               path:@"/addnotifications/"
+                                         parameters:nil
+                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                
+                                                NSLog(@"Notification sent successfully!");
+                                            }
+                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                
+                                                NSLog(@"Notification failed to be sent...");
+                                            }];
+    }
 }
 
 - (UIColor *)ourPurple
@@ -1044,7 +1053,24 @@
 
 - (NSArray *)getCategories
 {
-    NSArray *categories = [[NSMutableArray alloc] initWithObjects:@"Art",@"Automotive",@"Beauty & Personal Care",@"Books & Magazines",@"Electronics",@"Entertainment & Events",@"Fashion",@"Food & Groceries",@"Home & Furniture",@"Kids & Babies",@"Music",@"Pets",@"Restaurants & Bars",@"Sports & Outdoor",@"Travel",@"Other",nil];
+    NSString *art = NSLocalizedString(@"Art", nil);
+    NSString *automotive = NSLocalizedString(@"Automotive", nil);
+    NSString *beautyAndPersonalCare = NSLocalizedString(@"Beauty & Personal Care", nil);
+    NSString *booksAndMagazines = NSLocalizedString(@"Books & Magazines", nil);
+    NSString *electronics = NSLocalizedString(@"Electronics", nil);
+    NSString *entertainmentAndEvents = NSLocalizedString(@"Entertainment & Events", nil);
+    NSString *fashion = NSLocalizedString(@"Fashion", nil);
+    NSString *foodAndGroceries = NSLocalizedString(@"Food & Groceries", nil);
+    NSString *homeAndFurniture = NSLocalizedString(@"Home & Furniture", nil);
+    NSString *kidsAndBabies = NSLocalizedString(@"Kids & Babies", nil);
+    NSString *music = NSLocalizedString(@"Music", nil);
+    NSString *pets = NSLocalizedString(@"Pets", nil);
+    NSString *restaurantsAndBars = NSLocalizedString(@"Restaurants & Bars", nil);
+    NSString *sportsAndOutdoor = NSLocalizedString(@"Sports & Outdoor", nil);
+    NSString *travel = NSLocalizedString(@"Travel", nil);
+    NSString *other = NSLocalizedString(@"Other", nil);
+    
+    NSArray *categories = [[NSMutableArray alloc] initWithObjects:art, automotive, beautyAndPersonalCare, booksAndMagazines, electronics, entertainmentAndEvents, fashion, foodAndGroceries, homeAndFurniture, kidsAndBabies, music, pets, restaurantsAndBars, sportsAndOutdoor, travel, other, nil];
     
     return categories;
 }
@@ -1059,23 +1085,22 @@
 - (NSDictionary *)getCategoriesDictionary
 {
     NSDictionary *categories = @{
-                                 @"Fa" : @"Fashion",
-                                 @"Au" : @"Automotive",
-                                 @"Ar" : @"Art",
-                                 @"Be" : @"Beauty & Personal Care",
-                                 @"Bo" : @"Books & Magazines",
-                                 @"El" : @"Electronics",
-                                 @"En" : @"Entertainment & Events",
-                                 @"Fa" : @"Fashion",
-                                 @"Fo" : @"Food & Groceries",
-                                 @"Ho" : @"Home & Furniture",
-                                 @"Ki" : @"Kids & Babies",
-                                 @"Mu" : @"Music",
-                                 @"Pe" : @"Pets",
-                                 @"Re" : @"Restaurants & Bars",
-                                 @"Sp" : @"Sports & Outdoor",
-                                 @"Tr" : @"Travel",
-                                 @"Ot" : @"Other"
+                                 @"Fa" : NSLocalizedString(@"Fashion", nil),
+                                 @"Au" : NSLocalizedString(@"Automotive", nil),
+                                 @"Ar" : NSLocalizedString(@"Art", nil),
+                                 @"Be" : NSLocalizedString(@"Beauty & Personal Care", nil),
+                                 @"Bo" : NSLocalizedString(@"Books & Magazines", nil),
+                                 @"El" : NSLocalizedString(@"Electronics", nil),
+                                 @"En" : NSLocalizedString(@"Entertainment & Events", nil),
+                                 @"Fo" : NSLocalizedString(@"Food & Groceries", nil),
+                                 @"Ho" : NSLocalizedString(@"Home & Furniture", nil),
+                                 @"Ki" : NSLocalizedString(@"Kids & Babies", nil),
+                                 @"Mu" : NSLocalizedString(@"Music", nil),
+                                 @"Pe" : NSLocalizedString(@"Pets", nil),
+                                 @"Re" : NSLocalizedString(@"Restaurants & Bars", nil),
+                                 @"Sp" : NSLocalizedString(@"Sports & Outdoor", nil),
+                                 @"Tr" : NSLocalizedString(@"Travel", nil),
+                                 @"Ot" : NSLocalizedString(@"Other", nil)
                                  };
     return categories;
 }
@@ -1401,7 +1426,7 @@
 
 - (void)resetHTTPClientUsernameAndPassword
 {
-    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"09"];
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"090909deal"];
 }
 
 - (void)configureRestKit
@@ -1416,7 +1441,7 @@
     
     // validate with username and password
     NSString *username = @"ubuntu";
-    NSString *password = @"09";
+    NSString *password = @"090909deal";
     [manager.HTTPClient setAuthorizationHeaderWithUsername:username password:password];
     
     // other modifications to the object manager
@@ -1444,13 +1469,6 @@
     [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
                                                  method:RKRequestMethodAny
                                             pathPattern:@"/adddeals/"
-                                                keyPath:nil
-                                            statusCodes:statusCodes];
-    
-    RKResponseDescriptor *specificAddDealResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
-                                                 method:RKRequestMethodAny
-                                            pathPattern:@"/adddeals/:adddealID/"
                                                 keyPath:nil
                                             statusCodes:statusCodes];
     

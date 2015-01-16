@@ -23,5 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *discount;
 @property (weak, nonatomic) IBOutlet UIImageView *likesIcon;
 @property (weak, nonatomic) IBOutlet UILabel *likesCounter;
+@property (weak, nonatomic) IBOutlet UILabel *expiredTag;
 
 @end

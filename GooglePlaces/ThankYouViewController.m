@@ -53,7 +53,7 @@
 - (void)setThankYouMessage
 {
     appDelegate = [[UIApplication sharedApplication] delegate];
-    self.thankYou.text = [NSString stringWithFormat:@"Thank You\n%@!", appDelegate.dealer.fullName];
+    self.thankYou.text = [NSString stringWithFormat:NSLocalizedString(@"Thank You\n%@!", nil), appDelegate.dealer.fullName];
 }
 
 - (void)setOkButton
@@ -102,7 +102,11 @@
         
     } else {
         
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"WhatsApp not installed." message:@"Your device should have WhatsApp installed." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WhatsApp not installed.", nil)
+                                                         message:NSLocalizedString(@"Your device should have WhatsApp installed.", nil)
+                                                        delegate:self
+                                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                               otherButtonTitles:nil];
         [alert show];
     }
 }
