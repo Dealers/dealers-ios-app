@@ -17,16 +17,23 @@
 #import "Comment.h"
 #import "Notification.h"
 #import "User.h"
+#import "Invitation.h"
+#import "Device.h"
 #import "Error.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     int picsNumbers;
+    NSInteger timesTriedToUpdateDevice, timesTriedToUpdateBadge;
+    NSString *waitingForTabBarController;
+    NSNumber *pushedDealID;
+    NSDictionary *userInfoForActive;
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic) UIWindow *pushNotificationsWindow;
 @property (nonatomic) UIStoryboard *storyboard;
-@property (nonatomic) UITabBarController *tabBarController;
+@property (nonatomic) DealersTabBarController *tabBarController;
 @property (strong, nonatomic)  NSString *Animate_first;
 @property (strong, nonatomic)  NSString *UserID;
 @property (strong, nonatomic)  NSString *AfterAddDeal;
@@ -39,6 +46,9 @@
 @property BOOL shouldUpdateMyFeed;
 @property BOOL shouldUpdateProfile;
 
+@property NSMutableArray *pushedObjects;
+@property Deal *pushedDeal;
+
 @property RKObjectManager *updateFromFacebookManager;
 
 @property (weak) UIImage *screenShot;
@@ -47,6 +57,8 @@
 - (void)setTabBarController;
 - (void)showPlusButton;
 - (void)hidePlusButton;
+- (void)resetBadgeCounter;
+- (void)presentNotificationOfType:(NSString *)type;
 
 - (void)saveUserDetailsOnDevice;
 - (void)removeUserDetailsFromDevice;
@@ -56,6 +68,7 @@
 - (void)otherProfilePic:(Dealer *)dealer forTarget:(NSString *)target notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath;
 - (void)downloadPhotosForDeal:(Deal *)deal notificationName:(NSString *)notificationName atIndexPath:(NSIndexPath *)indexPath mode:(NSString *)mode;
 - (void)sendNotificationOfType:(NSString *)type toRecipients:(NSArray *)recipients regardingTheDeal:(NSNumber *)dealID;
+- (BOOL)didDealExpired:(Deal *)deal;
 - (UIColor *)ourPurple;
 - (UIColor *)textGrayColor;
 - (UIColor *)darkTextGrayColor;
@@ -83,6 +96,7 @@
 - (NSDictionary *)getCategoriesDictionary;
 - (NSString *)getCategoryKeyForValue:(NSString *)value;
 - (NSString *)getCategoryValueForKey:(NSString *)key;
+- (NSString *)getEnglishGender:(NSString *)gender;
 
 - (RKObjectMapping *)dealMapping;
 - (RKObjectMapping *)addDealMapping;

@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = self.mode;
+    self.title = NSLocalizedString(self.mode, nil);
     
     [self initialize];
     [self setNotificationsObservers];

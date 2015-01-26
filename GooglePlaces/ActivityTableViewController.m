@@ -40,6 +40,11 @@
     [self downloadNotifications];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [appDelegate resetBadgeCounter];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -85,7 +90,7 @@
                                                       [self mergeNotifications];
                                                       [self.tableView reloadData];
                                                       [self stopLoadingAnimation];
-
+                                                      
                                                   } else {
                                                       
                                                       [self noNotificationsMessage];
@@ -126,9 +131,9 @@
     if (self.tableView.contentSize.height > 0) {
         
         loadingView = [[UIView alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x,
-                                                              self.tableView.frame.origin.y,
-                                                              self.tableView.contentSize.width,
-                                                              self.tableView.contentSize.height)];
+                                                               self.tableView.frame.origin.y,
+                                                               self.tableView.contentSize.width,
+                                                               self.tableView.contentSize.height)];
     } else {
         
         loadingView = [[UIView alloc] initWithFrame:self.view.frame];
@@ -149,6 +154,7 @@
     UIImageView *loadingAnimation = (UIImageView *)[loadingView viewWithTag:43124321];
     [loadingAnimation stopAnimating];
     [UIView animateWithDuration:0.3 animations:^{ loadingView.alpha = 0; }];
+    [loadingView removeFromSuperview];
 }
 
 - (void)noNotificationsMessage
@@ -271,6 +277,8 @@
 
 - (void)mergeNotifications
 {
+    self.groupedNotifications = [[NSMutableArray alloc] init];
+
     for (Notification *notification in self.notifications) {
         
         if (notification.grouped) {
@@ -293,7 +301,7 @@
                 
                 if (!notificationsGroup) {
                     notificationsGroup = [[NSMutableArray alloc] initWithObjects:notification, otherNotification, nil];
-
+                    
                 } else {
                     [notificationsGroup addObject:otherNotification];
                 }
@@ -301,13 +309,8 @@
         }
         
         if (notificationsGroup) {
-            
-            if (!self.groupedNotifications) {
-                self.groupedNotifications = [[NSMutableArray alloc] init];
-            }
-            
             [self.groupedNotifications addObject:notificationsGroup];
-        
+            
         } else {
             [self.groupedNotifications addObject:notification];
         }
@@ -334,7 +337,7 @@
     
     Notification *notification;
     id object = [self.groupedNotifications objectAtIndex:indexPath.row];
-
+    
     if ([object isMemberOfClass:[Notification class]]) {
         notification = object;
         cell.label.text = [NotificationTableCell notificationStringForObject:notification];

@@ -72,6 +72,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *PriceIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *ExpireIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *DescriptionIcon;
+@property (weak, nonatomic) IBOutlet UILabel *expiredTag;
 
 @property (weak, nonatomic) IBOutlet UIView *dealerSection;
 

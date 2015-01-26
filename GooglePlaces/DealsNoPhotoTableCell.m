@@ -103,6 +103,13 @@
     if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
         [self setLayoutMargins:UIEdgeInsetsZero];
     }
+    
+    // Setting the exipred tag
+    self.expiredTag.layer.cornerRadius = 5.0;
+    self.expiredTag.layer.masksToBounds = YES;
+    self.expiredTag.layer.borderWidth = 1.5;
+    self.expiredTag.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.expiredTag.text = NSLocalizedString(@"Expired", nil);
 }
 
 + (UIImage *)randomBackgroundImages

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class DealerAttrib;
+@class Device;
 
 @interface Dealer : NSObject
 
@@ -42,6 +43,8 @@
 @property NSMutableArray *followedBy;
 
 @property NSNumber *invitationCounter;
+
+@property Device *device;
 
 @property NSMutableArray *notifications;
 

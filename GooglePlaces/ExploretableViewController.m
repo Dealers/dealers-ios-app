@@ -23,7 +23,7 @@
 - (void)viewDidLoad
 {
     self.title = NSLocalizedString(@"Explore", nil);
-    
+        
     [super viewDidLoad];
     self.myTableView.dataSource = self;
     self.myTableView.delegate = self;
@@ -57,7 +57,12 @@
     static NSString *CellIdentifier = @"Explorecell";
     UITableViewCell *Cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    Cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17.0];
+    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+        Cell.textLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:18.0];
+    } else {
+        Cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:18.0];
+    }
+    
     
     Cell.textLabel.text = [types objectAtIndex:indexPath.row];
     NSString *imagestring=[types_icons objectAtIndex:indexPath.row];

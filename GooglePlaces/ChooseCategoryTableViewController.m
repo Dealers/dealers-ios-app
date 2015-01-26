@@ -73,7 +73,13 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     cell.imageView.image = [UIImage imageNamed:[self.icons objectAtIndex:indexPath.row]];
-    cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17.0];
+    
+    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+        cell.textLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:18.0];
+    } else {
+        cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:18.0];
+    }
+    
     cell.textLabel.text = [self.categories objectAtIndex:indexPath.row];
     
     return cell;

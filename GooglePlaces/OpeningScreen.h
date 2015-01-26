@@ -13,14 +13,14 @@
 #import "MBProgressHUD.h"
 #import "User.h"
 
-@interface MainViewController : UIViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
+@interface OpeningScreen : UIViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
 {
     float ScreenHeight;
     MBProgressHUD *loggingInFacebook, *noConnection;
     FBGraphObject *facebookInfo;
     NSString *facebookUserEmail, *facebookToken;
     NSNumber *pseudoUserID;
-    BOOL didDownloadUserData, didPhotoFinishedDownloading, didPhotoFinishedUploading, firstSlogen, triedAddingNumber, triedUploadingPhoto, gotToken;
+    BOOL gotToken, didPhotoFinishedDownloading, didPhotoFinishedUploading, firstSlogen, triedAddingNumber, triedUploadingPhoto;
     
 }
 
@@ -39,17 +39,16 @@
 @property (weak, nonatomic) IBOutlet UILabel *slogen;
 @property (weak, nonatomic) IBOutlet UILabel *slogenDark;
 
-@property (weak, nonatomic) IBOutlet UIButton *facebookicon;
-@property (weak, nonatomic) IBOutlet UIButton *emailicon;
+@property (nonatomic) UIButton *facebook;
+@property (nonatomic) UIButton *email;
+
 @property (weak, nonatomic) NSString *i;
 
-@property (weak, nonatomic) IBOutlet UILabel *already;
-@property (weak, nonatomic) IBOutlet UILabel *signin;
+@property (weak, nonatomic) IBOutlet UIButton *alreadyHaveAccount;
 
 @property (weak, nonatomic) IBOutlet UIImageView *screenShot;
 
 @property BOOL authorized;
-@property BOOL enteredPasscode;
 @property BOOL didComeFromLogOut;
 
 
@@ -57,5 +56,7 @@
 - (IBAction)SigninButton:(id)sender;
 - (IBAction)facebookButtonClicked:(id)sender;
 
+- (void)signUpUser;
+- (void)cancelFacebookLogin;
 
 @end

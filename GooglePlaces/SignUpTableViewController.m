@@ -434,7 +434,6 @@
             }
             break;
             
-            
         default:
             break;
     }
@@ -508,7 +507,7 @@
 
 - (void)saveUserDetails
 {
-    self.dealer = [[Dealer alloc]init];
+    self.dealer = [[Dealer alloc] init];
     
     self.dealer.fullName = self.fullNameTextField.text;
     self.dealer.email = self.emailTextField.text;
@@ -528,6 +527,8 @@
     if (![self.genderLabel.text isEqualToString:NSLocalizedString(@"Gender (optional)", nil)]) {
         self.dealer.gender = self.genderLabel.text;
     }
+    
+    self.dealer.device = [[Device alloc] init];
     
     self.dealer.registerDate = [NSDate date];
     
@@ -675,8 +676,8 @@
 
 - (void)enterDealers
 {
-    [appDelegate saveUserDetailsOnDevice];
     [appDelegate setTabBarController];
+    [appDelegate saveUserDetailsOnDevice];
 }
 
 

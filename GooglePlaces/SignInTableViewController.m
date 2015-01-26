@@ -197,7 +197,6 @@
                                                                                        cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                                                        otherButtonTitles:nil];
                                                   [alert show];
-                                                  [alert show];
                                                   
                                                   [self stopLoading];
                                               }];
@@ -286,8 +285,8 @@
 
 - (void)enterDealers
 {
-    [appDelegate saveUserDetailsOnDevice];
     [appDelegate setTabBarController];
+    [appDelegate saveUserDetailsOnDevice];
 }
 
 

@@ -95,11 +95,11 @@
     self.store.frame = storeFrame;
     
     // Setting the exipred tag
-    self.expiredTag.layer.cornerRadius = 2.0;
+    self.expiredTag.layer.cornerRadius = 5.0;
     self.expiredTag.layer.masksToBounds = YES;
-    self.expiredTag.layer.borderWidth = 2.0;
+    self.expiredTag.layer.borderWidth = 1.5;
     self.expiredTag.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.expiredTag.hidden = YES;
+    self.expiredTag.text = NSLocalizedString(@"Expired", nil);
 }
 
 @end

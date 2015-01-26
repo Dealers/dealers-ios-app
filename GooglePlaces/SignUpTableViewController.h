@@ -12,6 +12,7 @@
 #import "KeychainItemWrapper.h"
 #import "MBProgressHUD.h"
 #import "Dealer.h"
+#import "Device.h"
 #import "Error.h"
 
 @interface SignUpTableViewController : UITableViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIScrollViewDelegate, MBProgressHUDDelegate> {

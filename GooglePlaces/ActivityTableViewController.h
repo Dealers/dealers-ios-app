@@ -17,6 +17,7 @@
 @interface ActivityTableViewController : UITableViewController {
     
     UIView *loadingView;
+    NSInteger timesTriedUpdateDevice;
 }
 
 @property AppDelegate *appDelegate;

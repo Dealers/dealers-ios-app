@@ -51,6 +51,10 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIView *cameraBlackCover;
 
+@property (weak, nonatomic) IBOutlet UIButton *snapButton;
+@property (weak, nonatomic) IBOutlet UIButton *rotateCameraButton;
+@property (weak, nonatomic) IBOutlet UIButton *exitCameraModeButton;
+
 @property (nonatomic, strong) GKImagePicker *imagePicker;
 
 @property (weak, nonatomic) IBOutlet UIButton *addPhoto;

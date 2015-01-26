@@ -343,7 +343,7 @@
     }
     
     [self.uploadedButton setFrame:CGRectMake(0, lowestYPoint, self.tableView.frame.size.width / 2, 48.0)];
-    [self.uploadedButton setTitle:@"Posts" forState:UIControlStateNormal];
+    [self.uploadedButton setTitle:NSLocalizedString(@"Posts", nil) forState:UIControlStateNormal];
     
     
     //    if (self.dealer.uploadedDeals.count > 0) {
@@ -380,7 +380,7 @@
     }
     
     [self.likedButton setFrame:CGRectMake(self.tableView.frame.size.width / 2, lowestYPoint, self.tableView.frame.size.width / 2, 48.0)];
-    [self.likedButton setTitle:@"Likes" forState:UIControlStateNormal];
+    [self.likedButton setTitle:NSLocalizedString(@"Likes", nil) forState:UIControlStateNormal];
     
     //    if (self.dealer.likedDeals.count > 0) {
     //        [self.likedButton setTitle:[NSString stringWithFormat:@"%@ Likes", [NSNumber numberWithUnsignedInteger:self.dealer.likedDeals.count]]
@@ -489,7 +489,6 @@
         self.currentDeals = self.likedDeals;
         
         if (didDownloadLikedDeals) {
-            self.currentDeals = self.likedDeals;
             [self.tableView reloadData];
             
         } else {
@@ -556,6 +555,7 @@
                                            parameters:nil
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   
+                                                  [self.uploadedDeals removeAllObjects];
                                                   [self.uploadedDeals addObjectsFromArray:mappingResult.array];
                                                   
                                                   if (!self.uploadedDeals || self.uploadedDeals.count == 0) {
@@ -590,6 +590,7 @@
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   
                                                   NSArray *temp = mappingResult.array;
+                                                  [self.likedDeals removeAllObjects];
                                                   
                                                   for (DealAttrib *dealAttrib in temp) {
                                                       [self.likedDeals insertObject:dealAttrib.deal atIndex:0];
@@ -775,7 +776,7 @@
         isRefreshing = NO;
     }
     
-    [self.tableView addSubview:noDealsMessage];
+    [self.tableView insertSubview:noDealsMessage atIndex:0];
     
     [UIView animateWithDuration:0.3 animations:^{ noDealsMessage.alpha = 1.0; }];
 }
@@ -932,6 +933,16 @@
             cell.photo.image = deal.photo1;
         }
         
+        // Checking if the deal expired
+        
+        if (deal.expiration) {
+            if ([appDelegate didDealExpired:deal]) {
+                cell.expiredTag.hidden = NO;
+            } else {
+                cell.expiredTag.hidden = YES;
+            }
+        }
+        
         // Loading the deal's details to the cell
         
         cell.title.text = deal.title;
@@ -986,6 +997,16 @@
             deal.photoURL1 = [NSNumber numberWithInt:random].stringValue;
         }
         cell.backgroundWithColor.backgroundColor = [DealsNoPhotoTableCell randomBackgroundColors:deal.photoURL1];
+        
+        // Checking if the deal expired
+        
+        if (deal.expiration) {
+            if ([appDelegate didDealExpired:deal]) {
+                cell.expiredTag.hidden = NO;
+            } else {
+                cell.expiredTag.hidden = YES;
+            }
+        }
         
         // Loading the deal's details to the cell
         

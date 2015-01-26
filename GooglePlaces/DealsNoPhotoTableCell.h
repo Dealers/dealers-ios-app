@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *store;
 @property (weak, nonatomic) IBOutlet UILabel *price;
 @property (weak, nonatomic) IBOutlet UILabel *discount;
+@property (weak, nonatomic) IBOutlet UILabel *expiredTag;
 
 + (UIImage *)randomBackgroundImages;
 + (UIColor *)randomBackgroundColors:(NSString *)colorNumber;

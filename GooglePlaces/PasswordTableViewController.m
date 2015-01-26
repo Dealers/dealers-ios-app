@@ -16,6 +16,44 @@
 
 @synthesize appDelegate;
 
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    appDelegate = [[UIApplication sharedApplication]delegate];
+    
+    self.title = NSLocalizedString(@"Change Password", nil);
+    
+    [self setNavigationBar];
+}
+
+- (void)setNavigationBar
+{
+    UIView *doneButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 58, 30)];
+    
+    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+    [doneButton setFrame:CGRectMake(8, 0, 58, 30)];
+    [doneButton setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
+    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [doneButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:15.0]];
+    [doneButton setBackgroundColor:[appDelegate ourPurple]];
+    [doneButton.layer setCornerRadius:5.0];
+    [doneButton.layer setMasksToBounds:YES];
+    
+    [doneButtonView addSubview:doneButton];
+    
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:doneButtonView];
+    
+    self.navigationItem.rightBarButtonItem = barButton;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
 - (void)done
 {
     if ([self.passwordCurrent.text length] == 0) {
@@ -26,7 +64,7 @@
                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
                               otherButtonTitles:nil];
         [blank show];
-    
+        
     } else if ([self.passwordNew.text length] == 0) {
         UIAlertView *blank = [[UIAlertView alloc]
                               initWithTitle:NSLocalizedString(@"New password is blank!", nil)
@@ -59,7 +97,7 @@
                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
                               otherButtonTitles:nil];
         [blank show];
-    
+        
     } else {
         appDelegate.dealer.userPassword = self.passwordNewAgain.text;
         // Send to the database the new password...
@@ -67,32 +105,5 @@
     }
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    appDelegate = [[UIApplication sharedApplication]delegate];
-    
-    self.title = NSLocalizedString(@"Change Password", nil);
-    
-    UIImage *doneImage = [[UIImage imageNamed:@"Done Button"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *done = [[UIBarButtonItem alloc]initWithImage:doneImage style:UIBarButtonItemStyleBordered target:self action:@selector(done)];
-    [done setImageInsets:UIEdgeInsetsMake(0, -9, 0, 9)];
-    
-    self.navigationItem.rightBarButtonItem = done;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
 
 @end

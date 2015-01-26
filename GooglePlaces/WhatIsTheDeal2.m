@@ -619,6 +619,7 @@
         self.addDealButton.backgroundColor = [appDelegate ourPurple];
         [self.addDealButton setTitle:NSLocalizedString(@"Share the Deal", nil) forState:UIControlStateNormal];
         [self.addDealButton setTintColor:[UIColor whiteColor]];
+    
         [self.addDealButton addTarget:self action:@selector(addDeal) forControlEvents:UIControlEventTouchUpInside];
         [self.addDealView addSubview:self.addDealButton];
     }
@@ -952,7 +953,7 @@
         NSString *categoryFullString = [appDelegate connectOldCategoryToNewCategory:self.deal.store.categoryID];
         NSRange endRange = [categoryFullString rangeOfString:@"_"];
         NSRange searchRange = NSMakeRange(0 , endRange.location);
-        NSString *category = [categoryFullString substringWithRange:searchRange];
+        NSString *category = NSLocalizedString([categoryFullString substringWithRange:searchRange], nil);
         
         self.categoryLabel.text = category;
         self.categoryLabel.textColor = [UIColor blackColor];
@@ -1254,8 +1255,6 @@
 
 - (void)addDeal
 {
-    [self startLoading];
-    
     [self.priceTextField resignFirstResponder];
     [self.discountTextField resignFirstResponder];
     
@@ -1299,12 +1298,16 @@
     
     if (self.didTouchDatePicker && !self.didCancelDate) {
         
-        self.deal.expiration = self.datePicker.date;
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *todaysComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[NSDate date]];
+        self.deal.expiration = [calendar dateFromComponents:todaysComponents];
     }
     
     self.deal.uploadDate = [NSDate date];
     
     // upload the deal to the server
+    
+    [self startLoading];
     
     [self uploadDeal];
     if (self.deal.photoSum > 0) [self uploadDealPhotos];

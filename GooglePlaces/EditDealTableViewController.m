@@ -35,7 +35,7 @@
     
     [self initialize];
     
-    [self setSaveButton];
+    [self setNavigationBar];
     
     [self setProgressIndicator];
     
@@ -59,13 +59,25 @@
     shouldDealloc = YES;
 }
 
-- (void)setSaveButton
+- (void)setNavigationBar
 {
-    UIImage *saveImage = [[UIImage imageNamed:@"Save Button"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *save = [[UIBarButtonItem alloc]initWithImage:saveImage style:UIBarButtonItemStyleBordered target:self action:@selector(saveChanges)];
-    [save setImageInsets:UIEdgeInsetsMake(0, -9, 0, 9)];
+    UIView *saveButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 58, 30)];
     
-    self.navigationItem.rightBarButtonItem = save;
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [saveButton addTarget:self action:@selector(saveChanges) forControlEvents:UIControlEventTouchUpInside];
+    [saveButton setFrame:CGRectMake(8, 0, 58, 30)];
+    [saveButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
+    [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [saveButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:15.0]];
+    [saveButton setBackgroundColor:[appDelegate ourPurple]];
+    [saveButton.layer setCornerRadius:5.0];
+    [saveButton.layer setMasksToBounds:YES];
+    
+    [saveButtonView addSubview:saveButton];
+    
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:saveButtonView];
+    
+    self.navigationItem.rightBarButtonItem = barButton;
 }
 
 - (void)initialize
@@ -265,7 +277,7 @@
             switch (indexPath.row) {
                     
                 case 0:
-                    witdvc.cameFrom = NSLocalizedString(@"Edit Deal", nil);
+                    witdvc.cameFrom = @"Edit Deal";
                     [self.navigationController pushViewController:witdvc animated:YES];
                     break;
                     

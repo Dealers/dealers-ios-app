@@ -28,7 +28,7 @@
     [self initialize];
     
     [self signUpForKeyboardNotifications];
-    [self setSaveButton];
+    [self setNavigationBar];
     [self setProgressIndicator];
     [self setProfilePicSection];
     [self saveOriginalValues];
@@ -81,13 +81,25 @@
 
 #pragma mark - Setting the view and sections
 
-- (void)setSaveButton
+- (void)setNavigationBar
 {
-    UIImage *saveImage = [[UIImage imageNamed:@"Save Button"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *save = [[UIBarButtonItem alloc]initWithImage:saveImage style:UIBarButtonItemStyleBordered target:self action:@selector(saveChanges)];
-    [save setImageInsets:UIEdgeInsetsMake(0, -9, 0, 9)];
+    UIView *saveButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 58, 30)];
     
-    self.navigationItem.rightBarButtonItem = save;
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [saveButton addTarget:self action:@selector(saveChanges) forControlEvents:UIControlEventTouchUpInside];
+    [saveButton setFrame:CGRectMake(8, 0, 58, 30)];
+    [saveButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
+    [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [saveButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:15.0]];
+    [saveButton setBackgroundColor:[appDelegate ourPurple]];
+    [saveButton.layer setCornerRadius:5.0];
+    [saveButton.layer setMasksToBounds:YES];
+    
+    [saveButtonView addSubview:saveButton];
+    
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:saveButtonView];
+    
+    self.navigationItem.rightBarButtonItem = barButton;
 }
 
 - (void)setProfilePicSection
@@ -154,7 +166,7 @@
         
         if (![appDelegate.dealer.gender isEqualToString:NSLocalizedString(@"Unspecified", nil)]) {
             
-            self.gender.text = appDelegate.dealer.gender;
+            self.gender.text = NSLocalizedString(appDelegate.dealer.gender, nil);
             self.gender.textColor = [UIColor blackColor];
         }
     }
@@ -605,7 +617,7 @@
     if ([self.gender.text isEqualToString:NSLocalizedString(@"Gender", nil)]) {
         appDelegate.dealer.gender = NSLocalizedString(@"Unspecified", nil);
     } else {
-        appDelegate.dealer.gender = self.gender.text;
+        appDelegate.dealer.gender = [appDelegate getEnglishGender:self.gender.text];
     }
     
     if (![self.email.text isEqualToString:self.originalEmail]) {

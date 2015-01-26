@@ -341,7 +341,9 @@
 - (void)viewDidLoad
 {
     self.title = NSLocalizedString(@"Where is the deal?", nil);
-        
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
     // This is the size of the venues table view in the initial display of the view:
     self.venuesTableInitialFrame = CGRectMake(0, barTableGap, 320, [[UIScreen mainScreen]bounds].size.height - 64 - 44 - barTableGap);
     
@@ -450,7 +452,8 @@
                                   @"v" : foursquareVersion,
                                   @"radius" : @"80000",
                                   @"intent" : @"browse",
-                                  @"query" : text
+                                  @"query" : text,
+                                  @"limit" : @"50"
                                   };
     
     [foursquareManager getObjectsAtPath:@"/v2/venues/search"
@@ -914,7 +917,8 @@
                                   @"client_id" : clientID,
                                   @"client_secret" : clientSecret,
                                   @"v" : foursquareVersion,
-                                  @"radius" : @"1000"
+                                  @"radius" : @"1000",
+                                  @"limit" : @"50"
                                   };
     
     [foursquareManager getObjectsAtPath:@"/v2/venues/search"

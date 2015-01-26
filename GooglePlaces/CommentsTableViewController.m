@@ -127,7 +127,7 @@
     self.textInputView.layer.borderColor = [[UIColor colorWithWhite:0.8 alpha:1.0]CGColor];
     self.textInputView.tintColor = [UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0];
     
-    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(40, 6, self.view.frame.size.width - 45 * 2, 32)];
+    self.textView = [[UITextView alloc] initWithFrame:CGRectMake(40, 6, self.view.frame.size.width - 45 * 2, 32)];
     self.textView.delegate = self;
     self.textView.layer.cornerRadius = 5.0;
     self.textView.layer.masksToBounds = YES;
@@ -140,10 +140,14 @@
     [self.textView setTextContainerInset:UIEdgeInsetsMake(5, 0, 5, 0)];
     self.textView.returnKeyType = UIReturnKeyDone;
     
-    self.placeholder = [[UILabel alloc]initWithFrame:CGRectMake(46, 0, self.view.frame.size.width - 44 * 2, 44)];
+    self.placeholder = [[UILabel alloc] initWithFrame:CGRectMake(46, 0, self.textView.frame.size.width - 6 * 2, 44)];
     self.placeholder.font = [UIFont fontWithName:@"Avenir-Roman" size:16.0];
     self.placeholder.text = NSLocalizedString(@"Write a comment...", nil);
     self.placeholder.textColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:206.0/255.0 alpha:1.0];
+    
+    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+        [self.placeholder setTextAlignment:NSTextAlignmentRight];
+    }
     
     self.postButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.postButton setFrame:CGRectMake(self.view.frame.size.width - 50.0, 0, 50.0, height)];

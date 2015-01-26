@@ -234,7 +234,7 @@
     
     loadingView.backgroundColor = [UIColor whiteColor];
     UIImageView *loadingAnimation = [appDelegate loadingAnimationPurple];
-    loadingAnimation.tag = 43434343434;
+    loadingAnimation.tag = 4343434;
     [loadingAnimation startAnimating];
     loadingAnimation.frame = CGRectMake(self.view.center.x - 15.0, 15.0, 30.0, 30.0);
     [loadingView addSubview:loadingAnimation];
@@ -243,7 +243,7 @@
 
 - (void)stopLoadingAnimation
 {
-    UIImageView *loadingAnimation = (UIImageView *)[loadingView viewWithTag:43434343434];
+    UIImageView *loadingAnimation = (UIImageView *)[loadingView viewWithTag:4343434];
     [loadingAnimation stopAnimating];
     [UIView animateWithDuration:0.3 animations:^{ loadingView.alpha = 0; }];
 }
@@ -717,6 +717,15 @@
         self.ExpireIcon.frame = CGRectMake(iconsLeftMargin, lowestYPoint + GAP, self.ExpireIcon.frame.size.width, self.ExpireIcon.frame.size.height);
         self.expirelabel.frame = CGRectMake(labelsLeftMargin, lowestYPoint+3+GAP, fieldsWidth, expirelabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.ExpireIcon.frame) > CGRectGetMaxY(expirelabel.frame)) ? CGRectGetMaxY(self.ExpireIcon.frame) : CGRectGetMaxY(expirelabel.frame);
+        
+        // Checking if the deal expired
+        
+        if ([appDelegate didDealExpired:self.deal]) {
+            [self setExpiredDeal];
+        } else {
+            self.expiredTag.hidden = YES;
+        }
+        
     } else {
         expirelabel.hidden = YES;
         self.ExpireIcon.hidden = YES;
@@ -736,6 +745,29 @@
         descriptionlabel.hidden = YES;
         self.DescriptionIcon.hidden = YES;
     }
+}
+
+- (void)setExpiredDeal
+{
+    self.expiredTag.layer.cornerRadius = 5.0;
+    self.expiredTag.layer.masksToBounds = YES;
+    self.expiredTag.layer.borderWidth = 1.5;
+    self.expiredTag.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.expiredTag.text = NSLocalizedString(@"Expired", nil);
+    self.expiredTag.hidden = NO;
+    
+    CGFloat x = iconsLeftMargin / 2;
+    CGFloat y = self.ExpireIcon.frame.origin.y - GAP / 2;
+    CGFloat width = self.view.frame.size.width - x * 2;
+    CGFloat height = self.ExpireIcon.frame.size.height + GAP;
+    
+    UIView *expiredBackground = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
+    expiredBackground.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:59.0/255.0 blue:48.0/255.0 alpha:0.2];
+    expiredBackground.layer.cornerRadius = 8.0;
+    expiredBackground.layer.masksToBounds = YES;
+    [self.scroll insertSubview:expiredBackground belowSubview:self.ExpireIcon];
+    
+    self.expirelabel.text = [NSLocalizedString(@"Expired on ", nil) stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.expiration]];
 }
 
 - (void)toggleStoreIcon
@@ -824,7 +856,11 @@
         likesSectionFrame.origin.y = lowestYPoint + 7;
         self.likesAndButtonsSection.frame = likesSectionFrame;
         
-        self.likesCountLabel.text = [NSString stringWithFormat:@"%lu people like this deal", (unsigned long)self.deal.dealAttrib.dealersThatLiked.count];
+        if (self.likeCounter.intValue == 1) {
+            self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1 person likes this deal", nil)];
+        } else {
+            self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ people like this deal", nil), self.likeCounter];
+        }
         
         UIButton *likersButton = [UIButton buttonWithType:UIButtonTypeCustom];
         likersButton.frame = self.likesCountLabel.frame;
@@ -876,7 +912,7 @@
 - (void)presentLikers
 {
     DealersTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealersTableViewController"];
-    dtvc.mode = NSLocalizedString(@"Likers", nil);
+    dtvc.mode = @"Likers";
     dtvc.dealID = self.deal.dealID;
     [self.navigationController pushViewController:dtvc animated:YES];
 }
@@ -906,11 +942,10 @@
         
         UIButton *commentsOverview = [UIButton buttonWithType:UIButtonTypeSystem];
         [commentsOverview setFrame:overviewFrame];
-        NSString *buttonTitle = [NSString stringWithFormat:@"View all %lu comments", (unsigned long)self.deal.comments.count];
+        NSString *buttonTitle = [NSString stringWithFormat:NSLocalizedString(@"View all %@ comments", nil), [NSNumber numberWithUnsignedInteger:self.deal.comments.count]];
         [commentsOverview setTitle:buttonTitle forState:UIControlStateNormal];
         commentsOverview.titleLabel.font = font;
         commentsOverview.tintColor = color;
-        commentsOverview.titleLabel.text = [NSString stringWithFormat:@"View all %lu comments", (unsigned long)self.deal.comments.count];
         [commentsOverview addTarget:self action:@selector(CommentButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         commentsOverview.tag = COMMENTS_OVERVIEW_BUTTON;
         
@@ -1115,15 +1150,23 @@
             lowestYPoint = CGRectGetMaxY(storePhone.frame);
         }
         
-        UIButton *wazeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        UIImage *wazeImage = [[UIImage imageNamed:@"Waze Button"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        [wazeButton setImage:wazeImage forState:UIControlStateNormal];
-        wazeButton.frame = CGRectMake(0, 0, 208, 45);
+        UIButton *wazeButton = [appDelegate actionButton];
         CGFloat buttonCenterY = lowestYPoint + wazeButton.frame.size.height/2 + sectionGap;
         wazeButton.center = CGPointMake(self.view.center.x, buttonCenterY);
         wazeButton.alpha = 0.9;
+        [wazeButton setTitle:NSLocalizedString(@"Navigate via Waze", nil) forState:UIControlStateNormal];
+        [wazeButton setImageEdgeInsets:UIEdgeInsetsMake(0, -4.0, 0, 4.0)];
+        [wazeButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
+        [wazeButton.layer setCornerRadius:8.0];
+        [wazeButton.layer setMasksToBounds:YES];
+        [wazeButton.layer setBorderWidth:1.5];
+        [wazeButton.layer setBorderColor:[[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:0.9] CGColor]];
         [wazeButton addTarget:self action:@selector(connectToWaze) forControlEvents: UIControlEventTouchUpInside];
         [self.mapAndStoreSection addSubview:wazeButton];
+        
+        UIImageView *wazeButtonIcon = [[UIImageView alloc] initWithFrame:CGRectMake(6.0, 2.0, 40.0, 40.0)];
+        [wazeButtonIcon setImage:[UIImage imageNamed:@"Waze Button Icon"]];
+        [wazeButton addSubview:wazeButtonIcon];
         
         self.mapAndStoreSection.frame = CGRectMake(self.mapAndStoreSection.frame.origin.x,
                                                    self.mapAndStoreSection.frame.origin.y,
@@ -1376,7 +1419,11 @@
         self.likeCounter = [NSNumber numberWithInt:self.likeCounter.intValue - 1];
     }
     
-    self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ people like this deal", nil), self.likeCounter];
+    if (self.likeCounter.intValue == 1) {
+        self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1 person likes this deal", nil)];
+    } else {
+        self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ people like this deal", nil), self.likeCounter];
+    }
 }
 
 - (IBAction)CommentButtonAction:(id)sender {
@@ -1565,29 +1612,38 @@
             
             cell.backgroundColor = [UIColor clearColor];
             
-            UIImageView *yourCommentProfilePic = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin, 12, 40, 40)];
+            UIImageView *yourCommentProfilePic = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMargin, 12, 40, 40)];
             yourCommentProfilePic.image = [appDelegate myProfilePic];
             yourCommentProfilePic.layer.cornerRadius = yourCommentProfilePic.frame.size.width / 2;
             yourCommentProfilePic.layer.masksToBounds = YES;
             [cell.contentView addSubview:yourCommentProfilePic];
             
-            UILabel *addCommentTitle = [[UILabel alloc]initWithFrame:CGRectMake(58, 12, 244, 39)];
+            CGFloat x = 58;
+            CGFloat y = 12;
+            CGFloat width = 244;
+            CGFloat height = 39;
+            
+            UIView *addCommentBackground = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
+            addCommentBackground.backgroundColor = [UIColor whiteColor];
+            addCommentBackground.layer.cornerRadius = 4.0;
+            addCommentBackground.layer.masksToBounds = YES;
+            
+            [cell.contentView addSubview:addCommentBackground];
+            
+            UILabel *addCommentTitle = [[UILabel alloc] initWithFrame:CGRectMake(x + 8, y, width - 8 * 2, height)];
             addCommentTitle.textColor = textGray;
-            addCommentTitle.font = [UIFont fontWithName:@"Avenir-Light" size:16.0];
+            addCommentTitle.font = [UIFont fontWithName:@"Avenir-Roman" size:16.0];
             
             if (self.deal.comments.count == 0) {
-                addCommentTitle.text = NSLocalizedString(@"  Be the first to comment...", nil);
+                addCommentTitle.text = NSLocalizedString(@"Be the first to comment...", nil);
             } else {
-                addCommentTitle.text = NSLocalizedString(@"  Add a comment...", nil);
+                addCommentTitle.text = NSLocalizedString(@"Add a comment...", nil);
             }
             
-            addCommentTitle.backgroundColor = [UIColor whiteColor];
-            addCommentTitle.layer.cornerRadius = 4.0;
-            addCommentTitle.layer.masksToBounds = YES;
             [cell.contentView addSubview:addCommentTitle];
             
             UIButton *addComment = [UIButton buttonWithType:UIButtonTypeCustom];
-            [addComment setFrame:addCommentTitle.frame];
+            [addComment setFrame:addCommentBackground.frame];
             [addComment setBackgroundColor:[UIColor clearColor]];
             [addComment addTarget:self action:@selector(CommentButtonAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:addComment];

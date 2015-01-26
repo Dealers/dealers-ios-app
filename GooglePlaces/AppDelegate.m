@@ -12,11 +12,17 @@
 #import <AWSiOSSDKv2/S3.h>
 #import <AWSiOSSDKv2/AWSCore.h>
 #import "WhereIsTheDeal.h"
+#import "ViewonedealViewController.h"
 #import "KeychainItemWrapper.h"
+#import "PushNotificationView.h"
 
 #define AWS_ACCESS_KEY_ID @"AKIAIWJFJX72FWKD2LYQ"
 #define AWS_SECRET_ACCESS_KEY @"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"
 #define AWS_S3_BUCKET_NAME @"dealers-app"
+
+@interface AppDelegate()
+
+@end
 
 @implementation AppDelegate
 
@@ -24,7 +30,7 @@
 @synthesize storyboard;
 @synthesize tabBarController;
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication];
@@ -37,6 +43,11 @@
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
     [NSURLCache setSharedURLCache:sharedCache];
     
+    // Checking if launched with push notificaiton
+    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+        NSLog(@"Application opened with a remote notification.");
+    }
+    
     // Customizing the Navigation Bar:
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
@@ -47,7 +58,6 @@
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     
     // Customizing the Tab Bar:
-    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                        [UIFont fontWithName:@"Avenir-Roman" size:11.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
@@ -69,6 +79,13 @@
     // For printing in the log info about the outputs and inputs via RestKit:
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
     
+    // Adding a window for the remote notifications
+    self.pushNotificationsWindow = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 64.0)];
+    
+    self.pushNotificationsWindow.backgroundColor = [UIColor clearColor];
+    self.pushNotificationsWindow.windowLevel = UIWindowLevelStatusBar + 1;
+    self.pushNotificationsWindow.hidden = YES;
+    
     return YES;
 }
 
@@ -79,7 +96,7 @@
 {
     storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
-    tabBarController = [[DealersTabBarController alloc]init];
+    tabBarController = [[DealersTabBarController alloc] init];
     
     UINavigationController *navigationControllerFeed = [storyboard instantiateViewControllerWithIdentifier:@"feedNavController"];
     UINavigationController *navigationControllerExplore = [storyboard instantiateViewControllerWithIdentifier:@"exploreNavController"];
@@ -130,6 +147,12 @@
     
     [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
+    // Is there a remote notifiaction that's waiting to the tab bar controller?
+    if (waitingForTabBarController) {
+        [self presentNotificationOfType:waitingForTabBarController];
+        waitingForTabBarController = nil;
+    }
 }
 
 - (void)hidePlusButton
@@ -151,22 +174,78 @@
                      }];
 }
 
-- (void)addDealVC: (id) sender {
+- (void)addDealVC: (id)sender {
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"addDealNavController"];
     WhereIsTheDeal *tvc = (WhereIsTheDeal *)[navigationController topViewController];
     tvc.cameFrom = @"Add Deal";
     [tabBarController presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)resetBadgeCounter
+{
+    if ([UIApplication sharedApplication].applicationIconBadgeNumber > 0 ) {
+        
+        self.dealer.device.badge = [NSNumber numberWithInteger:0];
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        UITabBarItem *activityItem = [self.tabBarController.tabBar.items objectAtIndex:4];
+        activityItem.badgeValue = nil;
+        [self updateBadgeValueAtServers];
+    }
+}
+
+- (void)updateBadgeValueAtServers
+{
+    NSString *path = [NSString stringWithFormat:@"/devices/%@/", self.dealer.device.deviceID];
+    [[RKObjectManager sharedManager] patchObject:self.dealer.device
+                                            path:path
+                                      parameters:nil
+                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                             
+                                             NSLog(@"Device updated successfully!");
+                                             timesTriedToUpdateBadge = 0;
+                                         }
+                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                             
+                                             NSLog(@"Failed to update device...");
+                                             if (timesTriedToUpdateBadge < 2) {
+                                                 timesTriedToUpdateBadge++;
+                                                 [self performSelector:@selector(updateBadgeValueAtServers) withObject:nil afterDelay:1.0];
+                                                 
+                                             } else {
+                                                 timesTriedToUpdateBadge = 0;
+                                             }
+                                         }];
+    
+}
+
 
 #pragma mark - Push notifications
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"Successfully Registered for Remote Notifications with Device Token (%@)", deviceToken);
+    
+    NSLog(@"Successfully Registered for Remote Notifications with Device Token %@", deviceToken);
+    
+    NSString  *tokenString = [[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                              stringByReplacingOccurrencesOfString:@">" withString:@""];
+    
+    NSLog(@"Edited string of the token: %@", tokenString);
+    
+    if (!self.dealer.device) {
+        self.dealer.device = [[Device alloc] init];
+        self.dealer.device.token = tokenString;
+        self.dealer.device.dealerID = self.dealer.dealerID;
+        [self postDevice];
+    } else {
+        self.dealer.device.token = tokenString;
+        self.dealer.device.dealerID = self.dealer.dealerID;
+        self.dealer.device.arn = nil;
+        self.dealer.device.lastUpdateDate = [NSDate date];
+        [self updateDevice];
+    }
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    NSLog(@"Failed to Register for Remote Notifications :(");
+    NSLog(@"Failed to Register for Remote Notifications.");
     NSLog(@"%@, %@", error, error.localizedDescription);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:error.localizedDescription
@@ -176,38 +255,194 @@
     [alert show];
 }
 
+- (void)postDevice
+{
+    [[RKObjectManager sharedManager] postObject:self.dealer.device
+                                           path:@"/devices/"
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            
+                                            NSLog(@"Device added with token successfully...");
+                                            self.dealer.device = mappingResult.firstObject;
+                                        }
+                                        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            
+                                            NSLog(@"Failed to post device...");
+                                            self.dealer.device = nil;
+                                            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                            [defaults removeObjectForKey:@"deviceID"];
+                                            [defaults removeObjectForKey:@"deviceBadge"];
+                                            [defaults removeObjectForKey:@"deviceCreationDate"];
+                                        }];
+}
+
+- (void)updateDevice
+{
+    NSString *path = [NSString stringWithFormat:@"/devices/%@/", self.dealer.device.deviceID];
+    [[RKObjectManager sharedManager] patchObject:self.dealer.device
+                                            path:path parameters:nil
+                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                             
+                                             NSLog(@"Device updated with token successfully..");
+                                             timesTriedToUpdateDevice = 0;
+                                         }
+                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                             
+                                             NSLog(@"Failed to update device...");
+                                             
+                                             // Try again
+                                             if (timesTriedToUpdateDevice < 2) {
+                                                 timesTriedToUpdateDevice++;
+                                                 [self updateDevice];
+                                             } else {
+                                                 timesTriedToUpdateDevice = 0;
+                                             }
+                                         }];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    UIApplicationState state = application.applicationState;
+    
+    if (state == UIApplicationStateActive) {
+        
+        userInfoForActive = userInfo;
+        application.applicationIconBadgeNumber = application.applicationIconBadgeNumber - 1;
+        
+        // download the deal
+        pushedDealID = userInfoForActive[@"deal"];
+        if (pushedDealID) {
+            NSString *path = [NSString stringWithFormat:@"/deals/%@/", pushedDealID];
+            [[RKObjectManager sharedManager] getObjectsAtPath:path
+                                                   parameters:nil
+                                                      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                          
+                                                          NSLog(@"Notification's deal downloaded successfully!");
+                                                          self.pushedDeal = mappingResult.firstObject;
+                                                          
+                                                          // download the dealer's photo
+                                                          [self otherProfilePic:self.pushedDeal.dealer forTarget:nil notificationName:@"Push Notifications" atIndexPath:nil];
+                                                      }
+                                                      failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                          
+                                                          NSLog(@"Notification's deal failed to download.");
+                                                          completionHandler(UIBackgroundFetchResultFailed);
+                                                      }];
+        }
+        
+        completionHandler(UIBackgroundFetchResultNoData);
+        
+    } else  if (state == UIApplicationStateBackground) {
+        
+        // Download the object, wheather it is a deal, dealer, else...
+        
+        if (userInfo[@"deal"]) {
+            // There is a deal object. Download it.
+            NSString *path = [NSString stringWithFormat:@"/deals/%@/", userInfo[@"deal"]];
+            [[RKObjectManager sharedManager] getObjectsAtPath:path
+                                                   parameters:nil
+                                                      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                          
+                                                          NSLog(@"Deal downloaded in background successfully.");
+                                                          self.pushedDeal = mappingResult.firstObject;
+                                                          completionHandler(UIBackgroundFetchResultNewData);
+                                                      }
+                                                      failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                          
+                                                          NSLog(@"Deal failed to download in background.");
+                                                          completionHandler(UIBackgroundFetchResultFailed);
+                                                      }];
+        }
+        
+    } else if (state == UIApplicationStateInactive) {
+        
+        // App was launched with push notificaiton
+        pushedDealID = userInfo[@"deal"];
+        
+        if (pushedDealID) {
+            [self presentNotificationOfType:@"deal"];
+        }
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
+}
+
+- (void)presentNotificationOfType:(NSString *)type
+{
+    if (!tabBarController) {
+        waitingForTabBarController = type;
+        return;
+    }
+    
+    UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:4];
+    [tabBarController setSelectedIndex:4];
+    
+    if ([type isEqualToString:@"deal"]) {
+        ViewonedealViewController *vodvc = [storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
+        if ([self.pushedDeal.dealID isEqualToValue:pushedDealID]) {
+            vodvc.deal = self.pushedDeal;
+        } else {
+            vodvc.dealID = pushedDealID;
+        }
+        [navigationController pushViewController:vodvc animated:YES];
+        [self resetBadgeCounter];
+    }
+}
+
+- (void)notifyAboutNotificationWhenActive
+{
+    if (!tabBarController) {
+        NSLog(@"There's a problem - no tab bar controller even though user is active.");
+        return;
+    }
+    
+    PushNotificationView *pushNotificationView = [[PushNotificationView alloc] initWithDelegate:self.pushNotificationsWindow];
+    [pushNotificationView layoutSubviews];
+    pushNotificationView.notificationPhoto.image = [UIImage imageWithData:self.pushedDeal.dealer.photo];
+    pushNotificationView.message.text = userInfoForActive[@"aps"][@"alert"];
+    pushNotificationView.deal = self.pushedDeal;
+    
+    [pushNotificationView presentNotification];
+}
+
 
 #pragma mark - Helper Methods
 
 - (void)saveUserDetailsOnDevice
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    [defaults setObject:self.dealer.dealerID forKey:@"dealerID"];
-    [defaults setObject:self.dealer.email forKey:@"email"];
-    [defaults setObject:self.dealer.username forKey:@"username"];
-    [defaults setObject:self.dealer.fullName forKey:@"fullName"];
-    [defaults setObject:self.dealer.dateOfBirth forKey:@"dateOfBirth"];
-    [defaults setObject:self.dealer.gender forKey:@"gender"];
-    [defaults setObject:self.dealer.registerDate forKey:@"registerDate"];
-    [defaults setObject:self.dealer.location forKey:@"location"];
-    [defaults setObject:self.dealer.about forKey:@"about"];
-    [defaults setObject:self.dealer.photoURL forKey:@"photoURL"];
-    [defaults setObject:self.dealer.uploadedDeals forKey:@"uploadedDeals"];
-    [defaults setObject:self.dealer.likedDeals forKey:@"likedDeals"];
-    [defaults setObject:self.dealer.sharedDeals forKey:@"sharedDeals"];
-    [defaults setObject:self.dealer.followedBy forKey:@"followedBy"];
-    [defaults setObject:self.dealer.followings forKey:@"followings"];
-    [defaults setObject:self.dealer.badReportsCounter forKey:@"badReportsCounter"];
-    [defaults setObject:self.dealer.score forKey:@"score"];
-    [defaults setObject:self.dealer.rank forKey:@"rank"];
-    [defaults setObject:self.dealer.reliability forKey:@"reliability"];
-    [defaults setObject:self.dealer.facebookPseudoUserID forKey:@"facebookPseudoUserID"];
-    
-    [defaults synchronize];
-    
-    if (self.dealer.photoURL.length > 1 && ![self.dealer.photoURL isEqualToString:@"None"]) {
-        [self saveProfilePic:self.dealer.photo];
+    if (tabBarController) { // In order to prevent the save if the user is not logged in.
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        [defaults setObject:self.dealer.dealerID forKey:@"dealerID"];
+        [defaults setObject:self.dealer.email forKey:@"email"];
+        [defaults setObject:self.dealer.username forKey:@"username"];
+        [defaults setObject:self.dealer.fullName forKey:@"fullName"];
+        [defaults setObject:self.dealer.dateOfBirth forKey:@"dateOfBirth"];
+        [defaults setObject:self.dealer.gender forKey:@"gender"];
+        [defaults setObject:self.dealer.registerDate forKey:@"registerDate"];
+        [defaults setObject:self.dealer.location forKey:@"location"];
+        [defaults setObject:self.dealer.about forKey:@"about"];
+        [defaults setObject:self.dealer.photoURL forKey:@"photoURL"];
+        [defaults setObject:self.dealer.uploadedDeals forKey:@"uploadedDeals"];
+        [defaults setObject:self.dealer.likedDeals forKey:@"likedDeals"];
+        [defaults setObject:self.dealer.sharedDeals forKey:@"sharedDeals"];
+        [defaults setObject:self.dealer.followedBy forKey:@"followedBy"];
+        [defaults setObject:self.dealer.followings forKey:@"followings"];
+        [defaults setObject:self.dealer.badReportsCounter forKey:@"badReportsCounter"];
+        [defaults setObject:self.dealer.score forKey:@"score"];
+        [defaults setObject:self.dealer.rank forKey:@"rank"];
+        [defaults setObject:self.dealer.reliability forKey:@"reliability"];
+        [defaults setObject:self.dealer.facebookPseudoUserID forKey:@"facebookPseudoUserID"];
+        [defaults setObject:self.dealer.invitationCounter forKey:@"invitationCounter"];
+        [defaults setObject:self.dealer.device.deviceID forKey:@"deviceID"];
+        [defaults setObject:self.dealer.device.badge forKey:@"deviceBadge"];
+        [defaults setObject:self.dealer.device.creationDate forKey:@"deviceCreationDate"];
+        
+        [defaults synchronize];
+        
+        if (self.dealer.photoURL.length > 1 && ![self.dealer.photoURL isEqualToString:@"None"]) {
+            [self saveProfilePic:self.dealer.photo];
+        }
     }
 }
 
@@ -235,6 +470,11 @@
     [defaults removeObjectForKey:@"rank"];
     [defaults removeObjectForKey:@"reliability"];
     [defaults removeObjectForKey:@"facebookPseudoUserID"];
+    [defaults removeObjectForKey:@"invitationCounter"];
+    [defaults removeObjectForKey:@"deviceID"];
+    [defaults removeObjectForKey:@"deviceBadge"];
+    [defaults removeObjectForKey:@"deviceCreationDate"];
+    [defaults removeObjectForKey:@"authorized"];
     
     [defaults synchronize];
     
@@ -295,6 +535,9 @@
                                                   
                                                   NSLog(@"Dealer updated successfuly...");
                                                   self.dealer = mappingResult.firstObject;
+                                                  self.dealer.device.dealerID = self.dealer.dealerID;
+                                                  [self saveUserDetailsOnDevice];
+                                                  
                                                   self.dealer.photo = [self loadProfilePic];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -357,6 +600,12 @@
                 
                 dealer.photo = [NSData dataWithContentsOfFile:downloadingFilePath];
                 dealer.downloadingPhoto = NO;
+                
+                if ([notificationName isEqualToString:@"Push Notifications"]) {
+                    [self notifyAboutNotificationWhenActive];
+                    return nil;
+                }
+                
                 __block NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
                                                   [UIImage imageWithData:dealer.photo], @"image",
                                                   notificationName, @"notificationName",
@@ -432,11 +681,13 @@
             
             deal.photo1 = [UIImage imageWithContentsOfFile:downloadingFilePath];
             deal.downloadingPhoto = NO;
+            
             __block NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
                                               deal.photo1, @"image",
                                               indexPath, @"indexPath",
                                               mode, @"mode",
                                               nil];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                                 object:nil
                                                               userInfo:userInfo];
@@ -473,6 +724,19 @@
                                                 
                                                 NSLog(@"Notification failed to be sent...");
                                             }];
+    }
+}
+
+- (BOOL)didDealExpired:(Deal *)deal
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *todaysComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[NSDate date]];
+    NSDate *today = [calendar dateFromComponents:todaysComponents];
+    
+    if ([today compare:deal.expiration] == NSOrderedDescending) {
+        return YES;
+    } else {
+        return NO;
     }
 }
 
@@ -1121,6 +1385,17 @@
     return [categories valueForKey:key];
 }
 
+- (NSString *)getEnglishGender:(NSString *)gender
+{
+    if ([gender isEqualToString:NSLocalizedString(@"Male", nil)]) {
+        return @"Male";
+        
+    } else if ([gender isEqualToString:NSLocalizedString(@"Female", nil)]) {
+        return @"Female";
+    }
+    return nil;
+}
+
 
 #pragma mark - RestKit
 
@@ -1248,8 +1523,15 @@
                                                          @"liked_deals" : @"likedDeals",
                                                          @"shared_deals" : @"sharedDeals",
                                                          @"followings" : @"followings",
-                                                         @"followed_by" : @"followedBy"
+                                                         @"followed_by" : @"followedBy",
+                                                         @"invitation_counter" : @"invitationCounter"
                                                          }];
+    
+    RKObjectMapping *deviceMapping = [self deviceMapping];
+    [dealerMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"device"
+                                                                                  toKeyPath:@"device"
+                                                                                withMapping:deviceMapping]];
+    
     return dealerMapping;
 }
 
@@ -1394,6 +1676,35 @@
     return userMapping;
 }
 
+- (RKObjectMapping *)invitationMapping
+{
+    RKObjectMapping *invitationMapping = [RKObjectMapping mappingForClass:[Invitation class]];
+    [invitationMapping addAttributeMappingsFromDictionary: @{
+                                                             @"id" : @"invitationID",
+                                                             @"dealer" : @"dealerID",
+                                                             @"passcode" : @"passcode"
+                                                             }];
+    
+    return invitationMapping;
+}
+
+- (RKObjectMapping *)deviceMapping
+{
+    RKObjectMapping *deviceMapping = [RKObjectMapping mappingForClass:[Device class]];
+    [deviceMapping addAttributeMappingsFromDictionary: @{
+                                                         @"id" : @"deviceID",
+                                                         @"dealers" : @"dealerID",
+                                                         @"token" : @"token",
+                                                         @"ios" : @"iOS",
+                                                         @"arn" : @"arn",
+                                                         @"badge" : @"badge",
+                                                         @"last_update_date" : @"lastUpdateDate",
+                                                         @"creation_date" : @"creationDate"
+                                                         }];
+    
+    return deviceMapping;
+}
+
 - (RKObjectMapping *)paginationMapping
 {
     RKObjectMapping *paginationMapping = [RKObjectMapping mappingForClass:[RKPaginator class]];
@@ -1469,6 +1780,13 @@
     [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
                                                  method:RKRequestMethodAny
                                             pathPattern:@"/adddeals/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *editDealResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self addDealMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/adddeals/:adddealID/"
                                                 keyPath:nil
                                             statusCodes:statusCodes];
     
@@ -1570,6 +1888,41 @@
                                                 keyPath:@"results"
                                             statusCodes:statusCodes];
     
+    RKResponseDescriptor *invitationResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self invitationMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/invitations/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *specificInvitationResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self invitationMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/invitations/:invitationID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *deviceResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self deviceMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/devices/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *specificDeviceResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self deviceMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/devices/:deviceID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *invitationSerachResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self invitationMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/invitations/"
+                                                keyPath:@"results"
+                                            statusCodes:statusCodes];
+    
     RKResponseDescriptor *signUpErrorResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self errorMapping]
                                                  method:RKRequestMethodAny
@@ -1579,7 +1932,7 @@
     
     // register mappings with the provider using request descriptors
     
-    // for user registration
+    // for Registration
     RKRequestDescriptor *signUpRequestDescriptor =
     [RKRequestDescriptor requestDescriptorWithMapping:[[self dealerMapping] inverseMapping]
                                           objectClass:[Dealer class]
@@ -1593,36 +1946,52 @@
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
-    // for Deal Attrib Update
+    // for Deal Attrib update
     RKRequestDescriptor *dealAttribRequestDescriptor =
     [RKRequestDescriptor requestDescriptorWithMapping:[[self dealAttribMapping] inverseMapping]
                                           objectClass:[DealAttrib class]
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
-    // for adding comment
+    // for adding Comment
     RKRequestDescriptor *addCommentRequestDescriptor =
     [RKRequestDescriptor requestDescriptorWithMapping:[[self addCommentMapping] inverseMapping]
                                           objectClass:[Comment class]
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
-    // for adding notification
+    // for adding Notification
     RKRequestDescriptor *addNotificationRequestDescriptor =
     [RKRequestDescriptor requestDescriptorWithMapping:[[self addNotificationMapping] inverseMapping]
                                           objectClass:[Notification class]
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
-    // for adding pseudo user
+    // for adding Pseudo User
     RKRequestDescriptor *userRequestDescriptor =
     [RKRequestDescriptor requestDescriptorWithMapping:[[self userMapping] inverseMapping]
                                           objectClass:[User class]
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
-    [manager addResponseDescriptorsFromArray:@[dealsResponseDescriptor,
+    // for posting Invitation
+    RKRequestDescriptor *invitationRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self invitationMapping] inverseMapping]
+                                          objectClass:[Invitation class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    // for Device update
+    RKRequestDescriptor *deviceRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self deviceMapping] inverseMapping]
+                                          objectClass:[Device class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    [manager addResponseDescriptorsFromArray:@[
+                                               dealsResponseDescriptor,
                                                addDealResponseDescriptor,
+                                               editDealResponseDescriptor,
                                                specificDealResponseDescriptor,
                                                dealersResponseDescriptor,
                                                signInResponseDescriptor,
@@ -1638,6 +2007,11 @@
                                                userResponseDescriptor,
                                                specificUserResponseDescriptor,
                                                facebookDealerResponseDescriptor,
+                                               invitationResponseDescriptor,
+                                               specificInvitationResponseDescriptor,
+                                               invitationSerachResponseDescriptor,
+                                               deviceResponseDescriptor,
+                                               specificDeviceResponseDescriptor,
                                                signUpErrorResponseDescriptor
                                                ]];
     
@@ -1647,7 +2021,9 @@
                                               dealAttribRequestDescriptor,
                                               addCommentRequestDescriptor,
                                               addNotificationRequestDescriptor,
-                                              userRequestDescriptor
+                                              userRequestDescriptor,
+                                              invitationRequestDescriptor,
+                                              deviceRequestDescriptor
                                               ]];
 }
 
@@ -1757,7 +2133,7 @@
     
     if (!dealer) {
         newDealer = YES;
-        dealer = [[Dealer alloc]init];
+        dealer = [[Dealer alloc] init];
         dealer.fullName = [NSString stringWithFormat:@"%@ %@",
                            [facebookInfo objectForKey:@"first_name"],
                            [facebookInfo objectForKey:@"last_name"]];
@@ -1867,8 +2243,12 @@
         
         [self openActiveSessionWithPermissions:nil allowLoginUI:NO];
     }
-    
     [FBAppCall handleDidBecomeActive];
+    
+    if (self.tabBarController && [UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
+        UITabBarItem *activityItem = [self.tabBarController.tabBar.items objectAtIndex:4];
+        activityItem.badgeValue = [NSNumber numberWithInteger:[UIApplication sharedApplication].applicationIconBadgeNumber].stringValue;
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

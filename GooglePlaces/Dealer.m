@@ -25,6 +25,7 @@
         _followings = [[NSMutableArray alloc]init];
         _followedBy = [[NSMutableArray alloc]init];
         
+        _invitationCounter = [NSNumber numberWithInteger:5];
     }
     return self;
 }

@@ -39,6 +39,8 @@
         self.title = self.categoryFromExplore;
     }
     
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
     [self initialize];
     [self setNotificationObservers];
     [self setRefreshControl];
@@ -463,14 +465,12 @@
         
         // Checking if the deal expired
         
-        NSDate *today = [NSDate date];
-        NSDate *expirationDate = deal.expiration;
-        
-        [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit startDate:&today interval:nil forDate:today];
-        [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit startDate:&expirationDate interval:nil forDate:expirationDate];
-        
-        if ([today compare:expirationDate] == NSOrderedDescending) {
-            cell.expiredTag.hidden = NO;
+        if (deal.expiration) {
+            if ([appDelegate didDealExpired:deal]) {
+                cell.expiredTag.hidden = NO;
+            } else {
+                cell.expiredTag.hidden = YES;
+            }
         }
         
         // Loading the deal's details to the cell
@@ -527,6 +527,16 @@
             deal.photoURL1 = [NSNumber numberWithInt:random].stringValue;
         }
         cell.backgroundWithColor.backgroundColor = [DealsNoPhotoTableCell randomBackgroundColors:deal.photoURL1];
+        
+        // Checking if the deal expired
+        
+        if (deal.expiration) {
+            if ([appDelegate didDealExpired:deal]) {
+                cell.expiredTag.hidden = NO;
+            } else {
+                cell.expiredTag.hidden = YES;
+            }
+        }
         
         // Loading the deal's details to the cell
         

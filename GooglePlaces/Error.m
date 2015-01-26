@@ -13,7 +13,7 @@
 - (NSString *)messagesString
 {
     if (self.detail) {
-        return self.detail;
+        return NSLocalizedString(self.detail, nil);
     }
     
     else {

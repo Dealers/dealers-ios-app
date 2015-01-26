@@ -36,7 +36,9 @@
     
     self.title = NSLocalizedString(@"What is the deal?", nil);
     
-    self.deal = [[Deal alloc]init];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
+    self.deal = [[Deal alloc] init];
     appDelegate = [[UIApplication sharedApplication] delegate];
     
     [self setNavigationBar];
@@ -48,6 +50,7 @@
     
     [self initializeCameraSection];
     [self setKeyboardNotification];
+    [self setTextViewSettings];
     [self setCounter];
     [self setProgressIndicator];
 }
@@ -133,11 +136,23 @@
 
 - (void)setNavigationBar
 {
-    UIImage *nextImage = [[UIImage imageNamed:@"Next Button"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *next = [[UIBarButtonItem alloc]initWithImage:nextImage style:UIBarButtonItemStyleBordered target:self action:@selector(nextView)];
-    [next setImageInsets:UIEdgeInsetsMake(1, -9, 0, 9)];
+    UIView *nextButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 58, 30)];
     
-    self.navigationItem.rightBarButtonItem = next;
+    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [nextButton addTarget:self action:@selector(nextView) forControlEvents:UIControlEventTouchUpInside];
+    [nextButton setFrame:CGRectMake(8, 0, 58, 30)];
+    [nextButton setTitle:NSLocalizedString(@"Next", nil) forState:UIControlStateNormal];
+    [nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [nextButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:15.0]];
+    [nextButton setBackgroundColor:[appDelegate ourPurple]];
+    [nextButton.layer setCornerRadius:5.0];
+    [nextButton.layer setMasksToBounds:YES];
+
+    [nextButtonView addSubview:nextButton];
+    
+     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:nextButtonView];
+    
+    self.navigationItem.rightBarButtonItem = barButton;
 }
 
 - (void)setKeyboardNotification
@@ -146,6 +161,15 @@
                                              selector:@selector(editingScrollPosition)
                                                  name:UIKeyboardDidShowNotification
                                                object:nil];
+}
+
+- (void)setTextViewSettings
+{
+    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+        [self.dealTitle setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
+        [self.dealTitle setTextAlignment:NSTextAlignmentRight];
+        [self.titlePlaceholder setTextAlignment:NSTextAlignmentRight];
+    }
 }
 
 - (void)setCounter
@@ -322,7 +346,22 @@
         self.addAnotherPhoto.hidden = YES;
     }
     
-    // Finally, setting camera in the background
+    // Finally, setting camera in the background (if exists in the device)
+    
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Camera", nil)
+                                                              message:NSLocalizedString(@"Your device has no camera. You can still add photos from your library", nil)
+                                                             delegate:nil
+                                                    cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                    otherButtonTitles: nil];
+        [myAlertView show];
+        self.snapButton.hidden = YES;
+        self.exitCameraModeButton.hidden = YES;
+        self.rotateCameraButton.hidden = YES;
+        
+        return;
+    }
     
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
@@ -358,6 +397,21 @@
 }
 
 - (IBAction)addPhoto:(id)sender {
+    
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Camera", nil)
+                                                              message:NSLocalizedString(@"Your device has no camera. You can still add photos from your library", nil)
+                                                             delegate:nil
+                                                    cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                    otherButtonTitles: nil];
+        [myAlertView show];
+        self.snapButton.hidden = YES;
+        self.exitCameraModeButton.hidden = YES;
+        self.rotateCameraButton.hidden = YES;
+        
+        return;
+    }
     
     if (self.addPhoto.hidden == NO) {
         
@@ -792,7 +846,7 @@
     
     self.deal.dealer = appDelegate.dealer;
     
-    self.deal.dealAttrib = [[DealAttrib alloc]init];
+    self.deal.dealAttrib = [[DealAttrib alloc] init];
     
     self.deal.type = @"Local";
     
