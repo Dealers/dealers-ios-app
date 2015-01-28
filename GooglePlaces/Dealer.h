@@ -44,7 +44,7 @@
 
 @property NSNumber *invitationCounter;
 
-@property Device *device;
+@property NSArray *devices;
 
 @property NSMutableArray *notifications;
 

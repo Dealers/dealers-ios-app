@@ -7,7 +7,6 @@
 //
 
 #import "Deal.h"
-#import "Functions.h"
 
 @implementation Deal
 

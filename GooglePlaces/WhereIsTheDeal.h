@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
-#import "Store.h"
 #import <MapKit/MapKit.h>
 #import <RestKit/RestKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "AppDelegate.h"
+#import "Store.h"
+#import "StoreCategoriesOrganizer.h"
+
 #define kGOOGLE_API_KEY @"AIzaSyCcDzlxbL52wI4wT_2y3iKqhrdCCo9WuUY"
 
 
@@ -34,6 +36,8 @@
 -(void) deallocMemory;
 
 @property UIApplication *app;
+
+@property AppDelegate *appDelegate;
 
 @property (nonatomic, strong) MKMapView *mapView;
 

@@ -9,7 +9,6 @@
 #import "WhereIsTheDeal.h"
 #import "WhatIsTheDeal1.h"
 #import "StoresTableCell.h"
-#import "Functions.h"
 #import <mach/mach.h>
 #import "CheckConnection.h"
 #import "EditDealTableViewController.h"
@@ -30,7 +29,7 @@
     WhatIsTheDeal1 *witd1vc;
 }
 
-@synthesize foursquareManager;
+@synthesize foursquareManager, appDelegate;
 
 -(void) connectionProblem {
     [_mapView removeFromSuperview];
@@ -50,157 +49,13 @@
     [alert show];
 }
 
--(BOOL) loadStoresFromFoursquare {
-    CheckConnection *checkconnection = [[CheckConnection alloc]init];
-    if ([checkconnection connected]) {
-        if (_locationManager.location.coordinate.latitude > 0) {
-            Functions *func = [[Functions alloc]init];
-            NSString * url= [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&radius=9000&v=20140201",_locationManager.location.coordinate.latitude, _locationManager.location.coordinate.longitude];
-            NSLog(@"url form FQ api:%@",url);
-            NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-            NSData *data = [NSData dataWithContentsOfURL: googleRequestURL];
-            NSError* error;
-            
-            
-            if (data!=nil) {
-                NSDictionary* json = [NSJSONSerialization
-                                      JSONObjectWithData:data
-                                      options:kNilOptions
-                                      error:&error];
-                NSDictionary *responseData = json[@"response"];
-                NSArray *venues = responseData[@"venues"];
-                
-                NSMutableArray *storeNameArray=[[NSMutableArray alloc] init];
-                NSMutableArray *storeLocationArray=[[NSMutableArray alloc]init];
-                NSMutableArray *storeIconArray=[[NSMutableArray alloc]init];
-                NSMutableArray *storeDistanceArray=[[NSMutableArray alloc]init];
-                NSMutableArray *storeCategoryArray=[[NSMutableArray alloc]init];
-                NSMutableArray *storeLongArray=[[NSMutableArray alloc]init];
-                NSMutableArray *storeLatArray=[[NSMutableArray alloc]init];
-                
-                for (int i=0; i < [[venues copy] count]; i++)
-                {
-                    NSString *categoryId = [[NSString alloc]init];
-                    NSDictionary *storeArrayFromVenues = [venues objectAtIndex:i];
-                    NSString *storeName = [storeArrayFromVenues objectForKey:@"name"];
-                    NSString *vicinity=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
-                    NSString *lng=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"lng"];
-                    NSString *lat=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"lat"];
-                    NSString *distance=[[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"distance"];
-                    NSArray *categoryArrayFromVenues=storeArrayFromVenues[@"categories"];
-                    UIImageView *tempimage = [[UIImageView alloc]init];
-                    
-                    if (storeName==nil) storeName=@"";
-                    if (vicinity==nil) vicinity=@"";
-                    if (distance==nil) distance=@"";
-                    
-                    if ([categoryArrayFromVenues count] > 0) {
-                        NSDictionary *categoryIdArray=[storeArrayFromVenues[@"categories"] objectAtIndex:0];
-                        categoryId = categoryIdArray[@"id"];
-                        if ([func CheckIfCategoryExist:categoryId]) {
-                            NSString *ImageName=[func ConnectOldCategoryToNewCategory:categoryId];
-                            if (ImageName != NULL) {
-                                tempimage.image =[UIImage imageNamed:[NSString stringWithFormat:@"%@",ImageName]];
-                                NSArray *CategoryNameArray = [ImageName componentsSeparatedByString:@"_"];
-                                NSString *CategoryName=[CategoryNameArray objectAtIndex:0];
-                                CategoryName = [CategoryName stringByReplacingOccurrencesOfString:@"@" withString:@"&"];
-                                [storeNameArray addObject:storeName];
-                                [storeLocationArray addObject:vicinity]; //vicinity
-                                [storeCategoryArray addObject:CategoryName];
-                                [storeIconArray addObject:tempimage];
-                                [storeDistanceArray addObject:distance];
-                                [storeLatArray addObject:lat];
-                                [storeLongArray addObject:lng];
-                            }
-                        }
-                    }
-                }
-                
-                
-                self.storeNameArraySort=[[NSMutableArray alloc]init];
-                self.storeLocationArraySort=[[NSMutableArray alloc]init];
-                self.storeIconArraySort=[[NSMutableArray alloc]init];
-                self.storeDistanceArraySort=[[NSMutableArray alloc]init];
-                self.storeCategoryArraySort=[[NSMutableArray alloc]init];
-                self.storeLongArraySort=[[NSMutableArray alloc]init];
-                self.storeLatArraySort=[[NSMutableArray alloc]init];
-                
-                
-                if ([storeDistanceArray count] == [storeNameArray count]) {
-                    for (int i=0; i<[[storeNameArray copy] count]; i++){
-                        int index;
-                        int min = 10000;
-                        for (int j=0; j<[[storeNameArray copy] count]; j++) {
-                            NSString *number;
-                            if (j<[storeDistanceArray count]) {
-                                number = [storeDistanceArray objectAtIndex:j];
-                            } else number=@"0";
-                            int minNumber = [number intValue];
-                            if (minNumber<min) {
-                                index=j;
-                                min=minNumber;
-                            }
-                        }
-                        
-                        if (index<[storeNameArray count]) {
-                            [self.storeNameArraySort addObject:[storeNameArray objectAtIndex:index]];
-                            
-                        } else [self.storeNameArraySort addObject:@"0"];
-                        
-                        if (index<[storeLocationArray count]) {
-                            [self.storeLocationArraySort addObject:[storeLocationArray objectAtIndex:index]];
-                            
-                        } else [self.storeLocationArraySort addObject:@"0"];
-                        
-                        if (index<[storeIconArray count]) {
-                            [self.storeIconArraySort addObject:[storeIconArray objectAtIndex:index]];
-                            
-                        } else [self.storeIconArraySort addObject:@"0"];
-                        
-                        if (index<[storeDistanceArray count]) {
-                            [self.storeDistanceArraySort addObject:[storeDistanceArray objectAtIndex:index]];
-                            
-                        }else [self.storeDistanceArraySort addObject:@"0"];
-                        
-                        if (index<[storeCategoryArray count]) {
-                            [self.storeCategoryArraySort addObject:[storeCategoryArray objectAtIndex:index]];
-                            
-                        }else [self.storeDistanceArraySort addObject:@"0"];
-                        
-                        if (index<[storeLongArray count]) {
-                            [self.storeLongArraySort addObject:[storeLongArray objectAtIndex:index]];
-                            
-                        }else [self.storeLongArraySort addObject:@"0"];
-                        
-                        if (index<[storeLatArray count]) {
-                            [self.storeLatArraySort addObject:[storeLatArray objectAtIndex:index]];
-                            
-                        }else [self.storeLatArraySort addObject:@"0"];
-                        
-                        [storeDistanceArray replaceObjectAtIndex:index withObject:@"100000"];
-                    }
-                }
-            }
-            
-        }//if locationmanager
-        else {
-            return NO;
-        }
-    }//if connection
-    else {
-        return NO;
-    }
-    return YES;
-}
-
 - (NSMutableArray *)filterStores:(NSArray *)storesArray
 {
-    NSMutableArray *filteredStores = [[NSMutableArray alloc]init];
-    Functions *func = [[Functions alloc]init];
+    NSMutableArray *filteredStores = [[NSMutableArray alloc] init];
     for (Store *store in storesArray) {
         if (store.categories.count > 0) {
             NSDictionary *categoryIdArray = [store.categories objectAtIndex:0];
-            if ([func CheckIfCategoryExist:categoryIdArray[@"id"]]) {
+            if ([StoreCategoriesOrganizer checkIfCategoryExists:categoryIdArray[@"id"]]) {
                 [filteredStores addObject:store];
             }
         }
@@ -332,6 +187,7 @@
 }
 
 -(void) initialize {
+    appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     [self displayLoadingIcon];
     self.storeSearchTableView.hidden = YES;
     //self.closeStoreSearchTableButton.hidden=YES;
@@ -488,8 +344,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    Functions *func = [[Functions alloc]init];
-    
     if (tableView == self.venuesTableView) {
         
         static NSString *cellIdentifier = @"StoresTableCell";
@@ -509,8 +363,8 @@
         if (store.categories.count > 0) {
             NSDictionary *categoryDetails = [store.categories objectAtIndex:0];
             NSString *categoryID = categoryDetails[@"id"];
-            if ([func CheckIfCategoryExist:categoryID]) {
-                UIImage *categoryIcon = [UIImage imageNamed:[func ConnectOldCategoryToNewCategory:categoryID]];
+            if ([StoreCategoriesOrganizer checkIfCategoryExists:categoryID]) {
+                UIImage *categoryIcon = [StoreCategoriesOrganizer iconForCategory:categoryID];
                 cell.categoryIcon.image = categoryIcon;
             } else {
                 cell.categoryIcon.image = [UIImage imageNamed:@"Other_general.png"];
@@ -540,8 +394,8 @@
             if (store.categories.count > 0) {
                 NSDictionary *categoryDetails = [store.categories objectAtIndex:0];
                 NSString *categoryID = categoryDetails[@"id"];
-                if ([func CheckIfCategoryExist:categoryID]) {
-                    UIImage *categoryIcon = [UIImage imageNamed:[func ConnectOldCategoryToNewCategory:categoryID]];
+                if ([StoreCategoriesOrganizer checkIfCategoryExists:categoryID]) {
+                    UIImage *categoryIcon = [StoreCategoriesOrganizer iconForCategory:categoryID];
                     cell.categoryIcon.image = categoryIcon;
                 } else {
                     cell.categoryIcon.image = [UIImage imageNamed:@"Other_general.png"];
@@ -576,8 +430,7 @@
 
 - (void)passingStoreToOptionals
 {
-    AppDelegate *app = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    app.previousViewControllerAddDeal=@"local";
+    appDelegate.previousViewControllerAddDeal = @"local";
     
     NSIndexPath *indexpath = [self.venuesTableView indexPathForSelectedRow];
     NSString *string;
@@ -883,27 +736,6 @@
     self.mapView.showsUserLocation=YES;
     [self.scrollView addSubview:self.mapView];
     [self.scrollView sendSubviewToBack:_mapView];
-}
-
-- (void)loadFoursquareaAfterDelay {
-    didUpdateTheMap = NO;
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-    dispatch_async(queue, ^{
-        // Do some computation here.
-        if (!didUpdateTheMap) {
-            loadsuc = [self loadStoresFromFoursquare];
-            didUpdateTheMap = YES;
-        }
-        // Update UI after computation.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the UI on the main thread.
-            [self setTableView];
-            if (!loadsuc) {
-                [self connectionProblem];
-            }
-        });
-    });
-    
 }
 
 - (void)loadStoresNearby

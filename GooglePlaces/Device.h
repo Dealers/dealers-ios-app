@@ -12,8 +12,9 @@
 
 @property NSNumber *deviceID;
 @property NSNumber *dealerID;
+@property NSString *UDID;
 @property NSString *token;
-@property BOOL iOS;
+@property NSString *os; // Ios; Android; Browser;
 @property NSString *arn;
 @property NSNumber *badge;
 @property NSDate *lastUpdateDate;

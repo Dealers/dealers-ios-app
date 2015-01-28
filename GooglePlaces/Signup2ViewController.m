@@ -7,7 +7,6 @@
 //
 
 #import "Signup2ViewController.h"
-#import "Functions.h"
 #import "MyFeedsViewController.h"
 #import "KeychainItemWrapper.h"
 

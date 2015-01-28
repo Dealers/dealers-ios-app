@@ -420,7 +420,7 @@
                                         <rect key="frame" x="0.0" y="430" width="320" height="115"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="My Feed+View Deal - New Version_Likes View Deal icon.png" id="2cb-MJ-bmv" userLabel="Image View like">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Likes Icon In View Deal" id="2cb-MJ-bmv" userLabel="Image View like">
                                                 <rect key="frame" x="12" y="18" width="18" height="17"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
@@ -1178,7 +1178,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Golden Card Icon" id="yaV-ZK-Cjp">
-                                <rect key="frame" x="100" y="84" width="120" height="99"/>
+                                <rect key="frame" x="85" y="44" width="150" height="124"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Passcode Here" textAlignment="center" minimumFontSize="17" id="ZuB-OA-JQR">
@@ -2068,7 +2068,7 @@ Shared by people like you</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0KA-81-Cgg" userLabel="Sign In button">
-                                        <rect key="frame" x="24" y="515" width="274" height="31.000000197924784"/>
+                                        <rect key="frame" x="24" y="515" width="274" height="31.000000197484969"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -4025,14 +4025,14 @@ Shared by people like you</string>
         <image name="Facebook Logo Selected" width="30" height="30"/>
         <image name="From Library" width="29" height="29"/>
         <image name="Gender Icon" width="30" height="30"/>
-        <image name="Golden Card Icon" width="120" height="99"/>
+        <image name="Golden Card Icon" width="150" height="124"/>
         <image name="Info Shade" width="300" height="78"/>
         <image name="Invitation Icon" width="48" height="48"/>
         <image name="Like Button" width="45" height="45"/>
         <image name="Like Button Selected" width="45" height="45"/>
+        <image name="Likes Icon In View Deal" width="18" height="17"/>
         <image name="Location Icon" width="30" height="30"/>
         <image name="Log In With Facebook Button" width="280" height="44"/>
-        <image name="My Feed+View Deal - New Version_Likes View Deal icon.png" width="18" height="17"/>
         <image name="Openning Screen Logo" width="215" height="50"/>
         <image name="Openning Screen White Logo" width="583" height="137"/>
         <image name="Password For Registration Icon" width="30" height="30"/>

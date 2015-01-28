@@ -19,7 +19,6 @@
 #import "WhatIsTheDeal.h"
 #import "CheckConnection.h"
 #import "Deal.h"
-#import "Functions.h"
 #import "DealsTableViewController.h"
 
 

@@ -528,8 +528,6 @@
         self.dealer.gender = self.genderLabel.text;
     }
     
-    self.dealer.device = [[Device alloc] init];
-    
     self.dealer.registerDate = [NSDate date];
     
     if (hasPhoto) {
@@ -648,7 +646,7 @@
                                  @"password": password
                                  };
     
-    AFHTTPClient* client = [AFHTTPClient clientWithBaseURL:[RKObjectManager sharedManager].baseURL];
+    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[RKObjectManager sharedManager].baseURL];
     [client setAuthorizationHeaderWithUsername:username password:password];
     [client postPath:@"/dealers-token-auth/"
           parameters:parameters

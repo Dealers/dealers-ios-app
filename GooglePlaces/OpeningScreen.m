@@ -371,6 +371,8 @@
     
     if (token.length > 0 && password.length > 0 && fullName.length > 0) {
         
+        appDelegate.userWasLoggedIn = YES;
+        
         [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:token];
         
         appDelegate.dealer = [[Dealer alloc] init];
@@ -396,13 +398,7 @@
         appDelegate.dealer.reliability = [userDefaults objectForKey:@"reliability"];
         appDelegate.dealer.facebookPseudoUserID = [userDefaults objectForKey:@"facebookPseudoUserID"];
         appDelegate.dealer.invitationCounter = [userDefaults objectForKey:@"invitationCounter"];
-        
-        appDelegate.dealer.device = [[Device alloc] init];
-        appDelegate.dealer.device.deviceID = [userDefaults objectForKey:@"deviceID"];
-        appDelegate.dealer.device.dealerID = self.dealer.dealerID;
-        appDelegate.dealer.device.badge = [userDefaults objectForKey:@"deviceBadge"];
-        appDelegate.dealer.device.creationDate = [userDefaults objectForKey:@"deviceCreationDate"];
-        
+                
         if (appDelegate.dealer.photoURL.length > 1 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
             appDelegate.dealer.photo = [appDelegate loadProfilePic];
         }
@@ -413,6 +409,8 @@
         
     } else {
         
+        appDelegate.userWasLoggedIn = NO;
+
         if ([appDelegate isFacebookConnected] || [FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
             [[FBSession activeSession] closeAndClearTokenInformation];
         }
@@ -752,7 +750,7 @@
                                  @"password": password
                                  };
     
-    AFHTTPClient* client = [AFHTTPClient clientWithBaseURL:[RKObjectManager sharedManager].baseURL];
+    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[RKObjectManager sharedManager].baseURL];
     [client setAuthorizationHeaderWithUsername:username password:password];
     [client postPath:@"/dealers-token-auth/"
           parameters:parameters
@@ -767,7 +765,6 @@
                  [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:token];
                  
                  KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
-                 [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
                  [keychain setObject:token forKey:(__bridge id)(kSecAttrAccount)];
                  [keychain setObject:password forKey:(__bridge id)(kSecValueData)];
                  

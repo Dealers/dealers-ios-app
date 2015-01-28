@@ -295,8 +295,8 @@
     UIGraphicsEndImageContext();
     
     [appDelegate deletePseudoUser];
-    appDelegate.dealer = nil;
     [appDelegate removeUserDetailsFromDevice];
+    [appDelegate updateDeviceAfterLogOut];
     
     if ([appDelegate isFacebookConnected]) {
         
@@ -306,6 +306,8 @@
     appDelegate.Animate_first = @"notfirst";
     appDelegate.screenShot = screenShot;
     appDelegate.window.rootViewController = nc;
+    
+    appDelegate.dealer = nil;
 }
 
 

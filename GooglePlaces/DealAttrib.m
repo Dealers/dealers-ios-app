@@ -21,8 +21,8 @@
         _objectiveRank = [NSNumber numberWithInt:0];
         _dealReliability = [NSNumber numberWithInt:100];
         
-        _dealersThatLiked = [[NSMutableArray alloc]init];
-        _dealersThatShared = [[NSMutableArray alloc]init];
+        _dealersThatLiked = [[NSMutableArray alloc] init];
+        _dealersThatShared = [[NSMutableArray alloc] init];
     }
     return self;
 }

@@ -950,10 +950,7 @@
         
     } else if (self.deal.store.categoryID) {
         // No cashed category, determine category according to the store
-        NSString *categoryFullString = [appDelegate connectOldCategoryToNewCategory:self.deal.store.categoryID];
-        NSRange endRange = [categoryFullString rangeOfString:@"_"];
-        NSRange searchRange = NSMakeRange(0 , endRange.location);
-        NSString *category = NSLocalizedString([categoryFullString substringWithRange:searchRange], nil);
+        NSString *category = [StoreCategoriesOrganizer superCategoryForCategory:self.deal.store.categoryID];
         
         self.categoryLabel.text = category;
         self.categoryLabel.textColor = [UIColor blackColor];

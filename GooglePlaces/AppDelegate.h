@@ -24,7 +24,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     int picsNumbers;
-    NSInteger timesTriedToUpdateDevice, timesTriedToUpdateBadge;
+    NSInteger timesTriedToPostDevice, timesTriedToUpdateDevice, timesTriedToUpdateBadge;
     NSString *waitingForTabBarController;
     NSNumber *pushedDealID;
     NSDictionary *userInfoForActive;
@@ -43,13 +43,16 @@
 @property (strong, nonatomic)  NSString *dealerName;
 @property (strong, nonatomic)  UIImage *dealerProfileImage;
 @property (strong, nonatomic)  Dealer *dealer;
+@property Device *device;
 @property BOOL shouldUpdateMyFeed;
 @property BOOL shouldUpdateProfile;
+@property BOOL userWasLoggedIn;
 
 @property NSMutableArray *pushedObjects;
 @property Deal *pushedDeal;
 
 @property RKObjectManager *updateFromFacebookManager;
+@property RKObjectManager *updateDeviceManager;
 
 @property (weak) UIImage *screenShot;
 
@@ -59,6 +62,8 @@
 - (void)hidePlusButton;
 - (void)resetBadgeCounter;
 - (void)presentNotificationOfType:(NSString *)type;
+
+- (void)updateDeviceAfterLogOut;
 
 - (void)saveUserDetailsOnDevice;
 - (void)removeUserDetailsFromDevice;
@@ -78,7 +83,6 @@
 - (NSNumber *)setPhotoSum:(Deal *)deal;
 - (Dealer *)updateDealer:(Dealer *)dealer withFacebookInfo:(FBGraphObject *)facebookInfo withPhoto:(BOOL)withPhoto;
 - (void)deletePseudoUser;
-- (NSString *)connectOldCategoryToNewCategory:(NSString *)string;
 
 - (UIImageView *)loadingAnimationWhite;
 - (UIImageView *)loadingAnimationPurple;

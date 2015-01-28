@@ -16,6 +16,7 @@
 #import "Deal.h"
 #import "Dealer.h"
 #import "Store.h"
+#import "StoreCategoriesOrganizer.h"
 #import "MBProgressHUD.h"
 
 @interface WhatIsTheDeal2 : UITableViewController <UITextViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, MBProgressHUDDelegate> {
