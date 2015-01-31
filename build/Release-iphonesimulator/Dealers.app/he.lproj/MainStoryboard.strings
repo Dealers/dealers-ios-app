@@ -1,0 +1,291 @@
+
+/* Class = "IBUITextField"; placeholder = "Password"; ObjectID = "0BT-8X-Ld3"; */
+"0BT-8X-Ld3.placeholder" = "סיסמה";
+
+/* Class = "IBUILabel"; text = "Uploaded Successfully"; ObjectID = "0wE-Xp-cLQ"; */
+"0wE-Xp-cLQ.text" = "הועלה בהצלחה";
+
+/* Class = "IBUILabel"; text = "Facebook"; ObjectID = "0zE-rT-sEg"; */
+"0zE-rT-sEg.text" = "פייסבוק";
+
+/* Class = "IBUITextField"; placeholder = "Email"; ObjectID = "1Lk-Oa-NkF"; */
+"1Lk-Oa-NkF.placeholder" = "דוא״ל";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Email & Password"; ObjectID = "2eC-N2-2yQ"; */
+"2eC-N2-2yQ.headerTitle" = "דוא״ל וסיסמה";
+
+/* Class = "IBUIViewController"; title = "myFeeds"; ObjectID = "2p8-yL-ySm"; */
+"2p8-yL-ySm.title" = "myFeeds";
+
+/* Class = "IBUILabel"; text = "Tell us about the deal..."; ObjectID = "3OD-0R-eyI"; */
+"3OD-0R-eyI.text" = "ספר לנו על המבצע...";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "3Yw-PU-SFP"; */
+"3Yw-PU-SFP.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Category"; ObjectID = "3ZW-Q7-ezc"; */
+"3ZW-Q7-ezc.text" = "קטגוריה";
+
+/* Class = "IBUILabel"; text = "Gender"; ObjectID = "3mD-G1-bHE"; */
+"3mD-G1-bHE.text" = "מין";
+
+/* Class = "IBUILabel"; text = "Category"; ObjectID = "3uD-no-a4g"; */
+"3uD-no-a4g.text" = "קטגוריה";
+
+/* Class = "IBUIBarButtonItem"; title = "No Date"; ObjectID = "4KY-nb-5E1"; */
+"4KY-nb-5E1.title" = "ללא תאריך";
+
+/* Class = "IBUITableViewSection"; headerTitle = "More Details"; ObjectID = "4eU-vP-heY"; */
+"4eU-vP-heY.headerTitle" = "פרטים נוספים";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "5dx-cf-Sjs"; */
+"5dx-cf-Sjs.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Coming Soon..."; ObjectID = "5nN-uI-V5r"; */
+"5nN-uI-V5r.text" = "בקרוב...";
+
+/* Class = "IBUIButton"; normalTitle = "What is this passcode?"; ObjectID = "7re-9v-5lJ"; */
+"7re-9v-5lJ.normalTitle" = "מהו קוד הכניסה הזה?";
+
+/* Class = "IBUILabel"; text = "Date of Birth"; ObjectID = "8Ny-SU-LxZ"; */
+"8Ny-SU-LxZ.text" = "תאריך לידה";
+
+/* Class = "IBUILabel"; text = "Push Notifications"; ObjectID = "8h9-rM-SDD"; */
+"8h9-rM-SDD.text" = "התרעות";
+
+/* Class = "IBUILabel"; text = "Discount"; ObjectID = "9bg-c4-Ch3"; */
+"9bg-c4-Ch3.text" = "הנחה";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "BuP-4E-Ser"; */
+"BuP-4E-Ser.text" = "Label";
+
+/* Class = "IBUITextField"; placeholder = "New Password"; ObjectID = "CaH-56-Nso"; */
+"CaH-56-Nso.placeholder" = "סיסמה חדשה";
+
+/* Class = "IBUILabel"; text = "Invite friends to Dealers with a special entrence code."; ObjectID = "D5y-Sk-Zbd"; */
+"D5y-Sk-Zbd.text" = "הזמן/י חברים ל-Dealers בעזרת קוד כניסה מיוחד.";
+
+/* Class = "IBUILabel"; text = "Sign in"; ObjectID = "E7Y-AN-Kmj"; */
+"E7Y-AN-Kmj.text" = "היכנס";
+
+/* Class = "IBUIButton"; normalTitle = "123"; ObjectID = "EIU-ZP-atj"; */
+"EIU-ZP-atj.normalTitle" = "123";
+
+/* Class = "IBUILabel"; text = "Clear Search History"; ObjectID = "EQU-9b-Uai"; */
+"EQU-9b-Uai.text" = "נקה היסטוריית חיפוש";
+
+/* Class = "IBUILabel"; text = "Not Connected"; ObjectID = "Eev-cn-7Cc"; */
+"Eev-cn-7Cc.text" = "לא מחובר";
+
+/* Class = "IBUILabel"; text = "Expires on"; ObjectID = "EgK-1R-reI"; */
+"EgK-1R-reI.text" = "תאריך תפוגה";
+
+/* Class = "IBUIButton"; normalTitle = "Add a Photo"; ObjectID = "FJ4-QR-iVH"; */
+"FJ4-QR-iVH.normalTitle" = "הוסף תמונה";
+
+/* Class = "IBUILabel"; text = "What is the Deal...? (required)"; ObjectID = "HAv-ZA-KcH"; */
+"HAv-ZA-KcH.text" = "על מה המבצע...? (חובה)";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "HTD-bx-C2Z"; */
+"HTD-bx-C2Z.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Report a Problem"; ObjectID = "HVR-5y-fHw"; */
+"HVR-5y-fHw.text" = "דווח על בעיה";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Title"; ObjectID = "I5w-lE-Fan"; */
+"I5w-lE-Fan.headerTitle" = "כותרת";
+
+/* Class = "IBUIButton"; normalTitle = "Edit"; ObjectID = "IJq-BF-dfM"; */
+"IJq-BF-dfM.normalTitle" = "ערוך";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Private Information"; ObjectID = "Iug-XB-iRH"; */
+"Iug-XB-iRH.headerTitle" = "מידע פרטי";
+
+/* Class = "IBUIButton"; normalTitle = "OK"; ObjectID = "JLd-kg-ck1"; */
+"JLd-kg-ck1.normalTitle" = "אישור";
+
+/* Class = "IBUILabel"; text = "Already have an account?"; ObjectID = "LID-58-8u9"; */
+"LID-58-8u9.text" = "יש לך כבר חשבון?";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "LKY-mr-2qf"; */
+"LKY-mr-2qf.text" = "Label";
+
+/* Class = "IBUIButton"; normalTitle = "Add a Photo"; ObjectID = "M4N-Qk-N4A"; */
+"M4N-Qk-N4A.normalTitle" = "הוסף תמונה";
+
+/* Class = "IBUIButton"; normalTitle = "Sign Up!"; ObjectID = "Muc-PO-MtV"; */
+"Muc-PO-MtV.normalTitle" = "הירשם";
+
+/* Class = "IBUILabel"; text = "Additional Description"; ObjectID = "NHW-40-hO3"; */
+"NHW-40-hO3.text" = "פרטים נוספים";
+
+/* Class = "IBUIButton"; normalTitle = "£"; ObjectID = "NHt-QW-jTa"; */
+"NHt-QW-jTa.normalTitle" = "£";
+
+/* Class = "IBUILabel"; text = "Edit Profile"; ObjectID = "Obg-zC-x4T"; */
+"Obg-zC-x4T.text" = "עריכת פרופיל";
+
+/* Class = "IBUILabel"; text = "Gender (optional)"; ObjectID = "Oic-Fw-qy0"; */
+"Oic-Fw-qy0.text" = "מין (אופציונלי)";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Pwb-tV-DR1"; */
+"Pwb-tV-DR1.text" = "Label";
+
+/* Class = "IBUITabBarItem"; title = "Item"; ObjectID = "Qgj-sA-4iB"; */
+"Qgj-sA-4iB.title" = "Item";
+
+/* Class = "IBUITextField"; placeholder = "New Password, Again..."; ObjectID = "Qrc-SW-YbR"; */
+"Qrc-SW-YbR.placeholder" = "סיסמה חדשה, שוב...";
+
+/* Class = "IBUILabel"; text = "Change Password"; ObjectID = "R4s-hf-cyl"; */
+"R4s-hf-cyl.text" = "שנה סיסמה";
+
+/* Class = "IBUIButton"; normalTitle = "%"; ObjectID = "RNL-kw-RsV"; */
+"RNL-kw-RsV.normalTitle" = "%";
+
+/* Class = "IBUIButton"; normalTitle = "$"; ObjectID = "RXh-7h-eXu"; */
+"RXh-7h-eXu.normalTitle" = "$";
+
+/* Class = "IBUIButton"; normalTitle = "₪"; ObjectID = "S8i-ju-JWa"; */
+"S8i-ju-JWa.normalTitle" = "₪";
+
+/* Class = "IBUITextField"; placeholder = "Price"; ObjectID = "SNQ-EA-4cR"; */
+"SNQ-EA-4cR.placeholder" = "מחיר";
+
+/* Class = "IBUIViewController"; title = "ExploreDeals"; ObjectID = "TBp-he-vsY"; */
+"TBp-he-vsY.title" = "ExploreDeals";
+
+/* Class = "IBUILabel"; text = "Description"; ObjectID = "U1W-BC-0Dc"; */
+"U1W-BC-0Dc.text" = "פרטים נוספים";
+
+/* Class = "IBUISearchBar"; placeholder = "Not there? Type store here"; ObjectID = "U4o-rW-sgd"; */
+"U4o-rW-sgd.placeholder" = "חפש בתי עסק";
+
+/* Class = "IBUISearchBar"; U4o-rW-sgd.scopeButtonTitles[0] = "Title"; ObjectID = "U4o-rW-sgd"; */
+"U4o-rW-sgd.scopeButtonTitles[0]" = "Title";
+
+/* Class = "IBUISearchBar"; U4o-rW-sgd.scopeButtonTitles[1] = "Title"; ObjectID = "U4o-rW-sgd"; */
+"U4o-rW-sgd.scopeButtonTitles[1]" = "Title";
+
+/* Class = "IBUITextField"; placeholder = "Something About Yourself"; ObjectID = "UaJ-P1-JjS"; */
+"UaJ-P1-JjS.placeholder" = "משהו על עצמך";
+
+/* Class = "IBUIButton"; normalTitle = "No Date"; ObjectID = "UzQ-v9-v5a"; */
+"UzQ-v9-v5a.normalTitle" = "ללא תאריך";
+
+/* Class = "IBUILabel"; text = "Send Feedback"; ObjectID = "VnS-LD-ubr"; */
+"VnS-LD-ubr.text" = "שלח חוות דעת";
+
+/* Class = "IBUILabel"; text = "Locating businesses nearby..."; ObjectID = "XI9-sz-Xhp"; */
+"XI9-sz-Xhp.text" = "מאתר בתי עסק באזור";
+
+/* Class = "IBUITextField"; placeholder = "Your Full Name"; ObjectID = "XNh-qj-LOV"; */
+"XNh-qj-LOV.placeholder" = "שמך המלא";
+
+/* Class = "IBUILabel"; text = "Likes"; ObjectID = "Y9i-ko-RdH"; */
+"Y9i-ko-RdH.text" = "לייקים";
+
+/* Class = "IBUILabel"; text = "Tutorial"; ObjectID = "YQ2-Bz-9jR"; */
+"YQ2-Bz-9jR.text" = "הדרכה";
+
+/* Class = "IBUIButton"; normalTitle = "No Date"; ObjectID = "Yt8-xb-A09"; */
+"Yt8-xb-A09.normalTitle" = "ללא תאריך";
+
+/* Class = "IBUITextField"; placeholder = "Enter Passcode Here"; ObjectID = "ZuB-OA-JQR"; */
+"ZuB-OA-JQR.placeholder" = "הכנס/י קוד כניסה כאן";
+
+/* Class = "IBUITextField"; placeholder = "Expiration Date"; ObjectID = "cbc-XJ-tjI"; */
+"cbc-XJ-tjI.placeholder" = "תאריך תפוגה";
+
+/* Class = "IBUILabel"; text = "Delete Deal"; ObjectID = "cr0-7m-F0z"; */
+"cr0-7m-F0z.text" = "מחק מבצע";
+
+/* Class = "IBUILabel"; text = "Find great deals\nShared by people like you"; ObjectID = "d0a-io-i0E"; */
+"d0a-io-i0E.text" = "מצא מבצעים מדהימים\nששותפו על ידי אנשים כמוך";
+
+/* Class = "IBUITabBarItem"; title = "Item"; ObjectID = "d3D-C2-b2I"; */
+"d3D-C2-b2I.title" = "Item";
+
+/* Class = "IBUITextField"; placeholder = "Location"; ObjectID = "da7-LK-I96"; */
+"da7-LK-I96.placeholder" = "מיקום";
+
+/* Class = "IBUITextField"; placeholder = "Password"; ObjectID = "e38-is-Vyi"; */
+"e38-is-Vyi.placeholder" = "סיסמה";
+
+/* Class = "IBUITextField"; placeholder = "Email"; ObjectID = "ehp-Bc-hii"; */
+"ehp-Bc-hii.placeholder" = "דוא״ל";
+
+/* Class = "IBUILabel"; text = "Date Of Birth (optional)"; ObjectID = "fgN-mQ-SKu"; */
+"fgN-mQ-SKu.text" = "תאריך לידה (אופציונלי)";
+
+/* Class = "IBUILabel"; text = "Expiration Date"; ObjectID = "fwe-1N-vvk"; */
+"fwe-1N-vvk.text" = "תאריך תפוגה";
+
+/* Class = "IBUIButton"; normalTitle = "Sign In"; ObjectID = "gBt-Uc-Vut"; */
+"gBt-Uc-Vut.normalTitle" = "היכנס";
+
+/* Class = "IBUILabel"; text = "Discount"; ObjectID = "gNM-J3-Cgp"; */
+"gNM-J3-Cgp.text" = "הנחה";
+
+/* Class = "IBUILabel"; text = "$"; ObjectID = "h1Q-sG-jVp"; */
+"h1Q-sG-jVp.text" = "$";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Support"; ObjectID = "izp-6C-IGB"; */
+"izp-6C-IGB.headerTitle" = "תמיכה";
+
+/* Class = "IBUIBarButtonItem"; title = " "; ObjectID = "j9U-rO-k5m"; */
+"j9U-rO-k5m.title" = " ";
+
+/* Class = "IBUILabel"; text = "Price"; ObjectID = "jUX-q8-Fl7"; */
+"jUX-q8-Fl7.text" = "מחיר";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Account Settings"; ObjectID = "mOx-g3-9VW"; */
+"mOx-g3-9VW.headerTitle" = "הגדרות חשבון";
+
+/* Class = "IBUILabel"; text = "Thank You\nGilad Lumbroso! "; ObjectID = "o1f-xS-WBu"; */
+"o1f-xS-WBu.text" = "Thank You\nGilad Lumbroso! ";
+
+/* Class = "IBUITextField"; placeholder = "Category"; ObjectID = "oFz-JN-Y4F"; */
+"oFz-JN-Y4F.placeholder" = "קטגוריה";
+
+/* Class = "IBUITextField"; placeholder = "Discount"; ObjectID = "pHb-zp-D6t"; */
+"pHb-zp-D6t.placeholder" = "הנחה";
+
+/* Class = "IBUILabel"; text = "Log Out"; ObjectID = "s1Q-4C-gyo"; */
+"s1Q-4C-gyo.text" = "התנתק";
+
+/* Class = "IBUITextField"; placeholder = "Full Name"; ObjectID = "s9r-el-Tr9"; */
+"s9r-el-Tr9.placeholder" = "שם מלא";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Basic Details"; ObjectID = "snO-jV-gUI"; */
+"snO-jV-gUI.headerTitle" = "פרטים בסיסיים";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "tea-wx-AX4"; */
+"tea-wx-AX4.text" = "Label";
+
+/* Class = "IBUIBarButtonItem"; title = " "; ObjectID = "thm-fH-E4Y"; */
+"thm-fH-E4Y.title" = " ";
+
+/* Class = "IBUILabel"; text = "Incorrect Passcode"; ObjectID = "uL2-6C-Y1i"; */
+"uL2-6C-Y1i.text" = "קוד כניסה שגוי";
+
+/* Class = "IBUITextField"; placeholder = "Current Password"; ObjectID = "uew-eV-t89"; */
+"uew-eV-t89.placeholder" = "סיסמה נוכחית";
+
+/* Class = "IBUITextField"; placeholder = "Email"; ObjectID = "wDP-qs-CQ9"; */
+"wDP-qs-CQ9.placeholder" = "דוא״ל";
+
+/* Class = "IBUILabel"; text = "Share with Facebook"; ObjectID = "wGd-Ve-qMr"; */
+"wGd-Ve-qMr.text" = "שתף/י עם פייסבוק";
+
+/* Class = "IBUILabel"; text = "Price"; ObjectID = "waY-z6-dpa"; */
+"waY-z6-dpa.text" = "מחיר";
+
+/* Class = "IBUILabel"; text = "%"; ObjectID = "xOZ-bl-3Ri"; */
+"xOZ-bl-3Ri.text" = "%";
+
+/* Class = "IBUILabel"; text = "Find great deals\nShared by people like you"; ObjectID = "yVz-3k-zxQ"; */
+"yVz-3k-zxQ.text" = "מצא מבצעים מדהימים\nששותפו על ידי אנשים כמוך";
+
+/* Class = "IBUILabel"; text = "Share with WhatsApp"; ObjectID = "ziO-YV-MgH"; */
+"ziO-YV-MgH.text" = "שתף/י עם וואטסאפ";

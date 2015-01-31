@@ -115,6 +115,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     [self.textView becomeFirstResponder];
     if ([self.title isEqualToString:NSLocalizedString(@"Price", nil)]) [self showPriceBar];
     if ([self.title isEqualToString:NSLocalizedString(@"Discount", nil)]) [self showDiscountBar];
@@ -122,6 +124,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     if ([self.title isEqualToString:NSLocalizedString(@"Title", nil)]) {
         self.textView.keyboardType = UIKeyboardTypeDefault;
         self.textView.returnKeyType = UIReturnKeyDone;

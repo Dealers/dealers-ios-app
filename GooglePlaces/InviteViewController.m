@@ -34,19 +34,23 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     [self setInvitationIcons];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"Navigation Bar Shade"];
 }
 
 - (void)setInvitationMessageAndPasscode
 {
     passcode = [self generateCode];
-    invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"I'm sending you an entrence passcode for Dealers:\n%@\n\nDownload Dealers here:\nHere will be our link.", nil), passcode];
+    invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"I'm sending you an entrence passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\nHere will be our link.", nil), passcode];
 }
 
 - (void)setInvitationIcons

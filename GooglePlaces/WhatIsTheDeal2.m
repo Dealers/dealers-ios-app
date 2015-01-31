@@ -50,11 +50,15 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     NSArray *viewControllers = self.navigationController.viewControllers;
     
     if ([viewControllers indexOfObject:self] == NSNotFound) {
@@ -858,8 +862,6 @@
         expirationLabel.numberOfLines = 1;
         expirationLabel.text = [NSLocalizedString(@"Expires on ", nil) stringByAppendingString:self.expirationDateLabel.text];
         [sharedView addSubview:expirationLabel];
-        
-        detailsLowestYPoint = CGRectGetMaxY(expirationLabel.frame);
     }
 }
 

@@ -40,6 +40,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
     
     if ([appDelegate isFacebookConnected]) {
@@ -294,10 +296,10 @@
     UIImage *screenShot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    [appDelegate deletePseudoUser];
-    [appDelegate removeUserDetailsFromDevice];
     [appDelegate updateDeviceAfterLogOut];
-    
+    [appDelegate removeUserDetailsFromDevice];
+    [appDelegate deletePseudoUser];
+
     if ([appDelegate isFacebookConnected]) {
         
         [[FBSession activeSession] closeAndClearTokenInformation];

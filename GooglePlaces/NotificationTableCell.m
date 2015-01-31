@@ -31,6 +31,19 @@
     self.notificationImage.layer.cornerRadius = self.notificationImage.frame.size.width / 2;
     self.notificationImage.layer.masksToBounds = YES;
     
+    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+        
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.baseWritingDirection = UITextWritingDirectionRightToLeft;
+        
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:self.label.text];
+        [string addAttribute:NSParagraphStyleAttributeName
+                       value:paragraphStyle
+                       range:NSMakeRange(0, string.length)];
+        
+        self.label.attributedText = string;
+    }
+    
     self.date.hidden = YES;
 }
 
@@ -77,6 +90,7 @@
         NSString *fullName2 = notification2.dealer.fullName;
         
         NSString *notificationString;
+        NSString *andSign = NSLocalizedString(@"&", nil);
         
         if ([notification1.type isEqualToString:@"Like"]) {
             
@@ -115,11 +129,11 @@
         
         if (notificationsGroup.count == 2) {
             
-            return [NSString stringWithFormat:@"%@ & %@ %@", fullName1, fullName2, notificationString];
+            return [NSString stringWithFormat:@"%@ %@ %@ %@", fullName1, andSign, fullName2, notificationString];
         
         } else if (notificationsGroup.count > 2) {
             
-            return [NSString stringWithFormat:@"%@, %@ & %@ more people %@", fullName1, fullName2, [NSNumber numberWithUnsignedInteger:notificationsGroup.count - 2], notificationString];
+            return [NSString stringWithFormat:@"%@, %@ %@ %@ more people %@", fullName1, fullName2, andSign, [NSNumber numberWithUnsignedInteger:notificationsGroup.count - 2], notificationString];
         }
     }
     

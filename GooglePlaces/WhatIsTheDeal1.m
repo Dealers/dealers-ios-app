@@ -63,6 +63,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     if (!(self.dealTitle.text.length > 0)) {
         
         [self.dealTitle becomeFirstResponder];
@@ -546,7 +548,7 @@
     
     CGRect cropRect = CGRectMake(originX, originY, sizeWidth, sizeHeight);
     
-    UIImage *finalImage = [UIImage imageWithCGImage:CGImageCreateWithImageInRect([resizedImage CGImage], cropRect)];
+    UIImage *finalImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(CFBridgingRelease(CGImageCreateWithImageInRect([resizedImage CGImage], cropRect)))];
     
     [self addNewPhotoToList:finalImage];
     

@@ -15,7 +15,6 @@
 		56849795154C00BF001601A2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56849793154C00BF001601A2 /* MainStoryboard.storyboard */; };
 		5684979F154C010C001601A2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5684979E154C010C001601A2 /* MapKit.framework */; };
 		568497A1154C0116001601A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 568497A0154C0116001601A2 /* CoreLocation.framework */; };
-		B012D950182AA323006288CA /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B012D94F182AA321006288CA /* ProfileViewController.m */; };
 		B01BD1B217F0D6480010C9A4 /* WhereIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */; };
 		B024374B17F47D9000FB24CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B024374A17F47D9000FB24CC /* QuartzCore.framework */; };
 		B02747FF186B291B005A52F0 /* PLCameraSheetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */; };
@@ -32,27 +31,20 @@
 		B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B027480F186B2A2B005A52F0 /* GKImageCropViewController.m */; };
 		B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B0274811186B2A2B005A52F0 /* GKImagePicker.m */; };
 		B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */; };
-		B0294C7318B0CC0900699107 /* MyFeedsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0294C7218B0CC0900699107 /* MyFeedsViewController.m */; };
 		B034B8B6180476AC00625392 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B034B8B5180476AC00625392 /* main.m */; };
 		B03F6B8A18676F6C000ACC13 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03F6B8718676F6C000ACC13 /* Accounts.framework */; };
 		B03F6B8B18676F6C000ACC13 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03F6B8818676F6C000ACC13 /* AdSupport.framework */; };
 		B03F6B8C18676F6C000ACC13 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03F6B8918676F6C000ACC13 /* Social.framework */; };
 		B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B055C73017FE878B00FBDFCC /* ExploretableViewController.m */; };
-		B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B06F806B181275E30032CE68 /* BackgroundLayer.m */; };
 		B079F2B81846230A00E0C186 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B079F2B71846230800E0C186 /* AVFoundation.framework */; };
 		B08A3668187B3C82005B72D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B08A3667187B3C82005B72D8 /* Images.xcassets */; };
-		B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0907D5F18F95A7500ED54F2 /* ExploreDealsViewController.m */; };
-		B0930BFC17F3807D004EB3CA /* WhatIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */; };
 		B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */; };
-		B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C0D17F40B78004EB3CA /* SigninViewController.m */; };
 		B0930C1417F40BD2004EB3CA /* OpeningScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = B0930C1317F40BD2004EB3CA /* OpeningScreen.m */; };
 		B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD1193CBE0A006CB986 /* Deal.m */; };
 		B09FBAD5193F0764006CB986 /* Dealer.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FBAD4193F0764006CB986 /* Dealer.m */; };
-		B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */; };
 		B0E0A943189C43BB00EF0641 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E0A942189C43BB00EF0641 /* libsqlite3.dylib */; };
 		B0E4F6FB191015F50080CD32 /* CheckConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E4F6FA191015F50080CD32 /* CheckConnection.m */; };
 		B0E62D0019C575810038FCDF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E62CFF19C575810038FCDF /* FacebookSDK.framework */; };
-		B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */; };
 		B0F1BB9618B913D700AD2929 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9518B913D700AD2929 /* CoreText.framework */; };
 		B0F1BB9818B913EC00AD2929 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9718B913EC00AD2929 /* Security.framework */; };
 		B0F1BB9A18B913F700AD2929 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */; };
@@ -183,8 +175,6 @@
 		56849791154C00BF001601A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5684979E154C010C001601A2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		568497A0154C0116001601A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		B012D94E182AA320006288CA /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
-		B012D94F182AA321006288CA /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhereIsTheDeal.h; sourceTree = "<group>"; };
 		B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhereIsTheDeal.m; sourceTree = "<group>"; };
 		B024374A17F47D9000FB24CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -208,8 +198,6 @@
 		B0274811186B2A2B005A52F0 /* GKImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKImagePicker.m; sourceTree = "<group>"; };
 		B0274812186B2A2B005A52F0 /* GKResizeableCropOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKResizeableCropOverlayView.h; sourceTree = "<group>"; };
 		B0274813186B2A2B005A52F0 /* GKResizeableCropOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKResizeableCropOverlayView.m; sourceTree = "<group>"; };
-		B0294C7118B0CC0900699107 /* MyFeedsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFeedsViewController.h; sourceTree = "<group>"; };
-		B0294C7218B0CC0900699107 /* MyFeedsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFeedsViewController.m; sourceTree = "<group>"; };
 		B034B8B41804765500625392 /* DB2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DB2-Prefix.pch"; sourceTree = "<group>"; };
 		B034B8B5180476AC00625392 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B03F6B8718676F6C000ACC13 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -218,32 +206,20 @@
 		B0493AD718FDC5E90044AD91 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B055C72F17FE877800FBDFCC /* ExploretableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploretableViewController.h; sourceTree = "<group>"; };
 		B055C73017FE878B00FBDFCC /* ExploretableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploretableViewController.m; sourceTree = "<group>"; };
-		B06F806A181275E20032CE68 /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
-		B06F806B181275E30032CE68 /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		B079F2B71846230800E0C186 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B08A3667187B3C82005B72D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Dealers-test/Images.xcassets"; sourceTree = "<group>"; };
-		B0907D5E18F95A7500ED54F2 /* ExploreDealsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreDealsViewController.h; sourceTree = "<group>"; };
-		B0907D5F18F95A7500ED54F2 /* ExploreDealsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreDealsViewController.m; sourceTree = "<group>"; };
-		B0930BFA17F3807D004EB3CA /* WhatIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatIsTheDeal.h; sourceTree = "<group>"; };
-		B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatIsTheDeal.m; sourceTree = "<group>"; };
 		B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewonedealViewController.h; sourceTree = "<group>"; };
 		B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewonedealViewController.m; sourceTree = "<group>"; };
-		B0930C0C17F40B78004EB3CA /* SigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SigninViewController.h; sourceTree = "<group>"; };
-		B0930C0D17F40B78004EB3CA /* SigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigninViewController.m; sourceTree = "<group>"; };
 		B0930C1217F40BD2004EB3CA /* OpeningScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningScreen.h; sourceTree = "<group>"; };
 		B0930C1317F40BD2004EB3CA /* OpeningScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningScreen.m; sourceTree = "<group>"; };
 		B09FBAD0193CBE0A006CB986 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
 		B09FBAD1193CBE0A006CB986 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
 		B09FBAD3193F0764006CB986 /* Dealer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dealer.h; sourceTree = "<group>"; };
 		B09FBAD4193F0764006CB986 /* Dealer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dealer.m; sourceTree = "<group>"; };
-		B0DBB1C418AB59BA001F8FDB /* OnlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OnlineViewController.h; path = ../OnlineViewController.h; sourceTree = "<group>"; };
-		B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OnlineViewController.m; path = ../OnlineViewController.m; sourceTree = "<group>"; };
 		B0E0A942189C43BB00EF0641 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B0E4F6F9191015F50080CD32 /* CheckConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckConnection.h; path = ../CheckConnection.h; sourceTree = "<group>"; };
 		B0E4F6FA191015F50080CD32 /* CheckConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckConnection.m; path = ../CheckConnection.m; sourceTree = "<group>"; };
 		B0E62CFF19C575810038FCDF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
-		B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signup2ViewController.h; sourceTree = "<group>"; };
-		B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signup2ViewController.m; sourceTree = "<group>"; };
 		B0F1BB9518B913D700AD2929 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B0F1BB9718B913EC00AD2929 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B0F1BB9918B913F700AD2929 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -696,22 +672,6 @@
 		C871A5321A25D58500A9A2D1 /* Old Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B0EB39621801C27700D3E0E8 /* Signup2ViewController.h */,
-				B0EB39631801C27700D3E0E8 /* Signup2ViewController.m */,
-				B012D94E182AA320006288CA /* ProfileViewController.h */,
-				B012D94F182AA321006288CA /* ProfileViewController.m */,
-				B0294C7118B0CC0900699107 /* MyFeedsViewController.h */,
-				B0294C7218B0CC0900699107 /* MyFeedsViewController.m */,
-				B0930C0C17F40B78004EB3CA /* SigninViewController.h */,
-				B0930C0D17F40B78004EB3CA /* SigninViewController.m */,
-				B0907D5E18F95A7500ED54F2 /* ExploreDealsViewController.h */,
-				B0907D5F18F95A7500ED54F2 /* ExploreDealsViewController.m */,
-				B0930BFA17F3807D004EB3CA /* WhatIsTheDeal.h */,
-				B0930BFB17F3807D004EB3CA /* WhatIsTheDeal.m */,
-				B0DBB1C418AB59BA001F8FDB /* OnlineViewController.h */,
-				B0DBB1C518AB59BA001F8FDB /* OnlineViewController.m */,
-				B06F806A181275E20032CE68 /* BackgroundLayer.h */,
-				B06F806B181275E30032CE68 /* BackgroundLayer.m */,
 			);
 			name = "Old Classes";
 			sourceTree = "<group>";
@@ -827,9 +787,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5684977C154C00BF001601A2 /* Dealers-test */ = {
+		5684977C154C00BF001601A2 /* Dealers */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5684979B154C00BF001601A2 /* Build configuration list for PBXNativeTarget "Dealers-test" */;
+			buildConfigurationList = 5684979B154C00BF001601A2 /* Build configuration list for PBXNativeTarget "Dealers" */;
 			buildPhases = (
 				56849779154C00BF001601A2 /* Sources */,
 				5684977A154C00BF001601A2 /* Frameworks */,
@@ -840,7 +800,7 @@
 			dependencies = (
 				C898FE6319A6176400F1C11A /* PBXTargetDependency */,
 			);
-			name = "Dealers-test";
+			name = Dealers;
 			productName = GooglePlaces;
 			productReference = 5684977D154C00BF001601A2 /* Dealers.app */;
 			productType = "com.apple.product-type.application";
@@ -883,7 +843,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				5684977C154C00BF001601A2 /* Dealers-test */,
+				5684977C154C00BF001601A2 /* Dealers */,
 			);
 		};
 /* End PBXProject section */
@@ -976,8 +936,6 @@
 				C898FE6D19AB94BA00F1C11A /* Store.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
 				B01BD1B217F0D6480010C9A4 /* WhereIsTheDeal.m in Sources */,
-				B0DBB1C618AB59BA001F8FDB /* OnlineViewController.m in Sources */,
-				B0930BFC17F3807D004EB3CA /* WhatIsTheDeal.m in Sources */,
 				C80810C11A6CFFE20034D8B1 /* Invitation.m in Sources */,
 				C8A10BAA19EAE4520090F1D9 /* CommentsTableViewController.m in Sources */,
 				C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */,
@@ -990,7 +948,6 @@
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
 				C80810C41A6EA0890034D8B1 /* Device.m in Sources */,
-				B0930C0E17F40B78004EB3CA /* SigninViewController.m in Sources */,
 				C862AF2B1A2E0B5F00352831 /* ProfileTableViewController.m in Sources */,
 				B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */,
 				B0930C1417F40BD2004EB3CA /* OpeningScreen.m in Sources */,
@@ -1001,13 +958,10 @@
 				C8A012F219DD52F700C1D973 /* WhatIsTheDeal2.m in Sources */,
 				B055C73117FE87A900FBDFCC /* ExploretableViewController.m in Sources */,
 				B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */,
-				B0294C7318B0CC0900699107 /* MyFeedsViewController.m in Sources */,
 				C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */,
 				C8AC887E19BD9A5D002A2C16 /* CommentsTableCell.m in Sources */,
 				C848B66D19ADB92A000F138D /* Comment.m in Sources */,
 				C8A10BA219E9628D0090F1D9 /* ActivityTableViewController.m in Sources */,
-				B0907D6018F95A7500ED54F2 /* ExploreDealsViewController.m in Sources */,
-				B0EB39641801C27800D3E0E8 /* Signup2ViewController.m in Sources */,
 				C8A012EF19DD52E100C1D973 /* WhatIsTheDeal1.m in Sources */,
 				C8A10B9219E465C90090F1D9 /* ThankYouViewController.m in Sources */,
 				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
@@ -1016,9 +970,7 @@
 				B034B8B6180476AC00625392 /* main.m in Sources */,
 				C848B67819B4AB76000F138D /* StoresTableCell.m in Sources */,
 				C863A6631A776A4300D74479 /* StoreCategoriesOrganizer.m in Sources */,
-				B06F806C181275E40032CE68 /* BackgroundLayer.m in Sources */,
 				C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */,
-				B012D950182AA323006288CA /* ProfileViewController.m in Sources */,
 				C8A10BA619E96B100090F1D9 /* NotificationTableCell.m in Sources */,
 				C8C2E5231A625E66000F305F /* InviteViewController.m in Sources */,
 				C8EE6D741A305FD500D53893 /* ComingSoonViewController.m in Sources */,
@@ -1168,7 +1120,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Uzi Lumbroso (26MT39LF3E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_RESOURCE_RULES_PATH[sdk=*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
@@ -1189,7 +1141,7 @@
 				);
 				PRODUCT_NAME = Dealers;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "693F5A72-197E-433C-8C1D-1F2EA13877C4";
+				"PROVISIONING_PROFILE[sdk=*]" = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1223,7 +1175,7 @@
 				);
 				PRODUCT_NAME = Dealers;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "35bcd955-579e-463e-ad07-523ad583d8a3";
+				"PROVISIONING_PROFILE[sdk=*]" = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1242,7 +1194,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5684979B154C00BF001601A2 /* Build configuration list for PBXNativeTarget "Dealers-test" */ = {
+		5684979B154C00BF001601A2 /* Build configuration list for PBXNativeTarget "Dealers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5684979C154C00BF001601A2 /* Debug */,

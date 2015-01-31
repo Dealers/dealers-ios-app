@@ -50,6 +50,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     UIButton *plusButton = (UIButton *)[self.tabBarController.view viewWithTag:123];
     if (plusButton.alpha == 1.0) {
         [appDelegate hidePlusButton];
@@ -61,6 +63,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     UIButton *plusButton = (UIButton *)[self.tabBarController.view viewWithTag:123];
     if (plusButton.alpha == 0) {
         [appDelegate showPlusButton];
@@ -76,6 +80,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     [self keyboardShouldBeReady];
 }
 

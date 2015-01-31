@@ -38,6 +38,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     if (!didUploadUserData) {
         
         appDelegate.dealer.photoURL = self.originalPhotoURL;

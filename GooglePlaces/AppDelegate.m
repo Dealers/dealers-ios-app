@@ -120,7 +120,14 @@
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
-    [self.updateDeviceManager addResponseDescriptor:updateDeviceResponseDescriptor];
+    RKResponseDescriptor *errorResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self errorMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:nil
+                                                keyPath:nil
+                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
+    
+    [self.updateDeviceManager addResponseDescriptorsFromArray:@[updateDeviceResponseDescriptor, errorResponseDescriptor]];
     [self.updateDeviceManager addRequestDescriptor:updateDeviceRequestDescriptor];
 }
 
@@ -149,6 +156,7 @@
         self.device.UDID = [defaults objectForKey:@"UDID"];
         self.device.os = [defaults objectForKey:@"deviceOS"];
         self.device.creationDate = [defaults objectForKey:@"deviceCreationDate"];
+        self.device.badge = [NSNumber numberWithInteger:[UIApplication sharedApplication].applicationIconBadgeNumber];
     }
 }
 
@@ -236,12 +244,24 @@
                                           
                                           NSLog(@"Failed to update device with token...");
                                           
-                                          // Try again
-                                          if (timesTriedToUpdateDevice < 2) {
-                                              timesTriedToUpdateDevice++;
-                                              [self patchDeviceFor:purpose];
+                                          //check if device wasn't found. If so post it.
+                                          
+                                          Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
+                                          
+                                          if ([[errors messagesString] isEqualToString:NSLocalizedString(@"Not found", nil)]) {
+                                              
+                                              // Post device
+                                              [self postDevice];
+                                          
                                           } else {
-                                              timesTriedToUpdateDevice = 0;
+                                              
+                                              // Something's wrong. Try again
+                                              if (timesTriedToUpdateDevice < 2) {
+                                                  timesTriedToUpdateDevice++;
+                                                  [self patchDeviceFor:purpose];
+                                              } else {
+                                                  timesTriedToUpdateDevice = 0;
+                                              }
                                           }
                                       }];
         
@@ -413,7 +433,7 @@
         // download the deal
         pushedDealID = userInfoForActive[@"deal"];
         if (pushedDealID) {
-            NSString *path = [NSString stringWithFormat:@"/deals/%@/", pushedDealID];
+            NSString *path = [NSString stringWithFormat:@"/alldeals/%@/", pushedDealID];
             [[RKObjectManager sharedManager] getObjectsAtPath:path
                                                    parameters:nil
                                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -439,7 +459,7 @@
         
         if (userInfo[@"deal"]) {
             // There is a deal object. Download it.
-            NSString *path = [NSString stringWithFormat:@"/deals/%@/", userInfo[@"deal"]];
+            NSString *path = [NSString stringWithFormat:@"/alldeals/%@/", userInfo[@"deal"]];
             [[RKObjectManager sharedManager] getObjectsAtPath:path
                                                    parameters:nil
                                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -575,8 +595,7 @@
     
     [self removeProfilePic];
     
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
-    [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
     [keychain resetKeychainItem];
 }
 
@@ -1480,7 +1499,7 @@
     RKResponseDescriptor *specificDealResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
                                                  method:RKRequestMethodAny
-                                            pathPattern:@"/deals/:dealID/"
+                                            pathPattern:@"/alldeals/:alldealID/"
                                                 keyPath:nil
                                             statusCodes:statusCodes];
     

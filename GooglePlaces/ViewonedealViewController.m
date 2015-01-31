@@ -12,7 +12,6 @@
 #import "AppDelegate.h"
 #import "WhereIsTheDeal.h"
 #import <QuartzCore/QuartzCore.h>
-#import "OnlineViewController.h"
 #import "ActivityTypeWhatsApp.h"
 #import "CommentsTableViewController.h"
 
@@ -72,6 +71,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     if (self.afterEditing || self.didChangesInComments) { // If the user edited the deal, then it should load iteself again in order to present the updated info.
         
         [self.scroll setNeedsLayout];
@@ -87,6 +88,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     [self setSharedView];
     [self screenshotSharedView];
     
@@ -97,6 +100,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     // Check if should update the dealAttrib
     if (self.likeCounter.integerValue != self.deal.dealAttrib.dealersThatLiked.count) {
         
@@ -184,7 +189,7 @@
 
 - (void)downloadDeal
 {
-    NSString *path = [NSString stringWithFormat:@"/deals/%@/", self.dealID];
+    NSString *path = [NSString stringWithFormat:@"/alldeals/%@/", self.dealID];
     
     [self setLoadingView];
     
@@ -1374,9 +1379,7 @@
         expirationLabel.textColor = detailsTextColor;
         expirationLabel.numberOfLines = 1;
         expirationLabel.text = self.expirelabel.text;
-        [sharedView addSubview:expirationLabel];
-        
-        detailsLowestYPoint = CGRectGetMaxY(expirationLabel.frame);
+        [sharedView addSubview:expirationLabel];        
     }
 }
 

@@ -350,7 +350,6 @@
         StoresTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if (!cell) {
-            cell = [[StoresTableCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTableCell" owner:nil options:nil];
             cell = [nib objectAtIndex:0];
         }
@@ -426,34 +425,6 @@
 //        [[segue destinationViewController] setStoreName:string];
 //        [[segue destinationViewController] setSegcategory:@"No Category"];
 //    }
-}
-
-- (void)passingStoreToOptionals
-{
-    appDelegate.previousViewControllerAddDeal = @"local";
-    
-    NSIndexPath *indexpath = [self.venuesTableView indexPathForSelectedRow];
-    NSString *string;
-    NSString *string2;
-    NSString *string3;
-    NSString *string4;
-    NSString *string5;
-    
-    if (indexpath.row<[self.storeNameArraySort count]) {
-        string = [self.storeNameArraySort objectAtIndex:indexpath.row];
-    } else string=@"Unknown";
-    if (indexpath.row<[self.storeCategoryArraySort count]) {
-        string2 = [self.storeCategoryArraySort objectAtIndex:indexpath.row];
-    } else string2=@"Unknown";
-    if (indexpath.row<[self.storeLatArraySort count]) {
-        string3 = [self.storeLatArraySort objectAtIndex:indexpath.row];
-    } else string3=@"0";
-    if (indexpath.row<[self.storeLongArraySort count]) {
-        string4 = [self.storeLongArraySort objectAtIndex:indexpath.row];
-    } else string4=@"0";
-    if (indexpath.row<[self.storeLocationArraySort count]) {
-        string5 = [self.storeLocationArraySort objectAtIndex:indexpath.row];
-    } else string5=@"Unknown";
 }
 
 - (IBAction)Dismiss:(id)sender {
@@ -776,6 +747,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self initialize];
     [self initMapView];
     if (currentVC) {
@@ -789,6 +762,9 @@
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
+    
+    [super viewDidDisappear:animated];
+    
     currentVC = 0;
     [self deallocMapView];
 }

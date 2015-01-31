@@ -27,18 +27,20 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+
     AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     self.title = NSLocalizedString(@"Choose Category", nil);
     
     self.categories = [[NSArray alloc]initWithArray:[app getCategories]];
     self.icons = [[NSArray alloc]initWithArray:[app getCategoriesIcons]];
-
-    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     if ([self.cameFrom isEqualToString:@"Add Deal"]) {
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
@@ -47,6 +49,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     if ([self.cameFrom isEqualToString:@"Add Deal"]) {
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Add Deal Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];

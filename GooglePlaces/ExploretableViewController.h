@@ -10,10 +10,7 @@
 #import "AppDelegate.h"
 #import "DealsTableViewController.h"
 #import "ViewonedealViewController.h"
-#import "ProfileViewController.h"
 #import "WhereIsTheDeal.h"
-#import "ExploreDealsViewController.h"
-#import "OnlineViewController.h"
 
 @interface ExploretableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
 

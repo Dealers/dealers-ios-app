@@ -56,6 +56,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     
     if (appDelegate.shouldUpdateProfile) {
@@ -80,6 +82,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"Navigation Bar Shade"];
     if (self.path.length > 0) {
         [[RKObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodAny matchingPathPattern:self.path];
@@ -941,6 +945,8 @@
             } else {
                 cell.expiredTag.hidden = YES;
             }
+        } else {
+            cell.expiredTag.hidden = YES;
         }
         
         // Loading the deal's details to the cell

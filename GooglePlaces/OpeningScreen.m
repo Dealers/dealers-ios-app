@@ -66,6 +66,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
@@ -81,6 +83,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
+    
     [self.screenShot setImage:nil];
     [[self.navigationController.view viewWithTag:321321321] removeFromSuperview];
 }

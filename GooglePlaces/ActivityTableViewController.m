@@ -42,6 +42,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [appDelegate resetBadgeCounter];
 }
 
@@ -243,7 +244,7 @@
 {
     for (Notification *notification in self.notifications) {
         
-        BOOL breakForLoop;
+        BOOL breakForLoop = NO;
         
         if (notification.noDuplicates) {
             continue;

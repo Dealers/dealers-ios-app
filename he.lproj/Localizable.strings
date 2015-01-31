@@ -36,6 +36,7 @@
 "Already have an account? " = "יש לך כבר חשבון? ";
 "Sign in" = "היכנס";
 "Email already exists!" = "הדוא״ל כבר קיים במערכת!";
+"Couldn't sign up..." = "Couldn't sign up...";
 "Please enter a valid email address." = "הכנס כתובת דוא״ל חוקית.";
 "OK" = "אישור";
 "Couldn't sign in with facebook" = "לא מצליח להתחבר עם פייסבוק";
@@ -178,15 +179,16 @@
 "Post" = "שלח";
 "Unable to post comment" = "העלאת התגובה נכשלה";
 
+"&" = "ו-";
 "likes your deal." = "אוהב/ת את המבצע שלך.";
 "commented on your deal." = "הגיב/ה על המבצע שלך.";
 "also commented on this deal." = "גם הגיב/ה על המבצע הזה.";
-"shared your deal." = "שיתף/ה את המבצע שלך";
-"edited your deal." = "ערך/ה את המבצע שלך";
-"like your deal." = "אהבו את המבצע שלך";
+"shared your deal." = "שיתף/ה את המבצע שלך.";
+"edited your deal." = "ערך/ה את המבצע שלך.";
+"like your deal." = "אוהבים את המבצע שלך.";
 
 "Invite" = "הזמנה";
-"I'm sending you an entrence passcode for Dealers:\n%@\n\nDownload Dealers here:\nHere will be our link." = "אני שולח/ת לך קוד כניסה ל-Dealers:\n%@\n\nהורד/י את Dealers כאן:\nכאן יהיה הקישור שלנו באפסטור..";
+"I'm sending you an entrence passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\nHere will be our link." = "אני שולח/ת לך הזמנה עם קוד כניסה ל-״דילרס״, אפליקציה לשיתוף מבצעים:\n%@\n\nהורד/י את דילרס מכאן:\n(כאן יהיה הקישור שלנו באפסטור)";
 "Invite by " = "הזמן עם ";
 "Text Message" = "הודעת טקסט";
 "Email" = "דוא״ל";

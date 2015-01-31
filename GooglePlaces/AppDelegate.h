@@ -30,20 +30,15 @@
     NSDictionary *userInfoForActive;
 }
 
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic) UIWindow *window;
 @property (nonatomic) UIWindow *pushNotificationsWindow;
 @property (nonatomic) UIStoryboard *storyboard;
 @property (nonatomic) DealersTabBarController *tabBarController;
-@property (strong, nonatomic)  NSString *Animate_first;
-@property (strong, nonatomic)  NSString *UserID;
-@property (strong, nonatomic)  NSString *AfterAddDeal;
-@property (strong, nonatomic)  NSString *onlineOrLocal;
-@property (strong, nonatomic)  NSString *previousViewControllerAddDeal;
-@property (strong, nonatomic)  NSString *previousViewController;
-@property (strong, nonatomic)  NSString *dealerName;
-@property (strong, nonatomic)  UIImage *dealerProfileImage;
-@property (strong, nonatomic)  Dealer *dealer;
+@property (nonatomic)  NSString *Animate_first;
+
+@property (nonatomic)  Dealer *dealer;
 @property Device *device;
+
 @property BOOL shouldUpdateMyFeed;
 @property BOOL shouldUpdateProfile;
 @property BOOL userWasLoggedIn;

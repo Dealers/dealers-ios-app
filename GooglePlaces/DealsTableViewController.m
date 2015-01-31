@@ -55,6 +55,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     if (appDelegate.shouldUpdateMyFeed) {
         [self.tableView setContentOffset:CGPointMake(0, -64)];
         [self setLoadingView];
@@ -471,6 +473,8 @@
             } else {
                 cell.expiredTag.hidden = YES;
             }
+        } else {
+            cell.expiredTag.hidden = YES;
         }
         
         // Loading the deal's details to the cell
