@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import "AppDelegate.h"
-#import "OpeningScreen.h"
+#import "OpeningScreenViewController.h"
 #import "EditProfileTableViewController.h"
 #import "PushNotificationsTableViewController.h"
+#import "TutorialViewController.h"
 #import "ComingSoonViewController.h"
 #import "MBProgressHUD.h"
 

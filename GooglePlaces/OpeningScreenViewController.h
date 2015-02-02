@@ -13,7 +13,7 @@
 #import "MBProgressHUD.h"
 #import "User.h"
 
-@interface OpeningScreen : UIViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
+@interface OpeningScreenViewController : UIViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
 {
     float ScreenHeight;
     MBProgressHUD *loggingInFacebook, *noConnection;

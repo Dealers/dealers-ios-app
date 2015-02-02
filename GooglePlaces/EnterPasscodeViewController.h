@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "OpeningScreen.h"
+#import "OpeningScreenViewController.h"
 #import "SignUpTableViewController.h"
 #import "Invitation.h"
 

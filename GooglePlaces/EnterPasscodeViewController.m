@@ -52,7 +52,7 @@
     [self.view endEditing:YES];
     [self.navigationControllerDelegate dismissViewControllerAnimated:YES
                                                           completion:^{
-                                                              OpeningScreen *opvc = (OpeningScreen *)self.navigationControllerDelegate.topViewController;
+                                                              OpeningScreenViewController *opvc = (OpeningScreenViewController *)self.navigationControllerDelegate.topViewController;
                                                               [opvc cancelFacebookLogin];
                                                           }];
 }
@@ -394,7 +394,7 @@
 
 - (void)dismissAndContinue
 {
-    OpeningScreen *mvc = (OpeningScreen *)[self.navigationControllerDelegate topViewController];
+    OpeningScreenViewController *mvc = (OpeningScreenViewController *)[self.navigationControllerDelegate topViewController];
     mvc.authorized = YES;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:YES forKey:@"authorized"];
@@ -406,7 +406,7 @@
                                                                   [self.navigationControllerDelegate pushViewController:sutvc animated:YES];
                                                               }];
     } else {
-        OpeningScreen *osvc = (OpeningScreen *)[self.navigationControllerDelegate topViewController];
+        OpeningScreenViewController *osvc = (OpeningScreenViewController *)[self.navigationControllerDelegate topViewController];
         [self.navigationControllerDelegate dismissViewControllerAnimated:YES
                                                               completion:^{
                                                                   [osvc signUpUser];

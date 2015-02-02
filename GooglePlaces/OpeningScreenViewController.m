@@ -6,18 +6,18 @@
 //
 //
 
-#import "OpeningScreen.h"
+#import "OpeningScreenViewController.h"
 #import "SignUpTableViewController.h"
 #import "SignInTableViewController.h"
 #import "KeychainItemWrapper.h"
 
 #define AWS_S3_BUCKET_NAME @"dealers-app"
 
-@interface OpeningScreen ()
+@interface OpeningScreenViewController ()
 
 @end
 
-@implementation OpeningScreen
+@implementation OpeningScreenViewController
 
 @synthesize appDelegate;
 @synthesize i;
@@ -789,8 +789,9 @@
 - (void)enterDealers
 {
     [loggingInFacebook hide:YES];
-    [appDelegate setTabBarController];
-    [appDelegate saveUserDetailsOnDevice];
+    TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
+    tvc.afterSignUp = YES;
+    [self.navigationController pushViewController:tvc animated:YES];
 }
 
 

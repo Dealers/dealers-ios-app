@@ -1718,7 +1718,7 @@
                             </tableViewSection>
                             <tableViewSection id="VSn-9X-ev7" userLabel="Social Networks">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="uXZ-wN-K2H" userLabel="Share with Facebook">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="uXZ-wN-K2H" userLabel="Share with Facebook">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uXZ-wN-K2H" id="fex-1r-Lj0">
@@ -1847,10 +1847,10 @@ Gilad Lumbroso! </string>
             </objects>
             <point key="canvasLocation" x="1438" y="34"/>
         </scene>
-        <!--Opening Screen-->
+        <!--Opening Screen View Controller-->
         <scene sceneID="DTm-VP-FvN">
             <objects>
-                <viewController storyboardIdentifier="main" id="Ey2-rh-183" customClass="OpeningScreen" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="main" id="Ey2-rh-183" customClass="OpeningScreenViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rUp-F9-RRi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1971,7 +1971,7 @@ Shared by people like you</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0KA-81-Cgg" userLabel="Sign In button">
-                                        <rect key="frame" x="24" y="515" width="274" height="31.00000019747656"/>
+                                        <rect key="frame" x="24" y="515" width="274" height="31.000000197476552"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                                         <state key="normal">
@@ -2350,23 +2350,6 @@ Shared by people like you</string>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="0qL-82-sdU">
-                                        <rect key="frame" x="0.0" y="215" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0qL-82-sdU" id="N7B-ob-X5U">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Search History" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EQU-9b-Uai">
-                                                    <rect key="frame" x="20" y="10" width="280" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Support" id="izp-6C-IGB">
@@ -2676,7 +2659,7 @@ Shared by people like you</string>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="3fl-Om-jDK">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="3fl-Om-jDK">
                                         <rect key="frame" x="0.0" y="660" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3fl-Om-jDK" id="MSD-vV-dPh">
@@ -2752,6 +2735,51 @@ Shared by people like you</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Egz-93-fcx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1438" y="720"/>
+        </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="CNH-Dz-b7e">
+            <objects>
+                <viewController storyboardIdentifier="Tutorial" id="l4i-6K-2Du" customClass="TutorialViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wTO-Wc-k5G">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LdJ-Yv-hMK" userLabel="Skip">
+                                <rect key="frame" x="117" y="485" width="86" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="18"/>
+                                <color key="tintColor" red="0.58823529409999997" green="0.0" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Skip">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="done:" destination="l4i-6K-2Du" eventType="touchUpInside" id="iHB-Ux-ALd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eqf-Ib-s5H">
+                                <rect key="frame" x="211" y="485" width="86" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="0.58823529409999997" green="0.0" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="18"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Got it">
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="done:" destination="l4i-6K-2Du" eventType="touchUpInside" id="qTd-dU-cpl"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="gotItButton" destination="eqf-Ib-s5H" id="fWQ-Qs-5Bo"/>
+                        <outlet property="skipButton" destination="LdJ-Yv-hMK" id="KB6-L2-3Wb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QuB-X3-LwK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1910" y="711"/>
         </scene>
         <!--Invite View Controller-->
         <scene sceneID="0tr-pl-zjb">

@@ -129,7 +129,8 @@
         case 2:
             switch (indexPath.row) {
                 case 0:
-                    // Tutorial...
+                    // Tutorial:
+                    [self pushTutorialView];
                     break;
                 case 1:
                     // Report a Problem:
@@ -284,12 +285,19 @@
     [self.navigationController pushViewController:csvc animated:YES];
 }
 
+- (void)pushTutorialView
+{
+    TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
+    [tvc setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:tvc animated:YES];
+}
+
 - (void)logOut
 {
     UINavigationController *nc = [self.storyboard instantiateViewControllerWithIdentifier:@"openingScreenID"];
     
     CGRect screenShotRect = self.view.bounds;
-    screenShotRect.origin.y = self.view.bounds.origin.y - 15;
+    screenShotRect.origin.y = self.view.bounds.origin.y + 29;
     
     UIGraphicsBeginImageContextWithOptions(self.view.frame.size, YES, 0.0);
     [self.tabBarController.view drawViewHierarchyInRect:screenShotRect afterScreenUpdates:NO];

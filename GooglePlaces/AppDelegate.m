@@ -57,10 +57,12 @@
                                                           [UIFont fontWithName:@"Avenir-Roman" size:20.0], NSFontAttributeName, nil]];
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     
-    // Customizing the Tab Bar:
+    // Customizing other elements:
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                        [UIFont fontWithName:@"Avenir-Roman" size:11.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [[UIPageControl appearanceWhenContainedIn:[UIPageViewController class], nil] setPageIndicatorTintColor:[UIColor colorWithWhite:0.85 alpha:1.0]];
+    [[UIPageControl appearanceWhenContainedIn:[UIPageViewController class], nil] setCurrentPageIndicatorTintColor:[UIColor blackColor]];
     
     // Configuring RestKit:
     [self configureRestKit];

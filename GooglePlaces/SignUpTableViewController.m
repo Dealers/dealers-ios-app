@@ -525,7 +525,11 @@
     }
     
     if (![self.genderLabel.text isEqualToString:NSLocalizedString(@"Gender (optional)", nil)]) {
-        self.dealer.gender = self.genderLabel.text;
+        
+        if ([NSLocalizedString(self.genderLabel.text, nil) isEqualToString:NSLocalizedString(@"Male", nil)]) {
+            self.dealer.gender = @"Male";
+        } else if ([NSLocalizedString(self.genderLabel.text, nil) isEqualToString:NSLocalizedString(@"Female", nil)])
+            self.dealer.gender = @"Female";
     }
     
     self.dealer.registerDate = [NSDate date];
@@ -674,8 +678,10 @@
 
 - (void)enterDealers
 {
-    [appDelegate setTabBarController];
-    [appDelegate saveUserDetailsOnDevice];
+    // First take the user through the tutorial
+    TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
+    tvc.afterSignUp = YES;
+    [self.navigationController pushViewController:tvc animated:YES];
 }
 
 

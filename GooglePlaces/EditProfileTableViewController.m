@@ -253,6 +253,11 @@
         height = self.datePickerIsShowing ? dateOfBirthCellHeight : 0.0;
     }
     
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        
+        height = 0;
+    }
+    
     return height;
 }
 
