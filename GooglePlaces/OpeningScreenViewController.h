@@ -20,7 +20,7 @@
     FBGraphObject *facebookInfo;
     NSString *facebookUserEmail, *facebookToken;
     NSNumber *pseudoUserID;
-    BOOL gotToken, didPhotoFinishedDownloading, didPhotoFinishedUploading, firstSlogen, triedAddingNumber, triedUploadingPhoto;
+    BOOL gotToken, didPhotoFinishedDownloading, didPhotoFinishedUploading, firstSlogen, triedAddingNumber, triedUploadingPhoto, signedUp;
     
 }
 

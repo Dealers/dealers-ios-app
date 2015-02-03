@@ -94,6 +94,7 @@
         self.skipButton.layer.borderColor = [[appDelegate ourPurple] CGColor];
     }
     
+    [self.gotItButton setTitle:NSLocalizedString(@"Got it", nil) forState:UIControlStateNormal];
     self.gotItButton.frame = self.skipButton.frame;
     self.gotItButton.layer.cornerRadius = 6.0;
     self.gotItButton.layer.masksToBounds = YES;

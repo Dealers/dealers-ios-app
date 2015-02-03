@@ -264,7 +264,7 @@
         return;
     }
     
-    if ([self.passcodeTextField.text isEqualToString:@"2171mg"]) {
+    if ([self.passcodeTextField.text isEqualToString:@"090909"]) {
         [self passcodeCorrect];
         return;
     }

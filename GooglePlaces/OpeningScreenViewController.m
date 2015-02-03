@@ -534,6 +534,7 @@
                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                             
                                             NSLog(@"Dealer signed up with Facebook successfuly!");
+                                            signedUp = YES;
                                             
                                             appDelegate.dealer = mappingResult.firstObject;
                                             appDelegate.dealer.photo = self.dealer.photo;
@@ -789,9 +790,17 @@
 - (void)enterDealers
 {
     [loggingInFacebook hide:YES];
-    TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
-    tvc.afterSignUp = YES;
-    [self.navigationController pushViewController:tvc animated:YES];
+
+    if (signedUp) {
+        TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
+        tvc.afterSignUp = YES;
+        [self.navigationController pushViewController:tvc animated:YES];
+    
+    } else {
+        
+        [appDelegate setTabBarController];
+        [appDelegate saveUserDetailsOnDevice];
+    }
 }
 
 
