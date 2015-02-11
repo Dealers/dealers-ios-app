@@ -42,6 +42,10 @@
     self.datePickerIsShowing = NO;
     [self.changeProfilePicButton setImage:[UIImage imageNamed:@"Change Photo Button"] forState:UIControlStateNormal];
     
+    [self.privacyPolicyAgreement setTitle:NSLocalizedString(@"By signing up, you agree to the\nPrivacy Policy", nil) forState:UIControlStateNormal];
+    [self.privacyPolicyAgreement.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.privacyPolicyAgreement.titleLabel setNumberOfLines:0];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self.profilePicView addGestureRecognizer:tap];
     
@@ -348,6 +352,11 @@
         [self saveUserDetails];
         [self uploadData];
     }
+}
+
+- (IBAction)privacyPolicy:(id)sender {
+
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.dealers.co.il/PrivacyPage.html"]];
 }
 
 - (IBAction)changeProfilePic:(id)sender {

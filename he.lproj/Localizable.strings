@@ -36,7 +36,7 @@
 "Already have an account? " = "יש לך כבר חשבון? ";
 "Sign in" = "היכנס";
 "Email already exists!" = "הדוא״ל כבר קיים במערכת!";
-"Couldn't sign up..." = "Couldn't sign up...";
+"Couldn't sign up..." = "ההרשמה נכשלה...";
 "Please enter a valid email address." = "הכנס כתובת דוא״ל חוקית.";
 "OK" = "אישור";
 "Couldn't sign in with facebook" = "לא מצליח להתחבר עם פייסבוק";
@@ -46,6 +46,7 @@
 "Wrong email or password" = "שם משתמש ו/או סיסמה לא נכונים";
 "Couldn't sign in..." = "הכניסה נכשלה...";
 "Sign Up" = "הרשמה";
+"By signing up, you agree to the\nPrivacy Policy" = "ההרשמה מהווה הסכמה לקיום\nמדיניות הפרטיות";
 "Please enter your name!" = "הכנס את שמך!";
 "Email is blank!" = "שדה הדוא״ל ריק!";
 "Password is blank!" = "שדה הסיסמה ריק!";
