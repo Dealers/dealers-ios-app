@@ -36,6 +36,7 @@
     [self initialize];
     [self determineProfileMode];
     [self setNotificationObservers];
+    [self setNavigationButtons];
     
     if (!self.dealer && self.dealerID) {
         
@@ -100,14 +101,6 @@
     isLoading = NO;
     isRefreshing = NO;
     self.afterEditing = NO;
-    
-    // Set Invite button
-    UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Invite Button"]
-                                                               style:UIBarButtonItemStyleBordered
-                                                              target:self
-                                                              action:@selector(pushInviteViewController:)];
-    [invite setImageInsets:UIEdgeInsetsMake(1, -5, -1, 5)];
-    self.navigationItem.rightBarButtonItem = invite;
 }
 
 - (void)determineProfileMode
@@ -148,6 +141,26 @@
                                              selector:@selector(loadProfilePic:)
                                                  name:PROFILE_PICTURE_NOTIFICATION
                                                object:nil];
+}
+
+- (void)setNavigationButtons
+{
+    if ([self.profileMode isEqualToString:@"My Profile Tab"]) {
+        
+        UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Settings Button"]
+                                                                     style:UIBarButtonItemStyleBordered
+                                                                    target:self
+                                                                    action:@selector(pushSettingsView:)];
+        [settings setImageInsets:UIEdgeInsetsMake(1, -5, -1, 5)];
+        self.navigationItem.leftBarButtonItem = settings;
+        
+        UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Invite Button"]
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(pushInviteViewController:)];
+        [invite setImageInsets:UIEdgeInsetsMake(1, -3, -1, 3)];
+        self.navigationItem.rightBarButtonItem = invite;
+    }
 }
 
 - (void)downloadDealer
@@ -223,6 +236,7 @@
             }
         }
     }
+    
     CGRect profilePicFrame = CGRectMake(0, GAP, 80.0, 80.0);
     profilePicFrame.origin.x = self.tableView.center.x - profilePicFrame.size.width / 2;
     self.profilePic.frame = profilePicFrame;
@@ -313,15 +327,7 @@
         lowestYPoint = CGRectGetMaxY(self.about.frame);
     }
     
-    lowestYPoint += GAP + 4.0;
-    
-    // Follow or Settings buttons
-    
-    if ([self.profileMode isEqualToString:@"My Profile Tab"] || [self.profileMode isEqualToString:@"My Profile"]) {
-        [self setSettingsButton];
-    } else {
-        [self setFollowButton];
-    }
+    lowestYPoint += GAP * 2.5;
     
     // Uploaded deals or Liked deals segmented controller
     
@@ -415,37 +421,33 @@
     self.tableView.tableHeaderView = self.topView;
 }
 
-- (void)setSettingsButton
-{
-    if (!self.settings) {
-        
-        self.settings = [appDelegate actionButton];
-        
-        [self.settings setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-        [self.settings setTitle:NSLocalizedString(@"Settings", nil) forState:UIControlStateNormal];
-        [[self.settings titleLabel] setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
-        [self.settings setTitleColor:[appDelegate textGrayColor] forState:UIControlStateNormal];
-        [self.settings addTarget:self action:@selector(pushSettingsView) forControlEvents:UIControlEventTouchUpInside];
-        [self.topView addSubview:self.settings];
-        
-        UIImageView *settingsIcon = [[UIImageView alloc]initWithFrame:CGRectMake(9.0, 9.0, 20.0, 20.0)];
-        settingsIcon.image = [UIImage imageNamed:@"Settings Icon"];
-        [self.settings addSubview:settingsIcon];
-    }
-    
-    CGRect frame = self.settings.frame;
-    frame.origin.y = lowestYPoint;
-    frame.size.height = 38.0;
-    self.settings.frame = frame;
-    
-    lowestYPoint = CGRectGetMaxY(self.settings.frame) + SECTION_GAP;
-}
+//- (void)setSettingsButton
+//{
+//    if (!self.settings) {
+//        
+//        self.settings = [appDelegate actionButton];
+//        
+//        [self.settings setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+//        [self.settings setTitle:NSLocalizedString(@"Settings", nil) forState:UIControlStateNormal];
+//        [[self.settings titleLabel] setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
+//        [self.settings setTitleColor:[appDelegate textGrayColor] forState:UIControlStateNormal];
+//        [self.settings addTarget:self action:@selector(pushSettingsView) forControlEvents:UIControlEventTouchUpInside];
+//        [self.topView addSubview:self.settings];
+//        
+//        UIImageView *settingsIcon = [[UIImageView alloc]initWithFrame:CGRectMake(9.0, 9.0, 20.0, 20.0)];
+//        settingsIcon.image = [UIImage imageNamed:@"Settings Icon"];
+//        [self.settings addSubview:settingsIcon];
+//    }
+//    
+//    CGRect frame = self.settings.frame;
+//    frame.origin.y = lowestYPoint;
+//    frame.size.height = 38.0;
+//    self.settings.frame = frame;
+//    
+//    lowestYPoint = CGRectGetMaxY(self.settings.frame) + SECTION_GAP;
+//}
 
-- (void)setFollowButton
-{
-}
-
-- (void)pushSettingsView
+- (void)pushSettingsView:(id)sender
 {
     SettingsTableViewController *stvc = [self.storyboard instantiateViewControllerWithIdentifier:@"settingsID"];
     [self.navigationController pushViewController:stvc animated:YES];

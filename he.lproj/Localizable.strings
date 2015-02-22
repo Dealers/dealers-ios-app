@@ -46,7 +46,7 @@
 "Wrong email or password" = "שם משתמש ו/או סיסמה לא נכונים";
 "Couldn't sign in..." = "הכניסה נכשלה...";
 "Sign Up" = "הרשמה";
-"By signing up, you agree to the\nPrivacy Policy" = "ההרשמה מהווה הסכמה לקיום\nמדיניות הפרטיות";
+"By signing up, you agree to the\nTerms of Service & Privacy Policy" = "ההרשמה מהווה הסכמה לקיום\nתנאי השימוש ומדיניות פרטיות";
 "Please enter your name!" = "הכנס את שמך!";
 "Email is blank!" = "שדה הדוא״ל ריק!";
 "Password is blank!" = "שדה הסיסמה ריק!";
@@ -212,3 +212,8 @@
 "Post deals that you find, and contirbute back to the community." = "שתף מבצעים טובים שאתה מוצא וסייע בהורדת המחירים.";
 "Like, comment and share deals, so others will know what's good." = "תן לייק, הוסף תגובה ושתף מבצעים, כך שכולנו נדע מה טוב.";
 "Skip" = "דלג וכנס";
+
+"Report as Spam?" = "לדווח על פרסום זה?";
+"Does this post includes inappropriate content?" = "האם פרסום זה מכיל תוכן לא ראוי?";
+"Report" = "דווח";
+"Report Sent" = "דיווח נשלח";

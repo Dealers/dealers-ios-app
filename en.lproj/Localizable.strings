@@ -46,7 +46,7 @@
 "Wrong email or password" = "Wrong email or password";
 "Couldn't sign in..." = "Couldn't sign in...";
 "Sign Up" = "Sign Up";
-"By signing up, you agree to the\nPrivacy Policy" = "By signing up, you agree to the\nPrivacy Policy";
+"By signing up, you agree to the\nTerms of Service & Privacy Policy" = "By signing up, you agree to the\nTerms of Service & Privacy Policy";
 "Please enter your name!" = "Please enter your name!";
 "Email is blank!" = "Email is blank!";
 "Password is blank!" = "Password is blank!";
@@ -214,3 +214,8 @@
 "Post deals that you find, and contirbute back to the community." = "Post deals that you find, and contirbute back to the community.";
 "Like, comment and share deals, so others will know what's good." = "Like, comment and share deals, so others will know what's good.";
 "Skip" = "Skip";
+
+"Report as Spam?" = "Report as Spam?";
+"Does this post includes inappropriate content?" = "Does this post includes inappropriate content?";
+"Report" = "Report";
+"Report Sent" = "Report Sent";

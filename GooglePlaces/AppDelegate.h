@@ -20,6 +20,7 @@
 #import "Invitation.h"
 #import "Device.h"
 #import "Error.h"
+#import "Report.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {

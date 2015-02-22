@@ -129,6 +129,7 @@
 		C8E43AA61A40A78A00B035BC /* DealersTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8E43AA41A40A78A00B035BC /* DealersTableCell.xib */; };
 		C8E996C21A554E60006FCAC7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E996C11A554E60006FCAC7 /* User.m */; };
 		C8EE6D741A305FD500D53893 /* ComingSoonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */; };
+		C8F6EF221A8E16CC009C18CD /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F6EF211A8E16CC009C18CD /* Report.m */; };
 		C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FFF56B197C437600D01744 /* EditDealTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -358,6 +359,8 @@
 		C8E996C11A554E60006FCAC7 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		C8EE6D721A305FD500D53893 /* ComingSoonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComingSoonViewController.h; sourceTree = "<group>"; };
 		C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComingSoonViewController.m; sourceTree = "<group>"; };
+		C8F6EF201A8E16CC009C18CD /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
+		C8F6EF211A8E16CC009C18CD /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		C8FFF56A197C437600D01744 /* EditDealTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDealTableViewController.h; sourceTree = "<group>"; };
 		C8FFF56B197C437600D01744 /* EditDealTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDealTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -484,7 +487,6 @@
 				C848B67119B4A247000F138D /* Custom Cells */,
 				C80810C51A6FA0E10034D8B1 /* Custom Views */,
 				C8DC1D8219B863680062E184 /* Activities */,
-				C871A5321A25D58500A9A2D1 /* Old Classes */,
 			);
 			name = "View Controllers";
 			path = GooglePlaces;
@@ -685,13 +687,6 @@
 			name = General;
 			sourceTree = "<group>";
 		};
-		C871A5321A25D58500A9A2D1 /* Old Classes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Old Classes";
-			sourceTree = "<group>";
-		};
 		C87B6D05192DDC810026DA66 /* Opening Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -735,6 +730,8 @@
 				C80810C31A6EA0890034D8B1 /* Device.m */,
 				C819F89A1A43352E00908726 /* Error.h */,
 				C819F89B1A43352E00908726 /* Error.m */,
+				C8F6EF201A8E16CC009C18CD /* Report.h */,
+				C8F6EF211A8E16CC009C18CD /* Report.m */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -971,6 +968,7 @@
 				C8DD1AC21A532AC6002843E8 /* DealersTabBarController.m in Sources */,
 				B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */,
 				C80123301A2C4A8800C40A37 /* DealsTableViewController.m in Sources */,
+				C8F6EF221A8E16CC009C18CD /* Report.m in Sources */,
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
 				C8C260D81A7E957500960D96 /* TutorialChildViewController.m in Sources */,
 				C891902019FE57D9005E85FB /* AddDealNavigationController.m in Sources */,

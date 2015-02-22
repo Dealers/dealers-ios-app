@@ -19,6 +19,7 @@
 #define sectionGap 25
 #define loadingIndicatorTag 1111
 #define sharedViewTag 9898
+#define REPORT_ALERT 43454
 
 #define iconsLeftMargin 12
 #define labelsLeftMargin 52
@@ -55,6 +56,7 @@
     
     [self initialize];
     [self setNavigationBar];
+    [self setProgressIndicator];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loadPhotosToView:)
@@ -182,7 +184,6 @@
     [self setPageControlView];
     [self setBasicDetailsSection];
     [self setDealerSection];
-    [self setLikesAndButtonsSection];
     [self setCommentsSection];
     [self setMapAndStoreInfo];
 }
@@ -301,13 +302,41 @@
 
 - (void)setNavigationBar
 {
-    self.navigationItem.titleView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
+    UIView *actionsTitleView = [[UIView alloc] init];
+    actionsTitleView.frame = CGRectMake(0, 0, 130, 30);
     
-    UIBarButtonItem *options = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Options Button"]
+    self.likeBarButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.likeBarButton setImage:[UIImage imageNamed:@"Like Bar Button"] forState:UIControlStateNormal];
+    [self.likeBarButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [self.likeBarButton addTarget:self action:@selector(LikeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [actionsTitleView addSubview:self.likeBarButton];
+    
+    self.likeBarButtonSelected = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.likeBarButtonSelected setImage:[UIImage imageNamed:@"Like Bar Button Selected"] forState:UIControlStateNormal];
+    [self.likeBarButtonSelected setFrame:CGRectMake(0, 0, 30, 30)];
+    [self.likeBarButtonSelected addTarget:self action:@selector(LikeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.likeBarButtonSelected setHidden:YES];
+    [actionsTitleView addSubview:self.likeBarButtonSelected];
+    
+    self.commentBarButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.commentBarButton setImage:[UIImage imageNamed:@"Comment Bar Button"] forState:UIControlStateNormal];
+    [self.commentBarButton setFrame:CGRectMake(50, 0, 30, 30)];
+    [self.commentBarButton addTarget:self action:@selector(CommentButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [actionsTitleView addSubview:self.commentBarButton];
+    
+    self.shareBarButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.shareBarButton setImage:[UIImage imageNamed:@"Share Bar Button"] forState:UIControlStateNormal];
+    [self.shareBarButton setFrame:CGRectMake(100, 0, 30, 30)];
+    [self.shareBarButton addTarget:self action:@selector(ShareButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [actionsTitleView addSubview:self.shareBarButton];
+    
+    self.navigationItem.titleView = actionsTitleView;
+    
+    UIBarButtonItem *options = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Options Button"]
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
                                                               action:@selector(optionsAction:)];
-    [options setImageInsets:UIEdgeInsetsMake(1, -10, -1, 10)];
+    [options setImageInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
     self.navigationItem.rightBarButtonItem = options;
 }
 
@@ -521,104 +550,17 @@
     }
 }
 
-/*
- - (void)loadImagesFromUrl {
- 
- if (self.deal.photoSum.intValue != 0) {
- 
- 
- 
- if (!self.captureImage.image) { // In case the photo wasn't downloaded yet.
- 
- self.captureImage.alpha = 0;
- 
- UIActivityIndicatorView *loadingIndicator = (UIActivityIndicatorView *)[self.scroll viewWithTag:loadingIndicatorTag];
- [UIView animateWithDuration:0.5 animations:^{
- loadingIndicator.alpha = 0;
- self.captureImage.alpha = 1;
- } completion:^(BOOL finished) { [loadingIndicator removeFromSuperview]; }];
- }
- 
- if (self.deal.photoSum.intValue == 2) {
- _urlImage2 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.deal.photoURL2];
- self.deal.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- self.captureImage2.image = self.deal.photo2;
- [UIView animateWithDuration:0.5 animations:^{
- [self.imageLoading2 stopAnimating];
- self.captureImage2.alpha = 1;
- }];
- });
- }
- if (self.deal.photoSum.intValue == 3) {
- 
- _urlImage2 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.deal.photoURL2];
- self.deal.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- self.captureImage2.image = self.deal.photo2;
- [UIView animateWithDuration:0.5 animations:^{
- [self.imageLoading2 stopAnimating];
- self.captureImage2.alpha = 1;
- }];
- });
- 
- _urlImage3 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.deal.photoURL3];
- self.deal.photo3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- self.captureImage3.image = self.deal.photo3;
- [UIView animateWithDuration:0.5 animations:^{
- [self.imageLoading3 stopAnimating];
- self.captureImage3.alpha = 1;
- }];
- });
- }
- if (self.deal.photoSum.intValue == 4) {
- 
- _urlImage2 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.deal.photoURL2];
- self.deal.photo2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage2]]];
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- self.captureImage2.image = self.deal.photo2;
- 
- [UIView animateWithDuration:0.5 animations:^{
- [self.imageLoading2 stopAnimating];
- self.captureImage2.alpha = 1;
- }];
- });
- 
- _urlImage3 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.deal.photoURL3];
- self.deal.photo3 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage3]]];
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- self.captureImage3.image = self.deal.photo3;
- 
- [UIView animateWithDuration:0.5 animations:^{
- [self.imageLoading3 stopAnimating];
- self.captureImage3.alpha = 1;
- }];
- });
- 
- _urlImage4 = [S3_PHOTOS_ADDRESS stringByAppendingString:self.deal.photoURL4];
- self.deal.photo4 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage4]]];
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- self.captureImage4.image = self.deal.photo4;
- 
- [UIView animateWithDuration:0.5 animations:^{
- [self.imageLoading4 stopAnimating];
- self.captureImage4.alpha = 1;
- }];
- });
- }
- }
- }
- */
-
 - (void)setBasicDetailsSection
 {
+    if ([self.isDealLikedByUser isEqualToString:@"yes"]) {
+        
+        self.likeBarButton.hidden = YES;
+        self.likeBarButtonSelected.hidden = NO;
+    } else {
+        self.likeBarButton.hidden = NO;
+        self.likeBarButtonSelected.hidden = YES;
+    }
+    
     UIFont *font = titlelabel.font;
     
     NSDictionary *attributes = @{NSFontAttributeName : font};
@@ -750,6 +692,42 @@
         descriptionlabel.hidden = YES;
         self.DescriptionIcon.hidden = YES;
     }
+    
+    
+    NSInteger x = self.deal.dealAttrib.dealersThatLiked.count;
+    NSInteger y = self.deal.dealAttrib.dealersThatShared.count;
+    
+    self.likeCounter = [NSNumber numberWithInteger:x];
+    self.shareCounter = [NSNumber numberWithInteger:y];
+    
+    if (self.likeCounter.intValue > 0) {
+        
+        self.likesCountImage.frame = CGRectMake(iconsLeftMargin + 6,
+                                                lowestYPoint + sectionGap,
+                                                self.likesCountImage.frame.size.width,
+                                                self.likesCountImage.frame.size.height);
+        self.likesCountLabel.frame = CGRectMake(labelsLeftMargin,
+                                                self.likesCountImage.frame.origin.y,
+                                                self.likesCountLabel.frame.size.width,
+                                                self.likesCountLabel.frame.size.height);
+        
+        if (self.likeCounter.intValue == 1) {
+            self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1 person likes this deal", nil)];
+        } else {
+            self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ people like this deal", nil), self.likeCounter];
+        }
+        
+        UIButton *likersButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        likersButton.frame = self.likesCountLabel.frame;
+        [likersButton addTarget:self action:@selector(presentLikers) forControlEvents:UIControlEventTouchUpInside];
+        [self.scroll addSubview:likersButton];
+        
+        lowestYPoint = CGRectGetMaxY(self.likesCountImage.frame);
+        
+    } else {
+        self.likesCountImage.hidden = YES;
+        self.likesCountLabel.hidden = YES;
+    }
 }
 
 - (void)setExpiredDeal
@@ -803,11 +781,9 @@
 - (void)setDealerSection
 {
     CGRect dealerSectionFrame = self.dealerSection.frame;
-    dealerSectionFrame.origin.y = lowestYPoint + sectionGap;
+    dealerSectionFrame.origin.y = lowestYPoint;
     self.dealerSection.frame = dealerSectionFrame;
     lowestYPoint = (CGRectGetMaxY(self.dealerSection.frame));
-    
-    self.dealerSection.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     Dealer *dealer = self.deal.dealer;
     
@@ -831,57 +807,6 @@
             [appDelegate otherProfilePic:self.deal.dealer forTarget:@"Deal Dealer's Photo" notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:nil];
         }
     }
-}
-
-- (void)setLikesAndButtonsSection
-{
-    CGFloat originY = CGRectGetMaxY(self.dealerSection.frame);
-    self.likesAndButtonsSection.frame = CGRectMake(0, originY, self.view.frame.size.width, self.likesAndButtonsSection.frame.size.height);
-    
-    NSInteger x = self.deal.dealAttrib.dealersThatLiked.count;
-    NSInteger y = self.deal.dealAttrib.dealersThatShared.count;
-    
-    self.likeCounter = [NSNumber numberWithInteger:x];
-    self.shareCounter = [NSNumber numberWithInteger:y];
-    
-    if ([self.isDealLikedByUser isEqualToString:@"yes"]) {
-        
-        self.likeButton.hidden = YES;
-        self.likeButtonSelected.hidden = NO;
-    } else {
-        self.likeButton.hidden = NO;
-        self.likeButtonSelected.hidden = YES;
-    }
-    
-    if (self.likeCounter.intValue > 0) {
-        
-        NSLog(@"like counter is: %lu", (unsigned long)self.deal.dealAttrib.dealersThatLiked.count);
-        
-        CGRect likesSectionFrame = self.likesAndButtonsSection.frame;
-        likesSectionFrame.origin.y = lowestYPoint + 7;
-        self.likesAndButtonsSection.frame = likesSectionFrame;
-        
-        if (self.likeCounter.intValue == 1) {
-            self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1 person likes this deal", nil)];
-        } else {
-            self.likesCountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ people like this deal", nil), self.likeCounter];
-        }
-        
-        UIButton *likersButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        likersButton.frame = self.likesCountLabel.frame;
-        [likersButton addTarget:self action:@selector(presentLikers) forControlEvents:UIControlEventTouchUpInside];
-        [self.likesAndButtonsSection addSubview:likersButton];
-        
-    } else {
-        self.likesCountImage.hidden = YES;
-        self.likesCountLabel.hidden = YES;
-        
-        self.likesAndButtonsSection.frame = CGRectMake(0, originY, self.likesAndButtonsSection.frame.size.width, self.likeButton.frame.size.height + sectionGap * 2 - 4);
-    }
-    
-    lowestYPoint = CGRectGetMaxY(self.likesAndButtonsSection.frame);
-    
-    [self setScrollSize];
 }
 
 - (void)setCommentsSection
@@ -1393,30 +1318,30 @@
 
 - (IBAction)LikeButtonAction:(id)sender
 {
-    if (self.likeButtonSelected.hidden) {
+    if (self.likeBarButtonSelected.hidden) {
         
-        self.likeButtonSelected.hidden = NO;
-        self.likeButtonSelected.alpha = 0;
+        self.likeBarButtonSelected.hidden = NO;
+        self.likeBarButtonSelected.alpha = 0;
         
         [UIView animateWithDuration:0.3 animations:^{
-            self.likeButtonSelected.transform = CGAffineTransformMakeScale(0.3, 0.3);
-            self.likeButtonSelected.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            self.likeButtonSelected.alpha = 1.0;
+            self.likeBarButtonSelected.transform = CGAffineTransformMakeScale(0.3, 0.3);
+            self.likeBarButtonSelected.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            self.likeBarButtonSelected.alpha = 1.0;
         } completion:^(BOOL finished) {
-            self.likeButton.hidden = YES;
+            self.likeBarButton.hidden = YES;
         }];
         
         self.likeCounter = [NSNumber numberWithInt:self.likeCounter.intValue + 1];
         
     } else {
         
-        self.likeButton.hidden = NO;
-        self.likeButton.alpha = 1.0;
+        self.likeBarButton.hidden = NO;
+        self.likeBarButton.alpha = 1.0;
         
         [UIView animateWithDuration:0.15 animations:^{
-            self.likeButtonSelected.alpha = 0;
+            self.likeBarButtonSelected.alpha = 0;
         } completion:^(BOOL finished) {
-            self.likeButtonSelected.hidden = YES;
+            self.likeBarButtonSelected.hidden = YES;
         }];
         
         self.likeCounter = [NSNumber numberWithInt:self.likeCounter.intValue - 1];
@@ -1628,7 +1553,7 @@
             
             UIView *addCommentBackground = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
             addCommentBackground.backgroundColor = [UIColor whiteColor];
-            addCommentBackground.layer.cornerRadius = 4.0;
+            addCommentBackground.layer.cornerRadius = 8.0;
             addCommentBackground.layer.masksToBounds = YES;
             
             [cell.contentView addSubview:addCommentBackground];
@@ -1964,8 +1889,16 @@
         }
             break;
             
-        case 1: // Report as Spam:
-            // ...
+        case 1: { // Report as Spam:
+            
+            UIAlertView *reportAsSpam = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Report as Spam?", nil)
+                                                                   message:NSLocalizedString(@"Does this post includes inappropriate content?", nil)
+                                                                  delegate:self
+                                                         cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                         otherButtonTitles:NSLocalizedString(@"Report", nil), nil];
+            reportAsSpam.tag = REPORT_ALERT;
+            [reportAsSpam show];
+        }
             break;
             
         default:
@@ -1973,16 +1906,52 @@
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //    self.optionsButton.hidden = NO;
-    //    self.optionsButton.alpha = 0;
-    //    [UIView animateWithDuration:0.3
-    //                     animations:^{
-    //                         self.optionsButtonSelected.alpha = 0;
-    //                         self.optionsButton.alpha = 1.0; }
-    //                     completion:^(BOOL finished){
-    //                         self.optionsButtonSelected.hidden = YES; }];
+    if (alertView.tag == REPORT_ALERT) {
+        if (buttonIndex == 1) {
+            
+            Report *report = [[Report alloc] init];
+            
+            report.dealID = self.deal.dealID;
+            report.reportingDealerID = appDelegate.dealer.dealerID;
+            report.report = @"Spam";
+
+            [[RKObjectManager sharedManager] postObject:report
+                                                   path:@"/reportdeals/"
+                                             parameters:nil
+                                                success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                
+                                                    NSLog(@"Report sent successfuly!");
+                                                    
+                                                    [reportSent show:YES];
+                                                    [reportSent hide:YES afterDelay:1.5];
+                                                }
+                                                failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            
+                                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                                                    message:nil
+                                                                                                   delegate:nil
+                                                                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                          otherButtonTitles:nil];
+                                                    [alert show];
+                                                }];
+        }
+    }
 }
+
+- (void)setProgressIndicator
+{
+    reportSent = [[MBProgressHUD alloc]initWithView:self.tabBarController.view];
+    reportSent.delegate = self;
+    reportSent.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
+    reportSent.mode = MBProgressHUDModeCustomView;
+    reportSent.labelText = NSLocalizedString(@"Report Sent", nil);
+    reportSent.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    reportSent.animationType = MBProgressHUDAnimationZoomIn;
+    
+    [self.tabBarController.view addSubview:reportSent];
+}
+
 
 @end

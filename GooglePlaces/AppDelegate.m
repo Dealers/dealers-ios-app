@@ -1459,6 +1459,19 @@
     return errorMapping;
 }
 
+- (RKObjectMapping *)reportMapping
+{
+    RKObjectMapping *deviceMapping = [RKObjectMapping mappingForClass:[Report class]];
+    [deviceMapping addAttributeMappingsFromDictionary: @{
+                                                         @"id" : @"reportID",
+                                                         @"title" : @"dealID",
+                                                         @"report" : @"report",
+                                                         @"dealer" : @"reportingDealerID"
+                                                         }];
+    
+    return deviceMapping;
+}
+
 - (void)setHTTPClientUsername:(NSString *)username andPassword:(NSString *)password
 {
     [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:username password:password];
@@ -1659,6 +1672,13 @@
                                                 keyPath:nil
                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError)];
     
+    RKResponseDescriptor *reportResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self reportMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/reportdeals/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
     // register mappings with the provider using request descriptors
     
     // for Registration
@@ -1717,6 +1737,14 @@
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
+    // for Report Dealer
+    RKRequestDescriptor *reportRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self reportMapping] inverseMapping]
+                                          objectClass:[Report class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
+    
     [manager addResponseDescriptorsFromArray:@[
                                                dealsResponseDescriptor,
                                                addDealResponseDescriptor,
@@ -1741,7 +1769,8 @@
                                                invitationSerachResponseDescriptor,
                                                deviceResponseDescriptor,
                                                specificDeviceResponseDescriptor,
-                                               signUpErrorResponseDescriptor
+                                               signUpErrorResponseDescriptor,
+                                               reportResponseDescriptor
                                                ]];
     
     [manager addRequestDescriptorsFromArray:@[
@@ -1752,7 +1781,8 @@
                                               addNotificationRequestDescriptor,
                                               userRequestDescriptor,
                                               invitationRequestDescriptor,
-                                              deviceRequestDescriptor
+                                              deviceRequestDescriptor,
+                                              reportRequestDescriptor
                                               ]];
 }
 

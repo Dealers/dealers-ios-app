@@ -64,9 +64,9 @@
 }
 
 - (void)setTableView {
-    [self.scrollView setContentSize:((CGSizeMake(320, ([self.storesNearby count]*70+barTableGap))))];
+    [self.scrollView setContentSize:((CGSizeMake(320, ([self.storesNearby count]*70+barTableGap+self.venuesTableView.tableFooterView.frame.size.height))))];
     
-    self.venuesTableView.frame = CGRectMake(0, barTableGap, 320, ([self.storesNearby count]*70));
+    self.venuesTableView.frame = CGRectMake(0, barTableGap, [[UIScreen mainScreen] bounds].size.width, ([self.storesNearby count]*70 + self.venuesTableView.tableFooterView.frame.size.height));
     self.whiteCoverView.frame = self.venuesTableInitialFrame;
     
     if ([self.storesNearby count] == 0 && loadsuc) {
@@ -212,7 +212,10 @@
     
     self.collapseMapButton.hidden = YES;
     currentVC = 1;
-    self.storesNearby = [[NSMutableArray alloc]init];
+    self.storesNearby = [[NSMutableArray alloc] init];
+    
+    self.venuesTableView.scrollEnabled = NO;
+    self.venuesTableView.tableFooterView = [self setFoursquareAcknowledgment];
     
     [self configureRestKit];
     
@@ -417,14 +420,17 @@
     
 }
 
--(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+- (UIView *)setFoursquareAcknowledgment
+{
+    UIView *foursquareAcknowledgmentView = [[UIView alloc] init];
+    foursquareAcknowledgmentView.frame = CGRectMake(0, 0, self.view.frame.size.width, 44.0);
     
-//    if ([[segue identifier] isEqualToString:@"StoreSearchSeq"]) {
-//        NSIndexPath *indexpath = [self.storeSearchTableView indexPathForSelectedRow];
-//        NSString *string = [self.storeSearchNameArray objectAtIndex:indexpath.row];
-//        [[segue destinationViewController] setStoreName:string];
-//        [[segue destinationViewController] setSegcategory:@"No Category"];
-//    }
+    UIImageView *foursquareAcknowledgmentImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Powered By Foursquare"]];
+    foursquareAcknowledgmentImage.frame = CGRectMake(55, 4, 210, 35);
+    
+    [foursquareAcknowledgmentView addSubview:foursquareAcknowledgmentImage];
+    
+    return foursquareAcknowledgmentView;
 }
 
 - (IBAction)Dismiss:(id)sender {

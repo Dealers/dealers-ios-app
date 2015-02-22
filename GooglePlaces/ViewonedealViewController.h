@@ -18,8 +18,10 @@
 #import "EditDealTableViewController.h"
 #import "DealersTableViewController.h"
 #import "Notification.h"
+#import "MBProgressHUD.h"
+#import "Report.h"
 
-@interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate>
+@interface ViewonedealViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, MBProgressHUDDelegate>
 
 {
     int currentpage;
@@ -32,6 +34,8 @@
     
     BOOL shouldAddID;
     BOOL shouldRemoveID;
+    
+    MBProgressHUD *reportSent;
 }
 
 @property AppDelegate *appDelegate;
@@ -85,6 +89,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *CommentButton;
 @property (weak, nonatomic) IBOutlet UIButton *ShareButton;
 
+@property UIButton *likeBarButton;
+@property UIButton *likeBarButtonSelected;
+@property UIButton *commentBarButton;
+@property UIButton *shareBarButton;
+
 @property NSNumber *likeCounter;
 @property NSNumber *shareCounter;
 
@@ -107,7 +116,6 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *imageLoading3;
 @property (weak, nonatomic) IBOutlet UIImageView *captureImage4;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *imageLoading4;
-@property (weak, nonatomic) IBOutlet UIView *likesAndButtonsSection;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *cameraScrollView;
 
