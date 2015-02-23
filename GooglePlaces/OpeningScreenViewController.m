@@ -402,7 +402,7 @@
         appDelegate.dealer.reliability = [userDefaults objectForKey:@"reliability"];
         appDelegate.dealer.facebookPseudoUserID = [userDefaults objectForKey:@"facebookPseudoUserID"];
         appDelegate.dealer.invitationCounter = [userDefaults objectForKey:@"invitationCounter"];
-                
+        
         if (appDelegate.dealer.photoURL.length > 1 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
             appDelegate.dealer.photo = [appDelegate loadProfilePic];
         }
@@ -414,7 +414,7 @@
     } else {
         
         appDelegate.userWasLoggedIn = NO;
-
+        
         if ([appDelegate isFacebookConnected] || [FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
             [[FBSession activeSession] closeAndClearTokenInformation];
         }
@@ -455,7 +455,7 @@
                                           facebookUserEmail = [result objectForKey:@"email"];
                                           
                                           [self checkIfUserExists];
-                                                                                    
+                                          
                                       } else {
                                           
                                           NSLog(@"%@", [error localizedDescription]);
@@ -502,7 +502,7 @@
                                                       }
                                                       
                                                       [self createPseudoUserForToken];
-                                                  
+                                                      
                                                   } else {
                                                       
                                                       // User does not exist. Check if he is authorized, if so sign him up.
@@ -572,16 +572,8 @@
 - (void)createPseudoUserForToken
 {
     self.pseudoUser = [[User alloc] init];
-    self.pseudoUser.username = [NSString stringWithFormat:@"fb_%@", facebookUserEmail];
+    self.pseudoUser.username = [self setUsernameString];
     self.pseudoUser.userPassword = [NSString stringWithFormat:@"pass_%@_key", facebookUserEmail];
-    
-    if (triedAddingNumber) {
-        self.pseudoUser.username = [NSString stringWithFormat:@"fb_2_%@", facebookUserEmail];
-    }
-    
-    if (self.pseudoUser.username.length > 30) {
-        self.pseudoUser.username = [self.pseudoUser.username substringToIndex:30];
-    }
     
     [[RKObjectManager sharedManager] postObject:self.pseudoUser
                                            path:@"/users/"
@@ -597,6 +589,7 @@
                                             
                                             NSLog(@"Pseudo user couldn't be created...");
                                             Error *errors = [[[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey] lastObject];
+                                            NSLog(@"Error: %@", errors);
                                             
                                             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Couldn't sign in with facebook", nil)
                                                                                            message:NSLocalizedString(@"Pleae try again later", nil)
@@ -604,26 +597,31 @@
                                                                                  cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                                                  otherButtonTitles:nil];
                                             
-                                            if ([[errors messagesString] isEqualToString:@"Pseudo user already exists"]) {
-                                                
-                                                if (!triedAddingNumber) {
-                                                    triedAddingNumber = YES;
-                                                    [self createPseudoUserForToken];
-                                                } else {
-                                                    [alert show];
-                                                    [loggingInFacebook hide:YES];
-                                                    appDelegate.dealer = nil;
-                                                    [[FBSession activeSession] closeAndClearTokenInformation];
-                                                }
-                                                
-                                            } else {
-                                                
-                                                [alert show];
-                                                [loggingInFacebook hide:YES];
-                                                appDelegate.dealer = nil;
-                                                [[FBSession activeSession] closeAndClearTokenInformation];
-                                            }
+                                            [alert show];
+                                            [loggingInFacebook hide:YES];
+                                            appDelegate.dealer = nil;
+                                            [[FBSession activeSession] closeAndClearTokenInformation];
                                         }];
+}
+
+- (NSString *)setUsernameString
+{
+    NSString *emailFirstPart = [facebookUserEmail componentsSeparatedByString:@"@"].firstObject;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateStyle = NSDateFormatterShortStyle;
+    dateFormatter.timeStyle = NSDateFormatterMediumStyle;
+    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+    dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@""];
+    dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@""];
+    dateString = [dateString stringByReplacingOccurrencesOfString:@"," withString:@"_"];
+    NSString *usernameString = [NSString stringWithFormat:@"%@_%@", dateString, emailFirstPart];
+    
+    if (usernameString.length > 30) {
+        usernameString = [usernameString substringToIndex:30];
+    }
+    
+    return usernameString;
 }
 
 - (void)uploadPhoto
@@ -790,12 +788,12 @@
 - (void)enterDealers
 {
     [loggingInFacebook hide:YES];
-
+    
     if (signedUp) {
         TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
         tvc.afterSignUp = YES;
         [self.navigationController pushViewController:tvc animated:YES];
-    
+        
     } else {
         
         [appDelegate setTabBarController];
