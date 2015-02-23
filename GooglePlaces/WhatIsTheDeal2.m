@@ -734,6 +734,8 @@
     CGSize iconSize = CGSizeMake(30, 30);
     CGFloat labelWidth = self.view.frame.size.width - labelsLeftMargin - iconsLeftMargin;
     UIColor *detailsTextColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:160.0/255.0 alpha:1.0];
+    BOOL addressIsTwoLines = NO;
+    BOOL hasPriceOrDiscount = NO;
     
     UIImageView *storeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
                                                                           dealPic.frame.size.height + detailsVerticalGap,
@@ -742,7 +744,7 @@
     storeIcon.image = [UIImage imageNamed:@"Store Icon"];
     [sharedView addSubview:storeIcon];
     
-    UILabel *storeLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+    UILabel *storeLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelsLeftMargin,
                                                                    storeIcon.frame.origin.y,
                                                                    labelWidth,
                                                                    storeIcon.frame.size.height)];
@@ -754,7 +756,47 @@
     
     detailsLowestYPoint = CGRectGetMaxY(storeIcon.frame);
     
+    if (self.deal.store.address.length > 1 && ![self.deal.store.address isEqualToString:@"None"]) {
+        
+        UIImageView *addressIcon = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMargin,
+                                                                                 detailsLowestYPoint + detailsVerticalGap,
+                                                                                 iconSize.width,
+                                                                                 iconSize.height)];
+        addressIcon.image = [UIImage imageNamed:@"Address Icon"];
+        [sharedView addSubview:addressIcon];
+        
+        UILabel *addressLabel = [[UILabel alloc] init];
+        addressLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+        addressLabel.textColor = detailsTextColor;
+        addressLabel.numberOfLines = 2;
+        addressLabel.text = self.deal.store.address;
+        
+        if (self.deal.store.city.length > 0 && ![self.deal.store.city isEqualToString:@"None"]) {
+            NSString *cityAddition = [NSString stringWithFormat:@", %@", self.deal.store.city];
+            addressLabel.text = [addressLabel.text stringByAppendingString:cityAddition];
+        }
+        
+        NSDictionary *attributes = @{NSFontAttributeName : addressLabel.font};
+        CGSize boundingRect = CGSizeMake(storeLabel.frame.size.width - 18.0, MAXFLOAT);
+        CGRect addressLabelBounds = [addressLabel.text boundingRectWithSize:boundingRect
+                                                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                                                 attributes:attributes
+                                                                    context:nil];
+        
+        addressLabel.frame = CGRectMake(labelsLeftMargin, addressIcon.frame.origin.y + 2, addressLabelBounds.size.width, addressLabelBounds.size.height);
+        
+        [sharedView addSubview:addressLabel];
+        
+        if (addressLabel.frame.size.height > 30) {
+            addressIsTwoLines = YES;
+        }
+        
+        detailsLowestYPoint = CGRectGetMaxY(addressIcon.frame) > CGRectGetMaxY(addressLabel.frame) ? CGRectGetMaxY(addressIcon.frame) : CGRectGetMaxY(addressLabel.frame);
+    }
+    
     if (self.priceTextField.text.length > 0 || self.discountTextField.text.length > 0) {
+        
+        hasPriceOrDiscount = YES;
         
         UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
                                                                               detailsLowestYPoint + detailsVerticalGap,
@@ -822,26 +864,8 @@
         detailsLowestYPoint = CGRectGetMaxY(priceIcon.frame);
     }
     
-    if (self.categoryLabel.text.length > 0 && [self.categoryLabel.text rangeOfString:NSLocalizedString(@"Choose Category", nil)].location == NSNotFound) {
-        
-        UIImageView *categoryIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
-                                                                                 detailsLowestYPoint + detailsVerticalGap,
-                                                                                 iconSize.width,
-                                                                                 iconSize.height)];
-        categoryIcon.image = [UIImage imageNamed:@"Category Icon"];
-        [sharedView addSubview:categoryIcon];
-        
-        UILabel *categoryLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
-                                                                          categoryIcon.frame.origin.y,
-                                                                          labelWidth,
-                                                                          categoryIcon.frame.size.height)];
-        categoryLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-        categoryLabel.textColor = detailsTextColor;
-        categoryLabel.numberOfLines = 1;
-        categoryLabel.text = self.categoryLabel.text;
-        [sharedView addSubview:categoryLabel];
-        
-        detailsLowestYPoint = CGRectGetMaxY(categoryIcon.frame);
+    if (addressIsTwoLines && hasPriceOrDiscount) {
+        return;
     }
     
     if (![self.expirationDateLabel.text isEqualToString:NSLocalizedString(@"Choose Date", nil)] && self.expirationDateLabel.text.length > 0) {
@@ -1295,11 +1319,12 @@
         self.deal.category = temp.firstObject;
     }
     
-    if (self.didTouchDatePicker && !self.didCancelDate) {
+    if (self.expirationDateLabel.text.length > 2 && !self.didCancelDate) {
         
         NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *todaysComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[NSDate date]];
-        self.deal.expiration = [calendar dateFromComponents:todaysComponents];
+        NSDateComponents *expirationDateComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+                                                         fromDate:self.datePicker.date];
+        self.deal.expiration = [calendar dateFromComponents:expirationDateComponents];
     }
     
     self.deal.uploadDate = [NSDate date];

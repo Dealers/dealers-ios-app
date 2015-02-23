@@ -922,7 +922,10 @@
     if ([self.dealExpirationDate.text isEqualToString:NSLocalizedString(@"Expiration Date", nil)]) {
         self.deal.expiration = nil;
     } else {
-        self.deal.expiration = self.datePicker.date;
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *expirationDateComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+                                                                 fromDate:self.datePicker.date];
+        self.deal.expiration = [calendar dateFromComponents:expirationDateComponents];
     }
     
     if ([self.dealDescription.text isEqualToString:NSLocalizedString(@"Description", nil)]) {

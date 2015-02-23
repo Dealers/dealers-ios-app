@@ -197,7 +197,7 @@
     [[RKObjectManager sharedManager] getObjectsAtPath:path
                                            parameters:nil
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        
+                                                  
                                                   NSLog(@"Deal downloaded successfuly!");
                                                   
                                                   self.deal = mappingResult.firstObject;
@@ -206,7 +206,7 @@
                                                   [self stopLoadingAnimation];
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
-    
+                                                  
                                                   NSLog(@"Deal failed to download...");
                                                   
                                                   UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Error", nil)
@@ -222,7 +222,7 @@
 - (void)setDealsDetails
 {
     self.deal.photoSum = [appDelegate setPhotoSum:self.deal];
-
+    
     if (self.deal.photoURL1.length > 1 && ![self.deal.photoURL1 isEqualToString:@"None"]) {
         self.isShortCell = @"no";
     } else self.isShortCell = @"yes";
@@ -333,9 +333,9 @@
     self.navigationItem.titleView = actionsTitleView;
     
     UIBarButtonItem *options = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Options Button"]
-                                                               style:UIBarButtonItemStylePlain
-                                                              target:self
-                                                              action:@selector(optionsAction:)];
+                                                                style:UIBarButtonItemStylePlain
+                                                               target:self
+                                                               action:@selector(optionsAction:)];
     [options setImageInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
     self.navigationItem.rightBarButtonItem = options;
 }
@@ -1189,6 +1189,8 @@
     CGFloat detailsLowestYPoint;
     CGFloat priceXPoint = labelsLeftMarginSharedView;
     UIColor *detailsTextColor = textGray;
+    BOOL addressIsTwoLines = NO;
+    BOOL hasPriceOrDiscount = NO;
     
     UIImageView *storeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                           dealPic.frame.size.height + detailsVerticalGap,
@@ -1209,9 +1211,49 @@
     
     detailsLowestYPoint = CGRectGetMaxY(storeIcon.frame);
     
+    if (self.deal.store.address.length > 1 && ![self.deal.store.address isEqualToString:@"None"]) {
+        
+        UIImageView *addressIcon = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMarginSharedView,
+                                                                                 detailsLowestYPoint + detailsVerticalGap,
+                                                                                 self.StoreIcon.frame.size.width,
+                                                                                 self.StoreIcon.frame.size.height)];
+        addressIcon.image = [UIImage imageNamed:@"Address Icon"];
+        [sharedView addSubview:addressIcon];
+        
+        UILabel *addressLabel = [[UILabel alloc] init];
+        addressLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+        addressLabel.textColor = detailsTextColor;
+        addressLabel.numberOfLines = 2;
+        addressLabel.text = self.deal.store.address;
+        
+        if (self.deal.store.city.length > 0 && ![self.deal.store.city isEqualToString:@"None"]) {
+            NSString *cityAddition = [NSString stringWithFormat:@", %@", self.deal.store.city];
+            addressLabel.text = [addressLabel.text stringByAppendingString:cityAddition];
+        }
+        
+        NSDictionary *attributes = @{NSFontAttributeName : addressLabel.font};
+        CGSize boundingRect = CGSizeMake(self.storelabel.frame.size.width - 18.0, MAXFLOAT);
+        CGRect addressLabelBounds = [addressLabel.text boundingRectWithSize:boundingRect
+                                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                                               attributes:attributes
+                                                                  context:nil];
+        
+        addressLabel.frame = CGRectMake(labelsLeftMarginSharedView, addressIcon.frame.origin.y + 2, addressLabelBounds.size.width, addressLabelBounds.size.height);
+        
+        [sharedView addSubview:addressLabel];
+        
+        if (addressLabel.frame.size.height > 30) {
+            addressIsTwoLines = YES;
+        }
+        
+        detailsLowestYPoint = CGRectGetMaxY(addressIcon.frame) > CGRectGetMaxY(addressLabel.frame) ? CGRectGetMaxY(addressIcon.frame) : CGRectGetMaxY(addressLabel.frame);
+    }
+    
     if (self.pricelabel.text.length > 0 || self.discountlabel.text.length > 0) {
         
-        UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
+        hasPriceOrDiscount = YES;
+        
+        UIImageView *priceIcon = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                               detailsLowestYPoint + detailsVerticalGap,
                                                                               self.PriceIcon.frame.size.width,
                                                                               self.PriceIcon.frame.size.height)];
@@ -1220,7 +1262,7 @@
         
         if (self.pricelabel.text.length > 0) {
             
-            UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
+            UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelsLeftMarginSharedView,
                                                                            priceIcon.frame.origin.y,
                                                                            self.pricelabel.frame.size.width,
                                                                            priceIcon.frame.size.height)];
@@ -1265,26 +1307,8 @@
         detailsLowestYPoint = CGRectGetMaxY(priceIcon.frame);
     }
     
-    if (self.categorylabel.text.length > 0 && [self.categorylabel.text rangeOfString:NSLocalizedString(@"No Category", nil)].location == NSNotFound) {
-        
-        UIImageView *categoryIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
-                                                                                 detailsLowestYPoint + detailsVerticalGap,
-                                                                                 self.CategoryIcon.frame.size.width,
-                                                                                 self.CategoryIcon.frame.size.height)];
-        categoryIcon.image = [UIImage imageNamed:@"Category Icon"];
-        [sharedView addSubview:categoryIcon];
-        
-        UILabel *categoryLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
-                                                                          categoryIcon.frame.origin.y,
-                                                                          self.categorylabel.frame.size.width - 18.0,
-                                                                          categoryIcon.frame.size.height)];
-        categoryLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-        categoryLabel.textColor = detailsTextColor;
-        categoryLabel.numberOfLines = 1;
-        categoryLabel.text = self.categorylabel.text;
-        [sharedView addSubview:categoryLabel];
-        
-        detailsLowestYPoint = CGRectGetMaxY(categoryIcon.frame);
+    if (addressIsTwoLines && hasPriceOrDiscount) {
+        return;
     }
     
     if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"] && ![expirelabel.text isEqualToString:@"0"] && expirelabel.text.length > 0) {
@@ -1304,7 +1328,7 @@
         expirationLabel.textColor = detailsTextColor;
         expirationLabel.numberOfLines = 1;
         expirationLabel.text = self.expirelabel.text;
-        [sharedView addSubview:expirationLabel];        
+        [sharedView addSubview:expirationLabel];
     }
 }
 
@@ -1916,19 +1940,19 @@
             report.dealID = self.deal.dealID;
             report.reportingDealerID = appDelegate.dealer.dealerID;
             report.report = @"Spam";
-
+            
             [[RKObjectManager sharedManager] postObject:report
                                                    path:@"/reportdeals/"
                                              parameters:nil
                                                 success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                
+                                                    
                                                     NSLog(@"Report sent successfuly!");
                                                     
                                                     [reportSent show:YES];
                                                     [reportSent hide:YES afterDelay:1.5];
                                                 }
                                                 failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            
+                                                    
                                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                                                                     message:nil
                                                                                                    delegate:nil
