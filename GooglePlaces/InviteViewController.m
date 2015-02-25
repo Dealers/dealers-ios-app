@@ -9,7 +9,7 @@
 #import "InviteViewController.h"
 
 #define PASSCODE_LENGTH 4
-
+#define APPSTORE_LINK @"https://appsto.re/il/12CB5.i"
 
 @interface InviteViewController ()
 
@@ -50,7 +50,7 @@
 - (void)setInvitationMessageAndPasscode
 {
     passcode = [self generateCode];
-    invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"I'm sending you an entrence passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\nHere will be our link.", nil), passcode];
+    invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"I'm sending you a passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\n%@", nil), passcode, APPSTORE_LINK];
 }
 
 - (void)setInvitationIcons

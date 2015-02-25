@@ -46,6 +46,7 @@
         self.notificationPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(15, 12, 40, 40)];
         self.notificationPhoto.layer.cornerRadius = self.notificationPhoto.frame.size.width / 2;
         self.notificationPhoto.layer.masksToBounds = YES;
+        self.notificationPhoto.contentMode = UIViewContentModeScaleAspectFill;
         [self addSubview:self.notificationPhoto];
     }
     
@@ -109,6 +110,8 @@
                          
                          [self removeFromSuperview];
                          appDelegate.pushNotificationsWindow.hidden = YES;
+                         appDelegate.pushedDeal = nil;
+                         appDelegate.notifyingDealer = nil;
                      }];
 }
 

@@ -30,6 +30,8 @@
     self.notificationImagePlaceholder.layer.masksToBounds = YES;
     self.notificationImage.layer.cornerRadius = self.notificationImage.frame.size.width / 2;
     self.notificationImage.layer.masksToBounds = YES;
+    self.notificationImage.imageView.contentMode = UIViewContentModeScaleAspectFill;
+
     
     if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
         

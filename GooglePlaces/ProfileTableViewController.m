@@ -242,6 +242,7 @@
     self.profilePic.frame = profilePicFrame;
     self.profilePic.layer.cornerRadius = profilePicFrame.size.width / 2;
     self.profilePic.layer.masksToBounds = YES;
+    self.profilePic.contentMode = UIViewContentModeScaleAspectFill;
     [self.topView addSubview:self.profilePic];
     
     self.profilePicPlaceholder = [[UIView alloc]initWithFrame:self.profilePic.frame];

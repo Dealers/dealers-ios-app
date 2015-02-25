@@ -382,14 +382,14 @@
                                             <view contentMode="scaleToFill" id="YGP-NI-T5H" userLabel="Dealer Image Placeholder">
                                                 <rect key="frame" x="121" y="26" width="78" height="78"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.78431372549019607" green="0.78431372549019607" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             </view>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" id="d9t-Ry-aiJ" userLabel="Dealer Image">
                                                 <rect key="frame" x="120" y="25" width="80" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <color key="backgroundColor" red="0.78431372549019607" green="0.78431372549019607" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4cj-Wg-CFb" userLabel="Button - profile">
+                                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4cj-Wg-CFb" userLabel="Button - profile">
                                                 <rect key="frame" x="120" y="25" width="80" height="80"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1266,7 +1266,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection id="vyQ-pQ-ypi" userLabel="Camera Section">
+                            <tableViewSection id="vyQ-pQ-ypi" userLabel="Main Section">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="165" id="0GL-WA-KbM" userLabel="Camera Cell">
                                         <rect key="frame" x="0.0" y="35" width="320" height="165"/>
@@ -1297,7 +1297,6 @@
                                                             <state key="highlighted" image="Snap Highlighted"/>
                                                             <connections>
                                                                 <action selector="snap:" destination="5fh-Db-rGC" eventType="touchUpInside" id="CUZ-TF-TMK"/>
-                                                                <action selector="snap:" destination="dWX-7j-cCd" eventType="touchUpInside" id="oj6-ek-p0A"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="skx-6A-cwo" userLabel="Rotate Camera">
@@ -1648,7 +1647,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" id="2yL-3i-HdI">
-                                                    <rect key="frame" x="-4" y="0.0" width="322" height="162"/>
+                                                    <rect key="frame" x="-6" y="0.0" width="324" height="162"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="434294952.28969002">
                                                         <!--2014-10-06 13:29:12 +0000-->

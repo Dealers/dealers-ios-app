@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "WhatIsTheDeal2.h"
 #import "GKImagePicker.h"
+#import "FullScreenCameraViewController.h"
 #import "Deal.h"
 #import "Store.h"
 #import "Dealer.h"
@@ -69,7 +70,7 @@
 @property NSDate *cashedExpirationDate;
 
 @property BOOL tooMuchText;
-
+@property BOOL isShowingFullScreenCamera;
 
 - (IBAction)snap:(id)sender;
 - (IBAction)addPhoto:(id)sender;

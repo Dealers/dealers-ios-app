@@ -130,6 +130,8 @@
 		C8E996C21A554E60006FCAC7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E996C11A554E60006FCAC7 /* User.m */; };
 		C8EE6D741A305FD500D53893 /* ComingSoonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */; };
 		C8F6EF221A8E16CC009C18CD /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F6EF211A8E16CC009C18CD /* Report.m */; };
+		C8F6EF311A9B9323009C18CD /* FullScreenCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F6EF2F1A9B9323009C18CD /* FullScreenCameraViewController.m */; };
+		C8F6EF321A9B9323009C18CD /* FullScreenCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8F6EF301A9B9323009C18CD /* FullScreenCameraViewController.xib */; };
 		C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FFF56B197C437600D01744 /* EditDealTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -361,6 +363,9 @@
 		C8EE6D731A305FD500D53893 /* ComingSoonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComingSoonViewController.m; sourceTree = "<group>"; };
 		C8F6EF201A8E16CC009C18CD /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
 		C8F6EF211A8E16CC009C18CD /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
+		C8F6EF2E1A9B9323009C18CD /* FullScreenCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullScreenCameraViewController.h; sourceTree = "<group>"; };
+		C8F6EF2F1A9B9323009C18CD /* FullScreenCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullScreenCameraViewController.m; sourceTree = "<group>"; };
+		C8F6EF301A9B9323009C18CD /* FullScreenCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullScreenCameraViewController.xib; sourceTree = "<group>"; };
 		C8FFF56A197C437600D01744 /* EditDealTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDealTableViewController.h; sourceTree = "<group>"; };
 		C8FFF56B197C437600D01744 /* EditDealTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDealTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -668,6 +673,9 @@
 				C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */,
 				C8A10B9019E465C90090F1D9 /* ThankYouViewController.h */,
 				C8A10B9119E465C90090F1D9 /* ThankYouViewController.m */,
+				C8F6EF2E1A9B9323009C18CD /* FullScreenCameraViewController.h */,
+				C8F6EF2F1A9B9323009C18CD /* FullScreenCameraViewController.m */,
+				C8F6EF301A9B9323009C18CD /* FullScreenCameraViewController.xib */,
 			);
 			name = "Add Deal";
 			sourceTree = "<group>";
@@ -922,6 +930,7 @@
 				5684978C154C00BF001601A2 /* InfoPlist.strings in Resources */,
 				56849795154C00BF001601A2 /* MainStoryboard.storyboard in Resources */,
 				C8A10BA719E96B100090F1D9 /* NotificationTableCell.xib in Resources */,
+				C8F6EF321A9B9323009C18CD /* FullScreenCameraViewController.xib in Resources */,
 				B0274801186B291B005A52F0 /* PLCameraSheetButtonPressed.png in Resources */,
 				C8A9EE331A2213B9002EE682 /* monitoring-2010-08-01.json in Resources */,
 				C8173E821A683FF50090CF64 /* Localizable.strings in Resources */,
@@ -988,6 +997,7 @@
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
 				C80810C41A6EA0890034D8B1 /* Device.m in Sources */,
+				C8F6EF311A9B9323009C18CD /* FullScreenCameraViewController.m in Sources */,
 				C862AF2B1A2E0B5F00352831 /* ProfileTableViewController.m in Sources */,
 				B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */,
 				B0930C1417F40BD2004EB3CA /* OpeningScreenViewController.m in Sources */,

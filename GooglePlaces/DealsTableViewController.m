@@ -540,6 +540,8 @@
             } else {
                 cell.expiredTag.hidden = YES;
             }
+        } else {
+            cell.expiredTag.hidden = YES;
         }
         
         // Loading the deal's details to the cell

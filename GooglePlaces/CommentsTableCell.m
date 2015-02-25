@@ -30,6 +30,7 @@
     self.dealerProfilePicPlaceholder.layer.masksToBounds = YES;
     self.dealerProfilePic.layer.cornerRadius = self.dealerProfilePic.frame.size.width / 2;
     self.dealerProfilePic.layer.masksToBounds = YES;
+    self.dealerProfilePic.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     NSDictionary *attributes = @{NSFontAttributeName : self.commentBody.font};
     CGSize boundingRect = CGSizeMake(250.0 ,MAXFLOAT);

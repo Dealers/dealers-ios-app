@@ -434,6 +434,7 @@
         
         // download the deal
         pushedDealID = userInfoForActive[@"deal"];
+        notifyingDealerID = userInfoForActive[@"dealer"];
         if (pushedDealID) {
             NSString *path = [NSString stringWithFormat:@"/alldeals/%@/", pushedDealID];
             [[RKObjectManager sharedManager] getObjectsAtPath:path
@@ -443,8 +444,10 @@
                                                           NSLog(@"Notification's deal downloaded successfully!");
                                                           self.pushedDeal = mappingResult.firstObject;
                                                           
-                                                          // download the dealer's photo
-                                                          [self otherProfilePic:self.pushedDeal.dealer forTarget:nil notificationName:@"Push Notifications" atIndexPath:nil];
+                                                          // download the notifying dealer
+                                                          if (notifyingDealerID) {
+                                                              [self downloadNotifyingDealer];
+                                                          }
                                                       }
                                                       failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                           
@@ -489,6 +492,25 @@
     }
 }
 
+- (void)downloadNotifyingDealer
+{
+    NSString *path = [NSString stringWithFormat:@"/dealers/%@/", notifyingDealerID];
+    [[RKObjectManager sharedManager] getObjectsAtPath:path
+                                           parameters:nil
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  
+                                                  NSLog(@"Notifying dealer downloaded successfully!");
+                                                  self.notifyingDealer = mappingResult.firstObject;
+                                                  
+                                                  // download the dealer's photo
+                                                  [self otherProfilePic:self.notifyingDealer forTarget:nil notificationName:@"Push Notifications" atIndexPath:nil];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  
+                                                  NSLog(@"Notifying dealer failed to download.");
+                                              }];
+}
+
 - (void)presentNotificationOfType:(NSString *)type
 {
     if (!tabBarController) {
@@ -520,7 +542,11 @@
     
     PushNotificationView *pushNotificationView = [[PushNotificationView alloc] initWithDelegate:self.pushNotificationsWindow];
     [pushNotificationView layoutSubviews];
-    pushNotificationView.notificationPhoto.image = [UIImage imageWithData:self.pushedDeal.dealer.photo];
+    if (self.notifyingDealer.photo) {
+        pushNotificationView.notificationPhoto.image = [UIImage imageWithData:self.notifyingDealer.photo];
+    } else {
+        pushNotificationView.notificationPhoto.image = [UIImage imageNamed:@"Dealers Icon"];
+    }
     pushNotificationView.message.text = userInfoForActive[@"aps"][@"alert"];
     pushNotificationView.deal = self.pushedDeal;
     

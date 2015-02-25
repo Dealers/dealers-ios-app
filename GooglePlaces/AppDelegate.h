@@ -27,7 +27,7 @@
     int picsNumbers;
     NSInteger timesTriedToPostDevice, timesTriedToUpdateDevice, timesTriedToUpdateBadge;
     NSString *waitingForTabBarController;
-    NSNumber *pushedDealID;
+    NSNumber *pushedDealID, *notifyingDealerID;
     NSDictionary *userInfoForActive;
 }
 
@@ -46,6 +46,7 @@
 
 @property NSMutableArray *pushedObjects;
 @property Deal *pushedDeal;
+@property Dealer *notifyingDealer;
 
 @property RKObjectManager *updateFromFacebookManager;
 @property RKObjectManager *updateDeviceManager;

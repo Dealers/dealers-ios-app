@@ -28,6 +28,7 @@
 
 #define AWS_S3_BUCKET_NAME @"dealers-app"
 #define NAME_FOR_NOTIFICATIONS @"View Deal Photos Notifications"
+#define APPSTORE_LINK @"https://appsto.re/il/12CB5.i"
 
 #define COMMENTS_OVERVIEW_BUTTON 123456789
 #define COMMENTS_OVERVIEW_TITLE 987654321
@@ -64,6 +65,7 @@
                                                object:nil];
     
     if (!self.deal && self.dealID) {
+        self.navigationItem.titleView.userInteractionEnabled = NO;
         [self downloadDeal];
     } else {
         [self setDealsDetails];
@@ -204,6 +206,7 @@
                                                   [self setDealsDetails];
                                                   [self loadViewDealPage];
                                                   [self stopLoadingAnimation];
+                                                  self.navigationItem.titleView.userInteractionEnabled = YES;
                                               }
                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                   
@@ -1397,7 +1400,7 @@
 
 - (IBAction)ShareButtonAction:(id)sender {
     
-    NSString *messageText = NSLocalizedString(@"Hear from others about great deals at Dealers!", nil);
+    NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"Hear from others about great deals at Dealers: %@", nil), APPSTORE_LINK];
     NSArray *activityItems = @[self.sharedImage, messageText];
     NSArray *excludedActivities = @[UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeSaveToCameraRoll];
     
@@ -1568,6 +1571,7 @@
             yourCommentProfilePic.image = [appDelegate myProfilePic];
             yourCommentProfilePic.layer.cornerRadius = yourCommentProfilePic.frame.size.width / 2;
             yourCommentProfilePic.layer.masksToBounds = YES;
+            yourCommentProfilePic.contentMode = UIViewContentModeScaleAspectFill;
             [cell.contentView addSubview:yourCommentProfilePic];
             
             CGFloat x = 58;

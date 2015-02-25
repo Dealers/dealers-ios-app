@@ -18,17 +18,7 @@
 @implementation WhatIsTheDeal1
 
 @synthesize appDelegate;
-@synthesize session, captureVideoPreviewLayer;
-
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize session, captureVideoPreviewLayer, isShowingFullScreenCamera;
 
 - (void)viewDidLoad
 {
@@ -42,14 +32,15 @@
     appDelegate = [[UIApplication sharedApplication] delegate];
     
     [self setNavigationBar];
+    [self registerForNotifications];
     
     isFrontCamera = NO;
     self.capturedImagesSection.hidden = YES;
     self.cameraSection.hidden = NO;
     shouldDealloc = NO;
+    isShowingFullScreenCamera = NO;
     
     [self initializeCameraSection];
-    [self setKeyboardNotification];
     [self setTextViewSettings];
     [self setCounter];
     [self setProgressIndicator];
@@ -73,43 +64,8 @@
     self.photosFileName = nil;
 }
 
-#pragma mark - Table view delegate
 
-/*
- - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
- {
- UIView *container = [[UIView alloc]init];
- UILabel *labelHeader = [[UILabel alloc] initWithFrame:CGRectMake (0, 21, tableView.bounds.size.width, 22)];
- 
- if (section == 1) {
- 
- labelHeader.font = [UIFont fontWithName:@"Avenir-Light" size:20.0];
- //        labelHeader.textColor = [UIColor colorWithRed:130.0/255.0 green:130.0/255.0 blue:136.0/255.0 alpha:1.0];
- labelHeader.textColor = [UIColor blackColor];
- labelHeader.text = @"Tell us about the deal";
- labelHeader.textAlignment = NSTextAlignmentCenter;
- }
- 
- [container addSubview:labelHeader];
- 
- return container;
- }
- 
- - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
- {
- if (section == 0) {
- 
- return 0.1;
- 
- } else if (section == 1) {
- 
- return 56.0;
- }
- 
- return 0.1;
- }
- 
- */
+#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -149,19 +105,30 @@
     [nextButton setBackgroundColor:[appDelegate ourPurple]];
     [nextButton.layer setCornerRadius:5.0];
     [nextButton.layer setMasksToBounds:YES];
-
+    
     [nextButtonView addSubview:nextButton];
     
-     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:nextButtonView];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:nextButtonView];
     
     self.navigationItem.rightBarButtonItem = barButton;
 }
 
-- (void)setKeyboardNotification
+- (void)registerForNotifications
 {
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationChanged:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(editingScrollPosition)
                                                  name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cameraModeDismissed:)
+                                                 name:@"CameraModeDismissed"
                                                object:nil];
 }
 
@@ -233,9 +200,9 @@
     [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-    captureVideoPreviewLayer.frame = self.cameraView.bounds;
-    [self.cameraView.layer addSublayer:captureVideoPreviewLayer];
-    self.cameraView.layer.masksToBounds = YES;
+        captureVideoPreviewLayer.frame = self.cameraView.bounds;
+        [self.cameraView.layer addSublayer:captureVideoPreviewLayer];
+        self.cameraView.layer.masksToBounds = YES;
     });
     
     NSArray *devices = [AVCaptureDevice devices];
@@ -284,8 +251,6 @@
     [session addOutput:self.stillImageOutput];
     
     [session startRunning];
-    
-//    NSLog(@"Camera View hidden: %hhd, and Frame: %f, %f, %f, %f", self.cameraView.hidden, self.cameraView.frame.origin.x,self.cameraView.frame.origin.y,self.cameraView.frame.size.width,self.cameraView.frame.size.height);
     
     isSessionRunning = YES;
 }
@@ -446,18 +411,21 @@
 
 - (IBAction)rotateCamera:(id)sender {
     
-    if (isFrontCamera == NO) {
-        isFrontCamera = YES;
-        [self initializeCamera];
-    } else {
-        isFrontCamera = NO;
-        [self initializeCamera];
-    }
+    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
+    dispatch_async(queue, ^{
+        if (isFrontCamera == NO) {
+            isFrontCamera = YES;
+            [self initializeCamera];
+        } else {
+            isFrontCamera = NO;
+            [self initializeCamera];
+        }
+    });
 }
 
 - (IBAction)exitCameraMode:(id)sender {
     
-    if (!self.photosArray.count) {
+    if (self.photosArray.count == 0) {
         self.addPhoto.hidden = NO;
         [UIView animateWithDuration:0.3 animations:^{
             self.addPhoto.center = self.cameraCell.contentView.center;
@@ -723,13 +691,42 @@
 }
 
 - (void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image {
-
+    
     CGFloat imageSizeDivider = image.size.width / 320.0;
     UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider,
-                                                                           image.size.height / imageSizeDivider)];
-
+                                                                             image.size.height / imageSizeDivider)];
+    
     [self addNewPhotoToList:resizedImage];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)orientationChanged:(NSNotification *)notification
+{
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    if (UIDeviceOrientationIsLandscape(deviceOrientation) &&
+        !isShowingFullScreenCamera)
+    {
+        FullScreenCameraViewController *fscvc = [[FullScreenCameraViewController alloc] initWithNibName:@"FullScreenCameraViewController" bundle:nil];
+        fscvc.delegate = self;
+        fscvc.isFrontCamera = isFrontCamera;
+        fscvc.isCameraActive = self.capturedImagesSection.hidden;
+        [self presentViewController:fscvc animated:YES completion:nil];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+        isShowingFullScreenCamera = YES;
+    }
+    else if (UIDeviceOrientationIsPortrait(deviceOrientation) &&
+             isShowingFullScreenCamera)
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        isShowingFullScreenCamera = NO;
+    }
+}
+
+- (void)cameraModeDismissed:(NSNotification *)notification
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    isShowingFullScreenCamera = NO;
 }
 
 
@@ -745,7 +742,7 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     int maxLength = 120;
-        
+    
     NSString *stringlength = [NSString stringWithString:self.dealTitle.text];
     self.countLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(maxLength - stringlength.length)];
     
@@ -893,7 +890,7 @@
             NSString *bodyFileURL = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
             [binaryImageData writeToFile:bodyFileURL atomically:YES];
         }
-    
+        
     } else {
         
         // There are now photos. Randomly pick a color number and save it in the photoURL1 attribute

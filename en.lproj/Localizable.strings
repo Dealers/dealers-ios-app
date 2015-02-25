@@ -156,7 +156,7 @@
 "1 person likes this deal" = "1 person like this deal";
 "%@ people like this deal" = "%@ people like this deal";
 "View all %@ comments" = "View all %@ comments";
-"Hear from others about great deals at Dealers!" = "Hear from others about great deals at Dealers!";
+"Hear from others about great deals at Dealers: %@" = "Hear from others about great deals at Dealers: %@";
 "Report as Spam" = "Report as Spam";
 "Be the first to comment..." = "  Be the first to comment...";
 "Add a comment..." = "  Add a comment...";
@@ -191,7 +191,7 @@
 "like your deal." = "like your deal.";
 
 "Invite" = "Invite";
-"I'm sending you an entrence passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\nHere will be our link." = "I'm sending you an entrence passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\nHere will be our link.";
+"I'm sending you a passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\n%@" = "I'm sending you a passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\n%@";
 "Invite by " = "Invite by ";
 "Text Message" = "Text Message";
 "Email" = "Email";
