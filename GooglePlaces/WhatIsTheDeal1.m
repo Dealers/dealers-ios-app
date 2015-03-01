@@ -38,7 +38,6 @@
     self.capturedImagesSection.hidden = YES;
     self.cameraSection.hidden = NO;
     shouldDealloc = NO;
-    isShowingFullScreenCamera = NO;
     
     [self initializeCameraSection];
     [self setTextViewSettings];
@@ -115,20 +114,9 @@
 
 - (void)registerForNotifications
 {
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(orientationChanged:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(editingScrollPosition)
                                                  name:UIKeyboardDidShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(cameraModeDismissed:)
-                                                 name:@"CameraModeDismissed"
                                                object:nil];
 }
 
@@ -226,22 +214,17 @@
         }
     }
     
-    if (!isFrontCamera) {
-        NSError *error = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:&error];
-        if (!input) {
-            NSLog(@"ERROR: trying to open camera: %@", error);
-        }
-        [session addInput:input];
+    NSError *error = nil;
+    backCameraInput = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:&error];
+    if (!backCameraInput) {
+        NSLog(@"ERROR: trying to open camera: %@", error);
     }
+    [session addInput:backCameraInput];
     
-    if (isFrontCamera) {
-        NSError *error = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera error:&error];
-        if (!input) {
-            NSLog(@"ERROR: trying to open camera: %@", error);
-        }
-        [session addInput:input];
+    error = nil;
+    frontCameraInput = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera error:&error];
+    if (!frontCameraInput) {
+        NSLog(@"ERROR: trying to open camera: %@", error);
     }
     
     self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
@@ -258,9 +241,9 @@
 - (void)deallocCameraSession
 {
     [captureVideoPreviewLayer removeFromSuperlayer];
-    AVCaptureInput* input = [session.inputs objectAtIndex:0];
+    AVCaptureDeviceInput *input = [session.inputs objectAtIndex:0];
     [session removeInput:input];
-    AVCaptureVideoDataOutput* output = [session.outputs objectAtIndex:0];
+    AVCaptureVideoDataOutput *output = [session.outputs objectAtIndex:0];
     [session removeOutput:output];
     [session stopRunning];
     session = nil;
@@ -411,16 +394,24 @@
 
 - (IBAction)rotateCamera:(id)sender {
     
-    dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-    dispatch_async(queue, ^{
-        if (isFrontCamera == NO) {
-            isFrontCamera = YES;
-            [self initializeCamera];
-        } else {
-            isFrontCamera = NO;
-            [self initializeCamera];
-        }
-    });
+    if (isFrontCamera == NO) {
+        isFrontCamera = YES;
+        [session beginConfiguration];
+        
+        [session removeInput:backCameraInput];
+        [session addInput:frontCameraInput];
+        
+        [session commitConfiguration];
+        
+    } else {
+        isFrontCamera = NO;
+        [session beginConfiguration];
+        
+        [session removeInput:frontCameraInput];
+        [session addInput:backCameraInput];
+        
+        [session commitConfiguration];
+    }
 }
 
 - (IBAction)exitCameraMode:(id)sender {
@@ -700,29 +691,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)orientationChanged:(NSNotification *)notification
-{
-    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-    if (UIDeviceOrientationIsLandscape(deviceOrientation) &&
-        !isShowingFullScreenCamera)
-    {
-        FullScreenCameraViewController *fscvc = [[FullScreenCameraViewController alloc] initWithNibName:@"FullScreenCameraViewController" bundle:nil];
-        fscvc.delegate = self;
-        fscvc.isFrontCamera = isFrontCamera;
-        fscvc.isCameraActive = self.capturedImagesSection.hidden;
-        [self presentViewController:fscvc animated:YES completion:nil];
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-        isShowingFullScreenCamera = YES;
-    }
-    else if (UIDeviceOrientationIsPortrait(deviceOrientation) &&
-             isShowingFullScreenCamera)
-    {
-        [self dismissViewControllerAnimated:YES completion:nil];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-        isShowingFullScreenCamera = NO;
-    }
-}
-
 - (void)cameraModeDismissed:(NSNotification *)notification
 {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
@@ -794,7 +762,7 @@
                                  self.countContainer.hidden = YES;
                              }];
         }
-        [textView resignFirstResponder];
+        [self nextView];
         return NO;
     }
     return YES;
@@ -828,8 +796,6 @@
 
 - (void)nextView
 {
-    [self.dealTitle resignFirstResponder];
-    
     [self manageData];
 }
 

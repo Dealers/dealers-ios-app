@@ -48,6 +48,7 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self.profilePicView addGestureRecognizer:tap];
+    [self.changeProfilePicButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
     
     [self setRoundCornersToButtons];
 }
@@ -379,7 +380,7 @@
                        otherButtonTitles:NSLocalizedString(@"Take a Picture", nil), NSLocalizedString(@"From Library", nil), nil];
     }
     actionSheet.tag = PROFILE_PIC_ACTION_SHEET_TAG;
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    [actionSheet showInView:self.view];
     
     if (self.datePickerIsShowing) {
         [self hideDatePickerCell];

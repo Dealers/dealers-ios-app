@@ -668,7 +668,11 @@
         self.expirelabel.frame = CGRectMake(labelsLeftMargin, lowestYPoint+3+GAP, fieldsWidth, expirelabel.frame.size.height);
         lowestYPoint=(CGRectGetMaxY(self.ExpireIcon.frame) > CGRectGetMaxY(expirelabel.frame)) ? CGRectGetMaxY(self.ExpireIcon.frame) : CGRectGetMaxY(expirelabel.frame);
         
-        // Checking if the deal expired
+        // Checking if the deal expired. But first, get rid of the old red background if exists.
+        
+        if ([self.scroll viewWithTag:321232123]) {
+            [[self.scroll viewWithTag:321232123] removeFromSuperview];
+        }
         
         if ([appDelegate didDealExpired:self.deal]) {
             [self setExpiredDeal];
@@ -751,6 +755,7 @@
     expiredBackground.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:59.0/255.0 blue:48.0/255.0 alpha:0.2];
     expiredBackground.layer.cornerRadius = 8.0;
     expiredBackground.layer.masksToBounds = YES;
+    expiredBackground.tag = 321232123;
     [self.scroll insertSubview:expiredBackground belowSubview:self.ExpireIcon];
     
     self.expirelabel.text = [NSLocalizedString(@"Expired on ", nil) stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.expiration]];

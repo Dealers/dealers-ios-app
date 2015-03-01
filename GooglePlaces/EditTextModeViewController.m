@@ -109,8 +109,8 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     placeholderColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1.0];
     
+    [self registerForKeyboardNotifications];
     [self setProgressIndicator];
-    [self positionBarsInPlace];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -136,6 +136,10 @@
     } else if ([self.title isEqualToString:NSLocalizedString(@"Description", nil)]) {
         self.textView.keyboardType = UIKeyboardTypeDefault;
         self.textView.returnKeyType = UIReturnKeyDefault;
+        if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+            [self.textView setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
+            [self.textView setTextAlignment:NSTextAlignmentNatural];
+        }
     }
 }
 
@@ -143,6 +147,39 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.textView.contentInset = contentInsets;
+    self.textView.scrollIndicatorInsets = contentInsets;
+    
+    CGPoint barCenter = CGPointMake(self.view.center.x, self.view.frame.size.height - kbSize.height - self.priceBar.frame.size.height/2);
+    
+    self.priceBar.center = barCenter;
+    self.discountBar.center = barCenter;
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.textView.contentInset = contentInsets;
+    self.textView.scrollIndicatorInsets = contentInsets;
 }
 
 - (void)textViewDidChange:(UITextView *)textView
@@ -166,14 +203,6 @@
 }
 
 #pragma mark - Price and Discount Type Bars
-
-- (void) positionBarsInPlace
-{
-    CGPoint barCenter = CGPointMake(self.view.center.x, self.view.frame.size.height - keyboardHeight - self.priceBar.frame.size.height/2);
-    
-    self.priceBar.center = barCenter;
-    self.discountBar.center = barCenter;
-}
 
 - (void)showPriceBar
 {

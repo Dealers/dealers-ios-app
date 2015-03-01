@@ -659,6 +659,7 @@
     } else {
         
         NSLog(@"No deals in the array, so no photos...");
+        [self.refreshControl endRefreshing];
     }
 }
 
@@ -1063,8 +1064,17 @@
     Deal *deal;
     
     if (self.uploadedButton.selected) {
+        
+        if (self.uploadedDeals.count == 0) {
+            return 0;
+        }
         deal = [self.uploadedDeals objectAtIndex:indexPath.row];
+    
     } else {
+        
+        if (self.likedDeals.count == 0) {
+            return 0;
+        }
         deal = [self.likedDeals objectAtIndex:indexPath.row];
     }
     

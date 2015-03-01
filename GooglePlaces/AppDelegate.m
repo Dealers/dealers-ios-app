@@ -359,12 +359,21 @@
     [tabBarController.view addSubview:button];
     
     // Register for push notifications
-    UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIApplication *application = [UIApplication sharedApplication];
     
-    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        
+        UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        [application registerUserNotificationSettings:mySettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
     
-    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        [application registerForRemoteNotificationTypes:myTypes];
+    }
+    
     
     // Is there a remote notifiaction that's waiting for the tab bar controller?
     if (waitingForTabBarController) {
@@ -746,9 +755,9 @@
                     [self notifyAboutNotificationWhenActive];
                     return nil;
                 }
-                
-                __block NSDictionary *userInfo = [[NSDictionary alloc]initWithObjectsAndKeys:
-                                                  [UIImage imageWithData:dealer.photo], @"image",
+                __block UIImage *image = [UIImage imageWithData:dealer.photo];
+                __block NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                  image, @"image",
                                                   notificationName, @"notificationName",
                                                   target, @"target",
                                                   indexPath, @"indexPath",

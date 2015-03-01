@@ -20,6 +20,7 @@
 @interface WhatIsTheDeal1 : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UITextViewDelegate, UITextFieldDelegate, MBProgressHUDDelegate, GKImagePickerDelegate> {
     
     BOOL isFrontCamera, isSessionRunning, shouldDealloc;
+    AVCaptureDeviceInput *frontCameraInput, *backCameraInput;
     MBProgressHUD *blankTitleIndicator, *tooMuchIndicator, *illogicalPercentage;
     
 }

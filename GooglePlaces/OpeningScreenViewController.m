@@ -445,7 +445,7 @@
             // The session is open. Get the user information and check if the user already exists by signing him up.
             
             [FBRequestConnection startWithGraphPath:@"me"
-                                         parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(large), location, email"}
+                                         parameters:@{@"fields": @"first_name, last_name, email, gender, birthday, picture.type(large), location"}
                                          HTTPMethod:@"GET"
                                   completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                                       
@@ -480,10 +480,13 @@
 
 - (void)checkIfUserExists
 {
-    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"090909deal"];
+    RKObjectManager *manager = [RKObjectManager sharedManager];
+    [manager.HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"090909deal"];
+    NSString *path = @"/dealerfbs/";
+    NSDictionary *parameters = @{ @"email" : facebookUserEmail };
     
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"/dealerfbs/"
-                                           parameters:@{ @"email" : facebookUserEmail }
+    [manager getObjectsAtPath:path
+                                           parameters:parameters
                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                   
                                                   Dealer *dealer = mappingResult.firstObject;

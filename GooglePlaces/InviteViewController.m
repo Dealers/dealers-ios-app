@@ -238,7 +238,7 @@
             
         case MessageComposeResultSent:
             [invitationSent show:YES];
-            [invitationSent hide:YES afterDelay:1.5];
+            [invitationSent hide:YES afterDelay:2];
             
             [self postInvitation];
             
@@ -267,7 +267,7 @@
             
         case MFMailComposeResultSent:   {
             [invitationSent show:YES];
-            [invitationSent hide:YES afterDelay:1.5];
+            [invitationSent hide:YES afterDelay:2];
             
             [self postInvitation];
             

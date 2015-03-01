@@ -68,6 +68,7 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self.profilePicView addGestureRecognizer:tap];
+    [self.profilePicButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
     
     didUploadUserData = NO;
     didPhotoFinishedUploading = NO;
