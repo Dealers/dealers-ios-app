@@ -127,6 +127,7 @@
 "Delete Photo" = "Delete Photo";
 "Are you sure want to delete this photo?" = "Are you sure want to delete this photo?";
 "Yes" = "Yes";
+"If you're done, tap Next near the title" = "If you're done, tap Next near the title";
 "Have more details?" = "Have more details?";
 "Choose Category" = "Choose Category";
 "Remove Category" = "Remove Category";
@@ -153,6 +154,7 @@
 "Likers" = "Likers";
 "Comments" = "Comments";
 "No Category" = "No Category";
+"%@ Likes";
 "1 person likes this deal" = "1 person like this deal";
 "%@ people like this deal" = "%@ people like this deal";
 "View all %@ comments" = "View all %@ comments";

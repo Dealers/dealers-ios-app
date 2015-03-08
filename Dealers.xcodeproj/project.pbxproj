@@ -57,6 +57,7 @@
 		C8173E821A683FF50090CF64 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8173E841A683FF50090CF64 /* Localizable.strings */; };
 		C819F89C1A43352E00908726 /* Error.m in Sources */ = {isa = PBXBuildFile; fileRef = C819F89B1A43352E00908726 /* Error.m */; };
 		C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */; };
+		C834B7041AA999AB00891288 /* DealTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C834B7061AA999AB00891288 /* DealTableViewCell.xib */; };
 		C83997F01A7559A6003E3793 /* PushNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = C83997EF1A7559A6003E3793 /* PushNotificationView.m */; };
 		C83B93C41A2D08BE00AC666B /* DealsNoPhotoTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C83B93C21A2D08BE00AC666B /* DealsNoPhotoTableCell.m */; };
 		C83B93C51A2D08BE00AC666B /* DealsNoPhotoTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C83B93C31A2D08BE00AC666B /* DealsNoPhotoTableCell.xib */; };
@@ -72,6 +73,7 @@
 		C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890607E19A27F88001D3359 /* NotificationsTableViewController.m */; };
 		C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */; };
 		C890608519A49014001D3359 /* PasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C890608419A49014001D3359 /* PasswordTableViewController.m */; };
+		C891417D1AA48C9C006BCF10 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C891417B1AA48C9C006BCF10 /* DealTableViewCell.m */; };
 		C891902019FE57D9005E85FB /* AddDealNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C891901F19FE57D9005E85FB /* AddDealNavigationController.m */; };
 		C898FE6419A6177800F1C11A /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE5B19A6098A00F1C11A /* libRestKit.a */; };
 		C898FE6819A617AE00F1C11A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE6519A617AE00F1C11A /* CFNetwork.framework */; };
@@ -243,6 +245,7 @@
 		C80810C01A6CFFE20034D8B1 /* Invitation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Invitation.m; sourceTree = "<group>"; };
 		C80810C21A6EA0890034D8B1 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		C80810C31A6EA0890034D8B1 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
+		C80EA9121AAB85520045D4CA /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/DealTableViewCell.strings; sourceTree = "<group>"; };
 		C8173E7B1A6658470090CF64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		C8173E7D1A66DD420090CF64 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C8173E831A683FF50090CF64 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -251,6 +254,7 @@
 		C819F89B1A43352E00908726 /* Error.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Error.m; sourceTree = "<group>"; };
 		C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewController.h; sourceTree = "<group>"; };
 		C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCategoryTableViewController.m; sourceTree = "<group>"; };
+		C834B7051AA999AB00891288 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DealTableViewCell.xib; sourceTree = "<group>"; };
 		C83997EE1A7559A6003E3793 /* PushNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationView.h; sourceTree = "<group>"; };
 		C83997EF1A7559A6003E3793 /* PushNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationView.m; sourceTree = "<group>"; };
 		C83B93C11A2D08BE00AC666B /* DealsNoPhotoTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsNoPhotoTableCell.h; sourceTree = "<group>"; };
@@ -279,6 +283,8 @@
 		C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationsTableViewController.m; sourceTree = "<group>"; };
 		C890608319A49014001D3359 /* PasswordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordTableViewController.h; sourceTree = "<group>"; };
 		C890608419A49014001D3359 /* PasswordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordTableViewController.m; sourceTree = "<group>"; };
+		C891417A1AA48C9C006BCF10 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
+		C891417B1AA48C9C006BCF10 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		C891901E19FE57D9005E85FB /* AddDealNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDealNavigationController.h; sourceTree = "<group>"; };
 		C891901F19FE57D9005E85FB /* AddDealNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDealNavigationController.m; sourceTree = "<group>"; };
 		C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
@@ -555,6 +561,9 @@
 		C848B67119B4A247000F138D /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C891417A1AA48C9C006BCF10 /* DealTableViewCell.h */,
+				C891417B1AA48C9C006BCF10 /* DealTableViewCell.m */,
+				C834B7061AA999AB00891288 /* DealTableViewCell.xib */,
 				C80123341A2C4BC000C40A37 /* DealsTableCell.h */,
 				C80123351A2C4BC000C40A37 /* DealsTableCell.m */,
 				C80123361A2C4BC000C40A37 /* DealsTableCell.xib */,
@@ -931,6 +940,7 @@
 				56849795154C00BF001601A2 /* MainStoryboard.storyboard in Resources */,
 				C8A10BA719E96B100090F1D9 /* NotificationTableCell.xib in Resources */,
 				C8F6EF321A9B9323009C18CD /* FullScreenCameraViewController.xib in Resources */,
+				C834B7041AA999AB00891288 /* DealTableViewCell.xib in Resources */,
 				B0274801186B291B005A52F0 /* PLCameraSheetButtonPressed.png in Resources */,
 				C8A9EE331A2213B9002EE682 /* monitoring-2010-08-01.json in Resources */,
 				C8173E821A683FF50090CF64 /* Localizable.strings in Resources */,
@@ -996,6 +1006,7 @@
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
+				C891417D1AA48C9C006BCF10 /* DealTableViewCell.m in Sources */,
 				C80810C41A6EA0890034D8B1 /* Device.m in Sources */,
 				C8F6EF311A9B9323009C18CD /* FullScreenCameraViewController.m in Sources */,
 				C862AF2B1A2E0B5F00352831 /* ProfileTableViewController.m in Sources */,
@@ -1075,6 +1086,15 @@
 			);
 			name = Localizable.strings;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		C834B7061AA999AB00891288 /* DealTableViewCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C834B7051AA999AB00891288 /* Base */,
+				C80EA9121AAB85520045D4CA /* he */,
+			);
+			name = DealTableViewCell.xib;
 			sourceTree = "<group>";
 		};
 		C8C260E91A7F8A0100960D96 /* Add_Deal.png */ = {

@@ -486,45 +486,45 @@
     NSDictionary *parameters = @{ @"email" : facebookUserEmail };
     
     [manager getObjectsAtPath:path
-                                           parameters:parameters
-                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                  
-                                                  Dealer *dealer = mappingResult.firstObject;
-                                                  
-                                                  if (dealer.dealerID) {
-                                                      
-                                                      // User exists. Save his details, create a pseudo user and sign him in.
-                                                      
-                                                      appDelegate.dealer = dealer;
-                                                      
-                                                      if (appDelegate.dealer.photoURL.length > 2 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
-                                                          [self downloadUserPhoto];
-                                                      } else {
-                                                          appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:facebookInfo withPhoto:YES];
-                                                          [self uploadPhoto];
-                                                      }
-                                                      
-                                                      [self createPseudoUserForToken];
-                                                      
-                                                  } else {
-                                                      
-                                                      // User does not exist. Check if he is authorized, if so sign him up.
-                                                      if (self.authorized) {
-                                                          [self signUpUser];
-                                                      } else {
-                                                          EnterPasscodeViewController *epvc = [self.storyboard instantiateViewControllerWithIdentifier:@"EnterPasscode"];
-                                                          epvc.navigationControllerDelegate = self.navigationController;
-                                                          epvc.facebook = YES;
-                                                          [self.navigationController presentViewController:epvc animated:YES completion:nil];
-                                                      }
-                                                  }
-                                              }
-                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                  
-                                                  NSLog(@"Couldn't check if user exists...");
-                                                  [loggingInFacebook hide:YES];
-                                                  [[FBSession activeSession] closeAndClearTokenInformation];
-                                              }];
+                   parameters:parameters
+                      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                          
+                          Dealer *dealer = mappingResult.firstObject;
+                          
+                          if (dealer.dealerID) {
+                              
+                              // User exists. Save his details, create a pseudo user and sign him in.
+                              
+                              appDelegate.dealer = dealer;
+                              
+                              if (appDelegate.dealer.photoURL.length > 2 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
+                                  [self downloadUserPhoto];
+                              } else {
+                                  appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:facebookInfo withPhoto:YES];
+                                  [self uploadPhoto];
+                              }
+                              
+                              [self createPseudoUserForToken];
+                              
+                          } else {
+                              
+                              // User does not exist. Check if he is authorized, if so sign him up.
+                              if (self.authorized) {
+                                  [self signUpUser];
+                              } else {
+                                  EnterPasscodeViewController *epvc = [self.storyboard instantiateViewControllerWithIdentifier:@"EnterPasscode"];
+                                  epvc.navigationControllerDelegate = self.navigationController;
+                                  epvc.facebook = YES;
+                                  [self.navigationController presentViewController:epvc animated:YES completion:nil];
+                              }
+                          }
+                      }
+                      failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                          
+                          NSLog(@"Couldn't check if user exists...");
+                          [loggingInFacebook hide:YES];
+                          [[FBSession activeSession] closeAndClearTokenInformation];
+                      }];
 }
 
 - (void)signUpUser

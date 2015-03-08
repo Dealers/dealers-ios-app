@@ -63,6 +63,8 @@
 @property (nonatomic) NSMutableArray *photosArray;
 @property (nonatomic) NSMutableArray *photosFileName;
 
+@property (weak, nonatomic) IBOutlet UILabel *hintLabel;
+
 @property NSString *cashedPrice;
 @property NSString *cashedCurrency;
 @property NSNumber *cashedDiscountValue;

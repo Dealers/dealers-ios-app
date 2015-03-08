@@ -13,11 +13,10 @@
 #define PROFILE_PICTURE_NOTIFICATION @"Profile Picture Notifications"
 #define NO_DEALS_TAG 54232543
 
-#define DEAL_CELL_HEIGHT 214.0f
-#define DEAL_CELL_HEIGHT_NO_PHOTO 159.0f
-
 #define SECTION_GAP 20.0
 #define GAP 10.0
+#define NO_PHOTO_BACKGROUND_HEIGHT 114.0
+static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 @interface ProfileTableViewController ()
 
@@ -98,6 +97,7 @@
     self.likedDeals = [[NSMutableArray alloc]init];
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     isLoading = NO;
     isRefreshing = NO;
     self.afterEditing = NO;
@@ -422,32 +422,6 @@
     self.tableView.tableHeaderView = self.topView;
 }
 
-//- (void)setSettingsButton
-//{
-//    if (!self.settings) {
-//        
-//        self.settings = [appDelegate actionButton];
-//        
-//        [self.settings setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-//        [self.settings setTitle:NSLocalizedString(@"Settings", nil) forState:UIControlStateNormal];
-//        [[self.settings titleLabel] setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
-//        [self.settings setTitleColor:[appDelegate textGrayColor] forState:UIControlStateNormal];
-//        [self.settings addTarget:self action:@selector(pushSettingsView) forControlEvents:UIControlEventTouchUpInside];
-//        [self.topView addSubview:self.settings];
-//        
-//        UIImageView *settingsIcon = [[UIImageView alloc]initWithFrame:CGRectMake(9.0, 9.0, 20.0, 20.0)];
-//        settingsIcon.image = [UIImage imageNamed:@"Settings Icon"];
-//        [self.settings addSubview:settingsIcon];
-//    }
-//    
-//    CGRect frame = self.settings.frame;
-//    frame.origin.y = lowestYPoint;
-//    frame.size.height = 38.0;
-//    self.settings.frame = frame;
-//    
-//    lowestYPoint = CGRectGetMaxY(self.settings.frame) + SECTION_GAP;
-//}
-
 - (void)pushSettingsView:(id)sender
 {
     SettingsTableViewController *stvc = [self.storyboard instantiateViewControllerWithIdentifier:@"settingsID"];
@@ -626,15 +600,6 @@
                                               }];
 }
 
-- (void)checkForDuplicates:(NSMutableArray *)array
-{
-    //    for (Deal *deal in array) {
-    //        for (int i = 0; i < array.count; i++) {
-    //            if (deal.dealID.intValue =
-    //        }
-    //    }
-}
-
 - (void)loadFirstTwoPhotos
 {
     if (self.currentDeals.count > 0) {
@@ -801,7 +766,7 @@
             
             if ([indexPathes[i] isEqual:receivedIndexPath]) {
                 
-                DealsTableCell *cell = (DealsTableCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
+                DealTableViewCell *cell = (DealTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
                 
                 cell.photo.image = [notification.userInfo objectForKey:@"image"];
                 [UIView animateWithDuration:0.5 animations:^{ cell.photo.alpha = 1.0; }];
@@ -856,13 +821,13 @@
     
     for (NSIndexPath *indexPath in visibleIndexPathes) {
         
-        if ([[self.tableView cellForRowAtIndexPath:indexPath] isMemberOfClass:[DealsTableCell class]]) {
+        if ([[self.tableView cellForRowAtIndexPath:indexPath] isMemberOfClass:[DealTableViewCell class]]) {
             
             if (indexPath.row >= self.currentDeals.count) {
                 return;
             }
               
-            DealsTableCell *cell = (DealsTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            DealTableViewCell *cell = (DealTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             Deal *deal = [self.currentDeals objectAtIndex:indexPath.row];
             
             if (deal.photo1 && cell.photo.alpha == 0) {
@@ -877,11 +842,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    //    if (self.dealer.likedDeals.count > 0) {
-    //        [self.likedButton setTitle:[NSString stringWithFormat:@"%@ Likes", [NSNumber numberWithUnsignedInteger:self.dealer.likedDeals.count]]
-    //                          forState:UIControlStateNormal];
-    //    }
-    
     if (self.uploadedButton.selected) {
         return self.uploadedDeals.count;
     } else {
@@ -891,21 +851,39 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Deal *deal;
+    return [self dealCellForIndexPath:indexPath];
+}
+
+- (DealTableViewCell *)dealCellForIndexPath:(NSIndexPath *)indexPath
+{
+    DealTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
     
-    if (self.uploadedButton.selected) {
-        
-        if (self.uploadedDeals.count > 0) {
-            deal = [self.uploadedDeals objectAtIndex:indexPath.row];
-        }
-        
-    } else {
-        
-        if (self.likedDeals.count > 0) {
-            deal = [self.likedDeals objectAtIndex:indexPath.row];
-        }
+    if (!cell) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DealTableViewCell" owner:nil options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
+    [self configureCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)configureCell:(DealTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    Deal *deal = self.currentDeals[indexPath.row];
+    
+    cell.title.text = deal.title;
+    cell.store.text = deal.store.name;
+    
+    [self prepareDeal:deal];
+    [self checkIfHasImageForCell:cell deal:deal indexPath:indexPath];
+    [self checkIfDealExpiredForCell:cell deal:deal];
+    [self setPriceAndDiscountForCell:cell deal:deal];
+    [self setLikesCounterForCell:cell deal:deal];
+    [self setSeparatorForLastCell:cell indexPath:indexPath];
+}
+
+- (Deal *)prepareDeal:(Deal *)deal
+{
     if (!deal.photoSum) {
         deal.photoSum = [appDelegate setPhotoSum:deal];
     }
@@ -918,174 +896,140 @@
         deal.discountType = [appDelegate getDiscountType:deal.discountType];
     }
     
-    if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"]) {
-        
-        static NSString *cellIdentifier = @"DealsTableCellID";
-        DealsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-        if (!cell) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DealsTableCell" owner:nil options:nil];
-            cell = [nib objectAtIndex:0];
+    return deal;
+}
+
+- (void)checkIfHasImageForCell:(DealTableViewCell *)cell deal:(Deal *)deal indexPath:(NSIndexPath *)indexPath
+{
+    if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
+        CGFloat imageWidth = cell.photo.bounds.size.width;
+        cell.photoHeightConstraint.constant = imageWidth * 0.678125; // 217:320 ratio
+        cell.photo.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        [self setImageForCell:cell deal:deal indexPath:indexPath];
+    } else {
+        cell.photoHeightConstraint.constant = NO_PHOTO_BACKGROUND_HEIGHT;
+        cell.photo.backgroundColor = [DealTableViewCell randomBackgroundColors:deal.photoURL1];
+        cell.photo.image = nil;
+    }
+}
+
+- (void)setImageForCell:(DealTableViewCell *)cell deal:(Deal *)deal indexPath:(NSIndexPath *)indexPath
+{
+    if (!deal.photo1) {
+        cell.photo.alpha = 0;
+        if (!deal.downloadingPhoto) {
+            deal.downloadingPhoto = YES;
+            [appDelegate downloadPhotosForDeal:deal notificationName:DEALS_PHOTOS_NOTIFICATION atIndexPath:indexPath mode:nil];
         }
-        
-        // Downloading deal's photo (if haven't been downloaded already)
-        
-        if (!deal.photo1) {
-            cell.photo.alpha = 0;
-            if (!deal.downloadingPhoto) {
-                deal.downloadingPhoto = YES;
-                [appDelegate downloadPhotosForDeal:deal notificationName:DEALS_PHOTOS_NOTIFICATION atIndexPath:indexPath mode:self.profileMode];
-            }
-        } else {
-            cell.photo.alpha = 1.0;
-            cell.photo.image = deal.photo1;
-        }
-        
-        // Checking if the deal expired
-        
-        if (deal.expiration) {
-            if ([appDelegate didDealExpired:deal]) {
-                cell.expiredTag.hidden = NO;
-            } else {
-                cell.expiredTag.hidden = YES;
-            }
+    } else {
+        cell.photo.alpha = 1.0;
+        cell.photo.image = deal.photo1;
+    }
+}
+
+- (void)checkIfDealExpiredForCell:(DealTableViewCell *)cell deal:(Deal *)deal
+{
+    if (deal.expiration) {
+        if ([appDelegate didDealExpired:deal]) {
+            cell.expiredTag.hidden = NO;
         } else {
             cell.expiredTag.hidden = YES;
         }
-        
-        // Loading the deal's details to the cell
-        
-        cell.title.text = deal.title;
-        cell.store.text = deal.store.name;
-        
-        if (deal.dealAttrib.dealersThatLiked.count > 0) {
-            cell.likesCounter.hidden = NO;
-            cell.likesIcon.hidden = NO;
-            cell.likesCounter.text = [NSNumber numberWithUnsignedInteger:deal.dealAttrib.dealersThatLiked.count].stringValue;
-        } else {
-            cell.likesCounter.hidden = YES;
-            cell.likesIcon.hidden = YES;
-        }
-        
-        if (deal.price.floatValue > 0) {
-            cell.price.hidden = NO;
-            cell.price.text = [deal.currency stringByAppendingString:deal.price.stringValue];
-        } else {
-            cell.price.hidden = YES;
-        }
-        
-        if (deal.discountValue.floatValue > 0) {
-            cell.discount.hidden = NO;
-            if ([deal.discountType isEqualToString:@"%"]) {
-                cell.discount.text = [deal.discountValue.stringValue stringByAppendingString:deal.discountType];
-            } else if ([deal.discountType isEqualToString:@"lastPrice"]){
-                NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-                NSString *lastPriceDiscount = [deal.currency stringByAppendingString:deal.discountValue.stringValue];
-                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:lastPriceDiscount attributes:attributes];
-                cell.discount.attributedText = attrText;
-            }
-        } else {
-            cell.discount.hidden = YES;
-        }
-        
-        return cell;
-        
     } else {
-        
-        static NSString *cellIdentifier = @"DealsNoPhotoTableCellID";
-        DealsNoPhotoTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-        if (!cell) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DealsNoPhotoTableCell" owner:nil options:nil];
-            cell = [nib objectAtIndex:0];
-        }
-        
-        // Setting random background image to cell
-        
-        if (!deal.photoURL1) {
-            int random = arc4random_uniform(4);
-            deal.photoURL1 = [NSNumber numberWithInt:random].stringValue;
-        }
-        cell.backgroundWithColor.backgroundColor = [DealsNoPhotoTableCell randomBackgroundColors:deal.photoURL1];
-        
-        // Checking if the deal expired
-        
-        if (deal.expiration) {
-            if ([appDelegate didDealExpired:deal]) {
-                cell.expiredTag.hidden = NO;
-            } else {
-                cell.expiredTag.hidden = YES;
-            }
-        }
-        
-        // Loading the deal's details to the cell
-        
-        cell.title.text = deal.title;
-        cell.store.text = deal.store.name;
-        
-        if (deal.dealAttrib.dealersThatLiked.count > 0) {
-            cell.likesCounter.hidden = NO;
-            cell.likesIcon.hidden = NO;
-            cell.likesCounter.text = [NSNumber numberWithUnsignedInteger:deal.dealAttrib.dealersThatLiked.count].stringValue;
-        } else {
-            cell.likesCounter.hidden = YES;
-            cell.likesIcon.hidden = YES;
-        }
-        
-        if (deal.price.floatValue > 0) {
-            cell.price.hidden = NO;
-            cell.price.text = [deal.currency stringByAppendingString:deal.price.stringValue];
-        } else {
-            cell.price.hidden = YES;
-        }
-        
-        if (deal.discountValue.floatValue > 0) {
-            cell.discount.hidden = NO;
-            if ([deal.discountType isEqualToString:@"%"]) {
-                cell.discount.text = [deal.discountValue.stringValue stringByAppendingString:deal.discountType];
-            } else if ([deal.discountType isEqualToString:@"lastPrice"]){
-                NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-                NSString *lastPriceDiscount = [deal.currency stringByAppendingString:deal.discountValue.stringValue];
-                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:lastPriceDiscount attributes:attributes];
-                cell.discount.attributedText = attrText;
-            }
-        } else {
-            cell.discount.hidden = YES;
-        }
-        
-        return cell;
+        cell.expiredTag.hidden = YES;
+    }
+}
+
+- (void)setPriceAndDiscountForCell:(DealTableViewCell *)cell deal:(Deal *)deal
+{
+    CGFloat priceDiscountHorizontalConstant = 12.0;
+    
+    if (deal.price.floatValue > 0) {
+        cell.priceAndDiscountContainer.hidden = NO;
+        cell.price.text = [deal.currency stringByAppendingString:deal.price.stringValue];
+    } else {
+        cell.price.text = nil;
     }
     
-    return nil;
+    if (deal.discountValue.floatValue > 0) {
+        cell.discount.hidden = NO;
+        if ([deal.discountType isEqualToString:@"%"]) {
+            cell.discount.text = [deal.discountValue.stringValue stringByAppendingString:deal.discountType];
+        } else if ([deal.discountType isEqualToString:@"lastPrice"]){
+            NSDictionary *attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
+            NSString *lastPriceDiscount = [deal.currency stringByAppendingString:deal.discountValue.stringValue];
+            NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:lastPriceDiscount attributes:attributes];
+            cell.discount.attributedText = attrText;
+        }
+    } else {
+        cell.discount.text = nil;
+    }
+    
+    if (!cell.price.text && !cell.discount.text) {
+        cell.priceAndDiscountContainer.hidden = YES;
+    } else if (cell.price.text && cell.discount.text) {
+        cell.priceAndDiscountContainer.hidden = NO;
+        cell.priceDiscountHorizontalConstraint.constant = priceDiscountHorizontalConstant;
+    } else {
+        cell.priceAndDiscountContainer.hidden = NO;
+        cell.priceDiscountHorizontalConstraint.constant = 0;
+    }
+}
+
+- (void)setLikesCounterForCell:(DealTableViewCell *)cell deal:(Deal *)deal
+{
+    if (deal.dealAttrib.dealersThatLiked.count > 0) {
+        cell.likesStoreVerticalConstraint.constant = 4.0;
+        cell.likesIconHeightConstraint.constant = 15.0;
+        cell.likesCounterHeightConstraint.constant = 21.0;
+        NSString *likes = [NSNumber numberWithUnsignedInteger:deal.dealAttrib.dealersThatLiked.count].stringValue;
+        cell.likesCounter.text = [NSString stringWithFormat:NSLocalizedString(@"%@ Likes", nil), likes];
+        
+    } else {
+        cell.likesStoreVerticalConstraint.constant = 0;
+        cell.likesIconHeightConstraint.constant = 0;
+        cell.likesCounterHeightConstraint.constant = 0;
+        cell.likesCounter.text = nil;
+    }
+}
+
+- (void)setSeparatorForLastCell:(DealTableViewCell *)cell indexPath:(NSIndexPath *)indexPath
+{
+    NSInteger lastDeal = self.currentDeals.count - 1;
+    if (indexPath.row == lastDeal) {
+        cell.separator.alpha = 0.25;
+    } else {
+        cell.separator.alpha = 1.0;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Deal *deal;
-    
-    if (self.uploadedButton.selected) {
-        
-        if (self.uploadedDeals.count == 0) {
-            return 0;
+    return [self heightForCellAtIndexPath:indexPath];
+}
+
+- (CGFloat)heightForCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    static DealTableViewCell *sizingCell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingCell = [self.tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
+        if (!sizingCell) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DealTableViewCell" owner:nil options:nil];
+            sizingCell = [nib objectAtIndex:0];
         }
-        deal = [self.uploadedDeals objectAtIndex:indexPath.row];
+    });
     
-    } else {
-        
-        if (self.likedDeals.count == 0) {
-            return 0;
-        }
-        deal = [self.likedDeals objectAtIndex:indexPath.row];
-    }
+    [self configureCell:sizingCell atIndexPath:indexPath];
+    return [self calculateHeightForConfiguredSizingCell:sizingCell];
+}
+
+- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell {
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
     
-    if (deal.photoURL1.length > 1 && ![deal.photoURL1 isEqualToString:@"None"]) {
-        
-        return DEAL_CELL_HEIGHT;
-        
-    } else {
-        
-        return DEAL_CELL_HEIGHT_NO_PHOTO;
-    }
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    return size.height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1102,17 +1046,6 @@
     vodvc.dealIndexPath = indexPath;
     
     [self.navigationController pushViewController:vodvc animated:YES];
-}
-
-- (void)viewDidLayoutSubviews
-{
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
-    }
 }
 
 

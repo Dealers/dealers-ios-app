@@ -9,7 +9,6 @@
 #import "WhatIsTheDeal1.h"
 
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
-#define keyboardHeight 216
 
 @interface WhatIsTheDeal1 ()
 
@@ -32,12 +31,13 @@
     appDelegate = [[UIApplication sharedApplication] delegate];
     
     [self setNavigationBar];
-    [self registerForNotifications];
     
     isFrontCamera = NO;
     self.capturedImagesSection.hidden = YES;
     self.cameraSection.hidden = NO;
     shouldDealloc = NO;
+    self.hintLabel.text = NSLocalizedString(@"If you're done, tap Next near the title", nil);
+    self.hintLabel.alpha = 0;
     
     [self initializeCameraSection];
     [self setTextViewSettings];
@@ -55,19 +55,19 @@
 {
     [super viewDidAppear:animated];
     
-    if (!(self.dealTitle.text.length > 0)) {
-        
-        [self.dealTitle becomeFirstResponder];
-    }
-    
     self.photosFileName = nil;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.hintLabel.alpha = 0;
 }
 
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -112,14 +112,6 @@
     self.navigationItem.rightBarButtonItem = barButton;
 }
 
-- (void)registerForNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(editingScrollPosition)
-                                                 name:UIKeyboardDidShowNotification
-                                               object:nil];
-}
-
 - (void)setTextViewSettings
 {
     if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
@@ -133,7 +125,6 @@
 {
     CGSize counterLabelSize = CGSizeMake(40, 30);
     CGFloat x = self.view.frame.size.width - counterLabelSize.width - 5;
-    //    CGFloat y = self.view.frame.size.height - counterLabelSize.height - keyboardHeight - 5;
     self.countLabel = [[UILabel alloc]initWithFrame:CGRectMake(x, 0, counterLabelSize.width, counterLabelSize.height)];
     
     self.countLabel.backgroundColor = [UIColor blackColor];
@@ -497,11 +488,9 @@
     CGFloat imageSizeDivider = image.size.width / 320.0;
     
     UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider, image.size.height / imageSizeDivider)];
-    
-    NSLog(@"\n\nThe size of the resized photo is: %f, %f", resizedImage.size.width, resizedImage.size.height);
-    
+        
     CGFloat originX = self.cameraCell.frame.origin.x * imageSizeMultiplier;
-    CGFloat originY = 131 * imageSizeMultiplier;
+    CGFloat originY = 104 * imageSizeMultiplier;
     CGFloat sizeWidth = self.captureImage.frame.size.width * imageSizeMultiplier;
     CGFloat sizeHeight = self.captureImage.frame.size.height * imageSizeMultiplier;
     
@@ -762,21 +751,18 @@
                                  self.countContainer.hidden = YES;
                              }];
         }
-        [self nextView];
+        [self.view endEditing:YES];
+        [self performSelector:@selector(showHint) withObject:nil afterDelay:0.6];
         return NO;
     }
     return YES;
 }
 
-
-- (void)editingScrollPosition
+- (void)showHint
 {
-    if ([[self.navigationController visibleViewController] isEqual:self]) {
-        
-        CGPoint offsetPoint = CGPointMake(0, -29.0);
-        [self.tableView setContentOffset:offsetPoint animated:YES];
-    }
+    [UIView animateWithDuration:0.3 animations:^{ self.hintLabel.alpha = 1.0; }];
 }
+
 
 /*
  - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

@@ -125,6 +125,7 @@
 "Delete Photo" = "מחק תמונה";
 "Are you sure want to delete this photo?" = "בטוח/ה שאת/ה רוצה למחוק את התמונה?";
 "Yes" = "כן";
+"If you're done, tap Next near the title" = "אם סיימת, לחץ/י ׳הבא׳ על יד הכותרת.";
 "Have more details?" = "יש פרטים נוספים?";
 "Choose Category" = "בחר/י קטגוריה";
 "Remove Category" = "הסר קטגוריה";
@@ -151,6 +152,7 @@
 "Likers" = "אנשים שאהבו";
 "Comments" = "תגובות";
 "No Category" = "ללא קטגוריה";
+"%@ Likes" = "%@ אהבו את זה";
 "1 person likes this deal" = "אדם אחד אוהב את המבצע הזה";
 "%@ people like this deal" = "%@ אנשים אוהבים את המבצע הזה";
 "View all %@ comments" = "הראה את כל %@ התגובות";

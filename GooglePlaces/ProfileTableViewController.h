@@ -14,8 +14,7 @@
 #import "Dealer.h"
 #import "DealAttrib.h"
 #import "Store.h"
-#import "DealsTableCell.h"
-#import "DealsNoPhotoTableCell.h"
+#import "DealTableViewCell.h"
 #import "SettingsTableViewController.h"
 #import "InviteViewController.h"
 

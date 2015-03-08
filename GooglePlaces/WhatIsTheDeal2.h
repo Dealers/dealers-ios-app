@@ -12,7 +12,7 @@
 #import "ChooseCategoryTableViewController.h"
 #import "ThankYouViewController.h"
 #import "WhatIsTheDeal1.h"
-#import "DealsNoPhotoTableCell.h"
+#import "DealTableViewCell.h"
 #import "Deal.h"
 #import "Dealer.h"
 #import "Store.h"

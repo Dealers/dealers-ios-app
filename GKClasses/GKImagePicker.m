@@ -28,7 +28,9 @@
 
 - (id)init{
     if (self = [super init]) {
-        self.cropSize = CGSizeMake(320, 165);
+        CGFloat cropWidth = [UIScreen mainScreen].bounds.size.width;
+        CGFloat cropHeight = cropWidth* 0.678125;
+        self.cropSize = CGSizeMake(cropWidth, cropHeight);
         self.resizeableCropArea = NO;
         _imagePickerController = [[UIImagePickerController alloc] init];
         _imagePickerController.delegate = self;

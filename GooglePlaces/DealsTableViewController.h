@@ -15,6 +15,7 @@
 #import "DealAttrib.h"
 #import "Store.h"
 #import "DealsTableCell.h"
+#import "DealTableViewCell.h"
 #import "DealsNoPhotoTableCell.h"
 
 @interface DealsTableViewController : UITableViewController <UIScrollViewDelegate> {

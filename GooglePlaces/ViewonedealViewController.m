@@ -24,7 +24,7 @@
 #define iconsLeftMargin 12
 #define labelsLeftMargin 52
 #define iconsLeftMarginSharedView 18
-#define labelsLeftMarginSharedView 58
+#define labelsLeftMarginSharedView 48
 
 #define AWS_S3_BUCKET_NAME @"dealers-app"
 #define NAME_FOR_NOTIFICATIONS @"View Deal Photos Notifications"
@@ -360,7 +360,7 @@
     }
     
     self.pageControl.numberOfPages = [[self.deal photoSum]intValue];
-    [self.cameraScrollView setContentSize:((CGSizeMake(320*[[self.deal photoSum]intValue], 165)))];
+    [self.cameraScrollView setContentSize:((CGSizeMake(320 * [[self.deal photoSum] intValue], 217)))];
     [self.cameraScrollView setScrollEnabled:YES];
 }
 
@@ -406,11 +406,11 @@
 {
     if ([self.isShortCell isEqualToString:@"yes"]) {
         self.cameraScrollView.hidden = YES;
-        lowestYPoint = 10;
+        lowestYPoint = CGRectGetMaxY(self.expiredTag.frame) + 2.0;
         
     } else {
         self.captureImage.image = self.deal.photo1;
-        lowestYPoint = CGRectGetMaxY(self.captureImage.frame) + 10;
+        lowestYPoint = CGRectGetMaxY(self.captureImage.frame) + 5;
         
         if (!self.captureImage.image) { // In case the photo didn't downloaded in the my feed yet.
             UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -1150,7 +1150,8 @@
     
     // Setting the shared view content:
     
-    UIImageView *dealPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, self.captureImage.frame.size.height)];
+    UIImageView *dealPic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, self.captureImage.frame.size.height)];
+    dealPic.contentMode = UIViewContentModeScaleAspectFill;
     [sharedView addSubview:dealPic];
     
     if (self.deal.photo1) {
@@ -1159,12 +1160,12 @@
         
     } else {
         
-        dealPic.backgroundColor = [DealsNoPhotoTableCell randomBackgroundColors:self.deal.photoURL1];
+        dealPic.backgroundColor = [DealTableViewCell randomBackgroundColors:self.deal.photoURL1];
         
-        UIImageView *logo = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"White Logo"]];
+        UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"White Logo"]];
         CGSize logoSize = CGSizeMake(45.0, 64.0);
         CGFloat x = sharedView.center.x - logoSize.width / 2;
-        CGFloat y = 33.0;
+        CGFloat y = 52.0;
         logo.frame = CGRectMake(x, y, logoSize.width, logoSize.height);
         
         [sharedView addSubview:logo];
@@ -1175,7 +1176,7 @@
     titleBackground.image = [UIImage imageNamed:@"Title Background"];
     
     if (self.deal.photo1) {
-        titleBackground.alpha = 0.65;
+        titleBackground.alpha = 0.75;
     } else {
         titleBackground.alpha = 0;
     }
@@ -1187,31 +1188,32 @@
                                                                    dealPic.frame.size.height - titleLabelHeight - 5,
                                                                    screenWidth - iconsLeftMarginSharedView * 2,
                                                                    titleLabelHeight)];
-    titleLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:17.0];
+    titleLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.numberOfLines = 2;
     titleLabel.text = self.titlelabel.text;
     [sharedView addSubview:titleLabel];
     
-    CGFloat detailsVerticalGap = 7.0;
+    CGFloat detailsVerticalGap = 9.0;
     CGFloat detailsLowestYPoint;
+    CGSize iconSize = CGSizeMake(22.0, 22.0);
+    CGSize labelSize = CGSizeMake([UIScreen mainScreen].bounds.size.width - labelsLeftMarginSharedView - iconsLeftMarginSharedView, 22.0);
     CGFloat priceXPoint = labelsLeftMarginSharedView;
     UIColor *detailsTextColor = textGray;
-    BOOL addressIsTwoLines = NO;
     BOOL hasPriceOrDiscount = NO;
     
     UIImageView *storeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
                                                                           dealPic.frame.size.height + detailsVerticalGap,
-                                                                          self.StoreIcon.frame.size.width,
-                                                                          self.StoreIcon.frame.size.height)];
+                                                                          iconSize.width,
+                                                                          iconSize.height)];
     storeIcon.image = [UIImage imageNamed:@"Store Icon"];
     [sharedView addSubview:storeIcon];
     
     UILabel *storeLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
                                                                    storeIcon.frame.origin.y,
-                                                                   self.storelabel.frame.size.width - 18.0,
-                                                                   storeIcon.frame.size.height)];
-    storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+                                                                   labelSize.width,
+                                                                   labelSize.height)];
+    storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
     storeLabel.textColor = detailsTextColor;
     storeLabel.numberOfLines = 1;
     storeLabel.text = self.storelabel.text;
@@ -1219,63 +1221,25 @@
     
     detailsLowestYPoint = CGRectGetMaxY(storeIcon.frame);
     
-    if (self.deal.store.address.length > 1 && ![self.deal.store.address isEqualToString:@"None"]) {
-        
-        UIImageView *addressIcon = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMarginSharedView,
-                                                                                 detailsLowestYPoint + detailsVerticalGap,
-                                                                                 self.StoreIcon.frame.size.width,
-                                                                                 self.StoreIcon.frame.size.height)];
-        addressIcon.image = [UIImage imageNamed:@"Address Icon"];
-        [sharedView addSubview:addressIcon];
-        
-        UILabel *addressLabel = [[UILabel alloc] init];
-        addressLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-        addressLabel.textColor = detailsTextColor;
-        addressLabel.numberOfLines = 2;
-        addressLabel.text = self.deal.store.address;
-        
-        if (self.deal.store.city.length > 0 && ![self.deal.store.city isEqualToString:@"None"]) {
-            NSString *cityAddition = [NSString stringWithFormat:@", %@", self.deal.store.city];
-            addressLabel.text = [addressLabel.text stringByAppendingString:cityAddition];
-        }
-        
-        NSDictionary *attributes = @{NSFontAttributeName : addressLabel.font};
-        CGSize boundingRect = CGSizeMake(self.storelabel.frame.size.width - 18.0, MAXFLOAT);
-        CGRect addressLabelBounds = [addressLabel.text boundingRectWithSize:boundingRect
-                                                                  options:NSStringDrawingUsesLineFragmentOrigin
-                                                               attributes:attributes
-                                                                  context:nil];
-        
-        addressLabel.frame = CGRectMake(labelsLeftMarginSharedView, addressIcon.frame.origin.y + 2, addressLabelBounds.size.width, addressLabelBounds.size.height);
-        
-        [sharedView addSubview:addressLabel];
-        
-        if (addressLabel.frame.size.height > 30) {
-            addressIsTwoLines = YES;
-        }
-        
-        detailsLowestYPoint = CGRectGetMaxY(addressIcon.frame) > CGRectGetMaxY(addressLabel.frame) ? CGRectGetMaxY(addressIcon.frame) : CGRectGetMaxY(addressLabel.frame);
-    }
-    
     if (self.pricelabel.text.length > 0 || self.discountlabel.text.length > 0) {
         
         hasPriceOrDiscount = YES;
         
         UIImageView *priceIcon = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMarginSharedView,
-                                                                              detailsLowestYPoint + detailsVerticalGap,
-                                                                              self.PriceIcon.frame.size.width,
-                                                                              self.PriceIcon.frame.size.height)];
+                                                                               detailsLowestYPoint + detailsVerticalGap,
+                                                                               iconSize.width,
+                                                                               iconSize.height)];
         priceIcon.image = self.PriceIcon.image;
         [sharedView addSubview:priceIcon];
         
         if (self.pricelabel.text.length > 0) {
             
             UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelsLeftMarginSharedView,
-                                                                           priceIcon.frame.origin.y,
-                                                                           self.pricelabel.frame.size.width,
-                                                                           priceIcon.frame.size.height)];
+                                                                            priceIcon.frame.origin.y,
+                                                                            self.pricelabel.frame.size.width,
+                                                                            priceIcon.frame.size.height)];
             priceLabel.text = self.pricelabel.text;
-            priceLabel.font = [UIFont fontWithName:@"Avenir-Light" size:19.0];
+            priceLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17.0];
             [priceLabel sizeToFit];
             priceLabel.center = priceIcon.center;
             CGRect priceLabelFrame = priceLabel.frame;
@@ -1300,7 +1264,7 @@
             } else {
                 discountLabel.text = self.discountlabel.text;
             }
-            discountLabel.font = [UIFont fontWithName:@"Avenir-Light" size:19.0];
+            discountLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17.0];
             [discountLabel sizeToFit];
             discountLabel.center = priceIcon.center;
             CGRect discountLabelFrame = discountLabel.frame;
@@ -1313,31 +1277,70 @@
         }
         
         detailsLowestYPoint = CGRectGetMaxY(priceIcon.frame);
+        
     }
     
-    if (addressIsTwoLines && hasPriceOrDiscount) {
-        return;
+    if (self.deal.store.address.length > 1 && ![self.deal.store.address isEqualToString:@"None"]) {
+        
+        UIImageView *addressIcon = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMarginSharedView,
+                                                                                 detailsLowestYPoint + detailsVerticalGap,
+                                                                                 iconSize.width,
+                                                                                 iconSize.height)];
+        addressIcon.image = [UIImage imageNamed:@"Address Icon"];
+        [sharedView addSubview:addressIcon];
+        
+        UILabel *addressLabel = [[UILabel alloc] init];
+        addressLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+        addressLabel.textColor = detailsTextColor;
+        addressLabel.text = self.deal.store.address;
+        
+        if (self.deal.store.city.length > 0 && ![self.deal.store.city isEqualToString:@"None"]) {
+            NSString *cityAddition = [NSString stringWithFormat:@", %@", self.deal.store.city];
+            addressLabel.text = [addressLabel.text stringByAppendingString:cityAddition];
+        }
+        
+        CGSize addressLabelSize;
+        
+        if (hasPriceOrDiscount) {
+            addressLabelSize = labelSize;
+            addressLabel.numberOfLines = 1;
+        } else {
+            NSDictionary *attributes = @{NSFontAttributeName : addressLabel.font};
+            CGSize boundingRect = CGSizeMake(labelSize.width, MAXFLOAT);
+            CGRect addressLabelBounds = [addressLabel.text boundingRectWithSize:boundingRect
+                                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                                     attributes:attributes
+                                                                        context:nil];
+            addressLabelSize = addressLabelBounds.size;
+            addressLabel.numberOfLines = 2;
+        }
+        
+        addressLabel.frame = CGRectMake(labelsLeftMarginSharedView, addressIcon.frame.origin.y + 2, addressLabelSize.width, addressLabelSize.height);
+        
+        [sharedView addSubview:addressLabel];
+        
+        detailsLowestYPoint = CGRectGetMaxY(addressIcon.frame) > CGRectGetMaxY(addressLabel.frame) ? CGRectGetMaxY(addressIcon.frame) : CGRectGetMaxY(addressLabel.frame);
     }
     
-    if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"] && ![expirelabel.text isEqualToString:@"0"] && expirelabel.text.length > 0) {
-        
-        UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
-                                                                                   detailsLowestYPoint + detailsVerticalGap,
-                                                                                   self.ExpireIcon.frame.size.width,
-                                                                                   self.ExpireIcon.frame.size.height)];
-        expirationIcon.image = [UIImage imageNamed:@"Expiration Date Icon"];
-        [sharedView addSubview:expirationIcon];
-        
-        UILabel *expirationLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
-                                                                            expirationIcon.frame.origin.y,
-                                                                            self.expirelabel.frame.size.width - 18.0,
-                                                                            expirationIcon.frame.size.height)];
-        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-        expirationLabel.textColor = detailsTextColor;
-        expirationLabel.numberOfLines = 1;
-        expirationLabel.text = self.expirelabel.text;
-        [sharedView addSubview:expirationLabel];
-    }
+//    if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"] && ![expirelabel.text isEqualToString:@"0"] && expirelabel.text.length > 0) {
+//        
+//        UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMarginSharedView,
+//                                                                                   detailsLowestYPoint + detailsVerticalGap,
+//                                                                                   self.ExpireIcon.frame.size.width,
+//                                                                                   self.ExpireIcon.frame.size.height)];
+//        expirationIcon.image = [UIImage imageNamed:@"Expiration Date Icon"];
+//        [sharedView addSubview:expirationIcon];
+//        
+//        UILabel *expirationLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMarginSharedView,
+//                                                                            expirationIcon.frame.origin.y,
+//                                                                            self.expirelabel.frame.size.width - 18.0,
+//                                                                            expirationIcon.frame.size.height)];
+//        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+//        expirationLabel.textColor = detailsTextColor;
+//        expirationLabel.numberOfLines = 1;
+//        expirationLabel.text = self.expirelabel.text;
+//        [sharedView addSubview:expirationLabel];
+//    }
 }
 
 - (void)setScrollSize
