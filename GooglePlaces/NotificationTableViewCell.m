@@ -1,16 +1,16 @@
 //
-//  NotificationTableCell.m
+//  NotificationTableViewCell.m
 //  Dealers
 //
 //  Created by Gilad Lumbroso on 10/11/14.
 //
 //
 
-#import "NotificationTableCell.h"
+#import "NotificationTableViewCell.h"
 #import "Notification.h"
 #import "Dealer.h"
 
-@implementation NotificationTableCell
+@implementation NotificationTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -38,15 +38,13 @@
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.baseWritingDirection = UITextWritingDirectionRightToLeft;
         
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:self.label.text];
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:self.message.text];
         [string addAttribute:NSParagraphStyleAttributeName
                        value:paragraphStyle
                        range:NSMakeRange(0, string.length)];
         
-        self.label.attributedText = string;
+        self.message.attributedText = string;
     }
-    
-    self.date.hidden = YES;
 }
 
 + (NSString *)notificationStringForObject:(id)object

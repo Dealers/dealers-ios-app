@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "CommentsTableCell.h"
+#import "CommentTableViewCell.h"
 #import "ProfileTableViewController.h"
 #import "Comment.h"
 #import "Dealer.h"
@@ -25,8 +25,6 @@
 @property Deal *deal;
 
 @property BOOL isKeyboardReady;
-
-@property CommentsTableCell *cellPrototype;
 
 @property UIView *textInputView;
 

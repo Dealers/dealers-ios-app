@@ -6,9 +6,9 @@
 //
 //
 
-#import "StoresTableCell.h"
+#import "StoreTableViewCell.h"
 
-@implementation StoresTableCell
+@implementation StoreTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

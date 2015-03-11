@@ -919,7 +919,6 @@
     
     static NSString *cellIdentifier = @"CommentsTableCell";
     [self.commentsTableView registerNib:[UINib nibWithNibName:@"CommentsTableCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
-    self.cellPrototype = (CommentsTableCell *)[self.commentsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     [self.commentsTableView reloadData];
     
@@ -1529,7 +1528,7 @@
         if (self.commentsPreviewCount - 1 != indexPath.row) {
             
             static NSString *commentsTableCellIdentifier = @"CommentsTableCell";
-            CommentsTableCell *cell = (CommentsTableCell *)[tableView dequeueReusableCellWithIdentifier:commentsTableCellIdentifier];
+            CommentTableViewCell *cell = (CommentTableViewCell *)[tableView dequeueReusableCellWithIdentifier:commentsTableCellIdentifier];
             Comment *comment = [self.commentsForPreview objectAtIndex:indexPath.row];
             
             if (!cell) {
@@ -1737,9 +1736,9 @@
             
             if ([indexPathes[i] isEqual:receivedIndexPath]) {
                 
-                CommentsTableCell *cell = (CommentsTableCell *)[self.commentsTableView cellForRowAtIndexPath:indexPathes[i]];
+                CommentTableViewCell *cell = (CommentTableViewCell *)[self.commentsTableView cellForRowAtIndexPath:indexPathes[i]];
                 
-                if ([cell isMemberOfClass:[CommentsTableCell class]]) {
+                if ([cell isMemberOfClass:[CommentTableViewCell class]]) {
                     [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
                     [UIView animateWithDuration:0.3 animations:^{ cell.dealerProfilePic.alpha = 1.0; }];
                     break;

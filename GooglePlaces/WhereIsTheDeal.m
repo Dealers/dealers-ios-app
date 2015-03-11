@@ -8,7 +8,7 @@
 
 #import "WhereIsTheDeal.h"
 #import "WhatIsTheDeal1.h"
-#import "StoresTableCell.h"
+#import "StoreTableViewCell.h"
 #import <mach/mach.h>
 #import "CheckConnection.h"
 #import "EditDealTableViewController.h"
@@ -30,24 +30,6 @@
 }
 
 @synthesize foursquareManager, appDelegate;
-
--(void) connectionProblem {
-    [_mapView removeFromSuperview];
-    UIButton *selectDealButton9=[UIButton buttonWithType:UIButtonTypeCustom];
-    [selectDealButton9 setTitle:@"" forState:UIControlStateNormal];
-    selectDealButton9.frame=[[UIScreen mainScreen] bounds];
-    selectDealButton9.tag=110;
-    [selectDealButton9 setBackgroundColor:[UIColor whiteColor]];
-    selectDealButton9.alpha=0.7;
-    [[self view] addSubview:selectDealButton9];
-    [[self view] bringSubviewToFront:selectDealButton9];
-    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Connection Error", nil)
-                                                  message:NSLocalizedString(@"Check your network connection", nil)
-                                                 delegate:nil
-                                        cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                        otherButtonTitles:nil];
-    [alert show];
-}
 
 - (NSMutableArray *)filterStores:(NSArray *)storesArray
 {
@@ -350,7 +332,7 @@
     if (tableView == self.venuesTableView) {
         
         static NSString *cellIdentifier = @"StoresTableCell";
-        StoresTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        StoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if (!cell) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTableCell" owner:nil options:nil];
@@ -382,7 +364,7 @@
         
         self.storeSearchTableView.hidden = NO;
         static NSString *cellIdentifier = @"StoresTableCell";
-        StoresTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        StoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoresTableCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
@@ -426,7 +408,8 @@
     foursquareAcknowledgmentView.frame = CGRectMake(0, 0, self.view.frame.size.width, 44.0);
     
     UIImageView *foursquareAcknowledgmentImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Powered By Foursquare"]];
-    foursquareAcknowledgmentImage.frame = CGRectMake(55, 4, 210, 35);
+    foursquareAcknowledgmentImage.frame = CGRectMake(0, 0, 210, 35);
+    foursquareAcknowledgmentImage.center = foursquareAcknowledgmentView.center;
     
     [foursquareAcknowledgmentView addSubview:foursquareAcknowledgmentImage];
     
@@ -473,58 +456,13 @@
     span.latitudeDelta = 0.01;
     span.longitudeDelta= 0.01;
     region.span=span;
-    region.center =lastCoords;
-    [self.mapView setRegion:region animated:TRUE];
+    region.center = lastCoords;
+    [self.mapView setRegion:region animated:YES];
 }
 
 - (void)sendToFoursquareAndUpdateWithText:(NSString *)text
 {
-    self.app.networkActivityIndicatorVisible = YES;
     [self loadStoresSearched:text];
-    
-    /*
-     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
-     dispatch_async(queue, ^{
-     // Do some computation here.
-     [self storeSearchFromFoursquer:text];
-     // Update UI after computation.
-     dispatch_async(dispatch_get_main_queue(), ^{
-     // Update the UI on the main thread.
-     [self LoadStoresTableView];
-     });
-     });
-     */
-}
-
-- (void)storeSearchFromFoursquer:(NSString *)text
-{
-    self.storeSearchNameArray = nil;
-    self.storeSearchLocationArray = nil;
-    self.storeSearchNameArray = [[NSMutableArray alloc]init];
-    self.storeSearchLocationArray = [[NSMutableArray alloc]init];
-    
-    NSString *url = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?client_id=JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O&client_secret=5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G&v=20131120&query=%@&intent=global&limit=50",text];
-    NSURL *googleRequestURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-    NSData *data = [NSData dataWithContentsOfURL: googleRequestURL];
-    NSError *error;
-    if (data != nil) {
-        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
-                                                             options:kNilOptions
-                                                               error:&error];
-        NSDictionary *responseData = json[@"response"];
-        NSArray *venues = responseData[@"venues"];
-        for (int i=0; i<[[venues copy] count]; i++)
-        {
-            NSDictionary *storeArrayFromVenues = [venues objectAtIndex:i];
-            NSString *storeName = [storeArrayFromVenues objectForKey:@"name"];
-            NSString *vicinity = [[storeArrayFromVenues objectForKey:@"location"]objectForKey:@"address"];
-            if (storeName == nil) storeName = @"";
-            if (vicinity == nil) continue; //vicinity=@"Unknown";
-            
-            [self.storeSearchNameArray addObject:storeName];
-            [self.storeSearchLocationArray addObject:vicinity];
-        }
-    }
 }
 
 -(void) LoadStoresTableView {
@@ -654,36 +592,6 @@
     self.storeSearchTableView.hidden = YES;
     [self.SearchBar resignFirstResponder];
     [self.SearchBar setShowsCancelButton:NO animated:YES];
-}
-
--(void) deallocMemory {
-    NSLog(@"dealloc foursquare");
-    
-    NSArray *viewsToRemove = [self.view subviews];
-    for (UIView *v in viewsToRemove) {
-        [v removeFromSuperview];}
-    [self deallocMapView];
-    static NSCache *_cache = nil;
-    [_cache removeAllObjects];
-    _locationManager.delegate=nil;
-    _locationManager=nil;
-    self.mapView=nil;
-    self.mapView.delegate=nil;
-    self.storeNameArraySort=nil;
-    self.storeLocationArraySort=nil;
-    self.storeCategoryArraySort=nil;
-    self.storeIconArraySort=nil;
-    self.storeDistanceArraySort=nil;
-    self.storeSearchNameArray=nil;
-    self.storeSearchLocationArray=nil;
-    self.storeSearchTableView.delegate=nil;
-    self.storeSearchTableView.dataSource=nil;
-    self.storeSearchTableView=nil;
-    self.venuesTableView.delegate=nil;
-    self.venuesTableView.dataSource=nil;
-    self.venuesTableView=nil;
-    [self.view removeFromSuperview];
-    self.view=nil;
 }
 
 -(void) initMapView {

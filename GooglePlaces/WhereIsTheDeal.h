@@ -33,8 +33,6 @@
     BOOL loadsuc;
 }
 
--(void) deallocMemory;
-
 @property UIApplication *app;
 
 @property AppDelegate *appDelegate;

@@ -12,6 +12,8 @@
 #define keybaordHeight 216
 #define NO_COMMENTS_MESSAGE_TAG 54325
 #define NAME_FOR_NOTIFICATIONS @"Comments Photos Notifications"
+static NSString * const CommentCellIdentifier = @"CommentTableViewCell";
+
 
 @interface CommentsTableViewController () {
     
@@ -275,7 +277,7 @@
     return YES;
 }
 
--(void)postComment {
+- (void)postComment {
     
     Comment *comment = [[Comment alloc]init];
     
@@ -362,7 +364,7 @@
             
             if ([indexPathes[i] isEqual:receivedIndexPath]) {
                 
-                CommentsTableCell *cell = (CommentsTableCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
+                CommentTableViewCell *cell = (CommentTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
                 
                 [cell.dealerProfilePic setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
                 [UIView animateWithDuration:0.3 animations:^{ cell.dealerProfilePic.alpha = 1.0; }];
@@ -381,32 +383,12 @@
     [self.navigationController pushViewController:ptvc animated:YES];
 }
 
-- (CGFloat)setCommentBodyHeightWithText:(NSString *)text font:(UIFont *)font
-{
-    NSDictionary *attributes = @{NSFontAttributeName : font};
-    CGSize boundingRect = CGSizeMake(250.0 ,MAXFLOAT);
-    CGRect commentBodyFrame = [text boundingRectWithSize:boundingRect
-                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                              attributes:attributes
-                                                 context:nil];
-    
-    CGFloat height = ceil(commentBodyFrame.size.height);
-    return height;
-}
-
 
 #pragma mark - Table view data source
 
-- (void)setTableViewSettings {
-    
-    static NSString *CellIdentifier = @"CommentsTableCell";
-    
-    [self.tableView registerNib:[UINib nibWithNibName:@"CommentsTableCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
-    
-    self.cellPrototype = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 74.0, 0);
-    
+- (void)setTableViewSettings
+{
+//    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 74.0, 0);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
@@ -425,40 +407,35 @@
     return self.comments.count;
 }
 
-- (CGFloat)labelHeight:(UILabel *)label {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CGSize maxSize = CGSizeMake(250.0f, CGFLOAT_MAX);
-    CGSize requiredSize = [label sizeThatFits:maxSize];
-    label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y, requiredSize.width, requiredSize.height);
-    
-    // Calculate cell height
-    CGFloat height = 12.0f + self.cellPrototype.dealerName.frame.size.height + 6.0f + 12.0f + label.frame.size.height;
-    
-    return height;
+    return [self commentCellForIndexPath:indexPath];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    Comment *comment = [self.comments objectAtIndex:indexPath.row];
-    
-    self.cellPrototype.commentBody.text = comment.text;
-    
-    CGFloat commentBodyHeight = [self labelHeight:self.cellPrototype.commentBody];
-    
-    return MAX(commentBodyHeight, 64.0f);
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *CellIdentifier = @"CommentsTableCell";
-    CommentsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    Comment *comment = [self.comments objectAtIndex:indexPath.row];
+- (CommentTableViewCell *)commentCellForIndexPath:(NSIndexPath *)indexPath
+{
+    CommentTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CommentCellIdentifier];
     
     if (!cell) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:nil options:nil];
         cell = [nib objectAtIndex:0];
     }
     
+    [self configureCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)configureCell:(CommentTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    Comment *comment = [self.comments objectAtIndex:indexPath.row];
+
+    [self setDealerImageForCell:cell comment:comment indexPath:indexPath];
+    [self setDealerProfileLinkForCell:cell indexPath:indexPath];
+    [self setBasicDetailsForCell:cell comment:comment];    
+}
+
+- (void)setDealerImageForCell:(CommentTableViewCell *)cell comment:(Comment *)comment indexPath:(NSIndexPath *)indexPath
+{
     if (comment.dealer.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
         [cell.dealerProfilePic setImage:[appDelegate myProfilePic] forState:UIControlStateNormal];
     } else if (!comment.dealer.photo) {
@@ -469,22 +446,53 @@
     } else {
         [cell.dealerProfilePic setImage:[UIImage imageWithData:comment.dealer.photo] forState:UIControlStateNormal];
     }
-    
+}
+
+- (void)setDealerProfileLinkForCell:(CommentTableViewCell *)cell indexPath:(NSIndexPath *)indexPath
+{
     [cell.dealerProfilePic setTag:indexPath.row];
     [cell.dealerProfilePic addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [cell.dealerName setTitle:comment.dealer.fullName forState:UIControlStateNormal];
     [cell.dealerName setTag:indexPath.row];
     [cell.dealerName addTarget:self action:@selector(commenterProfileButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
+}
+
+- (void)setBasicDetailsForCell:(CommentTableViewCell *)cell comment:(Comment *)comment
+{
+    [cell.dealerName setTitle:comment.dealer.fullName forState:UIControlStateNormal];
     cell.commentDate.text = [comment.dateFormatter stringFromDate:comment.uploadDate];
     cell.commentBody.text = comment.text;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self heightForCellAtIndexPath:indexPath];
+}
+
+- (CGFloat)heightForCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    static CommentTableViewCell *sizingCell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingCell = [self.tableView dequeueReusableCellWithIdentifier:CommentCellIdentifier];
+        if (!sizingCell) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:nil options:nil];
+            sizingCell = [nib objectAtIndex:0];
+        }
+    });
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self configureCell:sizingCell atIndexPath:indexPath];
+    return [self calculateHeightForConfiguredSizingCell:sizingCell];
+}
+
+- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
+{
+    sizingCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.frame), CGRectGetHeight(sizingCell.bounds));
     
-    [cell.contentView layoutSubviews];
-        
-    return cell;
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    return size.height;
 }
 
 

@@ -14,6 +14,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 #define NO_PHOTO_BACKGROUND_HEIGHT 114.0f
 
+
 @implementation DealsTableViewController
 
 @synthesize appDelegate;
@@ -479,12 +480,10 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 {
     Deal *deal = self.deals[indexPath.row];
     
-    cell.title.text = deal.title;
-    cell.store.text = deal.store.name;
-
     [self prepareDeal:deal];
     [self checkIfHasImageForCell:cell deal:deal indexPath:indexPath];
     [self checkIfDealExpiredForCell:cell deal:deal];
+    [self setBasicDetailsForCell:cell deal:deal];
     [self setPriceAndDiscountForCell:cell deal:deal];
     [self setLikesCounterForCell:cell deal:deal];
     [self setSeparatorForLastCell:cell indexPath:indexPath];
@@ -510,9 +509,9 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 - (void)checkIfHasImageForCell:(DealTableViewCell *)cell deal:(Deal *)deal indexPath:(NSIndexPath *)indexPath
 {
     if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
-        CGFloat imageWidth = cell.photo.bounds.size.width;
-        cell.photoHeightConstraint.constant = imageWidth * 0.678125; // 217:320 ratio
+        CGFloat imageWidth = [UIScreen mainScreen].bounds.size.width;
         cell.photo.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        cell.photoHeightConstraint.constant = imageWidth * 0.678125; // 217:320 ratio
         [self setImageForCell:cell deal:deal indexPath:indexPath];
     } else {
         cell.photoHeightConstraint.constant = NO_PHOTO_BACKGROUND_HEIGHT;
@@ -546,6 +545,12 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     } else {
         cell.expiredTag.hidden = YES;
     }
+}
+
+- (void)setBasicDetailsForCell:(DealTableViewCell *)cell deal:(Deal *)deal
+{
+    cell.title.text = deal.title;
+    cell.store.text = deal.store.name;
 }
 
 - (void)setPriceAndDiscountForCell:(DealTableViewCell *)cell deal:(Deal *)deal

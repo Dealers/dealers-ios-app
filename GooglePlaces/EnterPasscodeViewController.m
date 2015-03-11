@@ -14,7 +14,7 @@
 
 @implementation EnterPasscodeViewController
 
-@synthesize appDelegate;
+@synthesize appDelegate, done;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,6 +27,41 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
+}
+
+- (void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    
+    [self.done addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[done(==60)]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(done)]];
+    
+    [self.done addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[done(==34)]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(done)]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.done
+                                                          attribute:NSLayoutAttributeCenterY
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.passcodeTextField
+                                                          attribute:NSLayoutAttributeCenterY
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    
+    if (!self.doneHorizontalConstraint) {
+        self.doneHorizontalConstraint = [NSLayoutConstraint constraintWithItem:self.done
+                                                                     attribute:NSLayoutAttributeTrailing
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.passcodeTextField
+                                                                     attribute:NSLayoutAttributeTrailing
+                                                                    multiplier:1.0
+                                                                      constant:-18.0];
+        
+        [self.view addConstraint:self.doneHorizontalConstraint];
+    }
 }
 
 - (void)initialize
@@ -44,7 +79,7 @@
     [dismiss setImage:[UIImage imageNamed:@"Dismiss"] forState:UIControlStateNormal];
     [dismiss addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:dismiss];
+    [self.view insertSubview:dismiss belowSubview:self.explanationView];
 }
 
 - (void)dismiss
@@ -71,134 +106,110 @@
     }
     
     self.done = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.done setFrame:CGRectMake(0, 0, 60.0, 34.0)];
     [self.done setTitle:doneText forState:UIControlStateNormal];
+    [self.done setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.done setBackgroundColor:[appDelegate ourPurple]];
     [self.done setTintColor:[UIColor whiteColor]];
     [self.done.layer setCornerRadius:5.0];
     [self.done.layer setMasksToBounds:YES];
     [self.done.titleLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:15.0]];
-    
     [self.done addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.done.center = self.passcodeTextField.center;
-    CGRect frame = self.done.frame;
-    frame.origin.x = self.view.frame.size.width - frame.size.width * 1.5;
-    self.done.frame = frame;
+    [self.view insertSubview:self.done belowSubview:self.explanationView];
     
     self.done.alpha = 0;
     self.done.hidden = YES;
-    
-    [self.view addSubview:self.done];
 }
 
 - (void)showDoneButton
 {
+    [self.view layoutIfNeeded];
+    
     self.done.hidden = NO;
+    self.doneHorizontalConstraint.constant = -10.0;
     [UIView animateWithDuration:0.15 animations:^{
         self.done.alpha = 1.0;
-        CGRect frame = self.done.frame;
-        frame.origin.x = self.view.frame.size.width - self.done.frame.size.width - 20.0;
-        self.done.frame = frame;
+        [self.view layoutIfNeeded];
     }];
 }
 
 - (void)hideDoneButton
 {
+    [self.view layoutIfNeeded];
+    
+    self.doneHorizontalConstraint.constant = -18.0;
     [UIView animateWithDuration:0.15 animations:^{
         self.done.alpha = 0;
-        CGRect frame = self.done.frame;
-        frame.origin.x = self.view.frame.size.width - frame.size.width * 1.5;
-        self.done.frame = frame;
+        [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.done.hidden = YES;
     }];
 }
 
-
 - (IBAction)whatIsThis:(id)sender
 {
-    if (!self.whatIsThisView) {
-        [self setWhatIsThisView];
+    if (!explanationViewIsSet) {
+        [self setExplanationView];
     }
     
-    [UIView animateWithDuration:0.3 animations:^{
-        self.whatIsThisView.alpha = 1.0;
-        CGRect frame = self.whatIsThisView.frame;
-        frame.origin.y -= 30;
-        self.whatIsThisView.frame = frame;
-        
-        self.blackBackground.alpha = 0.6;
-    }];
+    [self showExplanationView:self.whatIsThis];
 }
 
-- (void)setWhatIsThisView
+- (IBAction)dismissExplanationView:(id)sender
 {
-    CGFloat x = 30;
-    CGFloat y = self.whatIsThis.frame.origin.y - 200;
-    CGFloat width = self.view.frame.size.width - 60;
-    CGFloat height = 200;
-    self.whatIsThisView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
-    self.whatIsThisView.backgroundColor = [UIColor whiteColor];
-    self.whatIsThisView.layer.cornerRadius = 8.0;
-    self.whatIsThisView.layer.masksToBounds = YES;
-    self.whatIsThisView.clipsToBounds = NO;
-    self.whatIsThisView.alpha = 0;
-    
-    [self.view addSubview:self.whatIsThisView];
-    
+    [self hideExplanationView:sender];
+}
+
+- (void)setExplanationView
+{
     self.blackBackground = [UIButton buttonWithType:UIButtonTypeCustom];
     self.blackBackground.frame = self.view.frame;
     self.blackBackground.backgroundColor = [UIColor blackColor];
-    [self.blackBackground addTarget:self action:@selector(hideWhatIsThisView:) forControlEvents:UIControlEventTouchUpInside];
+    [self.blackBackground addTarget:self action:@selector(hideExplanationView:) forControlEvents:UIControlEventTouchUpInside];
     self.blackBackground.alpha = 0;
+    [self.view insertSubview:self.blackBackground belowSubview:self.explanationView];
     
-    [self.view insertSubview:self.blackBackground belowSubview:self.whatIsThisView];
-    
-    UITextView *explanation = [[UITextView alloc] initWithFrame:CGRectMake(20, 30, self.whatIsThisView.frame.size.width - 40, 100)];
-    explanation.textContainerInset = UIEdgeInsetsZero;
-    explanation.contentInset = UIEdgeInsetsZero;
-    explanation.scrollEnabled = NO;
-    explanation.editable = NO;
-    explanation.font = [UIFont fontWithName:@"Avenir-Roman" size:16.0];
-    explanation.textAlignment = NSTextAlignmentCenter;
-    explanation.text = NSLocalizedString(@"Dealers is an invite-only network. You must be invited by an existing member in order to get a passcode.", nil) ;
+    self.explanationView.layer.cornerRadius = 8.0;
+    self.explanationView.layer.masksToBounds = YES;
+    self.explanationView.clipsToBounds = NO;
     
     if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
-        [explanation setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
-        [explanation setTextAlignment:NSTextAlignmentCenter];
+        
     }
     
-    [self.whatIsThisView addSubview:explanation];
+    self.explanationViewPointer.transform = CGAffineTransformRotate(self.explanationViewPointer.transform, 150);
     
-    UIButton *gotIt = [UIButton buttonWithType:UIButtonTypeSystem];
-    [gotIt setFrame:CGRectMake(50, 140, self.whatIsThisView.frame.size.width - 100, 40)];
-    [gotIt setTitle:NSLocalizedString(@"Got it", nil) forState:UIControlStateNormal];
-    [gotIt.titleLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:18.0]];
-    [gotIt setTintColor:[appDelegate ourPurple]];
-    [gotIt setAlpha:0.9];
-    [gotIt addTarget:self action:@selector(hideWhatIsThisView:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.whatIsThisView addSubview:gotIt];
-    
-    UIView *arrow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    arrow.backgroundColor = [UIColor whiteColor];
-    arrow.center = CGPointMake(self.whatIsThisView.frame.size.width / 2, self.whatIsThisView.frame.size.height);
-    arrow.transform = CGAffineTransformRotate(arrow.transform, 150);
-    
-    [self.whatIsThisView addSubview:arrow];
+    explanationViewIsSet = YES;
 }
 
-- (void)hideWhatIsThisView:(id)sender
+- (void)showExplanationView:(id)sender
 {
+    [self.view layoutIfNeeded];
+    
+    self.explanationView.hidden = NO;
+    self.verticalSpaceExplanationViewWhatIsThisConstraint.constant = 40.0;
+    
     [UIView animateWithDuration:0.3 animations:^{
-        self.whatIsThisView.alpha = 0;
-        CGRect frame = self.whatIsThisView.frame;
-        frame.origin.y += 30;
-        self.whatIsThisView.frame = frame;
-        
-        self.blackBackground.alpha = 0;
+        self.explanationView.alpha = 1.0;
+        self.blackBackground.alpha = 0.6;
+        [self.view layoutIfNeeded];
     }];
+}
+
+- (void)hideExplanationView:(id)sender
+{
+    [self.view layoutIfNeeded];
+    
+    self.verticalSpaceExplanationViewWhatIsThisConstraint.constant = 30.0;
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.explanationView.alpha = 0;
+                         self.blackBackground.alpha = 0;
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                         self.explanationView.hidden = YES;
+                     }];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -347,7 +358,7 @@
                                                       [self deleteInvitation:invitation];
                                                       
                                                       [self passcodeCorrect];
-                                                  
+                                                      
                                                   } else {
                                                       
                                                       NSLog(@"Passcode is invalid! Enterence denied.");
@@ -361,10 +372,10 @@
                                                   [self.activityIndicator stopAnimating];
                                                   
                                                   UIAlertView *tryAgain = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Can't connect the server", nil)
-                                                                                                         message:NSLocalizedString(@"Please try again", nil)
-                                                                                                        delegate:nil
-                                                                                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                                                                               otherButtonTitles:nil];
+                                                                                                     message:NSLocalizedString(@"Please try again", nil)
+                                                                                                    delegate:nil
+                                                                                           cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                                                           otherButtonTitles:nil];
                                                   [tryAgain show];
                                               }];
 }

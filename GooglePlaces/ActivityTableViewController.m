@@ -9,12 +9,9 @@
 #import "ActivityTableViewController.h"
 
 #define S3_PHOTOS_ADDRESS @"https://s3-eu-west-1.amazonaws.com/dealers-app/"
-
 #define NAME_FOR_NOTIFICATIONS @"Notifications Photos Notifications"
+static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell";
 
-@interface ActivityTableViewController ()
-
-@end
 
 @implementation ActivityTableViewController
 
@@ -37,6 +34,7 @@
     [self setNotificationObservers];
     [self setTableViewSettings];
     [self setRefreshControl];
+    [self setDateFormatter];
     [self downloadNotifications];
 }
 
@@ -62,6 +60,7 @@
 - (void)setTableViewSettings
 {
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)pushInviteViewController:(id)sender
@@ -93,7 +92,6 @@
                                                       [self stopLoadingAnimation];
                                                       
                                                   } else {
-                                                      
                                                       [self noNotificationsMessage];
                                                       [self stopLoadingAnimation];
                                                   }
@@ -140,7 +138,6 @@
         loadingView = [[UIView alloc] initWithFrame:self.view.frame];
     }
     
-    
     loadingView.backgroundColor = [UIColor whiteColor];
     UIImageView *loadingAnimation = [appDelegate loadingAnimationPurple];
     loadingAnimation.tag = 43124321;
@@ -148,6 +145,13 @@
     loadingAnimation.frame = CGRectMake(self.view.center.x - 15.0, 15.0, 30.0, 30.0);
     [loadingView addSubview:loadingAnimation];
     [self.tableView addSubview:loadingView];
+}
+
+- (void)setDateFormatter
+{
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
+    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
 }
 
 - (void)stopLoadingAnimation
@@ -198,7 +202,6 @@
     sadSmiley.alpha = 0;
     sadSmiley.text = @":(";
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundView = error;
     [self.tableView.backgroundView addSubview:sadSmiley];
     [UIView animateWithDuration:0.3 animations:^{
@@ -221,7 +224,7 @@
             
             if ([indexPathes[i] isEqual:receivedIndexPath]) {
                 
-                NotificationTableCell *cell = (NotificationTableCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
+                NotificationTableViewCell *cell = (NotificationTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
                 
                 [cell.notificationImage setImage:[info objectForKey:@"image"] forState:UIControlStateNormal];
                 [UIView animateWithDuration:0.3 animations:^{ cell.notificationImage.alpha = 1.0; }];
@@ -326,28 +329,50 @@
     return self.groupedNotifications.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *cellIdentifier = @"NotificationCell";
-    NotificationTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self notificationCellForIndexPath:indexPath];
+}
+
+- (NotificationTableViewCell *)notificationCellForIndexPath:(NSIndexPath *)indexPath
+{
+    NotificationTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NotificationCellIdentifier];
     
     if (!cell) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"NotificationTableCell" owner:nil options:nil];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"NotificationTableViewCell" owner:nil options:nil];
         cell = [nib objectAtIndex:0];
     }
     
-    Notification *notification;
+    [self configureCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)configureCell:(NotificationTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
     id object = [self.groupedNotifications objectAtIndex:indexPath.row];
-    
+    [self setNotificationMessageForCell:cell object:object];
+    Notification *notification = [self convertObjectIntoNotification:object];
+    [self setDealerImageForCell:cell notification:notification indexPath:indexPath];
+    [self setDealerProfileLinkForCell:cell indexPath:indexPath];
+    [self setUploadDateForCell:cell notification:notification];
+}
+
+- (void)setNotificationMessageForCell:(NotificationTableViewCell *)cell object:(id)object
+{
+    cell.message.text = [NotificationTableViewCell notificationStringForObject:object];
+}
+
+- (Notification *)convertObjectIntoNotification:(id)object
+{
     if ([object isMemberOfClass:[Notification class]]) {
-        notification = object;
-        cell.label.text = [NotificationTableCell notificationStringForObject:notification];
+        return (Notification *)object;
     } else {
-        NSMutableArray *notificationGroup = object;
-        cell.label.text = [NotificationTableCell notificationStringForObject:notificationGroup];
-        notification = [notificationGroup firstObject];
+        return (Notification *)[(NSMutableArray *)object firstObject];
     }
-    
+}
+
+- (void)setDealerImageForCell:(NotificationTableViewCell *)cell notification:(Notification *)notification indexPath:indexPath
+{
     if (!notification.dealer.photo) {
         cell.notificationImage.alpha = 0;
         if (!notification.dealer.downloadingPhoto) {
@@ -358,35 +383,58 @@
         cell.notificationImage.alpha = 1.0;
         [cell.notificationImage setImage:[UIImage imageWithData:notification.dealer.photo] forState:UIControlStateNormal];
     }
-    
+}
+
+- (void)setDealerProfileLinkForCell:(NotificationTableViewCell *)cell indexPath:(NSIndexPath *)indexPath
+{
     [cell.notificationImage setTag:indexPath.row];
     [cell.notificationImage addTarget:self action:@selector(notificationDealerButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setUploadDateForCell:(NotificationTableViewCell *)cell notification:(Notification *)notification
+{
+    cell.date.text = [self.dateFormatter stringFromDate:notification.date];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return [self heightForCellAtIndexPath:indexPath];
+}
+
+- (CGFloat)heightForCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NotificationTableViewCell *sizingCell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingCell = [self.tableView dequeueReusableCellWithIdentifier:NotificationCellIdentifier];
+        if (!sizingCell) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"NotificationTableViewCell" owner:nil options:nil];
+            sizingCell = [nib objectAtIndex:0];
+        }
+    });
     
-    return cell;
+    [self configureCell:sizingCell atIndexPath:indexPath];
+    return [self calculateHeightForConfiguredSizingCell:sizingCell];
+}
+
+- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
+{
+    sizingCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.frame), CGRectGetHeight(sizingCell.bounds));
+    
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    return size.height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     id object = [self.groupedNotifications objectAtIndex:indexPath.row];
-    Notification *notification;
-    
-    if ([object isMemberOfClass:[Notification class]]) {
-        notification = object;
-    } else {
-        NSMutableArray *notificationsGroup = object;
-        notification = notificationsGroup.firstObject;
-    }
-    
+    Notification *notification = [self convertObjectIntoNotification:object];
     ViewonedealViewController *vodvc = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
     vodvc.dealID = notification.dealID;
     [self.navigationController pushViewController:vodvc animated:YES];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 90;
 }
 
 

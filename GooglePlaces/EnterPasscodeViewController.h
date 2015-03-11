@@ -15,6 +15,7 @@
 @interface EnterPasscodeViewController : UIViewController <UITextFieldDelegate> {
     
     NSInteger deleteAttempt;
+    BOOL explanationViewIsSet;
 }
 
 @property AppDelegate *appDelegate;
@@ -30,13 +31,18 @@
 
 @property UIBarButtonItem *barDone;
 @property UIButton *done;
+@property NSLayoutConstraint *doneHorizontalConstraint;
 
 @property (weak, nonatomic) IBOutlet UIButton *whatIsThis;
-@property UIView *whatIsThisView;
 @property UIButton *blackBackground;
+@property (weak, nonatomic) IBOutlet UIView *explanationView;
+@property (weak, nonatomic) IBOutlet UILabel *explanation;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceExplanationViewWhatIsThisConstraint;
+@property (weak, nonatomic) IBOutlet UIView *explanationViewPointer;
 
 
 - (IBAction)whatIsThis:(id)sender;
+- (IBAction)dismissExplanationView:(id)sender;
 
 
 @end

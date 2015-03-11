@@ -15,12 +15,11 @@
 
 @interface OpeningScreenViewController : UIViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
 {
-    float ScreenHeight;
     MBProgressHUD *loggingInFacebook, *noConnection;
     FBGraphObject *facebookInfo;
     NSString *facebookUserEmail, *facebookToken;
     NSNumber *pseudoUserID;
-    BOOL gotToken, didPhotoFinishedDownloading, didPhotoFinishedUploading, firstSlogen, triedUploadingPhoto, signedUp;
+    BOOL gotToken, didPhotoFinishedDownloading, didPhotoFinishedUploading, triedUploadingPhoto, signedUp;
     
 }
 
@@ -29,18 +28,14 @@
 @property Dealer *dealer;
 @property User *pseudoUser;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *regularView;
-@property (weak, nonatomic) IBOutlet UIScrollView *darkCollageView;
-
-@property (weak, nonatomic) IBOutlet UIImageView *dealershead;
-@property (weak, nonatomic) IBOutlet UIImageView *dealersWhiteHead;
-@property (weak, nonatomic) IBOutlet UIImageView *backwhite;
+@property (weak, nonatomic) IBOutlet UIImageView *logo;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLogoConstraint;
+@property NSLayoutConstraint *centerYLogoConstraint;
 
 @property (weak, nonatomic) IBOutlet UILabel *slogen;
-@property (weak, nonatomic) IBOutlet UILabel *slogenDark;
 
-@property (nonatomic) UIButton *facebook;
-@property (nonatomic) UIButton *email;
+@property (weak, nonatomic) IBOutlet UIButton *facebook;
+@property (weak, nonatomic) IBOutlet UIButton *email;
 
 @property (weak, nonatomic) NSString *i;
 
@@ -52,10 +47,9 @@
 @property BOOL didComeFromLogOut;
 
 
-- (IBAction)EmailimageButton:(id)sender;
-- (IBAction)SigninButton:(id)sender;
-- (IBAction)facebookButtonClicked:(id)sender;
-
+- (IBAction)continueWithFacebook:(id)sender;
+- (IBAction)signUpWithEmail:(id)sender;
+- (IBAction)signIn:(id)sender;
 - (void)signUpUser;
 - (void)cancelFacebookLogin;
 

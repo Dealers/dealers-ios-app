@@ -44,9 +44,9 @@
 
 @property (weak, nonatomic) IBOutlet UIView *profilePicView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIButton *privacyPolicyAgreement;
 @property (weak, nonatomic) IBOutlet UIView *signUpButtonBackground;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
-@property (weak, nonatomic) IBOutlet UIButton *privacyPolicyAgreement;
 
 - (IBAction)changeProfilePic:(id)sender;
 - (IBAction)dateChanged:(id)sender;

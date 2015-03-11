@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,20 +15,43 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cU6-2u-cOe" userLabel="Dealer Profile Picture Placeholder">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cU6-2u-cOe" userLabel="Dealer Profile Picture Placeholder">
                         <rect key="frame" x="12" y="12" width="40" height="40"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="06F-Gl-SKf" userLabel="Dealer Profile Picture">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="06F-Gl-SKf" userLabel="Dealer Profile Picture">
                         <rect key="frame" x="12" y="12" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="l3N-2d-X24"/>
+                            <constraint firstAttribute="width" constant="40" id="m4r-8Q-VZC"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dealer Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5JH-Cf-c3c" userLabel="Dealer Name">
-                        <rect key="frame" x="62" y="14" width="217" height="40"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dealer Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5JH-Cf-c3c" userLabel="Dealer Name">
+                        <rect key="frame" x="62" y="22" width="217" height="24"/>
                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="06F-Gl-SKf" firstAttribute="bottom" secondItem="cU6-2u-cOe" secondAttribute="bottom" id="3mx-rd-nH4"/>
+                    <constraint firstItem="06F-Gl-SKf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="6kg-EL-PB0"/>
+                    <constraint firstAttribute="bottom" secondItem="06F-Gl-SKf" secondAttribute="bottom" constant="11" id="BZQ-PU-xhU"/>
+                    <constraint firstItem="06F-Gl-SKf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="Ecj-db-B6L"/>
+                    <constraint firstAttribute="centerY" secondItem="5JH-Cf-c3c" secondAttribute="centerY" constant="-2.5" id="K5P-yn-hoA"/>
+                    <constraint firstAttribute="centerY" secondItem="06F-Gl-SKf" secondAttribute="centerY" constant="-0.5" id="Oh1-8K-2KT"/>
+                    <constraint firstItem="06F-Gl-SKf" firstAttribute="leading" secondItem="cU6-2u-cOe" secondAttribute="leading" id="Rd4-xP-1as"/>
+                    <constraint firstItem="5JH-Cf-c3c" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Y39-bD-83h"/>
+                    <constraint firstItem="06F-Gl-SKf" firstAttribute="top" secondItem="cU6-2u-cOe" secondAttribute="top" id="kT5-r6-01o"/>
+                    <constraint firstItem="06F-Gl-SKf" firstAttribute="trailing" secondItem="cU6-2u-cOe" secondAttribute="trailing" id="lZe-g8-eV6"/>
+                    <constraint firstItem="5JH-Cf-c3c" firstAttribute="leading" secondItem="06F-Gl-SKf" secondAttribute="trailing" constant="10" id="r6k-QP-Zd8"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="6kg-EL-PB0"/>
+                        <exclude reference="BZQ-PU-xhU"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="62" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
@@ -35,7 +59,7 @@
                 <outlet property="profilePic" destination="06F-Gl-SKf" id="gJS-0n-ynB"/>
                 <outlet property="profilePicPlaceholder" destination="cU6-2u-cOe" id="jki-0N-wBC"/>
             </connections>
-            <point key="canvasLocation" x="441" y="264"/>
+            <point key="canvasLocation" x="477" y="443"/>
         </tableViewCell>
     </objects>
 </document>

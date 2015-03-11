@@ -83,6 +83,8 @@
 
 - (UIImageView *)loadingAnimationWhite;
 - (UIImageView *)loadingAnimationPurple;
+- (NSArray *)loadingAnimationWhiteImages;
+- (NSArray *)loadingAnimationPurpleImages;
 
 - (NSDictionary *)getCurrenciesDictionary;
 - (NSString *)getCurrencySign:(NSString *)currencyKey;

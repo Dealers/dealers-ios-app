@@ -21,14 +21,14 @@
 
 @synthesize appDelegate;
 @synthesize i;
-@synthesize backwhite,dealershead,dealersWhiteHead,alreadyHaveAccount;
+@synthesize logo,alreadyHaveAccount;
 
 
 - (void)viewDidLoad
 {
-    appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    [super viewDidLoad];
     
-    firstSlogen = YES;
+    appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     if ([self checkIfUserLoggedIn]) {
         return;
@@ -41,27 +41,21 @@
     
     self.authorized = [self isAuthorized];
     [self setProgressIndicator];
-    [self setButtons];
+    [self styleButtons];
+    [self setCenterYConstraint];
     
     if (([appDelegate.Animate_first isEqualToString:@"first"]) || (appDelegate.Animate_first == nil))  {
         appDelegate.Animate_first = @"notfirst";
+        self.slogen.alpha = 0;
         self.facebook.alpha = 0;
         self.email.alpha = 0;
-        alreadyHaveAccount.alpha=0.0;
-        backwhite.alpha=1.0;
-        dealershead.alpha=1.0;
-        dealersWhiteHead.alpha = 1.0;
-        dealershead.center = CGPointMake(160,(CGRectGetMidY(appDelegate.window.bounds)-dealershead.frame.size.height/2-16));
-        dealersWhiteHead.center = CGPointMake(160,(CGRectGetMidY(appDelegate.window.bounds)-dealershead.frame.size.height/2-16));
+        alreadyHaveAccount.alpha = 0;
+        [self.view removeConstraint:self.topLogoConstraint];
+        [self.view addConstraint:self.centerYLogoConstraint];
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(anim2) userInfo:nil repeats:NO];
-        
-    } else {
-        [self objectInPlace];
     }
     
     [appDelegate resetHTTPClientUsernameAndPassword];
-    
-    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -89,44 +83,12 @@
     [[self.navigationController.view viewWithTag:321321321] removeFromSuperview];
 }
 
-- (void)setButtons
+- (void)styleButtons
 {
-    self.facebook = [appDelegate actionButton];
-    
-    CGFloat emailButtonOriginY = self.alreadyHaveAccount.frame.origin.y - 6 - self.facebook.frame.size.height;
-    
-    CGRect frame = self.facebook.frame;
-    frame.origin.y = emailButtonOriginY - 15 - frame.size.height;
-    self.facebook.frame = frame;
-    
-    [self.facebook setBackgroundColor:[UIColor colorWithRed:58.0/255.0 green:86.0/255.0 blue:156.0/255.0 alpha:1.0]];
-    [self.facebook setTitle:NSLocalizedString(@"Continue with Facebook", nil) forState:UIControlStateNormal];
-    [[self.facebook titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:17.0]];
-    [self.facebook setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.facebook addTarget:self action:@selector(facebookButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view insertSubview:self.facebook belowSubview:self.screenShot];
-    
-    UIImageView *facebookIcon = [[UIImageView alloc] initWithFrame:CGRectMake(4.0, 2.0, 40.0, 40.0)];
-    facebookIcon.image = [UIImage imageNamed:@"Facebook Button Icon"];
-    [self.facebook addSubview:facebookIcon];
-    
-    
-    self.email = [appDelegate actionButton];
-    
-    frame = self.email.frame;
-    frame.origin.y = emailButtonOriginY;
-    self.email.frame = frame;
-    
-    [self.email setBackgroundColor:[appDelegate ourPurple]];
-    [self.email setTitle:NSLocalizedString(@"Sign up with email", nil) forState:UIControlStateNormal];
-    [[self.email titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:17.0]];
-    [self.email setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.email addTarget:self action:@selector(EmailimageButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view insertSubview:self.email belowSubview:self.screenShot];
-    
-    UIImageView *emailIcon = [[UIImageView alloc] initWithFrame:CGRectMake(4.0, 2.0, 40.0, 40.0)];
-    emailIcon.image = [UIImage imageNamed:@"Email White Button Icon"];
-    [self.email addSubview:emailIcon];
+    self.facebook.layer.cornerRadius = 8.0;
+    self.facebook.layer.masksToBounds = YES;
+    self.email.layer.cornerRadius = 8.0;
+    self.email.layer.masksToBounds = YES;
     
     if (![[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"en"]) {
         
@@ -146,124 +108,39 @@
     }
 }
 
-- (void)stylesTransitionButton {
-    
-    UIButton *switchStyles = [UIButton buttonWithType:UIButtonTypeCustom];
-    switchStyles.tag = 321321321;
-    [switchStyles setFrame:CGRectMake(0, 0, 150, 150)];
-    [switchStyles addTarget:self action:@selector(switchStyle) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationController.view addSubview:switchStyles];
-}
-
-- (void)switchStyle
+- (void)setCenterYConstraint
 {
-    if (self.regularView.hidden) {
-        
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             
-                             self.darkCollageView.alpha = 0;
-                             
-                         }
-                         completion:^(BOOL finished) {
-                             
-                             self.darkCollageView.hidden = YES;
-                             self.regularView.hidden = NO;
-                             self.regularView.alpha = 0;
-                             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-                             [UIView animateWithDuration:0.5 animations:^{
-                                 
-                                 self.regularView.alpha = 1.0;
-                             }];
-                         }];
-        
-    } else {
-        
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             
-                             self.regularView.alpha = 0;
-                             
-                         }
-                         completion:^(BOOL finished) {
-                             
-                             self.regularView.hidden = YES;
-                             self.darkCollageView.hidden = NO;
-                             self.darkCollageView.alpha = 0;
-                             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-                             [UIView animateWithDuration:0.5 animations:^{
-                                 
-                                 self.darkCollageView.alpha = 1.0;
-                             }];
-                         }];
-    }
-}
-
-- (void)createToggleSlogenButton
-{
-    UIButton *toggleSlogen = [UIButton buttonWithType:UIButtonTypeCustom];
-    [toggleSlogen setFrame:self.slogen.frame];
-    [toggleSlogen addTarget:self action:@selector(toggleSlogen) forControlEvents:UIControlEventTouchUpInside];
-    [self.regularView addSubview:toggleSlogen];
-}
-
-- (void)toggleSlogen
-{
-    if (firstSlogen) {
-        
-        [UIView animateWithDuration:0.3
-                         animations:^{ self.slogen.alpha = 0; }
-                         completion:^(BOOL finished) {
-                             self.slogen.text = NSLocalizedString(@"Share deals with others\nHelp reduce prices", @"The slogan");
-                             [UIView animateWithDuration:0.3
-                                              animations:^{ self.slogen.alpha = 1.0;
-                                              }];
-                         }];
-        firstSlogen = NO;
-        
-    } else {
-        
-        [UIView animateWithDuration:0.3
-                         animations:^{ self.slogen.alpha = 0; }
-                         completion:^(BOOL finished) {
-                             self.slogen.text = NSLocalizedString(@"Find great deals\nShared by people like you", @"The slogan");
-                             [UIView animateWithDuration:0.3
-                                              animations:^{ self.slogen.alpha = 1.0;
-                                              }];
-                         }];
-        firstSlogen = YES;
-    }
+    self.centerYLogoConstraint = [NSLayoutConstraint constraintWithItem:self.logo
+                                                              attribute:NSLayoutAttributeCenterY
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeCenterY
+                                                             multiplier:1.0
+                                                               constant:-40.0];
 }
 
 
 #pragma mark - Opening View & Animations
 
-- (void)objectInPlace {
-    dealershead.center = CGPointMake(160, 55);
-    dealersWhiteHead.center = CGPointMake(160, 75);
-    self.facebook.alpha=1.0;
-    self.email.alpha=1.0;
-    alreadyHaveAccount.alpha=1.0;
-    backwhite.hidden = YES;
-}
-
--(void) anim2 {
+- (void)anim2
+{
+    [self.view layoutIfNeeded];
     
-    [UIView animateWithDuration:1.0 animations:^{
-        dealershead.center = CGPointMake(160, 55);
-        dealersWhiteHead.center = CGPointMake(160, 75);
-    }];
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(anim) userInfo:nil repeats:NO];
-}
-
--(void) anim {
+    [self.view removeConstraint:self.centerYLogoConstraint];
+    [self.view addConstraint:self.topLogoConstraint];
     
-    [UIView animateWithDuration:0.5 animations:^{backwhite.alpha=0.0;}];
-    self.facebook.alpha=0.0;
-    self.email.alpha=0.0;
-    [UIView animateWithDuration:0.5 animations:^{self.facebook.alpha=1.0;}];
-    [UIView animateWithDuration:0.5 animations:^{self.email.alpha=1.0;}];
-    [UIView animateWithDuration:0.5 animations:^{alreadyHaveAccount.alpha=1.0;}];
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.5 animations:^{
+                             self.slogen.alpha = 1.0;
+                             self.facebook.alpha = 1.0;
+                             self.email.alpha = 1.0;
+                             alreadyHaveAccount.alpha = 1.0;
+                         }];
+                     }];
 }
 
 - (void)setScreenShot {
@@ -283,7 +160,12 @@
 
 #pragma mark - General methods
 
-- (IBAction)EmailimageButton:(id)sender
+- (IBAction)continueWithFacebook:(id)sender
+{
+    [self startFacebookLogin];
+}
+
+- (IBAction)signUpWithEmail:(id)sender
 {
     SignUpTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SignUpID"];
     
@@ -298,15 +180,10 @@
     }
 }
 
-- (IBAction)SigninButton:(id)sender
+- (IBAction)signIn:(id)sender
 {
     SignInTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SignInID"];
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (IBAction)facebookButtonClicked:(id)sender{
-    
-    [self startFacebookLogin];
 }
 
 - (void)startFacebookLogin

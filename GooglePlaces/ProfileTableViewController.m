@@ -902,7 +902,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 - (void)checkIfHasImageForCell:(DealTableViewCell *)cell deal:(Deal *)deal indexPath:(NSIndexPath *)indexPath
 {
     if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
-        CGFloat imageWidth = cell.photo.bounds.size.width;
+        CGFloat imageWidth = [UIScreen mainScreen].bounds.size.width;
         cell.photoHeightConstraint.constant = imageWidth * 0.678125; // 217:320 ratio
         cell.photo.backgroundColor = [UIColor groupTableViewBackgroundColor];
         [self setImageForCell:cell deal:deal indexPath:indexPath];

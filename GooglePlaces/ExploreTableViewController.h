@@ -1,8 +1,8 @@
 //
-//  ExploretableViewController.h
-//  GooglePlaces
+//  ExploreTempTableViewController.h
+//  Dealers
 //
-//  Created by itzik berrebi on 10/4/13.
+//  Created by Gilad Lumbroso on 3/10/15.
 //
 //
 
@@ -12,9 +12,7 @@
 #import "ViewonedealViewController.h"
 #import "WhereIsTheDeal.h"
 
-@interface ExploretableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate>
-
-@property (weak, nonatomic) IBOutlet UITableView *myTableView;
+@interface ExploreTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSMutableArray *types;
 @property (nonatomic, strong) NSMutableArray *types_icons;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "NotificationTableCell.h"
+#import "NotificationTableViewCell.h"
 #import "Notification.h"
 #import "ViewonedealViewController.h"
 #import "ProfileTableViewController.h"
@@ -26,5 +26,7 @@
 @property NSMutableArray *groupedNotifications;
 
 @property UIImage *notificationPhoto;
+
+@property NSDateFormatter *dateFormatter;
 
 @end

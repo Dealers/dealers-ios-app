@@ -23,6 +23,11 @@
     [self setProgressIndicator];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.emailTextField becomeFirstResponder];
+}
+
 - (void)initialize
 {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -34,9 +39,28 @@
 - (void)setLoadingAnimation
 {
     loadingAnimation = [appDelegate loadingAnimationWhite];
-    loadingAnimation.center = self.signInButton.center;
-    [self.bottomView addSubview:loadingAnimation];
-    loadingAnimation.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [self.signInBackground addSubview:loadingAnimation];
+    [self setConstraintsForLoadingAnimation];
+    loadingAnimation.transform = CGAffineTransformMakeScale(0.001, 0.001);
+}
+
+- (void)setConstraintsForLoadingAnimation
+{
+    [self.signInBackground addConstraint:[NSLayoutConstraint constraintWithItem:loadingAnimation
+                                                                            attribute:NSLayoutAttributeCenterX
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:self.signInBackground
+                                                                            attribute:NSLayoutAttributeCenterX
+                                                                           multiplier:1.0
+                                                                             constant:0]];
+    
+    [self.signInBackground addConstraint:[NSLayoutConstraint constraintWithItem:loadingAnimation
+                                                                            attribute:NSLayoutAttributeCenterY
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:self.signInBackground
+                                                                            attribute:NSLayoutAttributeCenterY
+                                                                           multiplier:1.0
+                                                                             constant:0]];
 }
 
 - (void)setRoundCornersToButton
@@ -50,24 +74,33 @@
 - (void)startLoading
 {
     [loadingAnimation startAnimating];
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        
-        self.signInButton.transform = CGAffineTransformMakeScale(0.01, 0.01);
-        self.signInButton.alpha = 0.5;
-        loadingAnimation.transform = CGAffineTransformMakeScale(1.0, 1.0);
-    }];
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.15
+                     animations:^{
+                         self.signInButton.transform = CGAffineTransformMakeScale(0.001, 0.001);
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.15
+                                          animations:^{
+                                              loadingAnimation.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                                          }];
+                     }];
 }
 
 - (void)stopLoading
 {
-    [loadingAnimation stopAnimating];
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        loadingAnimation.transform = CGAffineTransformMakeScale(0.01, 0.01);
-        self.signInButton.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        self.signInButton.alpha = 1.0;
-    }];
+    [loadingAnimation startAnimating];
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.15
+                     animations:^{
+                         loadingAnimation.transform = CGAffineTransformMakeScale(0.001, 0.001);
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.15
+                                          animations:^{
+                                              self.signInButton.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                                          }];
+                     }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

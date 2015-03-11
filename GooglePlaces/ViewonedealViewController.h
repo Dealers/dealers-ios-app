@@ -14,7 +14,7 @@
 #import "Dealer.h"
 #import "Store.h"
 #import "Comment.h"
-#import "CommentsTableCell.h"
+#import "CommentTableViewCell.h"
 #import "EditDealTableViewController.h"
 #import "DealersTableViewController.h"
 #import "Notification.h"
@@ -105,7 +105,7 @@
 @property NSMutableArray *commentsForPreview;
 @property NSNumber *commentsCount;
 @property UITableView *commentsTableView;
-@property (nonatomic) CommentsTableCell *cellPrototype;
+@property (nonatomic) CommentTableViewCell *cellPrototype;
 @property CGFloat tableViewHeight;
 @property NSInteger commentsPreviewCount;
 

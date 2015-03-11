@@ -56,9 +56,28 @@
 - (void)setLoadingAnimation
 {
     loadingAnimation = [appDelegate loadingAnimationWhite];
-    loadingAnimation.center = self.signUpButton.center;
-    [self.bottomView addSubview:loadingAnimation];
-    loadingAnimation.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [self.signUpButtonBackground addSubview:loadingAnimation];
+    [self setConstraintsForLoadingAnimation];
+    loadingAnimation.transform = CGAffineTransformMakeScale(0.001, 0.001);
+}
+
+- (void)setConstraintsForLoadingAnimation
+{
+    [self.signUpButtonBackground addConstraint:[NSLayoutConstraint constraintWithItem:loadingAnimation
+                                                                            attribute:NSLayoutAttributeCenterX
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:self.signUpButtonBackground
+                                                                            attribute:NSLayoutAttributeCenterX
+                                                                           multiplier:1.0
+                                                                             constant:0]];
+    
+    [self.signUpButtonBackground addConstraint:[NSLayoutConstraint constraintWithItem:loadingAnimation
+                                                                            attribute:NSLayoutAttributeCenterY
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:self.signUpButtonBackground
+                                                                            attribute:NSLayoutAttributeCenterY
+                                                                           multiplier:1.0
+                                                                             constant:0]];
 }
 
 - (void)setRoundCornersToButtons
@@ -116,24 +135,27 @@
 - (void)startLoading
 {
     [loadingAnimation startAnimating];
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        
-        self.signUpButton.transform = CGAffineTransformMakeScale(0.01, 0.01);
-        self.signUpButton.alpha = 0.5;
-        loadingAnimation.transform = CGAffineTransformMakeScale(1.0, 1.0);
-    }];
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.15
+                     animations:^{
+                         self.signUpButton.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.15 animations:^{ loadingAnimation.transform = CGAffineTransformMakeScale(1.0, 1.0); }];
+                     }];
 }
 
 - (void)stopLoading
 {
-    [loadingAnimation stopAnimating];
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        loadingAnimation.transform = CGAffineTransformMakeScale(0.01, 0.01);
-        self.signUpButton.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        self.signUpButton.alpha = 1.0;
-    }];
+    [loadingAnimation startAnimating];
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.15
+                     animations:^{
+                         loadingAnimation.transform = CGAffineTransformMakeScale(0.001, 0.001);
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.15 animations:^{ self.signUpButton.alpha = 1.0; }];
+                     }];
 }
 
 - (void)signUpForKeyboardNotifications {
@@ -189,7 +211,7 @@
             if (self.datePickerIsShowing) {
                 
                 [self hideDatePickerCell];
-            
+                
             } else {
                 if ([self.dateOfBirthLabel.text isEqualToString:NSLocalizedString(@"Date Of Birth (optional)", nil)] || !(self.dateOfBirthLabel.text.length > 0)) {
                     
@@ -252,7 +274,7 @@
 - (void)showDatePickerCell
 {
     self.datePickerIsShowing = YES;
-
+    
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
     
@@ -356,7 +378,7 @@
 }
 
 - (IBAction)privacyPolicy:(id)sender {
-
+    
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.dealers-app.com/PrivacyPage.htm"]];
 }
 
@@ -405,14 +427,14 @@
         [self showDatePickerCell];
         [self performSelector:@selector(dateChanged:) withObject:self.datePicker];
     }
-
+    
     return YES;
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (actionSheet.tag) {
-        
+            
         case PROFILE_PIC_ACTION_SHEET_TAG:
             
             [self setProfilePicActionSheet:buttonIndex];
