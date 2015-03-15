@@ -437,7 +437,7 @@
     
     UIButton *done1 = [UIButton buttonWithType:UIButtonTypeSystem];
     [done1 setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
-    [done1 setFrame:CGRectMake(260, 0, 60, 44)];
+    [done1 setFrame:CGRectMake(self.tableView.bounds.size.width - 70, 0, 60, 44)];
     [done1 setAlpha:0.9];
     [[done1 titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:17.0]];
     [done1 addTarget:self action:@selector(doneTextField) forControlEvents:UIControlEventTouchUpInside];
@@ -496,7 +496,7 @@
     
     UIButton *done2 = [UIButton buttonWithType:UIButtonTypeSystem];
     [done2 setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
-    [done2 setFrame:CGRectMake(260, 0, 60, 44)];
+    [done2 setFrame:CGRectMake(self.tableView.bounds.size.width - 70, 0, 60, 44)];
     [done2 setAlpha:0.9];
     [[done2 titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:17.0]];
     [done2 addTarget:self action:@selector(doneTextField) forControlEvents:UIControlEventTouchUpInside];
@@ -637,11 +637,35 @@
     }
     
     if (!self.loadingAnimation) {
-        self.loadingAnimation = [appDelegate loadingAnimationWhite];
-        self.loadingAnimation.center = self.addDealButton.center;
-        [self.addDealView addSubview:self.loadingAnimation];
-        self.loadingAnimation.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        [self setLoadingAnimation];
     }
+}
+
+- (void)setLoadingAnimation
+{
+    self.loadingAnimation = [appDelegate loadingAnimationWhite];
+    [self.addDealButtonBackground addSubview:self.loadingAnimation];
+    [self setConstraintsForLoadingAnimation];
+    self.loadingAnimation.transform = CGAffineTransformMakeScale(0.001, 0.001);
+}
+
+- (void)setConstraintsForLoadingAnimation
+{
+    [self.addDealButtonBackground addConstraint:[NSLayoutConstraint constraintWithItem:self.loadingAnimation
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.addDealButtonBackground
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                     multiplier:1.0
+                                                                       constant:0]];
+    
+    [self.addDealButtonBackground addConstraint:[NSLayoutConstraint constraintWithItem:self.loadingAnimation
+                                                                      attribute:NSLayoutAttributeCenterY
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self.addDealButtonBackground
+                                                                      attribute:NSLayoutAttributeCenterY
+                                                                     multiplier:1.0
+                                                                       constant:0]];
 }
 
 - (void)startLoading

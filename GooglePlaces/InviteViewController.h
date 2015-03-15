@@ -23,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *invitationContainerView;
 @property (weak, nonatomic) IBOutlet UIImageView *invitationIcon1;
 @property (weak, nonatomic) IBOutlet UIImageView *invitationIcon2;
 @property (weak, nonatomic) IBOutlet UIImageView *invitationIcon3;

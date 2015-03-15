@@ -556,7 +556,7 @@
 
 - (void)configureRestKit
 {
-    NSURL *baseURL = [NSURL URLWithString:@"http://www.dealers-web.com"];
+    NSURL *baseURL = [NSURL URLWithString:[appDelegate baseURL]];
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
     self.editProfileManager = [[RKObjectManager alloc] initWithHTTPClient:client];

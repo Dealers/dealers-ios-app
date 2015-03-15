@@ -1194,6 +1194,11 @@
 
 #pragma mark - RestKit
 
+- (NSString *)baseURL
+{
+    return @"http://www.dealers-web.com";
+}
+
 - (RKObjectMapping *)dealMapping
 {
     RKObjectMapping *dealMapping = [RKObjectMapping mappingForClass:[Deal class]];
@@ -1551,7 +1556,7 @@
 - (void)configureRestKit
 {
     // initialize AFNetworking HTTPClient
-    NSURL *baseURL = [NSURL URLWithString:@"http://www.dealers-web.com"];
+    NSURL *baseURL = [NSURL URLWithString:[self baseURL]];
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     
     // initialize RestKit

@@ -195,7 +195,7 @@
 "Invite" = "Invite";
 "I'm sending you a passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\n%@" = "I'm sending you a passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\n%@";
 "Invite by " = "Invite by ";
-"Text Message" = "Text Message";
+"Message" = "Message";
 "Email" = "Email";
 "WhatsApp" = "WhatsApp";
 "You have no invitations left." = "You have no invitations left.";

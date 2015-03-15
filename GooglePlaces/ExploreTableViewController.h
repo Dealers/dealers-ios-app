@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "DealsTableViewController.h"
 #import "ViewonedealViewController.h"
-#import "WhereIsTheDeal.h"
 
 @interface ExploreTableViewController : UITableViewController
 

@@ -15,7 +15,7 @@
 		56849795154C00BF001601A2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56849793154C00BF001601A2 /* MainStoryboard.storyboard */; };
 		5684979F154C010C001601A2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5684979E154C010C001601A2 /* MapKit.framework */; };
 		568497A1154C0116001601A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 568497A0154C0116001601A2 /* CoreLocation.framework */; };
-		B01BD1B217F0D6480010C9A4 /* WhereIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */; };
+		B01BD1B217F0D6480010C9A4 /* OldWhereIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = B01BD1B117F0D6470010C9A4 /* OldWhereIsTheDeal.m */; };
 		B024374B17F47D9000FB24CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B024374A17F47D9000FB24CC /* QuartzCore.framework */; };
 		B02747FF186B291B005A52F0 /* PLCameraSheetButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */; };
 		B0274800186B291B005A52F0 /* PLCameraSheetButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B02747EF186B291B005A52F0 /* PLCameraSheetButton@2x.png */; };
@@ -77,7 +77,7 @@
 		C891902019FE57D9005E85FB /* AddDealNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C891901F19FE57D9005E85FB /* AddDealNavigationController.m */; };
 		C895FB731AAE5EED00E4E4A5 /* ExploreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C895FB721AAE5EED00E4E4A5 /* ExploreTableViewController.m */; };
 		C895FB7F1AAF5BBB00E4E4A5 /* ElasticLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C895FB7E1AAF5BBB00E4E4A5 /* ElasticLabel.m */; };
-		C895FB821AB0327500E4E4A5 /* NewWhereIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C895FB811AB0327500E4E4A5 /* NewWhereIsTheDeal.m */; };
+		C895FB821AB0327500E4E4A5 /* WhereIsTheDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C895FB811AB0327500E4E4A5 /* WhereIsTheDeal.m */; };
 		C898FE6419A6177800F1C11A /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE5B19A6098A00F1C11A /* libRestKit.a */; };
 		C898FE6819A617AE00F1C11A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE6519A617AE00F1C11A /* CFNetwork.framework */; };
 		C898FE6919A617AE00F1C11A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C898FE6619A617AE00F1C11A /* CoreData.framework */; };
@@ -125,6 +125,7 @@
 		C8C2E5231A625E66000F305F /* InviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C2E5221A625E66000F305F /* InviteViewController.m */; };
 		C8C2E5261A63B39E000F305F /* EnterPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C2E5251A63B39E000F305F /* EnterPasscodeViewController.m */; };
 		C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */; };
+		C8C721001AB22FB800284B72 /* ViewDealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */; };
 		C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */; };
 		C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */; };
 		C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */; };
@@ -188,8 +189,8 @@
 		56849791154C00BF001601A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5684979E154C010C001601A2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		568497A0154C0116001601A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhereIsTheDeal.h; sourceTree = "<group>"; };
-		B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhereIsTheDeal.m; sourceTree = "<group>"; };
+		B01BD1B017F0D6470010C9A4 /* OldWhereIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldWhereIsTheDeal.h; sourceTree = "<group>"; };
+		B01BD1B117F0D6470010C9A4 /* OldWhereIsTheDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldWhereIsTheDeal.m; sourceTree = "<group>"; };
 		B024374A17F47D9000FB24CC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B02747EE186B291B005A52F0 /* PLCameraSheetButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PLCameraSheetButton.png; sourceTree = "<group>"; };
 		B02747EF186B291B005A52F0 /* PLCameraSheetButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PLCameraSheetButton@2x.png"; sourceTree = "<group>"; };
@@ -293,8 +294,8 @@
 		C895FB721AAE5EED00E4E4A5 /* ExploreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreTableViewController.m; sourceTree = "<group>"; };
 		C895FB7D1AAF5BBB00E4E4A5 /* ElasticLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElasticLabel.h; sourceTree = "<group>"; };
 		C895FB7E1AAF5BBB00E4E4A5 /* ElasticLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElasticLabel.m; sourceTree = "<group>"; };
-		C895FB801AB0327500E4E4A5 /* NewWhereIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewWhereIsTheDeal.h; sourceTree = "<group>"; };
-		C895FB811AB0327500E4E4A5 /* NewWhereIsTheDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewWhereIsTheDeal.m; sourceTree = "<group>"; };
+		C895FB801AB0327500E4E4A5 /* WhereIsTheDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhereIsTheDeal.h; sourceTree = "<group>"; };
+		C895FB811AB0327500E4E4A5 /* WhereIsTheDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhereIsTheDeal.m; sourceTree = "<group>"; };
 		C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		C898FE6519A617AE00F1C11A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C898FE6619A617AE00F1C11A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -359,6 +360,8 @@
 		C8C2E5251A63B39E000F305F /* EnterPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPasscodeViewController.m; sourceTree = "<group>"; };
 		C8C43E7B198E7CA700409DD2 /* EditTextModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextModeViewController.h; sourceTree = "<group>"; };
 		C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextModeViewController.m; sourceTree = "<group>"; };
+		C8C720FE1AB22FB800284B72 /* ViewDealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewDealViewController.h; sourceTree = "<group>"; };
+		C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewDealViewController.m; sourceTree = "<group>"; };
 		C8DC1D8619B863B60062E184 /* ActivityTypeWhatsApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTypeWhatsApp.h; sourceTree = "<group>"; };
 		C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTypeWhatsApp.m; sourceTree = "<group>"; };
 		C8DC1D8A19BC89410062E184 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -659,6 +662,8 @@
 		C869CB76191A135A00DF2C19 /* View Deal */ = {
 			isa = PBXGroup;
 			children = (
+				C8C720FE1AB22FB800284B72 /* ViewDealViewController.h */,
+				C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */,
 				B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */,
 				B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */,
 				C8FFF56A197C437600D01744 /* EditDealTableViewController.h */,
@@ -676,10 +681,8 @@
 			children = (
 				C891901E19FE57D9005E85FB /* AddDealNavigationController.h */,
 				C891901F19FE57D9005E85FB /* AddDealNavigationController.m */,
-				B01BD1B017F0D6470010C9A4 /* WhereIsTheDeal.h */,
-				B01BD1B117F0D6470010C9A4 /* WhereIsTheDeal.m */,
-				C895FB801AB0327500E4E4A5 /* NewWhereIsTheDeal.h */,
-				C895FB811AB0327500E4E4A5 /* NewWhereIsTheDeal.m */,
+				C895FB801AB0327500E4E4A5 /* WhereIsTheDeal.h */,
+				C895FB811AB0327500E4E4A5 /* WhereIsTheDeal.m */,
 				C8A012ED19DD52E100C1D973 /* WhatIsTheDeal1.h */,
 				C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */,
 				C8A012F019DD52F700C1D973 /* WhatIsTheDeal2.h */,
@@ -724,6 +727,8 @@
 		C895FB7C1AAED50600E4E4A5 /* Old Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B01BD1B017F0D6470010C9A4 /* OldWhereIsTheDeal.h */,
+				B01BD1B117F0D6470010C9A4 /* OldWhereIsTheDeal.m */,
 				C80123341A2C4BC000C40A37 /* DealsTableCell.h */,
 				C80123351A2C4BC000C40A37 /* DealsTableCell.m */,
 				C80123361A2C4BC000C40A37 /* DealsTableCell.xib */,
@@ -1016,7 +1021,7 @@
 				C8C2E5261A63B39E000F305F /* EnterPasscodeViewController.m in Sources */,
 				C898FE6D19AB94BA00F1C11A /* Store.m in Sources */,
 				56849792154C00BF001601A2 /* AppDelegate.m in Sources */,
-				B01BD1B217F0D6480010C9A4 /* WhereIsTheDeal.m in Sources */,
+				B01BD1B217F0D6480010C9A4 /* OldWhereIsTheDeal.m in Sources */,
 				C80810C11A6CFFE20034D8B1 /* Invitation.m in Sources */,
 				C895FB7F1AAF5BBB00E4E4A5 /* ElasticLabel.m in Sources */,
 				C8A10BAA19EAE4520090F1D9 /* CommentsTableViewController.m in Sources */,
@@ -1025,6 +1030,7 @@
 				B0274815186B2A2B005A52F0 /* GKImageCropOverlayView.m in Sources */,
 				B09FBAD5193F0764006CB986 /* Dealer.m in Sources */,
 				C83B93C41A2D08BE00AC666B /* DealsNoPhotoTableCell.m in Sources */,
+				C8C721001AB22FB800284B72 /* ViewDealViewController.m in Sources */,
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
@@ -1044,7 +1050,7 @@
 				C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */,
 				C8AC887E19BD9A5D002A2C16 /* CommentTableViewCell.m in Sources */,
 				C848B66D19ADB92A000F138D /* Comment.m in Sources */,
-				C895FB821AB0327500E4E4A5 /* NewWhereIsTheDeal.m in Sources */,
+				C895FB821AB0327500E4E4A5 /* WhereIsTheDeal.m in Sources */,
 				C8A10BA219E9628D0090F1D9 /* ActivityTableViewController.m in Sources */,
 				C8A012EF19DD52E100C1D973 /* WhatIsTheDeal1.m in Sources */,
 				C8A10B9219E465C90090F1D9 /* ThankYouViewController.m in Sources */,

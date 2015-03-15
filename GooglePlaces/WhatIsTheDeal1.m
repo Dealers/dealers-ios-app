@@ -25,20 +25,10 @@
     
     self.title = NSLocalizedString(@"What is the deal?", nil);
     
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    
     self.deal = [[Deal alloc] init];
-    appDelegate = [[UIApplication sharedApplication] delegate];
     
+    [self initialize];
     [self setNavigationBar];
-    
-    isFrontCamera = NO;
-    self.capturedImagesSection.hidden = YES;
-    self.cameraSection.hidden = NO;
-    shouldDealloc = NO;
-    self.hintLabel.text = NSLocalizedString(@"If you're done, tap Next near the title", nil);
-    self.hintLabel.alpha = 0;
-    
     [self initializeCameraSection];
     [self setTextViewSettings];
     [self setCounter];
@@ -63,8 +53,27 @@
     self.hintLabel.alpha = 0;
 }
 
+- (void)initialize
+{
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    isFrontCamera = NO;
+    self.capturedImagesSection.hidden = YES;
+    self.cameraSection.hidden = NO;
+    shouldDealloc = NO;
+    self.hintLabel.text = NSLocalizedString(@"If you're done, tap Next near the title", nil);
+    self.hintLabel.alpha = 0;
+}
+
 
 #pragma mark - Table view delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        return tableView.bounds.size.width * 0.678125; // 217:320 ratio
+    }
+    return 100;
+}
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -93,6 +102,8 @@
 
 - (void)setNavigationBar
 {
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
     UIView *nextButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 58, 30)];
     
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -114,7 +125,7 @@
 
 - (void)setTextViewSettings
 {
-    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+    if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         [self.dealTitle setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
         [self.dealTitle setTextAlignment:NSTextAlignmentRight];
         [self.titlePlaceholder setTextAlignment:NSTextAlignmentRight];
@@ -257,31 +268,37 @@
         self.cameraSection.hidden = YES;
         self.capturedImagesSection.hidden = NO;
         self.addPhoto.hidden = YES;
-        
+
+        // Populating the image views:
         for (int i = 0; i < [self.photosArray count]; i++) {
             
-            // Creating an imageView object in every 'page' of our scrollView:
-            
-            CGRect frame;
-            frame.origin.x = self.cameraScrollView.frame.size.width * i;
-            frame.origin.y = 0;
-            frame.size = self.cameraScrollView.frame.size;
-            
-            int tag = i + 1;
-            UIImageView *captureImageView = (UIImageView *)[self.cameraScrollView viewWithTag: tag];
-            captureImageView.image = [self.photosArray objectAtIndex:i];
-            captureImageView.frame = frame;
+            switch (i) {
+                case 0:
+                    self.captureImage.image = self.photosArray[i];
+                    break;
+                case 1:
+                    self.captureImage2.image = self.photosArray[i];
+                    break;
+                case 2:
+                    self.captureImage3.image = self.photosArray[i];
+                    break;
+                case 3:
+                    self.captureImage4.image = self.photosArray[i];
+                    break;
+                    
+                default:
+                    break;
+            }
         }
     }
     
     // Setting the Add Photo button in place
     
-    self.addPhoto.center = CGPointMake(self.addPhoto.center.x, - self.addPhoto.center.y);
     self.addPhoto.hidden = YES;
     
-    // Setting the content size of the camera scroll view
+    // Setting the width of the content view of the camera scroll view
     
-    self.cameraScrollView.contentSize = CGSizeMake(self.cameraScrollView.frame.size.width * [self.photosArray count], self.cameraScrollView.frame.size.height - 1);
+    self.widthContentViewConstraint.constant = self.tableView.bounds.size.width * self.photosArray.count;
     
     if (self.photosArray.count == 4) {
         self.addAnotherPhoto.hidden = YES;
@@ -330,7 +347,6 @@
     
     [UIView animateWithDuration: 0.1 animations:^{ self.flash.alpha = 1.0; }];
     [self capImage];
-    [self performSelector:@selector(hideFlash) withObject:nil afterDelay:0.5];
 }
 
 - (void)hideFlash {
@@ -354,12 +370,14 @@
         return;
     }
     
-    if (self.addPhoto.hidden == NO) {
+    if (!self.addPhoto.hidden) {
         
+        [self.view layoutIfNeeded];
+        self.verticalSpaceAddPhotoContentViewConstraint.constant = -(self.cameraCell.contentView.bounds.size.height);
         self.cameraSection.hidden = NO;
         if (!isSessionRunning) [self initializeCamera];
         [UIView animateWithDuration:0.3 animations:^{
-            self.addPhoto.center = CGPointMake(self.addPhoto.center.x, - self.addPhoto.center.y);
+            [self.view layoutIfNeeded];;
         } completion:^(BOOL finished){
             self.addPhoto.hidden = YES;
         }];
@@ -408,26 +426,28 @@
 - (IBAction)exitCameraMode:(id)sender {
     
     if (self.photosArray.count == 0) {
+        self.verticalSpaceAddPhotoContentViewConstraint.constant = -(self.cameraCell.contentView.bounds.size.height);
+        [self.view layoutIfNeeded];
+        
         self.addPhoto.hidden = NO;
+        self.verticalSpaceAddPhotoContentViewConstraint.constant = 0;
         [UIView animateWithDuration:0.3 animations:^{
-            self.addPhoto.center = self.cameraCell.contentView.center;
+            [self.view layoutIfNeeded];
         }];
         
     } else {
-        self.capturedImagesSection.hidden = NO;
-        [UIView animateWithDuration:0.3 animations:^{
-            self.capturedImagesSection.center = self.cameraCell.contentView.center;
-        }];
+        [self showCapturedSection];
     }
 }
 
 - (void)showCapturedSection
 {
-    CGPoint center = self.cameraCell.contentView.center;
+    [self.view layoutIfNeeded];
+    self.verticalSpaceCapturedImagesSectionContentViewConstraint.constant = 0;
     self.capturedImagesSection.hidden = NO;
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.capturedImagesSection.center = center;
+                         [self.view layoutIfNeeded];
                      }
                      completion:^(BOOL finished) {
                          self.cameraSection.hidden = YES;
@@ -436,16 +456,19 @@
 
 - (void)hideCapturedSection
 {
-    CGPoint center = self.cameraCell.contentView.center;
+    [self.view layoutIfNeeded];
+    self.verticalSpaceCapturedImagesSectionContentViewConstraint.constant = self.cameraCell.contentView.bounds.size.height;
     self.cameraSection.hidden = NO;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.capturedImagesSection.center = CGPointMake(center.x, center.y + self.cameraCell.bounds.size.height);
-    } completion:^(BOOL finished){
-        self.capturedImagesSection.hidden = YES;
-    }];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished){
+                         self.capturedImagesSection.hidden = YES;
+                     }];
 }
 
-- (void) capImage // Method to capture image from AVCaptureSession video feed
+- (void)capImage // Method to capture image from AVCaptureSession video feed
 {
     AVCaptureConnection *videoConnection = nil;
     for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
@@ -475,32 +498,26 @@
 
 - (void) processImage:(UIImage *)image // Process captured image, crop, resize and rotate
 {
-    // Photo Handling Process Explination:
+    CGRect outputRect = [captureVideoPreviewLayer metadataOutputRectOfInterestForRect:captureVideoPreviewLayer.bounds];
+    CGImageRef takenCGImage = image.CGImage;
+    size_t width = CGImageGetWidth(takenCGImage);
+    size_t height = CGImageGetHeight(takenCGImage);
+    CGRect cropRect = CGRectMake(outputRect.origin.x * width, outputRect.origin.y * height, outputRect.size.width * width, outputRect.size.height * height);
     
-    // The "Image Divider" is the number determining how many times smaller the resized photo
-    // will be after shrinking it. The smaller it'll be, the faster it will be downloaded.
-    // After the shrinking, the photo is still too big to fit the iPhone screen, so we need
-    // to modify the croping rect so it'll fit the size of the resized photo, that's being done by
-    // the "Image Mulitplier". The Image Multiplier needs to be multiplied by 2, probably
-    // because of the retina display.
+    CGImageRef cropCGImage = CGImageCreateWithImageInRect(takenCGImage, cropRect);
+    image = [UIImage imageWithCGImage:cropCGImage scale:1 orientation:image.imageOrientation];
+    CGImageRelease(cropCGImage);
     
-    CGFloat imageSizeMultiplier = 2;
-    CGFloat imageSizeDivider = image.size.width / 320.0;
+    UIGraphicsBeginImageContext(image.size);
+    [image drawAtPoint:CGPointZero];
+    image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     
+    CGFloat imageSizeDivider = image.size.width / 600.0;
+
     UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider, image.size.height / imageSizeDivider)];
-        
-    CGFloat originX = self.cameraCell.frame.origin.x * imageSizeMultiplier;
-    CGFloat originY = 104 * imageSizeMultiplier;
-    CGFloat sizeWidth = self.captureImage.frame.size.width * imageSizeMultiplier;
-    CGFloat sizeHeight = self.captureImage.frame.size.height * imageSizeMultiplier;
     
-    CGRect cropRect = CGRectMake(originX, originY, sizeWidth, sizeHeight);
-    
-    UIImage *finalImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(CFBridgingRelease(CGImageCreateWithImageInRect([resizedImage CGImage], cropRect)))];
-    
-    [self addNewPhotoToList:finalImage];
-    
-    //  [self deallocCameraSession];
+    [self addNewPhotoToList:resizedImage];
     
     // Adjust image orientation based on device orientation (not needed yet if at all...)
     /*
@@ -542,10 +559,13 @@
 
 - (void)addNewPhotoToList:(UIImage *)image
 {
+    [self hideFlash];
+    
     if (!self.photosArray) {
         self.captureImage.image = image;
         self.photosArray = [NSMutableArray arrayWithObjects:self.captureImage.image, nil];
         self.pageControl.numberOfPages = 1;
+        self.widthContentViewConstraint.constant = self.cameraCell.contentView.bounds.size.width;
         
     } else {
         [self.photosArray addObject:image];
@@ -554,7 +574,10 @@
     
     self.cameraSection.hidden = YES;
     self.capturedImagesSection.hidden = NO;
-    self.capturedImagesSection.center = self.cameraCell.contentView.center;
+    self.verticalSpaceCapturedImagesSectionContentViewConstraint.constant = 0;
+    [self.view layoutIfNeeded];
+    
+    [self updatePageController];
     
     if (shouldDealloc) {
         [self deallocCameraSession];
@@ -562,24 +585,39 @@
     }
 }
 
+- (void)updatePageController
+{
+    NSInteger currentPage = self.photosArray.count - 1;
+    self.cameraScrollView.contentOffset = CGPointMake(currentPage * self.tableView.bounds.size.width, 0);
+    self.pageControl.currentPage = currentPage;
+}
+
 - (void)setCapturedSectionAfterSnap
 {
-    CGRect frame;
-    NSUInteger i = self.photosArray.count - 1;
-    frame.origin.x = self.cameraScrollView.frame.size.width * i;
-    frame.origin.y = 0;
-    frame.size = self.cameraScrollView.frame.size;
+    CGPoint origin;
+    switch (self.photosArray.count) {
+        case 2:
+            self.captureImage2.image = self.photosArray[1];
+            origin = self.captureImage2.frame.origin;
+            break;
+        case 3:
+            self.captureImage3.image = self.photosArray[2];
+            origin = self.captureImage3.frame.origin;
+            break;
+        case 4:
+            self.captureImage4.image = self.photosArray[3];
+            origin = self.captureImage4.frame.origin;
+            break;
+            
+        default:
+            break;
+    }
     
-    unsigned long tag = i + 1;
-    UIImageView *captureImageView = (UIImageView *)[self.cameraScrollView viewWithTag:tag];
-    captureImageView.image = [self.photosArray objectAtIndex:i];
-    captureImageView.frame = frame;
-    
-    self.cameraScrollView.contentSize = CGSizeMake(self.cameraScrollView.frame.size.width * [self.photosArray count], self.cameraScrollView.frame.size.height - 1);
-    self.cameraScrollView.contentOffset = frame.origin;
+    self.widthContentViewConstraint.constant += self.cameraCell.contentView.bounds.size.width;
+    self.cameraScrollView.contentOffset = origin;
     
     self.pageControl.numberOfPages++;
-    self.pageControl.currentPage = i;
+    self.pageControl.currentPage = origin.x / self.tableView.bounds.size.width;
     
     if (self.photosArray.count == 4) {
         self.addAnotherPhoto.hidden = YES;
@@ -657,7 +695,7 @@
         
     } else {
         self.pageControl.numberOfPages = self.photosArray.count;
-        self.cameraScrollView.contentSize = CGSizeMake(self.cameraScrollView.frame.size.width * [self.photosArray count], self.cameraScrollView.frame.size.height - 1);
+        self.widthContentViewConstraint.constant -= self.cameraCell.bounds.size.width;
     }
     
     self.addAnotherPhoto.hidden = NO;
@@ -672,7 +710,7 @@
 
 - (void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image {
     
-    CGFloat imageSizeDivider = image.size.width / 320.0;
+    CGFloat imageSizeDivider = image.size.width / 414.0;
     UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider,
                                                                              image.size.height / imageSizeDivider)];
     

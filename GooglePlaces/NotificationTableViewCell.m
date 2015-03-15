@@ -33,7 +33,7 @@
     self.notificationImage.imageView.contentMode = UIViewContentModeScaleAspectFill;
 
     
-    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+    if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.baseWritingDirection = UITextWritingDirectionRightToLeft;

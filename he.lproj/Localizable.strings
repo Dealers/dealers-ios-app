@@ -193,7 +193,7 @@
 "Invite" = "הזמנה";
 "I'm sending you a passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\n%@" = "אני שולח/ת לך הזמנה עם קוד כניסה לדילרס, אפליקציה לשיתוף מבצעים:\n%@\n\nהורד/י את דילרס מכאן:\n%@";
 "Invite by " = "הזמן עם ";
-"Text Message" = "הודעת טקסט";
+"Message" = "הודעת טקסט";
 "Email" = "דוא״ל";
 "WhatsApp" = "וואטסאפ";
 "You have no invitations left." = "לא נשארו לך הזמנות.";

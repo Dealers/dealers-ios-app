@@ -136,7 +136,7 @@
     } else if ([self.title isEqualToString:NSLocalizedString(@"Description", nil)]) {
         self.textView.keyboardType = UIKeyboardTypeDefault;
         self.textView.returnKeyType = UIReturnKeyDefault;
-        if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+        if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
             [self.textView setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
             [self.textView setTextAlignment:NSTextAlignmentNatural];
         }

@@ -78,7 +78,7 @@
     NSDictionary* attributesSecondPart = @{ NSFontAttributeName: [UIFont fontWithName:@"Avenir-Heavy" size:17.0] };
 
     NSString *inviteBy = NSLocalizedString(@"Invite by ", nil);
-    NSString *textMessage = NSLocalizedString(@"Text Message", nil);
+    NSString *textMessage = NSLocalizedString(@"Message", nil);
     
     NSAttributedString *attrInviteBy = [[NSAttributedString alloc] initWithString:inviteBy attributes:attributesFirstPart];
     NSAttributedString *attrTextMessage = [[NSAttributedString alloc] initWithString:textMessage attributes:attributesSecondPart];
@@ -88,14 +88,8 @@
     
     [self.textMessage setAttributedTitle:textMessageButtonString forState:UIControlStateNormal];
     [self.textMessage.titleLabel setTextAlignment:NSTextAlignmentLeft];
-    [self.textMessage setTintColor:[UIColor whiteColor]];
-    [self.textMessage setBackgroundColor:[UIColor colorWithRed:43.0/255.0 green:221.0/255.0 blue:29.0/255.0 alpha:1.0]];
     [self.textMessage.layer setCornerRadius:8.0];
     [self.textMessage.layer setMasksToBounds:YES];
-    
-    UIImageView *textMessageIcon = [[UIImageView alloc] initWithFrame:CGRectMake(4, 2, 40, 40)];
-    [textMessageIcon setImage:[UIImage imageNamed:@"Text Message White Button Icon"]];
-    [self.textMessage addSubview:textMessageIcon];
     
     // Email Button
     
@@ -108,15 +102,8 @@
     
     [self.emailButton setAttributedTitle:emailButtonString forState:UIControlStateNormal];
     [self.emailButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
-    [self.emailButton setTintColor:[UIColor whiteColor]];
-    [self.emailButton setBackgroundColor:[UIColor colorWithRed:68.0/255.0 green:144.0/255.0 blue:231.0/255.0 alpha:1.0]];
     [self.emailButton.layer setCornerRadius:8.0];
     [self.emailButton.layer setMasksToBounds:YES];
-    
-    UIImageView *emailIcon = [[UIImageView alloc] initWithFrame:CGRectMake(4, 2, 40, 40)];
-    [emailIcon setImage:[UIImage imageNamed:@"Email White Button Icon"]];
-    [self.emailButton addSubview:emailIcon];
-    
     
     // WhatsApp Button
     
@@ -129,14 +116,8 @@
     
     [self.whatsAppButton setAttributedTitle:whatsAppButtonString forState:UIControlStateNormal];
     [self.whatsAppButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
-    [self.whatsAppButton setTintColor:[UIColor whiteColor]];
-    [self.whatsAppButton setBackgroundColor:[UIColor colorWithRed:43.0/255.0 green:221.0/255.0 blue:29.0/255.0 alpha:1.0]];
     [self.whatsAppButton.layer setCornerRadius:8.0];
     [self.whatsAppButton.layer setMasksToBounds:YES];
-    
-    UIImageView *whatsAppIcon = [[UIImageView alloc] initWithFrame:CGRectMake(4, 2, 40, 40)];
-    [whatsAppIcon setImage:[UIImage imageNamed:@"WhatsApp White Button Icon"]];
-    [self.whatsAppButton addSubview:whatsAppIcon];
 }
 
 - (void)setNoInvitationsLeft
@@ -330,12 +311,12 @@
 - (void)usedInvitation
 {
     UIImageView *invitationIcon;
-    
+
     invitationIcon = [self invitationIconForIndex:appDelegate.dealer.invitationCounter.integerValue];
     
     UIImageView *usedInvitationIcon = [[UIImageView alloc] initWithFrame:invitationIcon.frame];
     usedInvitationIcon.image = [UIImage imageNamed:@"Empty Invitation Icon"];
-    [self.view insertSubview:usedInvitationIcon belowSubview:invitationIcon];
+    [self.invitationContainerView insertSubview:usedInvitationIcon belowSubview:invitationIcon];
     
     [UIView animateWithDuration:0.3
                      animations:^{
@@ -440,7 +421,7 @@
         newInvitationIcon.image = [UIImage imageNamed:@"Invitation Icon"];
         newInvitationIcon.transform = CGAffineTransformMakeScale(0.001, 0.001);
         
-        [self.view addSubview:newInvitationIcon];
+        [self.invitationContainerView addSubview:newInvitationIcon];
         
         [UIView animateWithDuration:0.3
                          animations:^{

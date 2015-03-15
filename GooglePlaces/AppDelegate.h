@@ -101,6 +101,7 @@
 - (NSString *)getCategoryValueForKey:(NSString *)key;
 - (NSString *)getEnglishGender:(NSString *)gender;
 
+- (NSString *)baseURL;
 - (RKObjectMapping *)dealMapping;
 - (RKObjectMapping *)addDealMapping;
 - (RKObjectMapping *)dealerMapping;

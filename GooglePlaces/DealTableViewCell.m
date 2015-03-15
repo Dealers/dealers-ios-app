@@ -21,7 +21,7 @@
 
 - (void)setWritingDirection
 {
-    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+    if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         self.title.textAlignment = NSTextAlignmentRight;
         self.store.textAlignment = NSTextAlignmentRight;
         self.likesCounter.textAlignment = NSTextAlignmentRight;

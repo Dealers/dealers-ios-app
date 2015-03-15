@@ -10,7 +10,6 @@
 #import "ProfileTableViewController.h"
 #import "ExploretableViewController.h"
 #import "AppDelegate.h"
-#import "WhereIsTheDeal.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ActivityTypeWhatsApp.h"
 #import "CommentsTableViewController.h"

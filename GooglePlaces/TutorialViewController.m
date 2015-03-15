@@ -56,6 +56,13 @@
     if (!self.afterSignUp) {
         [appDelegate hidePlusButton];
     }
+    
+    self.skipButton.alpha = 0;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [UIView animateWithDuration:0.3 animations:^{ self.skipButton.alpha = 1.0; }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

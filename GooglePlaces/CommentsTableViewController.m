@@ -153,7 +153,7 @@ static NSString * const CommentCellIdentifier = @"CommentTableViewCell";
     self.placeholder.text = NSLocalizedString(@"Write a comment...", nil);
     self.placeholder.textColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:206.0/255.0 alpha:1.0];
     
-    if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
+    if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         [self.placeholder setTextAlignment:NSTextAlignmentRight];
     }
     

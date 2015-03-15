@@ -52,6 +52,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *addAnotherPhoto;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIView *cameraBlackCover;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthContentViewConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceCapturedImagesSectionContentViewConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceAddPhotoContentViewConstraint;
 
 @property (weak, nonatomic) IBOutlet UIButton *snapButton;
 @property (weak, nonatomic) IBOutlet UIButton *rotateCameraButton;
