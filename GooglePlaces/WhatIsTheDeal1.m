@@ -50,6 +50,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
     self.hintLabel.alpha = 0;
 }
 
@@ -610,6 +611,7 @@
             break;
             
         default:
+            origin = CGPointZero;
             break;
     }
     

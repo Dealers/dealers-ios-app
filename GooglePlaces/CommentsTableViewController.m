@@ -7,7 +7,7 @@
 //
 
 #import "CommentsTableViewController.h"
-#import "ViewonedealViewController.h"
+#import "ViewDealViewController.h"
 
 #define keybaordHeight 216
 #define NO_COMMENTS_MESSAGE_TAG 54325
@@ -73,10 +73,10 @@ static NSString * const CommentCellIdentifier = @"CommentTableViewCell";
     }
     
     id viewController = [[self.navigationController viewControllers] objectAtIndex:self.navigationController.viewControllers.count -  1];
-    if ([viewController isKindOfClass:[ViewonedealViewController class]]) {
-        ViewonedealViewController *vodvc = viewController;
-        vodvc.didChangesInComments = self.didChanges;
-        vodvc.deal.comments = self.comments;
+    if ([viewController isKindOfClass:[ViewDealViewController class]]) {
+        ViewDealViewController *vdvc = viewController;
+        vdvc.didChangesInComments = self.didChanges;
+        vdvc.deal.comments = self.comments;
     }
 }
 
@@ -417,7 +417,7 @@ static NSString * const CommentCellIdentifier = @"CommentTableViewCell";
     CommentTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CommentCellIdentifier];
     
     if (!cell) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:nil options:nil];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentTableViewCell" owner:nil options:nil];
         cell = [nib objectAtIndex:0];
     }
     
@@ -475,7 +475,7 @@ static NSString * const CommentCellIdentifier = @"CommentTableViewCell";
     dispatch_once(&onceToken, ^{
         sizingCell = [self.tableView dequeueReusableCellWithIdentifier:CommentCellIdentifier];
         if (!sizingCell) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentsTableCell" owner:nil options:nil];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentTableViewCell" owner:nil options:nil];
             sizingCell = [nib objectAtIndex:0];
         }
     });

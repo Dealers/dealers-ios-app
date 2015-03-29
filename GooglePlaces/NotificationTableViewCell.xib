@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -51,28 +52,22 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="dB5-gM-u4b" firstAttribute="top" secondItem="PEK-Dh-M5b" secondAttribute="top" id="3sF-DO-RV5"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="V8k-ER-m1d" secondAttribute="bottom" constant="8" id="60c-LS-eQU"/>
-                    <constraint firstItem="V8k-ER-m1d" firstAttribute="leading" secondItem="PEK-Dh-M5b" secondAttribute="trailing" constant="10" id="EqK-Da-Ogu"/>
+                    <constraint firstItem="V8k-ER-m1d" firstAttribute="left" secondItem="PEK-Dh-M5b" secondAttribute="right" constant="10" id="EqK-Da-Ogu"/>
                     <constraint firstItem="PEK-Dh-M5b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="JJh-6q-SIh"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="TlO-Hc-18t" secondAttribute="trailing" constant="7" id="JiD-xu-DUa"/>
-                    <constraint firstItem="TlO-Hc-18t" firstAttribute="leading" secondItem="pOy-fG-4eo" secondAttribute="leading" id="RtU-lU-j1A"/>
-                    <constraint firstItem="TlO-Hc-18t" firstAttribute="leading" secondItem="PEK-Dh-M5b" secondAttribute="trailing" constant="10" id="bEb-zS-IsI"/>
+                    <constraint firstAttribute="rightMargin" secondItem="TlO-Hc-18t" secondAttribute="right" constant="7" id="JiD-xu-DUa"/>
+                    <constraint firstItem="TlO-Hc-18t" firstAttribute="left" secondItem="pOy-fG-4eo" secondAttribute="left" id="RtU-lU-j1A"/>
+                    <constraint firstItem="TlO-Hc-18t" firstAttribute="left" secondItem="PEK-Dh-M5b" secondAttribute="right" constant="10" id="bEb-zS-IsI"/>
                     <constraint firstAttribute="bottomMargin" secondItem="pOy-fG-4eo" secondAttribute="bottom" constant="-8" id="g3A-Q5-kd6"/>
                     <constraint firstItem="pOy-fG-4eo" firstAttribute="top" secondItem="V8k-ER-m1d" secondAttribute="bottom" constant="10" id="gMe-Jc-Zzt"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="V8k-ER-m1d" secondAttribute="trailing" constant="7" id="kCd-8R-kOE"/>
+                    <constraint firstAttribute="rightMargin" secondItem="V8k-ER-m1d" secondAttribute="right" constant="7" id="kCd-8R-kOE"/>
                     <constraint firstItem="dB5-gM-u4b" firstAttribute="bottom" secondItem="PEK-Dh-M5b" secondAttribute="bottom" id="nz3-Kv-B5g"/>
                     <constraint firstItem="TlO-Hc-18t" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="oPd-2v-XSU"/>
                     <constraint firstItem="V8k-ER-m1d" firstAttribute="top" secondItem="TlO-Hc-18t" secondAttribute="bottom" constant="2" id="ry4-nA-Dlc"/>
-                    <constraint firstItem="PEK-Dh-M5b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="sXh-tj-JvV"/>
+                    <constraint firstItem="PEK-Dh-M5b" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="15" id="sXh-tj-JvV"/>
                     <constraint firstItem="dB5-gM-u4b" firstAttribute="trailing" secondItem="PEK-Dh-M5b" secondAttribute="trailing" id="vOD-y3-qCf"/>
                     <constraint firstItem="dB5-gM-u4b" firstAttribute="leading" secondItem="PEK-Dh-M5b" secondAttribute="leading" id="wut-Bn-arg"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="pOy-fG-4eo" secondAttribute="trailing" constant="-8" id="x2j-93-Izp"/>
+                    <constraint firstAttribute="rightMargin" secondItem="pOy-fG-4eo" secondAttribute="right" constant="-8" id="x2j-93-Izp"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="60c-LS-eQU"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="80" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>

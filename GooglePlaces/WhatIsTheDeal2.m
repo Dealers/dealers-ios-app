@@ -885,9 +885,7 @@
         
         addressLabel.frame = CGRectMake(labelsLeftMargin, addressIcon.frame.origin.y + 2, addressLabelSize.width, addressLabelSize.height);
         
-        [sharedView addSubview:addressLabel];
-        
-        detailsLowestYPoint = CGRectGetMaxY(addressIcon.frame) > CGRectGetMaxY(addressLabel.frame) ? CGRectGetMaxY(addressIcon.frame) : CGRectGetMaxY(addressLabel.frame);
+        [sharedView addSubview:addressLabel];        
     }
     
 //    if (![self.expirationDateLabel.text isEqualToString:NSLocalizedString(@"Choose Date", nil)] && self.expirationDateLabel.text.length > 0) {

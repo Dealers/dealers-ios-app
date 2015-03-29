@@ -29,4 +29,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *percentage;
 @property (weak, nonatomic) IBOutlet UIButton *lastPrice;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpacePriceBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceDiscountBar;
+
+
 @end

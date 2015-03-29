@@ -38,7 +38,8 @@
             if (self.shekel.selected) currency = @"₪";
             if (self.dollar.selected) currency = @"$";
             if (self.pound.selected) currency = @"£";
-            edtvc.dealPrice.text = [currency stringByAppendingString:self.textView.text];
+            NSInteger floatValue = [self.textView.text floatValue];
+            edtvc.dealPrice.text = [currency stringByAppendingString:[[NSNumber numberWithFloat:floatValue] stringValue]];
             edtvc.selectedCurrency = currency;
             edtvc.dealPrice.textColor = [UIColor blackColor];
         }
@@ -51,13 +52,14 @@
             edtvc.dealDiscount.textColor = placeholderColor;
         } else {
             NSString *discountType;
+            NSInteger floatValue = [self.textView.text floatValue];
             if (self.percentage.selected) {
                 discountType = @"%";
-                edtvc.dealDiscount.text = [self.textView.text stringByAppendingString:discountType];
+                edtvc.dealDiscount.text = [[[NSNumber numberWithFloat:floatValue] stringValue] stringByAppendingString:discountType];
             } else if (self.lastPrice.selected) {
                 discountType = @"lastPrice";
                 NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.textView.text attributes:attributes];
+                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:[[NSNumber numberWithFloat:floatValue] stringValue] attributes:attributes];
                 edtvc.dealDiscount.attributedText = attrText;
             }
             edtvc.selectedDiscountType = discountType;
@@ -90,15 +92,6 @@
         return NO;
     }
     return YES;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -169,10 +162,9 @@
     self.textView.contentInset = contentInsets;
     self.textView.scrollIndicatorInsets = contentInsets;
     
-    CGPoint barCenter = CGPointMake(self.view.center.x, self.view.frame.size.height - kbSize.height - self.priceBar.frame.size.height/2);
-    
-    self.priceBar.center = barCenter;
-    self.discountBar.center = barCenter;
+    self.verticalSpacePriceBar.constant = kbSize.height;
+    self.verticalSpaceDiscountBar.constant = kbSize.height;
+    [self.view layoutIfNeeded];
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)notification

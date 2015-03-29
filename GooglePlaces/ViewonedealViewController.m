@@ -342,7 +342,7 @@
     self.navigationItem.rightBarButtonItem = options;
 }
 
--(void)setDateFormatter
+- (void)setDateFormatter
 {
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
@@ -1315,9 +1315,7 @@
         
         addressLabel.frame = CGRectMake(labelsLeftMarginSharedView, addressIcon.frame.origin.y + 2, addressLabelSize.width, addressLabelSize.height);
         
-        [sharedView addSubview:addressLabel];
-        
-        detailsLowestYPoint = CGRectGetMaxY(addressIcon.frame) > CGRectGetMaxY(addressLabel.frame) ? CGRectGetMaxY(addressIcon.frame) : CGRectGetMaxY(addressLabel.frame);
+        [sharedView addSubview:addressLabel];        
     }
     
 //    if (![expirelabel.text isEqualToString:@"0000-00-00 00:00:00"] && ![expirelabel.text isEqualToString:@"0"] && expirelabel.text.length > 0) {
@@ -1745,98 +1743,6 @@
             }
         }
     }
-}
-
-- (void)downloadDealersProfileImage
-{
-    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    
-    NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"dealer_profile_pic_tmp.jpg"];
-    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
-    
-    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
-    
-    downloadRequest.bucket = AWS_S3_BUCKET_NAME;
-    
-    
-    downloadRequest.key = self.deal.dealer.photoURL;
-    downloadRequest.downloadingFileURL = downloadingFileURL;
-    
-    [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-        
-        if (task.error){
-            if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                switch (task.error.code) {
-                    case AWSS3TransferManagerErrorCancelled:
-                    case AWSS3TransferManagerErrorPaused:
-                        break;
-                        
-                    default:
-                        NSLog(@"Error: %@", task.error);
-                        break;
-                }
-            } else {
-                // Unknown error.
-                NSLog(@"\n\nCouldn't download the dealer's profile picture. Error: %@", task.error);
-            }
-        }
-        
-        if (task.result) {
-            
-            self.dealerImage.alpha = 0;
-            self.dealerImage.image = [UIImage imageWithContentsOfFile:downloadingFilePath];
-            [UIView animateWithDuration:0.3 animations:^{
-                self.dealerImage.alpha = 1;
-            }];
-        }
-        
-        return nil;
-    }];
-}
-
-- (void)downloadCommentersProfileImage
-{
-    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    
-    NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"Commenter_profile_pic_tmp.jpg"];
-    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
-    
-    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
-    
-    downloadRequest.bucket = AWS_S3_BUCKET_NAME;
-    downloadRequest.key = self.deal.dealer.photoURL;
-    downloadRequest.downloadingFileURL = downloadingFileURL;
-    
-    [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-        
-        if (task.error){
-            if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                switch (task.error.code) {
-                    case AWSS3TransferManagerErrorCancelled:
-                    case AWSS3TransferManagerErrorPaused:
-                        break;
-                        
-                    default:
-                        NSLog(@"Error: %@", task.error);
-                        break;
-                }
-            } else {
-                // Unknown error.
-                NSLog(@"\n\nCouldn't download the dealer's profile picture. Error: %@", task.error);
-            }
-        }
-        
-        if (task.result) {
-            
-            self.dealerImage.alpha = 0;
-            self.dealerImage.image = [UIImage imageWithContentsOfFile:downloadingFilePath];
-            [UIView animateWithDuration:0.3 animations:^{
-                self.dealerImage.alpha = 1;
-            }];
-        }
-        
-        return nil;
-    }];
 }
 
 - (void)deallocMapView {

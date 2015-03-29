@@ -34,23 +34,14 @@
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"Edit Deal", nil);
-    
     [self initialize];
-    
     [self setNavigationBar];
-    
     [self setProgressIndicator];
-    
     [self setupExpirationDateCellContentView];
-    
     [self loadingParameters];
-    
     [self bundlePhotosInArray];
-    
     [self initializeCameraSection];
-    
     [self canDelete];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -250,6 +241,8 @@
     if (indexPath.section == 4) {
         if (!self.canDeleteDeal) {
             height = 0;
+        } else {
+            height = 44.0;
         }
     }
     
@@ -259,7 +252,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     EditTextModeViewController *etmvc = [self.storyboard instantiateViewControllerWithIdentifier:@"editTextModeViewControllerID"];
-    WhereIsTheDeal *witdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"whereIsTheDealID"];
+    WhereIsTheDeal *witdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDeal"];
     ChooseCategoryTableViewController *cctvc = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCategoryID"];
     
     if (!(indexPath.section == 3 && indexPath.row == 1) && self.datePickerIsShowing) {
@@ -508,7 +501,7 @@
     isSessionRunning = NO;
 }
 
--(void) initializeCameraSection {
+- (void)initializeCameraSection {
     
     // First checking if there is any photo at all:
     
@@ -548,7 +541,7 @@
     dispatch_queue_t queue = dispatch_queue_create("com.MyQueue", NULL);
     dispatch_async(queue, ^{
         
-        [self initializeCamera];
+//        [self initializeCamera];
         
     });
 }
@@ -982,9 +975,8 @@
         self.deal.photoSum = [NSNumber numberWithInteger:numberOfPics];
     }
     
-    
-    ViewonedealViewController *vodvc = self.delegate;
-    vodvc.afterEditing = YES;
+    ViewDealViewController *vdvc = self.delegate;
+    vdvc.afterEditing = YES;
     
     [uploadingDeal show:YES];
     
@@ -1084,10 +1076,10 @@
                                                           
                                                           NSLog(@"Deal was deleted successfuly.");
                                                           [self dismissViewControllerAnimated:YES completion:nil];
-                                                          ViewonedealViewController *vodvc = self.delegate;
+                                                          ViewDealViewController *vdvc = self.delegate;
                                                           appDelegate.shouldUpdateMyFeed = YES;
                                                           appDelegate.shouldUpdateProfile = YES;
-                                                          [vodvc.navigationController popToRootViewControllerAnimated:YES];
+                                                          [vdvc.navigationController popToRootViewControllerAnimated:YES];
                                                       }
                                                       failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                           
@@ -1127,7 +1119,6 @@
 
 - (void)setProgressIndicator
 {
-    
     illogicalPercentage = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     illogicalPercentage.delegate = self;
     illogicalPercentage.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Error"]];

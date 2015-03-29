@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "DealsTableViewController.h"
-#import "ViewonedealViewController.h"
 
-@interface ExploreTableViewController : UITableViewController
+@interface ExploreTableViewController : UITableViewController <UISearchBarDelegate>
 
-@property (nonatomic, strong) NSMutableArray *types;
-@property (nonatomic, strong) NSMutableArray *types_icons;
-
-@property (nonatomic, strong) NSMutableArray *filteredtypes;
-@property (nonatomic, strong) NSMutableArray *filteredtypes_icons;
+@property AppDelegate *appDelegate;
+@property UISearchBar *searchBar;
+@property UIButton *exitSearchModeButton;
+@property BOOL searched;
+@property (nonatomic, strong) NSMutableArray *categories;
+@property (nonatomic, strong) NSMutableArray *categoriesIcons;
 
 @end

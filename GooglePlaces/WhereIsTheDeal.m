@@ -33,7 +33,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     [self configureMapView];
     [self configureTableViews];
     [self configureLoadingView];
-    [self downloadStoresNearby];
+    [self downloadStoresNearby];    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,6 +57,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     // If came frome Edit Deal, no need for dismiss button:
     if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
         self.navigationItem.leftBarButtonItem = nil;
+        self.extendedLayoutIncludesOpaqueBars = NO;
     }
 }
 
@@ -237,6 +238,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 {
     [self showWhiteCoverView];
     [self downloadStoresNearby];
+    [self updateMap];
     [UIView animateWithDuration:0.3
                      animations:^{
                          [self.scrollView viewWithTag:4321].alpha = 0;
@@ -327,6 +329,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 
     if (allCellsHeight > self.nearbyTableViewMinHeight) {
         self.heightNearByTableViewConstraint.constant = allCellsHeight;
+        [self.view layoutIfNeeded];
     }
     
     [UIView animateWithDuration:0.3
@@ -535,7 +538,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     self.centerYMapViewConstraint.constant = mapOriginalPosition;
     self.verticalSpaceSearchBarScrollViewConstraint.constant = 0;
     self.verticalSpaceHideMapButtonConstraint.constant = deviceScreenHeight - 65.0;
-    [self returnToOriginalLocation];
+    [self updateMap];
     [UIView animateWithDuration:0.6
                      animations:^{
                          [self.view layoutIfNeeded];
@@ -553,7 +556,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     [UIView animateWithDuration:0.3 animations:^{[self.view layoutIfNeeded];}];
 }
 
-- (void)returnToOriginalLocation
+- (void)updateMap
 {
     lastCoords.latitude = self.locationManager.location.coordinate.latitude;
     lastCoords.longitude = self.locationManager.location.coordinate.longitude;
@@ -564,6 +567,9 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     region.span = span;
     region.center = lastCoords;
     [self.mapView setRegion:region animated:YES];
+    [self.mapView regionThatFits:region];
+    
+    [self adjustMapViewPosition];
 }
 
 

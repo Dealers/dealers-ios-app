@@ -33,15 +33,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     [super viewDidLoad];
     
     [self checkFeature];
-    
-    if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
-        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
-    } else if ([selfViewController isEqualToString:NSLocalizedString(@"Explore", nil)]) {
-        self.title = self.categoryFromExplore;
-    }
-    
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    
+    [self configureNavigationBar];
     [self initialize];
     [self setNotificationObservers];
     [self setRefreshControl];
@@ -52,6 +44,8 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     
     [self.paginator loadPage:1];
     self.pageIsLoading = YES;
+    
+    [self getInvitationCounter];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -68,10 +62,15 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 - (void)checkFeature
 {
-    if ([self.navigationController.restorationIdentifier isEqualToString:@"feedNavController"]) {
+    if (!self.categoryFromExplore && !self.searchTermFromExplore) {
         selfViewController = NSLocalizedString(@"My Feed", nil);
-    } else if ([self.navigationController.restorationIdentifier isEqualToString:@"exploreNavController"]) {
-        selfViewController = NSLocalizedString(@"Explore", nil);
+    } else if (self.categoryFromExplore && !self.searchTermFromExplore) {
+        selfViewController = NSLocalizedString(@"Category", nil);
+    } else if (!self.categoryFromExplore && self.searchTermFromExplore) {
+        selfViewController = NSLocalizedString(@"Search", nil);
+    } else {
+        NSLog(@"Both category and search term values are populated, undesired situation...");
+        selfViewController = NSLocalizedString(@"My Feed", nil);
     }
 }
 
@@ -86,6 +85,18 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 
 # pragma mark - General methods
+
+- (void)configureNavigationBar
+{
+    if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
+        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Dealers Logo"]];
+    } else if ([selfViewController isEqualToString:NSLocalizedString(@"Category", nil)]) {
+        self.title = self.categoryFromExplore;
+    } else if ([selfViewController isEqualToString:NSLocalizedString(@"Search", nil)]) {
+        self.title = NSLocalizedString(@"Search", nil);
+    }
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+}
 
 - (void)setNotificationObservers
 {
@@ -127,16 +138,15 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     __weak typeof(self) weakSelf = self;
     
     if (!self.paginator) {
-        
         NSString *requestString;
-        
         if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
-            
             requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage"];
-            
-        } else if ([selfViewController isEqualToString:NSLocalizedString(@"Explore", nil)]) {
-            
-            requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage&category=%@", [appDelegate getCategoryKeyForValue:self.categoryFromExplore]];
+        } else if ([selfViewController isEqualToString:NSLocalizedString(@"Category", nil)]) {
+            NSString *categoryKey = [appDelegate getCategoryKeyForValue:self.categoryFromExplore];
+            requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage&category=%@", categoryKey];
+        } else if ([selfViewController isEqualToString:NSLocalizedString(@"Search", nil)]) {
+            requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage&search=%@", self.searchTermFromExplore];
+            requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         }
         
         self.paginator = [[RKObjectManager sharedManager] paginatorWithPathPattern:requestString];
@@ -169,6 +179,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
             NSLog(@"Failure: %@", error);
             [weakSelf stopLoadingAnimation];
             [weakSelf errorMessage];
+            [weakSelf.tableView reloadData];
             [weakSelf.refreshControl endRefreshing];
             weakSelf.pageIsLoading = NO;
             [weakSelf.paginator cancel];
@@ -317,7 +328,6 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
         loadingView = [[UIView alloc]initWithFrame:self.view.frame];
     }
     
-    
     loadingView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     UIImageView *loadingAnimation = [appDelegate loadingAnimationPurple];
     loadingAnimation.tag = 13212;
@@ -341,7 +351,12 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     error.textAlignment = NSTextAlignmentCenter;
     error.textColor = [appDelegate textGrayColor];
     error.alpha = 0;
-    error.text = NSLocalizedString(@"There are no deals at this moment!", nil);
+    
+    if ([selfViewController isEqualToString:NSLocalizedString(@"Search", nil)]) {
+        error.text = NSLocalizedString(@"No deals found", nil);
+    } else {
+        error.text = NSLocalizedString(@"There are no deals at this moment!", nil);
+    }
     
     UILabel *sadSmiley = [[UILabel alloc]initWithFrame:CGRectMake(0, error.center.y - 80, self.tableView.frame.size.width, 50)];
     sadSmiley.font = [UIFont fontWithName:@"Avenir-Light" size:50.0];
@@ -647,13 +662,13 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ViewonedealViewController *vodvc = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
+    ViewDealViewController *vdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
     Deal *deal = [self.deals objectAtIndex:indexPath.row];
-    vodvc.deal = deal;
-    vodvc.delegate = self;
-    vodvc.dealIndexPath = indexPath;
+    vdvc.deal = deal;
+    vdvc.delegate = self;
+    vdvc.dealIndexPath = indexPath;
     
-    [self.navigationController pushViewController:vodvc animated:YES];
+    [self.navigationController pushViewController:vdvc animated:YES];
 }
 
 - (UIView *)setFooterView
@@ -684,6 +699,22 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     }
     
     return self.footerView;
+}
+
+- (void)getInvitationCounter
+{
+    NSString *path = [NSString stringWithFormat:@"/dealers/%@/", appDelegate.dealer.dealerID];
+    [[RKObjectManager sharedManager] getObjectsAtPath:path
+                                           parameters:nil
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  Dealer *dealer = mappingResult.firstObject;
+                                                  NSNumber *counter = dealer.invitationCounter;
+                                                  appDelegate.dealer.invitationCounter = counter;
+                                                  [[NSUserDefaults standardUserDefaults] setObject:counter forKey:@"invitationCounter"];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  NSLog(@"Couldn't fetch dealer invitation counter");
+                                              }];
 }
 
 

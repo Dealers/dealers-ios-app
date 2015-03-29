@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "ViewonedealViewController.h"
+#import "ViewDealViewController.h"
 #import "DealersTabBarController.h"
 
 @interface PushNotificationView : UINavigationBar

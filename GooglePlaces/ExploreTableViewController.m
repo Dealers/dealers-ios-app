@@ -14,31 +14,113 @@
 
 @implementation ExploreTableViewController
 
+@synthesize appDelegate;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"Explore", nil);
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    self.types = [[NSMutableArray alloc] initWithArray:[appDelegate getCategories]];
-    
-    self.filteredtypes = [[NSMutableArray alloc] initWithArray:[appDelegate getCategories]];
-    
-    self.types_icons = [[NSMutableArray alloc] initWithArray:[appDelegate getCategoriesIcons]];
+    [self initialize];
+    [self setSearchBar];
+    [self setExitSearchModeButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+    if (self.searched) {
+        [self.searchBar becomeFirstResponder];
+        [self enterSearchMode];
+        self.searched = NO;
+    }
 }
+
+- (void)initialize
+{
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    self.categories = [[NSMutableArray alloc] initWithArray:[appDelegate getCategories]];
+    self.categoriesIcons = [[NSMutableArray alloc] initWithArray:[appDelegate getCategoriesIcons]];
+    self.tableView.rowHeight = 54.0;
+    self.searched = NO;
+}
+
+
+#pragma mark - Search bar
+
+- (void)setSearchBar
+{
+    self.searchBar = [[UISearchBar alloc] init];
+    self.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    self.searchBar.placeholder = NSLocalizedString(@"Search deals", nil);
+    UIView *searchBarContrainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.navigationBar.bounds.size.width - 30.0, 44.0)];
+    [searchBarContrainer addSubview:self.searchBar];
+    [self.searchBar sizeToFit];
+    self.navigationItem.titleView = searchBarContrainer;
+    self.searchBar.delegate = self;
+}
+
+- (void)setExitSearchModeButton
+{
+    self.exitSearchModeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.exitSearchModeButton setFrame:self.view.frame];
+    [self.exitSearchModeButton setBackgroundColor:[UIColor blackColor]];
+    [self.exitSearchModeButton setAlpha:0];
+    [self.exitSearchModeButton addTarget:self action:@selector(exitSearchMode) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.view insertSubview:self.exitSearchModeButton belowSubview:self.navigationController.navigationBar];
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [self enterSearchMode];
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    [self exitSearchMode];
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    if (searchBar.text.length > 0) {
+        [searchBar resignFirstResponder];
+        [self exitSearchModeButton];
+        DealsTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealsID"];
+        dtvc.categoryFromExplore = nil;
+        dtvc.searchTermFromExplore = searchBar.text;
+        [self.navigationController pushViewController:dtvc animated:YES];
+        self.searched = YES;
+    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self exitSearchMode];
+    [self.searchBar resignFirstResponder];
+}
+
+- (void)enterSearchMode
+{
+    [UIView animateWithDuration:0.3 animations:^{self.exitSearchModeButton.alpha = 0.65;}];
+    [self.searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)exitSearchMode
+{
+    [UIView animateWithDuration:0.3 animations:^{self.exitSearchModeButton.alpha = 0.0;}];
+    [self.searchBar setShowsCancelButton:NO animated:YES];
+    [self.searchBar resignFirstResponder];
+}
+
+
+#pragma mark - Table view
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.types.count;
+    return self.categories.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -52,9 +134,8 @@
         cell.textLabel.font = [UIFont fontWithName:@"Avenir-Light" size:18.0];
     }
     
-    
-    cell.textLabel.text = [self.types objectAtIndex:indexPath.row];
-    NSString *imageString = [self.types_icons objectAtIndex:indexPath.row];
+    cell.textLabel.text = [self.categories objectAtIndex:indexPath.row];
+    NSString *imageString = [self.categoriesIcons objectAtIndex:indexPath.row];
     cell.imageView.image =[UIImage imageNamed:imageString];
     
     return cell;
@@ -63,7 +144,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DealsTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealsID"];
-    dtvc.categoryFromExplore = [self.types objectAtIndex:indexPath.row];
+    dtvc.categoryFromExplore = [self.categories objectAtIndex:indexPath.row];
+    dtvc.searchTermFromExplore = nil;
     [self.navigationController pushViewController:dtvc animated:YES];
 }
 

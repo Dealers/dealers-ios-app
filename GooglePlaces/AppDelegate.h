@@ -51,7 +51,7 @@
 @property RKObjectManager *updateFromFacebookManager;
 @property RKObjectManager *updateDeviceManager;
 
-@property (weak) UIImage *screenShot;
+@property UIView *screenShot;
 
 
 - (void)setTabBarController;
@@ -78,6 +78,7 @@
 - (UIButton *)actionButton;
 - (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
 - (NSNumber *)setPhotoSum:(Deal *)deal;
+- (NSMutableArray *)photosURLArray:(Deal *)deal;
 - (Dealer *)updateDealer:(Dealer *)dealer withFacebookInfo:(FBGraphObject *)facebookInfo withPhoto:(BOOL)withPhoto;
 - (void)deletePseudoUser;
 

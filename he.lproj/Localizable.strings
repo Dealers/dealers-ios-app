@@ -31,6 +31,10 @@
 "Travel" = "טיולים ונסיעות";
 "Other" = "אחר";
 
+"Search" = "חיפוש";
+"Search deals" = "חפש/י מבצעים";
+"No deals found" = "לא נמצאו מבצעים";
+
 "Continue with Facebook" = "היכנס עם פייסבוק";
 "Sign up with email" = "הירשם עם דוא״ל";
 "Already have an account? " = "יש לך כבר חשבון? ";
@@ -153,8 +157,8 @@
 "Comments" = "תגובות";
 "No Category" = "ללא קטגוריה";
 "%@ Likes" = "%@ אהבו את זה";
-"1 person likes this deal" = "אדם אחד אוהב את המבצע הזה";
-"%@ people like this deal" = "%@ אנשים אוהבים את המבצע הזה";
+"1 person likes this" = "אדם אחד אוהב את זה";
+"%@ people like this" = "%@ אנשים אוהבים את זה";
 "View all %@ comments" = "הראה את כל %@ התגובות";
 "Hear from others about great deals at Dealers: %@" = "שמע/י מאנשים אחרים על מבצעים מדהימים בדילרס: %@";
 "Report as Spam" = "דווח כתוכן פוגעני";
@@ -183,12 +187,12 @@
 "Unable to post comment" = "העלאת התגובה נכשלה";
 
 "&" = "ו-";
-"likes your deal." = "אוהב/ת את המבצע שלך.";
-"commented on your deal." = "הגיב/ה על המבצע שלך.";
-"also commented on this deal." = "גם הגיב/ה על המבצע הזה.";
-"shared your deal." = "שיתף/ה את המבצע שלך.";
-"edited your deal." = "ערך/ה את המבצע שלך.";
-"like your deal." = "אוהבים את המבצע שלך.";
+"likes your deal" = "אוהב/ת את המבצע שלך";
+"commented on your deal" = "הגיב/ה על המבצע שלך";
+"also commented on the deal" = "גם הגיב/ה על המבצע הזה";
+"shared your deal" = "שיתף/ה את המבצע שלך";
+"edited your deal" = "ערך/ה את המבצע שלך";
+"like your deal" = "אוהבים את המבצע שלך";
 
 "Invite" = "הזמנה";
 "I'm sending you a passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\n%@" = "אני שולח/ת לך הזמנה עם קוד כניסה לדילרס, אפליקציה לשיתוף מבצעים:\n%@\n\nהורד/י את דילרס מכאן:\n%@";
@@ -209,10 +213,10 @@
 "Expired" = "פג תוקף";
 "Crop" = "חתוך";
 
-"Find in your feed great deals that were shared by people like you." = "קבל למסך הבית שלך מבצעים מעולים שצרכנים אחרים העלו.";
-"Explore more deals arranged by categories." = "מצא מבצעים נוספים לפי קטגוריות.";
-"Post deals that you find, and contirbute back to the community." = "שתף מבצעים טובים שאתה מוצא וסייע בהורדת המחירים.";
-"Like, comment and share deals, so others will know what's good." = "תן לייק, הוסף תגובה ושתף מבצעים, כך שכולנו נדע מה טוב.";
+"Find in your feed great deals that were shared by people like you." = "קבל/י למסך הבית שלך מבצעים מעולים שצרכנים אחרים העלו.";
+"Explore more deals with searching or with our categories." = "מצא/י מבצעים נוספים על ידי חיפוש או בעזרת הקטגוריות שלנו.";
+"Post deals that you find, and contirbute back to the community." = "שתף/י מבצעים טובים שאתה מוצא וסייע בהורדת המחירים.";
+"Like, comment and share deals, so others will know what's good." = "תן/י לייק, הוסף/י תגובה ושתף/י מבצעים, כך שכולנו נדע מה טוב.";
 "Skip" = "דלג וכנס";
 
 "Report as Spam?" = "לדווח על פרסום זה?";

@@ -31,6 +31,10 @@
 "Travel" = "Travel";
 "Other" = "Other";
 
+"Search" = "Search";
+"Search deals" = "Search deals";
+"No deals found" = "No deals found";
+
 "Continue with Facebook" = "Continue with Facebook";
 "Sign up with email" = "Sign up with email";
 "Already have an account? " = "Already have an account? ";
@@ -155,8 +159,8 @@
 "Comments" = "Comments";
 "No Category" = "No Category";
 "%@ Likes";
-"1 person likes this deal" = "1 person like this deal";
-"%@ people like this deal" = "%@ people like this deal";
+"1 person likes this" = "1 person like this";
+"%@ people like this" = "%@ people like this";
 "View all %@ comments" = "View all %@ comments";
 "Hear from others about great deals at Dealers: %@" = "Hear from others about great deals at Dealers: %@";
 "Report as Spam" = "Report as Spam";
@@ -212,7 +216,7 @@
 "Crop" = "Crop";
 
 "Find in your feed great deals that were shared by people like you." = "Find in your feed great deals that were shared by people like you.";
-"Explore more deals arranged by categories." = "Explore more deals arranged by categories.";
+"Explore more deals with searching or with our categories." = "Explore more deals with searching or with our categories.";
 "Post deals that you find, and contirbute back to the community." = "Post deals that you find, and contirbute back to the community.";
 "Like, comment and share deals, so others will know what's good." = "Like, comment and share deals, so others will know what's good.";
 "Skip" = "Skip";

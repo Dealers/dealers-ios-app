@@ -62,6 +62,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [UIView animateWithDuration:0.3 animations:^{ self.skipButton.alpha = 1.0; }];
 }
 

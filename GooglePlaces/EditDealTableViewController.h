@@ -10,7 +10,7 @@
 #import "Deal.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
-#import "ViewonedealViewController.h"
+#import "ViewDealViewController.h"
 #import "EditTextModeViewController.h"
 #import "WhereIsTheDeal.h"
 #import "ChooseCategoryTableViewController.h"

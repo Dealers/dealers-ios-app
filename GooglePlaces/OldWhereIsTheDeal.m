@@ -455,7 +455,7 @@
     MKCoordinateSpan span;
     span.latitudeDelta = 0.01;
     span.longitudeDelta= 0.01;
-    region.span=span;
+    region.span = span;
     region.center = lastCoords;
     [self.mapView setRegion:region animated:YES];
 }

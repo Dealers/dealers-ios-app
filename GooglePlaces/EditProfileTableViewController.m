@@ -623,7 +623,7 @@
     }
     
     if ([self.gender.text isEqualToString:NSLocalizedString(@"Gender", nil)]) {
-        appDelegate.dealer.gender = NSLocalizedString(@"Unspecified", nil);
+        appDelegate.dealer.gender = nil;
     } else {
         appDelegate.dealer.gender = [appDelegate getEnglishGender:self.gender.text];
     }

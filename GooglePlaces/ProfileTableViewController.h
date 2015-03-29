@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AWSiOSSDKv2/S3.h>
 #import "AppDelegate.h"
-#import "ViewonedealViewController.h"
+#import "ViewDealViewController.h"
 #import "Deal.h"
 #import "Dealer.h"
 #import "DealAttrib.h"

@@ -12,7 +12,7 @@
 #import <AWSiOSSDKv2/S3.h>
 #import <AWSiOSSDKv2/AWSCore.h>
 #import "WhereIsTheDeal.h"
-#import "ViewonedealViewController.h"
+#import "ViewDealViewController.h"
 #import "KeychainItemWrapper.h"
 #import "PushNotificationView.h"
 
@@ -49,8 +49,10 @@
     }
     
     // Customizing the Navigation Bar:
+    UIImage *imageNavBar = [UIImage imageNamed:@"Navigation Bar Background"];
+    imageNavBar = [imageNavBar stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:150.0/255.0 green:0/255.0 blue:180.0/255.0 alpha:1.0]];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:imageNavBar forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"Navigation Bar Shade"]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                           [UIColor colorWithRed:150.0/255.0 green:0.0/255.0 blue:180.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
@@ -531,13 +533,13 @@
     [tabBarController setSelectedIndex:4];
     
     if ([type isEqualToString:@"deal"]) {
-        ViewonedealViewController *vodvc = [storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
+        ViewDealViewController *vdvc = [storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
         if ([self.pushedDeal.dealID isEqualToValue:pushedDealID]) {
-            vodvc.deal = self.pushedDeal;
+            vdvc.deal = self.pushedDeal;
         } else {
-            vodvc.dealID = pushedDealID;
+            vdvc.dealID = pushedDealID;
         }
-        [navigationController pushViewController:vodvc animated:YES];
+        [navigationController pushViewController:vdvc animated:YES];
         [self resetBadgeCounter];
     }
 }
@@ -970,6 +972,25 @@
     return [NSNumber numberWithInt:4];
 }
 
+- (NSMutableArray *)photosURLArray:(Deal *)deal
+{
+    NSMutableArray *photosURLArray = [[NSMutableArray alloc] init];
+    
+    if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"])
+        [photosURLArray addObject:deal.photoURL1];
+    
+    if (deal.photoURL2.length > 2 && ![deal.photoURL2 isEqualToString:@"None"])
+        [photosURLArray addObject:deal.photoURL2];
+    
+    if (deal.photoURL3.length > 2 && ![deal.photoURL3 isEqualToString:@"None"])
+        [photosURLArray addObject:deal.photoURL3];
+    
+    if (deal.photoURL4.length > 2 && ![deal.photoURL4 isEqualToString:@"None"])
+        [photosURLArray addObject:deal.photoURL4];
+    
+    return photosURLArray;
+}
+
 - (UIImageView *)loadingAnimationWhite
 {
     UIImageView *loadingAnimationView = [[UIImageView alloc] init];
@@ -1001,7 +1022,7 @@
 
 - (UIImageView *)loadingAnimationPurple
 {
-    UIImageView *loadingAnimationView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
+    UIImageView *loadingAnimationView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
     
     loadingAnimationView.animationImages = [self loadingAnimationPurpleImages];
     
@@ -1196,7 +1217,8 @@
 
 - (NSString *)baseURL
 {
-    return @"http://www.dealers-web.com";
+    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
+//    return @"http://52.17.69.34";
 }
 
 - (RKObjectMapping *)dealMapping
@@ -1428,6 +1450,7 @@
                                                                @"type" : @"type",
                                                                @"recipients" : @"recipients",
                                                                @"deal" : @"dealID",
+                                                               @"subject_title" : @"subjectTitle",
                                                                @"date" : @"date"
                                                                }];
     

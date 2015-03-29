@@ -53,30 +53,31 @@
         
         Notification *notification = object;
         NSString *fullName = notification.dealer.fullName;
+        NSString *dealTitle = notification.subjectTitle;
         NSString *notificationString;
         
         if ([notification.type isEqualToString:@"Like"]) {
             
-            notificationString = NSLocalizedString(@"likes your deal.", nil);
+            notificationString = NSLocalizedString(@"likes your deal", nil);
             
         } else if ([notification.type isEqualToString:@"Comment"]) {
             
-            notificationString = NSLocalizedString(@"commented on your deal.", nil);
+            notificationString = NSLocalizedString(@"commented on your deal", nil);
             
         } else if ([notification.type isEqualToString:@"Also Commented"]) {
             
-            notificationString = NSLocalizedString(@"also commented on this deal.", nil);
+            notificationString = NSLocalizedString(@"also commented on the deal", nil);
             
         } else if ([notification.type isEqualToString:@"Share"]) {
             
-            notificationString = NSLocalizedString(@"shared your deal.", nil);
+            notificationString = NSLocalizedString(@"shared your deal", nil);
             
         } else if ([notification.type isEqualToString:@"Edit"]) {
             
-            notificationString = NSLocalizedString(@"edited your deal.", nil);
+            notificationString = NSLocalizedString(@"edited your deal", nil);
         }
         
-        return [NSString stringWithFormat:@"%@ %@", fullName, notificationString];
+        return [NSString stringWithFormat:@"%@ %@: \"%@\"", fullName, notificationString, dealTitle];
     
     
     } else {
@@ -89,30 +90,31 @@
         NSString *fullName1 = notification1.dealer.fullName;
         NSString *fullName2 = notification2.dealer.fullName;
         
+        NSString *dealTitle = notification1.subjectTitle;
         NSString *notificationString;
         NSString *andSign = NSLocalizedString(@"&", nil);
         
         if ([notification1.type isEqualToString:@"Like"]) {
             
-            notificationString = NSLocalizedString(@"like your deal.", nil);
+            notificationString = NSLocalizedString(@"like your deal", nil);
             
         } else if ([notification1.type isEqualToString:@"Comment"]) {
             
-            notificationString = NSLocalizedString(@"commented on your deal.", nil);
+            notificationString = NSLocalizedString(@"commented on your deal", nil);
             if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
                 notificationString = @"הגיבו על המבצע שלך";
             }
             
         } else if ([notification1.type isEqualToString:@"Also Commented"]) {
             
-            notificationString = NSLocalizedString(@"also commented on this deal.", nil);
+            notificationString = NSLocalizedString(@"also commented on the deal", nil);
             if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
-                notificationString = @"גם הגיבו על המבצע הזה";
+                notificationString = @"גם הגיבו על המבצע";
             }
             
         } else if ([notification1.type isEqualToString:@"Share"]) {
             
-            notificationString = NSLocalizedString(@"shared your deal.", nil);
+            notificationString = NSLocalizedString(@"shared your deal", nil);
             if ([[[NSBundle mainBundle] preferredLocalizations].firstObject isEqualToString:@"he"]) {
                 notificationString = @"שיתפו את המבצע שלך";
             }
@@ -129,11 +131,11 @@
         
         if (notificationsGroup.count == 2) {
             
-            return [NSString stringWithFormat:@"%@ %@ %@ %@", fullName1, andSign, fullName2, notificationString];
+            return [NSString stringWithFormat:@"%@ %@ %@ %@: \"%@\"", fullName1, andSign, fullName2, notificationString, dealTitle];
         
         } else if (notificationsGroup.count > 2) {
             
-            return [NSString stringWithFormat:@"%@, %@ %@ %@ more people %@", fullName1, fullName2, andSign, [NSNumber numberWithUnsignedInteger:notificationsGroup.count - 2], notificationString];
+            return [NSString stringWithFormat:@"%@, %@ %@ %@ more people %@: \"%@\"", fullName1, fullName2, andSign, [NSNumber numberWithUnsignedInteger:notificationsGroup.count - 2], notificationString, dealTitle];
         }
     }
     

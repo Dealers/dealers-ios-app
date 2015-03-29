@@ -66,21 +66,13 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     if (appDelegate.screenShot) {
-        [self.screenShot setImage:appDelegate.screenShot];
+        screenshot = appDelegate.screenShot;
         [self setScreenShot];
     }
     
     if (appDelegate.tabBarController) {
         appDelegate.tabBarController = nil;
     }
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    [self.screenShot setImage:nil];
-    [[self.navigationController.view viewWithTag:321321321] removeFromSuperview];
 }
 
 - (void)styleButtons
@@ -144,17 +136,20 @@
 }
 
 - (void)setScreenShot {
-    self.screenShot.hidden = NO;
+    [self.view addSubview:screenshot];
     [self performSelector:@selector(fadeAway) withObject:nil afterDelay:0];
 }
 
 - (void)fadeAway {
-    [UIView animateWithDuration:1.0 animations:^{
-        self.screenShot.center = CGPointMake(self.screenShot.center.x, self.screenShot.center.y + self.screenShot.bounds.size.height);
-    } completion:^(BOOL finished) {
-        self.screenShot.hidden = YES;
-        self.screenShot.center = self.view.center;
-    }];
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         CGRect screenshotFrame = screenshot.frame;
+                         screenshotFrame.origin.y = [UIScreen mainScreen].bounds.size.height;
+                         screenshot.frame = screenshotFrame;
+                     }
+                     completion:^(BOOL finished) {
+                         [screenshot removeFromSuperview];
+                     }];
 }
 
 

@@ -32,9 +32,9 @@
 - (void)initialize
 {
     appDelegate = [[UIApplication sharedApplication] delegate];
-    self.dealers = [[NSMutableArray alloc]init];
+    self.dealers = [[NSMutableArray alloc] init];
     self.tableView.rowHeight = 64.0;
-    self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)setNotificationsObservers
@@ -48,7 +48,6 @@
 - (void)determineMode
 {
     if ([self.mode isEqualToString:@"Likers"]) {
-        
         [self downloadDealers];
     }
 }
@@ -81,14 +80,12 @@
 - (void)setLoadingView
 {
     if (self.tableView.contentSize.height > 0) {
-        
-        loadingView = [[UIView alloc]initWithFrame:CGRectMake(self.tableView.frame.origin.x,
+        loadingView = [[UIView alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x,
                                                               self.tableView.frame.origin.y,
                                                               self.tableView.contentSize.width,
                                                               self.tableView.contentSize.height)];
     } else {
-        
-        loadingView = [[UIView alloc]initWithFrame:self.view.frame];
+        loadingView = [[UIView alloc] initWithFrame:self.view.frame];
     }
     
     
@@ -148,9 +145,7 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DealersTableCell" owner:nil options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+        
     if (dealer.dealerID.intValue == self.appDelegate.dealer.dealerID.intValue) {
         cell.profilePic.alpha = 1.0;
         cell.profilePic.image = [appDelegate myProfilePic];
@@ -166,7 +161,7 @@
     }
     
     cell.fullName.text = dealer.fullName;
-    
+        
     return cell;
 }
 

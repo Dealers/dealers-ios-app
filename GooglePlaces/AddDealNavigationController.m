@@ -18,7 +18,9 @@
     
     [super viewDidLoad];
 
-    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"Add Deal Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
+    UIImage *imageNavBar = [UIImage imageNamed:@"Add Deal Navigation Bar Background"];
+    imageNavBar = [imageNavBar stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    [self.navigationBar setBackgroundImage:imageNavBar forBarMetrics:UIBarMetricsDefault];
     self.navigationBar.shadowImage = [UIImage new];
 }
 

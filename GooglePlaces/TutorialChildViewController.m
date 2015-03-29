@@ -29,7 +29,7 @@
             self.view.backgroundColor = [UIColor colorWithRed:129.0/250.0 green:216.0/250.0 blue:132.0/250.0 alpha:1.0];
             self.iPhoneImage.image = [UIImage imageNamed:@"Explore.png"];
             self.featureIcon.image = [UIImage imageNamed:@"Tutorial Explore Icon"];
-            self.explanation.text = NSLocalizedString(@"Explore more deals arranged by categories.", nil);
+            self.explanation.text = NSLocalizedString(@"Explore more deals with searching or with our categories.", nil);
             break;
         case 2:
             self.view.backgroundColor = [UIColor colorWithRed:255.0/250.0 green:212.0/250.0 blue:40.0/250.0 alpha:1.0];

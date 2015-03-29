@@ -16,6 +16,7 @@
 @property NSString *type; // Like, Comment, Also Commented, Share or Edit
 @property Dealer *dealer;
 @property NSNumber *dealID;
+@property NSString *subjectTitle;
 @property NSDate *date;
 
 @property BOOL wasRead;

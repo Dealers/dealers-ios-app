@@ -117,6 +117,7 @@
 		C8A9EE3C1A221ABA002EE682 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE3B1A221ABA002EE682 /* Reachability.framework */; };
 		C8AC887E19BD9A5D002A2C16 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AC887C19BD9A5C002A2C16 /* CommentTableViewCell.m */; };
 		C8AC887F19BD9A5D002A2C16 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8AC887D19BD9A5C002A2C16 /* CommentTableViewCell.xib */; };
+		C8BD73AD1AC04FE600FE3672 /* PersonalizeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8BD73AC1AC04FE600FE3672 /* PersonalizeTableViewController.m */; };
 		C8C260D41A7E924500960D96 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C260D31A7E924500960D96 /* TutorialViewController.m */; };
 		C8C260D81A7E957500960D96 /* TutorialChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C260D61A7E957500960D96 /* TutorialChildViewController.m */; };
 		C8C260D91A7E957500960D96 /* TutorialChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C260D71A7E957500960D96 /* TutorialChildViewController.xib */; };
@@ -242,7 +243,6 @@
 		C80123361A2C4BC000C40A37 /* DealsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealsTableCell.xib; sourceTree = "<group>"; };
 		C8051BEE1A41DB9B008FBA40 /* SignUpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpTableViewController.h; sourceTree = "<group>"; };
 		C8051BEF1A41DB9B008FBA40 /* SignUpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpTableViewController.m; sourceTree = "<group>"; };
-		C80810BE1A6C0CD10034D8B1 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		C80810BF1A6CFFE20034D8B1 /* Invitation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Invitation.h; sourceTree = "<group>"; };
 		C80810C01A6CFFE20034D8B1 /* Invitation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Invitation.m; sourceTree = "<group>"; };
 		C80810C21A6EA0890034D8B1 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
@@ -345,6 +345,8 @@
 		C8AC887B19BD9A5C002A2C16 /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		C8AC887C19BD9A5C002A2C16 /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		C8AC887D19BD9A5C002A2C16 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		C8BD73AB1AC04FE600FE3672 /* PersonalizeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalizeTableViewController.h; sourceTree = "<group>"; };
+		C8BD73AC1AC04FE600FE3672 /* PersonalizeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalizeTableViewController.m; sourceTree = "<group>"; };
 		C8C260D21A7E924500960D96 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		C8C260D31A7E924500960D96 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		C8C260D51A7E957500960D96 /* TutorialChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialChildViewController.h; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 		C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextModeViewController.m; sourceTree = "<group>"; };
 		C8C720FE1AB22FB800284B72 /* ViewDealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewDealViewController.h; sourceTree = "<group>"; };
 		C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewDealViewController.m; sourceTree = "<group>"; };
+		C8C976751ABC817100E9F9E6 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		C8DC1D8619B863B60062E184 /* ActivityTypeWhatsApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTypeWhatsApp.h; sourceTree = "<group>"; };
 		C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTypeWhatsApp.m; sourceTree = "<group>"; };
 		C8DC1D8A19BC89410062E184 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -628,6 +631,8 @@
 				C890607E19A27F88001D3359 /* NotificationsTableViewController.m */,
 				C890608019A32AA7001D3359 /* PushNotificationsTableViewController.h */,
 				C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */,
+				C8BD73AB1AC04FE600FE3672 /* PersonalizeTableViewController.h */,
+				C8BD73AC1AC04FE600FE3672 /* PersonalizeTableViewController.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -664,8 +669,6 @@
 			children = (
 				C8C720FE1AB22FB800284B72 /* ViewDealViewController.h */,
 				C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */,
-				B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */,
-				B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */,
 				C8FFF56A197C437600D01744 /* EditDealTableViewController.h */,
 				C8FFF56B197C437600D01744 /* EditDealTableViewController.m */,
 				C8C43E7B198E7CA700409DD2 /* EditTextModeViewController.h */,
@@ -727,6 +730,8 @@
 		C895FB7C1AAED50600E4E4A5 /* Old Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B0930C0317F38DAA004EB3CA /* ViewonedealViewController.h */,
+				B0930C0417F38DAA004EB3CA /* ViewonedealViewController.m */,
 				B01BD1B017F0D6470010C9A4 /* OldWhereIsTheDeal.h */,
 				B01BD1B117F0D6470010C9A4 /* OldWhereIsTheDeal.m */,
 				C80123341A2C4BC000C40A37 /* DealsTableCell.h */,
@@ -1047,6 +1052,7 @@
 				C882D7A01A279AE200C4F0DD /* SignInTableViewController.m in Sources */,
 				C8A012F219DD52F700C1D973 /* WhatIsTheDeal2.m in Sources */,
 				B0274819186B2A2B005A52F0 /* GKResizeableCropOverlayView.m in Sources */,
+				C8BD73AD1AC04FE600FE3672 /* PersonalizeTableViewController.m in Sources */,
 				C84846FF19A2620C00BC6ACE /* EditProfileTableViewController.m in Sources */,
 				C8AC887E19BD9A5D002A2C16 /* CommentTableViewCell.m in Sources */,
 				C848B66D19ADB92A000F138D /* Comment.m in Sources */,
@@ -1103,7 +1109,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C8173E7B1A6658470090CF64 /* Base */,
-				C80810BE1A6C0CD10034D8B1 /* he */,
+				C8C976751ABC817100E9F9E6 /* he */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";

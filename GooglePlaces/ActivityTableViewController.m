@@ -432,9 +432,9 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
     
     id object = [self.groupedNotifications objectAtIndex:indexPath.row];
     Notification *notification = [self convertObjectIntoNotification:object];
-    ViewonedealViewController *vodvc = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
-    vodvc.dealID = notification.dealID;
-    [self.navigationController pushViewController:vodvc animated:YES];
+    ViewDealViewController *vdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
+    vdvc.dealID = notification.dealID;
+    [self.navigationController pushViewController:vdvc animated:YES];
 }
 
 

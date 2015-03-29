@@ -73,8 +73,8 @@
     if (self.deal) {
         
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        ViewonedealViewController *vodvc = [storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
-        vodvc.deal = self.deal;
+        ViewDealViewController *vdvc = [storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
+        vdvc.deal = self.deal;
         
         [self hideNotification];
         [appDelegate presentNotificationOfType:@"deal"];

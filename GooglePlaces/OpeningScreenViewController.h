@@ -20,7 +20,7 @@
     NSString *facebookUserEmail, *facebookToken;
     NSNumber *pseudoUserID;
     BOOL gotToken, didPhotoFinishedDownloading, didPhotoFinishedUploading, triedUploadingPhoto, signedUp;
-    
+    UIView *screenshot;
 }
 
 @property AppDelegate *appDelegate;
@@ -31,17 +31,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *logo;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLogoConstraint;
 @property NSLayoutConstraint *centerYLogoConstraint;
-
 @property (weak, nonatomic) IBOutlet UILabel *slogen;
-
 @property (weak, nonatomic) IBOutlet UIButton *facebook;
 @property (weak, nonatomic) IBOutlet UIButton *email;
-
 @property (weak, nonatomic) NSString *i;
-
 @property (weak, nonatomic) IBOutlet UIButton *alreadyHaveAccount;
-
-@property (weak, nonatomic) IBOutlet UIImageView *screenShot;
 
 @property BOOL authorized;
 @property BOOL didComeFromLogOut;

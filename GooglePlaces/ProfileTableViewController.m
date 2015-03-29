@@ -1034,18 +1034,18 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ViewonedealViewController *vodvc = [self.storyboard instantiateViewControllerWithIdentifier:@"viewdeal"];
+    ViewDealViewController *vdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
     Deal *deal;
     if (self.uploadedButton.selected) {
         deal = [self.uploadedDeals objectAtIndex:indexPath.row];
     } else {
         deal = [self.likedDeals objectAtIndex:indexPath.row];
     }
-    vodvc.deal = deal;
-    vodvc.delegate = self;
-    vodvc.dealIndexPath = indexPath;
+    vdvc.deal = deal;
+    vdvc.delegate = self;
+    vdvc.dealIndexPath = indexPath;
     
-    [self.navigationController pushViewController:vodvc animated:YES];
+    [self.navigationController pushViewController:vdvc animated:YES];
 }
 
 

@@ -7,7 +7,7 @@
 //
 
 #import "ActivityTypeWhatsApp.h"
-#import "ViewonedealViewController.h"
+#import "ViewDealViewController.h"
 
 @implementation ActivityTypeWhatsApp
 

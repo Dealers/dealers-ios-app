@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "NotificationTableViewCell.h"
 #import "Notification.h"
-#import "ViewonedealViewController.h"
+#import "ViewDealViewController.h"
 #import "ProfileTableViewController.h"
 
 
