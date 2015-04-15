@@ -124,6 +124,8 @@
 "No stores were found around you" = "No stores were found around you";
 "Can't connect to the server" = "Can't connect to the server";
 "Try Again" = "Try Again";
+"Didn't find it? Try Searching" = "Didn't find it? Try Searching";
+"Add a new store" = "Add a new store";
 "What is the deal?" = "What is the deal?";
 "Title can't be blank!" = "Title can't be blank!";
 "Title is too long" = "Title is too long";
@@ -225,3 +227,9 @@
 "Does this post includes inappropriate content?" = "Does this post includes inappropriate content?";
 "Report" = "Report";
 "Report Sent" = "Report Sent";
+
+"Add New Store" = "Add New Store";
+"Add" = "Add";
+"Store Added" = "Store Added";
+"Thanks!" = "Thanks!";
+"Tap Store Location" = "Tap Store Location";

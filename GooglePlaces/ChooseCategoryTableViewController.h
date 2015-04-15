@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
-
 @interface ChooseCategoryTableViewController : UITableViewController
 
 @property (nonatomic) NSArray *categories;

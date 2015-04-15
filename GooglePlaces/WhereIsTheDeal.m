@@ -8,8 +8,8 @@
 
 #import "WhereIsTheDeal.h"
 
-#define CLIENTID @"JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O"
-#define CLIENTSECRET @"5XLGKL4023AKUAQWUFXRGM1JT1GBEXKRY4RIAB4WIO4TH53G"
+#define CLIENTID @"K5GUWBVHWMFLC4BKY04S2AT4RZWNY3VGTVI1S2X3XZBY1CHJ"
+#define CLIENTSECRET @"CU5VDZCZWPKJTSHK3JH3B5CEJOZO50EKZ4VYJMGWGLICJFTO"
 #define VERSION @"20140201"
 static const CGFloat mapWindowMaxHeight = 152.0;
 static NSString * const storeCellIdentifier = @"StoreTableViewCell";
@@ -268,7 +268,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 
 - (void)configureMapView
 {
-    self.locationManager = [[CLLocationManager alloc]init];
+    self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
@@ -325,7 +325,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 
 - (void)updateNearbyTableView
 {
-    CGFloat allCellsHeight = self.storesNearby.count * self.nearbyTableView.rowHeight + self.nearbyTableView.tableFooterView.frame.size.height;
+    CGFloat allCellsHeight = (self.storesNearby.count + 1) * self.nearbyTableView.rowHeight + self.nearbyTableView.tableFooterView.frame.size.height;
 
     if (allCellsHeight > self.nearbyTableViewMinHeight) {
         self.heightNearByTableViewConstraint.constant = allCellsHeight;
@@ -354,28 +354,32 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([tableView isEqual:self.nearbyTableView]) {
-        return self.storesNearby.count;
+        return self.storesNearby.count + 1; // +1 for the "Didn't find it?" cell
     } else {
-        return self.storesSearched.count;
+        return self.storesSearched.count + 1; // +1 for the "Add store" cell
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     StoreTableViewCell *cell = [self storeCellForIndexPath:indexPath tableView:tableView];
-
     Store *store;
+    
     if ([tableView isEqual:self.nearbyTableView]) {
-        store = [self.storesNearby objectAtIndex:indexPath.row];
+        if (indexPath.row == self.storesNearby.count && self.storesNearby) {
+            return [self configureTrySearchCell:cell];
+        } else {
+            store = [self.storesNearby objectAtIndex:indexPath.row];
+            return [self configureStoreCell:cell store:store];
+        }
     } else {
-        store = [self.storesSearched objectAtIndex:indexPath.row];
+        if (indexPath.row == self.storesSearched.count && self.storesSearched) {
+            return [self configureAddStoreCell:cell];
+        } else {
+            store = [self.storesSearched objectAtIndex:indexPath.row];
+            return [self configureStoreCell:cell store:store];
+        }
     }
-    
-    cell.nameLabel.text = store.name;
-    cell.detailLabel.text = [[store.distance stringValue] stringByAppendingString:@" m"];
-    [self setStoreIconForCell:cell store:store];
-    
-    return cell;
 }
 
 - (StoreTableViewCell *)storeCellForIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -385,6 +389,16 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StoreTableViewCell" owner:nil options:nil];
         cell = [nib objectAtIndex:0];
     }
+    
+    return cell;
+}
+
+- (StoreTableViewCell *)configureStoreCell:(StoreTableViewCell *)cell store:(Store *)store
+{
+    cell.nameLabel.text = store.name;
+    cell.detailLabel.text = [[store.distance stringValue] stringByAppendingString:@" m"];
+    [self setStoreIconForCell:cell store:store];
+    cell.textLabel.text = nil;
     
     return cell;
 }
@@ -410,9 +424,19 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     Store *store;
     
     if ([tableView isEqual:self.nearbyTableView]) {
-        store = [self.storesNearby objectAtIndex:indexPath.row];
+        if (indexPath.row == self.storesNearby.count) {
+            [self.searchBar becomeFirstResponder];
+            return;
+        } else {
+            store = [self.storesNearby objectAtIndex:indexPath.row];
+        }
     } else {
-        store = [self.storesSearched objectAtIndex:indexPath.row];
+        if (indexPath.row == self.storesSearched.count) {
+            [self pushAddStoreView];
+            return;
+        } else {
+            store = [self.storesSearched objectAtIndex:indexPath.row];
+        }
     }
     
     if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
@@ -436,6 +460,36 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     edtvc.dealStore.text = edtvc.store.name;
     edtvc.didChangeOriginalDeal = YES;
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (StoreTableViewCell *)configureTrySearchCell:(StoreTableViewCell *)cell
+{
+    cell.textLabel.text = NSLocalizedString(@"Didn't find it? Try Searching", nil);
+    cell.textLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    cell.textLabel.textColor = [appDelegate ourPurple];
+    cell.categoryIcon.image = [UIImage imageNamed:@"Try Search Icon"];
+    cell.nameLabel.text = nil;
+    cell.detailLabel.text = nil;
+    return cell;
+}
+
+- (StoreTableViewCell *)configureAddStoreCell:(StoreTableViewCell *)cell
+{
+    cell.textLabel.text = NSLocalizedString(@"Add a new store", nil);
+    cell.textLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    cell.textLabel.textColor = [appDelegate ourPurple];
+    cell.categoryIcon.image = [UIImage imageNamed:@"Add Store Icon"];
+    cell.nameLabel.text = nil;
+    cell.detailLabel.text = nil;
+    return cell;
+}
+
+- (void)pushAddStoreView
+{
+    AddStoreTableViewController *astvc = [self.storyboard instantiateViewControllerWithIdentifier:@"AddStore"];
+    astvc.searchText = self.searchBar.text;
+    astvc.locationManager = self.locationManager;
+    [self.navigationController pushViewController:astvc animated:YES];
 }
 
 
@@ -485,6 +539,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
                          self.searchTableView.hidden = YES;
                          self.searchBackgroundButton.hidden = YES;
                      }];
+    [self.nearbyTableView deselectRowAtIndexPath:self.nearbyTableView.indexPathForSelectedRow animated:YES];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -511,6 +566,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     self.searchTableView.hidden = YES;
     [self.searchBar resignFirstResponder];
     [self.searchBar setShowsCancelButton:NO animated:YES];
+    [self.nearbyTableView deselectRowAtIndexPath:self.nearbyTableView.indexPathForSelectedRow animated:YES];
 }
 
 - (void)updateSearchTableViewInsetsForKeyboardHeight:(CGFloat)height

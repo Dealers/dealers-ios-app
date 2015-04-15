@@ -9,6 +9,7 @@
 #import "ChooseCategoryTableViewController.h"
 #import "EditDealTableViewController.h"
 #import "WhatIsTheDeal2.h"
+#import "AddStoreTableViewController.h"
 
 @interface ChooseCategoryTableViewController ()
 
@@ -41,7 +42,7 @@
 {
     [super viewWillAppear:animated];
     
-    if ([self.cameFrom isEqualToString:@"Add Deal"]) {
+    if ([self.cameFrom isEqualToString:@"Add Deal"] || [self.cameFrom isEqualToString:@"Add Store"]) {
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
     }
@@ -51,17 +52,12 @@
 {
     [super viewWillDisappear:animated];
     
-    if ([self.cameFrom isEqualToString:@"Add Deal"]) {
+    if ([self.cameFrom isEqualToString:@"Add Deal"] || [self.cameFrom isEqualToString:@"Add Store"]) {
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Add Deal Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
@@ -104,6 +100,12 @@
         WhatIsTheDeal2 *witd2vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
         witd2vc.categoryLabel.text = [self.categories objectAtIndex:indexPath.row];
         witd2vc.categoryLabel.textColor = [UIColor blackColor];
+        [self.navigationController popViewControllerAnimated:YES];
+    
+    } else if ([self.cameFrom isEqualToString:@"Add Store"]) {
+        
+        AddStoreTableViewController *astvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+        astvc.storeCategoryTextField.text = [self.categories objectAtIndex:indexPath.row];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

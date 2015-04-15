@@ -528,7 +528,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 - (void)setDealTitleAndStore
 {
     self.dealTitle.text = self.deal.title;
-    self.store.text = self.deal.store != nil ? [NSLocalizedString(@"At ", nil) stringByAppendingString:self.deal.store.name] : @"No store";
+    self.store.text = self.deal.store != nil ? self.deal.store.name : @"No store";
 }
 
 - (void)setPriceAndDiscount
@@ -575,7 +575,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 - (void)setCategory
 {
     if (self.deal.category) {
-        self.category.text = [NSLocalizedString(@"In ", nil) stringByAppendingString:self.deal.category];
+        self.category.text = self.deal.category;
         self.categoryIconHeightConstraint.constant = iconHeight;
         self.verticalSpaceCategoryIconExpirationDateIconConstraint.constant = iconsVerticalSpace;
     } else {

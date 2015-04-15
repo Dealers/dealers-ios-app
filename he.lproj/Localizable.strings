@@ -122,6 +122,8 @@
 "No stores were found around you" = "לא נמצאו חנויות באזורך";
 "Can't connect to the server" = "לא מצליח להתחבר לשרת";
 "Try Again" = "נסה שוב";
+"Didn't find it? Try Searching" = "לא מצאת את בית העסק? נסה/י לחפש";
+"Add a new store" = "הוסף בית עסק חדש";
 "What is the deal?" = "על מה המבצע?";
 "Title can't be blank!" = "חייבת להיות כותרת למבצע!";
 "Title is too long" = "הכותרת ארוכה מדי";
@@ -223,3 +225,9 @@
 "Does this post includes inappropriate content?" = "האם פרסום זה מכיל תוכן לא ראוי?";
 "Report" = "דווח";
 "Report Sent" = "דיווח נשלח";
+
+"Add New Store" = "הוסף בית עסק";
+"Add" = "הוסף";
+"Store Added" = "החנות הוספה";
+"Thanks!" = "תודה!";
+"Tap Store Location" = "סימון מקום החנות";

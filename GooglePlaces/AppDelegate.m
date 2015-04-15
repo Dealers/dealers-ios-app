@@ -1217,8 +1217,8 @@
 
 - (NSString *)baseURL
 {
-    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
-//    return @"http://52.17.69.34";
+//    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
+    return @"http://52.17.170.180";
 }
 
 - (RKObjectMapping *)dealMapping
@@ -1388,7 +1388,8 @@
                                                         @"category_id" : @"categoryID",
                                                         @"url" : @"url",
                                                         @"phone" : @"phone",
-                                                        @"verified_by_foursquare" : @"verifiedByFoursquare"
+                                                        @"verified_by_foursquare" : @"verifiedByFoursquare",
+                                                        @"added" : @"added"
                                                         }];
     return storeMapping;
 }
@@ -1602,6 +1603,13 @@
     [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
                                                  method:RKRequestMethodAny
                                             pathPattern:@"/deals/"
+                                                keyPath:@"results"
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *searchDealsResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealsearch/"
                                                 keyPath:@"results"
                                             statusCodes:statusCodes];
     
@@ -1841,6 +1849,7 @@
     
     [manager addResponseDescriptorsFromArray:@[
                                                dealsResponseDescriptor,
+                                               searchDealsResponseDescriptor,
                                                addDealResponseDescriptor,
                                                editDealResponseDescriptor,
                                                specificDealResponseDescriptor,

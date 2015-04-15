@@ -514,7 +514,7 @@
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    CGFloat imageSizeDivider = image.size.width / 600.0;
+    CGFloat imageSizeDivider = image.size.width / 500.0;
 
     UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider, image.size.height / imageSizeDivider)];
     
@@ -926,7 +926,7 @@
     witd2vc.cashedDiscountType = self.cashedDiscountType;
     witd2vc.cashedCategory = self.cashedCategory;
     witd2vc.cashedExpirationDate = self.cashedExpirationDate;
-    
+        
     [self.navigationController pushViewController:witd2vc animated:YES];
 }
 

@@ -103,9 +103,9 @@
     progressIndicator.delegate = self;
     progressIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
     progressIndicator.mode = MBProgressHUDModeCustomView;
-    progressIndicator.labelText = @"Email Sent";
+    progressIndicator.labelText = NSLocalizedString(@"Email Sent", nil);
     progressIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-    progressIndicator.detailsLabelText = @"Thanks!";
+    progressIndicator.detailsLabelText = NSLocalizedString(@"Thanks!", nil);
     progressIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
     progressIndicator.animationType = MBProgressHUDAnimationZoomIn;
     

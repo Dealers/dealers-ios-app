@@ -145,7 +145,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
             NSString *categoryKey = [appDelegate getCategoryKeyForValue:self.categoryFromExplore];
             requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage&category=%@", categoryKey];
         } else if ([selfViewController isEqualToString:NSLocalizedString(@"Search", nil)]) {
-            requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage&search=%@", self.searchTermFromExplore];
+            requestString = [NSString stringWithFormat:@"/dealsearch/?page=:currentPage&per_page=:perPage&search=%@", self.searchTermFromExplore];
             requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         }
         

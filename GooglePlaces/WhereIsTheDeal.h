@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "StoreCategoriesOrganizer.h"
 #import "StoreTableViewCell.h"
+#import "AddStoreTableViewController.h"
 #import "WhatIsTheDeal1.h"
 #import "EditDealTableViewController.h"
 

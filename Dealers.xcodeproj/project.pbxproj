@@ -54,6 +54,9 @@
 		C80810C11A6CFFE20034D8B1 /* Invitation.m in Sources */ = {isa = PBXBuildFile; fileRef = C80810C01A6CFFE20034D8B1 /* Invitation.m */; };
 		C80810C41A6EA0890034D8B1 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = C80810C31A6EA0890034D8B1 /* Device.m */; };
 		C80EA9191AADA9690045D4CA /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C80EA9181AADA9690045D4CA /* Launch Screen.xib */; };
+		C81493C21AC94D8600A5DBE7 /* AddStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81493C11AC94D8600A5DBE7 /* AddStoreTableViewController.m */; };
+		C81493C81AC9FB5800A5DBE7 /* DealersAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = C81493C71AC9FB5800A5DBE7 /* DealersAnnotation.m */; };
+		C81493CB1ACA88C200A5DBE7 /* StoreLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81493CA1ACA88C200A5DBE7 /* StoreLocationViewController.m */; };
 		C8173E821A683FF50090CF64 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8173E841A683FF50090CF64 /* Localizable.strings */; };
 		C819F89C1A43352E00908726 /* Error.m in Sources */ = {isa = PBXBuildFile; fileRef = C819F89B1A43352E00908726 /* Error.m */; };
 		C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */; };
@@ -249,6 +252,12 @@
 		C80810C31A6EA0890034D8B1 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		C80EA9121AAB85520045D4CA /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/DealTableViewCell.strings; sourceTree = "<group>"; };
 		C80EA9181AADA9690045D4CA /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		C81493C01AC94D8600A5DBE7 /* AddStoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStoreTableViewController.h; sourceTree = "<group>"; };
+		C81493C11AC94D8600A5DBE7 /* AddStoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStoreTableViewController.m; sourceTree = "<group>"; };
+		C81493C61AC9FB5800A5DBE7 /* DealersAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealersAnnotation.h; sourceTree = "<group>"; };
+		C81493C71AC9FB5800A5DBE7 /* DealersAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealersAnnotation.m; sourceTree = "<group>"; };
+		C81493C91ACA88C200A5DBE7 /* StoreLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreLocationViewController.h; sourceTree = "<group>"; };
+		C81493CA1ACA88C200A5DBE7 /* StoreLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreLocationViewController.m; sourceTree = "<group>"; };
 		C8173E7B1A6658470090CF64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		C8173E7D1A66DD420090CF64 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C8173E831A683FF50090CF64 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -690,6 +699,12 @@
 				C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */,
 				C8A012F019DD52F700C1D973 /* WhatIsTheDeal2.h */,
 				C8A012F119DD52F700C1D973 /* WhatIsTheDeal2.m */,
+				C81493C01AC94D8600A5DBE7 /* AddStoreTableViewController.h */,
+				C81493C11AC94D8600A5DBE7 /* AddStoreTableViewController.m */,
+				C81493C91ACA88C200A5DBE7 /* StoreLocationViewController.h */,
+				C81493CA1ACA88C200A5DBE7 /* StoreLocationViewController.m */,
+				C81493C61AC9FB5800A5DBE7 /* DealersAnnotation.h */,
+				C81493C71AC9FB5800A5DBE7 /* DealersAnnotation.m */,
 				C81E7A9B197E9ECE009CBA2D /* ChooseCategoryTableViewController.h */,
 				C81E7A9C197E9ECF009CBA2D /* ChooseCategoryTableViewController.m */,
 				C8A10B9019E465C90090F1D9 /* ThankYouViewController.h */,
@@ -1037,6 +1052,7 @@
 				C83B93C41A2D08BE00AC666B /* DealsNoPhotoTableCell.m in Sources */,
 				C8C721001AB22FB800284B72 /* ViewDealViewController.m in Sources */,
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
+				C81493C81AC9FB5800A5DBE7 /* DealersAnnotation.m in Sources */,
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
@@ -1059,6 +1075,7 @@
 				C895FB821AB0327500E4E4A5 /* WhereIsTheDeal.m in Sources */,
 				C8A10BA219E9628D0090F1D9 /* ActivityTableViewController.m in Sources */,
 				C8A012EF19DD52E100C1D973 /* WhatIsTheDeal1.m in Sources */,
+				C81493CB1ACA88C200A5DBE7 /* StoreLocationViewController.m in Sources */,
 				C8A10B9219E465C90090F1D9 /* ThankYouViewController.m in Sources */,
 				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
 				C83997F01A7559A6003E3793 /* PushNotificationView.m in Sources */,
@@ -1075,6 +1092,7 @@
 				C8051BF01A41DB9B008FBA40 /* SignUpTableViewController.m in Sources */,
 				C8A10B9F19E95B330090F1D9 /* Notification.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
+				C81493C21AC94D8600A5DBE7 /* AddStoreTableViewController.m in Sources */,
 				C8A10B9C19E711220090F1D9 /* KeychainItemWrapper.m in Sources */,
 				C8E43AA51A40A78A00B035BC /* DealersTableCell.m in Sources */,
 				C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */,

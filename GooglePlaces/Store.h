@@ -31,6 +31,6 @@
 @property NSString *phone;
 
 @property NSString *verifiedByFoursquare;
-
+@property BOOL added;
 
 @end
