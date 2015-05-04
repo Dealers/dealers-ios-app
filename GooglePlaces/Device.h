@@ -15,7 +15,6 @@
 @property NSString *UDID;
 @property NSString *token;
 @property NSString *os; // Ios; Android; Browser;
-@property NSString *arn;
 @property NSNumber *badge;
 @property NSDate *lastUpdateDate;
 @property NSDate *creationDate;

@@ -15,6 +15,9 @@
 #import "Dealer.h"
 #import "Device.h"
 #import "Error.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface SignUpTableViewController : UITableViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIScrollViewDelegate, MBProgressHUDDelegate> {
     

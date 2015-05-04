@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "EditDealTableViewController.h"
 #import "MBProgressHUD.h"
+#import "GAITrackedViewController.h"
 
-@interface EditTextModeViewController : UIViewController <MBProgressHUDDelegate> {
+@interface EditTextModeViewController : GAITrackedViewController <MBProgressHUDDelegate> {
     
     MBProgressHUD *blankTitleIndicator, *tooMuchIndicator;
 }

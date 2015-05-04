@@ -15,8 +15,9 @@
 #import "AddStoreTableViewController.h"
 #import "WhatIsTheDeal1.h"
 #import "EditDealTableViewController.h"
+#import "GAITrackedViewController.h"
 
-@interface WhereIsTheDeal : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate> {
+@interface WhereIsTheDeal : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate> {
     
     CLLocationCoordinate2D currentCentre;
     CLLocationCoordinate2D lastCoords;

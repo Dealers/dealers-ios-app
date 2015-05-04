@@ -78,6 +78,16 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     if (self.tabBarController.tabBar.hidden == YES) {
         self.tabBarController.tabBar.hidden = NO;
     }
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    if ([self.profileMode isEqualToString:@"My Profile Tab"]) {
+        [tracker set:kGAIScreenName value:@"My Profile Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    } else {
+        [tracker set:kGAIScreenName value:@"Other Profile Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -159,7 +169,15 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
                                                                   target:self
                                                                   action:@selector(pushInviteViewController:)];
         [invite setImageInsets:UIEdgeInsetsMake(1, -3, -1, 3)];
-        self.navigationItem.rightBarButtonItem = invite;
+        
+        UIBarButtonItem *personalize = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Personalize Button"]
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(pushPersonalizeTableViewController:)];
+//        [invite setImageInsets:UIEdgeInsetsMake(1, -3, -1, 3)];
+        self.navigationItem.rightBarButtonItems = [[NSArray alloc] initWithObjects:invite, personalize, nil];
+;
+
     }
 }
 
@@ -813,6 +831,12 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 {
     InviteViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"Invite"];
     [self.navigationController pushViewController:ivc animated:YES];
+}
+
+- (void)pushPersonalizeTableViewController:(id)sender
+{
+    PersonalizeTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Personalize"];
+    [self.navigationController pushViewController:ptvc animated:YES];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

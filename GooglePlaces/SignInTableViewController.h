@@ -11,6 +11,9 @@
 #import "AppDelegate.h"
 #import "KeychainItemWrapper.h"
 #import "MBProgressHUD.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 
 @interface SignInTableViewController : UITableViewController <UITextFieldDelegate, MBProgressHUDDelegate> {

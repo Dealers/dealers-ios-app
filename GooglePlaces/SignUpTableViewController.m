@@ -53,10 +53,21 @@
     [self setRoundCornersToButtons];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Sign Up Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
 - (void)setLoadingAnimation
 {
+    [self.view layoutIfNeeded];
     loadingAnimation = [appDelegate loadingAnimationWhite];
     [self.signUpButtonBackground addSubview:loadingAnimation];
+    CGPoint loadingAnimationCenter = CGPointMake(self.signUpButtonBackground.bounds.size.width / 2, self.signUpButtonBackground.bounds.size.height / 2);
+    loadingAnimation.center = loadingAnimationCenter;
     [self setConstraintsForLoadingAnimation];
     loadingAnimation.transform = CGAffineTransformMakeScale(0.001, 0.001);
 }
@@ -160,7 +171,10 @@
 
 - (void)signUpForKeyboardNotifications {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
 }
 
 - (void)keyboardWillShow {
@@ -374,6 +388,7 @@
         [self.view endEditing:YES];
         [self saveUserDetails];
         [self uploadData];
+        [appDelegate logButtonPress:@"Sign up with email"];
     }
 }
 

@@ -19,6 +19,7 @@
 #import "User.h"
 #import "Invitation.h"
 #import "Device.h"
+#import "Category.h"
 #import "Error.h"
 #import "Report.h"
 
@@ -115,5 +116,8 @@
 
 - (void)openActiveSessionWithPermissions:(NSArray *)permissions allowLoginUI:(BOOL)allowLoginUI;
 - (BOOL)isFacebookConnected;
+
+- (void)logButtonPress:(NSString *)eventLabel;
+
 
 @end

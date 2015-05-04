@@ -11,8 +11,9 @@
 #import "Invitation.h"
 #import "MBProgressHUD.h"
 #import "KeychainItemWrapper.h"
+#import "GAITrackedViewController.h"
 
-@interface InviteViewController : UIViewController <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, MBProgressHUDDelegate> {
+@interface InviteViewController : GAITrackedViewController <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, MBProgressHUDDelegate> {
     
     NSString *invitationMessage, *passcode;
     NSInteger timesTried, secretButtonCounter, timesTriedServerUpdate;

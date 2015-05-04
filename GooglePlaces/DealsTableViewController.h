@@ -17,6 +17,9 @@
 #import "DealsTableCell.h"
 #import "DealTableViewCell.h"
 #import "DealsNoPhotoTableCell.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface DealsTableViewController : UITableViewController <UIScrollViewDelegate> {
     

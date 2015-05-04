@@ -15,6 +15,7 @@
 #import "ViewDealViewController.h"
 #import "KeychainItemWrapper.h"
 #import "PushNotificationView.h"
+#import "GAI.h"
 
 #define AWS_ACCESS_KEY_ID @"AKIAIWJFJX72FWKD2LYQ"
 #define AWS_SECRET_ACCESS_KEY @"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"
@@ -93,6 +94,12 @@
     self.pushNotificationsWindow.windowLevel = UIWindowLevelStatusBar + 1;
     self.pushNotificationsWindow.hidden = YES;
     
+    // Initializing the Google Analytics tracker
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    [GAI sharedInstance].dispatchInterval = 20;
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelInfo];
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-62425106-1"];
+    
     return YES;
 }
 
@@ -107,7 +114,6 @@
     [updateDeviceMapping addAttributeMappingsFromDictionary: @{
                                                                @"dealer" : @"dealerID",
                                                                @"token" : @"token",
-                                                               @"arn" : @"arn",
                                                                @"last_update_date" : @"lastUpdateDate"
                                                                }];
     
@@ -147,7 +153,6 @@
         self.device.UDID = [[UIDevice currentDevice] identifierForVendor].UUIDString;
         self.device.os = @"Ios";
         self.device.token = @"";
-        self.device.arn = @"";
         self.device.creationDate = [NSDate date];
         self.device.badge = [NSNumber numberWithInteger:0];
         
@@ -178,7 +183,6 @@
 {
     self.device.dealerID = self.dealer.dealerID;
     self.device.token = token;
-    self.device.arn = @"";
     self.device.lastUpdateDate = [NSDate date];
     
     [self patchDeviceFor:@"deviceUpdate"];
@@ -993,25 +997,7 @@
 
 - (UIImageView *)loadingAnimationWhite
 {
-    UIImageView *loadingAnimationView = [[UIImageView alloc] init];
-    
-    [loadingAnimationView addConstraint:[NSLayoutConstraint constraintWithItem:loadingAnimationView
-                                                                      attribute:NSLayoutAttributeWidth
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                        toItem:nil
-                                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                                     multiplier:1.0
-                                                                       constant:30.0]];
-    
-    [loadingAnimationView addConstraint:[NSLayoutConstraint constraintWithItem:loadingAnimationView
-                                                                      attribute:NSLayoutAttributeHeight
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:nil
-                                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                                     multiplier:1.0
-                                                                       constant:30.0]];
-    
-    loadingAnimationView.translatesAutoresizingMaskIntoConstraints = NO;
+    UIImageView *loadingAnimationView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30.0, 30.0)];
     
     loadingAnimationView.animationImages = [self loadingAnimationWhiteImages];
     
@@ -1217,8 +1203,8 @@
 
 - (NSString *)baseURL
 {
-//    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
-    return @"http://52.17.170.180";
+    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
+//    return @"http://52.17.170.180";
 }
 
 - (RKObjectMapping *)dealMapping
@@ -1520,13 +1506,24 @@
                                                          @"udid" : @"UDID",
                                                          @"token" : @"token",
                                                          @"os" : @"os",
-                                                         @"arn" : @"arn",
                                                          @"badge" : @"badge",
                                                          @"last_update_date" : @"lastUpdateDate",
                                                          @"creation_date" : @"creationDate"
                                                          }];
     
     return deviceMapping;
+}
+
+- (RKObjectMapping *)categoryMapping
+{
+    RKObjectMapping *categoryMapping = [RKObjectMapping mappingForClass:[Category class]];
+    [categoryMapping addAttributeMappingsFromDictionary: @{
+                                                         @"id" : @"categoryID",
+                                                         @"dealer" : @"dealerID",
+                                                         @"category" : @"categoryKey"
+                                                         }];
+    
+    return categoryMapping;
 }
 
 - (RKObjectMapping *)paginationMapping
@@ -1599,10 +1596,17 @@
     manager.paginationMapping = [self paginationMapping];
     
     // register mappings with the provider using response descriptors
-    RKResponseDescriptor *dealsResponseDescriptor =
+    RKResponseDescriptor *myFeedResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
                                                  method:RKRequestMethodAny
-                                            pathPattern:@"/deals/"
+                                            pathPattern:@"/my_feeds/"
+                                                keyPath:@"results"
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *categoryDealsResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/category_deals/"
                                                 keyPath:@"results"
                                             statusCodes:statusCodes];
     
@@ -1753,6 +1757,27 @@
                                                 keyPath:nil
                                             statusCodes:statusCodes];
     
+    RKResponseDescriptor *categoriesResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self categoryMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealer_cats/:dealer_catID/"
+                                                keyPath:@"dealer_categorys"
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *categoryResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self categoryMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealer_categorys/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *categoryDeleteResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self categoryMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/dealer_categorys/:dealer_categoryID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
     RKResponseDescriptor *specificDeviceResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self deviceMapping]
                                                  method:RKRequestMethodAny
@@ -1839,6 +1864,13 @@
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
     
+    // for Category update
+    RKRequestDescriptor *categoryRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self categoryMapping] inverseMapping]
+                                          objectClass:[Category class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
+    
     // for Report Dealer
     RKRequestDescriptor *reportRequestDescriptor =
     [RKRequestDescriptor requestDescriptorWithMapping:[[self reportMapping] inverseMapping]
@@ -1848,7 +1880,8 @@
     
     
     [manager addResponseDescriptorsFromArray:@[
-                                               dealsResponseDescriptor,
+                                               myFeedResponseDescriptor,
+                                               categoryDealsResponseDescriptor,
                                                searchDealsResponseDescriptor,
                                                addDealResponseDescriptor,
                                                editDealResponseDescriptor,
@@ -1871,6 +1904,9 @@
                                                specificInvitationResponseDescriptor,
                                                invitationSerachResponseDescriptor,
                                                deviceResponseDescriptor,
+                                               categoriesResponseDescriptor,
+                                               categoryResponseDescriptor,
+                                               categoryDeleteResponseDescriptor,
                                                specificDeviceResponseDescriptor,
                                                signUpErrorResponseDescriptor,
                                                reportResponseDescriptor
@@ -1885,6 +1921,7 @@
                                               userRequestDescriptor,
                                               invitationRequestDescriptor,
                                               deviceRequestDescriptor,
+                                              categoryRequestDescriptor,
                                               reportRequestDescriptor
                                               ]];
 }
@@ -2065,6 +2102,18 @@
                                                   NSLog(@"Couldn't delete pseudo user, Error: %@", error);
                                               }];
     }
+}
+
+#pragma mark - Google Analytics
+
+- (void)logButtonPress:(NSString *)eventLabel
+{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"     // Event category (required)
+                                                          action:@"button_press"  // Event action (required)
+                                                           label:eventLabel       // Event label
+                                                           value:nil] build]];    // Event value
 }
 
 

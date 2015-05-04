@@ -1488,14 +1488,6 @@
     [self.navigationController pushViewController:ptvc animated:YES];
 }
 
-- (IBAction)urlSiteButtonClicked:(id)sender {
-    NSString *DataResult;
-    if (![[_deal dealUrlSite] isEqualToString:@"0"]) {
-        DataResult = [@"http://" stringByAppendingString:[_deal dealUrlSite]];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:DataResult]];
-    }
-}
-
 
 #pragma mark - Table View
 

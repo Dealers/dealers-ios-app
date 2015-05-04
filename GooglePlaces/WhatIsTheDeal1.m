@@ -46,6 +46,9 @@
     [super viewDidAppear:animated];
     
     self.photosFileName = nil;
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Add Deal - What Is The Deal 1 Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

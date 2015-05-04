@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZXa-ud-UfS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZXa-ud-UfS">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -169,7 +169,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="rTo-GF-NuX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="O5Y-bD-hn6">
                                 <cells>
@@ -305,7 +305,7 @@
                                                         <color key="backgroundColor" red="0.78431373829999995" green="0.78431373829999995" blue="0.84313726430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     </imageView>
                                                 </subviews>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="JJ7-6S-dSO" firstAttribute="centerX" secondItem="VFR-Q4-Dfy" secondAttribute="centerX" id="2hD-iK-rd7"/>
                                                     <constraint firstItem="xa2-2O-7Ja" firstAttribute="height" secondItem="K68-o8-YAY" secondAttribute="height" id="BdH-Dr-DFJ"/>
@@ -331,7 +331,7 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="320" id="GSX-lA-owh"/>
                                             <constraint firstItem="K68-o8-YAY" firstAttribute="leading" secondItem="7C9-Vb-eey" secondAttribute="leading" id="NOS-YJ-uL9"/>
@@ -798,7 +798,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="bQG-1O-6ha">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="YFB-bX-QMM" userLabel="Camera">
                                 <cells>
@@ -963,7 +963,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deal Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihq-ya-eqI" userLabel="Title">
                                                     <rect key="frame" x="15" y="9" width="552" height="25"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="18"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -988,7 +988,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deal Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mb4-so-NEl" userLabel="Store">
                                                     <rect key="frame" x="53" y="11" width="506" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Store Icon" translatesAutoresizingMaskIntoConstraints="NO" id="HSs-XE-Wai">
@@ -1502,7 +1502,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="I8c-zm-Xy2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
                             <outlet property="dataSource" destination="3Ks-On-q35" id="vRR-ih-pvj"/>
                             <outlet property="delegate" destination="3Ks-On-q35" id="tqH-Zx-ur8"/>
@@ -1535,7 +1535,7 @@
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Passcode Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZuB-OA-JQR">
                                 <rect key="frame" x="10" y="220" width="580" height="54"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="2wb-8c-YVb"/>
                                 </constraints>
@@ -1580,7 +1580,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Dealers is an invite-only network. You must be invited by an existing member in order to get a passcode." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="w90-e5-O6q" userLabel="Explanation">
                                         <rect key="frame" x="20" y="20" width="240" height="88"/>
                                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" alpha="0.89999999999999991" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnD-u3-gou">
@@ -1659,7 +1659,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="8DE-3Z-Bap">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="unA-fK-Zs0">
                             <rect key="frame" x="0.0" y="133" width="600" height="84"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1716,7 +1716,7 @@
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="wDP-qs-CQ9" firstAttribute="left" secondItem="FRU-Tq-W1Y" secondAttribute="leftMargin" constant="12" id="QBd-bb-Sk9"/>
+                                                <constraint firstItem="wDP-qs-CQ9" firstAttribute="left" secondItem="FRU-Tq-W1Y" secondAttribute="left" constant="20" id="QBd-bb-Sk9"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="wDP-qs-CQ9" secondAttribute="right" constant="12" id="ate-Dc-UZR"/>
                                                 <constraint firstAttribute="centerY" secondItem="wDP-qs-CQ9" secondAttribute="centerY" id="ofd-21-x6L"/>
                                             </constraints>
@@ -1737,9 +1737,9 @@
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="rightMargin" secondItem="e38-is-Vyi" secondAttribute="right" constant="12" id="H4Z-TC-3c6"/>
+                                                <constraint firstAttribute="right" secondItem="e38-is-Vyi" secondAttribute="right" constant="20" id="H4Z-TC-3c6"/>
                                                 <constraint firstAttribute="centerY" secondItem="e38-is-Vyi" secondAttribute="centerY" id="HaD-h8-hNj"/>
-                                                <constraint firstItem="e38-is-Vyi" firstAttribute="left" secondItem="z93-ia-8w0" secondAttribute="leftMargin" constant="12" id="ZfL-M6-qDh"/>
+                                                <constraint firstItem="e38-is-Vyi" firstAttribute="left" secondItem="z93-ia-8w0" secondAttribute="left" constant="20" id="ZfL-M6-qDh"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1991,7 +1991,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Sbi-Eh-0xi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="nSZ-cR-TiU" userLabel="Hint Footer View">
                             <rect key="frame" x="0.0" y="362" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -2003,7 +2003,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="centerX" secondItem="a7v-Vg-WPa" secondAttribute="centerX" id="EXi-y5-DPp"/>
                                 <constraint firstAttribute="centerY" secondItem="a7v-Vg-WPa" secondAttribute="centerY" id="Lm6-X3-fP7"/>
@@ -2217,6 +2217,7 @@
                                                             </connections>
                                                         </button>
                                                         <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vTC-vU-b1l">
+                                                            <rect key="frame" x="160" y="179" width="0.0" height="37"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="37" id="GMj-uF-KpW"/>
                                                             </constraints>
@@ -2358,7 +2359,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dQd-9m-bis">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="53" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Ydf-0V-6Gm" userLabel="Add Deal View">
                             <rect key="frame" x="0.0" y="551" width="600" height="74"/>
@@ -2461,6 +2462,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kfb-mC-0pc" userLabel="Category Label">
+                                                    <rect key="frame" x="559" y="22" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
                                                     <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2497,6 +2499,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MZp-WF-ikk" userLabel="Expiration Date Label">
+                                                    <rect key="frame" x="559" y="22" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
                                                     <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2551,7 +2554,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share with Facebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGd-Ve-qMr">
                                                     <rect key="frame" x="53" y="11" width="151" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WRN-5L-8kY">
@@ -2591,7 +2594,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share with WhatsApp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziO-YV-MgH">
                                                     <rect key="frame" x="53" y="11" width="156" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tAL-Qm-YNU">
@@ -2736,7 +2739,7 @@ Gilad Lumbroso!</string>
                                         <string key="text">Find great deals
 Shared by people like you</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
-                                        <color key="textColor" red="0.56862747669219971" green="0.56862747669219971" blue="0.62745100259780884" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.56862745098039214" green="0.56862745098039214" blue="0.62745098039215685" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -2871,7 +2874,7 @@ Shared by people like you</string>
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="rIH-4h-clZ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="53" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="yfl-Qz-9oQ" userLabel="Profile Pic View">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="130"/>
@@ -2924,7 +2927,7 @@ Shared by people like you</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2L9-Lj-ZBP">
-                                    <rect key="frame" x="211" y="8" width="198" height="40"/>
+                                    <rect key="frame" x="201" y="8" width="198" height="40"/>
                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                     <state key="normal">
                                         <string key="title">By signing up, you agree to our
@@ -2939,7 +2942,7 @@ Privacy Policy</string>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="Muc-PO-MtV" firstAttribute="left" secondItem="oXq-PA-Ji1" secondAttribute="left" constant="20" id="4j3-6A-33Q"/>
-                                <constraint firstAttribute="centerX" secondItem="2L9-Lj-ZBP" secondAttribute="centerX" constant="-10" id="ZYN-fe-R8h"/>
+                                <constraint firstAttribute="centerX" secondItem="2L9-Lj-ZBP" secondAttribute="centerX" id="ZYN-fe-R8h"/>
                                 <constraint firstItem="Kjp-MO-Sjl" firstAttribute="top" secondItem="2L9-Lj-ZBP" secondAttribute="bottom" constant="22" id="b8M-dx-9MN"/>
                                 <constraint firstAttribute="trailing" secondItem="Kjp-MO-Sjl" secondAttribute="trailing" constant="20" id="bFc-Vj-DgY"/>
                                 <constraint firstItem="Muc-PO-MtV" firstAttribute="centerY" secondItem="Kjp-MO-Sjl" secondAttribute="centerY" id="bj2-T8-w3Z"/>
@@ -2971,7 +2974,7 @@ Privacy Policy</string>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="s9r-el-Tr9" firstAttribute="left" secondItem="bVb-xO-zQa" secondAttribute="right" constant="8" id="9b6-Fj-dQc"/>
-                                                <constraint firstItem="bVb-xO-zQa" firstAttribute="left" secondItem="aHg-mO-4CJ" secondAttribute="leftMargin" constant="7" id="mFq-3r-z35"/>
+                                                <constraint firstItem="bVb-xO-zQa" firstAttribute="left" secondItem="aHg-mO-4CJ" secondAttribute="left" constant="15" id="mFq-3r-z35"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="s9r-el-Tr9" secondAttribute="right" constant="8" id="n4y-Jq-aHp"/>
                                                 <constraint firstAttribute="centerY" secondItem="s9r-el-Tr9" secondAttribute="centerY" constant="-0.5" id="nUC-ra-6SG"/>
                                                 <constraint firstAttribute="centerY" secondItem="bVb-xO-zQa" secondAttribute="centerY" constant="-0.5" id="uqU-b5-jys"/>
@@ -2999,7 +3002,7 @@ Privacy Policy</string>
                                                 <constraint firstItem="1Lk-Oa-NkF" firstAttribute="left" secondItem="h2o-Fh-Hd4" secondAttribute="right" constant="8" id="AB1-hv-frW"/>
                                                 <constraint firstAttribute="centerY" secondItem="h2o-Fh-Hd4" secondAttribute="centerY" constant="-0.5" id="BdX-wd-SyG"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="1Lk-Oa-NkF" secondAttribute="right" constant="8" id="d3e-GF-0ue"/>
-                                                <constraint firstItem="h2o-Fh-Hd4" firstAttribute="left" secondItem="hEX-BI-xft" secondAttribute="leftMargin" constant="7" id="lYC-3g-Pe2"/>
+                                                <constraint firstItem="h2o-Fh-Hd4" firstAttribute="left" secondItem="hEX-BI-xft" secondAttribute="left" constant="15" id="lYC-3g-Pe2"/>
                                                 <constraint firstAttribute="centerY" secondItem="1Lk-Oa-NkF" secondAttribute="centerY" constant="-0.5" id="zjm-3a-zp3"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -3022,7 +3025,7 @@ Privacy Policy</string>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="YXu-oQ-jqn" firstAttribute="left" secondItem="i3K-Wi-zCB" secondAttribute="leftMargin" constant="7" id="4VM-QJ-Ykv"/>
+                                                <constraint firstItem="YXu-oQ-jqn" firstAttribute="left" secondItem="i3K-Wi-zCB" secondAttribute="left" constant="15" id="4VM-QJ-Ykv"/>
                                                 <constraint firstItem="0BT-8X-Ld3" firstAttribute="left" secondItem="YXu-oQ-jqn" secondAttribute="right" constant="8" id="Ado-4p-djX"/>
                                                 <constraint firstAttribute="centerY" secondItem="0BT-8X-Ld3" secondAttribute="centerY" constant="-0.5" id="HkQ-bt-RYI"/>
                                                 <constraint firstAttribute="centerY" secondItem="YXu-oQ-jqn" secondAttribute="centerY" constant="-0.5" id="eey-km-Vng"/>
@@ -3047,7 +3050,7 @@ Privacy Policy</string>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="EbC-xx-y7W" secondAttribute="centerY" constant="-0.5" id="Fmd-L3-Eyq"/>
-                                                <constraint firstItem="EbC-xx-y7W" firstAttribute="left" secondItem="wqV-pk-Tyb" secondAttribute="leftMargin" constant="7" id="YPY-31-vCs"/>
+                                                <constraint firstItem="EbC-xx-y7W" firstAttribute="left" secondItem="wqV-pk-Tyb" secondAttribute="left" constant="15" id="YPY-31-vCs"/>
                                                 <constraint firstAttribute="centerY" secondItem="fgN-mQ-SKu" secondAttribute="centerY" constant="-0.5" id="rvq-jC-cBS"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="fgN-mQ-SKu" secondAttribute="trailing" constant="8" id="t8g-rX-IWm"/>
                                                 <constraint firstItem="fgN-mQ-SKu" firstAttribute="left" secondItem="EbC-xx-y7W" secondAttribute="right" constant="8" id="uJ9-J7-55m"/>
@@ -3100,7 +3103,7 @@ Privacy Policy</string>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="gn8-06-QJq" secondAttribute="centerY" constant="-0.5" id="05e-Oo-Ike"/>
-                                                <constraint firstItem="gn8-06-QJq" firstAttribute="left" secondItem="WwE-Z3-cyg" secondAttribute="leftMargin" constant="7" id="d3e-mH-Tiz"/>
+                                                <constraint firstItem="gn8-06-QJq" firstAttribute="left" secondItem="WwE-Z3-cyg" secondAttribute="left" constant="15" id="d3e-mH-Tiz"/>
                                                 <constraint firstAttribute="centerY" secondItem="Oic-Fw-qy0" secondAttribute="centerY" constant="-0.5" id="vDN-Zp-dS2"/>
                                                 <constraint firstItem="Oic-Fw-qy0" firstAttribute="left" secondItem="gn8-06-QJq" secondAttribute="right" constant="8" id="yNO-JR-XZg"/>
                                             </constraints>
@@ -3141,7 +3144,7 @@ Privacy Policy</string>
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="aCn-NC-05E">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="zTB-Yf-jn9" userLabel="Table View Section - Edit Profile">
                                 <cells>
@@ -3155,7 +3158,23 @@ Privacy Policy</string>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Obg-zC-x4T">
                                                     <rect key="frame" x="20" y="12" width="280" height="19"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="drt-Xi-INy">
+                                        <rect key="frame" x="0.0" y="35" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="drt-Xi-INy" id="hre-yh-Ebj">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Personalize" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbR-Dk-Fni">
+                                                    <rect key="frame" x="20" y="12" width="280" height="19"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -3175,7 +3194,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Facebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zE-rT-sEg">
                                                     <rect key="frame" x="20" y="10" width="280" height="24"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Connected" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eev-cn-7Cc">
@@ -3201,7 +3220,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Push Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8h9-rM-SDD">
                                                     <rect key="frame" x="20" y="12" width="280" height="19"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -3221,7 +3240,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tutorial" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YQ2-Bz-9jR">
                                                     <rect key="frame" x="20" y="12" width="280" height="19"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -3237,7 +3256,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Report a Problem" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVR-5y-fHw">
                                                     <rect key="frame" x="20" y="12" width="280" height="24"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -3253,7 +3272,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Send Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnS-LD-ubr">
                                                     <rect key="frame" x="20" y="10" width="280" height="24"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -3273,7 +3292,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log Out" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1Q-4C-gyo">
                                                     <rect key="frame" x="20" y="10" width="280" height="24"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -3288,6 +3307,7 @@ Privacy Policy</string>
                     </tableView>
                     <connections>
                         <outlet property="facebookConnectionIndicator" destination="Eev-cn-7Cc" id="DVE-US-wIy"/>
+                        <outlet property="personalizeLabel" destination="ZbR-Dk-Fni" id="g4m-AJ-eOq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4HM-9Z-VV4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3301,9 +3321,28 @@ Privacy Policy</string>
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xLt-Dz-GO8">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" id="mgh-dN-Dkr" userLabel="Header Explanation">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="68"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose categories to get more personalized deals in your feed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="520" translatesAutoresizingMaskIntoConstraints="NO" id="rhk-MS-b2L" customClass="ElasticLabel">
+                                    <rect key="frame" x="40" y="14" width="520" height="40"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
+                                    <color key="textColor" red="0.43137255311012268" green="0.43137255311012268" blue="0.49019607901573181" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="rhk-MS-b2L" secondAttribute="bottom" constant="14" id="Lbl-Nf-RU4"/>
+                                <constraint firstItem="rhk-MS-b2L" firstAttribute="top" secondItem="mgh-dN-Dkr" secondAttribute="top" constant="14" id="Xdi-yU-GZS"/>
+                                <constraint firstItem="rhk-MS-b2L" firstAttribute="leading" secondItem="mgh-dN-Dkr" secondAttribute="leading" constant="40" id="eLI-fa-6nh"/>
+                                <constraint firstAttribute="trailing" secondItem="rhk-MS-b2L" secondAttribute="trailing" constant="40" id="guH-Xq-6gR"/>
+                            </constraints>
+                        </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonalizeCell" rowHeight="54" id="Kqu-3t-QPD">
+                            <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonalizeCell" rowHeight="54" id="Kqu-3t-QPD">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kqu-3t-QPD" id="Dyk-rn-Y7B">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -3315,6 +3354,9 @@ Privacy Policy</string>
                             <outlet property="delegate" destination="o0A-9S-eO5" id="4Vd-fD-3Wg"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="explanation" destination="rhk-MS-b2L" id="SSt-En-xOA"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NEA-GU-JYK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3327,7 +3369,7 @@ Privacy Policy</string>
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="DfE-DB-BAu">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="1ef-mN-dYQ" userLabel="Profile Pic View">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="138"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3356,7 +3398,7 @@ Privacy Policy</string>
                                     </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="IJq-BF-dfM" secondAttribute="bottom" constant="12" id="7ue-9B-MaH"/>
                                 <constraint firstAttribute="centerX" secondItem="LSx-16-KXU" secondAttribute="centerX" id="Nkg-Fd-8ai"/>
@@ -3677,7 +3719,7 @@ Privacy Policy</string>
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dDX-fd-HiZ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="GLc-7g-hSe">
                                 <cells>
@@ -3689,7 +3731,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z4-o5-lUF">
                                                     <rect key="frame" x="20" y="11" width="44" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Required" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UGJ-ge-Vvk">
@@ -3720,7 +3762,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBb-b4-OrV">
                                                     <rect key="frame" x="20" y="11" width="67" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Required" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hcG-gf-ilK">
@@ -3747,7 +3789,7 @@ Privacy Policy</string>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bA-e2-y27">
                                                     <rect key="frame" x="20" y="11" width="59" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Optional" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V4V-tn-fc3">
@@ -3908,7 +3950,7 @@ Privacy Policy</string>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Invite friends to Dealers with a special entrence code." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="D5y-Sk-Zbd">
                                 <rect key="frame" x="182" y="40" width="237" height="47"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBm-4o-qbT" userLabel="Invitation Cards Container">

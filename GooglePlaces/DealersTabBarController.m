@@ -10,10 +10,10 @@
 
 @interface DealersTabBarController () {
     
+    UIActionSheet *feedbackActionSheet;
     MBProgressHUD *progressIndicator;
+    BOOL feedbackViewPresenting;
 }
-
-@property BOOL feedbackViewPresenting;
 
 @end
 
@@ -22,8 +22,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.feedbackViewPresenting = NO;
+    feedbackViewPresenting = NO;
     [self setProgressIndicator];
+    [self setActionSheet];
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -35,11 +36,20 @@
 {
     if (motion == UIEventSubtypeMotionShake )
     {
-        // User was shaking the device. Post a notification named "shake".
-        if (!self.feedbackViewPresenting) {
-            [self sendFeedback];
+        if (!feedbackViewPresenting && self.selectedViewController.isViewLoaded && self.selectedViewController.view.window) {
+            [feedbackActionSheet showInView:self.view];
+            feedbackViewPresenting = YES;
         }
     }
+}
+
+- (void)setActionSheet
+{
+    feedbackActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"Send Feedback", nil), nil];
 }
 
 - (void)sendFeedback
@@ -60,10 +70,9 @@
     
     // Present mail view controller on screen
     [self presentViewController:mc animated:YES completion:nil];
-    self.feedbackViewPresenting = YES;
 }
 
-- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     switch (result)
     {
@@ -94,7 +103,16 @@
     
     // Close the Mail Interface
     [self dismissViewControllerAnimated:YES completion:NULL];
-    self.feedbackViewPresenting = NO;
+    feedbackViewPresenting = NO;
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self sendFeedback];
+    } else {
+        feedbackViewPresenting = NO;
+    }
 }
 
 - (void)setProgressIndicator

@@ -27,6 +27,10 @@
     
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
     self.pageControl.numberOfPages = self.photosArray.count;
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Edit Deal Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)viewDidLoad

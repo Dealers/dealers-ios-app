@@ -61,6 +61,10 @@ static NSString * const CommentCellIdentifier = @"CommentTableViewCell";
     if (self.tabBarController.tabBar.hidden == NO) {
         self.tabBarController.tabBar.hidden = YES;
     }
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Comments Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

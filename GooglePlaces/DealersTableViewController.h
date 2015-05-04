@@ -11,6 +11,9 @@
 #import "DealersTableCell.h"
 #import "Dealer.h"
 #import "ProfileTableViewController.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface DealersTableViewController : UITableViewController {
     

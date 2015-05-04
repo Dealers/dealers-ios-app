@@ -44,6 +44,25 @@
     
     if ([self.cameFrom isEqualToString:@"Add Deal"] || [self.cameFrom isEqualToString:@"Add Store"]) {
         
+    }
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    
+    if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
+        
+        [tracker set:kGAIScreenName value:@"Edit Deal - Choose Category Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+        
+    } else if ([self.cameFrom isEqualToString:@"Add Deal"]) {
+        
+        [tracker set:kGAIScreenName value:@"Add Deal - Choose Category Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
+        
+    } else if ([self.cameFrom isEqualToString:@"Add Store"]) {
+        
+        [tracker set:kGAIScreenName value:@"Add Store - Choose Category Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Navigation Bar Background"] forBarMetrics:UIBarMetricsDefault];
     }
 }

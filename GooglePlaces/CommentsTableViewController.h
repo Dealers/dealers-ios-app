@@ -13,6 +13,9 @@
 #import "Comment.h"
 #import "Dealer.h"
 #import "MBProgressHUD.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface CommentsTableViewController : UITableViewController <UITextViewDelegate, MBProgressHUDDelegate> {
     

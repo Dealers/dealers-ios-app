@@ -13,6 +13,9 @@
 #import "ProfileTableViewController.h"
 #import "MBProgressHUD.h"
 #import "KeychainItemWrapper.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface EditProfileTableViewController : UITableViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, MBProgressHUDDelegate>
 {

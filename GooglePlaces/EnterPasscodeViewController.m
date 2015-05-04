@@ -70,6 +70,7 @@
     self.incorrectPasscode.alpha = 0;
     self.passcodeTextField.layer.cornerRadius = 8.0;
     self.passcodeTextField.layer.masksToBounds = YES;
+    self.screenName = @"Enter Passcode Screen";
 }
 
 - (void)setDismissButton

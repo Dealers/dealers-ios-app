@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "DealsTableViewController.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface ExploreTableViewController : UITableViewController <UISearchBarDelegate>
 

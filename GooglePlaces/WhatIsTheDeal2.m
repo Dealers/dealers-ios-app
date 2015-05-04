@@ -53,6 +53,9 @@
     [super viewDidAppear:animated];
     
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Add Deal - What Is The Deal 2 Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -643,29 +646,12 @@
 
 - (void)setLoadingAnimation
 {
+    [self.view layoutIfNeeded];
     self.loadingAnimation = [appDelegate loadingAnimationWhite];
     [self.addDealButtonBackground addSubview:self.loadingAnimation];
-    [self setConstraintsForLoadingAnimation];
+    CGPoint loadingAnimationCenter = CGPointMake(self.addDealButtonBackground.bounds.size.width / 2, self.addDealButtonBackground.bounds.size.height / 2);
+    self.loadingAnimation.center = loadingAnimationCenter;
     self.loadingAnimation.transform = CGAffineTransformMakeScale(0.001, 0.001);
-}
-
-- (void)setConstraintsForLoadingAnimation
-{
-    [self.addDealButtonBackground addConstraint:[NSLayoutConstraint constraintWithItem:self.loadingAnimation
-                                                                      attribute:NSLayoutAttributeCenterX
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:self.addDealButtonBackground
-                                                                      attribute:NSLayoutAttributeCenterX
-                                                                     multiplier:1.0
-                                                                       constant:0]];
-    
-    [self.addDealButtonBackground addConstraint:[NSLayoutConstraint constraintWithItem:self.loadingAnimation
-                                                                      attribute:NSLayoutAttributeCenterY
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:self.addDealButtonBackground
-                                                                      attribute:NSLayoutAttributeCenterY
-                                                                     multiplier:1.0
-                                                                       constant:0]];
 }
 
 - (void)startLoading
@@ -1355,6 +1341,7 @@
     
     [self uploadDeal];
     if (self.deal.photoSum > 0) [self uploadDealPhotos];
+    [appDelegate logButtonPress:@"Add deal!"];
 }
 
 - (BOOL)validation

@@ -16,6 +16,9 @@
 #import "DealersAnnotation.h"
 #import "Store.h"
 #import "MBProgressHUD.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface AddStoreTableViewController : UITableViewController <UITextFieldDelegate, MKMapViewDelegate, CLLocationManagerDelegate, MBProgressHUDDelegate> {
     

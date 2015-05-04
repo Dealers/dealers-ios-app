@@ -43,12 +43,5 @@
 
 @property (nonatomic) NSMutableArray *comments;
 
-// Need to delete
-@property (nonatomic) NSNumber *likeCounter;
-@property (nonatomic) NSNumber *commentCounter;
-@property (nonatomic) NSString *dealUrlSite;
-@property (nonatomic) NSString *dealStoreAddress;
-@property (nonatomic) NSString *dealStoreLatitude;
-@property (nonatomic) NSString *dealStoreLongitude;
 
 @end

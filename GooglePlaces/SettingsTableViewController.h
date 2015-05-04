@@ -14,7 +14,11 @@
 #import "PushNotificationsTableViewController.h"
 #import "TutorialViewController.h"
 #import "ComingSoonViewController.h"
+#import "PersonalizeTableViewController.h"
 #import "MBProgressHUD.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface SettingsTableViewController : UITableViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, MBProgressHUDDelegate> {
     
@@ -23,5 +27,6 @@
 
 @property AppDelegate *appDelegate;
 @property (weak, nonatomic) IBOutlet UILabel *facebookConnectionIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *personalizeLabel;
 
 @end

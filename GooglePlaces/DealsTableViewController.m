@@ -58,6 +58,19 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
         [self refresh];
         appDelegate.shouldUpdateMyFeed = NO;
     }
+
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+
+    if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
+        [tracker set:kGAIScreenName value:@"My Feed Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    } else if ([selfViewController isEqualToString:NSLocalizedString(@"Category", nil)]) {
+        [tracker set:kGAIScreenName value:@"Category Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    } else if ([selfViewController isEqualToString:NSLocalizedString(@"Search", nil)]) {
+        [tracker set:kGAIScreenName value:@"Search Results Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    }
 }
 
 - (void)checkFeature
@@ -140,10 +153,10 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     if (!self.paginator) {
         NSString *requestString;
         if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
-            requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage"];
+            requestString = [NSString stringWithFormat:@"/my_feeds/?page=:currentPage&per_page=:perPage"];
         } else if ([selfViewController isEqualToString:NSLocalizedString(@"Category", nil)]) {
             NSString *categoryKey = [appDelegate getCategoryKeyForValue:self.categoryFromExplore];
-            requestString = [NSString stringWithFormat:@"/deals/?page=:currentPage&per_page=:perPage&category=%@", categoryKey];
+            requestString = [NSString stringWithFormat:@"/category_deals/?page=:currentPage&per_page=:perPage&category=%@", categoryKey];
         } else if ([selfViewController isEqualToString:NSLocalizedString(@"Search", nil)]) {
             requestString = [NSString stringWithFormat:@"/dealsearch/?page=:currentPage&per_page=:perPage&search=%@", self.searchTermFromExplore];
             requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

@@ -33,6 +33,10 @@
     } else {
         [self disableAddButton];
     }
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Add Store Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)setNavigationBar

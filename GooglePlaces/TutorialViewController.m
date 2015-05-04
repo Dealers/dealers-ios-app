@@ -8,7 +8,7 @@
 
 #import "TutorialViewController.h"
 
-#define CHILD_SCREENS_COUNT 4
+#define CHILD_SCREENS_COUNT 5
 
 @interface TutorialViewController ()
 
@@ -43,7 +43,7 @@
     
     [self addChildViewController:self.pageController];
     [self.view insertSubview:self.pageController.view belowSubview:self.skipButton];
-    [self.pageController didMoveToParentViewController:self];
+    [self.pageController didMoveToParentViewController:self];    
 }
 
 - (void)viewWillAppear:(BOOL)animated

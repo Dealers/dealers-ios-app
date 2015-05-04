@@ -10,6 +10,6 @@
 #import <MessageUI/MessageUI.h>
 #import "MBProgressHUD.h"
 
-@interface DealersTabBarController : UITabBarController <MFMailComposeViewControllerDelegate, MBProgressHUDDelegate>
+@interface DealersTabBarController : UITabBarController <MFMailComposeViewControllerDelegate, MBProgressHUDDelegate, UIActionSheetDelegate>
 
 @end

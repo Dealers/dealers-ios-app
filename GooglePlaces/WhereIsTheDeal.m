@@ -44,8 +44,15 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     [self.searchTableView deselectRowAtIndexPath:self.searchTableView.indexPathForSelectedRow animated:YES];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+}
+
 - (IBAction)dismiss:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)initialize
@@ -58,6 +65,9 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
         self.navigationItem.leftBarButtonItem = nil;
         self.extendedLayoutIncludesOpaqueBars = NO;
+        self.screenName = @"Edit Deal - Where Is The Deal Screen";
+    } else {
+        self.screenName = @"Add Deal - Where Is The Deal Screen";
     }
 }
 

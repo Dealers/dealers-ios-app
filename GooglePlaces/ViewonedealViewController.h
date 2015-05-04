@@ -129,8 +129,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *shreCountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *urlSiteButton;
 
-- (IBAction)urlSiteButtonClicked:(id)sender;
-
 @property UIImage *sharedImage;
 
 @property (retain) UIDocumentInteractionController * documentInteractionController;

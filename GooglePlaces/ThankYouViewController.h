@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
+#import "GAITrackedViewController.h"
 
-@interface ThankYouViewController : UIViewController <UIDocumentInteractionControllerDelegate>
+@interface ThankYouViewController : GAITrackedViewController <UIDocumentInteractionControllerDelegate>
 
 @property AppDelegate *appDelegate;
 

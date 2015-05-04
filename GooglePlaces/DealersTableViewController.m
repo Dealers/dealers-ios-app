@@ -29,6 +29,17 @@
     [self setLoadingView];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    if ([self.mode isEqualToString:@"Likers"]) {
+        [tracker set:kGAIScreenName value:@"Who Liked Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    }
+}
+
 - (void)initialize
 {
     appDelegate = [[UIApplication sharedApplication] delegate];

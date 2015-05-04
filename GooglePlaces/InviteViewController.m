@@ -38,6 +38,7 @@
     
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     [self setInvitationIcons];
+    [self setScreenName:@"Invite Screen"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -147,6 +148,7 @@
     
     // Present message view controller on screen
     [self presentViewController:mc animated:YES completion:nil];
+    [appDelegate logButtonPress:@"Invite by text message"];
 }
 
 - (IBAction)inviteWithEmail:(id)sender {
@@ -161,6 +163,7 @@
     
     // Present mail view controller on screen
     [self presentViewController:mc animated:YES completion:nil];
+    [appDelegate logButtonPress:@"Invite by email"];
 }
 
 - (IBAction)inviteWithWhatsApp:(id)sender {
@@ -172,6 +175,7 @@
         
         [[UIApplication sharedApplication] openURL:whatsappURL];
         [self performSelector:@selector(postInvitation) withObject:nil afterDelay:0.5];
+        [appDelegate logButtonPress:@"Invite by WhatsApp"];
         
     } else {
         

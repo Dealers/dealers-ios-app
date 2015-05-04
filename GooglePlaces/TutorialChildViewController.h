@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
-@interface TutorialChildViewController : UIViewController
+@interface TutorialChildViewController : GAITrackedViewController
 
 @property (assign, nonatomic) NSInteger index;
 @property (weak, nonatomic) IBOutlet UIImageView *iPhoneImage;

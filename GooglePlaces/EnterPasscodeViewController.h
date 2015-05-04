@@ -11,8 +11,9 @@
 #import "OpeningScreenViewController.h"
 #import "SignUpTableViewController.h"
 #import "Invitation.h"
+#import "GAITrackedViewController.h"
 
-@interface EnterPasscodeViewController : UIViewController <UITextFieldDelegate> {
+@interface EnterPasscodeViewController : GAITrackedViewController <UITextFieldDelegate> {
     
     NSInteger deleteAttempt;
     BOOL explanationViewIsSet;

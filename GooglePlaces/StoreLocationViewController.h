@@ -12,6 +12,9 @@
 #import "AppDelegate.h"
 #import "AddStoreTableViewController.h"
 #import "DealersAnnotation.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 
 @interface StoreLocationViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIGestureRecognizerDelegate> {

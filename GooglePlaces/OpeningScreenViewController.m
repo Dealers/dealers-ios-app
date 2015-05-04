@@ -56,6 +56,7 @@
     }
     
     [appDelegate resetHTTPClientUsernameAndPassword];
+    self.screenName = @"Opening Screen";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -157,6 +158,7 @@
 
 - (IBAction)continueWithFacebook:(id)sender
 {
+    [appDelegate logButtonPress:@"Continue with Facebook"];
     [self startFacebookLogin];
 }
 
@@ -211,7 +213,7 @@
     UIImageView *customView = [appDelegate loadingAnimationWhite];
     [customView startAnimating];
     
-    loggingInFacebook = [[MBProgressHUD alloc]initWithView:self.view];
+    loggingInFacebook = [[MBProgressHUD alloc] initWithView:self.view];
     loggingInFacebook.delegate = self;
     loggingInFacebook.customView = customView;
     loggingInFacebook.mode = MBProgressHUDModeCustomView;
@@ -652,6 +654,14 @@
                      [self enterDealers];
                  } else if (didPhotoFinishedUploading) {
                      [self enterDealers];
+                 } else {
+                     [loggingInFacebook hide:YES];
+                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"There was a problem", nil)
+                                                                     message:NSLocalizedString(@"Please try again", nil)
+                                                                    delegate:self
+                                                           cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                           otherButtonTitles:nil];
+                     [alert show];
                  }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -17,6 +17,10 @@
 #import "DealTableViewCell.h"
 #import "SettingsTableViewController.h"
 #import "InviteViewController.h"
+#import "PersonalizeTableViewController.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface ProfileTableViewController : UITableViewController <UIScrollViewDelegate> {
     

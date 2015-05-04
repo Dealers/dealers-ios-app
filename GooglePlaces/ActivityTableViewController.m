@@ -28,7 +28,7 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
                                                                style:UIBarButtonItemStyleBordered
                                                               target:self
                                                               action:@selector(pushInviteViewController:)];
-    [invite setImageInsets:UIEdgeInsetsMake(1, -5, -1, 5)];
+    [invite setImageInsets:UIEdgeInsetsMake(1, -3, -1, 3)];
     self.navigationItem.rightBarButtonItem = invite;
     
     [self setNotificationObservers];
@@ -42,6 +42,9 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
 {
     [super viewDidAppear:animated];
     [appDelegate resetBadgeCounter];
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Activity Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)didReceiveMemoryWarning {

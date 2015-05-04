@@ -98,6 +98,7 @@
 "Email Error" = "שגיאת דוא״ל";
 "Unable to send email. please try again" = "שליחת הדוא״ל נכשלה. אנא נסה/י שוב";
 "Feedback" = "חוות דעת";
+"Send Feedback" = "שלח חוות דעת";
 "Edit Profile" = "עריכת פרופיל";
 "Save" = "שמור";
 "Name can't be blank!" = "השם שלך לא יכול להיות ריק!";
@@ -215,10 +216,11 @@
 "Expired" = "פג תוקף";
 "Crop" = "חתוך";
 
-"Find in your feed great deals that were shared by people like you." = "קבל/י למסך הבית שלך מבצעים מעולים שצרכנים אחרים העלו.";
-"Explore more deals with searching or with our categories." = "מצא/י מבצעים נוספים על ידי חיפוש או בעזרת הקטגוריות שלנו.";
-"Post deals that you find, and contirbute back to the community." = "שתף/י מבצעים טובים שאתה מוצא וסייע בהורדת המחירים.";
-"Like, comment and share deals, so others will know what's good." = "תן/י לייק, הוסף/י תגובה ושתף/י מבצעים, כך שכולנו נדע מה טוב.";
+"Find in your feed great deals that were shared by people like you" = "קבל/י למסך הבית שלך מבצעים מעולים שצרכנים אחרים העלו";
+"Personalize your feed by choosing your interests in your profile" = "בחר/י בפרופיל את תחומי העניין שלך כדי לקבל מבצעים בהתאמה אישית";
+"Explore more deals with searching or with our categories" = "מצא/י מבצעים נוספים על ידי חיפוש או בעזרת הקטגוריות שלנו";
+"Post deals that you find, and contirbute back to the community" = "שתף/י מבצעים טובים שאתה מוצא וסייע בהורדת המחירים";
+"Like, comment and share deals, so others will know what's good" = "תן/י לייק, הוסף/י תגובה ושתף/י מבצעים, כך שכולנו נדע מה טוב";
 "Skip" = "דלג וכנס";
 
 "Report as Spam?" = "לדווח על פרסום זה?";
@@ -231,3 +233,7 @@
 "Store Added" = "החנות הוספה";
 "Thanks!" = "תודה!";
 "Tap Store Location" = "סימון מקום החנות";
+
+"Personalize" = "התאמה אישית";
+"Choose categories to get more personalized deals in your feed" = "בחר/י את הקטגוריות המועדפות עליך כדי לקבל לפיד מבצעים שיעניינו אותך";
+"There was a problem" = "הייתה בעיה";

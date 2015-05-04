@@ -35,6 +35,10 @@
         [self enterSearchMode];
         self.searched = NO;
     }
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Explore Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)initialize

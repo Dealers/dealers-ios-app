@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <AWSiOSSDKv2/S3.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
 #import "CommentTableViewCell.h"
@@ -18,8 +19,9 @@
 #import "ActivityTypeWhatsApp.h"
 #import "Report.h"
 #import "MBProgressHUD.h"
+#import "GAITrackedViewController.h"
 
-@interface ViewDealViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, MBProgressHUDDelegate> {
+@interface ViewDealViewController : GAITrackedViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, MBProgressHUDDelegate> {
     
     BOOL shouldAddID, shouldRemoveID;
     NSInteger commentsPreviewCount;

@@ -14,6 +14,9 @@
 #import "Deal.h"
 #import "Store.h"
 #import "Dealer.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 #import "MBProgressHUD.h"
 

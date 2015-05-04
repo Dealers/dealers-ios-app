@@ -27,6 +27,7 @@
     
     self.title = NSLocalizedString(@"Settings", nil);
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.personalizeLabel.text = NSLocalizedString(@"Personalize", nil);
     
     appDelegate = [[UIApplication sharedApplication] delegate];
     
@@ -54,6 +55,10 @@
         self.facebookConnectionIndicator.text = NSLocalizedString(@"Not Connected", nil);
         self.facebookConnectionIndicator.textColor = [UIColor lightGrayColor];
     }
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Settings Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)setProgressIndicator
@@ -87,8 +92,14 @@
 {
     switch (indexPath.section) {
         case 0:
-            // Edit Profile:
-            [self pushEditProfileView];
+            if (indexPath.row == 0) {
+                // Edit Profile:
+                [self pushEditProfileView];
+            } else {
+                // Personalize:
+                PersonalizeTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Personalize"];
+                [self.navigationController pushViewController:ptvc animated:YES];
+            }
             break;
         case 1:
             // Facebook Connection:

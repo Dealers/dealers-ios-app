@@ -168,6 +168,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     self.didChangesInComments = NO;
     shouldAddID = NO;
     shouldRemoveID = NO;
+    self.screenName = @"View Deal";
     
     textGray = [appDelegate textGrayColor];
 }

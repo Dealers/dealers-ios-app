@@ -33,6 +33,10 @@
     [[self transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"Navigation Bar Shade"]];
     } completion:nil];
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Add Store - Store Location Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

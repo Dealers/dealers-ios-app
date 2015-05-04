@@ -15,12 +15,16 @@
 #import "WhereIsTheDeal.h"
 #import "ChooseCategoryTableViewController.h"
 #import "MBProgressHUD.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface EditDealTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate> {
     
     BOOL isFrontCamera, isSessionRunning, shouldDealloc;
     MBProgressHUD *illogicalPercentage, *lastPriceWithoutPrice, *uploadingDeal;
     UIColor *placeholderColor;
+    
 }
 
 @property AppDelegate *appDelegate;

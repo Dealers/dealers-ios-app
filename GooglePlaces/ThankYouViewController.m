@@ -22,6 +22,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self setThankYouMessage];
     [self setOkButton];
+    self.screenName = @"Add Deal - Thank You Screen";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     
@@ -31,13 +32,14 @@
         
         [self facebookShare];
         self.shouldDismiss = NO;
-        
+        [appDelegate logButtonPress:@"Shared the deal with Facebook"];
     }
     
     if (self.wasWhatsAppSelected) {
         
         [self whatsAppShare];
         self.shouldDismiss = NO;
+        [appDelegate logButtonPress:@"Shared the deal with WhatsApp"];
     }
     
     if (self.shouldDismiss) {

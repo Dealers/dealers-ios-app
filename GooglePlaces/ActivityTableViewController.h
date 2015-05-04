@@ -12,7 +12,9 @@
 #import "Notification.h"
 #import "ViewDealViewController.h"
 #import "ProfileTableViewController.h"
-
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface ActivityTableViewController : UITableViewController {
     

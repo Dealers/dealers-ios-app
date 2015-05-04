@@ -12,8 +12,9 @@
 #import "EnterPasscodeViewController.h"
 #import "MBProgressHUD.h"
 #import "User.h"
+#import "GAITrackedViewController.h"
 
-@interface OpeningScreenViewController : UIViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
+@interface OpeningScreenViewController : GAITrackedViewController <UINavigationBarDelegate, UINavigationBarDelegate, MBProgressHUDDelegate>
 {
     MBProgressHUD *loggingInFacebook, *noConnection;
     FBGraphObject *facebookInfo;

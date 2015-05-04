@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -31,13 +30,13 @@
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="20" text="Notification Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="TlO-Hc-18t" customClass="ElasticLabel">
-                        <rect key="frame" x="65" y="10" width="240" height="20"/>
+                        <rect key="frame" x="65" y="10" width="239" height="20"/>
                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="17" text="Upload Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="V8k-ER-m1d">
-                        <rect key="frame" x="65" y="32" width="240" height="17"/>
+                        <rect key="frame" x="65" y="32" width="239" height="17"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                         <color key="textColor" red="0.56862747669219971" green="0.56862747669219971" blue="0.62745100259780884" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -54,19 +53,19 @@
                     <constraint firstItem="dB5-gM-u4b" firstAttribute="top" secondItem="PEK-Dh-M5b" secondAttribute="top" id="3sF-DO-RV5"/>
                     <constraint firstItem="V8k-ER-m1d" firstAttribute="left" secondItem="PEK-Dh-M5b" secondAttribute="right" constant="10" id="EqK-Da-Ogu"/>
                     <constraint firstItem="PEK-Dh-M5b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="JJh-6q-SIh"/>
-                    <constraint firstAttribute="rightMargin" secondItem="TlO-Hc-18t" secondAttribute="right" constant="7" id="JiD-xu-DUa"/>
+                    <constraint firstAttribute="right" secondItem="TlO-Hc-18t" secondAttribute="right" constant="16" id="JiD-xu-DUa"/>
                     <constraint firstItem="TlO-Hc-18t" firstAttribute="left" secondItem="pOy-fG-4eo" secondAttribute="left" id="RtU-lU-j1A"/>
                     <constraint firstItem="TlO-Hc-18t" firstAttribute="left" secondItem="PEK-Dh-M5b" secondAttribute="right" constant="10" id="bEb-zS-IsI"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="pOy-fG-4eo" secondAttribute="bottom" constant="-8" id="g3A-Q5-kd6"/>
+                    <constraint firstAttribute="bottom" secondItem="pOy-fG-4eo" secondAttribute="bottom" id="g3A-Q5-kd6"/>
                     <constraint firstItem="pOy-fG-4eo" firstAttribute="top" secondItem="V8k-ER-m1d" secondAttribute="bottom" constant="10" id="gMe-Jc-Zzt"/>
-                    <constraint firstAttribute="rightMargin" secondItem="V8k-ER-m1d" secondAttribute="right" constant="7" id="kCd-8R-kOE"/>
+                    <constraint firstAttribute="right" secondItem="V8k-ER-m1d" secondAttribute="right" constant="16" id="kCd-8R-kOE"/>
                     <constraint firstItem="dB5-gM-u4b" firstAttribute="bottom" secondItem="PEK-Dh-M5b" secondAttribute="bottom" id="nz3-Kv-B5g"/>
-                    <constraint firstItem="TlO-Hc-18t" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="oPd-2v-XSU"/>
+                    <constraint firstItem="TlO-Hc-18t" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="oPd-2v-XSU"/>
                     <constraint firstItem="V8k-ER-m1d" firstAttribute="top" secondItem="TlO-Hc-18t" secondAttribute="bottom" constant="2" id="ry4-nA-Dlc"/>
                     <constraint firstItem="PEK-Dh-M5b" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="15" id="sXh-tj-JvV"/>
                     <constraint firstItem="dB5-gM-u4b" firstAttribute="trailing" secondItem="PEK-Dh-M5b" secondAttribute="trailing" id="vOD-y3-qCf"/>
                     <constraint firstItem="dB5-gM-u4b" firstAttribute="leading" secondItem="PEK-Dh-M5b" secondAttribute="leading" id="wut-Bn-arg"/>
-                    <constraint firstAttribute="rightMargin" secondItem="pOy-fG-4eo" secondAttribute="right" constant="-8" id="x2j-93-Izp"/>
+                    <constraint firstAttribute="right" secondItem="pOy-fG-4eo" secondAttribute="right" id="x2j-93-Izp"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="80" minY="0.0" maxX="0.0" maxY="0.0"/>

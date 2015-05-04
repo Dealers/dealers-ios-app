@@ -18,6 +18,9 @@
 #import "Store.h"
 #import "StoreCategoriesOrganizer.h"
 #import "MBProgressHUD.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface WhatIsTheDeal2 : UITableViewController <UITextViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, MBProgressHUDDelegate> {
     

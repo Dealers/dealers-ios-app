@@ -27,6 +27,10 @@
 {
     [super viewDidAppear:animated];
     [self.emailTextField becomeFirstResponder];
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Sign In Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)initialize
@@ -39,29 +43,12 @@
 
 - (void)setLoadingAnimation
 {
+    [self.view layoutIfNeeded];
     loadingAnimation = [appDelegate loadingAnimationWhite];
     [self.signInBackground addSubview:loadingAnimation];
-    [self setConstraintsForLoadingAnimation];
+    CGPoint loadingAnimationCenter = CGPointMake(self.signInBackground.bounds.size.width / 2, self.signInBackground.bounds.size.height / 2);
+    loadingAnimation.center = loadingAnimationCenter;
     loadingAnimation.transform = CGAffineTransformMakeScale(0.001, 0.001);
-}
-
-- (void)setConstraintsForLoadingAnimation
-{
-    [self.signInBackground addConstraint:[NSLayoutConstraint constraintWithItem:loadingAnimation
-                                                                            attribute:NSLayoutAttributeCenterX
-                                                                            relatedBy:NSLayoutRelationEqual
-                                                                               toItem:self.signInBackground
-                                                                            attribute:NSLayoutAttributeCenterX
-                                                                           multiplier:1.0
-                                                                             constant:0]];
-    
-    [self.signInBackground addConstraint:[NSLayoutConstraint constraintWithItem:loadingAnimation
-                                                                            attribute:NSLayoutAttributeCenterY
-                                                                            relatedBy:NSLayoutRelationEqual
-                                                                               toItem:self.signInBackground
-                                                                            attribute:NSLayoutAttributeCenterY
-                                                                           multiplier:1.0
-                                                                             constant:0]];
 }
 
 - (void)setRoundCornersToButton
