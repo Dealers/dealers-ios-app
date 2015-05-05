@@ -3410,7 +3410,7 @@ Privacy Policy</string>
                         <sections>
                             <tableViewSection id="EOv-U3-01t" userLabel="Table View Section - Basic Info">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JTV-ir-zEv">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JTV-ir-zEv">
                                         <rect key="frame" x="0.0" y="138" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JTV-ir-zEv" id="Ncu-RS-QqI">
@@ -3434,12 +3434,12 @@ Privacy Policy</string>
                                                 <constraint firstItem="XNh-qj-LOV" firstAttribute="left" secondItem="t1l-2S-c8t" secondAttribute="right" constant="8" id="9j6-Ds-97W"/>
                                                 <constraint firstAttribute="centerY" secondItem="XNh-qj-LOV" secondAttribute="centerY" constant="-0.5" id="U89-P3-bdl"/>
                                                 <constraint firstAttribute="centerY" secondItem="t1l-2S-c8t" secondAttribute="centerY" id="k46-Fh-oCn"/>
-                                                <constraint firstItem="t1l-2S-c8t" firstAttribute="left" secondItem="Ncu-RS-QqI" secondAttribute="leftMargin" constant="7" id="lwV-Gn-ylU"/>
+                                                <constraint firstItem="t1l-2S-c8t" firstAttribute="left" secondItem="Ncu-RS-QqI" secondAttribute="left" constant="15" id="lwV-Gn-ylU"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="zUv-tC-ewq">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="zUv-tC-ewq">
                                         <rect key="frame" x="0.0" y="226" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zUv-tC-ewq" id="RIb-32-8l9">
@@ -3464,7 +3464,7 @@ Privacy Policy</string>
                                                 <constraint firstItem="da7-LK-I96" firstAttribute="left" secondItem="J7d-Nu-hu3" secondAttribute="right" constant="8" id="Xi4-AG-VzE"/>
                                                 <constraint firstAttribute="centerY" secondItem="da7-LK-I96" secondAttribute="centerY" constant="-0.5" id="bWz-lF-7fq"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="da7-LK-I96" secondAttribute="right" constant="7" id="jYy-sm-Avs"/>
-                                                <constraint firstItem="J7d-Nu-hu3" firstAttribute="left" secondItem="RIb-32-8l9" secondAttribute="leftMargin" constant="7" id="lm1-nd-gmi"/>
+                                                <constraint firstItem="J7d-Nu-hu3" firstAttribute="left" secondItem="RIb-32-8l9" secondAttribute="left" constant="15" id="lm1-nd-gmi"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -3474,7 +3474,7 @@ Privacy Policy</string>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="E9p-6M-fRf">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="E9p-6M-fRf">
                                         <rect key="frame" x="0.0" y="182" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E9p-6M-fRf" id="xk3-7X-dHf">
@@ -3497,7 +3497,7 @@ Privacy Policy</string>
                                                 <constraint firstAttribute="centerY" secondItem="BUp-uj-oWJ" secondAttribute="centerY" id="9g5-0C-Xey"/>
                                                 <constraint firstAttribute="centerY" secondItem="UaJ-P1-JjS" secondAttribute="centerY" constant="-0.5" id="IBP-sL-IwN"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="UaJ-P1-JjS" secondAttribute="right" constant="7" id="RC0-Z1-scN"/>
-                                                <constraint firstItem="BUp-uj-oWJ" firstAttribute="left" secondItem="xk3-7X-dHf" secondAttribute="leftMargin" constant="7" id="RTm-nk-e6c"/>
+                                                <constraint firstItem="BUp-uj-oWJ" firstAttribute="left" secondItem="xk3-7X-dHf" secondAttribute="left" constant="15" id="RTm-nk-e6c"/>
                                                 <constraint firstItem="UaJ-P1-JjS" firstAttribute="left" secondItem="BUp-uj-oWJ" secondAttribute="right" constant="8" id="ftL-T9-Cgf"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -3539,7 +3539,7 @@ Privacy Policy</string>
                                                 <constraint firstAttribute="centerY" secondItem="UzQ-v9-v5a" secondAttribute="centerY" constant="-0.5" id="5gW-JM-UnG"/>
                                                 <constraint firstItem="8Ny-SU-LxZ" firstAttribute="left" secondItem="6gx-fy-EFt" secondAttribute="right" constant="8" id="AFb-fb-wa9"/>
                                                 <constraint firstAttribute="centerY" secondItem="8Ny-SU-LxZ" secondAttribute="centerY" constant="-0.5" id="QHj-du-bPI"/>
-                                                <constraint firstItem="6gx-fy-EFt" firstAttribute="left" secondItem="R1t-nB-py2" secondAttribute="leftMargin" constant="7" id="hsj-ah-MQM"/>
+                                                <constraint firstItem="6gx-fy-EFt" firstAttribute="left" secondItem="R1t-nB-py2" secondAttribute="left" constant="15" id="hsj-ah-MQM"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="UzQ-v9-v5a" secondAttribute="right" constant="7" id="swZ-Nm-g8b"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -3592,7 +3592,7 @@ Privacy Policy</string>
                                             <constraints>
                                                 <constraint firstItem="3mD-G1-bHE" firstAttribute="left" secondItem="bYH-sC-heQ" secondAttribute="right" constant="8" id="2OK-IE-rKb"/>
                                                 <constraint firstAttribute="centerY" secondItem="3mD-G1-bHE" secondAttribute="centerY" constant="-0.5" id="X3b-yO-hCJ"/>
-                                                <constraint firstItem="bYH-sC-heQ" firstAttribute="left" secondItem="Yjf-v3-7s4" secondAttribute="leftMargin" constant="7" id="iby-tO-ytP"/>
+                                                <constraint firstItem="bYH-sC-heQ" firstAttribute="left" secondItem="Yjf-v3-7s4" secondAttribute="left" constant="15" id="iby-tO-ytP"/>
                                                 <constraint firstAttribute="centerY" secondItem="bYH-sC-heQ" secondAttribute="centerY" constant="-0.5" id="s5A-va-Tub"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -3625,7 +3625,7 @@ Privacy Policy</string>
                                                 <constraint firstAttribute="rightMargin" secondItem="ehp-Bc-hii" secondAttribute="right" constant="7" id="4US-JQ-qOa"/>
                                                 <constraint firstAttribute="centerY" secondItem="ehp-Bc-hii" secondAttribute="centerY" constant="-0.5" id="YzO-9o-Fs0"/>
                                                 <constraint firstAttribute="centerY" secondItem="Fiu-qk-N1t" secondAttribute="centerY" id="aws-cs-SF8"/>
-                                                <constraint firstItem="Fiu-qk-N1t" firstAttribute="left" secondItem="m92-bO-BlN" secondAttribute="leftMargin" constant="7" id="fpV-7M-TFQ"/>
+                                                <constraint firstItem="Fiu-qk-N1t" firstAttribute="left" secondItem="m92-bO-BlN" secondAttribute="left" constant="15" id="fpV-7M-TFQ"/>
                                                 <constraint firstItem="ehp-Bc-hii" firstAttribute="left" secondItem="Fiu-qk-N1t" secondAttribute="right" constant="8" id="pGq-d6-UUZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -3648,7 +3648,7 @@ Privacy Policy</string>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Npc-YS-S6d" firstAttribute="left" secondItem="MSD-vV-dPh" secondAttribute="leftMargin" constant="7" id="0tt-Sp-OTH"/>
+                                                <constraint firstItem="Npc-YS-S6d" firstAttribute="left" secondItem="MSD-vV-dPh" secondAttribute="left" constant="15" id="0tt-Sp-OTH"/>
                                                 <constraint firstAttribute="centerY" secondItem="Npc-YS-S6d" secondAttribute="centerY" constant="-0.5" id="4qA-lc-Gda"/>
                                                 <constraint firstItem="R4s-hf-cyl" firstAttribute="left" secondItem="Npc-YS-S6d" secondAttribute="right" constant="8" id="If8-Bl-obn"/>
                                                 <constraint firstAttribute="centerY" secondItem="R4s-hf-cyl" secondAttribute="centerY" id="f5W-41-5sL"/>
