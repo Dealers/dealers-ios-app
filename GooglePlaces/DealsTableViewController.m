@@ -37,6 +37,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     [self initialize];
     [self setNotificationObservers];
     [self setRefreshControl];
+    [self startLocationTrack];
     [self configurePaginator];
     [self setLoadingView];
     
@@ -146,6 +147,19 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     self.pageIsLoading = YES;
 }
 
+- (void)startLocationTrack
+{
+    if (!self.locationManager) {
+        self.locationManager = [[CLLocationManager alloc] init];
+    }
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+    [self.locationManager startMonitoringSignificantLocationChanges];
+}
+
 - (void)configurePaginator
 {
     __weak typeof(self) weakSelf = self;
@@ -160,6 +174,13 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
         } else if ([selfViewController isEqualToString:NSLocalizedString(@"Search", nil)]) {
             requestString = [NSString stringWithFormat:@"/dealsearch/?page=:currentPage&per_page=:perPage&search=%@", self.searchTermFromExplore];
             requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        }
+        
+        if (self.locationManager.location.coordinate.latitude && self.locationManager.location.coordinate.longitude) {
+            NSString *locationParameters = [NSString stringWithFormat:@"&ll=%f,%f",
+                                            self.locationManager.location.coordinate.latitude,
+                                            self.locationManager.location.coordinate.longitude];
+            requestString = [requestString stringByAppendingString:locationParameters];
         }
         
         self.paginator = [[RKObjectManager sharedManager] paginatorWithPathPattern:requestString];
@@ -423,6 +444,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
             DealTableViewCell *cell = (DealTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
             
             cell.photo.image = [notification.userInfo objectForKey:@"image"];
+            cell.photo = [appDelegate contentModeForImageView:cell.photo];
             [UIView animateWithDuration:0.5 animations:^{ cell.photo.alpha = 1.0; }];
             break;
         }
@@ -478,6 +500,16 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     }
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation* location = [locations lastObject];
+    NSTimeInterval howRecent = [location.timestamp timeIntervalSinceNow];
+    if (fabs(howRecent) < 60.0) {
+        // If the event is recent, do something with it.
+        [self.locationManager stopMonitoringSignificantLocationChanges];
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -514,7 +546,6 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     [self setBasicDetailsForCell:cell deal:deal];
     [self setPriceAndDiscountForCell:cell deal:deal];
     [self setLikesCounterForCell:cell deal:deal];
-    [self setSeparatorForLastCell:cell indexPath:indexPath];
 }
 
 - (Deal *)prepareDeal:(Deal *)deal
@@ -538,8 +569,8 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 {
     if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
         CGFloat imageWidth = [UIScreen mainScreen].bounds.size.width;
-        cell.photo.backgroundColor = [UIColor groupTableViewBackgroundColor];
         cell.photoHeightConstraint.constant = imageWidth * 0.678125; // 217:320 ratio
+        cell.photo.backgroundColor = [UIColor whiteColor];
         [self setImageForCell:cell deal:deal indexPath:indexPath];
     } else {
         cell.photoHeightConstraint.constant = NO_PHOTO_BACKGROUND_HEIGHT;
@@ -559,6 +590,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     } else {
         cell.photo.alpha = 1.0;
         cell.photo.image = deal.photo1;
+        cell.photo = [appDelegate contentModeForImageView:cell.photo];
     }
 }
 
@@ -579,6 +611,11 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 {
     cell.title.text = deal.title;
     cell.store.text = deal.store.name;
+    if ([deal.type isEqualToString:@"Online"]) {
+        cell.storeIcon.image = [UIImage imageNamed:@"Online Icon Gray"];
+    } else {
+        cell.storeIcon.image = [UIImage imageNamed:@"Local Icon Gray"];
+    }
 }
 
 - (void)setPriceAndDiscountForCell:(DealTableViewCell *)cell deal:(Deal *)deal

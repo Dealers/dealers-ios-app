@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import <AWSiOSSDKv2/S3.h>
 #import <AWSiOSSDKv2/AWSCore.h>
-#import "WhereIsTheDeal.h"
+#import "DealersTabBarController.h"
 #import "ViewDealViewController.h"
 #import "KeychainItemWrapper.h"
 #import "PushNotificationView.h"
@@ -21,7 +21,10 @@
 #define AWS_SECRET_ACCESS_KEY @"yWeDltbIFIh+mrKJK1YMljieNKyHO8ZuKz2GpRBO"
 #define AWS_S3_BUCKET_NAME @"dealers-app"
 
-@interface AppDelegate()
+@interface AppDelegate() {
+    
+    DealersTabBarController *tabBarController;
+}
 
 @end
 
@@ -29,7 +32,6 @@
 
 @synthesize window = _window;
 @synthesize storyboard;
-@synthesize tabBarController;
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     
@@ -260,7 +262,7 @@
                                               
                                               // Post device
                                               [self postDevice];
-                                          
+                                              
                                           } else {
                                               
                                               // Something's wrong. Try again
@@ -307,7 +309,7 @@
         
         self.device.badge = [NSNumber numberWithInteger:0];
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-        UITabBarItem *activityItem = [self.tabBarController.tabBar.items objectAtIndex:4];
+        UITabBarItem *activityItem = [tabBarController.tabBar.items objectAtIndex:4];
         activityItem.badgeValue = nil;
         [self patchDeviceFor:@"badgeReset"];
     }
@@ -354,16 +356,6 @@
     activity.image = [UIImage imageNamed:@"Activity Tab"];
     activity.selectedImage = [UIImage imageNamed:@"Activity Tab Selected"];
     
-    // Adding the Add Deal button to the UITabBarController:
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(tabBarController.tabBar.center.x-30.5,tabBarController.tabBar.center.y-30.5, 61, 61);
-    [button setImage:[UIImage imageNamed:@"Add Deal"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"Add Deal Highlighted"] forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(addDealVC:) forControlEvents:UIControlEventTouchUpInside];
-    button.userInteractionEnabled = YES;
-    button.tag = 123;
-    [tabBarController.view addSubview:button];
-    
     // Register for push notifications
     UIApplication *application = [UIApplication sharedApplication];
     
@@ -373,7 +365,7 @@
         UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
         [application registerUserNotificationSettings:mySettings];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
-    
+        
     } else {
         
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
@@ -385,6 +377,13 @@
     if (waitingForTabBarController) {
         [self presentNotificationOfType:waitingForTabBarController];
         waitingForTabBarController = nil;
+    }
+}
+
+- (void)removeTabBar
+{
+    if (tabBarController) {
+        tabBarController = nil;
     }
 }
 
@@ -405,13 +404,6 @@
                      completion:^(BOOL finished){
                          [tabBarController.view bringSubviewToFront:plusButton];
                      }];
-}
-
-- (void)addDealVC: (id)sender {
-    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"addDealNavController"];
-    WhereIsTheDeal *tvc = (WhereIsTheDeal *)[navigationController topViewController];
-    tvc.cameFrom = @"Add Deal";
-    [tabBarController presentViewController:navigationController animated:YES completion:nil];
 }
 
 
@@ -1067,6 +1059,20 @@
     return loadingAnimationImages;
 }
 
+- (UIImageView *)contentModeForImageView:(UIImageView *)imageView
+{
+    if (imageView.image) {
+        CGFloat ratio = imageView.image.size.height / imageView.image.size.width;
+        if (ratio > 0.52 && ratio < 0.81) {
+            // Gives a ratio of between 320:180 to 320:240
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+        } else {
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+        }
+    }
+    return imageView;
+}
+
 
 #pragma mark - Dictionaries & Arrays
 
@@ -1203,8 +1209,8 @@
 
 - (NSString *)baseURL
 {
-    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
-//    return @"http://52.17.170.180";
+    //    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
+    return @"http://www.dealers-web.com";
 }
 
 - (RKObjectMapping *)dealMapping
@@ -1518,10 +1524,10 @@
 {
     RKObjectMapping *categoryMapping = [RKObjectMapping mappingForClass:[Category class]];
     [categoryMapping addAttributeMappingsFromDictionary: @{
-                                                         @"id" : @"categoryID",
-                                                         @"dealer" : @"dealerID",
-                                                         @"category" : @"categoryKey"
-                                                         }];
+                                                           @"id" : @"categoryID",
+                                                           @"dealer" : @"dealerID",
+                                                           @"category" : @"categoryKey"
+                                                           }];
     
     return categoryMapping;
 }
@@ -2148,8 +2154,8 @@
     }
     [FBAppCall handleDidBecomeActive];
     
-    if (self.tabBarController && [UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
-        UITabBarItem *activityItem = [self.tabBarController.tabBar.items objectAtIndex:4];
+    if (tabBarController && [UIApplication sharedApplication].applicationIconBadgeNumber > 0) {
+        UITabBarItem *activityItem = [tabBarController.tabBar.items objectAtIndex:4];
         activityItem.badgeValue = [NSNumber numberWithInteger:[UIApplication sharedApplication].applicationIconBadgeNumber].stringValue;
     }
 }

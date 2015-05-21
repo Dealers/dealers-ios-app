@@ -16,14 +16,16 @@
 #import "EditDealTableViewController.h"
 #import "CommentsTableViewController.h"
 #import "DealersTableViewController.h"
+#import "WhereIsTheDealOnline.h"
 #import "ActivityTypeWhatsApp.h"
 #import "Report.h"
+#import "PaddedLabel.h"
 #import "MBProgressHUD.h"
 #import "GAITrackedViewController.h"
 
 @interface ViewDealViewController : GAITrackedViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, MBProgressHUDDelegate> {
     
-    BOOL shouldAddID, shouldRemoveID;
+    BOOL shouldAddID, shouldRemoveID, descriptionMaximized;
     NSInteger commentsPreviewCount;
     CGFloat headerHeight, footerHeight;
     CLLocationCoordinate2D lastCoords;
@@ -64,12 +66,15 @@
 
 @property (weak, nonatomic) IBOutlet ElasticLabel *dealTitle;
 @property (weak, nonatomic) IBOutlet ElasticLabel *store;
+@property (weak, nonatomic) IBOutlet UIButton *linkToStore;
 @property (weak, nonatomic) IBOutlet UIImageView *priceIcon;
 @property (weak, nonatomic) IBOutlet UILabel *price;
 @property (weak, nonatomic) IBOutlet UILabel *discount;
 @property (weak, nonatomic) IBOutlet UILabel *category;
 @property (weak, nonatomic) IBOutlet UILabel *expirationDate;
-@property (weak, nonatomic) IBOutlet ElasticLabel *dealDescription;
+@property (weak, nonatomic) IBOutlet UITextView *dealDescription;
+@property (weak, nonatomic) IBOutlet UIButton *readMoreButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *likes;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 
@@ -84,6 +89,7 @@
 @property UIView *tableViewFooter;
 @property NSMutableArray *cellsHeights;
 
+@property (weak, nonatomic) IBOutlet UIView *storeContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @property UIView *locationCircle;
 @property (weak, nonatomic) IBOutlet ElasticLabel *storeTitle;
@@ -100,10 +106,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryIconHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceCategoryIconExpirationDateIconConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *expirationDateIconHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceExpirationDateIconDescriptionIconConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionIconHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceBasicDetailsLikesConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceDescriptionLabelLikeIconConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceExpirationDateIconDescriptionConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readMoreButtonHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceReadMoreButtonLikesIcon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceDescriptionLikesIcon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *likesIconHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceLikesIconDealerProfilePicConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentsPreviewTableViewHeightConstraint;
@@ -122,7 +129,7 @@
 @property NSNumber *likeCounter;
 @property NSNumber *shareCounter;
 
-@property (retain) UIDocumentInteractionController * documentInteractionController;
+@property (retain) UIDocumentInteractionController *documentInteractionController;
 
 @property BOOL isDealLikedByUser;
 @property BOOL afterEditing;

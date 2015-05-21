@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AWSiOSSDKv2/S3.h>
+#import <CoreLocation/CoreLocation.h>
 #import "AppDelegate.h"
 #import "ViewDealViewController.h"
 #import "Deal.h"
@@ -21,7 +22,7 @@
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
 
-@interface DealsTableViewController : UITableViewController <UIScrollViewDelegate> {
+@interface DealsTableViewController : UITableViewController <UIScrollViewDelegate, CLLocationManagerDelegate> {
     
     int firstPhotosCounter;
     NSString *selfViewController;
@@ -32,6 +33,8 @@
 @property AppDelegate *appDelegate;
 
 @property NSMutableArray *deals;
+
+@property CLLocationManager *locationManager;
 
 @property NSString *categoryFromExplore;
 @property NSString *searchTermFromExplore;

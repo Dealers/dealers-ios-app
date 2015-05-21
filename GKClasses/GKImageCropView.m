@@ -16,7 +16,7 @@
 
 static CGRect GKScaleRect(CGRect rect, CGFloat scale)
 {
-	return CGRectMake(rect.origin.x * scale, rect.origin.y * scale, rect.size.width * scale, rect.size.height * scale);
+	return CGRectMake(floor(rect.origin.x * scale), floor(rect.origin.y * scale), floor(rect.size.width * scale), floor(rect.size.height * scale));
 }
 
 @interface ScrollView : UIScrollView
@@ -132,11 +132,11 @@ static CGRect GKScaleRect(CGRect rect, CGFloat scale)
     
     if (self.imageToCrop.size.width > self.imageToCrop.size.height)
     {
-        scale = (self.imageToCrop.size.width < self.imageToCrop.size.height ?
+        scale = (self.imageToCrop.size.width <= self.imageToCrop.size.height ?
                  MAX(scaleWidth, scaleHeight) :
                  MIN(scaleWidth, scaleHeight));
     }else{
-        scale = (self.imageToCrop.size.width < self.imageToCrop.size.height ?
+        scale = (self.imageToCrop.size.width <= self.imageToCrop.size.height ?
                  MIN(scaleWidth, scaleHeight) :
                  MAX(scaleWidth, scaleHeight));
     }

@@ -162,7 +162,7 @@
 "S8i-ju-JWa.normalTitle" = "₪";
 
 /* Class = "UILabel"; text = "Description"; ObjectID = "U1W-BC-0Dc"; */
-"U1W-BC-0Dc.text" = "תאור נוסף";
+"U1W-BC-0Dc.text" = "עוד על המבצע";
 
 /* Class = "UISearchBar"; placeholder = "Not there? Type store here"; ObjectID = "U4o-rW-sgd"; */
 "U4o-rW-sgd.placeholder" = "חפש בתי עסק";

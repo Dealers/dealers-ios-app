@@ -24,7 +24,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.title = NSLocalizedString(@"Where is the deal?", nil);
     
     [self initialize];
@@ -33,7 +33,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     [self configureMapView];
     [self configureTableViews];
     [self configureLoadingView];
-    [self downloadStoresNearby];    
+    [self downloadStoresNearby];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -144,23 +144,23 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
                                   };
     
     [self.foursquareManager getObjectsAtPath:@"/v2/venues/search"
-                             parameters:queryParams
-                                success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                    
-                                    self.storesNearby = [self filterStores:mappingResult.array]; 
-                                    [self.nearbyTableView reloadData];
-                                    if (self.storesNearby.count == 0) {
-                                        [self errorLoadingStores: @"No stores around"];
-                                    } else {
-                                        [self updateNearbyTableView];
-                                    }
-                                }
-                                failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                    
-                                    NSLog(@"There was an error with the loading of the stores nearby: %@", error);
-                                    [self errorLoadingStores:@"Connection error"];
-                                    [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.3];
-                                }];
+                                  parameters:queryParams
+                                     success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                         
+                                         self.storesNearby = [self filterStores:mappingResult.array];
+                                         [self.nearbyTableView reloadData];
+                                         if (self.storesNearby.count == 0) {
+                                             [self errorLoadingStores: @"No stores around"];
+                                         } else {
+                                             [self updateNearbyTableView];
+                                         }
+                                     }
+                                     failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                         
+                                         NSLog(@"There was an error with the loading of the stores nearby: %@", error);
+                                         [self errorLoadingStores:@"Connection error"];
+                                         [self performSelector:@selector(hideWhiteCoverView) withObject:nil afterDelay:0.3];
+                                     }];
 }
 
 - (void)downloadStoresSearched:(NSString *)text
@@ -181,15 +181,15 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
                                   };
     
     [self.foursquareManager getObjectsAtPath:@"/v2/venues/search"
-                             parameters:queryParams
-                                success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                    
-                                    self.storesSearched = [self filterStores:mappingResult.array];
-                                    [self.searchTableView reloadData];
-                                }
-                                failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                    NSLog(@"There was an error with the loading of the store search: %@", error);
-                                }];
+                                  parameters:queryParams
+                                     success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                         
+                                         self.storesSearched = [self filterStores:mappingResult.array];
+                                         [self.searchTableView reloadData];
+                                     }
+                                     failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                         NSLog(@"There was an error with the loading of the store search: %@", error);
+                                     }];
 }
 
 - (NSMutableArray *)filterStores:(NSArray *)storesArray
@@ -336,7 +336,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 - (void)updateNearbyTableView
 {
     CGFloat allCellsHeight = (self.storesNearby.count + 1) * self.nearbyTableView.rowHeight + self.nearbyTableView.tableFooterView.frame.size.height;
-
+    
     if (allCellsHeight > self.nearbyTableViewMinHeight) {
         self.heightNearByTableViewConstraint.constant = allCellsHeight;
         [self.view layoutIfNeeded];
@@ -458,9 +458,14 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 
 - (void)storeSelectedForAddDeal:(Store *)store
 {
-    WhatIsTheDeal1 *witd1vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhatIsTheDeal1ID"];
-    witd1vc.store = store;
-    [self.navigationController pushViewController:witd1vc animated:YES];
+    if (self.cashedInstance) {
+        self.cashedInstance.store = store;
+        [self.navigationController pushViewController:self.cashedInstance animated:YES];
+    } else {
+        WhatIsTheDeal1 *witd1vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhatIsTheDeal1ID"];
+        witd1vc.store = store;
+        [self.navigationController pushViewController:witd1vc animated:YES];
+    }
 }
 
 - (void)storeSelectedForEditDeal:(Store *)store
@@ -518,7 +523,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{    
+{
     if (searchText.length == 0) {
         [UIView animateWithDuration:0.2
                          animations:^{ self.searchTableView.alpha = 0; }
@@ -615,7 +620,7 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
                          self.verticalSpaceHideMapButtonConstraint.constant = -58.0;
                      }];
 }
-     
+
 - (void)presentCloseMapButton
 {
     self.verticalSpaceHideMapButtonConstraint.constant = 0;

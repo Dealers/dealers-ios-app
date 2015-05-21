@@ -14,6 +14,7 @@
 #import "Deal.h"
 #import "Store.h"
 #import "Dealer.h"
+#import "ElasticLabel.h"
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
@@ -24,6 +25,7 @@
     
     BOOL isFrontCamera, isSessionRunning, shouldDealloc;
     AVCaptureDeviceInput *frontCameraInput, *backCameraInput;
+    CGFloat titleHeight, descriptionHeight;
     MBProgressHUD *blankTitleIndicator, *tooMuchIndicator, *illogicalPercentage;
     
 }
@@ -37,6 +39,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titlePlaceholder;
 @property (nonatomic) UILabel *countLabel;
 @property (nonatomic) UIView *countContainer;
+@property (weak, nonatomic) IBOutlet ElasticLabel *descriptionPlaceholder;
+@property (weak, nonatomic) IBOutlet UITextView *dealDescription;
 
 @property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property AVCaptureSession *session;

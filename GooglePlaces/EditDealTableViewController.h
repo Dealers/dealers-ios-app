@@ -15,6 +15,7 @@
 #import "WhereIsTheDeal.h"
 #import "ChooseCategoryTableViewController.h"
 #import "MBProgressHUD.h"
+#import "ElasticLabel.h"
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
@@ -45,7 +46,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *dealCategory;
 @property (weak, nonatomic) IBOutlet UILabel *dealExpirationDate;
-@property (weak, nonatomic) IBOutlet UILabel *dealDescription;
+@property (weak, nonatomic) IBOutlet ElasticLabel *dealDescription;
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UITableViewCell *datePickerCell;

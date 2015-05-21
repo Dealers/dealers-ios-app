@@ -12,8 +12,8 @@
 #import "AppDelegate.h"
 #import "StoreCategoriesOrganizer.h"
 #import "StoreTableViewCell.h"
-#import "AddStoreTableViewController.h"
 #import "WhatIsTheDeal1.h"
+#import "AddStoreTableViewController.h"
 #import "EditDealTableViewController.h"
 #import "GAITrackedViewController.h"
 
@@ -51,6 +51,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *loadingAnimation;
 @property (weak, nonatomic) IBOutlet UILabel *loadingMessage;
 
+@property WhatIsTheDeal1 *cashedInstance;
 @property NSString *cameFrom;
 
 

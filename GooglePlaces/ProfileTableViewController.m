@@ -787,6 +787,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
                 DealTableViewCell *cell = (DealTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPathes[i]];
                 
                 cell.photo.image = [notification.userInfo objectForKey:@"image"];
+                cell.photo = [appDelegate contentModeForImageView:cell.photo];
                 [UIView animateWithDuration:0.5 animations:^{ cell.photo.alpha = 1.0; }];
                 break;
             }
@@ -897,13 +898,17 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     
     cell.title.text = deal.title;
     cell.store.text = deal.store.name;
+    if ([deal.type isEqualToString:@"Online"]) {
+        cell.storeIcon.image = [UIImage imageNamed:@"Online Icon Gray"];
+    } else {
+        cell.storeIcon.image = [UIImage imageNamed:@"Local Icon Gray"];
+    }
     
     [self prepareDeal:deal];
     [self checkIfHasImageForCell:cell deal:deal indexPath:indexPath];
     [self checkIfDealExpiredForCell:cell deal:deal];
     [self setPriceAndDiscountForCell:cell deal:deal];
     [self setLikesCounterForCell:cell deal:deal];
-    [self setSeparatorForLastCell:cell indexPath:indexPath];
 }
 
 - (Deal *)prepareDeal:(Deal *)deal
@@ -928,7 +933,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     if (deal.photoURL1.length > 2 && ![deal.photoURL1 isEqualToString:@"None"]) {
         CGFloat imageWidth = [UIScreen mainScreen].bounds.size.width;
         cell.photoHeightConstraint.constant = imageWidth * 0.678125; // 217:320 ratio
-        cell.photo.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        cell.photo.backgroundColor = [UIColor whiteColor];
         [self setImageForCell:cell deal:deal indexPath:indexPath];
     } else {
         cell.photoHeightConstraint.constant = NO_PHOTO_BACKGROUND_HEIGHT;
@@ -948,6 +953,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     } else {
         cell.photo.alpha = 1.0;
         cell.photo.image = deal.photo1;
+        cell.photo = [appDelegate contentModeForImageView:cell.photo];
     }
 }
 

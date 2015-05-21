@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import "DealersTabBarController.h"
 #import "Deal.h"
 #import "Store.h"
 #import "Dealer.h"
@@ -35,7 +34,6 @@
 @property (nonatomic) UIWindow *window;
 @property (nonatomic) UIWindow *pushNotificationsWindow;
 @property (nonatomic) UIStoryboard *storyboard;
-@property (nonatomic) DealersTabBarController *tabBarController;
 @property (nonatomic)  NSString *Animate_first;
 
 @property (nonatomic)  Dealer *dealer;
@@ -56,6 +54,7 @@
 
 
 - (void)setTabBarController;
+- (void)removeTabBar;
 - (void)showPlusButton;
 - (void)hidePlusButton;
 - (void)resetBadgeCounter;
@@ -87,6 +86,7 @@
 - (UIImageView *)loadingAnimationPurple;
 - (NSArray *)loadingAnimationWhiteImages;
 - (NSArray *)loadingAnimationPurpleImages;
+- (UIImageView *)contentModeForImageView:(UIImageView *)imageView;
 
 - (NSDictionary *)getCurrenciesDictionary;
 - (NSString *)getCurrencySign:(NSString *)currencyKey;

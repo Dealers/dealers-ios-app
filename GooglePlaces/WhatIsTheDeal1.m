@@ -1,4 +1,4 @@
-//
+ //
 //  WhatIsTheDeal1.m
 //  Dealers
 //
@@ -7,8 +7,11 @@
 //
 
 #import "WhatIsTheDeal1.h"
+#import "WhereIsTheDeal.h"
 
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
+#define TITLE_HEIGHT 54.0
+#define DESCRIPTION_HEIGHT 92.0
 
 @interface WhatIsTheDeal1 ()
 
@@ -51,6 +54,18 @@
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if ([viewControllers indexOfObject:self] == NSNotFound) {
+        // View is disappearing because it was popped from the stack
+        WhereIsTheDeal *witdvc = (WhereIsTheDeal *)viewControllers.lastObject;
+        witdvc.cashedInstance = self;
+    }
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -73,10 +88,27 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGFloat height = tableView.rowHeight;
     if (indexPath.row == 0) {
-        return tableView.bounds.size.width * 0.678125; // 217:320 ratio
+        height = tableView.bounds.size.width * 0.678125; // 217:320 ratio
+    } else if (indexPath.row == 1) {
+        height = titleHeight; // 4 for extra padding
+        if (height <= TITLE_HEIGHT) {
+            titleHeight = TITLE_HEIGHT;
+            return titleHeight;
+        } else {
+            height = titleHeight + 13.0;
+        }
+    } else if (indexPath.row == 2) {
+        height = descriptionHeight;
+        if (height <= DESCRIPTION_HEIGHT) {
+            descriptionHeight = DESCRIPTION_HEIGHT;
+            return descriptionHeight;
+        } else {
+            height = descriptionHeight + 10.0;
+        }
     }
-    return 100;
+    return height;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -129,10 +161,16 @@
 
 - (void)setTextViewSettings
 {
+    self.titlePlaceholder.text = NSLocalizedString(@"Tell us about the deal...", nil);
+    self.descriptionPlaceholder.text = NSLocalizedString(@"Tell us more (optional)", nil);
+    
     if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         [self.dealTitle setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
         [self.dealTitle setTextAlignment:NSTextAlignmentRight];
         [self.titlePlaceholder setTextAlignment:NSTextAlignmentRight];
+        [self.dealDescription setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
+        [self.dealDescription setTextAlignment:NSTextAlignmentRight];
+        [self.descriptionPlaceholder setTextAlignment:NSTextAlignmentRight];
     }
 }
 
@@ -175,7 +213,7 @@
     tooMuchIndicator.mode = MBProgressHUDModeCustomView;
     tooMuchIndicator.labelText = NSLocalizedString(@"Title is too long", nil);
     tooMuchIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-    tooMuchIndicator.detailsLabelText = NSLocalizedString(@"120 characters max", nil);
+    tooMuchIndicator.detailsLabelText = NSLocalizedString(@"190 characters max", nil);
     tooMuchIndicator.detailsLabelFont = [UIFont fontWithName:@"Avenir-Light" size:15.0];
     tooMuchIndicator.animationType = MBProgressHUDAnimationZoomIn;
     
@@ -716,10 +754,10 @@
 - (void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image {
     
     CGFloat imageSizeDivider = image.size.width / 414.0;
-    UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider,
-                                                                             image.size.height / imageSizeDivider)];
+//    UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider,
+//                                                                             image.size.height / imageSizeDivider)];
     
-    [self addNewPhotoToList:resizedImage];
+    [self addNewPhotoToList:image];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -741,62 +779,90 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    int maxLength = 120;
-    
-    NSString *stringlength = [NSString stringWithString:self.dealTitle.text];
-    self.countLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(maxLength - stringlength.length)];
-    
-    if (stringlength.length > maxLength / 2) {
+    if (textView == self.dealTitle) {
+        int maxLength = 190;
         
-        [UIView animateWithDuration:0.3
-                         animations:^{
-                             self.countContainer.hidden = NO;
-                             self.countContainer.alpha = 0.7;
-                         }];
+        NSString *stringlength = [NSString stringWithString:self.dealTitle.text];
+        self.countLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(maxLength - stringlength.length)];
         
-        if (stringlength.length > maxLength) {
-            self.countLabel.backgroundColor = [UIColor redColor];
-            self.tooMuchText = YES;
-            self.countLabel.text = @"0";
-        } else {
-            self.countLabel.backgroundColor = [UIColor blackColor];
-            self.tooMuchText = NO;
-            self.countLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(maxLength - stringlength.length)];
-        }
-    } else {
-        if (self.countLabel.hidden == NO) {
+        if (stringlength.length > (maxLength / 3) * 2) {
+            
             [UIView animateWithDuration:0.3
                              animations:^{
-                                 self.countContainer.alpha = 0; }
-                             completion:^(BOOL finished) {
-                                 self.countContainer.hidden = YES;
+                                 self.countContainer.hidden = NO;
+                                 self.countContainer.alpha = 0.7;
                              }];
+            
+            if (stringlength.length > maxLength) {
+                self.countLabel.backgroundColor = [UIColor redColor];
+                self.tooMuchText = YES;
+                self.countLabel.text = @"0";
+            } else {
+                self.countLabel.backgroundColor = [UIColor blackColor];
+                self.tooMuchText = NO;
+                self.countLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(maxLength - stringlength.length)];
+            }
+        } else {
+            if (self.countLabel.hidden == NO) {
+                [UIView animateWithDuration:0.3
+                                 animations:^{
+                                     self.countContainer.alpha = 0; }
+                                 completion:^(BOOL finished) {
+                                     self.countContainer.hidden = YES;
+                                 }];
+            }
+        }
+        
+        CGSize sizeThatFitsTextView = [textView sizeThatFits:CGSizeMake(textView.frame.size.width, MAXFLOAT)];
+        [self adjustHeight:sizeThatFitsTextView.height toTextView:@"Title"];
+        
+        if (self.dealTitle.text.length == 0) {
+            self.titlePlaceholder.hidden = NO;
+        } else {
+            self.titlePlaceholder.hidden = YES;
+        }
+    
+    } else if (textView == self.dealDescription) {
+        CGSize sizeThatFitsTextView = [textView sizeThatFits:CGSizeMake(textView.frame.size.width, MAXFLOAT)];
+        [self adjustHeight:sizeThatFitsTextView.height toTextView:@"Description"];
+        
+        if (self.dealDescription.text.length == 0) {
+            self.descriptionPlaceholder.hidden = NO;
+        } else {
+            self.descriptionPlaceholder.hidden = YES;
         }
     }
-    
-    if (self.dealTitle.text.length == 0) {
-        self.titlePlaceholder.hidden = NO;
-    } else {
-        self.titlePlaceholder.hidden = YES;
+}
+
+- (void)adjustHeight:(CGFloat)height toTextView:(NSString *)textViewName
+{
+    if ([textViewName isEqualToString:@"Title"]) {
+        titleHeight = height;
+    } else if ([textViewName isEqualToString:@"Description"]) {
+        descriptionHeight = height;
     }
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 // Setting the return button as Done:
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if ([text isEqualToString:@"\n"]) {
-        
-        if (self.countLabel.hidden == NO) {
-            [UIView animateWithDuration:0.35
-                             animations:^{
-                                 self.countContainer.alpha = 0;
-                                 self.countContainer.hidden = YES;
-                             }];
+    if (textView == self.dealTitle) {
+        if ([text isEqualToString:@"\n"]) {
+            
+            if (self.countLabel.hidden == NO) {
+                [UIView animateWithDuration:0.35
+                                 animations:^{
+                                     self.countContainer.alpha = 0;
+                                     self.countContainer.hidden = YES;
+                                 }];
+            }
+            [self.view endEditing:YES];
+            [self performSelector:@selector(showHint) withObject:nil afterDelay:0.6];
+            return NO;
         }
-        [self.view endEditing:YES];
-        [self performSelector:@selector(showHint) withObject:nil afterDelay:0.6];
-        return NO;
     }
     return YES;
 }
@@ -845,7 +911,8 @@
     self.deal.type = @"Local";
     
     self.deal.title = self.dealTitle.text;
-    
+    self.deal.moreDescription = self.dealDescription.text;
+
     // Prepering photos (if exist) for upload
     
     if (self.photosArray.count > 0) {
@@ -888,7 +955,7 @@
         
     } else {
         
-        // There are now photos. Randomly pick a color number and save it in the photoURL1 attribute
+        // There are no photos. Randomly pick a color number and save it in the photoURL1 attribute
         int random = arc4random_uniform(4);
         self.deal.photoURL1 = [NSNumber numberWithInt:random].stringValue;
     }
@@ -922,6 +989,7 @@
     
     witd2vc.deal = self.deal;
     witd2vc.photosFileName = self.photosFileName;
+    
     
     witd2vc.cashedPrice = self.cashedPrice;
     witd2vc.cashedCurrency = self.cashedCurrency;

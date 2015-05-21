@@ -20,6 +20,8 @@ static CGFloat const iconsVerticalSpace = 12.0;
 static CGFloat const iconsLeftMargin = 15.0;
 static CGFloat const iconsLeftMarginSharedView = 18.0;
 static CGFloat const labelsLeftMarginSharedView = 48.0;
+static CGFloat const descriptionMaxHeight = 142.0;
+static CGFloat const descriptionCollapsedHeight = 98.0;
 static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 
 @implementation ViewDealViewController
@@ -168,6 +170,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     self.didChangesInComments = NO;
     shouldAddID = NO;
     shouldRemoveID = NO;
+    descriptionMaximized = NO;
     self.screenName = @"View Deal";
     
     textGray = [appDelegate textGrayColor];
@@ -346,7 +349,12 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     [self setLikesCounter];
     [self setDealerSection];
     [self configureCommentsPreviewTableView];
-    [self setMapAndStoreDetails];
+    
+    if ([self.deal.type isEqualToString:@"Online"]) {
+        [self.storeContainer removeFromSuperview];
+    } else {
+        [self setMapAndStoreDetails];
+    }
     
     [self.view layoutIfNeeded];
 }
@@ -369,6 +377,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     } else {
         self.imagesScrollViewHeightConstraint.constant = self.view.bounds.size.width * 0.678125; // 217:320 ratio
         self.capturedImage1.image = self.deal.photo1;
+        self.capturedImage1 = [appDelegate contentModeForImageView:self.capturedImage1];
     }
 }
 
@@ -408,6 +417,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
                 case 1:
                     if (self.deal.photo2) {
                         self.capturedImage2.image = self.deal.photo2;
+                        self.capturedImage2 = [appDelegate contentModeForImageView:self.capturedImage2];
                         self.capturedImage2.alpha = 1.0;
                         [self.loadingIndicator2 stopAnimating];
                         continue;
@@ -419,6 +429,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
                 case 2:
                     if (self.deal.photo3) {
                         self.capturedImage3.image = self.deal.photo3;
+                        self.capturedImage3 = [appDelegate contentModeForImageView:self.capturedImage3];
                         self.capturedImage3.alpha = 1.0;
                         [self.loadingIndicator3 stopAnimating];
                         continue;
@@ -430,6 +441,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
                 case 3:
                     if (self.deal.photo4) {
                         self.capturedImage4.image = self.deal.photo4;
+                        self.capturedImage4 = [appDelegate contentModeForImageView:self.capturedImage4];
                         self.capturedImage4.alpha = 1.0;
                         [self.loadingIndicator4 stopAnimating];
                         continue;
@@ -477,6 +489,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
                                                                            __block UIImage *dealPhoto = [UIImage imageWithContentsOfFile:downloadingFilePath];
                                                                            capturedImage.image = dealPhoto;
                                                                            capturedImage.alpha = 0;
+                                                                           [self setImageViewContentMode:capturedImage];
                                                                            [UIView animateWithDuration:0.5 animations:^{
                                                                                [loadingIndicator stopAnimating];
                                                                                capturedImage.alpha = 1;
@@ -507,6 +520,11 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     }
 }
 
+- (void)setImageViewContentMode:(UIImageView *)imageView
+{
+    [appDelegate contentModeForImageView:imageView];
+}
+
 - (void)setPageControl
 {
     self.pageControl.numberOfPages = self.photosURLArray.count;
@@ -530,6 +548,11 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 {
     self.dealTitle.text = self.deal.title;
     self.store.text = self.deal.store != nil ? self.deal.store.name : @"No store";
+    if ([self.deal.type isEqualToString:@"Online"]) {
+        self.linkToStore.enabled = YES;
+    } else {
+        self.linkToStore.enabled = NO;
+    }
 }
 
 - (void)setPriceAndDiscount
@@ -591,12 +614,12 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     if (self.deal.expiration) {
         self.expirationDate.text = [NSLocalizedString(@"Expires on ", nil) stringByAppendingString:[self.dateFormatter stringFromDate:self.deal.expiration]];
         self.expirationDateIconHeightConstraint.constant = iconHeight;
-        self.verticalSpaceExpirationDateIconDescriptionIconConstraint.constant = iconsVerticalSpace;
+        self.verticalSpaceExpirationDateIconDescriptionConstraint.constant = 25.0;
     }
     else {
         self.expirationDate.text = nil;
         self.expirationDateIconHeightConstraint.constant = 0;
-        self.verticalSpaceExpirationDateIconDescriptionIconConstraint.constant = 0;
+        self.verticalSpaceExpirationDateIconDescriptionConstraint.constant = 13.0;
     }
     [self checkIfDealExpired];
     [self.view needsUpdateConstraints];
@@ -627,17 +650,51 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 
 - (void)setDealDescription
 {
+    self.dealDescription.textContainer.lineFragmentPadding = 0;
+    self.dealDescription.textContainerInset = UIEdgeInsetsZero;
+    self.dealDescription.textAlignment = NSTextAlignmentNatural;
+
     if (self.deal.moreDescription.length > 0 && ![self.deal.moreDescription isEqualToString:@"None"]) {
-        self.dealDescription.text = [NSLocalizedString(@"Description: ", nil) stringByAppendingString:self.deal.moreDescription];
-        self.descriptionIconHeightConstraint.constant = iconHeight;
-        self.verticalSpaceBasicDetailsLikesConstraint.constant = 25.0;
-        self.verticalSpaceDescriptionLabelLikeIconConstraint.constant = 25.0;
+        self.dealDescription.text = self.deal.moreDescription;
+        self.verticalSpaceReadMoreButtonLikesIcon.constant = 25.0;
+        self.verticalSpaceDescriptionLikesIcon.constant = 25.0;
+        [self configureDescriptionAppearance];
     } else {
         self.dealDescription.text = nil;
-        self.descriptionIconHeightConstraint.constant = 0;
-        self.verticalSpaceBasicDetailsLikesConstraint.constant = 25.0 - iconsVerticalSpace;
-        self.verticalSpaceDescriptionLabelLikeIconConstraint.constant = 0;
+        self.verticalSpaceReadMoreButtonLikesIcon.constant = -8.0;
+        self.verticalSpaceDescriptionLikesIcon.constant = 0;
+        [self hideReadMoreButton];
     }
+}
+
+- (void)configureDescriptionAppearance
+{
+    CGSize sizeThatFitsTextView = [self.dealDescription sizeThatFits:CGSizeMake(self.dealDescription.frame.size.width, MAXFLOAT)];
+    if (sizeThatFitsTextView.height <= descriptionMaxHeight) {
+        self.descriptionHeightConstraint.constant = sizeThatFitsTextView.height + 8.0;
+        [self hideReadMoreButton];
+    } else {
+        [self showReadMoreButton];
+        if (descriptionMaximized) {
+            self.descriptionHeightConstraint.constant = sizeThatFitsTextView.height + 8.0;
+            [self.readMoreButton setTitle:NSLocalizedString(@"Minimize", nil) forState:UIControlStateNormal];
+        } else {
+            self.descriptionHeightConstraint.constant = descriptionCollapsedHeight;
+            [self.readMoreButton setTitle:NSLocalizedString(@"Read More", nil) forState:UIControlStateNormal];
+        }
+    }
+}
+
+- (void)showReadMoreButton
+{
+    self.readMoreButtonHeightConstraint.constant = 32.0;
+    self.readMoreButton.hidden = NO;
+}
+
+- (void)hideReadMoreButton
+{
+    self.readMoreButtonHeightConstraint.constant = 0;
+    self.readMoreButton.hidden = YES;
 }
 
 - (void)setLikesCounter
@@ -891,6 +948,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     
     if (self.deal.photo1) {
         dealPic.image = self.deal.photo1;
+        dealPic = [appDelegate contentModeForImageView:dealPic];
         
     } else {
         dealPic.backgroundColor = [DealTableViewCell randomBackgroundColors:self.deal.photoURL1];
@@ -908,7 +966,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     titleBackground.image = [UIImage imageNamed:@"Title Background"];
     
     if (self.deal.photo1) {
-        titleBackground.alpha = 0.75;
+        titleBackground.alpha = 0.8;
     } else {
         titleBackground.alpha = 0;
     }
@@ -1183,7 +1241,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     
     [cell.contentView addSubview:addCommentBackground];
     
-    UILabel *addCommentTitle = [[UILabel alloc] initWithFrame:CGRectMake(x, y, width - 8 * 2, height)];
+    PaddedLabel *addCommentTitle = [[PaddedLabel alloc] initWithFrame:CGRectMake(x, y, width - 8 * 2, height)];
     addCommentTitle.textColor = textGray;
     addCommentTitle.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
     
@@ -1472,6 +1530,36 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     ptvc.dealerID = comment.dealer.dealerID;
     [self.navigationController pushViewController:ptvc animated:YES];
 }
+
+- (IBAction)linkToStore:(id)sender
+{
+    WhereIsTheDealOnline *witdovc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDealOnline"];
+    witdovc.cameFrom = @"View Deal";
+    witdovc.urlToLoad = self.deal.store.url;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:witdovc];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (IBAction)readMore:(id)sender
+{
+    if (descriptionMaximized) {
+        self.descriptionHeightConstraint.constant = descriptionCollapsedHeight;
+        [self.readMoreButton setTitle:NSLocalizedString(@"Read More", nil) forState:UIControlStateNormal];
+        descriptionMaximized = NO;
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    } else {
+        CGSize sizeThatFitsTextView = [self.dealDescription sizeThatFits:CGSizeMake(self.dealDescription.frame.size.width, MAXFLOAT)];
+        self.descriptionHeightConstraint.constant = sizeThatFitsTextView.height + 8.0;
+        [self.readMoreButton setTitle:NSLocalizedString(@"Minimize", nil) forState:UIControlStateNormal];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+        descriptionMaximized = YES;
+    }
+}
+
 
 
 #pragma mark - General methods

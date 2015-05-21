@@ -98,7 +98,7 @@
 "Email Error" = "שגיאת דוא״ל";
 "Unable to send email. please try again" = "שליחת הדוא״ל נכשלה. אנא נסה/י שוב";
 "Feedback" = "חוות דעת";
-"Send Feedback" = "שלח חוות דעת";
+"Send Feedback!" = "שלח חוות דעת!";
 "Edit Profile" = "עריכת פרופיל";
 "Save" = "שמור";
 "Name can't be blank!" = "השם שלך לא יכול להיות ריק!";
@@ -117,6 +117,21 @@
 "You have no notifications yet!" = "עדין אין לך התרעות!";
 "Couldn't load the notifications..." = "טעינת ההתרעות נכשלה...";
 
+"Is the deal from a\nwebsite or local store?" = "האם המבצע נמצא\nבאתר או בחנות מקומית?";
+"Local" = "חנות";
+"Online" = "אתר";
+
+"Type address" = "הקלד/י כתובת";
+"Go to the deal's page at the store URL (Amazon.com, Ebay.com), and then tap Next." = "מצא/י את עמוד המבצע באתר החנות (amazon.com, aliexpress.com), ולחצ/י הבא.";
+"Tip: Copy a valid URL, and it will be pasted automatically in the address field." = "עצה: העתק/י כתובת אינטרנט חוקית, והיא תודבק אוטומטית בשדה הכתובת.";
+"Not a valid URL" = "כתובת אינטרנט לא תקינה";
+"Go to the deal's page so others will have the link." = "מצא/י את עמוד המבצע כדי שלאחרים יהיה את הקישור.";
+"Change Image" = "שנה תמונה";
+"No Image" = "ללא תמונה";
+"No Images" = "אין תמונות";
+"Appropriate images weren't found" = "לא נמצאו תמונות מתאימות";
+"Couldn't download images" = "הורדת התמונות נכשלה";
+
 "Where is the deal?" = "איפה המבצע?";
 "Connection Error" = "בעיית התחברות";
 "Check your network connection" = "כדאי לבדוק את החיבור לרשת";
@@ -126,9 +141,12 @@
 "Didn't find it? Try Searching" = "לא מצאת את בית העסק? נסה/י לחפש";
 "Add a new store" = "הוסף בית עסק חדש";
 "What is the deal?" = "על מה המבצע?";
+"Tell us about the deal..." = "ספר/י לנו על המבצע...";
+"Tell us more (optional)" = "ספר/י לנו עוד (אופציונלי)";
+"Select an image" = "בחר/י תמונה";
 "Title can't be blank!" = "חייבת להיות כותרת למבצע!";
 "Title is too long" = "הכותרת ארוכה מדי";
-"120 characters max" = "120 תוים מקסימום";
+"190 characters max" = "190 תוים מקסימום";
 "Delete Photo" = "מחק תמונה";
 "Are you sure want to delete this photo?" = "בטוח/ה שאת/ה רוצה למחוק את התמונה?";
 "Yes" = "כן";
@@ -155,6 +173,8 @@
 
 "In " = "תחת ";
 "Description: " = "פרטים נוספים: ";
+"Read More" = "קרא/י עוד";
+"Minimize" = "מזער";
 "Uploaded on " = "שותף בתאריך ";
 "Likers" = "אנשים שאהבו";
 "Comments" = "תגובות";
@@ -174,6 +194,7 @@
 "Category" = "קטגוריה";
 "Expiration Date" = "תאריך תפוגה";
 "Description" = "פרטים נוספים";
+"More about the deal" = "עוד על המבצע";
 "Title" = "כותרת";
 "Discount" = "הנחה";
 "Delete Deal" = "מחק מבצע";
@@ -212,6 +233,10 @@
 "Next" = "הבא";
 "Dealers is an invite-only network. You must be invited by an existing member in order to get a passcode." = "Dealers היא רשת למוזמנים בלבד. אתה צריך להיות מוזמן על ידי משתמש קיים בכדי לקבל קוד כניסה.";
 "Got it" = "הבנתי";
+"Request an invitation" = "בקש/י הזמנה";
+"Invitation Request" = "בקשת הזמנה";
+"Hello,\n\nI would like to receive an invitation to Dealers.\n\nThanks!" = "היי,\n\nאשמח לקבל הזמנה לדילרס.\n\nתודה!";
+"Request Sent!" = "הבקשה נשלחה!";
 
 "Expired" = "פג תוקף";
 "Crop" = "חתוך";

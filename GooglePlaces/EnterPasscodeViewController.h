@@ -7,16 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "AppDelegate.h"
 #import "OpeningScreenViewController.h"
 #import "SignUpTableViewController.h"
 #import "Invitation.h"
+#import "MBProgressHUD.h"
 #import "GAITrackedViewController.h"
 
-@interface EnterPasscodeViewController : GAITrackedViewController <UITextFieldDelegate> {
+@interface EnterPasscodeViewController : GAITrackedViewController <MFMailComposeViewControllerDelegate, MBProgressHUDDelegate, UITextFieldDelegate> {
     
     NSInteger deleteAttempt;
     BOOL explanationViewIsSet;
+    MBProgressHUD *progressIndicator;
 }
 
 @property AppDelegate *appDelegate;
@@ -40,10 +43,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *explanation;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceExplanationViewWhatIsThisConstraint;
 @property (weak, nonatomic) IBOutlet UIView *explanationViewPointer;
+@property (weak, nonatomic) IBOutlet UIButton *invitationRequest;
 
 
 - (IBAction)whatIsThis:(id)sender;
 - (IBAction)dismissExplanationView:(id)sender;
+- (IBAction)requestPasscode:(id)sender;
 
 
 @end

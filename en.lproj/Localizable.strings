@@ -100,7 +100,7 @@
 "Email Error" = "Email Error";
 "Unable to send email. please try again" = "Unable to send email. please try again";
 "Feedback" = "Feedback";
-"Send Feedback" = "Send Feedback";
+"Send Feedback!" = "Send Feedback!";
 "Edit Profile" = "Edit Profile";
 "Save" = "Save";
 "Name can't be blank!" = "Name can't be blank!";
@@ -119,6 +119,21 @@
 "You have no notifications yet!" = "You have no notifications yet!";
 "Couldn't load the notifications..." = "Couldn't load the notifications...";
 
+"Is the deal from a\nwebsite or local store?" = "Is the deal from a\nwebsite or local store?";
+"Local" = "Local";
+"Online" = "Online";
+
+"Type address" = "Type address";
+"Go to the deal's page at the store URL (Amazon.com, Ebay.com), and then tap Next." = "Go to the deal's page at the store URL (Amazon.com, Ebay.com), and then tap Next.";
+"Tip: Copy a valid URL, and it will be pasted automatically in the address field." = "Tip: Copy a valid URL, and it will be pasted automatically in the address field.";
+"Not a valid URL" = "Not a valid URL";
+"Go to the deal's page at the store URL, so others will have the link." = "Go to the deal's page at the store URL, so others will have the link.";
+"Change Image" = "Change Image";
+"No Image" = "No Image";
+"No Images" = "No Images";
+"Appropriate images weren't found" = "Aoppropriate images weren't found";
+"Couldn't download images" = "Couldn't download images";
+
 "Where is the deal?" = "Where is the deal?";
 "Connection Error" = "Connection Error";
 "Check your network connection" = "Check your network connection";
@@ -128,9 +143,12 @@
 "Didn't find it? Try Searching" = "Didn't find it? Try Searching";
 "Add a new store" = "Add a new store";
 "What is the deal?" = "What is the deal?";
+"Tell us about the deal..." = "Tell us about the deal...";
+"Tell us more (optional)" = "Tell us more";
+"Select an image" = "Select an image";
 "Title can't be blank!" = "Title can't be blank!";
 "Title is too long" = "Title is too long";
-"120 characters max" = "120 characters max";
+"190 characters max" = "190 characters max";
 "Delete Photo" = "Delete Photo";
 "Are you sure want to delete this photo?" = "Are you sure want to delete this photo?";
 "Yes" = "Yes";
@@ -150,13 +168,15 @@
 "Required if there's previous price" = "Required if there's previous price";
 "Permission not granted" = "Permission not granted";
 "Your deal will not be published to Facebook." = "Your deal will not be published to Facebook.";
-"Couldn't upload the deal :(" = "Couldn't upload the deal :(";
+"Couldn't upload the deal" = "Couldn't upload the deal";
 "Thank You\n%@!" = "Thank You\n%@!";
 "WhatsApp not installed." = "WhatsApp not installed.";
 "Your device should have WhatsApp installed." = "Your device should have WhatsApp installed.";
 
 "In " = "In ";
 "Description: " = "Description: ";
+"Read More" = "Read More";
+"Minimize" = "Minimize";
 "Uploaded on " = "Uploaded on ";
 "Likers" = "Likers";
 "Comments" = "Comments";
@@ -176,6 +196,7 @@
 "Category" = "Category";
 "Expiration Date" = "Expiration Date";
 "Description" = "Description";
+"More about the deal" = "More about the deal";
 "Title" = "Title";
 "Discount" = "Discount";
 "Delete Deal" = "Delete Deal";
@@ -214,6 +235,10 @@
 "Next" = "Next";
 "Dealers is an invite-only network. You must be invited by an existing member in order to get a passcode." = "Dealers is an invite-only network. You must be invited by an existing member in order to get a passcode.";
 "Got it" = "Got it";
+"Request an invitation" = "Request an invitation";
+"Invitation Request" = "Invitation Request";
+"Hello,\n\nI would like to receive an invitation to Dealers.\n\nThanks!" = "Hello,\n\nI would like to receive an invitation to Dealers.\n\nThanks!";
+"Request Sent!" = "Request Sent!";
 
 "Expired" = "Expired";
 "Crop" = "Crop";

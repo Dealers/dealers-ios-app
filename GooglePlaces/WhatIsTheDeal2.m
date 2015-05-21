@@ -7,6 +7,7 @@
 //
 
 #import "WhatIsTheDeal2.h"
+#import "WhatIsTheDeal1Online.h"
 
 #define categorySheetTag 6666
 #define expirationDateSheetTag 7777
@@ -66,30 +67,35 @@
     
     if ([viewControllers indexOfObject:self] == NSNotFound) {
         // View is disappearing because it was popped from the stack
-        WhatIsTheDeal1 *witd1 = viewControllers.lastObject;
-        if (self.priceTextField.text.length > 0) {
-            witd1.cashedPrice = self.priceTextField.text;
-            witd1.cashedCurrency = self.selectedCurrency;
+        if ([self.deal.type isEqualToString:@"Online"]) {
+            WhatIsTheDeal1Online *witd1ovc = (WhatIsTheDeal1Online *)viewControllers.lastObject;
+            witd1ovc.cashedInstance = self;
         } else {
-            witd1.cashedPrice = nil;
-            witd1.cashedCurrency = nil;
-        }
-        if (self.discountTextField.text.length > 0) {
-            witd1.cashedDiscountValue = [NSNumber numberWithFloat:self.discountValue];
-            witd1.cashedDiscountType = self.selectedDiscountType;
-        } else {
-            witd1.cashedDiscountValue = nil;
-            witd1.cashedDiscountType = nil;
-        }
-        if (self.categoryLabel.text.length > 0 && ![self.categoryLabel.text isEqualToString:NSLocalizedString(@"Choose Category", nil)]) {
-            witd1.cashedCategory = self.categoryLabel.text;
-        } else {
-            witd1.cashedCategory = nil;
-        }
-        if (self.expirationDateLabel.text.length > 0) {
-            witd1.cashedExpirationDate = self.datePicker.date;
-        } else {
-            witd1.cashedExpirationDate = nil;
+            WhatIsTheDeal1 *witd1 = viewControllers.lastObject;
+            if (self.priceTextField.text.length > 0) {
+                witd1.cashedPrice = self.priceTextField.text;
+                witd1.cashedCurrency = self.selectedCurrency;
+            } else {
+                witd1.cashedPrice = nil;
+                witd1.cashedCurrency = nil;
+            }
+            if (self.discountTextField.text.length > 0) {
+                witd1.cashedDiscountValue = [NSNumber numberWithFloat:self.discountValue];
+                witd1.cashedDiscountType = self.selectedDiscountType;
+            } else {
+                witd1.cashedDiscountValue = nil;
+                witd1.cashedDiscountType = nil;
+            }
+            if (self.categoryLabel.text.length > 0 && ![self.categoryLabel.text isEqualToString:NSLocalizedString(@"Choose Category", nil)]) {
+                witd1.cashedCategory = self.categoryLabel.text;
+            } else {
+                witd1.cashedCategory = nil;
+            }
+            if (self.expirationDateLabel.text.length > 0) {
+                witd1.cashedExpirationDate = self.datePicker.date;
+            } else {
+                witd1.cashedExpirationDate = nil;
+            }
         }
     }
 }
@@ -700,6 +706,7 @@
     if (self.deal.photo1) {
         
         dealPic.image = self.deal.photo1;
+        dealPic = [appDelegate contentModeForImageView:dealPic];
         
     } else {
         
@@ -719,7 +726,7 @@
     titleBackground.image = [UIImage imageNamed:@"Title Background"];
     
     if (self.deal.photo1) {
-        titleBackground.alpha = 0.75;
+        titleBackground.alpha = 0.8;
     } else {
         titleBackground.alpha = 0;
     }
@@ -1391,8 +1398,8 @@
      
                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                             
-                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                                                            message:NSLocalizedString(@"Couldn't upload the deal :(", nil)
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Couldn't upload the deal", nil)
+                                                                                            message:error.localizedDescription
                                                                                            delegate:nil
                                                                                   cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                                                   otherButtonTitles:nil];

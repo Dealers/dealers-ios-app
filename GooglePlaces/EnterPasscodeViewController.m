@@ -22,6 +22,7 @@
     [self initialize];
     [self setDismissButton];
     [self setDoneButton];
+    [self setProgressIndicator];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -70,6 +71,7 @@
     self.incorrectPasscode.alpha = 0;
     self.passcodeTextField.layer.cornerRadius = 8.0;
     self.passcodeTextField.layer.masksToBounds = YES;
+    [self.invitationRequest setTitle:NSLocalizedString(@"Request an invitation", nil) forState:UIControlStateNormal];
     self.screenName = @"Enter Passcode Screen";
 }
 
@@ -158,6 +160,60 @@
 - (IBAction)dismissExplanationView:(id)sender
 {
     [self hideExplanationView:sender];
+}
+
+- (IBAction)requestPasscode:(id)sender
+{
+    NSString *emailTitle = NSLocalizedString(@"Invitation Request", nil);
+    // Email Content
+    NSString *messageBody = NSLocalizedString(@"Hello,\n\nI would like to receive an invitation to Dealers.\n\nThanks!", nil);
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"contact@dealers-app.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    mc.view.tintColor = [appDelegate ourPurple];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:nil];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+            
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+            
+        case MFMailComposeResultSent:   {
+            [progressIndicator show:YES];
+            [progressIndicator hide:YES afterDelay:2.5];
+            [self dismiss];
+            
+            break;
+        }
+        case MFMailComposeResultFailed: {
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Email Error" message:@"Unable to send email. please try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)setExplanationView
@@ -427,6 +483,19 @@
                                                                   [osvc signUpUser];
                                                               }];
     }
+}
+
+- (void)setProgressIndicator
+{
+    progressIndicator = [[MBProgressHUD alloc]initWithView:self.view];
+    progressIndicator.delegate = self;
+    progressIndicator.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
+    progressIndicator.mode = MBProgressHUDModeCustomView;
+    progressIndicator.labelText = NSLocalizedString(@"Request Sent!", nil);
+    progressIndicator.labelFont = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    progressIndicator.animationType = MBProgressHUDAnimationZoomIn;
+    
+    [self.navigationControllerDelegate.view addSubview:progressIndicator];
 }
 
 

@@ -68,9 +68,9 @@
         
         [self.navigationController popViewControllerAnimated:YES];
         
-    } else if ([self.title isEqualToString:NSLocalizedString(@"Description", nil)]) {
+    } else if ([self.title isEqualToString:NSLocalizedString(@"More about the deal", nil)]) {
         if ([self.textView.text isEqualToString:@""]) {
-            edtvc.dealDescription.text = NSLocalizedString(@"Description", nil);
+            edtvc.dealDescription.text = NSLocalizedString(@"More about the deal", nil);
             edtvc.dealDescription.textColor = placeholderColor;
         } else {
             edtvc.dealDescription.text = self.textView.text;
@@ -127,7 +127,7 @@
     } else if ([self.title isEqualToString:NSLocalizedString(@"Price", nil)] || [self.title isEqualToString:NSLocalizedString(@"Discount", nil)]) {
         self.textView.keyboardType = UIKeyboardTypeDecimalPad;
         self.textView.font = [UIFont fontWithName:@"Avenir-Light" size:25.0];
-    } else if ([self.title isEqualToString:NSLocalizedString(@"Description", nil)]) {
+    } else if ([self.title isEqualToString:NSLocalizedString(@"More about the deal", nil)]) {
         self.textView.keyboardType = UIKeyboardTypeDefault;
         self.textView.returnKeyType = UIReturnKeyDefault;
         if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {

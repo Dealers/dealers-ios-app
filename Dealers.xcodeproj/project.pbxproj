@@ -124,6 +124,9 @@
 		C8AC887E19BD9A5D002A2C16 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AC887C19BD9A5C002A2C16 /* CommentTableViewCell.m */; };
 		C8AC887F19BD9A5D002A2C16 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8AC887D19BD9A5C002A2C16 /* CommentTableViewCell.xib */; };
 		C8BD73AD1AC04FE600FE3672 /* PersonalizeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8BD73AC1AC04FE600FE3672 /* PersonalizeTableViewController.m */; };
+		C8C08CD51B0326A10018EA28 /* PaddedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C08CD41B0326A00018EA28 /* PaddedLabel.m */; };
+		C8C08CDB1B0327F80018EA28 /* PaddedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C08CDA1B0327F70018EA28 /* PaddedTextField.m */; };
+		C8C08CDF1B04D8ED0018EA28 /* WhatIsTheDeal1Online.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C08CDE1B04D8ED0018EA28 /* WhatIsTheDeal1Online.m */; };
 		C8C260D41A7E924500960D96 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C260D31A7E924500960D96 /* TutorialViewController.m */; };
 		C8C260D81A7E957500960D96 /* TutorialChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C260D61A7E957500960D96 /* TutorialChildViewController.m */; };
 		C8C260D91A7E957500960D96 /* TutorialChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C260D71A7E957500960D96 /* TutorialChildViewController.xib */; };
@@ -132,7 +135,12 @@
 		C8C2E5231A625E66000F305F /* InviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C2E5221A625E66000F305F /* InviteViewController.m */; };
 		C8C2E5261A63B39E000F305F /* EnterPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C2E5251A63B39E000F305F /* EnterPasscodeViewController.m */; };
 		C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */; };
+		C8C6FCAE1B00DC1600F12B97 /* WhereIsTheDealOnline.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C6FCAD1B00DC1600F12B97 /* WhereIsTheDealOnline.m */; };
 		C8C721001AB22FB800284B72 /* ViewDealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */; };
+		C8DBD9841B0B55B60025BA93 /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DBD9831B0B55B60025BA93 /* ImageCollectionViewCell.m */; };
+		C8DBD9871B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DBD9861B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.m */; };
+		C8DBD98F1B0E02ED0025BA93 /* Logo (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = C8DBD98D1B0E02ED0025BA93 /* Logo (high resolution).png */; };
+		C8DBD9901B0E02ED0025BA93 /* Logo White Background (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = C8DBD98E1B0E02ED0025BA93 /* Logo White Background (high resolution).png */; };
 		C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */; };
 		C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC1D8B19BC89410062E184 /* MBProgressHUD.m */; };
 		C8DC1D8E19BC9A9B0062E184 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DC1D8D19BC9A9B0062E184 /* MessageUI.framework */; };
@@ -374,6 +382,12 @@
 		C8AC887D19BD9A5C002A2C16 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		C8BD73AB1AC04FE600FE3672 /* PersonalizeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalizeTableViewController.h; sourceTree = "<group>"; };
 		C8BD73AC1AC04FE600FE3672 /* PersonalizeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalizeTableViewController.m; sourceTree = "<group>"; };
+		C8C08CD31B0326A00018EA28 /* PaddedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaddedLabel.h; sourceTree = "<group>"; };
+		C8C08CD41B0326A00018EA28 /* PaddedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaddedLabel.m; sourceTree = "<group>"; };
+		C8C08CD91B0327F70018EA28 /* PaddedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaddedTextField.h; sourceTree = "<group>"; };
+		C8C08CDA1B0327F70018EA28 /* PaddedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaddedTextField.m; sourceTree = "<group>"; };
+		C8C08CDD1B04D8ED0018EA28 /* WhatIsTheDeal1Online.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatIsTheDeal1Online.h; sourceTree = "<group>"; };
+		C8C08CDE1B04D8ED0018EA28 /* WhatIsTheDeal1Online.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatIsTheDeal1Online.m; sourceTree = "<group>"; };
 		C8C260D21A7E924500960D96 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		C8C260D31A7E924500960D96 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		C8C260D51A7E957500960D96 /* TutorialChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialChildViewController.h; sourceTree = "<group>"; };
@@ -389,9 +403,17 @@
 		C8C2E5251A63B39E000F305F /* EnterPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPasscodeViewController.m; sourceTree = "<group>"; };
 		C8C43E7B198E7CA700409DD2 /* EditTextModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextModeViewController.h; sourceTree = "<group>"; };
 		C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextModeViewController.m; sourceTree = "<group>"; };
+		C8C6FCAC1B00DC1600F12B97 /* WhereIsTheDealOnline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhereIsTheDealOnline.h; sourceTree = "<group>"; };
+		C8C6FCAD1B00DC1600F12B97 /* WhereIsTheDealOnline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhereIsTheDealOnline.m; sourceTree = "<group>"; };
 		C8C720FE1AB22FB800284B72 /* ViewDealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewDealViewController.h; sourceTree = "<group>"; };
 		C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewDealViewController.m; sourceTree = "<group>"; };
 		C8CC65C91AF246E4004E46CE /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		C8DBD9821B0B55B60025BA93 /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
+		C8DBD9831B0B55B60025BA93 /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
+		C8DBD9851B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlineImagePickerCollectionViewController.h; sourceTree = "<group>"; };
+		C8DBD9861B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnlineImagePickerCollectionViewController.m; sourceTree = "<group>"; };
+		C8DBD98D1B0E02ED0025BA93 /* Logo (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Logo (high resolution).png"; sourceTree = "<group>"; };
+		C8DBD98E1B0E02ED0025BA93 /* Logo White Background (high resolution).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Logo White Background (high resolution).png"; sourceTree = "<group>"; };
 		C8DC1D8619B863B60062E184 /* ActivityTypeWhatsApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTypeWhatsApp.h; sourceTree = "<group>"; };
 		C8DC1D8719B863B60062E184 /* ActivityTypeWhatsApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTypeWhatsApp.m; sourceTree = "<group>"; };
 		C8DC1D8A19BC89410062E184 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -513,8 +535,7 @@
 		56849787154C00BF001601A2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C8173E841A683FF50090CF64 /* Localizable.strings */,
-				C8C260DA1A7F887300960D96 /* Localized Images */,
+				C8DBD98B1B0E02270025BA93 /* Assets */,
 				B0493AD718FDC5E90044AD91 /* AppDelegate.h */,
 				56849791154C00BF001601A2 /* AppDelegate.m */,
 				56849793154C00BF001601A2 /* MainStoryboard.storyboard */,
@@ -616,6 +637,8 @@
 				C8A10BA319E96B100090F1D9 /* NotificationTableViewCell.h */,
 				C8A10BA419E96B100090F1D9 /* NotificationTableViewCell.m */,
 				C8A10BA519E96B100090F1D9 /* NotificationTableViewCell.xib */,
+				C8DBD9821B0B55B60025BA93 /* ImageCollectionViewCell.h */,
+				C8DBD9831B0B55B60025BA93 /* ImageCollectionViewCell.m */,
 			);
 			name = "Custom Cells";
 			sourceTree = "<group>";
@@ -745,8 +768,14 @@
 				C891901F19FE57D9005E85FB /* AddDealNavigationController.m */,
 				C895FB801AB0327500E4E4A5 /* WhereIsTheDeal.h */,
 				C895FB811AB0327500E4E4A5 /* WhereIsTheDeal.m */,
+				C8C6FCAC1B00DC1600F12B97 /* WhereIsTheDealOnline.h */,
+				C8C6FCAD1B00DC1600F12B97 /* WhereIsTheDealOnline.m */,
 				C8A012ED19DD52E100C1D973 /* WhatIsTheDeal1.h */,
 				C8A012EE19DD52E100C1D973 /* WhatIsTheDeal1.m */,
+				C8C08CDD1B04D8ED0018EA28 /* WhatIsTheDeal1Online.h */,
+				C8C08CDE1B04D8ED0018EA28 /* WhatIsTheDeal1Online.m */,
+				C8DBD9851B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.h */,
+				C8DBD9861B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.m */,
 				C8A012F019DD52F700C1D973 /* WhatIsTheDeal2.h */,
 				C8A012F119DD52F700C1D973 /* WhatIsTheDeal2.m */,
 				C81493C01AC94D8600A5DBE7 /* AddStoreTableViewController.h */,
@@ -779,6 +808,10 @@
 				C863A6621A776A4300D74479 /* StoreCategoriesOrganizer.m */,
 				C895FB7D1AAF5BBB00E4E4A5 /* ElasticLabel.h */,
 				C895FB7E1AAF5BBB00E4E4A5 /* ElasticLabel.m */,
+				C8C08CD31B0326A00018EA28 /* PaddedLabel.h */,
+				C8C08CD41B0326A00018EA28 /* PaddedLabel.m */,
+				C8C08CD91B0327F70018EA28 /* PaddedTextField.h */,
+				C8C08CDA1B0327F70018EA28 /* PaddedTextField.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -916,6 +949,25 @@
 				C8C2E5251A63B39E000F305F /* EnterPasscodeViewController.m */,
 			);
 			name = Invitation;
+			sourceTree = "<group>";
+		};
+		C8DBD98B1B0E02270025BA93 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C8DBD98C1B0E02510025BA93 /* Brand Images */,
+				C8173E841A683FF50090CF64 /* Localizable.strings */,
+				C8C260DA1A7F887300960D96 /* Localized Images */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		C8DBD98C1B0E02510025BA93 /* Brand Images */ = {
+			isa = PBXGroup;
+			children = (
+				C8DBD98D1B0E02ED0025BA93 /* Logo (high resolution).png */,
+				C8DBD98E1B0E02ED0025BA93 /* Logo White Background (high resolution).png */,
+			);
+			name = "Brand Images";
 			sourceTree = "<group>";
 		};
 		C8DC1D8219B863680062E184 /* Activities */ = {
@@ -1065,8 +1117,10 @@
 				C8C260E71A7F8A0100960D96 /* Add_Deal.png in Resources */,
 				C8A9EE301A2213B9002EE682 /* email-2010-12-01.json in Resources */,
 				C8A9EE2D1A2213B9002EE682 /* dynamodb-2012-08-10.json in Resources */,
+				C8DBD98F1B0E02ED0025BA93 /* Logo (high resolution).png in Resources */,
 				B0274806186B291B005A52F0 /* PLCameraSheetDoneButtonPressed@2x.png in Resources */,
 				C8A9EE2C1A2213B9002EE682 /* css-2014-06-30.json in Resources */,
+				C8DBD9901B0E02ED0025BA93 /* Logo White Background (high resolution).png in Resources */,
 				B0274804186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png in Resources */,
 				C8A9EE2F1A2213B9002EE682 /* elasticloadbalancing-2012-06-01.json in Resources */,
 				C8A9EE321A2213B9002EE682 /* mobileanalytics-2014-06-30.json in Resources */,
@@ -1109,6 +1163,7 @@
 				C83B93C41A2D08BE00AC666B /* DealsNoPhotoTableCell.m in Sources */,
 				C8C721001AB22FB800284B72 /* ViewDealViewController.m in Sources */,
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
+				C8DBD9841B0B55B60025BA93 /* ImageCollectionViewCell.m in Sources */,
 				C81493C81AC9FB5800A5DBE7 /* DealersAnnotation.m in Sources */,
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
@@ -1138,10 +1193,13 @@
 				C83997F01A7559A6003E3793 /* PushNotificationView.m in Sources */,
 				C8E996C21A554E60006FCAC7 /* User.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
+				C8C08CDB1B0327F80018EA28 /* PaddedTextField.m in Sources */,
 				C895FB731AAE5EED00E4E4A5 /* ExploreTableViewController.m in Sources */,
 				C848B67819B4AB76000F138D /* StoreTableViewCell.m in Sources */,
+				C8C08CDF1B04D8ED0018EA28 /* WhatIsTheDeal1Online.m in Sources */,
 				C863A6631A776A4300D74479 /* StoreCategoriesOrganizer.m in Sources */,
 				C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */,
+				C8C6FCAE1B00DC1600F12B97 /* WhereIsTheDealOnline.m in Sources */,
 				C8C260D41A7E924500960D96 /* TutorialViewController.m in Sources */,
 				C8A10BA619E96B100090F1D9 /* NotificationTableViewCell.m in Sources */,
 				C8C2E5231A625E66000F305F /* InviteViewController.m in Sources */,
@@ -1150,8 +1208,10 @@
 				C8A10B9F19E95B330090F1D9 /* Notification.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
 				C81493C21AC94D8600A5DBE7 /* AddStoreTableViewController.m in Sources */,
+				C8DBD9871B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.m in Sources */,
 				C8A10B9C19E711220090F1D9 /* KeychainItemWrapper.m in Sources */,
 				C8E43AA51A40A78A00B035BC /* DealersTableCell.m in Sources */,
+				C8C08CD51B0326A10018EA28 /* PaddedLabel.m in Sources */,
 				C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */,
 				C80123371A2C4BC000C40A37 /* DealsTableCell.m in Sources */,
 				C884E18419EC082100C83A3F /* DealAttrib.m in Sources */,

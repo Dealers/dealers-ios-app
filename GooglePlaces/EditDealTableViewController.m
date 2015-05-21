@@ -75,6 +75,7 @@
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:saveButtonView];
     
     self.navigationItem.rightBarButtonItem = barButton;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)initialize
@@ -139,7 +140,7 @@
         self.dealDescription.text = [self.deal.moreDescription mutableCopy];
         self.dealDescription.textColor = [UIColor blackColor];
     } else {
-        self.dealDescription.text = NSLocalizedString(@"Description", nil);
+        self.dealDescription.text = NSLocalizedString(@"More about the deal", nil);
         self.dealDescription.textColor = placeholderColor;
     }
 }
@@ -243,6 +244,15 @@
     }
     
     if (indexPath.section == 4) {
+        CGSize sizeThatFitsTextView = [self.dealDescription sizeThatFits:CGSizeMake(self.dealDescription.frame.size.width, MAXFLOAT)];
+        if (sizeThatFitsTextView.height < 98.0) {
+            height = sizeThatFitsTextView.height + 24.0;
+        } else {
+            height = 98.0;
+        }
+    }
+    
+    if (indexPath.section == 5) {
         if (!self.canDeleteDeal) {
             height = 0;
         } else {
@@ -256,7 +266,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     EditTextModeViewController *etmvc = [self.storyboard instantiateViewControllerWithIdentifier:@"editTextModeViewControllerID"];
-    WhereIsTheDeal *witdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDeal"];
     ChooseCategoryTableViewController *cctvc = [self.storyboard instantiateViewControllerWithIdentifier:@"chooseCategoryID"];
     
     if (!(indexPath.section == 3 && indexPath.row == 1) && self.datePickerIsShowing) {
@@ -275,11 +284,19 @@
         case 2:
             switch (indexPath.row) {
                     
-                case 0:
-                    witdvc.cameFrom = @"Edit Deal";
-                    [self.navigationController pushViewController:witdvc animated:YES];
+                case 0: {
+                    if ([self.deal.type isEqualToString:@"Online"]) {
+                        WhereIsTheDealOnline *witdovc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDealOnline"];
+                        witdovc.cameFrom = @"Edit Deal";
+                        witdovc.urlToLoad = self.deal.store.url;
+                        [self.navigationController pushViewController:witdovc animated:YES];
+                    } else {
+                        WhereIsTheDeal *witdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDeal"];
+                        witdvc.cameFrom = @"Edit Deal";
+                        [self.navigationController pushViewController:witdvc animated:YES];
+                    }
                     break;
-                    
+                }
                 case 1:
                     etmvc.title = NSLocalizedString(@"Price", nil);
                     etmvc.currency = self.selectedCurrency;
@@ -327,24 +344,20 @@
                     }
                     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
                     break;
-                    
-                case 3:
-                    etmvc.title = NSLocalizedString(@"Description", nil);
-                    if ([self.dealDescription.text isEqualToString:NSLocalizedString(@"Description", nil)]) {
-                        etmvc.currentValue = @"";
-                    } else {
-                        etmvc.currentValue = self.dealDescription.text;
-                    }
-                    [self.navigationController pushViewController:etmvc animated:YES];
-                    break;
-                    
-                default:
-                    break;
             }
             break;
             
-        case 4: {
+        case 4:
+            etmvc.title = NSLocalizedString(@"More about the deal", nil);
+            if ([self.dealDescription.text isEqualToString:NSLocalizedString(@"More about the deal", nil)]) {
+                etmvc.currentValue = @"";
+            } else {
+                etmvc.currentValue = self.dealDescription.text;
+            }
+            [self.navigationController pushViewController:etmvc animated:YES];
+            break;
             
+        case 5: {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Deal", nil)
                                                             message:NSLocalizedString(@"Are you sure you want to delete this deal? This action cannot be undone.", nil)
                                                            delegate:self
@@ -925,7 +938,7 @@
         self.deal.expiration = [calendar dateFromComponents:expirationDateComponents];
     }
     
-    if ([self.dealDescription.text isEqualToString:NSLocalizedString(@"Description", nil)]) {
+    if ([self.dealDescription.text isEqualToString:NSLocalizedString(@"More about the deal", nil)]) {
         self.deal.moreDescription = nil;
     } else {
         self.deal.moreDescription = self.dealDescription.text;

@@ -71,9 +71,7 @@
         [self setScreenShot];
     }
     
-    if (appDelegate.tabBarController) {
-        appDelegate.tabBarController = nil;
-    }
+    [appDelegate removeTabBar];
 }
 
 - (void)styleButtons

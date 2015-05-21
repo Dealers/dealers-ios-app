@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.6</string>
+	<string>1.61</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -32,9 +32,21 @@
 				<string>fb307875306059843</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>Logo (high resolution)</string>
+			<key>CFBundleURLName</key>
+			<string>my_feed</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dealers</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.6.23</string>
+	<string>1.6.31</string>
 	<key>FacebookAppID</key>
 	<string>307875306059843</string>
 	<key>FacebookDisplayName</key>

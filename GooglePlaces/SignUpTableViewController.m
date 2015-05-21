@@ -710,7 +710,7 @@
                  NSString *token = [tokenDictionary objectForKey:@"token"];
                  [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithToken:token];
                  
-                 KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"DealersKeychain" accessGroup:nil];
+                 KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"DealersKeychain" accessGroup:nil];
                  [keychain setObject:@"DealersKeychain" forKey:(__bridge id)kSecAttrService];
                  [keychain setObject:token forKey:(__bridge id)(kSecAttrAccount)];
                  [keychain setObject:self.passwordTextField.text forKey:(__bridge id)(kSecValueData)];
