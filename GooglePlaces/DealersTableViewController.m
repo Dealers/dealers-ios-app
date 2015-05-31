@@ -65,7 +65,7 @@
 
 - (void)downloadDealers
 {
-    NSString *path = [NSString stringWithFormat:@"/dealerslikeddeals/%@/", self.dealID];
+    NSString *path = [NSString stringWithFormat:@"/dealerslikeddeals/%@/", self.dealAttribID];
     
     [[RKObjectManager sharedManager] getObjectsAtPath:path
                                            parameters:nil

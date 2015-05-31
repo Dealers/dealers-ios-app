@@ -168,7 +168,7 @@
 
 - (IBAction)inviteWithWhatsApp:(id)sender {
     
-    NSString *urlWhats = [NSString stringWithFormat:@"whatsapp://send?text=%@",invitationMessage];
+    NSString *urlWhats = [NSString stringWithFormat:@"whatsapp://send?text=%@", invitationMessage];
     NSURL *whatsappURL = [NSURL URLWithString:[urlWhats stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     if ([[UIApplication sharedApplication] canOpenURL:whatsappURL]) {

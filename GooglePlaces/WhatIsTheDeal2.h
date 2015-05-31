@@ -11,24 +11,23 @@
 #import <AWSiOSSDKv2/S3.h>
 #import "ChooseCategoryTableViewController.h"
 #import "ThankYouViewController.h"
-#import "WhatIsTheDeal1.h"
 #import "DealTableViewCell.h"
 #import "Deal.h"
 #import "Dealer.h"
 #import "Store.h"
 #import "StoreCategoriesOrganizer.h"
 #import "MBProgressHUD.h"
+#import "ElasticLabel.h"
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
 
 @interface WhatIsTheDeal2 : UITableViewController <UITextViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, MBProgressHUDDelegate> {
     
-    BOOL isFacebookSelectd;
-    BOOL isWhatsAppSelected;
     BOOL didUploadDealData;
     BOOL didDealPhotosFinishedUploading;
     UIColor *placeholder;
+    CGFloat descriptionHeight;
     
     MBProgressHUD *illogicalPercentage, *lastPriceWithoutPrice, *loggingInFacebook;
 }
@@ -62,23 +61,15 @@
 @property BOOL didTouchDatePicker;
 @property BOOL didCancelDate;
 
+@property (weak, nonatomic) IBOutlet ElasticLabel *descriptionPlaceholder;
+@property (weak, nonatomic) IBOutlet UITextView *dealDescription;
+
 @property (weak, nonatomic) IBOutlet UIView *addDealView;
 @property UIButton *addDealButton;
 @property UIView *addDealButtonBackground;
 @property UIImageView *loadingAnimation;
 
-@property NSString *cashedPrice;
-@property NSString *cashedCurrency;
-@property NSNumber *cashedDiscountValue;
-@property NSString *cashedDiscountType;
 @property NSString *cashedCategory;
-@property NSDate *cashedExpirationDate;
-
-@property (weak, nonatomic) IBOutlet UIButton *facebookIcon;
-@property (weak, nonatomic) IBOutlet UILabel *facebookLabel;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *facebookActivityIndicator;
-@property (weak, nonatomic) IBOutlet UIButton *whatsAppIcon;
-@property (weak, nonatomic) IBOutlet UILabel *whatsAppLabel;
 
 @property BOOL hasPublishPermissions;
 

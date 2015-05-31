@@ -9,8 +9,10 @@
 #import "ViewDealViewController.h"
 
 #define AWS_S3_BUCKET_NAME @"dealers-app"
+#define S3_PHOTOS_ADDRESS @"https://s3-eu-west-1.amazonaws.com/dealers-app/"
 #define NAME_FOR_NOTIFICATIONS @"View Deal Photos Notifications"
 #define APPSTORE_LINK @"https://appsto.re/il/12CB5.i"
+#define FEATURE @"view_deal"
 #define SHARED_VIEW 9898
 #define REPORT_ALERT 43454
 #define COMMENTS_OVERVIEW_BUTTON 123456789
@@ -548,11 +550,6 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 {
     self.dealTitle.text = self.deal.title;
     self.store.text = self.deal.store != nil ? self.deal.store.name : @"No store";
-    if ([self.deal.type isEqualToString:@"Online"]) {
-        self.linkToStore.enabled = YES;
-    } else {
-        self.linkToStore.enabled = NO;
-    }
 }
 
 - (void)setPriceAndDiscount
@@ -588,11 +585,13 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     
     if (self.price.text && self.discount.text) {
         self.horizontalSpacePriceDiscountConstraint.constant = 20.0;
+        self.priceIcon.image = [UIImage imageNamed:@"Price Icon"];
     } else if (!self.price.text && self.discount.text) {
         self.horizontalSpacePriceDiscountConstraint.constant = 0;
         self.priceIcon.image = [UIImage imageNamed:@"Discount Icon"];
     } else {
         self.horizontalSpacePriceDiscountConstraint.constant = 0;
+        self.priceIcon.image = [UIImage imageNamed:@"Price Icon"];
     }
 }
 
@@ -944,6 +943,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     
     UIImageView *dealPic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, sharedViewWidth, sharedViewWidth * 0.678125)];
     dealPic.contentMode = UIViewContentModeScaleAspectFill;
+    dealPic.clipsToBounds = YES;
     [sharedView addSubview:dealPic];
     
     if (self.deal.photo1) {
@@ -1439,26 +1439,22 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 
 - (void)share:(id)sender {
 
-    NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"Hear from others about great deals at Dealers: %@", nil), APPSTORE_LINK];
-    NSArray *activityItems = @[messageText, self.sharedImage];
+    NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"%@:\n", nil), self.deal.title];
     NSArray *excludedActivities = @[UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeSaveToCameraRoll];
-    
-    ActivityTypeWhatsApp *whatsappActivity = [[ActivityTypeWhatsApp alloc] init];
-    NSArray *appActivities = @[whatsappActivity];
-    
-    UIActivityViewController *activityController = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:appActivities];
-    
+    NSString *url = [self getImageURL];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:@{
+                                                                                    @"deal" : self.deal.dealID.stringValue,
+                                                                                    @"$og_title" : self.deal.title,
+                                                                                    @"$og_image_url" : url,
+                                                                                    @"$og_description" : NSLocalizedString(@"Check out this deal at Dealers", nil)
+                                                                                    }];
+    UIActivityItemProvider *provider = [Branch getBranchActivityItemWithParams:params andFeature:FEATURE andStage:nil andTags:@[[appDelegate currentVersion]]];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[messageText, provider] applicationActivities:nil];
     activityController.excludedActivityTypes = excludedActivities;
-    
-    __weak ViewDealViewController *weakSelf = self;
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         
         if (completed) {
-            
-            if ([activityType isEqualToString:@"WhatsApp Sharing"]) {
-                [weakSelf whatsAppShare];
-            }
             
             // need to add the dealer's id to the shares array
             NSMutableArray *dealersThatSharedArray = [[NSMutableArray alloc] initWithArray:self.deal.dealAttrib.dealersThatShared];
@@ -1495,6 +1491,33 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
+- (NSString *)getImageURL
+{
+    if (self.deal.photoURL1.length > 2 && ![self.deal.photoURL1 isEqualToString:@"None"]) {
+        return [S3_PHOTOS_ADDRESS stringByAppendingString:self.deal.photoURL1];
+    } else {
+        int color = self.deal.photoURL1.intValue;
+        switch (color) {
+            case 0:
+                return [S3_PHOTOS_ADDRESS stringByAppendingString:@"media/Brand_Photos/logo_colorful_blue.png"];
+                break;
+            case 1:
+                return [S3_PHOTOS_ADDRESS stringByAppendingString:@"media/Brand_Photos/logo_colorful_green.png"];
+                break;
+            case 2:
+                return [S3_PHOTOS_ADDRESS stringByAppendingString:@"media/Brand_Photos/logo_colorful_red.png"];
+                break;
+            case 3:
+                return [S3_PHOTOS_ADDRESS stringByAppendingString:@"media/Brand_Photos/logo_colorful_yellow.png"];
+                break;
+                
+            default:
+                return nil;
+                break;
+        }
+    }
+}
+
 - (void)options:(id)sender
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil
@@ -1510,7 +1533,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 {
     DealersTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealersTableViewController"];
     dtvc.mode = @"Likers";
-    dtvc.dealID = self.deal.dealID;
+    dtvc.dealAttribID = self.deal.dealAttrib.dealAttribID;
     [self.navigationController pushViewController:dtvc animated:YES];
 }
 
@@ -1533,11 +1556,17 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 
 - (IBAction)linkToStore:(id)sender
 {
-    WhereIsTheDealOnline *witdovc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDealOnline"];
-    witdovc.cameFrom = @"View Deal";
-    witdovc.urlToLoad = self.deal.store.url;
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:witdovc];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    if ([self.deal.type isEqualToString:@"Online"]) {
+        WhereIsTheDealOnline *witdovc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDealOnline"];
+        witdovc.cameFrom = @"View Deal";
+        witdovc.urlToLoad = self.deal.store.url;
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:witdovc];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else if ([self.deal.type isEqualToString:@"Local"]) {
+        CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
+        [self.scrollView setContentOffset:bottomOffset animated:YES];
+    }
+    
 }
 
 - (IBAction)readMore:(id)sender

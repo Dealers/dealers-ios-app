@@ -26,26 +26,13 @@
     self.hintView.layer.masksToBounds = YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    
-    [[self transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"Navigation Bar Shade"]];
-    } completion:nil];
-    
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"Navigation Bar Shade"]];
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Add Store - Store Location Screen"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    [[self transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    } completion:nil];
 }
 
 - (void)setNavigationBar

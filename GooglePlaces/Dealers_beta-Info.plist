@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.61</string>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -38,7 +38,7 @@
 			<key>CFBundleURLIconFile</key>
 			<string>Logo (high resolution)</string>
 			<key>CFBundleURLName</key>
-			<string>my_feed</string>
+			<string>dealers_url</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>dealers</string>
@@ -46,7 +46,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.6.31</string>
+	<string>2.0.3</string>
 	<key>FacebookAppID</key>
 	<string>307875306059843</string>
 	<key>FacebookDisplayName</key>
@@ -85,5 +85,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>branch_key</key>
+	<string>key_live_ogpB3j4wICkg4ifk1J2FXigftvoz7q5H</string>
 </dict>
 </plist>

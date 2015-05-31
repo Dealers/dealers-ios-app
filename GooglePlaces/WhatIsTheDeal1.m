@@ -10,8 +10,7 @@
 #import "WhereIsTheDeal.h"
 
 #define DegreesToRadians(x) ((x) * M_PI / 180.0)
-#define TITLE_HEIGHT 54.0
-#define DESCRIPTION_HEIGHT 92.0
+#define TITLE_HEIGHT 92.0
 
 @interface WhatIsTheDeal1 ()
 
@@ -50,7 +49,7 @@
     
     self.photosFileName = nil;
     id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"Add Deal - What Is The Deal 1 Screen"];
+    [tracker set:kGAIScreenName value:@"Add Deal - What Is The Deal 1 Local Screen"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
@@ -97,15 +96,7 @@
             titleHeight = TITLE_HEIGHT;
             return titleHeight;
         } else {
-            height = titleHeight + 13.0;
-        }
-    } else if (indexPath.row == 2) {
-        height = descriptionHeight;
-        if (height <= DESCRIPTION_HEIGHT) {
-            descriptionHeight = DESCRIPTION_HEIGHT;
-            return descriptionHeight;
-        } else {
-            height = descriptionHeight + 10.0;
+            height = titleHeight + 15.0;
         }
     }
     return height;
@@ -162,15 +153,11 @@
 - (void)setTextViewSettings
 {
     self.titlePlaceholder.text = NSLocalizedString(@"Tell us about the deal...", nil);
-    self.descriptionPlaceholder.text = NSLocalizedString(@"Tell us more (optional)", nil);
     
     if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         [self.dealTitle setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
         [self.dealTitle setTextAlignment:NSTextAlignmentRight];
         [self.titlePlaceholder setTextAlignment:NSTextAlignmentRight];
-        [self.dealDescription setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
-        [self.dealDescription setTextAlignment:NSTextAlignmentRight];
-        [self.descriptionPlaceholder setTextAlignment:NSTextAlignmentRight];
     }
 }
 
@@ -555,7 +542,7 @@
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    CGFloat imageSizeDivider = image.size.width / 500.0;
+    CGFloat imageSizeDivider = image.size.width / 375.0;
 
     UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider, image.size.height / imageSizeDivider)];
     
@@ -753,11 +740,11 @@
 
 - (void)imagePicker:(GKImagePicker *)imagePicker pickedImage:(UIImage *)image {
     
-    CGFloat imageSizeDivider = image.size.width / 414.0;
-//    UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider,
-//                                                                             image.size.height / imageSizeDivider)];
+    CGFloat imageSizeDivider = image.size.width / 375.0;
+    UIImage *resizedImage = [appDelegate resizeImage:image toSize:CGSizeMake(image.size.width / imageSizeDivider,
+                                                                             image.size.height / imageSizeDivider)];
     
-    [self addNewPhotoToList:image];
+    [self addNewPhotoToList:resizedImage];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -821,16 +808,6 @@
         } else {
             self.titlePlaceholder.hidden = YES;
         }
-    
-    } else if (textView == self.dealDescription) {
-        CGSize sizeThatFitsTextView = [textView sizeThatFits:CGSizeMake(textView.frame.size.width, MAXFLOAT)];
-        [self adjustHeight:sizeThatFitsTextView.height toTextView:@"Description"];
-        
-        if (self.dealDescription.text.length == 0) {
-            self.descriptionPlaceholder.hidden = NO;
-        } else {
-            self.descriptionPlaceholder.hidden = YES;
-        }
     }
 }
 
@@ -838,8 +815,6 @@
 {
     if ([textViewName isEqualToString:@"Title"]) {
         titleHeight = height;
-    } else if ([textViewName isEqualToString:@"Description"]) {
-        descriptionHeight = height;
     }
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
@@ -872,6 +847,10 @@
     [UIView animateWithDuration:0.3 animations:^{ self.hintLabel.alpha = 1.0; }];
 }
 
+- (IBAction)disableKeyboard:(id)sender
+{
+    [self.view endEditing:YES];
+}
 
 /*
  - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -902,6 +881,7 @@
     
     NSDictionary *categoryDictionary = self.store.categories.firstObject;
     self.store.categoryID = [categoryDictionary valueForKey:@"id"];
+    
     self.deal.store = self.store;
     
     self.deal.dealer = appDelegate.dealer;
@@ -911,7 +891,6 @@
     self.deal.type = @"Local";
     
     self.deal.title = self.dealTitle.text;
-    self.deal.moreDescription = self.dealDescription.text;
 
     // Prepering photos (if exist) for upload
     
@@ -923,7 +902,7 @@
                 self.photosFileName = [[NSMutableArray alloc]init];
             }
             
-            NSString *fileName = [NSString stringWithFormat:@"%@_%@_%i.jpg", self.deal.dealer.dealerID, [NSDate date], i + 1];
+            NSString *fileName = [NSString stringWithFormat:@"%@_%f_%i.jpg", self.deal.dealer.dealerID, [[NSDate date] timeIntervalSince1970], 1];
             NSString *key = [NSString stringWithFormat:@"media/Deals_Photos/%@", fileName];
             [self.photosFileName addObject:fileName];
             
@@ -985,20 +964,18 @@
 
 - (void)pushNextView
 {
-    WhatIsTheDeal2 *witd2vc = [self.storyboard instantiateViewControllerWithIdentifier:@"WhatIsTheDeal2ID"];
-    
-    witd2vc.deal = self.deal;
-    witd2vc.photosFileName = self.photosFileName;
-    
-    
-    witd2vc.cashedPrice = self.cashedPrice;
-    witd2vc.cashedCurrency = self.cashedCurrency;
-    witd2vc.cashedDiscountValue = self.cashedDiscountValue;
-    witd2vc.cashedDiscountType = self.cashedDiscountType;
-    witd2vc.cashedCategory = self.cashedCategory;
-    witd2vc.cashedExpirationDate = self.cashedExpirationDate;
-        
-    [self.navigationController pushViewController:witd2vc animated:YES];
+    WhatIsTheDeal2 *nextView;
+    if (self.cashedInstance) {
+        nextView = self.cashedInstance;
+    } else {
+        nextView = [self.storyboard instantiateViewControllerWithIdentifier:@"WhatIsTheDeal2ID"];
+    }
+    nextView.deal = self.deal;
+    nextView.photosFileName = self.photosFileName;
+    if (self.cashedCategory) {
+        nextView.cashedCategory = self.cashedCategory;
+    }
+    [self.navigationController pushViewController:nextView animated:YES];
 }
 
 /*

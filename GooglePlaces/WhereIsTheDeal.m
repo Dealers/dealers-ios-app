@@ -65,9 +65,9 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     if ([self.cameFrom isEqualToString:@"Edit Deal"]) {
         self.navigationItem.leftBarButtonItem = nil;
         self.extendedLayoutIncludesOpaqueBars = NO;
-        self.screenName = @"Edit Deal - Where Is The Deal Screen";
+        self.screenName = @"Edit Deal - Where Is The Deal Local Screen";
     } else {
-        self.screenName = @"Add Deal - Where Is The Deal Screen";
+        self.screenName = @"Add Deal - Where Is The Deal Local Screen";
     }
 }
 

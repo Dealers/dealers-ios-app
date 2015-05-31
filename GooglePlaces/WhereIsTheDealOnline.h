@@ -11,8 +11,9 @@
 #import "WhatIsTheDeal1Online.h"
 #import "MBProgressHUD.h"
 #import "PaddedTextField.h"
+#import "GAITrackedViewController.h"
 
-@interface WhereIsTheDealOnline : UIViewController <UIWebViewDelegate, UITextFieldDelegate, MBProgressHUDDelegate>
+@interface WhereIsTheDealOnline : GAITrackedViewController <UIWebViewDelegate, UITextFieldDelegate, MBProgressHUDDelegate>
 
 @property AppDelegate *appDelegate;
 

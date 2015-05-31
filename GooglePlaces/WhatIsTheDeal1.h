@@ -25,7 +25,7 @@
     
     BOOL isFrontCamera, isSessionRunning, shouldDealloc;
     AVCaptureDeviceInput *frontCameraInput, *backCameraInput;
-    CGFloat titleHeight, descriptionHeight;
+    CGFloat titleHeight;
     MBProgressHUD *blankTitleIndicator, *tooMuchIndicator, *illogicalPercentage;
     
 }
@@ -34,13 +34,12 @@
 
 @property Deal *deal;
 @property Store *store;
+@property NSString *cashedCategory;
 
 @property (weak, nonatomic) IBOutlet UITextView *dealTitle;
 @property (weak, nonatomic) IBOutlet UILabel *titlePlaceholder;
 @property (nonatomic) UILabel *countLabel;
 @property (nonatomic) UIView *countContainer;
-@property (weak, nonatomic) IBOutlet ElasticLabel *descriptionPlaceholder;
-@property (weak, nonatomic) IBOutlet UITextView *dealDescription;
 
 @property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
 @property AVCaptureSession *session;
@@ -75,12 +74,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *hintLabel;
 
-@property NSString *cashedPrice;
-@property NSString *cashedCurrency;
-@property NSNumber *cashedDiscountValue;
-@property NSString *cashedDiscountType;
-@property NSString *cashedCategory;
-@property NSDate *cashedExpirationDate;
+@property WhatIsTheDeal2 *cashedInstance;
 
 @property BOOL tooMuchText;
 @property BOOL isShowingFullScreenCamera;

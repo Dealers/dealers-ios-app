@@ -650,7 +650,7 @@
     
     if (self.didChangeProfilePic) {
         if (userHaveProfilePic) {
-            photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", appDelegate.dealer.email, [NSDate date]];
+            photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", appDelegate.dealer.email, [[NSDate date] timeIntervalSince1970]];
             appDelegate.dealer.photoURL = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
             shouldUploadPhoto = YES;
             [self uploadPhoto:self.profilePicButton.imageView.image];

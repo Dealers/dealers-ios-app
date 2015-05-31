@@ -144,7 +144,7 @@
 "Add a new store" = "Add a new store";
 "What is the deal?" = "What is the deal?";
 "Tell us about the deal..." = "Tell us about the deal...";
-"Tell us more (optional)" = "Tell us more";
+"Anything else...?" = "Anything else...?";
 "Select an image" = "Select an image";
 "Title can't be blank!" = "Title can't be blank!";
 "Title is too long" = "Title is too long";
@@ -169,7 +169,9 @@
 "Permission not granted" = "Permission not granted";
 "Your deal will not be published to Facebook." = "Your deal will not be published to Facebook.";
 "Couldn't upload the deal" = "Couldn't upload the deal";
-"Thank You\n%@!" = "Thank You\n%@!";
+"Thank You!" = "Thank You!";
+"Share with Facebook" = "Share with Facebook";
+"Share with WhatsApp" = "Share with WhatsApp";
 "WhatsApp not installed." = "WhatsApp not installed.";
 "Your device should have WhatsApp installed." = "Your device should have WhatsApp installed.";
 
@@ -185,7 +187,8 @@
 "1 person likes this" = "1 person like this";
 "%@ people like this" = "%@ people like this";
 "View all %@ comments" = "View all %@ comments";
-"Hear from others about great deals at Dealers: %@" = "Hear from others about great deals at Dealers: %@";
+"I found a great deal at Dealers, check it out" = "I found a great deal at Dealers, check it out";
+"Check out this deal at Dealers" = "Check out this deal at Dealers";
 "Report as Spam" = "Report as Spam";
 "Be the first to comment..." = "  Be the first to comment...";
 "Add a comment..." = "  Add a comment...";

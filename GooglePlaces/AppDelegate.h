@@ -26,9 +26,9 @@
 {
     int picsNumbers;
     NSInteger timesTriedToPostDevice, timesTriedToUpdateDevice, timesTriedToUpdateBadge;
-    NSString *waitingForTabBarController;
+    NSString *pendingNotification;
     NSNumber *pushedDealID, *notifyingDealerID;
-    NSDictionary *userInfoForActive;
+    NSDictionary *userInfoForActive, *pendingContent;
 }
 
 @property (nonatomic) UIWindow *window;
@@ -104,6 +104,7 @@
 - (NSString *)getEnglishGender:(NSString *)gender;
 
 - (NSString *)baseURL;
+- (NSString *)currentVersion;
 - (RKObjectMapping *)dealMapping;
 - (RKObjectMapping *)addDealMapping;
 - (RKObjectMapping *)dealerMapping;

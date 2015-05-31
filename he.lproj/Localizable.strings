@@ -142,7 +142,7 @@
 "Add a new store" = "הוסף בית עסק חדש";
 "What is the deal?" = "על מה המבצע?";
 "Tell us about the deal..." = "ספר/י לנו על המבצע...";
-"Tell us more (optional)" = "ספר/י לנו עוד (אופציונלי)";
+"Anything else...?" = "משהו נוסף...?";
 "Select an image" = "בחר/י תמונה";
 "Title can't be blank!" = "חייבת להיות כותרת למבצע!";
 "Title is too long" = "הכותרת ארוכה מדי";
@@ -167,7 +167,9 @@
 "Permission not granted" = "לא ניתן אישור";
 "Your deal will not be published to Facebook." = "המבצע לא יפורסם בפייסבוק";
 "Couldn't upload the deal :(" = "העלאת המבצע נכשלה :(";
-"Thank You\n%@!" = "תודה רבה\n%@!";
+"Thank You!" = "תודה רבה!";
+"Share with Facebook" = "שתף עם פייסבוק";
+"Share with WhatsApp" = "שתף עם וואטסאפ";
 "WhatsApp not installed." = "לא מותקן וואטסאפ";
 "Your device should have WhatsApp installed." = "וואטסאפ צריך להיות מותקן במכשיר שלך.";
 
@@ -183,7 +185,8 @@
 "1 person likes this" = "אדם אחד אוהב את זה";
 "%@ people like this" = "%@ אנשים אוהבים את זה";
 "View all %@ comments" = "הראה את כל %@ התגובות";
-"Hear from others about great deals at Dealers: %@" = "שמע/י מאנשים אחרים על מבצעים מדהימים בדילרס: %@";
+"I found a great deal at Dealers, check it out" = "מצאתי מבצע שווה בדילרס";
+"Check out this deal at Dealers" = "מצא/י את המבצע הזה בדילרס";
 "Report as Spam" = "דווח כתוכן פוגעני";
 "Be the first to comment..." = "היה/י הראשון/ה להגיב";
 "Add a comment..." = "הוסף תגובה...";

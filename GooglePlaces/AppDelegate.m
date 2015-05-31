@@ -15,11 +15,13 @@
 #import "ViewDealViewController.h"
 #import "KeychainItemWrapper.h"
 #import "PushNotificationView.h"
+#import "Branch.h"
 #import "GAI.h"
 
 #define AWS_ACCESS_KEY_ID @"AKIAIWJFJX72FWKD2LYQ"
 #define AWS_SECRET_ACCESS_KEY @"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"
 #define AWS_S3_BUCKET_NAME @"dealers-app"
+#define S3_PHOTOS_ADDRESS @"https://s3-eu-west-1.amazonaws.com/dealers-app/"
 
 @interface AppDelegate() {
     
@@ -34,6 +36,10 @@
 @synthesize storyboard;
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    if ([[Branch getInstance] handleDeepLink:url]) {
+        return YES;
+    }
     
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication];
@@ -96,10 +102,23 @@
     self.pushNotificationsWindow.windowLevel = UIWindowLevelStatusBar + 1;
     self.pushNotificationsWindow.hidden = YES;
     
+    // Initializing Branch Metrics's SDK
+    Branch *branch = [Branch getInstance];
+    [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+        // params are the deep linked params associated with the link that the user clicked before showing up.
+        if (!error) {
+            if (params.count > 0) {
+                [self presentContentWithParams:params];
+            }
+        } else {
+            NSLog(@"There was an error with Branch: %@", error.localizedDescription);
+        }
+    }];
+    
     // Initializing the Google Analytics tracker
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
-    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelInfo];
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelError];
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-62425106-1"];
     
     return YES;
@@ -372,11 +391,19 @@
         [application registerForRemoteNotificationTypes:myTypes];
     }
     
+    // Identifying the user for the Branch analytics
+    [[Branch getInstance] setIdentity:self.dealer.dealerID.stringValue];
+    
+    // Is there a shared content that's waiting for the tab bar controller?
+    if (pendingContent) {
+        [self presentContentWithParams:pendingContent];
+        pendingContent = nil;
+    }
     
     // Is there a remote notifiaction that's waiting for the tab bar controller?
-    if (waitingForTabBarController) {
-        [self presentNotificationOfType:waitingForTabBarController];
-        waitingForTabBarController = nil;
+    if (pendingNotification) {
+        [self presentNotificationOfType:pendingNotification];
+        pendingNotification = nil;
     }
 }
 
@@ -518,10 +545,27 @@
                                               }];
 }
 
+- (void)presentContentWithParams:(NSDictionary *)params
+{
+    if (!tabBarController) {
+        pendingContent = params;
+        return;
+    }
+    
+    UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:0];
+    [tabBarController setSelectedIndex:0];
+    
+    if (params[@"deal"]) {
+        ViewDealViewController *vdvc = [storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
+        vdvc.dealID = params[@"deal"];
+        [navigationController pushViewController:vdvc animated:YES];
+    }
+}
+
 - (void)presentNotificationOfType:(NSString *)type
 {
     if (!tabBarController) {
-        waitingForTabBarController = type;
+        pendingNotification = type;
         return;
     }
     
@@ -1209,8 +1253,13 @@
 
 - (NSString *)baseURL
 {
-    //    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
-    return @"http://www.dealers-web.com";
+    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
+    // return @"http://www.dealers-web.com";
+}
+
+- (NSString *)currentVersion
+{
+    return @"version 2.0";
 }
 
 - (RKObjectMapping *)dealMapping
@@ -2075,7 +2124,7 @@
             
             NSURL *pictureURL = [NSURL URLWithString:[[[facebookInfo objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
             
-            NSString *photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", dealer.email, [NSDate date]];
+            NSString *photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", dealer.email, [[NSDate date] timeIntervalSince1970]];
             NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
             dealer.photoURL = filePathAtS3;
             

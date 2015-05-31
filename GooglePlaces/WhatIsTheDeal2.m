@@ -6,6 +6,7 @@
 //
 //
 
+#import "WhatIsTheDeal1.h"
 #import "WhatIsTheDeal2.h"
 #import "WhatIsTheDeal1Online.h"
 
@@ -15,6 +16,7 @@
 #define sharedViewTag 8888
 #define iconsLeftMargin 18
 #define labelsLeftMargin 48
+#define DESCRIPTION_HEIGHT 92.0
 
 #define AWS_S3_BUCKET_NAME @"dealers-app"
 
@@ -36,17 +38,18 @@
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleFBSessionStateChangeWithNotification:)
-                                                 name:@"SessionStateChangeNotification"
-                                               object:nil];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self
+    //                                             selector:@selector(handleFBSessionStateChangeWithNotification:)
+    //                                                 name:@"SessionStateChangeNotification"
+    //                                               object:nil];
     
     [self initialize];
     [self setupExpirationDateCellContentView];
+    [self setCategory];
+    [self setTextViewSettings];
     [self setAddDealButton];
     [self setProgressIndicator];
     [self createInputAccessoryViews];
-    [self setCashedData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -64,38 +67,14 @@
     [super viewWillDisappear:animated];
     
     NSArray *viewControllers = self.navigationController.viewControllers;
-    
     if ([viewControllers indexOfObject:self] == NSNotFound) {
         // View is disappearing because it was popped from the stack
         if ([self.deal.type isEqualToString:@"Online"]) {
             WhatIsTheDeal1Online *witd1ovc = (WhatIsTheDeal1Online *)viewControllers.lastObject;
             witd1ovc.cashedInstance = self;
-        } else {
-            WhatIsTheDeal1 *witd1 = viewControllers.lastObject;
-            if (self.priceTextField.text.length > 0) {
-                witd1.cashedPrice = self.priceTextField.text;
-                witd1.cashedCurrency = self.selectedCurrency;
-            } else {
-                witd1.cashedPrice = nil;
-                witd1.cashedCurrency = nil;
-            }
-            if (self.discountTextField.text.length > 0) {
-                witd1.cashedDiscountValue = [NSNumber numberWithFloat:self.discountValue];
-                witd1.cashedDiscountType = self.selectedDiscountType;
-            } else {
-                witd1.cashedDiscountValue = nil;
-                witd1.cashedDiscountType = nil;
-            }
-            if (self.categoryLabel.text.length > 0 && ![self.categoryLabel.text isEqualToString:NSLocalizedString(@"Choose Category", nil)]) {
-                witd1.cashedCategory = self.categoryLabel.text;
-            } else {
-                witd1.cashedCategory = nil;
-            }
-            if (self.expirationDateLabel.text.length > 0) {
-                witd1.cashedExpirationDate = self.datePicker.date;
-            } else {
-                witd1.cashedExpirationDate = nil;
-            }
+        } else if ([self.deal.type isEqualToString:@"Local"]) {
+            WhatIsTheDeal1 *witd1vc = (WhatIsTheDeal1 *)viewControllers.lastObject;
+            witd1vc.cashedInstance = self;
         }
     }
 }
@@ -109,8 +88,6 @@
 - (void)initialize
 {
     appDelegate = [[UIApplication sharedApplication]delegate];
-    isFacebookSelectd = NO;
-    isWhatsAppSelected = NO;
     self.didTouchDatePicker = NO;
     didUploadDealData = NO;
     didDealPhotosFinishedUploading = NO;
@@ -124,10 +101,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     CGFloat height = tableView.rowHeight;
-    
     if (indexPath.row == 1 && indexPath.section == 2) {
-        
         height = self.datePickerIsShowing ? expirationDateCellHeight : 0.0f;
+    } else if (indexPath.section == 3) {
+        height = descriptionHeight;
+        if (height <= DESCRIPTION_HEIGHT) {
+            descriptionHeight = DESCRIPTION_HEIGHT;
+            return descriptionHeight;
+        } else {
+            height = descriptionHeight + 10.0;
+        }
     }
     
     return height;
@@ -238,40 +221,8 @@
         [self.priceTextField resignFirstResponder];
         [self.discountTextField resignFirstResponder];
         
-    } else if (indexPath.section == 3) { // Social Networks
+    } else if (indexPath.section == 3) { // Description
         
-        if (indexPath.row == 0) {
-            
-            if (isFacebookSelectd) {
-                
-                self.facebookIcon.selected = NO;
-                self.facebookLabel.textColor = [UIColor blackColor];
-                [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-                isFacebookSelectd = NO;
-                
-            } else {
-                
-                [self setFacebookConnection];
-            }
-        }
-        
-        else if (indexPath.row == 1) {
-            
-            if (isWhatsAppSelected) {
-                
-                self.whatsAppIcon.selected = NO;
-                self.whatsAppLabel.textColor = [UIColor blackColor];
-                [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-                isWhatsAppSelected = NO;
-                
-            } else {
-                
-                self.whatsAppIcon.selected = YES;
-                self.whatsAppLabel.textColor = [UIColor colorWithRed:48.0/255.0 green:178.0/255.0 blue:32.0/255.0 alpha:1.0];
-                [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
-                isWhatsAppSelected = YES;
-            }
-        }
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -456,25 +407,9 @@
     [priceBar addSubview:pound];
     [priceBar addSubview:done1];
     
-    if (self.cashedCurrency.length > 0) {
-        
-        self.selectedCurrency = self.cashedCurrency;
-        if ([self.selectedCurrency isEqualToString:@"₪"]) {
-            [shekel setSelected:YES];
-            
-        } else if ([self.selectedCurrency isEqualToString:@"$"]) {
-            [dollar setSelected:YES];
-            
-        } else if ([self.selectedCurrency isEqualToString:@"£"]) {
-            [pound setSelected:YES];
-        }
-        
-    } else {
-        
-        // default choise:
-        [shekel setSelected:YES];
-        self.selectedCurrency = @"₪";
-    }
+    // default choise:
+    [shekel setSelected:YES];
+    self.selectedCurrency = @"₪";
     
     [self.priceTextField setInputAccessoryView:priceBar];
     
@@ -514,45 +449,30 @@
     [discountBar addSubview:lastPrice];
     [discountBar addSubview:done2];
     
-    if (self.cashedDiscountType.length > 0) {
-        
-        self.selectedDiscountType = self.cashedDiscountType;
-        if ([self.selectedDiscountType isEqualToString:@"%"]) {
-            [percentage setSelected:YES];
-            
-        } else {
-            [lastPrice setSelected:YES];
-        }
-        
-    } else {
-        
-        // default choise:
-        [percentage setSelected:YES];
-        self.selectedDiscountType = @"%";
-    }
+    // default choise:
+    [percentage setSelected:YES];
+    self.selectedDiscountType = @"%";
     
     [self.discountTextField setInputAccessoryView:discountBar];
     
     
-    // Creating the more description bar (obsolete):
+    // Creating the more description bar:
     
-    /*
      UIView *doneBar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
      
-     doneBar.backgroundColor = [UIColor groupTableViewBackgroundColor];
+     doneBar.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:226.0/255.0 blue:234.0/255.0 alpha:1.0];
      doneBar.tintColor = [UIColor colorWithRed:150.0/250.0 green:0 blue:180.0/250.0 alpha:1.0];
      
      UIButton *done = [UIButton buttonWithType:UIButtonTypeSystem];
-     [done setTitle:@"Done" forState:UIControlStateNormal];
-     [done setFrame:CGRectMake(260, 0, 60, 44)];
+     [done setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
+     [done setFrame:CGRectMake(self.view.frame.size.width - 60 - 15, 0, 60, 44)];
      [done setAlpha:0.9];
-     [[done titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:17.0]];
+     [[done titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:18.0]];
      [done addTarget:self action:@selector(doneTextView) forControlEvents:UIControlEventTouchUpInside];
      
      [doneBar addSubview:done];
      
-     [self.moreDescriptionTextView setInputAccessoryView:doneBar];
-     */
+     [self.dealDescription setInputAccessoryView:doneBar];
 }
 
 - (void)selectCurrency:(UIButton *)sender
@@ -619,7 +539,31 @@
 
 - (void)doneTextView
 {
-    [self.moreDescriptionTextView resignFirstResponder];
+    [self.dealDescription resignFirstResponder];
+}
+
+- (void)setCategory
+{
+    if (self.cashedCategory.length > 0) {
+        self.categoryLabel.text = self.cashedCategory;
+        self.categoryLabel.textColor = [UIColor blackColor];
+    } else if (self.deal.store.categoryID) {
+        // No cashed category, determine category according to the store
+        NSString *category = [StoreCategoriesOrganizer superCategoryForCategory:self.deal.store.categoryID];
+        self.categoryLabel.text = category;
+        self.categoryLabel.textColor = [UIColor blackColor];
+    }
+}
+
+- (void)setTextViewSettings
+{
+    self.descriptionPlaceholder.text = NSLocalizedString(@"Anything else...?", nil);
+    
+    if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+        [self.dealDescription setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
+        [self.dealDescription setTextAlignment:NSTextAlignmentRight];
+        [self.descriptionPlaceholder setTextAlignment:NSTextAlignmentRight];
+    }
 }
 
 - (void)setAddDealButton
@@ -632,7 +576,7 @@
         self.addDealButton.backgroundColor = [appDelegate ourPurple];
         [self.addDealButton setTitle:NSLocalizedString(@"Share the Deal", nil) forState:UIControlStateNormal];
         [self.addDealButton setTintColor:[UIColor whiteColor]];
-    
+        
         [self.addDealButton addTarget:self action:@selector(addDeal) forControlEvents:UIControlEventTouchUpInside];
         [self.addDealView addSubview:self.addDealButton];
     }
@@ -735,9 +679,9 @@
     
     CGFloat titleLabelHeight = 48.0;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(iconsLeftMargin,
-                                                                   dealPic.frame.size.height - titleLabelHeight - 5,
-                                                                   screenWidth - iconsLeftMargin * 2,
-                                                                   titleLabelHeight)];
+                                                                    dealPic.frame.size.height - titleLabelHeight - 5,
+                                                                    screenWidth - iconsLeftMargin * 2,
+                                                                    titleLabelHeight)];
     titleLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.numberOfLines = 2;
@@ -753,16 +697,16 @@
     BOOL hasPriceOrDiscount = NO;
     
     UIImageView *storeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMargin,
-                                                                          dealPic.frame.size.height + detailsVerticalGap,
-                                                                          iconSize.width,
-                                                                          iconSize.height)];
+                                                                           dealPic.frame.size.height + detailsVerticalGap,
+                                                                           iconSize.width,
+                                                                           iconSize.height)];
     storeIcon.image = [UIImage imageNamed:@"Store Icon"];
     [sharedView addSubview:storeIcon];
     
     UILabel *storeLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelsLeftMargin,
-                                                                   storeIcon.frame.origin.y,
-                                                                   labelSize.width,
-                                                                   labelSize.height)];
+                                                                    storeIcon.frame.origin.y,
+                                                                    labelSize.width,
+                                                                    labelSize.height)];
     storeLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
     storeLabel.textColor = detailsTextColor;
     storeLabel.numberOfLines = 1;
@@ -776,9 +720,9 @@
         hasPriceOrDiscount = YES;
         
         UIImageView *priceIcon = [[UIImageView alloc] initWithFrame:CGRectMake(iconsLeftMargin,
-                                                                              detailsLowestYPoint + detailsVerticalGap,
-                                                                              iconSize.width,
-                                                                              iconSize.height)];
+                                                                               detailsLowestYPoint + detailsVerticalGap,
+                                                                               iconSize.width,
+                                                                               iconSize.height)];
         if (!(self.priceValue > 0) && self.discountValue > 0) {
             priceIcon.image = [UIImage imageNamed:@"Discount Icon"];
         } else {
@@ -878,28 +822,28 @@
         
         addressLabel.frame = CGRectMake(labelsLeftMargin, addressIcon.frame.origin.y + 2, addressLabelSize.width, addressLabelSize.height);
         
-        [sharedView addSubview:addressLabel];        
+        [sharedView addSubview:addressLabel];
     }
     
-//    if (![self.expirationDateLabel.text isEqualToString:NSLocalizedString(@"Choose Date", nil)] && self.expirationDateLabel.text.length > 0) {
-//        
-//        UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
-//                                                                                   detailsLowestYPoint + detailsVerticalGap,
-//                                                                                   iconSize.width,
-//                                                                                   iconSize.height)];
-//        expirationIcon.image = [UIImage imageNamed:@"Expiration Date Icon"];
-//        [sharedView addSubview:expirationIcon];
-//        
-//        UILabel *expirationLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
-//                                                                            expirationIcon.frame.origin.y,
-//                                                                            labelWidth,
-//                                                                            expirationIcon.frame.size.height)];
-//        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
-//        expirationLabel.textColor = detailsTextColor;
-//        expirationLabel.numberOfLines = 1;
-//        expirationLabel.text = [NSLocalizedString(@"Expires on ", nil) stringByAppendingString:self.expirationDateLabel.text];
-//        [sharedView addSubview:expirationLabel];
-//    }
+    //    if (![self.expirationDateLabel.text isEqualToString:NSLocalizedString(@"Choose Date", nil)] && self.expirationDateLabel.text.length > 0) {
+    //
+    //        UIImageView *expirationIcon = [[UIImageView alloc]initWithFrame:CGRectMake(iconsLeftMargin,
+    //                                                                                   detailsLowestYPoint + detailsVerticalGap,
+    //                                                                                   iconSize.width,
+    //                                                                                   iconSize.height)];
+    //        expirationIcon.image = [UIImage imageNamed:@"Expiration Date Icon"];
+    //        [sharedView addSubview:expirationIcon];
+    //
+    //        UILabel *expirationLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelsLeftMargin,
+    //                                                                            expirationIcon.frame.origin.y,
+    //                                                                            labelWidth,
+    //                                                                            expirationIcon.frame.size.height)];
+    //        expirationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:17.0];
+    //        expirationLabel.textColor = detailsTextColor;
+    //        expirationLabel.numberOfLines = 1;
+    //        expirationLabel.text = [NSLocalizedString(@"Expires on ", nil) stringByAppendingString:self.expirationDateLabel.text];
+    //        [sharedView addSubview:expirationLabel];
+    //    }
 }
 
 - (void)screenshotSharedView
@@ -957,58 +901,12 @@
 
 #pragma mark - General methods
 
-- (void)setCashedData
-{
-    if (self.cashedPrice.length > 0) {
-        
-        self.priceValue = [self.cashedPrice substringFromIndex:1].floatValue;
-        self.priceTextField.text = self.cashedPrice;
-        // Cashed currency has already been set in the createInputAccessoryViews method
-    }
-    
-    if (self.cashedDiscountValue.floatValue > 0) {
-        
-        self.discountValue = self.cashedDiscountValue.floatValue;
-        // Cashed discount type has already been set in the createInputAccessoryViews method
-        
-        NSString *discountValue = [[NSNumber numberWithFloat:self.discountValue] stringValue];
-        
-        if ([self.selectedDiscountType isEqualToString:@"%"]) {
-            self.discountTextField.text = [discountValue stringByAppendingString:self.selectedDiscountType];
-            
-        } else {
-            NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:discountValue attributes:attributes];
-            [self.discountTextField setAttributedText:attrText];
-        }
-    }
-    
-    if (self.cashedCategory.length > 0) {
-        self.categoryLabel.text = self.cashedCategory;
-        self.categoryLabel.textColor = [UIColor blackColor];
-        
-    } else if (self.deal.store.categoryID) {
-        // No cashed category, determine category according to the store
-        NSString *category = [StoreCategoriesOrganizer superCategoryForCategory:self.deal.store.categoryID];
-        
-        self.categoryLabel.text = category;
-        self.categoryLabel.textColor = [UIColor blackColor];
-    }
-    
-    if (self.cashedExpirationDate) {
-        [self.datePicker setDate:self.cashedExpirationDate];
-        self.expirationDateLabel.text = [self.dateFormatter stringFromDate:self.cashedExpirationDate];
-        self.expirationDateLabel.textColor = [UIColor blackColor];
-    }
-}
-
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if (textField == self.priceTextField) {
         
         if (textField.text.length > 0 && [textField.text rangeOfString:self.selectedCurrency].location != NSNotFound) {
             textField.text = [textField.text stringByReplacingOccurrencesOfString:self.selectedCurrency withString:@""];
-            
         }
         
     } else if (textField == self.discountTextField) {
@@ -1070,6 +968,28 @@
         }
     }
 }
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    CGSize sizeThatFitsTextView = [textView sizeThatFits:CGSizeMake(textView.frame.size.width, MAXFLOAT)];
+    [self adjustHeight:sizeThatFitsTextView.height toTextView:@"Description"];
+    
+    if (self.dealDescription.text.length == 0) {
+        self.descriptionPlaceholder.hidden = NO;
+    } else {
+        self.descriptionPlaceholder.hidden = YES;
+    }
+}
+
+- (void)adjustHeight:(CGFloat)height toTextView:(NSString *)textViewName
+{
+    if ([textViewName isEqualToString:@"Description"]) {
+        descriptionHeight = height;
+    }
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
 
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 //{
@@ -1133,159 +1053,160 @@
     [self.navigationController pushViewController:cctvc animated:YES];
 }
 
-- (void)setFacebookConnection
-{
-    if ([appDelegate isFacebookConnected]) {
-        
-        [self.facebookActivityIndicator startAnimating];
-        
-        if (self.hasPublishPermissions) {
-            [self turnOnFacebook];
-            
-        } else {
-            
-            // Present the permissions dialog and ask for publish_actions
-            [FBRequestConnection startWithGraphPath:@"/me/permissions"
-                                  completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                      
-                                      if (!error){
-                                          
-                                          NSDictionary *permissions = [(NSArray *)[result data] objectAtIndex:2]; // object at index 2 is the publish_actions permission
-                                          
-                                          if ([[permissions objectForKey:@"permission"] isEqualToString:@"publish_actions"]
-                                              && [[permissions objectForKey:@"status"] isEqualToString:@"granted"]) {
-                                              
-                                              // Publish permissions found, turn on facebook
-                                              self.hasPublishPermissions = YES;
-                                              [self turnOnFacebook];
-                                              
-                                          } else {
-                                              
-                                              // Publish permissions not found, ask for publish_actions
-                                              self.hasPublishPermissions = NO;
-                                              [self requestPublishPermissions];
-                                              
-                                          }
-                                          
-                                      } else {
-                                          // There was an error, handle it
-                                          [self.facebookActivityIndicator stopAnimating];
-                                      }
-                                  }];
-        }
-        
-    } else {
-        
-        // Connect with Facebook Login and ask for all the necessary permissions, including publish_actions
-        
-        [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email", @"user_birthday", @"user_location", @"publish_actions"] allowLoginUI:YES];
-    }
-}
-
-- (void)requestPublishPermissions
-{
-    [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
-                                          defaultAudience:FBSessionDefaultAudienceFriends
-                                        completionHandler:^(FBSession *session, NSError *error) {
-                                            
-                                            if (!error) {
-                                                
-                                                [self checkPublishPermissions];
-                                                
-                                            } else {
-                                                
-                                                // There was an error, handle it
-                                                NSLog(@"error! %@", [error localizedDescription]);
-                                                [self.facebookActivityIndicator stopAnimating];
-                                            }
-                                        }];
-}
-
-- (void)checkPublishPermissions
-{
-    if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
-        
-        // Permission not granted, tell the user we will not publish
-        
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Permission not granted", nil)
-                                    message:NSLocalizedString(@"Your deal will not be published to Facebook.", nil)
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                          otherButtonTitles:nil] show];
-        
-        self.hasPublishPermissions = NO;
-        [self.facebookActivityIndicator stopAnimating];
-        
-    } else {
-        
-        // Permission granted, turn on facebook
-        self.hasPublishPermissions = YES;
-        [self turnOnFacebook];
-    }
-}
-
-- (void)turnOnFacebook
-{
-    [self.facebookActivityIndicator stopAnimating];
-    NSIndexPath *facebookIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
-    self.facebookIcon.selected = YES;
-    self.facebookLabel.textColor = [UIColor colorWithRed:59.0/255.0 green:87.0/255.0 blue:157.0/255.0 alpha:1.0];
-    [self.tableView cellForRowAtIndexPath:facebookIndexPath].accessoryType = UITableViewCellAccessoryCheckmark;
-    isFacebookSelectd = YES;
-}
-
-- (void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification
-{
-    if (!self.hasPublishPermissions) { // Otherwise there is no need to fetch the user's info, because we already have it.
-        
-        // Get the session, state and error values from the notification's userInfo dictionary.
-        NSDictionary *userInfo = [notification userInfo];
-        
-        FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
-        NSError *error = [userInfo objectForKey:@"error"];
-        
-        if (!error) {
-            
-            // In case that there's not any error, then check if the session opened or closed.
-            
-            if ([appDelegate isFacebookConnected]) {
-                
-                // The session is open. Get the user information and update the UI.
-                
-                [FBRequestConnection startWithGraphPath:@"me"
-                                             parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(large), location, email"}
-                                             HTTPMethod:@"GET"
-                                      completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                          
-                                          if (!error) {
-                                              
-                                              appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:(FBGraphObject *)result withPhoto:NO];
-                                              
-                                              [self checkPublishPermissions];
-                                              
-                                          } else {
-                                              
-                                              NSLog(@"%@", [error localizedDescription]);
-                                              [self.facebookActivityIndicator stopAnimating];
-                                          }
-                                      }];
-                
-            } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
-                
-                // A session was closed or the login was failed or canceled. Update the UI accordingly.
-                
-                [self.facebookActivityIndicator stopAnimating];
-            }
-            
-        } else {
-            
-            // In case an error has occured, then just log the error and update the UI accordingly.
-            NSLog(@"Error: %@", [error localizedDescription]);
-            [self.facebookActivityIndicator stopAnimating];
-        }
-    }
-}
-
+/*
+ - (void)setFacebookConnection
+ {
+ if ([appDelegate isFacebookConnected]) {
+ 
+ [self.facebookActivityIndicator startAnimating];
+ 
+ if (self.hasPublishPermissions) {
+ [self turnOnFacebook];
+ 
+ } else {
+ 
+ // Present the permissions dialog and ask for publish_actions
+ [FBRequestConnection startWithGraphPath:@"/me/permissions"
+ completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+ 
+ if (!error){
+ 
+ NSDictionary *permissions = [(NSArray *)[result data] objectAtIndex:2]; // object at index 2 is the publish_actions permission
+ 
+ if ([[permissions objectForKey:@"permission"] isEqualToString:@"publish_actions"]
+ && [[permissions objectForKey:@"status"] isEqualToString:@"granted"]) {
+ 
+ // Publish permissions found, turn on facebook
+ self.hasPublishPermissions = YES;
+ [self turnOnFacebook];
+ 
+ } else {
+ 
+ // Publish permissions not found, ask for publish_actions
+ self.hasPublishPermissions = NO;
+ [self requestPublishPermissions];
+ 
+ }
+ 
+ } else {
+ // There was an error, handle it
+ [self.facebookActivityIndicator stopAnimating];
+ }
+ }];
+ }
+ 
+ } else {
+ 
+ // Connect with Facebook Login and ask for all the necessary permissions, including publish_actions
+ 
+ [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email", @"user_birthday", @"user_location", @"publish_actions"] allowLoginUI:YES];
+ }
+ }
+ 
+ - (void)requestPublishPermissions
+ {
+ [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+ defaultAudience:FBSessionDefaultAudienceFriends
+ completionHandler:^(FBSession *session, NSError *error) {
+ 
+ if (!error) {
+ 
+ [self checkPublishPermissions];
+ 
+ } else {
+ 
+ // There was an error, handle it
+ NSLog(@"error! %@", [error localizedDescription]);
+ [self.facebookActivityIndicator stopAnimating];
+ }
+ }];
+ }
+ 
+ - (void)checkPublishPermissions
+ {
+ if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
+ 
+ // Permission not granted, tell the user we will not publish
+ 
+ [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Permission not granted", nil)
+ message:NSLocalizedString(@"Your deal will not be published to Facebook.", nil)
+ delegate:self
+ cancelButtonTitle:NSLocalizedString(@"OK", nil)
+ otherButtonTitles:nil] show];
+ 
+ self.hasPublishPermissions = NO;
+ [self.facebookActivityIndicator stopAnimating];
+ 
+ } else {
+ 
+ // Permission granted, turn on facebook
+ self.hasPublishPermissions = YES;
+ [self turnOnFacebook];
+ }
+ }
+ 
+ - (void)turnOnFacebook
+ {
+ [self.facebookActivityIndicator stopAnimating];
+ NSIndexPath *facebookIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+ self.facebookIcon.selected = YES;
+ self.facebookLabel.textColor = [UIColor colorWithRed:59.0/255.0 green:87.0/255.0 blue:157.0/255.0 alpha:1.0];
+ [self.tableView cellForRowAtIndexPath:facebookIndexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+ isFacebookSelectd = YES;
+ }
+ 
+ - (void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification
+ {
+ if (!self.hasPublishPermissions) { // Otherwise there is no need to fetch the user's info, because we already have it.
+ 
+ // Get the session, state and error values from the notification's userInfo dictionary.
+ NSDictionary *userInfo = [notification userInfo];
+ 
+ FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
+ NSError *error = [userInfo objectForKey:@"error"];
+ 
+ if (!error) {
+ 
+ // In case that there's not any error, then check if the session opened or closed.
+ 
+ if ([appDelegate isFacebookConnected]) {
+ 
+ // The session is open. Get the user information and update the UI.
+ 
+ [FBRequestConnection startWithGraphPath:@"me"
+ parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(large), location, email"}
+ HTTPMethod:@"GET"
+ completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+ 
+ if (!error) {
+ 
+ appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:(FBGraphObject *)result withPhoto:NO];
+ 
+ [self checkPublishPermissions];
+ 
+ } else {
+ 
+ NSLog(@"%@", [error localizedDescription]);
+ [self.facebookActivityIndicator stopAnimating];
+ }
+ }];
+ 
+ } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
+ 
+ // A session was closed or the login was failed or canceled. Update the UI accordingly.
+ 
+ [self.facebookActivityIndicator stopAnimating];
+ }
+ 
+ } else {
+ 
+ // In case an error has occured, then just log the error and update the UI accordingly.
+ NSLog(@"Error: %@", [error localizedDescription]);
+ [self.facebookActivityIndicator stopAnimating];
+ }
+ }
+ }
+ */
 
 #pragma mark - Upload Deal
 
@@ -1297,16 +1218,7 @@
     // First check if all is valid
     
     if (![self validation]) {
-        
         return;
-    }
-    
-    // were any other social network selected?
-    
-    if (isFacebookSelectd || isWhatsAppSelected) {
-        
-        [self setSharedView];
-        [self screenshotSharedView];
     }
     
     // store all the data in the view in the Deal object
@@ -1336,8 +1248,12 @@
         
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *expirationDateComponents = [calendar components:NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                                         fromDate:self.datePicker.date];
+                                                                 fromDate:self.datePicker.date];
         self.deal.expiration = [calendar dateFromComponents:expirationDateComponents];
+    }
+    
+    if (self.dealDescription.text.length > 0) {
+        self.deal.moreDescription = self.dealDescription.text;
     }
     
     self.deal.uploadDate = [NSDate date];
@@ -1527,8 +1443,7 @@
 {
     ThankYouViewController *tyvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ThankYouID"];
     
-    tyvc.wasFacebookSelected = isFacebookSelectd;
-    tyvc.wasWhatsAppSelected = isWhatsAppSelected;
+    tyvc.deal = self.deal;
     tyvc.sharedImage = self.sharedImage;
     
     appDelegate.shouldUpdateMyFeed = YES;

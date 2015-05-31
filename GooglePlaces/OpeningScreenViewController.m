@@ -501,7 +501,7 @@
 
 - (void)uploadPhoto
 {
-    NSString *photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", appDelegate.dealer.email, [NSDate date]];
+    NSString *photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", appDelegate.dealer.email, [[NSDate date] timeIntervalSince1970]];
     
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
     

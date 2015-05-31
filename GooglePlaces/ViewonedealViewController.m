@@ -850,7 +850,7 @@
 {
     DealersTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealersTableViewController"];
     dtvc.mode = @"Likers";
-    dtvc.dealID = self.deal.dealID;
+    dtvc.dealAttribID = self.deal.dealAttrib.dealAttribID;
     [self.navigationController pushViewController:dtvc animated:YES];
 }
 

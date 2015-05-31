@@ -585,7 +585,7 @@
         
         UIImage *sizedProfilPic = [appDelegate resizeImage:self.changeProfilePicButton.imageView.image toSize:CGSizeMake(90, 90)];
         self.dealer.photo = UIImageJPEGRepresentation(sizedProfilPic, 0.6);
-        photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", self.dealer.email, [NSDate date]];
+        photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", self.dealer.email, [[NSDate date] timeIntervalSince1970]];
         NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
         self.dealer.photoURL = filePathAtS3;
     }

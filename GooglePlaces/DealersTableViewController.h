@@ -24,7 +24,7 @@
 
 @property NSString *mode;
 
-@property NSNumber *dealID;
+@property NSNumber *dealAttribID;
 
 @property NSMutableArray *dealers;
 

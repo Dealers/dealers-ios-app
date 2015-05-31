@@ -222,7 +222,7 @@
 
 - (void)uploadPhoto
 {
-    NSString *photoFileName = [NSString stringWithFormat:@"%@_%@.jpg", appDelegate.dealer.email, [NSDate date]];
+    NSString *photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", appDelegate.dealer.email, [[NSDate date] timeIntervalSince1970]];
     NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
     appDelegate.dealer.photoURL = filePathAtS3;
     
@@ -308,6 +308,7 @@
     UINavigationController *nc = [self.storyboard instantiateViewControllerWithIdentifier:@"openingScreenID"];
     
     appDelegate.screenShot = [appDelegate.window snapshotViewAfterScreenUpdates:NO];
+    [[Branch getInstance] logout];
     [appDelegate updateDeviceAfterLogOut];
     [appDelegate removeUserDetailsFromDevice];
     [appDelegate deletePseudoUser];

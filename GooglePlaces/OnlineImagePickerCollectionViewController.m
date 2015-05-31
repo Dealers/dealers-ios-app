@@ -26,6 +26,13 @@ static CGFloat const imageCellPadding = 6.0;
     [self collectionViewSettings];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Add Deal - Online Image Picker Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
 - (void)setNavigationButtons
 {
     UIBarButtonItem *options = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Dismiss"]

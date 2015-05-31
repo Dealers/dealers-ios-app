@@ -8,7 +8,6 @@
 
 #import "ActivityTableViewController.h"
 
-#define S3_PHOTOS_ADDRESS @"https://s3-eu-west-1.amazonaws.com/dealers-app/"
 #define NAME_FOR_NOTIFICATIONS @"Notifications Photos Notifications"
 static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell";
 

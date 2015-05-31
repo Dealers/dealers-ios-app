@@ -27,19 +27,22 @@
 
 @synthesize appDelegate;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     appDelegate = [[UIApplication sharedApplication] delegate];
     [self updateButtons];
     [self setNavBarContent];
     [self setNavBarConstraints];
-    [self configureExplanationViewText];
+    [self configureExplanationView];
     [self setProgressBar];
     
     if ([self.cameFrom isEqualToString:@"Add Deal"]) {
+        self.screenName = @"Add Deal - Where Is The Deal Online Screen";
         [self putClipboardURLIfValid:YES];
     } else {
+        self.screenName = @"Edit Deal - Where Is The Deal Online Screen";
         if (self.urlToLoad.length > 0) {
             [self loadRequestFromString:self.urlToLoad];
         } else {
@@ -47,11 +50,10 @@
         }
     }
     
-    if (!(urlField.text.length > 0)) {
-        self.webView.hidden = YES;
+    if ([self.cameFrom isEqualToString:@"Add Deal"] && !(urlField.text.length > 0)) {
+        [self loadRequestFromString:@"http://google.com"];
         self.explanationView.hidden = NO;
     } else {
-        self.webView.hidden = NO;
         self.explanationView.hidden = YES;
     }
 }
@@ -84,12 +86,19 @@
                                              selector:@selector(putClipboardURLIfValid:)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardAppearing:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
 }
 
 - (void)removeNotificationObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidBecomeActiveNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
                                                   object:nil];
 }
 
@@ -115,11 +124,28 @@
 {
     NSString *clipboardURL = [self checkClipboardForValidURL];
     if (clipboardURL) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        if ([clipboardURL isEqualToString:[ud objectForKey:@"clipboardURL"]]) {
+            return;
+        } else {
+            [ud setObject:clipboardURL forKey:@"clipboardURL"];
+        }
         urlField.text = clipboardURL;
         if (andGO) {
             [self loadRequestFromString:urlField.text];
         }
     }
+}
+
+- (void)keyboardAppearing:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.explanationView.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         self.explanationView.hidden = YES;
+                     }];
 }
 
 - (void)setNavBarContent
@@ -297,7 +323,7 @@
     [self.view layoutIfNeeded];
 }
 
-- (void)configureExplanationViewText
+- (void)configureExplanationView
 {
     if ([self.cameFrom isEqualToString:@"Add Deal"]) {
         self.explanationLabel.text = NSLocalizedString(@"Go to the deal's page at the store URL (Amazon.com, Ebay.com), and then tap Next.", nil);
@@ -313,16 +339,16 @@
     NSString *copied = [UIPasteboard generalPasteboard].string;
     BOOL ssl = NO;
     NSRange range;
-    if ([copied containsString:@"http://"]) {
+    if ([copied rangeOfString:@"http://"].location != NSNotFound) {
         range = [copied rangeOfString:@"http://"];
-    } else if ([copied containsString:@"https://"]) {
+    } else if ([copied rangeOfString:@"https://"].location != NSNotFound) {
         range = [copied rangeOfString:@"https://"];
         ssl = YES;
     } else {
         return nil;
     }
     NSString *polishedURL = [copied substringFromIndex:range.location];
-    if ([polishedURL containsString:@" "]) {
+    if ([polishedURL rangeOfString:@" "].location != NSNotFound) {
         polishedURL = [polishedURL substringToIndex:[copied rangeOfString:@" "].location];
     }
     // Checking if there is are more than 1 address for some reason
@@ -426,6 +452,8 @@
         name = [name substringFromIndex:2];
     } else if ([[name substringToIndex:4] isEqualToString:@"www."]) {
         name = [name substringFromIndex:4];
+    } else if ([[name substringToIndex:6] isEqualToString:@"touch."]) {
+        name = [name substringFromIndex:6];
     }
     return name;
 }
@@ -433,7 +461,7 @@
 - (void)validation:(NSString *)urlString
 {
     NSURL *url = [NSURL URLWithString:urlString];
-    if (!(url && url.scheme && url.host) || self.webView.hidden) {
+    if (!(url && url.scheme && url.host)) {
         [self disableNext];
         finalLink = nil;
     } else {
@@ -496,7 +524,7 @@
     self.images = [[NSMutableArray alloc] init];
     [downloadingImages show:YES];
     for (NSString *source in imagesSources) {
-        if ([imagesSources indexOfObject:source] == 10) {
+        if ([imagesSources indexOfObject:source] == 150) {
             break;
         }
         NSLog(@"%@", source);
@@ -514,10 +542,12 @@
                                                                           NSLog(@"%@", [error localizedDescription]);
                                                                           downloadCounter++;
                                                                           failureCounter++;
-                                                                          if (failureCounter == imagesSources.count || failureCounter == 10) {
+                                                                          if (failureCounter == imagesSources.count || failureCounter == 150) {
                                                                               [downloadingImages hide:YES];
-                                                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Couldn't download images", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                                              [alert show];
+                                                                              if (error.code != -10) {
+                                                                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Couldn't download images", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                                                  [alert show];
+                                                                              }
                                                                           }
                                                                           [self continueIfDone];
                                                                       }];
@@ -527,7 +557,7 @@
 
 - (void)continueIfDone
 {
-    if (downloadCounter == imagesSources.count || downloadCounter == 10) {
+    if (downloadCounter == imagesSources.count || downloadCounter == 150) {
         [downloadingImages hide:YES];
         if ([nextView isEqual:self.cashedInstance] && !nextView.selectedImage) {
             [nextView insertImageInImageView:self.images.firstObject];
@@ -538,7 +568,7 @@
 
 - (void)addImage:(UIImage *)image
 {
-    if (image.size.width >= 160.0 && image.size.height > 100.0) {
+    if (image.size.width >= 100.0 && image.size.height > 90.0) {
         [self.images addObject:image];
     }
 }
@@ -547,10 +577,6 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self updateButtons];
-    if (self.webView.hidden) {
-        self.webView.hidden = NO;
-        self.explanationView.hidden = YES;
-    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -577,8 +603,6 @@
 {
     if (error.code != NSURLErrorCancelled) { // Error with code -999
         [self disableNext];
-        self.webView.hidden = YES;
-        self.explanationView.hidden = NO;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                         message:error.localizedDescription
                                                        delegate:nil

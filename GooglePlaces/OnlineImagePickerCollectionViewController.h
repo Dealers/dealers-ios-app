@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ImageCollectionViewCell.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface OnlineImagePickerCollectionViewController : UICollectionViewController
 

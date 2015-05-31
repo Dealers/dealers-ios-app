@@ -13,10 +13,13 @@
 #import "MBProgressHUD.h"
 #import "ElasticLabel.h"
 #import "OnlineImagePickerCollectionViewController.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface WhatIsTheDeal1Online : UITableViewController <UITextViewDelegate, MBProgressHUDDelegate> {
     
-    CGFloat titleHeight, descriptionHeight;
+    CGFloat titleHeight;
     MBProgressHUD *blankTitleIndicator, *tooMuchIndicator;
 }
 
@@ -26,7 +29,6 @@
 @property Store *store;
 
 @property (weak, nonatomic) IBOutlet UIView *addPhotoContainer;
-@property (weak, nonatomic) IBOutlet UILabel *addPhotoLabel;
 @property (weak, nonatomic) IBOutlet UIView *imageContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIButton *changeImage;
@@ -36,9 +38,6 @@
 @property (nonatomic) UILabel *countLabel;
 @property (nonatomic) UIView *countContainer;
 @property BOOL tooMuchText;
-
-@property (weak, nonatomic) IBOutlet ElasticLabel *descriptionPlaceholder;
-@property (weak, nonatomic) IBOutlet UITextView *dealDescription;
 
 @property (weak, nonatomic) IBOutlet UILabel *hintLabel;
 

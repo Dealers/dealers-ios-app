@@ -137,6 +137,19 @@
 		C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C43E7C198E7CA700409DD2 /* EditTextModeViewController.m */; };
 		C8C6FCAE1B00DC1600F12B97 /* WhereIsTheDealOnline.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C6FCAD1B00DC1600F12B97 /* WhereIsTheDealOnline.m */; };
 		C8C721001AB22FB800284B72 /* ViewDealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */; };
+		C8D0209C1B0E231C0028B222 /* BNCEncodingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020821B0E231C0028B222 /* BNCEncodingUtils.m */; };
+		C8D0209D1B0E231C0028B222 /* BNCError.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020841B0E231C0028B222 /* BNCError.m */; };
+		C8D0209E1B0E231C0028B222 /* BNCLinkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020861B0E231C0028B222 /* BNCLinkCache.m */; };
+		C8D0209F1B0E231C0028B222 /* BNCLinkData.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020881B0E231C0028B222 /* BNCLinkData.m */; };
+		C8D020A01B0E231C0028B222 /* BNCPreferenceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D0208A1B0E231C0028B222 /* BNCPreferenceHelper.m */; };
+		C8D020A11B0E231C0028B222 /* BNCServerInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D0208C1B0E231C0028B222 /* BNCServerInterface.m */; };
+		C8D020A21B0E231C0028B222 /* BNCServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D0208E1B0E231C0028B222 /* BNCServerRequest.m */; };
+		C8D020A31B0E231C0028B222 /* BNCServerRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020901B0E231C0028B222 /* BNCServerRequestQueue.m */; };
+		C8D020A41B0E231C0028B222 /* BNCServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020921B0E231C0028B222 /* BNCServerResponse.m */; };
+		C8D020A51B0E231C0028B222 /* BNCSystemObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020941B0E231C0028B222 /* BNCSystemObserver.m */; };
+		C8D020A61B0E231C0028B222 /* Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020971B0E231C0028B222 /* Branch.m */; };
+		C8D020A71B0E231C0028B222 /* BranchActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D020991B0E231C0028B222 /* BranchActivityItemProvider.m */; };
+		C8D020A81B0E231C0028B222 /* BranchServerInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = C8D0209B1B0E231C0028B222 /* BranchServerInterface.m */; };
 		C8DBD9841B0B55B60025BA93 /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DBD9831B0B55B60025BA93 /* ImageCollectionViewCell.m */; };
 		C8DBD9871B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DBD9861B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.m */; };
 		C8DBD98F1B0E02ED0025BA93 /* Logo (high resolution).png in Resources */ = {isa = PBXBuildFile; fileRef = C8DBD98D1B0E02ED0025BA93 /* Logo (high resolution).png */; };
@@ -408,6 +421,34 @@
 		C8C720FE1AB22FB800284B72 /* ViewDealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewDealViewController.h; sourceTree = "<group>"; };
 		C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewDealViewController.m; sourceTree = "<group>"; };
 		C8CC65C91AF246E4004E46CE /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		C8D020801B0E231C0028B222 /* BNCConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCConfig.h; sourceTree = "<group>"; };
+		C8D020811B0E231C0028B222 /* BNCEncodingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCEncodingUtils.h; sourceTree = "<group>"; };
+		C8D020821B0E231C0028B222 /* BNCEncodingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCEncodingUtils.m; sourceTree = "<group>"; };
+		C8D020831B0E231C0028B222 /* BNCError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCError.h; sourceTree = "<group>"; };
+		C8D020841B0E231C0028B222 /* BNCError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCError.m; sourceTree = "<group>"; };
+		C8D020851B0E231C0028B222 /* BNCLinkCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLinkCache.h; sourceTree = "<group>"; };
+		C8D020861B0E231C0028B222 /* BNCLinkCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLinkCache.m; sourceTree = "<group>"; };
+		C8D020871B0E231C0028B222 /* BNCLinkData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLinkData.h; sourceTree = "<group>"; };
+		C8D020881B0E231C0028B222 /* BNCLinkData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLinkData.m; sourceTree = "<group>"; };
+		C8D020891B0E231C0028B222 /* BNCPreferenceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCPreferenceHelper.h; sourceTree = "<group>"; };
+		C8D0208A1B0E231C0028B222 /* BNCPreferenceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCPreferenceHelper.m; sourceTree = "<group>"; };
+		C8D0208B1B0E231C0028B222 /* BNCServerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCServerInterface.h; sourceTree = "<group>"; };
+		C8D0208C1B0E231C0028B222 /* BNCServerInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCServerInterface.m; sourceTree = "<group>"; };
+		C8D0208D1B0E231C0028B222 /* BNCServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCServerRequest.h; sourceTree = "<group>"; };
+		C8D0208E1B0E231C0028B222 /* BNCServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCServerRequest.m; sourceTree = "<group>"; };
+		C8D0208F1B0E231C0028B222 /* BNCServerRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCServerRequestQueue.h; sourceTree = "<group>"; };
+		C8D020901B0E231C0028B222 /* BNCServerRequestQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCServerRequestQueue.m; sourceTree = "<group>"; };
+		C8D020911B0E231C0028B222 /* BNCServerResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCServerResponse.h; sourceTree = "<group>"; };
+		C8D020921B0E231C0028B222 /* BNCServerResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCServerResponse.m; sourceTree = "<group>"; };
+		C8D020931B0E231C0028B222 /* BNCSystemObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCSystemObserver.h; sourceTree = "<group>"; };
+		C8D020941B0E231C0028B222 /* BNCSystemObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCSystemObserver.m; sourceTree = "<group>"; };
+		C8D020951B0E231C0028B222 /* Branch-SDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Branch-SDK-Prefix.pch"; sourceTree = "<group>"; };
+		C8D020961B0E231C0028B222 /* Branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Branch.h; sourceTree = "<group>"; };
+		C8D020971B0E231C0028B222 /* Branch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Branch.m; sourceTree = "<group>"; };
+		C8D020981B0E231C0028B222 /* BranchActivityItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchActivityItemProvider.h; sourceTree = "<group>"; };
+		C8D020991B0E231C0028B222 /* BranchActivityItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchActivityItemProvider.m; sourceTree = "<group>"; };
+		C8D0209A1B0E231C0028B222 /* BranchServerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchServerInterface.h; sourceTree = "<group>"; };
+		C8D0209B1B0E231C0028B222 /* BranchServerInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchServerInterface.m; sourceTree = "<group>"; };
 		C8DBD9821B0B55B60025BA93 /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
 		C8DBD9831B0B55B60025BA93 /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
 		C8DBD9851B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlineImagePickerCollectionViewController.h; sourceTree = "<group>"; };
@@ -484,7 +525,8 @@
 			children = (
 				C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */,
 				B08A3667187B3C82005B72D8 /* Images.xcassets */,
-				56849787154C00BF001601A2 /* View Controllers */,
+				C8DBD98B1B0E02270025BA93 /* Assets */,
+				56849787154C00BF001601A2 /* Classes */,
 				56849788154C00BF001601A2 /* Supporting Files */,
 				56849780154C00BF001601A2 /* Frameworks */,
 				C8561DCE1AF1150D00B257BA /* 3rd Party Frameworks */,
@@ -532,10 +574,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		56849787154C00BF001601A2 /* View Controllers */ = {
+		56849787154C00BF001601A2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C8DBD98B1B0E02270025BA93 /* Assets */,
 				B0493AD718FDC5E90044AD91 /* AppDelegate.h */,
 				56849791154C00BF001601A2 /* AppDelegate.m */,
 				56849793154C00BF001601A2 /* MainStoryboard.storyboard */,
@@ -558,7 +599,7 @@
 				C8DC1D8219B863680062E184 /* Activities */,
 				C895FB7C1AAED50600E4E4A5 /* Old Classes */,
 			);
-			name = "View Controllers";
+			name = Classes;
 			path = GooglePlaces;
 			sourceTree = "<group>";
 		};
@@ -646,6 +687,7 @@
 		C8561DCE1AF1150D00B257BA /* 3rd Party Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C8D0207E1B0E231C0028B222 /* Branch-SDK */,
 				C8561DCF1AF115C600B257BA /* Google Analytics Library */,
 				C8A9EE051A221034002EE682 /* AWSiOSSDKv2.framework */,
 				C8A9EE1A1A2213B9002EE682 /* service-definitions (AWS) */,
@@ -951,6 +993,50 @@
 			name = Invitation;
 			sourceTree = "<group>";
 		};
+		C8D0207E1B0E231C0028B222 /* Branch-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				C8D0207F1B0E231C0028B222 /* Branch-SDK */,
+			);
+			name = "Branch-SDK";
+			path = "../Branch-SDK";
+			sourceTree = "<group>";
+		};
+		C8D0207F1B0E231C0028B222 /* Branch-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				C8D020801B0E231C0028B222 /* BNCConfig.h */,
+				C8D020811B0E231C0028B222 /* BNCEncodingUtils.h */,
+				C8D020821B0E231C0028B222 /* BNCEncodingUtils.m */,
+				C8D020831B0E231C0028B222 /* BNCError.h */,
+				C8D020841B0E231C0028B222 /* BNCError.m */,
+				C8D020851B0E231C0028B222 /* BNCLinkCache.h */,
+				C8D020861B0E231C0028B222 /* BNCLinkCache.m */,
+				C8D020871B0E231C0028B222 /* BNCLinkData.h */,
+				C8D020881B0E231C0028B222 /* BNCLinkData.m */,
+				C8D020891B0E231C0028B222 /* BNCPreferenceHelper.h */,
+				C8D0208A1B0E231C0028B222 /* BNCPreferenceHelper.m */,
+				C8D0208B1B0E231C0028B222 /* BNCServerInterface.h */,
+				C8D0208C1B0E231C0028B222 /* BNCServerInterface.m */,
+				C8D0208D1B0E231C0028B222 /* BNCServerRequest.h */,
+				C8D0208E1B0E231C0028B222 /* BNCServerRequest.m */,
+				C8D0208F1B0E231C0028B222 /* BNCServerRequestQueue.h */,
+				C8D020901B0E231C0028B222 /* BNCServerRequestQueue.m */,
+				C8D020911B0E231C0028B222 /* BNCServerResponse.h */,
+				C8D020921B0E231C0028B222 /* BNCServerResponse.m */,
+				C8D020931B0E231C0028B222 /* BNCSystemObserver.h */,
+				C8D020941B0E231C0028B222 /* BNCSystemObserver.m */,
+				C8D020951B0E231C0028B222 /* Branch-SDK-Prefix.pch */,
+				C8D020961B0E231C0028B222 /* Branch.h */,
+				C8D020971B0E231C0028B222 /* Branch.m */,
+				C8D020981B0E231C0028B222 /* BranchActivityItemProvider.h */,
+				C8D020991B0E231C0028B222 /* BranchActivityItemProvider.m */,
+				C8D0209A1B0E231C0028B222 /* BranchServerInterface.h */,
+				C8D0209B1B0E231C0028B222 /* BranchServerInterface.m */,
+			);
+			path = "Branch-SDK";
+			sourceTree = "<group>";
+		};
 		C8DBD98B1B0E02270025BA93 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -959,6 +1045,7 @@
 				C8C260DA1A7F887300960D96 /* Localized Images */,
 			);
 			name = Assets;
+			path = GooglePlaces;
 			sourceTree = "<group>";
 		};
 		C8DBD98C1B0E02510025BA93 /* Brand Images */ = {
@@ -1143,6 +1230,7 @@
 			files = (
 				C8DD1AC21A532AC6002843E8 /* DealersTabBarController.m in Sources */,
 				B09FBAD2193CBE0A006CB986 /* Deal.m in Sources */,
+				C8D020A11B0E231C0028B222 /* BNCServerInterface.m in Sources */,
 				C80123301A2C4A8800C40A37 /* DealsTableViewController.m in Sources */,
 				C8F6EF221A8E16CC009C18CD /* Report.m in Sources */,
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
@@ -1166,16 +1254,21 @@
 				C8DBD9841B0B55B60025BA93 /* ImageCollectionViewCell.m in Sources */,
 				C81493C81AC9FB5800A5DBE7 /* DealersAnnotation.m in Sources */,
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
+				C8D020A81B0E231C0028B222 /* BranchServerInterface.m in Sources */,
+				C8D020A51B0E231C0028B222 /* BNCSystemObserver.m in Sources */,
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
+				C8D020A41B0E231C0028B222 /* BNCServerResponse.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
 				C891417D1AA48C9C006BCF10 /* DealTableViewCell.m in Sources */,
 				C80810C41A6EA0890034D8B1 /* Device.m in Sources */,
+				C8D0209C1B0E231C0028B222 /* BNCEncodingUtils.m in Sources */,
 				C8F6EF311A9B9323009C18CD /* FullScreenCameraViewController.m in Sources */,
 				C862AF2B1A2E0B5F00352831 /* ProfileTableViewController.m in Sources */,
 				B0274817186B2A2B005A52F0 /* GKImageCropViewController.m in Sources */,
 				B0930C1417F40BD2004EB3CA /* OpeningScreenViewController.m in Sources */,
 				B0274814186B2A2B005A52F0 /* GKCropBorderView.m in Sources */,
 				C8DC1D8C19BC89410062E184 /* MBProgressHUD.m in Sources */,
+				C8D020A61B0E231C0028B222 /* Branch.m in Sources */,
 				C819F89C1A43352E00908726 /* Error.m in Sources */,
 				C882D7A01A279AE200C4F0DD /* SignInTableViewController.m in Sources */,
 				C8A012F219DD52F700C1D973 /* WhatIsTheDeal2.m in Sources */,
@@ -1187,18 +1280,24 @@
 				C895FB821AB0327500E4E4A5 /* WhereIsTheDeal.m in Sources */,
 				C8A10BA219E9628D0090F1D9 /* ActivityTableViewController.m in Sources */,
 				C8A012EF19DD52E100C1D973 /* WhatIsTheDeal1.m in Sources */,
+				C8D020A21B0E231C0028B222 /* BNCServerRequest.m in Sources */,
 				C81493CB1ACA88C200A5DBE7 /* StoreLocationViewController.m in Sources */,
 				C8A10B9219E465C90090F1D9 /* ThankYouViewController.m in Sources */,
 				C890607F19A27F88001D3359 /* NotificationsTableViewController.m in Sources */,
+				C8D0209D1B0E231C0028B222 /* BNCError.m in Sources */,
+				C8D0209F1B0E231C0028B222 /* BNCLinkData.m in Sources */,
 				C83997F01A7559A6003E3793 /* PushNotificationView.m in Sources */,
 				C8E996C21A554E60006FCAC7 /* User.m in Sources */,
+				C8D020A01B0E231C0028B222 /* BNCPreferenceHelper.m in Sources */,
 				B034B8B6180476AC00625392 /* main.m in Sources */,
 				C8C08CDB1B0327F80018EA28 /* PaddedTextField.m in Sources */,
 				C895FB731AAE5EED00E4E4A5 /* ExploreTableViewController.m in Sources */,
 				C848B67819B4AB76000F138D /* StoreTableViewCell.m in Sources */,
 				C8C08CDF1B04D8ED0018EA28 /* WhatIsTheDeal1Online.m in Sources */,
+				C8D020A31B0E231C0028B222 /* BNCServerRequestQueue.m in Sources */,
 				C863A6631A776A4300D74479 /* StoreCategoriesOrganizer.m in Sources */,
 				C890608219A32AA7001D3359 /* PushNotificationsTableViewController.m in Sources */,
+				C8D0209E1B0E231C0028B222 /* BNCLinkCache.m in Sources */,
 				C8C6FCAE1B00DC1600F12B97 /* WhereIsTheDealOnline.m in Sources */,
 				C8C260D41A7E924500960D96 /* TutorialViewController.m in Sources */,
 				C8A10BA619E96B100090F1D9 /* NotificationTableViewCell.m in Sources */,
@@ -1214,6 +1313,7 @@
 				C8C08CD51B0326A10018EA28 /* PaddedLabel.m in Sources */,
 				C8C43E7D198E7CA700409DD2 /* EditTextModeViewController.m in Sources */,
 				C80123371A2C4BC000C40A37 /* DealsTableCell.m in Sources */,
+				C8D020A71B0E231C0028B222 /* BranchActivityItemProvider.m in Sources */,
 				C884E18419EC082100C83A3F /* DealAttrib.m in Sources */,
 				C81E7A9D197E9ECF009CBA2D /* ChooseCategoryTableViewController.m in Sources */,
 				C8E43AA11A40A72B00B035BC /* DealersTableViewController.m in Sources */,

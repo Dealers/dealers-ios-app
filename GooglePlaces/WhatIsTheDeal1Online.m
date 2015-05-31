@@ -10,8 +10,7 @@
 #import "WhereIsTheDealOnline.h"
 
 #define IMAGE_HEIGHT 216.0
-#define TITLE_HEIGHT 54.0
-#define DESCRIPTION_HEIGHT 92.0
+#define TITLE_HEIGHT 92.0
 
 @interface WhatIsTheDeal1Online ()
 
@@ -37,7 +36,6 @@
             [self insertImageInImageView:self.images.firstObject];
         } else {
             self.imageContainer.hidden = YES;
-            self.addPhotoLabel.hidden = NO;
             self.selectedImage = NO;
         }
     }
@@ -53,15 +51,13 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Add Deal - What Is The Deal 1 Online Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -103,15 +99,11 @@
 - (void)setTextViewSettings
 {
     self.titlePlaceholder.text = NSLocalizedString(@"Tell us about the deal...", nil);
-    self.descriptionPlaceholder.text = NSLocalizedString(@"Tell us more (optional)", nil);
     
     if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         [self.dealTitle setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
         [self.dealTitle setTextAlignment:NSTextAlignmentRight];
         [self.titlePlaceholder setTextAlignment:NSTextAlignmentRight];
-        [self.dealDescription setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
-        [self.dealDescription setTextAlignment:NSTextAlignmentRight];
-        [self.descriptionPlaceholder setTextAlignment:NSTextAlignmentRight];
     }
 }
 
@@ -212,15 +204,7 @@
             titleHeight = TITLE_HEIGHT;
             return titleHeight;
         } else {
-            height = titleHeight + 12.0;
-        }
-    } else if (indexPath.row == 2) {
-        height = descriptionHeight;
-        if (height <= DESCRIPTION_HEIGHT) {
-            descriptionHeight = DESCRIPTION_HEIGHT;
-            return descriptionHeight;
-        } else {
-            height = descriptionHeight + 10.0;
+            height = titleHeight + 15.0;
         }
     }
     
@@ -313,15 +297,6 @@
             self.titlePlaceholder.hidden = YES;
         }
         
-    } else if (textView == self.dealDescription) {
-        CGSize sizeThatFitsTextView = [textView sizeThatFits:CGSizeMake(textView.frame.size.width, MAXFLOAT)];
-        [self adjustHeight:sizeThatFitsTextView.height toTextView:@"Description"];
-        
-        if (self.dealDescription.text.length == 0) {
-            self.descriptionPlaceholder.hidden = NO;
-        } else {
-            self.descriptionPlaceholder.hidden = YES;
-        }
     }
 }
 
@@ -329,8 +304,6 @@
 {
     if ([textViewName isEqualToString:@"Title"]) {
         titleHeight = height;
-    } else if ([textViewName isEqualToString:@"Description"]) {
-        descriptionHeight = height;
     }
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
@@ -402,14 +375,13 @@
     self.deal = [[Deal alloc] init];
     
     self.deal.title = self.dealTitle.text;
-    self.deal.moreDescription = self.dealDescription.text;
     self.deal.store = self.store;
     self.deal.dealer = appDelegate.dealer;
     self.deal.dealAttrib = [[DealAttrib alloc] init];
     self.deal.type = @"Online";
     
     if (self.selectedImage) {
-        NSString *fileName = [NSString stringWithFormat:@"%@_%@_%i.jpg", self.deal.dealer.dealerID, [NSDate date], 1];
+        NSString *fileName = [NSString stringWithFormat:@"%@_%f_%i.jpg", self.deal.dealer.dealerID, [[NSDate date] timeIntervalSince1970], 1];
         NSString *key = [NSString stringWithFormat:@"media/Deals_Photos/%@", fileName];
         if (!self.photosFileName) {
             self.photosFileName = [[NSMutableArray alloc] init];

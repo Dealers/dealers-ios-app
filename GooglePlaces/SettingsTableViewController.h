@@ -16,6 +16,7 @@
 #import "ComingSoonViewController.h"
 #import "PersonalizeTableViewController.h"
 #import "MBProgressHUD.h"
+#import "Branch.h"
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
