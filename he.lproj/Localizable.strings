@@ -27,8 +27,8 @@
 "Music" = "מוזיקה";
 "Pets" = "חיות מחמד";
 "Restaurants & Bars" = "מסעדות וברים";
-"Sports & Outdoor" = "ספורט";
-"Travel" = "טיולים ונסיעות";
+"Sports & Outdoor" = "ספורט, קמפינג ופנאי";
+"Travel" = "חופשות ונסיעות";
 "Other" = "אחר";
 
 "Search" = "חיפוש";
@@ -264,4 +264,5 @@
 
 "Personalize" = "התאמה אישית";
 "Choose categories to get more personalized deals in your feed" = "בחר/י את הקטגוריות המועדפות עליך כדי לקבל לפיד מבצעים שיעניינו אותך";
+"Choose categories to get more personalized deals in your feed. You can always make changes later from your profile." = "בחר/י את הקטגוריות המועדפות עליך כדי לקבל לפיד מבצעים שיעניינו אותך. אפשר לשנות את הקטגוריות בכל זמן בפרופיל.";
 "There was a problem" = "הייתה בעיה";

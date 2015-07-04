@@ -197,6 +197,7 @@
     [[FBSession activeSession] closeAndClearTokenInformation];
     facebookInfo = nil;
     facebookUserEmail = nil;
+    facebookUserID = nil;
 }
 
 - (BOOL)isAuthorized
@@ -322,9 +323,12 @@
                                   completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                                       
                                       if (!error) {
-                                          
                                           facebookInfo = (FBGraphObject *)result;
-                                          facebookUserEmail = [result objectForKey:@"email"];
+                                          if ([result objectForKey:@"email"]) {
+                                              facebookUserEmail = [result objectForKey:@"email"];
+                                          } else {
+                                              facebookUserID = [result objectForKey:@"id"];
+                                          }
                                           
                                           [self checkIfUserExists];
                                           
@@ -355,7 +359,13 @@
     RKObjectManager *manager = [RKObjectManager sharedManager];
     [manager.HTTPClient setAuthorizationHeaderWithUsername:@"ubuntu" password:@"090909deal"];
     NSString *path = @"/dealerfbs/";
-    NSDictionary *parameters = @{ @"email" : facebookUserEmail };
+    NSDictionary *parameters;
+    if (facebookUserEmail) {
+        parameters = @{ @"user__username" : facebookUserEmail };
+    } else {
+        parameters = @{ @"user__username" : facebookUserID };
+    }
+    
     
     [manager getObjectsAtPath:path
                    parameters:parameters
@@ -448,7 +458,11 @@
 {
     self.pseudoUser = [[User alloc] init];
     self.pseudoUser.username = [self setUsernameString];
-    self.pseudoUser.userPassword = [NSString stringWithFormat:@"pass_%@_key", facebookUserEmail];
+    if (facebookUserEmail) {
+        self.pseudoUser.userPassword = [NSString stringWithFormat:@"pass_%@_key", facebookUserEmail];
+    } else {
+        self.pseudoUser.userPassword = [NSString stringWithFormat:@"pass_%@_key", facebookUserID];
+    }
     
     [[RKObjectManager sharedManager] postObject:self.pseudoUser
                                            path:@"/users/"
@@ -481,7 +495,7 @@
 
 - (NSString *)setUsernameString
 {
-    NSString *emailFirstPart = [facebookUserEmail componentsSeparatedByString:@"@"].firstObject;
+    NSString *usernameString;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateStyle = NSDateFormatterShortStyle;
     dateFormatter.timeStyle = NSDateFormatterMediumStyle;
@@ -490,7 +504,12 @@
     dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@""];
     dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@""];
     dateString = [dateString stringByReplacingOccurrencesOfString:@"," withString:@"_"];
-    NSString *usernameString = [NSString stringWithFormat:@"%@_%@", dateString, emailFirstPart];
+    if (facebookUserEmail) {
+        NSString *emailFirstPart = [facebookUserEmail componentsSeparatedByString:@"@"].firstObject;
+        usernameString = [NSString stringWithFormat:@"%@_%@", dateString, emailFirstPart];
+    } else {
+        usernameString = [NSString stringWithFormat:@"%@_%@", dateString, facebookUserID];
+    }
     
     if (usernameString.length > 30) {
         usernameString = [usernameString substringToIndex:30];
@@ -652,7 +671,7 @@
                      [self enterDealers];
                  } else if (didPhotoFinishedUploading) {
                      [self enterDealers];
-                 } 
+                 }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  
@@ -665,12 +684,11 @@
     [loggingInFacebook hide:YES];
     
     if (signedUp) {
-        TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
-        tvc.afterSignUp = YES;
-        [self.navigationController pushViewController:tvc animated:YES];
-        
+        PersonalizeTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Personalize"];
+        ptvc.afterSignUp = YES;
+        [self.navigationController pushViewController:ptvc animated:YES];
+
     } else {
-        
         [appDelegate setTabBarController];
         [appDelegate saveUserDetailsOnDevice];
     }

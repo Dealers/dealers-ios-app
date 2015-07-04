@@ -92,9 +92,6 @@
     // For printing in the log info about the outputs and inputs via RestKit:
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
     
-    // Instantiate the device object:
-    [self instantiateDevice];
-    
     // Adding a window for the remote notifications
     self.pushNotificationsWindow = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 64.0)];
     
@@ -131,6 +128,8 @@
 {
     self.updateDeviceManager = [[RKObjectManager alloc] initWithHTTPClient:[RKObjectManager sharedManager].HTTPClient];
     
+    self.updateDeviceManager.requestSerializationMIMEType = RKMIMETypeJSON;
+    
     RKObjectMapping *updateDeviceMapping = [RKObjectMapping mappingForClass:[Device class]];
     [updateDeviceMapping addAttributeMappingsFromDictionary: @{
                                                                @"dealer" : @"dealerID",
@@ -162,57 +161,51 @@
     [self.updateDeviceManager addRequestDescriptor:updateDeviceRequestDescriptor];
 }
 
-- (void)instantiateDevice
+- (void)instantiateDeviceWithToken:(NSString *)token
 {
-    self.device = [[Device alloc] init];
+    if (!self.device) {
+        self.device = [[Device alloc] init];
+    }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     if (![defaults objectForKey:@"deviceID"]) {
-        
-        // First time app is opened - no details on device. Set them and save.
-        self.device.UDID = [[UIDevice currentDevice] identifierForVendor].UUIDString;
-        self.device.os = @"Ios";
-        self.device.token = @"";
-        self.device.creationDate = [NSDate date];
-        self.device.badge = [NSNumber numberWithInteger:0];
-        
-        // Post the device.
-        [self postDevice];
-        
+        // Signed in - no details on device. Get them and save
+        self.device.token = token;
+        [self checkIfDeviceExists];
+    
     } else {
-        
         self.device.deviceID = [defaults objectForKey:@"deviceID"];
         self.device.UDID = [defaults objectForKey:@"UDID"];
         self.device.os = [defaults objectForKey:@"deviceOS"];
         self.device.creationDate = [defaults objectForKey:@"deviceCreationDate"];
         self.device.badge = [NSNumber numberWithInteger:[UIApplication sharedApplication].applicationIconBadgeNumber];
+        self.device.token = token;
+        [self updateDeviceWithDealer];
     }
 }
 
-- (void)resetDeviceInfo
+- (void)checkIfDeviceExists
 {
-    self.device = nil;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"deviceID"];
-    [defaults removeObjectForKey:@"UDID"];
-    [defaults removeObjectForKey:@"deviceOS"];
-    [defaults removeObjectForKey:@"deviceCreationDate"];
-}
-
-- (void)updateDeviceWithToken:(NSString *)token
-{
-    self.device.dealerID = self.dealer.dealerID;
-    self.device.token = token;
-    self.device.lastUpdateDate = [NSDate date];
-    
-    [self patchDeviceFor:@"deviceUpdate"];
-}
-
-- (void)updateDeviceAfterLogOut
-{
-    self.device.dealerID = nil;
-    [self patchDeviceFor:@"deviceUpdate"];
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/devices/"
+                                           parameters:@{@"token" : self.device.token}
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  
+                                                  if (mappingResult.array.count > 0) {
+                                                      self.device = mappingResult.firstObject;
+                                                      [self saveDeviceDetails];
+                                                      [self updateDeviceWithDealer];
+                                                  } else {
+                                                      self.device.UDID = [[UIDevice currentDevice] identifierForVendor].UUIDString;
+                                                      self.device.os = @"Ios";
+                                                      self.device.creationDate = [NSDate date];
+                                                      self.device.badge = [NSNumber numberWithInteger:0];
+                                                      [self postDevice];
+                                                  }
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  
+                                                  NSLog(@"Notification's deal failed to download.");
+                                              }];
 }
 
 - (void)postDevice
@@ -223,15 +216,9 @@
                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                             
                                             NSLog(@"Device posted successfully!");
-                                            
                                             self.device = mappingResult.firstObject;
-                                            
-                                            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                            [defaults setObject:self.device.deviceID forKey:@"deviceID"];
-                                            [defaults setObject:self.device.UDID forKey:@"UDID"];
-                                            [defaults setObject:self.device.os forKey:@"deviceOS"];
-                                            [defaults setObject:self.device.creationDate forKey:@"deviceCreationDate"];
-                                            
+                                            [self saveDeviceDetails];
+                                            [self updateDeviceWithDealer];
                                             timesTriedToPostDevice = 0;
                                         }
                                         failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -246,6 +233,32 @@
                                                 timesTriedToPostDevice = 0;
                                             }
                                         }];
+}
+
+- (void)saveDeviceDetails
+{
+    if (self.device) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:self.device.deviceID forKey:@"deviceID"];
+        [defaults setObject:self.device.UDID forKey:@"UDID"];
+        [defaults setObject:self.device.os forKey:@"deviceOS"];
+        [defaults setObject:self.device.creationDate forKey:@"deviceCreationDate"];
+    } else {
+        NSLog(@"Something's wrong. Attempting to save device to memory but there's no device");
+    }
+}
+
+- (void)updateDeviceWithDealer
+{
+    self.device.dealerID = self.dealer.dealerID;
+    self.device.lastUpdateDate = [NSDate date];
+    [self patchDeviceFor:@"deviceUpdate"];
+}
+
+- (void)updateDeviceAfterLogOut
+{
+    self.device.dealerID = nil;
+    [self patchDeviceFor:@"deviceUpdate"];
 }
 
 - (void)patchDeviceFor:(NSString *)purpose
@@ -443,7 +456,7 @@
     NSString  *tokenString = [[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
                               stringByReplacingOccurrencesOfString:@">" withString:@""];
     
-    [self updateDeviceWithToken:tokenString];
+    [self instantiateDeviceWithToken:tokenString];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -547,15 +560,15 @@
 
 - (void)presentContentWithParams:(NSDictionary *)params
 {
-    if (!tabBarController) {
-        pendingContent = params;
-        return;
-    }
-    
-    UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:0];
-    [tabBarController setSelectedIndex:0];
-    
     if (params[@"deal"]) {
+        
+        if (!tabBarController) {
+            pendingContent = params;
+            return;
+        }
+        
+        UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:0];
+        [tabBarController setSelectedIndex:0];
         ViewDealViewController *vdvc = [storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
         vdvc.dealID = params[@"deal"];
         [navigationController pushViewController:vdvc animated:YES];
@@ -678,6 +691,16 @@
     [keychain resetKeychainItem];
 }
 
+- (void)removeDeviceDetailsFromDevice
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"deviceID"];
+    [defaults removeObjectForKey:@"UDID"];
+    [defaults removeObjectForKey:@"deviceOS"];
+    [defaults removeObjectForKey:@"deviceCreationDate"];
+    [defaults synchronize];
+}
+
 - (void)saveProfilePic:(NSData *)image
 {
     if (image != nil)
@@ -685,7 +708,7 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                              NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString* path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.email]];
+        NSString* path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.username]];
         [image writeToFile:path atomically:YES];
     }
 }
@@ -696,7 +719,7 @@
                                                          NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString* path = [documentsDirectory stringByAppendingPathComponent:
-                      [NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.email]];
+                      [NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.username]];
     NSData *profilePic = [NSData dataWithContentsOfFile:path];
     
     return profilePic;
@@ -707,7 +730,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.email]];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"profile_pic_%@.jpg", self.dealer.username]];
     NSError *error;
     BOOL success = [fileManager removeItemAtPath:filePath error:&error];
     if (success) {
@@ -1253,8 +1276,8 @@
 
 - (NSString *)baseURL
 {
-    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
-    // return @"http://www.dealers-web.com";
+//    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
+    return @"http://www.dealers-web.com";
 }
 
 - (NSString *)currentVersion
@@ -1812,6 +1835,13 @@
                                                 keyPath:nil
                                             statusCodes:statusCodes];
     
+    RKResponseDescriptor *deviceCheckResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self deviceMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/devices/"
+                                                keyPath:@"results"
+                                            statusCodes:statusCodes];
+    
     RKResponseDescriptor *categoriesResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self categoryMapping]
                                                  method:RKRequestMethodAny
@@ -1959,6 +1989,7 @@
                                                specificInvitationResponseDescriptor,
                                                invitationSerachResponseDescriptor,
                                                deviceResponseDescriptor,
+                                               deviceCheckResponseDescriptor,
                                                categoriesResponseDescriptor,
                                                categoryResponseDescriptor,
                                                categoryDeleteResponseDescriptor,
@@ -2080,20 +2111,23 @@
     if (!dealer) {
         newDealer = YES;
         dealer = [[Dealer alloc] init];
+        dealer.registerDate = [NSDate date];
         dealer.fullName = [NSString stringWithFormat:@"%@ %@",
                            [facebookInfo objectForKey:@"first_name"],
                            [facebookInfo objectForKey:@"last_name"]];
-        dealer.email = [facebookInfo objectForKey:@"email"];
-        
-        if (dealer.email.length > 30) {
-            dealer.username = [dealer.email substringToIndex:30];
+        if ([facebookInfo objectForKey:@"email"]) {
+            dealer.email = [facebookInfo objectForKey:@"email"];
+            if (dealer.email.length > 30) {
+                dealer.username = [dealer.email substringToIndex:30];
+            } else {
+                dealer.username = dealer.email;
+            }
         } else {
-            dealer.username = dealer.email;
+            dealer.email = @"";
+            dealer.username = [facebookInfo objectForKey:@"id"];
         }
-        
-        dealer.userPassword = [NSString stringWithFormat:@"facebook_user_%@", dealer.email];
-        dealer.registerDate = [NSDate date];
-        
+        dealer.userPassword = [NSString stringWithFormat:@"facebook_user_%@", dealer.username];
+
     } else {
         newDealer = NO;
     }
@@ -2124,7 +2158,7 @@
             
             NSURL *pictureURL = [NSURL URLWithString:[[[facebookInfo objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
             
-            NSString *photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", dealer.email, [[NSDate date] timeIntervalSince1970]];
+            NSString *photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", dealer.username, [[NSDate date] timeIntervalSince1970]];
             NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
             dealer.photoURL = filePathAtS3;
             

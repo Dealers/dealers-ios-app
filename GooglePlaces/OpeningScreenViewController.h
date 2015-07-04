@@ -10,6 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "EnterPasscodeViewController.h"
+#import "PersonalizeTableViewController.h"
 #import "MBProgressHUD.h"
 #import "User.h"
 #import "GAITrackedViewController.h"
@@ -18,7 +19,7 @@
 {
     MBProgressHUD *loggingInFacebook, *noConnection;
     FBGraphObject *facebookInfo;
-    NSString *facebookUserEmail, *facebookToken;
+    NSString *facebookUserEmail, *facebookUserID, *facebookToken;
     NSNumber *pseudoUserID;
     BOOL gotToken, didPhotoFinishedDownloading, didPhotoFinishedUploading, triedUploadingPhoto, signedUp;
     UIView *screenshot;

@@ -725,10 +725,10 @@
 
 - (void)enterDealers
 {
-    // First take the user through the tutorial
-    TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
-    tvc.afterSignUp = YES;
-    [self.navigationController pushViewController:tvc animated:YES];
+    // First ask the user for his favorite categories
+    PersonalizeTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Personalize"];
+    ptvc.afterSignUp = YES;
+    [self.navigationController pushViewController:ptvc animated:YES];
 }
 
 

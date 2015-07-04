@@ -176,6 +176,8 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
             requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         }
         
+        requestString = [requestString stringByAppendingString:[NSString stringWithFormat:@"&dealer=%@", appDelegate.dealer.username]];
+        
         if (self.locationManager.location.coordinate.latitude && self.locationManager.location.coordinate.longitude) {
             NSString *locationParameters = [NSString stringWithFormat:@"&ll=%f,%f",
                                             self.locationManager.location.coordinate.latitude,

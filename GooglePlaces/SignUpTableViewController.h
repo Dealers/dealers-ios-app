@@ -10,7 +10,7 @@
 #import <AWSiOSSDKv2/S3.h>
 #import "AppDelegate.h"
 #import "KeychainItemWrapper.h"
-#import "TutorialViewController.h"
+#import "PersonalizeTableViewController.h"
 #import "MBProgressHUD.h"
 #import "Dealer.h"
 #import "Device.h"

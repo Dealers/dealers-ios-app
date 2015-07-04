@@ -27,7 +27,7 @@
 @implementation WhatIsTheDeal2
 
 @synthesize appDelegate;
-@synthesize shekel, dollar, pound, percentage, lastPrice;
+@synthesize shekel, dollar, euro, pound, percentage, lastPrice;
 
 
 - (void)viewDidLoad
@@ -372,28 +372,9 @@
     UIView *priceBar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     
     priceBar.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:226.0/255.0 blue:234.0/255.0 alpha:1.0];
-    priceBar.tintColor = [UIColor colorWithRed:150.0/255.0 green:0 blue:180.0/255.0 alpha:1.0];
+    priceBar.tintColor = [appDelegate ourPurple];
     
-    shekel = [UIButton buttonWithType:UIButtonTypeSystem];
-    [shekel setTitle:@"₪" forState:UIControlStateNormal];
-    [shekel setFrame:CGRectMake(15, 6, 30, 30)];
-    [shekel setAlpha:0.9];
-    [[shekel titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:26]];
-    [shekel addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
-    
-    dollar = [UIButton buttonWithType:UIButtonTypeSystem];
-    [dollar setTitle:@"$" forState:UIControlStateNormal];
-    [dollar setFrame:CGRectMake(60, 7, 30, 30)];
-    [dollar setAlpha:0.9];
-    [[dollar titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:24]];
-    [dollar addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
-    
-    pound = [UIButton buttonWithType:UIButtonTypeSystem];
-    [pound setTitle:@"£" forState:UIControlStateNormal];
-    [pound setFrame:CGRectMake(105, 7, 30, 30)];
-    [pound setAlpha:0.9];
-    [[pound titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:24]];
-    [pound addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
+    [self setCurrenciesOnBar:priceBar];
     
     UIButton *done1 = [UIButton buttonWithType:UIButtonTypeSystem];
     [done1 setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
@@ -401,15 +382,7 @@
     [done1 setAlpha:0.9];
     [[done1 titleLabel] setFont:[UIFont fontWithName:@"Avenir-Medium" size:17.0]];
     [done1 addTarget:self action:@selector(doneTextField) forControlEvents:UIControlEventTouchUpInside];
-    
-    [priceBar addSubview:shekel];
-    [priceBar addSubview:dollar];
-    [priceBar addSubview:pound];
     [priceBar addSubview:done1];
-    
-    // default choise:
-    [shekel setSelected:YES];
-    self.selectedCurrency = @"₪";
     
     [self.priceTextField setInputAccessoryView:priceBar];
     
@@ -475,10 +448,59 @@
      [self.dealDescription setInputAccessoryView:doneBar];
 }
 
+- (void)setCurrenciesOnBar:(UIView *)priceBar
+{
+    dollar = [UIButton buttonWithType:UIButtonTypeSystem];
+    [dollar setTitle:@"$" forState:UIControlStateNormal];
+    [dollar setAlpha:0.9];
+    [[dollar titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:24]];
+    [dollar addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
+    
+    euro = [UIButton buttonWithType:UIButtonTypeSystem];
+    [euro setTitle:@"€" forState:UIControlStateNormal];
+    [euro setAlpha:0.9];
+    [[euro titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:24]];
+    [euro addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
+
+    if ([[[NSLocale autoupdatingCurrentLocale] localeIdentifier] isEqualToString:@"he_IL"]) {
+        shekel = [UIButton buttonWithType:UIButtonTypeSystem];
+        [shekel setTitle:@"₪" forState:UIControlStateNormal];
+        [shekel setAlpha:0.9];
+        [[shekel titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:26]];
+        [shekel addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self orderCurrenciesFirst:shekel second:dollar third:euro];
+        
+        [priceBar addSubview:shekel];
+    
+    } else {
+        [self orderCurrenciesFirst:dollar second:euro third:nil];
+    }
+    
+    [priceBar addSubview:dollar];
+    [priceBar addSubview:euro];
+}
+
+- (void)orderCurrenciesFirst:(UIButton *)first second:(UIButton *)second third:(UIButton *)third
+{
+    if (first) {
+        [first setFrame:CGRectMake(15, 7, 30, 30)];
+        first.selected = YES;
+        self.selectedCurrency = first.titleLabel.text;
+    }
+    if (second) {
+        [second setFrame:CGRectMake(60, 7, 30, 30)];
+    }
+    if (third) {
+        [third setFrame:CGRectMake(105, 7, 30, 30)];
+    }
+}
+
 - (void)selectCurrency:(UIButton *)sender
 {
     shekel.selected = NO;
     dollar.selected = NO;
+    euro.selected = NO;
     pound.selected = NO;
     
     sender.selected = YES;
@@ -511,19 +533,6 @@
     
     [self.priceTextField resignFirstResponder];
     [self.discountTextField resignFirstResponder];
-}
-
-- (NSString *)convertCurrency {
-    
-    if ([self.selectedCurrency isEqualToString:@"₪"]) {
-        return @"SH";
-    } else if ([self.selectedCurrency isEqualToString:@"$"]) {
-        return @"DO";
-    } else if ([self.selectedCurrency isEqualToString:@"£"]) {
-        return @"PO";
-    } else {
-        return nil;
-    }
 }
 
 - (NSString *)convertDiscountType {
@@ -1053,160 +1062,6 @@
     [self.navigationController pushViewController:cctvc animated:YES];
 }
 
-/*
- - (void)setFacebookConnection
- {
- if ([appDelegate isFacebookConnected]) {
- 
- [self.facebookActivityIndicator startAnimating];
- 
- if (self.hasPublishPermissions) {
- [self turnOnFacebook];
- 
- } else {
- 
- // Present the permissions dialog and ask for publish_actions
- [FBRequestConnection startWithGraphPath:@"/me/permissions"
- completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
- 
- if (!error){
- 
- NSDictionary *permissions = [(NSArray *)[result data] objectAtIndex:2]; // object at index 2 is the publish_actions permission
- 
- if ([[permissions objectForKey:@"permission"] isEqualToString:@"publish_actions"]
- && [[permissions objectForKey:@"status"] isEqualToString:@"granted"]) {
- 
- // Publish permissions found, turn on facebook
- self.hasPublishPermissions = YES;
- [self turnOnFacebook];
- 
- } else {
- 
- // Publish permissions not found, ask for publish_actions
- self.hasPublishPermissions = NO;
- [self requestPublishPermissions];
- 
- }
- 
- } else {
- // There was an error, handle it
- [self.facebookActivityIndicator stopAnimating];
- }
- }];
- }
- 
- } else {
- 
- // Connect with Facebook Login and ask for all the necessary permissions, including publish_actions
- 
- [appDelegate openActiveSessionWithPermissions:@[@"public_profile", @"user_friends", @"email", @"user_birthday", @"user_location", @"publish_actions"] allowLoginUI:YES];
- }
- }
- 
- - (void)requestPublishPermissions
- {
- [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
- defaultAudience:FBSessionDefaultAudienceFriends
- completionHandler:^(FBSession *session, NSError *error) {
- 
- if (!error) {
- 
- [self checkPublishPermissions];
- 
- } else {
- 
- // There was an error, handle it
- NSLog(@"error! %@", [error localizedDescription]);
- [self.facebookActivityIndicator stopAnimating];
- }
- }];
- }
- 
- - (void)checkPublishPermissions
- {
- if ([FBSession.activeSession.permissions indexOfObject:@"publish_actions"] == NSNotFound) {
- 
- // Permission not granted, tell the user we will not publish
- 
- [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Permission not granted", nil)
- message:NSLocalizedString(@"Your deal will not be published to Facebook.", nil)
- delegate:self
- cancelButtonTitle:NSLocalizedString(@"OK", nil)
- otherButtonTitles:nil] show];
- 
- self.hasPublishPermissions = NO;
- [self.facebookActivityIndicator stopAnimating];
- 
- } else {
- 
- // Permission granted, turn on facebook
- self.hasPublishPermissions = YES;
- [self turnOnFacebook];
- }
- }
- 
- - (void)turnOnFacebook
- {
- [self.facebookActivityIndicator stopAnimating];
- NSIndexPath *facebookIndexPath = [NSIndexPath indexPathForRow:0 inSection:3];
- self.facebookIcon.selected = YES;
- self.facebookLabel.textColor = [UIColor colorWithRed:59.0/255.0 green:87.0/255.0 blue:157.0/255.0 alpha:1.0];
- [self.tableView cellForRowAtIndexPath:facebookIndexPath].accessoryType = UITableViewCellAccessoryCheckmark;
- isFacebookSelectd = YES;
- }
- 
- - (void)handleFBSessionStateChangeWithNotification:(NSNotification *)notification
- {
- if (!self.hasPublishPermissions) { // Otherwise there is no need to fetch the user's info, because we already have it.
- 
- // Get the session, state and error values from the notification's userInfo dictionary.
- NSDictionary *userInfo = [notification userInfo];
- 
- FBSessionState sessionState = [[userInfo objectForKey:@"state"] integerValue];
- NSError *error = [userInfo objectForKey:@"error"];
- 
- if (!error) {
- 
- // In case that there's not any error, then check if the session opened or closed.
- 
- if ([appDelegate isFacebookConnected]) {
- 
- // The session is open. Get the user information and update the UI.
- 
- [FBRequestConnection startWithGraphPath:@"me"
- parameters:@{@"fields": @"first_name, last_name, gender, birthday, picture.type(large), location, email"}
- HTTPMethod:@"GET"
- completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
- 
- if (!error) {
- 
- appDelegate.dealer = [appDelegate updateDealer:appDelegate.dealer withFacebookInfo:(FBGraphObject *)result withPhoto:NO];
- 
- [self checkPublishPermissions];
- 
- } else {
- 
- NSLog(@"%@", [error localizedDescription]);
- [self.facebookActivityIndicator stopAnimating];
- }
- }];
- 
- } else if (sessionState == FBSessionStateClosed || sessionState == FBSessionStateClosedLoginFailed){
- 
- // A session was closed or the login was failed or canceled. Update the UI accordingly.
- 
- [self.facebookActivityIndicator stopAnimating];
- }
- 
- } else {
- 
- // In case an error has occured, then just log the error and update the UI accordingly.
- NSLog(@"Error: %@", [error localizedDescription]);
- [self.facebookActivityIndicator stopAnimating];
- }
- }
- }
- */
 
 #pragma mark - Upload Deal
 
@@ -1227,7 +1082,7 @@
         
         self.deal.price = [NSNumber numberWithFloat:self.priceValue];
         
-        self.deal.currency = [self convertCurrency];
+        self.deal.currency = [appDelegate getCurrencyKey:self.selectedCurrency];
     }
     
     if (self.discountTextField.text.length > 0) {

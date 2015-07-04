@@ -222,7 +222,7 @@
 
 - (void)uploadPhoto
 {
-    NSString *photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", appDelegate.dealer.email, [[NSDate date] timeIntervalSince1970]];
+    NSString *photoFileName = [NSString stringWithFormat:@"%@_%f.jpg", appDelegate.dealer.username, [[NSDate date] timeIntervalSince1970]];
     NSString *filePathAtS3 = [NSString stringWithFormat:@"media/Profile_Photos/%@", photoFileName];
     appDelegate.dealer.photoURL = filePathAtS3;
     
@@ -311,6 +311,7 @@
     [[Branch getInstance] logout];
     [appDelegate updateDeviceAfterLogOut];
     [appDelegate removeUserDetailsFromDevice];
+    [appDelegate removeDeviceDetailsFromDevice];
     [appDelegate deletePseudoUser];
 
     if ([appDelegate isFacebookConnected]) {

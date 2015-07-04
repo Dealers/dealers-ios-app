@@ -13,11 +13,14 @@
 @interface EditTextModeViewController () {
     
     UIColor *placeholderColor;
+    NSString *newCurrency;
 }
 
 @end
 
 @implementation EditTextModeViewController
+
+@synthesize dollar, euro, shekel, pound;
 
 - (IBAction)done:(id)sender {
     EditDealTableViewController *edtvc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
@@ -34,13 +37,10 @@
             edtvc.dealPrice.text = NSLocalizedString(@"Price", nil);
             edtvc.dealPrice.textColor = placeholderColor;
         } else {
-            NSString *currency;
-            if (self.shekel.selected) currency = @"₪";
-            if (self.dollar.selected) currency = @"$";
-            if (self.pound.selected) currency = @"£";
+            self.selectedCurrency = newCurrency;
             NSInteger floatValue = [self.textView.text floatValue];
-            edtvc.dealPrice.text = [currency stringByAppendingString:[[NSNumber numberWithFloat:floatValue] stringValue]];
-            edtvc.selectedCurrency = currency;
+            edtvc.dealPrice.text = [self.selectedCurrency stringByAppendingString:[[NSNumber numberWithFloat:floatValue] stringValue]];
+            edtvc.selectedCurrency = self.selectedCurrency;
             edtvc.dealPrice.textColor = [UIColor blackColor];
         }
         
@@ -197,22 +197,6 @@
 
 #pragma mark - Price and Discount Type Bars
 
-- (void)showPriceBar
-{
-    self.priceBar.hidden = NO;
-    self.priceBar.alpha = 0;
-    
-    if ([self.currency isEqualToString:@"$"]) {
-        self.dollar.selected = YES;
-    } else if ([self.currency isEqualToString:@"£"]) {
-        self.pound.selected = YES;
-    } else {
-        self.shekel.selected = YES;
-    }
-    
-    [UIView animateWithDuration:0.4 animations:^{self.priceBar.alpha = 1.0;}];
-}
-
 - (void)showDiscountBar
 {
     NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
@@ -231,43 +215,21 @@
     [UIView animateWithDuration:0.4 animations:^{self.discountBar.alpha = 1.0;}];
 }
 
-- (IBAction)shekelSelected:(id)sender {
-    
-    if (![self.currency isEqualToString:@"₪"]) {
+- (void)selectCurrency:(UIButton *)sender
+{
+    if (![self.selectedCurrency isEqualToString:sender.titleLabel.text]) {
         self.navigationItem.rightBarButtonItem.enabled = YES;
-    } else if (![self.currency isEqualToString:@""] && [self.currentValue isEqualToString:self.textView.text]) {
+    } else if (![self.selectedCurrency isEqualToString:@""] && [self.currentValue isEqualToString:self.textView.text]) {
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
     
-    self.shekel.selected = YES;
-    self.dollar.selected = NO;
-    self.pound.selected = NO;
-}
-
-- (IBAction)dollarSelected:(id)sender {
+    shekel.selected = NO;
+    dollar.selected = NO;
+    euro.selected = NO;
+    pound.selected = NO;
     
-    if (![self.currency isEqualToString:@"$"]) {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    } else if (![self.currency isEqualToString:@""] && [self.currentValue isEqualToString:self.textView.text]) {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-    }
-    
-    self.shekel.selected = NO;
-    self.dollar.selected = YES;
-    self.pound.selected = NO;
-}
-
-- (IBAction)poundSelected:(id)sender {
-    
-    if (![self.currency isEqualToString:@"£"]) {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    } else if (![self.currency isEqualToString:@""] && [self.currentValue isEqualToString:self.textView.text]) {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-    }
-    
-    self.shekel.selected = NO;
-    self.dollar.selected = NO;
-    self.pound.selected = YES;
+    sender.selected = YES;
+    newCurrency = sender.titleLabel.text;
 }
 
 - (IBAction)percentageSelected:(id)sender {
@@ -318,15 +280,72 @@
     [self.navigationController.view addSubview:tooMuchIndicator];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+- (void)showPriceBar
+{
+    dollar = [UIButton buttonWithType:UIButtonTypeSystem];
+    [dollar setTitle:@"$" forState:UIControlStateNormal];
+    [dollar setAlpha:0.9];
+    [[dollar titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:24]];
+    [dollar addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
+    
+    euro = [UIButton buttonWithType:UIButtonTypeSystem];
+    [euro setTitle:@"€" forState:UIControlStateNormal];
+    [euro setAlpha:0.9];
+    [[euro titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:24]];
+    [euro addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([[[NSLocale autoupdatingCurrentLocale] localeIdentifier] isEqualToString:@"he_IL"]) {
+        shekel = [UIButton buttonWithType:UIButtonTypeSystem];
+        [shekel setTitle:@"₪" forState:UIControlStateNormal];
+        [shekel setAlpha:0.9];
+        [[shekel titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:26]];
+        [shekel addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self orderCurrenciesFirst:shekel second:dollar third:euro];
+        
+        [self.priceBar addSubview:shekel];
+        
+    } else {
+        [self orderCurrenciesFirst:dollar second:euro third:nil];
+    }
+    
+    [self.priceBar addSubview:dollar];
+    [self.priceBar addSubview:euro];
+    
+    self.priceBar.hidden = NO;
+    self.priceBar.alpha = 0;
+    [UIView animateWithDuration:0.4 animations:^{self.priceBar.alpha = 1.0;}];
+}
+
+- (void)orderCurrenciesFirst:(UIButton *)first second:(UIButton *)second third:(UIButton *)third
+{
+    BOOL shouldSelectDefault = YES;
+    if (first) {
+        [first setFrame:CGRectMake(15, 7, 30, 30)];
+        if ([self.selectedCurrency isEqualToString:first.titleLabel.text]) {
+            first.selected = YES;
+            shouldSelectDefault = NO;
+        }
+    }
+    if (second) {
+        [second setFrame:CGRectMake(60, 7, 30, 30)];
+        if ([self.selectedCurrency isEqualToString:second.titleLabel.text]) {
+            second.selected = YES;
+            shouldSelectDefault = NO;
+        }
+    }
+    if (third) {
+        [third setFrame:CGRectMake(105, 7, 30, 30)];
+        if ([self.selectedCurrency isEqualToString:third.titleLabel.text]) {
+            third.selected = YES;
+            shouldSelectDefault = NO;
+        }
+    }
+    if (shouldSelectDefault) {
+        first.selected = YES;
+        newCurrency = first.titleLabel.text;
+    }
+}
+
 
 @end

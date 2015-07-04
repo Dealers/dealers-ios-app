@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "Category.h"
+#import "TutorialViewController.h"
 #import "ElasticLabel.h"
 #import "GAI.h"
 #import "GAIFields.h"
@@ -28,5 +29,7 @@
 @property NSMutableArray *selectedCategories;
 
 @property (weak, nonatomic) IBOutlet ElasticLabel *explanation;
+
+@property BOOL afterSignUp;
 
 @end

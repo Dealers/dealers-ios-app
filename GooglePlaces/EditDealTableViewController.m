@@ -147,7 +147,7 @@
 
 - (void)canDelete
 {
-    if (![appDelegate.dealer.email isEqualToString:self.deal.dealer.email]) {
+    if (![appDelegate.dealer.username isEqualToString:self.deal.dealer.username]) {
         
         // Add a cell at the end of the table view for - "Delete Deal".
     }
@@ -299,7 +299,7 @@
                 }
                 case 1:
                     etmvc.title = NSLocalizedString(@"Price", nil);
-                    etmvc.currency = self.selectedCurrency;
+                    etmvc.selectedCurrency = self.selectedCurrency;
                     etmvc.currentValue = [self.dealPrice.text substringFromIndex:1];
                     if ([self.dealPrice.text isEqualToString:NSLocalizedString(@"Price", nil)]) {
                         etmvc.currentValue = @"";

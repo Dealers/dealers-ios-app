@@ -46,6 +46,7 @@
 
 @property (retain, nonatomic) UIButton *shekel;
 @property (retain, nonatomic) UIButton *dollar;
+@property (retain, nonatomic) UIButton *euro;
 @property (retain, nonatomic) UIButton *pound;
 @property (retain, nonatomic) UIButton *percentage;
 @property (retain, nonatomic) UIButton *lastPrice;

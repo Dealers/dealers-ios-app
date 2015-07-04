@@ -245,6 +245,10 @@
         }
     }
     
+    if (![self checkAuthorizationStatus]) {
+        return;
+    }
+    
     NSError *error = nil;
     backCameraInput = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:&error];
     if (!backCameraInput) {
@@ -267,6 +271,38 @@
     [session startRunning];
     
     isSessionRunning = YES;
+}
+
+- (BOOL)checkAuthorizationStatus
+{
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if(authStatus == AVAuthorizationStatusAuthorized) {
+        return YES;
+    } else if (authStatus == AVAuthorizationStatusDenied || authStatus == AVAuthorizationStatusRestricted) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert =[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Permission For Camera", nil)
+                                                           message:NSLocalizedString(@"In order to use the camera, go to the settings and authorize the app to do so.", nil)
+                                                          delegate:self
+                                                 cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                 otherButtonTitles:nil];
+            alert.tag = 123;
+            [alert show];
+        });
+            return NO;
+    } else if (authStatus == AVAuthorizationStatusNotDetermined) {
+        // not determined?!
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if(granted){
+                NSLog(@"Granted access to %@", AVMediaTypeVideo);
+            } else {
+                NSLog(@"Not granted access to %@", AVMediaTypeVideo);
+            }
+        }];
+        return NO;
+    } else {
+        // impossible, unknown authorization status
+        return NO;
+    }
 }
 
 - (void)deallocCameraSession

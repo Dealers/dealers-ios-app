@@ -19,11 +19,12 @@
 @property NSString *currentValue;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
-@property NSString *currency;
+@property NSString *selectedCurrency;
 @property (weak, nonatomic) IBOutlet UIView *priceBar;
-@property (weak, nonatomic) IBOutlet UIButton *shekel;
-@property (weak, nonatomic) IBOutlet UIButton *dollar;
-@property (weak, nonatomic) IBOutlet UIButton *pound;
+@property (retain, nonatomic) UIButton *shekel;
+@property (retain, nonatomic) UIButton *dollar;
+@property (retain, nonatomic) UIButton *euro;
+@property (retain, nonatomic) UIButton *pound;
 
 @property NSString *discountType;
 @property (weak, nonatomic) IBOutlet UIView *discountBar;

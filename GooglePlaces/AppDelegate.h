@@ -64,6 +64,7 @@
 
 - (void)saveUserDetailsOnDevice;
 - (void)removeUserDetailsFromDevice;
+- (void)removeDeviceDetailsFromDevice;
 - (NSData *)loadProfilePic;
 - (void)updateUserInfo;
 - (UIImage *)myProfilePic;

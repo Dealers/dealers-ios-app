@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZXa-ud-UfS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZXa-ud-UfS">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -231,13 +231,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="247" translatesAutoresizingMaskIntoConstraints="NO" id="QB8-SM-ot7" userLabel="Store Label" customClass="ElasticLabel">
-                                        <rect key="frame" x="53" y="304" width="247" height="30"/>
+                                        <rect key="frame" x="53" y="304" width="41" height="30"/>
                                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                         <color key="textColor" red="0.56862747669219971" green="0.56862747669219971" blue="0.62745100259780884" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LZh-yY-5Ce" userLabel="Link To Store">
-                                        <rect key="frame" x="15" y="304" width="285" height="30"/>
+                                        <rect key="frame" x="15" y="304" width="101" height="30"/>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -490,6 +490,9 @@
                                             <constraint firstItem="sCN-xS-Iur" firstAttribute="centerY" secondItem="dO6-KH-O9H" secondAttribute="centerY" id="z3O-wQ-haE"/>
                                         </constraints>
                                     </view>
+                                    <imageView userInteractionEnabled="NO" alpha="0.89999999999999991" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Store Chevron" translatesAutoresizingMaskIntoConstraints="NO" id="f9Q-F6-bbD">
+                                        <rect key="frame" x="100" y="313" width="8" height="13"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="1jp-Ij-G2z" secondAttribute="centerX" id="0VS-1h-o8k"/>
@@ -500,6 +503,7 @@
                                     <constraint firstItem="xQR-xb-2f6" firstAttribute="top" secondItem="jiD-Ik-bew" secondAttribute="bottom" constant="12" id="3iB-v6-rGg"/>
                                     <constraint firstAttribute="trailing" secondItem="4xM-YW-lYC" secondAttribute="trailing" constant="7" id="3xN-5Z-bA1"/>
                                     <constraint firstAttribute="right" secondItem="rEX-79-iA0" secondAttribute="right" id="3xz-8c-5A4"/>
+                                    <constraint firstItem="f9Q-F6-bbD" firstAttribute="centerY" secondItem="QB8-SM-ot7" secondAttribute="centerY" id="42Q-PS-K4S"/>
                                     <constraint firstAttribute="right" relation="greaterThanOrEqual" secondItem="vE1-c8-xdw" secondAttribute="right" constant="20" id="4wP-Jo-lIO"/>
                                     <constraint firstItem="jiD-Ik-bew" firstAttribute="left" secondItem="IF1-eK-jao" secondAttribute="left" constant="15" id="5j3-1X-h5M"/>
                                     <constraint firstItem="Ad4-BB-7KM" firstAttribute="centerY" secondItem="0J0-PA-3hc" secondAttribute="centerY" id="7D9-Gz-Ydo"/>
@@ -518,6 +522,7 @@
                                     <constraint firstItem="s9N-p2-Wzz" firstAttribute="left" secondItem="M29-wT-q4D" secondAttribute="right" constant="8" id="FD1-SW-Q9o"/>
                                     <constraint firstItem="7C9-Vb-eey" firstAttribute="top" secondItem="IF1-eK-jao" secondAttribute="top" id="GOB-Er-KLI"/>
                                     <constraint firstItem="vE1-c8-xdw" firstAttribute="left" secondItem="xQR-xb-2f6" secondAttribute="right" constant="8" id="Gou-JS-4Ka"/>
+                                    <constraint firstItem="f9Q-F6-bbD" firstAttribute="left" secondItem="QB8-SM-ot7" secondAttribute="right" constant="6" id="I1a-il-dTK"/>
                                     <constraint firstItem="FP8-Yn-szG" firstAttribute="top" secondItem="VtK-U4-PLj" secondAttribute="top" id="IGR-ux-qNE"/>
                                     <constraint firstItem="M29-wT-q4D" firstAttribute="centerX" secondItem="D18-Oa-SoO" secondAttribute="centerX" id="ILN-mc-qBA"/>
                                     <constraint firstAttribute="right" relation="greaterThanOrEqual" secondItem="Y5N-45-UPA" secondAttribute="right" constant="20" id="Inh-rH-0c7"/>
@@ -552,6 +557,7 @@
                                     <constraint firstItem="cwi-BN-7Zi" firstAttribute="top" secondItem="7C9-Vb-eey" secondAttribute="bottom" id="gDq-is-mOS"/>
                                     <constraint firstItem="BD8-uu-lYA" firstAttribute="leading" secondItem="IF1-eK-jao" secondAttribute="leading" constant="20" id="gIY-uk-AW2"/>
                                     <constraint firstAttribute="centerX" secondItem="61x-o5-xXI" secondAttribute="centerX" id="gNU-sj-u2H"/>
+                                    <constraint firstItem="LZh-yY-5Ce" firstAttribute="right" secondItem="f9Q-F6-bbD" secondAttribute="right" constant="8" id="ggI-Bt-XXO"/>
                                     <constraint firstItem="BD8-uu-lYA" firstAttribute="top" secondItem="xQR-xb-2f6" secondAttribute="bottom" constant="25" id="gvB-9G-xFK"/>
                                     <constraint firstItem="rEX-79-iA0" firstAttribute="top" secondItem="61x-o5-xXI" secondAttribute="bottom" constant="25" id="ikt-cB-Ce0"/>
                                     <constraint firstItem="iTj-h4-Ba9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="e3K-yJ-2FH" secondAttribute="bottom" constant="8" id="im5-76-hcO"/>
@@ -564,7 +570,7 @@
                                     <constraint firstItem="LZh-yY-5Ce" firstAttribute="leading" secondItem="QB8-SM-ot7" secondAttribute="leading" id="nzP-wC-crR"/>
                                     <constraint firstItem="Ad4-BB-7KM" firstAttribute="left" secondItem="IF1-eK-jao" secondAttribute="left" constant="15" id="ps7-6Q-hyN"/>
                                     <constraint firstItem="MDk-fE-DKQ" firstAttribute="leading" secondItem="VtK-U4-PLj" secondAttribute="leading" id="rXN-51-jVR"/>
-                                    <constraint firstAttribute="right" secondItem="QB8-SM-ot7" secondAttribute="right" constant="20" id="rfs-w5-Xrt"/>
+                                    <constraint firstAttribute="right" relation="greaterThanOrEqual" secondItem="QB8-SM-ot7" secondAttribute="right" constant="20" id="rfs-w5-Xrt"/>
                                     <constraint firstItem="e3K-yJ-2FH" firstAttribute="leading" secondItem="IF1-eK-jao" secondAttribute="leading" constant="8" id="sDD-0s-Awf"/>
                                     <constraint firstItem="h1v-LK-7f7" firstAttribute="bottom" secondItem="s9N-p2-Wzz" secondAttribute="bottom" id="twR-p8-jo1"/>
                                     <constraint firstItem="FP8-Yn-szG" firstAttribute="leading" secondItem="1jp-Ij-G2z" secondAttribute="leading" id="uxx-jp-hiU"/>
@@ -574,6 +580,7 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="Nbc-r2-7Km"/>
                                         <exclude reference="nzP-wC-crR"/>
                                         <exclude reference="enH-gR-oHV"/>
                                     </mask>
@@ -1169,36 +1176,6 @@
                             </textView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="03l-U6-h8E" userLabel="Price Bar">
                                 <rect key="frame" x="0.0" y="340" width="600" height="44"/>
-                                <subviews>
-                                    <button opaque="NO" alpha="0.80000000000000027" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8i-ju-JWa" userLabel="Shekel">
-                                        <rect key="frame" x="15" y="6" width="30" height="30"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="26"/>
-                                        <state key="normal" title="₪"/>
-                                        <connections>
-                                            <action selector="shekelSelected:" destination="EEf-4Z-tbm" eventType="touchUpInside" id="MPu-uh-tYB"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.80000000000000027" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXh-7h-eXu" userLabel="Dollar">
-                                        <rect key="frame" x="55" y="7" width="30" height="30"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
-                                        <state key="normal" title="$">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="dollarSelected:" destination="EEf-4Z-tbm" eventType="touchUpInside" id="Wzg-hS-PCA"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.80000000000000027" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHt-QW-jTa" userLabel="Pound">
-                                        <rect key="frame" x="95" y="7" width="30" height="30"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
-                                        <state key="normal" title="£">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="poundSelected:" destination="EEf-4Z-tbm" eventType="touchUpInside" id="Srg-TQ-lWS"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="h6H-6f-gNb"/>
@@ -1256,12 +1233,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="discountBar" destination="jX9-Hg-6TW" id="kxu-qP-ZPz"/>
-                        <outlet property="dollar" destination="RXh-7h-eXu" id="wfV-PY-P6M"/>
                         <outlet property="lastPrice" destination="EIU-ZP-atj" id="oJ4-ym-irF"/>
                         <outlet property="percentage" destination="RNL-kw-RsV" id="jkU-mH-Ndr"/>
-                        <outlet property="pound" destination="NHt-QW-jTa" id="zHX-rK-TAx"/>
                         <outlet property="priceBar" destination="03l-U6-h8E" id="LD4-n6-uc1"/>
-                        <outlet property="shekel" destination="S8i-ju-JWa" id="PGZ-Mv-Ek3"/>
                         <outlet property="textView" destination="Bva-qS-OS0" id="NAB-75-rmJ"/>
                         <outlet property="verticalSpaceDiscountBar" destination="dNz-oW-6zz" id="JYe-Oo-e7I"/>
                         <outlet property="verticalSpacePriceBar" destination="Yoi-YX-AnZ" id="0mg-Yq-fUe"/>
@@ -1590,7 +1564,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDP-qs-CQ9" userLabel="Email Text Field">
                                                     <rect key="frame" x="20" y="9" width="560" height="25"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="yey-Gf-Itm" id="BVp-WI-eIv"/>
                                                     </connections>
@@ -2640,7 +2614,7 @@
                                                 <constraint firstItem="waY-z6-dpa" firstAttribute="left" secondItem="Txp-Tv-r0A" secondAttribute="right" constant="8" id="WlE-96-36h"/>
                                                 <constraint firstAttribute="centerY" secondItem="DRW-Jf-jmw" secondAttribute="centerY" constant="-0.5" id="Y74-o6-Arr"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="DRW-Jf-jmw" secondAttribute="right" constant="33" id="ZH7-S7-dmH"/>
-                                                <constraint firstItem="Txp-Tv-r0A" firstAttribute="left" secondItem="uGh-qJ-O1Z" secondAttribute="leftMargin" constant="7" id="ZMD-Ib-XPs"/>
+                                                <constraint firstItem="Txp-Tv-r0A" firstAttribute="left" secondItem="uGh-qJ-O1Z" secondAttribute="left" constant="15" id="ZMD-Ib-XPs"/>
                                                 <constraint firstAttribute="centerY" secondItem="Txp-Tv-r0A" secondAttribute="centerY" constant="-0.5" id="ch4-1J-Zg9"/>
                                                 <constraint firstAttribute="centerY" secondItem="waY-z6-dpa" secondAttribute="centerY" constant="-0.5" id="o6p-dM-zDA"/>
                                                 <constraint firstItem="DRW-Jf-jmw" firstAttribute="left" secondItem="waY-z6-dpa" secondAttribute="right" constant="20" id="zWz-Ry-Wbr"/>
@@ -2657,7 +2631,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="500" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a9e-WO-B1Y" userLabel="Discount Field">
                                                     <rect key="frame" x="137" y="8" width="422" height="28"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="20"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="Qgd-rt-SA2" id="g1L-a2-asT"/>
                                                     </connections>
@@ -2672,7 +2646,7 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="VY1-Mw-Gqb" firstAttribute="left" secondItem="ZfI-hL-jtw" secondAttribute="leftMargin" constant="7" id="6qo-xd-Nkj"/>
+                                                <constraint firstItem="VY1-Mw-Gqb" firstAttribute="left" secondItem="ZfI-hL-jtw" secondAttribute="left" constant="15" id="6qo-xd-Nkj"/>
                                                 <constraint firstAttribute="centerY" secondItem="gNM-J3-Cgp" secondAttribute="centerY" constant="-0.5" id="Ixd-24-UdP"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="a9e-WO-B1Y" secondAttribute="right" constant="33" id="Ukv-ni-YCc"/>
                                                 <constraint firstItem="gNM-J3-Cgp" firstAttribute="left" secondItem="VY1-Mw-Gqb" secondAttribute="right" constant="8" id="V1v-3k-hzl"/>
@@ -2715,7 +2689,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="sp4-0C-9cj" secondAttribute="centerY" constant="0.5" id="KTV-ht-6Ya"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="kfb-mC-0pc" secondAttribute="right" id="PCx-Bi-GtL"/>
-                                                <constraint firstItem="sp4-0C-9cj" firstAttribute="left" secondItem="Y2n-gB-cEe" secondAttribute="leftMargin" constant="7" id="TS4-fc-g1J"/>
+                                                <constraint firstItem="sp4-0C-9cj" firstAttribute="left" secondItem="Y2n-gB-cEe" secondAttribute="left" constant="15" id="TS4-fc-g1J"/>
                                                 <constraint firstItem="3ZW-Q7-ezc" firstAttribute="left" secondItem="sp4-0C-9cj" secondAttribute="right" constant="8" id="duL-ZB-8DT"/>
                                                 <constraint firstAttribute="centerY" secondItem="kfb-mC-0pc" secondAttribute="centerY" constant="-0.5" id="fSP-uX-B3X"/>
                                                 <constraint firstAttribute="centerY" secondItem="3ZW-Q7-ezc" secondAttribute="centerY" constant="-0.5" id="k3K-aS-3ds"/>
@@ -2755,7 +2729,7 @@
                                                 <constraint firstAttribute="centerY" secondItem="EgK-1R-reI" secondAttribute="centerY" constant="-0.5" id="Je3-kA-aZc"/>
                                                 <constraint firstAttribute="centerY" secondItem="qFv-I7-ZNT" secondAttribute="centerY" constant="-0.5" id="KL1-bt-LMc"/>
                                                 <constraint firstAttribute="rightMargin" secondItem="MZp-WF-ikk" secondAttribute="right" constant="33" id="LWM-ej-2jo"/>
-                                                <constraint firstItem="qFv-I7-ZNT" firstAttribute="left" secondItem="PkS-pr-kzj" secondAttribute="leftMargin" constant="7" id="fM3-O9-YSA"/>
+                                                <constraint firstItem="qFv-I7-ZNT" firstAttribute="left" secondItem="PkS-pr-kzj" secondAttribute="left" constant="15" id="fM3-O9-YSA"/>
                                                 <constraint firstAttribute="centerY" secondItem="MZp-WF-ikk" secondAttribute="centerY" id="vCt-j9-UdR"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -3668,7 +3642,7 @@ Privacy Policy</string>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose categories to get more personalized deals in your feed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="520" translatesAutoresizingMaskIntoConstraints="NO" id="rhk-MS-b2L" customClass="ElasticLabel">
                                     <rect key="frame" x="40" y="14" width="520" height="40"/>
-                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
                                     <color key="textColor" red="0.43137255311012268" green="0.43137255311012268" blue="0.49019607901573181" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -4743,6 +4717,7 @@ Privacy Policy</string>
         <image name="Rotate Camera" width="40" height="40"/>
         <image name="Snap" width="78" height="78"/>
         <image name="Snap Highlighted" width="78" height="78"/>
+        <image name="Store Chevron" width="8" height="13"/>
         <image name="Store Icon" width="30" height="30"/>
         <image name="Store Phone Icon" width="30" height="30"/>
         <image name="Store Website Icon" width="30" height="30"/>

@@ -22,14 +22,18 @@
     
     self.title = NSLocalizedString(@"Personalize", nil);
     [self initialize];
+    [self.view layoutIfNeeded];
     [self setNavigationBar];
-    self.explanation.text = NSLocalizedString(@"Choose categories to get more personalized deals in your feed", nil);
+    [self setExplanationText];
     [self downloadSelectedCategories];
     [self setLoadingView];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
+    if ([[self.navigationController navigationBar] isHidden]) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Personalize Screen"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
@@ -49,20 +53,47 @@
     UIView *doneButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 58, 30)];
     
     UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [doneButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     [doneButton setFrame:CGRectMake(8, 0, 58, 30)];
-    [doneButton setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [doneButton.titleLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:15.0]];
     [doneButton setBackgroundColor:[appDelegate ourPurple]];
     [doneButton.layer setCornerRadius:5.0];
     [doneButton.layer setMasksToBounds:YES];
     
+    if (self.afterSignUp) {
+        [doneButton setTitle:NSLocalizedString(@"Next", nil) forState:UIControlStateNormal];
+        [doneButton addTarget:self action:@selector(next:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [doneButton setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
+        [doneButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     [doneButtonView addSubview:doneButton];
     
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:doneButtonView];
     
     self.navigationItem.rightBarButtonItem = barButton;
+    
+    if (self.afterSignUp) {
+        [self.navigationItem setHidesBackButton:YES];
+    }
+}
+
+- (void)setExplanationText
+{
+    self.explanation.text = NSLocalizedString(@"Choose categories to get more personalized deals in your feed", nil);
+
+    if (self.afterSignUp) {
+        self.explanation.text = NSLocalizedString(@"Choose categories to get more personalized deals in your feed. You can always make changes later from your profile.", nil);
+    } else {
+        self.explanation.text = NSLocalizedString(@"Choose categories to get more personalized deals in your feed", nil);
+    }
+    
+    UIView *header = self.tableView.tableHeaderView;
+    CGSize explanationSize = [self.explanation sizeThatFits:CGSizeMake(self.explanation.frame.size.width, MAXFLOAT)];
+    header.frame = CGRectMake(0, 0, self.tableView.frame.size.width, explanationSize.height + 14.0 * 2);
+    self.tableView.tableHeaderView = header;
+    
 }
 
 - (void)downloadSelectedCategories
@@ -286,6 +317,13 @@
 - (void)dismiss
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)next:(UIButton *)sender
+{
+    TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
+    tvc.afterSignUp = YES;
+    [self.navigationController pushViewController:tvc animated:YES];
 }
 
 
