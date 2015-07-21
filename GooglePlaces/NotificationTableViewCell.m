@@ -52,9 +52,21 @@
     if ([object isMemberOfClass:[Notification class]]) {
         
         Notification *notification = object;
+        NSString *notificationString;
+
+        if ([notification.type isEqualToString:@"Weekly Deals"]) {
+            notificationString = NSLocalizedString(notification.subjectMessage, nil);
+            return notificationString;
+        }
+        
+        if ([notification.type isEqualToString:@"New Rank"]) {
+            NSString *rank = NSLocalizedString(notification.subjectTitle, nil);
+            notificationString = [NSString stringWithFormat:NSLocalizedString(@"Congratulations! You became a %@!", nil), rank];
+            return notificationString;
+        }
+        
         NSString *fullName = notification.dealer.fullName;
         NSString *dealTitle = notification.subjectTitle;
-        NSString *notificationString;
         
         if ([notification.type isEqualToString:@"Like"]) {
             

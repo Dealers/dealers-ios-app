@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "NotificationTableViewCell.h"
 #import "Notification.h"
+#import "DealsTableViewController.h"
 #import "ViewDealViewController.h"
 #import "ProfileTableViewController.h"
 #import "GAI.h"
@@ -30,5 +31,8 @@
 @property UIImage *notificationPhoto;
 
 @property NSDateFormatter *dateFormatter;
+
+- (void)refresh;
+
 
 @end

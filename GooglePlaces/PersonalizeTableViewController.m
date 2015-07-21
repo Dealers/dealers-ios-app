@@ -31,12 +31,19 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     if ([[self.navigationController navigationBar] isHidden]) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"Personalize Screen"];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    if (self.afterSignUp) {
+        id tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:@"Personalize Screen (after sign up)"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    } else {
+        id tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:@"Personalize Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    }
 }
 
 - (void)initialize

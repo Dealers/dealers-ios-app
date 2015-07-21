@@ -155,6 +155,7 @@
     navBarContainer = [[UIView alloc] init];
     navBarContainer.translatesAutoresizingMaskIntoConstraints = NO;
     [titleView addSubview:navBarContainer];
+    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.width);
     [navBarContainer addConstraint:[NSLayoutConstraint constraintWithItem:navBarContainer
                                                                 attribute:NSLayoutAttributeWidth
                                                                 relatedBy:NSLayoutRelationEqual
@@ -488,7 +489,10 @@
 
 - (void)dismiss:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    appDelegate.addDealState = NO;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [appDelegate exitAddDealState];
+    }];
 }
 
 - (void)setProgressBar

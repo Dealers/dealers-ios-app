@@ -41,6 +41,8 @@
 @property NSMutableArray *sharedDeals;
 @property NSMutableArray *followings;
 @property NSMutableArray *followedBy;
+@property NSNumber *totalLikes;
+@property NSNumber *totalShares;
 
 @property NSNumber *invitationCounter;
 

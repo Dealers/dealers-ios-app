@@ -35,17 +35,17 @@
             break;
         case 2:
             self.view.backgroundColor = [UIColor colorWithRed:255.0/250.0 green:212.0/250.0 blue:40.0/250.0 alpha:1.0];
-            self.iPhoneImage.image = [UIImage imageNamed:@"Explore.png"];
-            self.featureIcon.image = [UIImage imageNamed:@"Tutorial Explore Icon"];
-            self.explanation.text = NSLocalizedString(@"Explore more deals with searching or with our categories", nil);
-            self.screenName = @"Tutorial Explore Screen";
-            break;
-        case 3:
-            self.view.backgroundColor = [UIColor colorWithRed:255.0/250.0 green:115.0/250.0 blue:123.0/250.0 alpha:1.0];
             self.iPhoneImage.image = [UIImage imageNamed:@"Add_Deal.png"];
             self.featureIcon.image = [UIImage imageNamed:@"Tutorial Add Deal Icon"];
             self.explanation.text = NSLocalizedString(@"Post deals that you find, and contirbute back to the community", nil);
             self.screenName = @"Tutorial Add Deal Screen";
+            break;
+        case 3:
+            self.view.backgroundColor = [UIColor colorWithRed:255.0/250.0 green:115.0/250.0 blue:123.0/250.0 alpha:1.0];
+            self.iPhoneImage.image = [UIImage imageNamed:NSLocalizedString(@"Score Screenshot", nil)];
+            self.featureIcon.image = [UIImage imageNamed:@"Tutorial Score Icon"];
+            self.explanation.text = NSLocalizedString(@"Gain points and move up in the ranks to have more influence", nil);
+            self.screenName = @"Tutorial Score Screen";
             break;
         case 4:
             self.view.backgroundColor = [UIColor colorWithRed:190.0/250.0 green:158.0/250.0 blue:131.0/250.0 alpha:1.0];

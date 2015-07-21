@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "ViewDealViewController.h"
+#import "DealsTableViewController.h"
 #import "DealersTabBarController.h"
 
 @interface PushNotificationView : UINavigationBar
@@ -19,7 +20,7 @@
 @property UILabel *message;
 @property UIButton *hideNotificationButton;
 @property NSNumber *objectID; // What is the id of the object that is the issue of the notification.
-@property NSString *action; // What should be done? (options: deal, dealer, or else...)
+@property NSString *type; // What is the type of the notification?
 @property Deal *deal;
 
 - (PushNotificationView *)initWithDelegate:(UIWindow *)delegate;

@@ -1,4 +1,4 @@
-//
+    //
 //  WhatIsTheDeal2.m
 //  Dealers
 //
@@ -462,7 +462,9 @@
     [[euro titleLabel] setFont:[UIFont fontWithName:@"Avenir-Light" size:24]];
     [euro addTarget:self action:@selector(selectCurrency:) forControlEvents:UIControlEventTouchUpInside];
 
-    if ([[[NSLocale autoupdatingCurrentLocale] localeIdentifier] isEqualToString:@"he_IL"]) {
+    NSString *region = [[NSLocale autoupdatingCurrentLocale] objectForKey:NSLocaleCountryCode];
+    
+    if ([region isEqualToString:@"IL"]) {
         shekel = [UIButton buttonWithType:UIButtonTypeSystem];
         [shekel setTitle:@"₪" forState:UIControlStateNormal];
         [shekel setAlpha:0.9];

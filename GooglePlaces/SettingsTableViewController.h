@@ -13,6 +13,8 @@
 #import "EditProfileTableViewController.h"
 #import "PushNotificationsTableViewController.h"
 #import "TutorialViewController.h"
+#import "ScoreGuideViewController.h"
+#import "NewRankViewController.h"
 #import "ComingSoonViewController.h"
 #import "PersonalizeTableViewController.h"
 #import "MBProgressHUD.h"

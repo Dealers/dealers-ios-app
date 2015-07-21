@@ -38,6 +38,8 @@
 
 @property NSString *categoryFromExplore;
 @property NSString *searchTermFromExplore;
+@property NSNumber *weeklyDealsID;
+@property NSString *recommendedDealsTitle;
 
 @property RKPaginator *paginator;
 

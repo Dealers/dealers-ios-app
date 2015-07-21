@@ -12,7 +12,9 @@
 #import <AWSiOSSDKv2/S3.h>
 #import <AWSiOSSDKv2/AWSCore.h>
 #import "DealersTabBarController.h"
+#import "DealsTableViewController.h"
 #import "ViewDealViewController.h"
+#import "ActivityTableViewController.h"
 #import "KeychainItemWrapper.h"
 #import "PushNotificationView.h"
 #import "Branch.h"
@@ -172,7 +174,7 @@
         // Signed in - no details on device. Get them and save
         self.device.token = token;
         [self checkIfDeviceExists];
-    
+        
     } else {
         self.device.deviceID = [defaults objectForKey:@"deviceID"];
         self.device.UDID = [defaults objectForKey:@"UDID"];
@@ -456,6 +458,7 @@
     NSString  *tokenString = [[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
                               stringByReplacingOccurrencesOfString:@">" withString:@""];
     
+    
     [self instantiateDeviceWithToken:tokenString];
 }
 
@@ -473,34 +476,52 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     UIApplicationState state = application.applicationState;
-    
+    userInfoForActive = userInfo;
+
     if (state == UIApplicationStateActive) {
         
-        userInfoForActive = userInfo;
         application.applicationIconBadgeNumber = application.applicationIconBadgeNumber - 1;
+        NSString *type = userInfoForActive[@"type"];
         
-        // download the deal
-        pushedDealID = userInfoForActive[@"deal"];
-        notifyingDealerID = userInfoForActive[@"dealer"];
-        if (pushedDealID) {
-            NSString *path = [NSString stringWithFormat:@"/alldeals/%@/", pushedDealID];
-            [[RKObjectManager sharedManager] getObjectsAtPath:path
-                                                   parameters:nil
-                                                      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                          
-                                                          NSLog(@"Notification's deal downloaded successfully!");
-                                                          self.pushedDeal = mappingResult.firstObject;
-                                                          
-                                                          // download the notifying dealer
-                                                          if (notifyingDealerID) {
-                                                              [self downloadNotifyingDealer];
+        if ([type isEqualToString:@"New Rank"]) {
+            if (userInfoForActive[@"rank"] && tabBarController) {
+                if (self.addDealState) {
+                    pendingNewRankAnnouncement = userInfoForActive[@"rank"];
+                } else {
+                    [self presentNewRank:userInfoForActive[@"rank"]];
+                    pendingNewRankAnnouncement = nil;
+                }
+            }
+        
+        } else if ([type isEqualToString:@"Weekly Deals"]) {
+            weeklyDealsID = userInfoForActive[@"weekly_deals_id"];
+            [self notificationWhenActive:type];
+            return;
+            
+        } else {
+            // It's a deal - download it
+            pushedDealID = userInfoForActive[@"deal"];
+            notifyingDealerID = userInfoForActive[@"dealer"];
+            if (pushedDealID) {
+                NSString *path = [NSString stringWithFormat:@"/alldeals/%@/", pushedDealID];
+                [[RKObjectManager sharedManager] getObjectsAtPath:path
+                                                       parameters:nil
+                                                          success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                              
+                                                              NSLog(@"Notification's deal downloaded successfully!");
+                                                              self.pushedDeal = mappingResult.firstObject;
+                                                              
+                                                              // download the notifying dealer
+                                                              if (notifyingDealerID) {
+                                                                  [self downloadNotifyingDealer];
+                                                              }
                                                           }
-                                                      }
-                                                      failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                          
-                                                          NSLog(@"Notification's deal failed to download.");
-                                                          completionHandler(UIBackgroundFetchResultFailed);
-                                                      }];
+                                                          failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                              
+                                                              NSLog(@"Notification's deal failed to download.");
+                                                              completionHandler(UIBackgroundFetchResultFailed);
+                                                          }];
+            }
         }
         
         completionHandler(UIBackgroundFetchResultNoData);
@@ -509,7 +530,7 @@
         
         // Download the object, wheather it is a deal, dealer, else...
         
-        if (userInfo[@"deal"]) {
+        if (userInfoForActive[@"deal"]) {
             // There is a deal object. Download it.
             NSString *path = [NSString stringWithFormat:@"/alldeals/%@/", userInfo[@"deal"]];
             [[RKObjectManager sharedManager] getObjectsAtPath:path
@@ -529,11 +550,24 @@
         
     } else if (state == UIApplicationStateInactive) {
         
-        // App was launched with push notificaiton
-        pushedDealID = userInfo[@"deal"];
+        NSString *type = userInfoForActive[@"type"];
         
-        if (pushedDealID) {
-            [self presentNotificationOfType:@"deal"];
+        // App was launched with push notificaiton
+        if ([type isEqualToString:@"New Rank"]) {
+            if (userInfoForActive[@"rank"]) {
+                cashedRank = userInfoForActive[@"rank"];
+                [self presentNotificationOfType:@"newRank"];
+            }
+        } else if ([type isEqualToString:@"Weekly Deals"]) {
+            if (userInfoForActive[@"weekly_deals_id"]) {
+                weeklyDealsID = userInfoForActive[@"weekly_deals_id"];
+                [self presentNotificationOfType:@"dealsList"];
+            }
+        } else {
+            if (userInfoForActive[@"deal"]) {
+                pushedDealID = userInfoForActive[@"deal"];
+                [self presentNotificationOfType:@"deal"];
+            }
         }
         completionHandler(UIBackgroundFetchResultNoData);
     }
@@ -582,8 +616,17 @@
         return;
     }
     
-    UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:4];
-    [tabBarController setSelectedIndex:4];
+    NSString *pushNotificationType = userInfoForActive[@"type"];
+    UINavigationController *navigationController;
+    if ([pushNotificationType isEqualToString:@"Category Deals"]) {
+        navigationController = [[tabBarController viewControllers] objectAtIndex:0];
+        [tabBarController setSelectedIndex:0];
+    } else {
+        navigationController = [[tabBarController viewControllers] objectAtIndex:4];
+        [tabBarController setSelectedIndex:4];
+        ActivityTableViewController *atvc = [[navigationController viewControllers] firstObject];
+        [atvc refresh];
+    }
     
     if ([type isEqualToString:@"deal"]) {
         ViewDealViewController *vdvc = [storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
@@ -594,10 +637,27 @@
         }
         [navigationController pushViewController:vdvc animated:YES];
         [self resetBadgeCounter];
+        pushedDealID = nil;
+        
+    } else if ([type isEqualToString:@"dealsList"]) {
+        DealsTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealsID"];
+        dtvc.weeklyDealsID = weeklyDealsID;
+        dtvc.recommendedDealsTitle = userInfoForActive[@"subject_title"];
+        [navigationController pushViewController:dtvc animated:YES];
+        [self resetBadgeCounter];
+        weeklyDealsID = nil;
+    
+    } else if([type isEqualToString:@"newRank"]) {
+        NewRankViewController *nrvc = [self.storyboard instantiateViewControllerWithIdentifier:@"NewRank"];
+        nrvc.rank = cashedRank;
+        [navigationController pushViewController:nrvc animated:YES];
+        [self resetBadgeCounter];
     }
+    
+    userInfoForActive = nil;
 }
 
-- (void)notifyAboutNotificationWhenActive
+- (void)notificationWhenActive:(NSString *)type
 {
     if (!tabBarController) {
         NSLog(@"There's a problem - no tab bar controller even though user is active.");
@@ -606,15 +666,44 @@
     
     PushNotificationView *pushNotificationView = [[PushNotificationView alloc] initWithDelegate:self.pushNotificationsWindow];
     [pushNotificationView layoutSubviews];
-    if (self.notifyingDealer.photo) {
-        pushNotificationView.notificationPhoto.image = [UIImage imageWithData:self.notifyingDealer.photo];
+
+    if ([type isEqualToString:@"Weekly Deals"]) {
+        pushNotificationView.notificationPhoto.image = [UIImage imageNamed:@"Weekly Deals Notification Icon"];
+        pushNotificationView.message.text = userInfoForActive[@"aps"][@"alert"];
+        pushNotificationView.objectID = weeklyDealsID;
+    
     } else {
-        pushNotificationView.notificationPhoto.image = [UIImage imageNamed:@"Dealers Icon"];
+        if (self.notifyingDealer.photo) {
+            pushNotificationView.notificationPhoto.image = [UIImage imageWithData:self.notifyingDealer.photo];
+        } else {
+            pushNotificationView.notificationPhoto.image = [UIImage imageNamed:@"Dealers Icon"];
+        }
+        pushNotificationView.message.text = userInfoForActive[@"aps"][@"alert"];
+        pushNotificationView.deal = self.pushedDeal;
     }
-    pushNotificationView.message.text = userInfoForActive[@"aps"][@"alert"];
-    pushNotificationView.deal = self.pushedDeal;
     
     [pushNotificationView presentNotification];
+}
+
+- (void)exitAddDealState
+{
+    if (pendingNewRankAnnouncement) {
+        [self presentNewRank:pendingNewRankAnnouncement];
+    }
+    
+    self.addDealState = NO;
+    pendingNewRankAnnouncement = nil;
+}
+
+- (void)presentNewRank:(NSString *)rank
+{
+    if (rank) {
+        NewRankViewController *nrvc = [self.storyboard instantiateViewControllerWithIdentifier:@"NewRank"];
+        nrvc.navControllerDelegate = (UINavigationController *)tabBarController.selectedViewController;
+        self.dealer.rank = rank;
+        nrvc.rank = rank;
+        [nrvc.navControllerDelegate presentViewController:nrvc animated:YES completion:nil];
+    }
 }
 
 
@@ -817,7 +906,7 @@
                 dealer.downloadingPhoto = NO;
                 
                 if ([notificationName isEqualToString:@"Push Notifications"]) {
-                    [self notifyAboutNotificationWhenActive];
+                    [self notificationWhenActive:@"Deal"];
                     return nil;
                 }
                 __block UIImage *image = [UIImage imageWithData:dealer.photo];
@@ -1276,8 +1365,8 @@
 
 - (NSString *)baseURL
 {
-//    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
-    return @"http://www.dealers-web.com";
+    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
+//    return @"http://www.dealers-web.com";
 }
 
 - (NSString *)currentVersion
@@ -1331,7 +1420,9 @@
                                                          @"liked_deals" : @"likedDeals",
                                                          @"shared_deals" : @"sharedDeals",
                                                          @"followings" : @"followings",
-                                                         @"followed_by" : @"followedBy"
+                                                         @"followed_by" : @"followedBy",
+                                                         @"total_likes" : @"totalLikes",
+                                                         @"total_shares" : @"totalShares"
                                                          }];
     
     [dealMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"dealer"
@@ -1410,6 +1501,8 @@
                                                          @"shared_deals" : @"sharedDeals",
                                                          @"followings" : @"followings",
                                                          @"followed_by" : @"followedBy",
+                                                         @"total_likes" : @"totalLikes",
+                                                         @"total_shares" : @"totalShares",
                                                          @"invitation_counter" : @"invitationCounter"
                                                          }];
     
@@ -1515,7 +1608,9 @@
                                                                @"type" : @"type",
                                                                @"recipients" : @"recipients",
                                                                @"deal" : @"dealID",
+                                                               @"weekly_deales_id" : @"weeklyDealsID",
                                                                @"subject_title" : @"subjectTitle",
+                                                               @"subject_message" : @"subjectMessage",
                                                                @"date" : @"date"
                                                                }];
     
@@ -1611,10 +1706,24 @@
     [paginationMapping addAttributeMappingsFromDictionary:@{
                                                             @"per_page": @"perPage",
                                                             @"total_pages": @"pageCount",
-                                                            @"count": @"objectCount",
+                                                            @"count": @"objectCount"
                                                             }];
     
     return paginationMapping;
+}
+
+- (RKObjectMapping *)scoreGuideMapping
+{
+    RKObjectMapping *scoreGuideMapping = [RKObjectMapping mappingForClass:[ScoreGuide class]];
+    
+    [scoreGuideMapping addAttributeMappingsFromDictionary:@{
+                                                            @"dealer": @"dealer",
+                                                            @"pro_dealer": @"proDealer",
+                                                            @"senior_dealer": @"seniorDealer",
+                                                            @"master_dealer" : @"masterDealer"
+                                                            }];
+    
+    return scoreGuideMapping;
 }
 
 - (RKObjectMapping *)errorMapping
@@ -1742,6 +1851,13 @@
                                                  method:RKRequestMethodGET
                                             pathPattern:@"/likeddeals/:likeddealID/"
                                                 keyPath:@"liked_deals"
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *weeklyDealsResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self dealMapping]
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"/send_weekly_notifications/:send_weekly_notificationID/"
+                                                keyPath:@"weekly_deal"
                                             statusCodes:statusCodes];
     
     RKResponseDescriptor *specificDealerResponseDescriptor =
@@ -1877,6 +1993,13 @@
                                                 keyPath:@"results"
                                             statusCodes:statusCodes];
     
+    RKResponseDescriptor *scoreGuideResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self scoreGuideMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/score_tables/"
+                                                keyPath:@"results"
+                                            statusCodes:statusCodes];
+    
     RKResponseDescriptor *signUpErrorResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self errorMapping]
                                                  method:RKRequestMethodAny
@@ -1975,6 +2098,7 @@
                                                signInResponseDescriptor,
                                                uploadedDealsResponseDescriptor,
                                                likedDealsResponseDescriptor,
+                                               weeklyDealsResponseDescriptor,
                                                specificDealerResponseDescriptor,
                                                likersResponseDescriptor,
                                                dealAttribResponseDescriptor,
@@ -1994,6 +2118,7 @@
                                                categoryResponseDescriptor,
                                                categoryDeleteResponseDescriptor,
                                                specificDeviceResponseDescriptor,
+                                               scoreGuideResponseDescriptor,
                                                signUpErrorResponseDescriptor,
                                                reportResponseDescriptor
                                                ]];
@@ -2127,7 +2252,7 @@
             dealer.username = [facebookInfo objectForKey:@"id"];
         }
         dealer.userPassword = [NSString stringWithFormat:@"facebook_user_%@", dealer.username];
-
+        
     } else {
         newDealer = NO;
     }

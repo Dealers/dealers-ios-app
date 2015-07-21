@@ -382,9 +382,9 @@
         return YES;
     }
     
-    if ([self.passcodeTextField.text isEqualToString:@"090909"] ||
-        [self.passcodeTextField.text isEqualToString:@"4x9j"] ||
-        [self.passcodeTextField.text isEqualToString:@"tk3u"]) {
+    if (([self.passcodeTextField.text caseInsensitiveCompare:@"4x9j"] == NSOrderedSame ||
+        [self.passcodeTextField.text caseInsensitiveCompare:@"tk3u"] == NSOrderedSame) &&
+        self.passcodeTextField.text.length > 0) {
         [self passcodeCorrect];
         return YES;
     }

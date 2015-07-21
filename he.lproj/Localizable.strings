@@ -212,6 +212,8 @@
 "Write a comment..." = "כתוב תגובה...";
 "Post" = "שלח";
 "Unable to post comment" = "העלאת התגובה נכשלה";
+"Found this deal at Dealers. Check it out: %@\n" = "מצאתי את המבצע הזה בדילרס: %@\n";
+"Found this deal at Dealers. Check it out: %@\n%@" = "מצאתי את המבצע הזה בדילרס: %@\n%@";
 
 "&" = "ו-";
 "likes your deal" = "אוהב/ת את המבצע שלך";
@@ -244,12 +246,14 @@
 "Expired" = "פג תוקף";
 "Crop" = "חתוך";
 
-"Find in your feed great deals that were shared by people like you" = "קבל/י למסך הבית שלך מבצעים מעולים שצרכנים אחרים העלו";
-"Personalize your feed by choosing your interests in your profile" = "בחר/י בפרופיל את תחומי העניין שלך כדי לקבל מבצעים בהתאמה אישית";
-"Explore more deals with searching or with our categories" = "מצא/י מבצעים נוספים על ידי חיפוש או בעזרת הקטגוריות שלנו";
-"Post deals that you find, and contirbute back to the community" = "שתף/י מבצעים טובים שאתה מוצא וסייע בהורדת המחירים";
-"Like, comment and share deals, so others will know what's good" = "תן/י לייק, הוסף/י תגובה ושתף/י מבצעים, כך שכולנו נדע מה טוב";
+"Find in your feed great deals that were shared by people like you" = "קבלו למסך הבית שלכם מבצעים מעולים שצרכנים אחרים העלו";
+"Personalize your feed by choosing your interests in your profile" = "בחרו בפרופיל את תחומי העניין שלכם כדי לקבל מבצעים בהתאמה אישית";
+"Post deals that you find, and contirbute back to the community" = "שתפו מבצעים טובים שאתם מוצאים כדי לעזור לאחרים לבצע קניות חכמות יותר";
+"Gain points and move up in the ranks to have more influence" = "צברו נקודות, עלו בסולם הדרגות וקבלו יותר השפעה";
+"Like, comment and share deals, so others will know what's good" = "תנו לייק, הוסיפו תגובה ושתפו מבצעים, כך שכולנו נדע מה טוב";
+"Explore more deals with searching or with our categories" = "מצאו מבצעים נוספים על ידי חיפוש או בעזרת הקטגוריות שלנו";
 "Skip" = "דלג וכנס";
+"Score Screenshot" = "ניקוד";
 
 "Report as Spam?" = "לדווח על פרסום זה?";
 "Does this post includes inappropriate content?" = "האם פרסום זה מכיל תוכן לא ראוי?";
@@ -266,3 +270,62 @@
 "Choose categories to get more personalized deals in your feed" = "בחר/י את הקטגוריות המועדפות עליך כדי לקבל לפיד מבצעים שיעניינו אותך";
 "Choose categories to get more personalized deals in your feed. You can always make changes later from your profile." = "בחר/י את הקטגוריות המועדפות עליך כדי לקבל לפיד מבצעים שיעניינו אותך. אפשר לשנות את הקטגוריות בכל זמן בפרופיל.";
 "There was a problem" = "הייתה בעיה";
+
+
+"You have just started helping people find better deals. Keep it going!" = "התחלת לעזור לאנשים אחרים למצוא מבצעים טובים יותר. המשיכו כך!";
+"You are not a beginner anymore, you already helped many people shop better." = "You are not a beginner anymore, you already helped many people shop better.";
+"You're not only active, but you also share information that people find super valuable. Way to go!" = "You're not only active, but you also share information that people find super valuable. Way to go!";
+"Your contribution to this community is epic. We want to thank you in the name of all the people at Dealers!" = "Your contribution to this community is epic. We want to thank you in the name of all the people at Dealers!";
+
+"Viewer" = "צופה";
+"Dealer" = "דילר";
+"Pro Dealer" = "דילר מקצועי";
+"Senior Dealer" = "דילר בכיר";
+"Master Dealer" = "מאסטר דילר";
+"Congratulations!" = "מזל טוב!";
+"Congratulations! You became a %@!" = "מזל טוב! הפכת להיות %@!";
+
+// Male
+"You are officially a Dealer! " = "נהיית דילר באופן רשמי!";
+"You are now a Pro Dealer! " = "התקדמת להיות דילר מקצועי!";
+"You are now a Senior Dealer! " = "התקדמת להיות דילר בכיר!";
+"You are a Master Dealer! " = "אתה מאסטר דילר!";
+
+"You just started helping people find better deals. Keep it going! " = "התחלת לעזור לאנשים אחרים למצוא מבצעים טובים יותר. המשיך כך!";
+"You are not a beginner anymore, you have already helped many people shop better. " = "אתה כבר לא צעיר, עזרת להרבה אנשים לעשות קניות טובות יותר. כל הכבוד!";
+"You're not only active, you also share information that people find super valuable. Way to go! " = "אתה לא רק אקטיבי, אתה גם משתף מידע שאנשים אחרים מעריכים ואוהבים. סחתיין!";
+"Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers! " = "תשמע, התרומה שלך לקהילה הזאת מדהימה. אנחנו רוצים להודות לך בשם כל המשתמשים בדילרס!";
+
+// Female
+"You are officially a Dealer!  " = "נהיית דילרית באופן רשמי!";
+"You are now a Pro Dealer!  " = "התקדמת להיות דילרית מקצועית!";
+"You are now a Senior Dealer!  " = "התקדמת להיות דילרית בכירה!";
+"You are a Master Dealer!  " = "את מאסטר דילרית!";
+
+"You just started helping people find better deals. Keep it going!  " = "התחלת לעזור לאנשים אחרים למצוא מבצעים טובים יותר. המשיכי כך!";
+"You are not a beginner anymore, you have already helped many people shop better.  " = "את כבר לא צעירה, עזרת להרבה אנשים לעשות קניות טובות יותר. כל הכבוד!";
+"You're not only active, you also share information that people find super valuable. Way to go!  " = "את לא רק אקטיבית, את גם משתפת מידע שאנשים אחרים מעריכים ואוהבים. סחתיין!";
+"Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers!  " = "תשמעי, התרומה שלך לקהילה הזאת מדהימה. אנחנו רוצים להודות לך בשם כל המשתמשים בדילרס!";
+
+// Unspecified
+"You are officially a Dealer!" = "נהייתם דילר באופן רשמי!";
+"You are now a Pro Dealer!" = "התקדמתם להיות דילר מקצועי!";
+"You are now a Senior Dealer!" = "התקדמתם להיות דילר בכיר!";
+"You are a Master Dealer!" = "אתם מאסטר דילר!";
+
+"You just started helping people find better deals. Keep it going!" = "התחלתם לעזור לאנשים אחרים למצוא מבצעים טובים יותר. המשיכו כך!";
+"You are not a beginner anymore, you have already helped many people shop better." = "אתם כבר לא צעירים, עזרתם להרבה אנשים לעשות קניות טובות יותר. כל הכבוד!";
+"You're not only active, you also share information that people find super valuable. Way to go!" = "אתם לא רק אקטיביים, אתם גם משתפים מידע שאנשים אחרים מעריכים ואוהבים. סחתיין!";
+"Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers!" = "תשמעו, התרומה שלכם לקהילה הזאת מדהימה. אנחנו רוצים להודות לכם בשם כל המשתמשים בדילרס!";
+
+"My Stats" = "הניקוד שלי";
+"All you have to do to become a Dealer is upload one deal." = "כל מה שעליך לעשות כדי להפוך לדילר זה להעלות מבצע אחד.";
+"To become a Dealer upload one deal and gain %ld more points." = "כדי להפוך לדילר, עליך להעלות מבצע אחד ולצבור עוד %ld נקודות.";
+"To become a Pro Dealer, gain %ld more points." = "כדי להפוך לדילר מקצועי, עליך לצבור עוד %ld נקודות.";
+"To become a Senior Dealer, gain %ld more likes & shares and %ld more points." = "כדי להפוך לדילר בכיר, עליך לצבור עוד %ld לייקים ושיתופים ועוד %ld נקודות.";
+"To become a Master Dealer, gain %ld more likes & shares and %ld more points." = "כדי להפוך למאסטר דילר, עליך לצבור עוד %ld לייקים ושיתופים ועוד %ld נקודות.";
+"You're on top :)" = "אתה מאסטר :)";
+
+"Score Guide" = "מדריך הניקוד";
+
+"Weekly Deals" = "המבצעים של השבוע";

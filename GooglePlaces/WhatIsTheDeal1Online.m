@@ -43,6 +43,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     NSArray *viewControllers = self.navigationController.viewControllers;
     if ([viewControllers indexOfObject:self] == NSNotFound) {
         // View is disappearing because it was popped from the stack

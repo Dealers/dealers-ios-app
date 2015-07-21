@@ -54,6 +54,10 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     
     [self checkIfDealLikedByUser];
     
+    [[self transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"Navigation Bar Shade"]];
+    } completion:nil];
+    
     if (self.didChangesInComments) {
         [self configureCommentsPreviewTableView];
         [self.view layoutIfNeeded];
@@ -76,6 +80,7 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     
     [self setSharedView];
     [self screenshotSharedView];
+    [self addUserToViewedBy];
     
     UIButton *plusButton = (UIButton *)[self.tabBarController.view viewWithTag:123];
     
@@ -280,6 +285,11 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
                                                   [alert show];
                                                   [self stopLoadingAnimation];
                                               }];
+}
+
+- (void)addUserToViewedBy
+{
+    
 }
 
 - (void)startLoadingAnimation
@@ -1439,14 +1449,14 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
 
 - (void)share:(id)sender {
 
-    NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"%@:\n", nil), self.deal.title];
+    NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"Found this deal at Dealers. Check it out: %@\n", nil), self.deal.title];
     NSArray *excludedActivities = @[UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeSaveToCameraRoll];
     NSString *url = [self getImageURL];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:@{
                                                                                     @"deal" : self.deal.dealID.stringValue,
                                                                                     @"$og_title" : self.deal.title,
                                                                                     @"$og_image_url" : url,
-                                                                                    @"$og_description" : NSLocalizedString(@"Check out this deal at Dealers", nil)
+                                                                                    @"$og_description" : NSLocalizedString(@"Find more great deals at Dealers", nil)
                                                                                     }];
     UIActivityItemProvider *provider = [Branch getBranchActivityItemWithParams:params andFeature:FEATURE andStage:nil andTags:@[[appDelegate currentVersion]]];
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[messageText, provider] applicationActivities:nil];

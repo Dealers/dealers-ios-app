@@ -19,6 +19,7 @@
 #import "Invitation.h"
 #import "Device.h"
 #import "Category.h"
+#import "ScoreGuide.h"
 #import "Error.h"
 #import "Report.h"
 
@@ -26,8 +27,8 @@
 {
     int picsNumbers;
     NSInteger timesTriedToPostDevice, timesTriedToUpdateDevice, timesTriedToUpdateBadge;
-    NSString *pendingNotification;
-    NSNumber *pushedDealID, *notifyingDealerID;
+    NSString *pendingNotification, *pendingNewRankAnnouncement, *cashedRank;
+    NSNumber *pushedDealID, *notifyingDealerID, *weeklyDealsID;
     NSDictionary *userInfoForActive, *pendingContent;
 }
 
@@ -42,6 +43,7 @@
 @property BOOL shouldUpdateMyFeed;
 @property BOOL shouldUpdateProfile;
 @property BOOL userWasLoggedIn;
+@property BOOL addDealState;
 
 @property NSMutableArray *pushedObjects;
 @property Deal *pushedDeal;
@@ -59,6 +61,7 @@
 - (void)hidePlusButton;
 - (void)resetBadgeCounter;
 - (void)presentNotificationOfType:(NSString *)type;
+- (void)exitAddDealState;
 
 - (void)updateDeviceAfterLogOut;
 

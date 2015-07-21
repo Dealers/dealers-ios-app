@@ -18,6 +18,7 @@
 #import "SettingsTableViewController.h"
 #import "InviteViewController.h"
 #import "PersonalizeTableViewController.h"
+#import "ScoreAndStatsViewController.h"
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
@@ -55,6 +56,8 @@
 @property UIView *profilePicPlaceholder;
 @property UIImageView *profilePic;
 @property UILabel *fullName;
+@property UIButton *rank;
+@property UIButton *rankIcon;
 @property UILabel *location;
 @property UIImageView *locationIcon;
 @property UITextView *about;

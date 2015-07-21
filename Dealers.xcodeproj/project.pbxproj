@@ -123,6 +123,10 @@
 		C8A9EE3C1A221ABA002EE682 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A9EE3B1A221ABA002EE682 /* Reachability.framework */; };
 		C8AC887E19BD9A5D002A2C16 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AC887C19BD9A5C002A2C16 /* CommentTableViewCell.m */; };
 		C8AC887F19BD9A5D002A2C16 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8AC887D19BD9A5C002A2C16 /* CommentTableViewCell.xib */; };
+		C8AF2AB91B4AA6DB00C8593E /* ScoreAndStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AF2AB81B4AA6DB00C8593E /* ScoreAndStatsViewController.m */; };
+		C8AF2ABC1B4BC4B100C8593E /* NewRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AF2ABB1B4BC4B100C8593E /* NewRankViewController.m */; };
+		C8AF2ABF1B4EB3E700C8593E /* ScoreGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AF2ABE1B4EB3E700C8593E /* ScoreGuideViewController.m */; };
+		C8AF2AC21B4FF72600C8593E /* ScoreGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AF2AC11B4FF72600C8593E /* ScoreGuide.m */; };
 		C8BD73AD1AC04FE600FE3672 /* PersonalizeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8BD73AC1AC04FE600FE3672 /* PersonalizeTableViewController.m */; };
 		C8C08CD51B0326A10018EA28 /* PaddedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C08CD41B0326A00018EA28 /* PaddedLabel.m */; };
 		C8C08CDB1B0327F80018EA28 /* PaddedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C08CDA1B0327F70018EA28 /* PaddedTextField.m */; };
@@ -393,6 +397,15 @@
 		C8AC887B19BD9A5C002A2C16 /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		C8AC887C19BD9A5C002A2C16 /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		C8AC887D19BD9A5C002A2C16 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		C8AF2AB71B4AA6DB00C8593E /* ScoreAndStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreAndStatsViewController.h; sourceTree = "<group>"; };
+		C8AF2AB81B4AA6DB00C8593E /* ScoreAndStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreAndStatsViewController.m; sourceTree = "<group>"; };
+		C8AF2ABA1B4BC4B100C8593E /* NewRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRankViewController.h; sourceTree = "<group>"; };
+		C8AF2ABB1B4BC4B100C8593E /* NewRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewRankViewController.m; sourceTree = "<group>"; };
+		C8AF2ABD1B4EB3E700C8593E /* ScoreGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreGuideViewController.h; sourceTree = "<group>"; };
+		C8AF2ABE1B4EB3E700C8593E /* ScoreGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreGuideViewController.m; sourceTree = "<group>"; };
+		C8AF2AC01B4FF72600C8593E /* ScoreGuide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreGuide.h; sourceTree = "<group>"; };
+		C8AF2AC11B4FF72600C8593E /* ScoreGuide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreGuide.m; sourceTree = "<group>"; };
+		C8AF2AC41B5193AB00C8593E /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		C8BD73AB1AC04FE600FE3672 /* PersonalizeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalizeTableViewController.h; sourceTree = "<group>"; };
 		C8BD73AC1AC04FE600FE3672 /* PersonalizeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalizeTableViewController.m; sourceTree = "<group>"; };
 		C8C08CD31B0326A00018EA28 /* PaddedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaddedLabel.h; sourceTree = "<group>"; };
@@ -420,7 +433,6 @@
 		C8C6FCAD1B00DC1600F12B97 /* WhereIsTheDealOnline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhereIsTheDealOnline.m; sourceTree = "<group>"; };
 		C8C720FE1AB22FB800284B72 /* ViewDealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewDealViewController.h; sourceTree = "<group>"; };
 		C8C720FF1AB22FB800284B72 /* ViewDealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewDealViewController.m; sourceTree = "<group>"; };
-		C8CC65C91AF246E4004E46CE /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		C8D020801B0E231C0028B222 /* BNCConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCConfig.h; sourceTree = "<group>"; };
 		C8D020811B0E231C0028B222 /* BNCEncodingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCEncodingUtils.h; sourceTree = "<group>"; };
 		C8D020821B0E231C0028B222 /* BNCEncodingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCEncodingUtils.m; sourceTree = "<group>"; };
@@ -757,6 +769,12 @@
 				C890608119A32AA7001D3359 /* PushNotificationsTableViewController.m */,
 				C8BD73AB1AC04FE600FE3672 /* PersonalizeTableViewController.h */,
 				C8BD73AC1AC04FE600FE3672 /* PersonalizeTableViewController.m */,
+				C8AF2AB71B4AA6DB00C8593E /* ScoreAndStatsViewController.h */,
+				C8AF2AB81B4AA6DB00C8593E /* ScoreAndStatsViewController.m */,
+				C8AF2ABA1B4BC4B100C8593E /* NewRankViewController.h */,
+				C8AF2ABB1B4BC4B100C8593E /* NewRankViewController.m */,
+				C8AF2ABD1B4EB3E700C8593E /* ScoreGuideViewController.h */,
+				C8AF2ABE1B4EB3E700C8593E /* ScoreGuideViewController.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -922,6 +940,8 @@
 				C819F89B1A43352E00908726 /* Error.m */,
 				C8F6EF201A8E16CC009C18CD /* Report.h */,
 				C8F6EF211A8E16CC009C18CD /* Report.m */,
+				C8AF2AC01B4FF72600C8593E /* ScoreGuide.h */,
+				C8AF2AC11B4FF72600C8593E /* ScoreGuide.m */,
 			);
 			name = "Data Types";
 			sourceTree = "<group>";
@@ -1234,6 +1254,7 @@
 				C80123301A2C4A8800C40A37 /* DealsTableViewController.m in Sources */,
 				C8F6EF221A8E16CC009C18CD /* Report.m in Sources */,
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
+				C8AF2ABF1B4EB3E700C8593E /* ScoreGuideViewController.m in Sources */,
 				C8C260D81A7E957500960D96 /* TutorialChildViewController.m in Sources */,
 				C891902019FE57D9005E85FB /* AddDealNavigationController.m in Sources */,
 				C86462691AF3DB9100F02433 /* Category.m in Sources */,
@@ -1252,6 +1273,7 @@
 				C8C721001AB22FB800284B72 /* ViewDealViewController.m in Sources */,
 				C8FFF56C197C437600D01744 /* EditDealTableViewController.m in Sources */,
 				C8DBD9841B0B55B60025BA93 /* ImageCollectionViewCell.m in Sources */,
+				C8AF2ABC1B4BC4B100C8593E /* NewRankViewController.m in Sources */,
 				C81493C81AC9FB5800A5DBE7 /* DealersAnnotation.m in Sources */,
 				C8DC1D8819B863B60062E184 /* ActivityTypeWhatsApp.m in Sources */,
 				C8D020A81B0E231C0028B222 /* BranchServerInterface.m in Sources */,
@@ -1259,6 +1281,7 @@
 				B0930C0517F38DAB004EB3CA /* ViewonedealViewController.m in Sources */,
 				C8D020A41B0E231C0028B222 /* BNCServerResponse.m in Sources */,
 				C84846FC19A2617B00BC6ACE /* SettingsTableViewController.m in Sources */,
+				C8AF2AC21B4FF72600C8593E /* ScoreGuide.m in Sources */,
 				C891417D1AA48C9C006BCF10 /* DealTableViewCell.m in Sources */,
 				C80810C41A6EA0890034D8B1 /* Device.m in Sources */,
 				C8D0209C1B0E231C0028B222 /* BNCEncodingUtils.m in Sources */,
@@ -1305,6 +1328,7 @@
 				C8EE6D741A305FD500D53893 /* ComingSoonViewController.m in Sources */,
 				C8051BF01A41DB9B008FBA40 /* SignUpTableViewController.m in Sources */,
 				C8A10B9F19E95B330090F1D9 /* Notification.m in Sources */,
+				C8AF2AB91B4AA6DB00C8593E /* ScoreAndStatsViewController.m in Sources */,
 				B0274818186B2A2B005A52F0 /* GKImagePicker.m in Sources */,
 				C81493C21AC94D8600A5DBE7 /* AddStoreTableViewController.m in Sources */,
 				C8DBD9871B0BA62D0025BA93 /* OnlineImagePickerCollectionViewController.m in Sources */,
@@ -1344,7 +1368,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C8173E7B1A6658470090CF64 /* Base */,
-				C8CC65C91AF246E4004E46CE /* he */,
+				C8AF2AC41B5193AB00C8593E /* he */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";

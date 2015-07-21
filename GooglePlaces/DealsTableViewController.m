@@ -19,15 +19,6 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 @synthesize appDelegate;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,22 +27,33 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     [self configureNavigationBar];
     [self initialize];
     [self setNotificationObservers];
-    [self setRefreshControl];
-    [self startLocationTrack];
-    [self configurePaginator];
     [self setLoadingView];
     
-    NSLog(@"\n\n%@\n%@",[NSNumber numberWithInteger:self.paginator.perPage], [NSNumber numberWithInteger:self.paginator.objectCount]);
     
-    [self.paginator loadPage:1];
-    self.pageIsLoading = YES;
-    
-    [self getInvitationCounter];
+    if (self.weeklyDealsID) {
+        [self showWeeklyDeals];
+    } else {
+        [self setRefreshControl];
+        [self startLocationTrack];
+        [self configurePaginator];
+        
+        NSLog(@"\n\n%@\n%@",[NSNumber numberWithInteger:self.paginator.perPage], [NSNumber numberWithInteger:self.paginator.objectCount]);
+        
+        [self.paginator loadPage:1];
+        self.pageIsLoading = YES;
+        
+        [self getInvitationCounter];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [[self transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"Navigation Bar Shade"]];
+    } completion:nil];
+
     
     if (appDelegate.shouldUpdateMyFeed) {
         [self.tableView setContentOffset:CGPointMake(0, -64)];
@@ -76,14 +78,16 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 - (void)checkFeature
 {
-    if (!self.categoryFromExplore && !self.searchTermFromExplore) {
-        selfViewController = NSLocalizedString(@"My Feed", nil);
+    if (self.weeklyDealsID) {
+        selfViewController = NSLocalizedString(@"Weekly Deals", nil);
     } else if (self.categoryFromExplore && !self.searchTermFromExplore) {
         selfViewController = NSLocalizedString(@"Category", nil);
     } else if (!self.categoryFromExplore && self.searchTermFromExplore) {
         selfViewController = NSLocalizedString(@"Search", nil);
+    } else if (self.weeklyDealsID) {
+        selfViewController = NSLocalizedString(@"My Feed", nil);
     } else {
-        NSLog(@"Both category and search term values are populated, undesired situation...");
+        NSLog(@"Both category and search term values are populated, and there's no weekly deals id. Undesired situation...");
         selfViewController = NSLocalizedString(@"My Feed", nil);
     }
 }
@@ -107,7 +111,13 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     } else if ([selfViewController isEqualToString:NSLocalizedString(@"Category", nil)]) {
         self.title = self.categoryFromExplore;
     } else if ([selfViewController isEqualToString:NSLocalizedString(@"Search", nil)]) {
-        self.title = NSLocalizedString(@"Search", nil);
+        self.title = selfViewController;
+    } else if ([selfViewController isEqualToString:NSLocalizedString(@"Weekly Deals", nil)]) {
+        if (self.recommendedDealsTitle) {
+            self.title = self.recommendedDealsTitle;
+        } else {
+            self.title = selfViewController;
+        }
     }
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
@@ -123,6 +133,26 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
                                              selector:@selector(photoDownloaded:)
                                                  name:NOTIFICATION_FIRST_THREE
                                                object:nil];
+}
+
+- (void)showWeeklyDeals
+{
+    NSString *path = [NSString stringWithFormat:@"/send_weekly_notifications/%@/", self.weeklyDealsID];
+    
+    [[RKObjectManager sharedManager] getObjectsAtPath:path
+                                           parameters:nil
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  
+                                                  [self.deals addObjectsFromArray:mappingResult.array];
+                                                  [self loadFirstThreePhotos];
+                                                  [self.tableView reloadData];
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  
+                                                  [self stopLoadingAnimation];
+                                                  [self errorMessage];
+                                                  [self.tableView reloadData];
+                                              }];
 }
 
 - (void)setRefreshControl
@@ -477,6 +507,10 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (self.weeklyDealsID) {
+        return;
+    }
+    
     if (self.tableView.contentSize.height > 0) {
         int nextPageTriggerPoint = self.tableView.contentSize.height / 1.5;
         int contentOffset = self.tableView.contentOffset.y + self.tableView.frame.size.height;

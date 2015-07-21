@@ -37,6 +37,15 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
     [self downloadNotifications];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+    [[self transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"Navigation Bar Shade"]];
+    } completion:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -44,6 +53,14 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Activity Screen"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[self transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    } completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -236,13 +253,20 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
     }
 }
 
-- (void)notificationDealerButtonTapped:(id)sender {
+- (void)notificationImageButtonTapped:(id)sender {
     
     UIButton *notificationImageButton = sender;
     Notification *notification = [self.notifications objectAtIndex:notificationImageButton.tag];
-    ProfileTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileID"];
-    ptvc.dealer = notification.dealer;
-    [self.navigationController pushViewController:ptvc animated:YES];
+    
+    if ([notification.type isEqualToString:@"Weekly Deals"]) {
+        [self pushWeeklyDealsForNotification:notification];
+    } else if ([notification.type isEqualToString:@"New Rank"]) {
+        [self pushNewRankForNotification:notification];
+    } else {
+        ProfileTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileID"];
+        ptvc.dealer = notification.dealer;
+        [self.navigationController pushViewController:ptvc animated:YES];
+    }
 }
 
 - (void)removeDuplicates
@@ -354,8 +378,7 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
     id object = [self.groupedNotifications objectAtIndex:indexPath.row];
     [self setNotificationMessageForCell:cell object:object];
     Notification *notification = [self convertObjectIntoNotification:object];
-    [self setDealerImageForCell:cell notification:notification indexPath:indexPath];
-    [self setDealerProfileLinkForCell:cell indexPath:indexPath];
+    [self setImageForCell:cell notification:notification indexPath:indexPath];
     [self setUploadDateForCell:cell notification:notification];
 }
 
@@ -373,24 +396,36 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
     }
 }
 
-- (void)setDealerImageForCell:(NotificationTableViewCell *)cell notification:(Notification *)notification indexPath:indexPath
+- (void)setImageForCell:(NotificationTableViewCell *)cell notification:(Notification *)notification indexPath:indexPath
 {
-    if (!notification.dealer.photo) {
-        cell.notificationImage.alpha = 0;
-        if (!notification.dealer.downloadingPhoto) {
-            notification.dealer.downloadingPhoto = YES;
-            [appDelegate otherProfilePic:notification.dealer forTarget:@"Notification Dealer's Photo" notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:indexPath];
-        }
-    } else {
+    if ([notification.type isEqualToString:@"Weekly Deals"]) {
         cell.notificationImage.alpha = 1.0;
-        [cell.notificationImage setImage:[UIImage imageWithData:notification.dealer.photo] forState:UIControlStateNormal];
+        [cell.notificationImage setImage:[UIImage imageNamed:@"Weekly Deals Notification Icon"] forState:UIControlStateNormal];
+    
+    } else if ([notification.type isEqualToString:@"New Rank"]) {
+        cell.notificationImage.alpha = 1.0;
+        NSString *imageName = [NSString stringWithFormat:@"%@ Notification Icon", notification.subjectTitle];
+        [cell.notificationImage setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+
+    } else {
+        if (!notification.dealer.photo) {
+            cell.notificationImage.alpha = 0;
+            if (!notification.dealer.downloadingPhoto) {
+                notification.dealer.downloadingPhoto = YES;
+                [appDelegate otherProfilePic:notification.dealer forTarget:@"Notification Dealer's Photo" notificationName:NAME_FOR_NOTIFICATIONS atIndexPath:indexPath];
+            }
+        } else {
+            cell.notificationImage.alpha = 1.0;
+            [cell.notificationImage setImage:[UIImage imageWithData:notification.dealer.photo] forState:UIControlStateNormal];
+        }
     }
+    [self setImageLinkForCell:cell indexPath:indexPath];
 }
 
-- (void)setDealerProfileLinkForCell:(NotificationTableViewCell *)cell indexPath:(NSIndexPath *)indexPath
+- (void)setImageLinkForCell:(NotificationTableViewCell *)cell indexPath:(NSIndexPath *)indexPath
 {
     [cell.notificationImage setTag:indexPath.row];
-    [cell.notificationImage addTarget:self action:@selector(notificationDealerButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.notificationImage addTarget:self action:@selector(notificationImageButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setUploadDateForCell:(NotificationTableViewCell *)cell notification:(Notification *)notification
@@ -434,9 +469,31 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
     
     id object = [self.groupedNotifications objectAtIndex:indexPath.row];
     Notification *notification = [self convertObjectIntoNotification:object];
-    ViewDealViewController *vdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
-    vdvc.dealID = notification.dealID;
-    [self.navigationController pushViewController:vdvc animated:YES];
+    
+    if ([notification.type isEqualToString:@"Weekly Deals"]) {
+        [self pushWeeklyDealsForNotification:notification];
+    } else if ([notification.type isEqualToString:@"New Rank"]) {
+        [self pushNewRankForNotification:notification];
+    } else {
+        ViewDealViewController *vdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
+        vdvc.dealID = notification.dealID;
+        [self.navigationController pushViewController:vdvc animated:YES];
+    }
+}
+
+- (void)pushWeeklyDealsForNotification:(Notification *)notification
+{
+    DealsTableViewController *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DealsID"];
+    dtvc.recommendedDealsTitle = notification.subjectTitle;
+    dtvc.weeklyDealsID = notification.weeklyDealsID;
+    [self.navigationController pushViewController:dtvc animated:YES];
+}
+
+- (void)pushNewRankForNotification:(Notification *)notification
+{
+    NewRankViewController *nrvc = [self.storyboard instantiateViewControllerWithIdentifier:@"NewRank"];
+    nrvc.rank = notification.subjectTitle;
+    [self.navigationController pushViewController:nrvc animated:YES];
 }
 
 

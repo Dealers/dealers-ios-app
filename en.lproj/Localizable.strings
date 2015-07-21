@@ -214,6 +214,7 @@
 "Write a comment..." = "Write a comment...";
 "Post" = "Post";
 "Unable to post comment" = "Unable to post comment";
+"Found this deal at Dealers. Check it out: %@\n" = "Found this deal at Dealers. Check it out: %@\n";
 
 "&" = "&";
 "likes your deal." = "likes your deal.";
@@ -248,10 +249,12 @@
 
 "Find in your feed great deals that were shared by people like you" = "Find in your feed great deals that were shared by people like you";
 "Personalize your feed by choosing your interests in your profile" = "Personalize your feed by choosing your interests in your profile";
-"Explore more deals with searching or with our categories" = "Explore more deals with searching or with our categories";
 "Post deals that you find, and contirbute back to the community" = "Post deals that you find, and contirbute back to the community";
+"Gain points and move up in the ranks to have more influence" = "Gain points and move up in ranks to have more influence";
 "Like, comment and share deals, so others will know what's good" = "Like, comment and share deals, so others will know what's good";
+"Explore more deals with searching or with our categories" = "Explore more deals with searching or with our categories";
 "Skip" = "Skip";
+"Score Screenshot" = "Score Screenshot";
 
 "Report as Spam?" = "Report as Spam?";
 "Does this post includes inappropriate content?" = "Does this post includes inappropriate content?";
@@ -268,3 +271,55 @@
 "Choose categories to get more personalized deals in your feed" = "Choose categories to get more personalized deals in your feed";
 "Choose categories to get more personalized deals in your feed. You can always make changes later from your profile." = "Choose categories to get more personalized deals in your feed. You can always make changes later from your profile.";
 "There was a problem" = "There was a problem";
+
+"Viewer" = "Viewer";
+"Dealer" = "Dealer";
+"Pro Dealer" = "Pro Dealer";
+"Senior Dealer" = "Senior Dealer";
+"Master Dealer" = "Master Dealer";
+"Congratulations!" = "Congratulations!";
+"Congratulations! You became a %@!" = "Congratulations! You became a %@!";
+
+// Male
+"You are officially a Dealer! " = "You are officially a Dealer! ";
+"You are now a Pro Dealer! " = "You are now a Pro Dealer! ";
+"You are now a Senior Dealer! " = "You are now a Senior Dealer! ";
+"You are a Master Dealer! " = "You are a Master Dealer! ";
+
+"You just started helping people find better deals. Keep it going! " = "You have just started helping people find better deals. Keep it going! ";
+"You are not a beginner anymore, you have already helped many people shop better. " = "You are not a beginner anymore, you have already helped many people shop better. ";
+"You're not only active, you also share information that people find super valuable. Way to go! " = "You're not only active, but you also share information that people find super valuable. Way to go! ";
+"Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers! " = "Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers! ";
+
+// Female
+"You are officially a Dealer!  " = "You are officially a Dealer!  ";
+"You are now a Pro Dealer!  " = "You are now a Pro Dealer!  ";
+"You are now a Senior Dealer!  " = "You are now a Senior Dealer!  ";
+"You are a Master Dealer!  " = "You are a Master Dealer!  ";
+
+"You just started helping people find better deals. Keep it going!  " = "You have just started helping people find better deals. Keep it going!  ";
+"You are not a beginner anymore, you have already helped many people shop better.  " = "You are not a beginner anymore, you already helped many people shop better.  ";
+"You're not only active, you also share information that people find super valuable. Way to go!  " = "You're not only active, but you also share information that people find super valuable. Way to go!  ";
+"Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers!  " = "Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers!  ";
+
+// Unspecified
+"You are officially a Dealer!" = "You are officially a Dealer!";
+"You are now a Pro Dealer!" = "You are now a Pro Dealer!";
+"You are now a Senior Dealer!" = "You are now a Senior Dealer!";
+"You are a Master Dealer!" = "You are a Master Dealer!";
+
+"You just started helping people find better deals. Keep it going!" = "You have just started helping people find better deals. Keep it going!";
+"You are not a beginner anymore, you have already helped many people shop better." = "You are not a beginner anymore, you already helped many people shop better.";
+"You're not only active, you also share information that people find super valuable. Way to go!" = "You're not only active, but you also share information that people find super valuable. Way to go!";
+"Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers!" = "Your contribution to this community is epic. We want to thank you on behalf of all the people at Dealers!";
+
+"My Stats" = "My Stats";
+"All you have to do to become a Dealer is upload one deal." = "All you have to do to become a Dealer is upload one deal.";
+"To become a Dealer upload one deal and gain %ld more points." = "To become a Dealer upload one deal and gain %ld more points.";
+"To become a Pro Dealer, gain %ld more points." = "To become a Pro Dealer, gain %ld more points.";
+"To become a Senior Dealer, gain %ld more likes & shares and %ld more points." = "To become a Senior Dealer, gain %ld more likes & shares and %ld more points.";
+"To become a Master Dealer, gain %ld more likes & shares and %ld more points." = "To become a Master Dealer, gain %ld more likes & shares and %ld more points.";
+"You're on top :)" = "You're on top :)";
+"Score Guide" = "Score Guide";
+
+"Weekly Deals" = "Weekly Deals";

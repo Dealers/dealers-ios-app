@@ -103,6 +103,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
 - (void)initialize
 {
     appDelegate = [[UIApplication sharedApplication] delegate];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.uploadedDeals = [[NSMutableArray alloc]init];
     self.likedDeals = [[NSMutableArray alloc]init];
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -280,7 +281,31 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     }
     self.fullName.text = self.dealer.fullName;
     
-    lowestYPoint = CGRectGetMaxY(self.fullName.frame);
+    lowestYPoint = CGRectGetMaxY(self.fullName.frame) + GAP;
+    
+    if (!self.rank) {
+        self.rank = [UIButton buttonWithType:UIButtonTypeSystem];
+        [self.rank setFrame:CGRectMake(0, lowestYPoint, self.tableView.frame.size.width, 22.0)];
+        [[self.rank titleLabel] setFont:[UIFont fontWithName:@"Avenir-Roman" size:16.0]];
+        [self.rank addTarget:self action:@selector(scoreAndStats:) forControlEvents:UIControlEventTouchUpInside];
+        self.rank.adjustsImageWhenHighlighted = NO;
+        [self.topView addSubview:self.rank];
+    }
+    [self.rank setTitle:NSLocalizedString(self.dealer.rank, nil) forState:UIControlStateNormal];
+    [self.rank sizeToFit];
+    
+    if (self.rankIcon) {
+        [self.rankIcon removeFromSuperview];
+    }
+    
+    self.rankIcon = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self setIconForRank:self.dealer.rank];
+    self.rankIcon.adjustsImageWhenHighlighted = NO;
+    [self.topView addSubview:self.rankIcon];
+    
+    [self setRankAndIconXValues];
+    
+    lowestYPoint = CGRectGetMaxY(self.rank.frame);
     
     if (self.location) {
         [self.location removeFromSuperview];
@@ -289,7 +314,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     
     if (self.dealer.location.length > 0 && ![self.dealer.location isEqualToString:@"None"]) {
         
-        self.location = [[UILabel alloc]initWithFrame:CGRectMake(0, lowestYPoint + GAP + 2, self.tableView.frame.size.width, 18.0)];
+        self.location = [[UILabel alloc]initWithFrame:CGRectMake(0, lowestYPoint + GAP - 4, self.tableView.frame.size.width, 18.0)];
         self.location.text = self.dealer.location;
         self.location.textAlignment = NSTextAlignmentCenter;
         self.location.font = [UIFont fontWithName:@"Avenir-Roman" size:16.0];
@@ -309,10 +334,10 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
         self.locationIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Store Address Black Icon"]];
         self.locationIcon.frame = CGRectMake(0, 0, 14.0, 14.0);
         self.locationIcon.center = self.location.center;
-        CGRect iconFrame = self.locationIcon.frame;
-        iconFrame.origin.x = self.location.frame.origin.x - self.locationIcon.frame.size.width - 5;
-        iconFrame.origin.y -= 1;
-        self.locationIcon.frame = iconFrame;
+        CGRect locationIconFrame = self.locationIcon.frame;
+        locationIconFrame.origin.x = self.location.frame.origin.x - self.locationIcon.frame.size.width - 5;
+        locationIconFrame.origin.y -= 1;
+        self.locationIcon.frame = locationIconFrame;
         [self.topView addSubview:self.locationIcon];
         
         lowestYPoint = CGRectGetMaxY(self.location.frame);
@@ -440,6 +465,53 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     self.tableView.tableHeaderView = self.topView;
 }
 
+- (void)setIconForRank:(NSString *)rank
+{
+    
+    if ([rank isEqualToString:@"Viewer"]) {
+        self.rankIcon.frame = CGRectMake(0, 0, 10.0, 10.0);
+        [self.rankIcon setImage:[UIImage imageNamed:@"Mini Viewer Icon"] forState:UIControlStateNormal];
+    } else if ([rank isEqualToString:@"Dealer"]) {
+        self.rankIcon.frame = CGRectMake(0, 0, 19.0, 10.0);
+        [self.rankIcon setImage:[UIImage imageNamed:@"Mini Dealer Icon"] forState:UIControlStateNormal];
+    } else if ([rank isEqualToString:@"Pro Dealer"]) {
+        self.rankIcon.frame = CGRectMake(0, 0, 18.0, 15.0);
+        [self.rankIcon setImage:[UIImage imageNamed:@"Mini Pro Dealer Icon"] forState:UIControlStateNormal];
+    } else if ([rank isEqualToString:@"Senior Dealer"]) {
+        self.rankIcon.frame = CGRectMake(0, 0, 18.0, 18.0);
+        [self.rankIcon setImage:[UIImage imageNamed:@"Mini Senior Dealer Icon"] forState:UIControlStateNormal];
+    } else if ([rank isEqualToString:@"Master Dealer"]) {
+        self.rankIcon.frame = CGRectMake(0, 0, 19.0, 18.0);
+        [self.rankIcon setImage:[UIImage imageNamed:@"Mini Master Dealer Icon"] forState:UIControlStateNormal];
+    }
+    
+}
+
+- (void)setRankAndIconXValues
+{
+    CGRect rankFrame = self.rank.frame;
+    rankFrame.origin.x = self.tableView.center.x - self.rank.frame.size.width / 2 + self.rankIcon.frame.size.width / 2;
+    self.rank.frame = rankFrame;
+    
+    self.rankIcon.center = self.rank.center;
+    CGRect rankIconFrame = self.rankIcon.frame;
+    rankIconFrame.origin.x = self.rank.frame.origin.x - self.rankIcon.frame.size.width - 6;
+    rankIconFrame.origin.y -= 1;
+    self.rankIcon.frame = rankIconFrame;
+}
+
+- (void)scoreAndStats:(id)sender
+{
+    ScoreAndStatsViewController *sasvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ScoreAndStats"];
+    sasvc.dealer = self.dealer;
+    if ([self.profileMode isEqualToString:@"Other Profile"]) {
+        sasvc.isMyStats = NO;
+    } else {
+        sasvc.isMyStats = YES;
+    }
+    [self.navigationController pushViewController:sasvc animated:YES];
+}
+
 - (void)pushSettingsView:(id)sender
 {
     SettingsTableViewController *stvc = [self.storyboard instantiateViewControllerWithIdentifier:@"settingsID"];
@@ -529,6 +601,10 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
         [self downloadUploadedDeals];
     } else {
         [self downloadLikedDeals];
+    }
+    
+    if (![self.profileMode isEqualToString:@"Other Profile"]) {
+        self.dealer = appDelegate.dealer;
     }
     
     [self setTopView];

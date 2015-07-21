@@ -333,6 +333,7 @@
 
 - (void)startLocal:(UIButton *)button
 {
+    appDelegate.addDealState = YES;
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"addDealNavController"];
     WhereIsTheDeal *tvc = [storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDeal"];
     tvc.cameFrom = @"Add Deal";
@@ -342,6 +343,7 @@
 
 - (void)startOnline:(UIButton *)button
 {
+    appDelegate.addDealState = YES;
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"addDealNavController"];
     WhereIsTheDealOnline *witdo = [storyboard instantiateViewControllerWithIdentifier:@"WhereIsTheDealOnline"];
     witdo.cameFrom = @"Add Deal";

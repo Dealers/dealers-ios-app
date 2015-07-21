@@ -28,6 +28,7 @@ static CGFloat const imageCellPadding = 6.0;
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Add Deal - Online Image Picker Screen"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];

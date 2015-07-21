@@ -24,6 +24,8 @@
         _sharedDeals = [[NSMutableArray alloc]init];
         _followings = [[NSMutableArray alloc]init];
         _followedBy = [[NSMutableArray alloc]init];
+        _totalLikes = [NSNumber numberWithInt:0];
+        _totalShares = [NSNumber numberWithInt:0];
         
         _invitationCounter = [NSNumber numberWithInteger:5];
     }

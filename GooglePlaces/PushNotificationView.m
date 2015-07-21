@@ -70,15 +70,20 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
     if (self.deal) {
-        
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         ViewDealViewController *vdvc = [storyboard instantiateViewControllerWithIdentifier:@"ViewDealID"];
         vdvc.deal = self.deal;
         
-        [self hideNotification];
         [appDelegate presentNotificationOfType:@"deal"];
+    
+    } else if ([self.type isEqualToString:@"Weekly Deals"]) {
+        if (self.objectID) {
+            [appDelegate presentNotificationOfType:@"dealsList"];
+        }
     }
+    [self hideNotification];
 }
 
 - (void)presentNotification

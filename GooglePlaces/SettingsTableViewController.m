@@ -144,11 +144,17 @@
                     [self pushTutorialView];
                     break;
                 case 1:
+                    // Score Guide:
+                    [self pushScoreGuide];
+                    break;
+                case 2:
                     // Report a Problem:
                     [self sendReportProblem];
-                case 2:
+                    break;
+                case 3:
                     // Send Feedback:
                     [self sendFeedback];
+                    break;
             }
             break;
         case 3:
@@ -301,6 +307,12 @@
     TutorialViewController *tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
     [tvc setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:tvc animated:YES];
+}
+
+- (void)pushScoreGuide
+{
+    ScoreGuideViewController *sgvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ScoreGuide"];
+    [self.navigationController pushViewController:sgvc animated:YES];
 }
 
 - (void)logOut

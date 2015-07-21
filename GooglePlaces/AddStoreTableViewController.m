@@ -28,6 +28,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     if (self.storeNameTextField.text.length > 0 && self.storeCategoryTextField.text.length > 0) {
         [self enableAddButton];
     } else {

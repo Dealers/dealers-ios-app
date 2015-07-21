@@ -11,20 +11,32 @@
 /* Class = "UILabel"; text = "Facebook"; ObjectID = "0zE-rT-sEg"; */
 "0zE-rT-sEg.text" = "פייסבוק";
 
+/* Class = "UILabel"; text = "Score"; ObjectID = "0za-AB-nQp"; */
+"0za-AB-nQp.text" = "ניקוד";
+
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "1Lk-Oa-NkF"; */
 "1Lk-Oa-NkF.placeholder" = "דוא״ל";
 
 /* Class = "UILabel"; text = "Dealer Name"; ObjectID = "1jp-Ij-G2z"; */
-"1jp-Ij-G2z.text" = "שם הדילר";
+"1jp-Ij-G2z.text" = "Dealer Name";
+
+/* Class = "UILabel"; text = "If you're done, tap Next near the title."; ObjectID = "1op-Ny-VAc"; */
+"1op-Ny-VAc.text" = "אם סיימת, לחץ/י ׳הבא׳ על יד הכותרת";
 
 /* Class = "UIButton"; normalTitle = "By signing up, you agree to our\nPrivacy Policy"; ObjectID = "2L9-Lj-ZBP"; */
-"2L9-Lj-ZBP.normalTitle" = "ההרשמה מהווה הסכמה לקיום תנאי השימוש ומדיניות הפרטיות";
+"2L9-Lj-ZBP.normalTitle" = "ההרשמה מהווה הסכמה לקיום מדיניות הפרטיות שלנו";
+
+/* Class = "UILabel"; text = "You are now a Senior Dealer!"; ObjectID = "2Xh-QD-ENO"; */
+"2Xh-QD-ENO.text" = "הפכת להיות דילר בכיר!";
+
+/* Class = "UIButton"; normalTitle = "Check out your stats"; ObjectID = "2dm-uR-V53"; */
+"2dm-uR-V53.normalTitle" = "הניקוד שלי";
 
 /* Class = "UITableViewSection"; headerTitle = "Email & Password"; ObjectID = "2eC-N2-2yQ"; */
 "2eC-N2-2yQ.headerTitle" = "דוא״ל וסיסמה";
 
 /* Class = "UILabel"; text = "Tell us about the deal..."; ObjectID = "3OD-0R-eyI"; */
-"3OD-0R-eyI.text" = "ספר לנו על המבצע...";
+"3OD-0R-eyI.text" = "ספר/י לנו על המבצע...";
 
 /* Class = "UILabel"; text = "Category"; ObjectID = "3ZW-Q7-ezc"; */
 "3ZW-Q7-ezc.text" = "קטגוריה";
@@ -38,23 +50,41 @@
 /* Class = "UITableViewSection"; headerTitle = "More Details"; ObjectID = "4eU-vP-heY"; */
 "4eU-vP-heY.headerTitle" = "פרטים נוספים";
 
+/* Class = "UILabel"; text = "Gain 2,400 points, and receive a total of 100 likes & shares for your deals "; ObjectID = "5Og-aO-HmG"; */
+"5Og-aO-HmG.text" = "צברו 2400 נקודות, וקבלו סך הכל 100 לייקים ושיתופים עבור המבצעים שלכם";
+
+/* Class = "UILabel"; text = "Pro Dealer"; ObjectID = "5Sa-Bn-bAc"; */
+"5Sa-Bn-bAc.text" = "דילר מקצועי";
+
 /* Class = "UILabel"; text = "Coming Soon..."; ObjectID = "5nN-uI-V5r"; */
 "5nN-uI-V5r.text" = "בקרוב...";
 
 /* Class = "UILabel"; text = "Uploaded In..."; ObjectID = "61x-o5-xXI"; */
-"61x-o5-xXI.text" = "הועלה בתאריך";
+"61x-o5-xXI.text" = "העולה ב-...";
+
+/* Class = "UILabel"; text = "Score Guide"; ObjectID = "6jd-DE-8D6"; */
+"6jd-DE-8D6.text" = "מדריך הניקוד";
 
 /* Class = "UILabel"; text = "Expired"; ObjectID = "7FB-n6-y84"; */
 "7FB-n6-y84.text" = "פג תוקף";
 
+/* Class = "UILabel"; text = "Dealer"; ObjectID = "7ia-O8-NhA"; */
+"7ia-O8-NhA.text" = "דילר";
+
 /* Class = "UIButton"; normalTitle = "What is this passcode?"; ObjectID = "7re-9v-5lJ"; */
-"7re-9v-5lJ.normalTitle" = "מהי הסיסמה הזו?";
+"7re-9v-5lJ.normalTitle" = "מהו קוד הכניסה הזה?";
+
+/* Class = "UIButton"; normalTitle = "Great!"; ObjectID = "7xP-9L-P1I"; */
+"7xP-9L-P1I.normalTitle" = "מעולה!";
 
 /* Class = "UILabel"; text = "Date of Birth"; ObjectID = "8Ny-SU-LxZ"; */
 "8Ny-SU-LxZ.text" = "תאריך לידה";
 
+/* Class = "UILabel"; text = "Someone liking your deal"; ObjectID = "8fq-LI-COH"; */
+"8fq-LI-COH.text" = "מישהו אוהב מבצע שלך";
+
 /* Class = "UILabel"; text = "Push Notifications"; ObjectID = "8h9-rM-SDD"; */
-"8h9-rM-SDD.text" = "התרעות";
+"8h9-rM-SDD.text" = "התראות";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "8z4-o5-lUF"; */
 "8z4-o5-lUF.text" = "שם";
@@ -62,26 +92,38 @@
 /* Class = "UIButton"; normalTitle = "Text Message"; ObjectID = "94q-E9-SpN"; */
 "94q-E9-SpN.normalTitle" = "הודעת טקסט";
 
+/* Class = "UILabel"; text = "Viewer"; ObjectID = "9Vu-wg-JFd"; */
+"9Vu-wg-JFd.text" = "צופה";
+
 /* Class = "UILabel"; text = "Address"; ObjectID = "9bA-e2-y27"; */
 "9bA-e2-y27.text" = "כתובת";
 
 /* Class = "UILabel"; text = "Discount"; ObjectID = "9bg-c4-Ch3"; */
 "9bg-c4-Ch3.text" = "הנחה";
 
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut."; ObjectID = "BD8-uu-lYA"; */
+"BD8-uu-lYA.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.";
+
+/* Class = "UILabel"; text = "Pro Dealer"; ObjectID = "BUS-tK-TAK"; */
+"BUS-tK-TAK.text" = "דילר מקצועי";
+
 /* Class = "UILabel"; text = "To select the store location, tap and hold"; ObjectID = "CNR-WI-AjN"; */
-"CNR-WI-AjN.text" = "כדי לבחור מיקום, לחץ/י לחיצה ארוכה";
+"CNR-WI-AjN.text" = "כדי לבחור את מיקום החנות, לחץ/י לחיצה ארוכה";
 
 /* Class = "UITextField"; placeholder = "New Password"; ObjectID = "CaH-56-Nso"; */
 "CaH-56-Nso.placeholder" = "סיסמה חדשה";
 
+/* Class = "UILabel"; text = "Whats Next"; ObjectID = "CrR-zd-gCa"; */
+"CrR-zd-gCa.text" = "מה לעשות כדי להתקדם לדרגה הבאה";
+
 /* Class = "UILabel"; text = "Invite friends to Dealers with a special entrence code."; ObjectID = "D5y-Sk-Zbd"; */
-"D5y-Sk-Zbd.text" = "שלח/י לחבריך הזמנה לדילרס עם סיסמת כניסה";
+"D5y-Sk-Zbd.text" = "הזמינו חברים לדילרס כדי שיקבלו סיסמת כניסה";
 
 /* Class = "UIButton"; normalTitle = "123"; ObjectID = "EIU-ZP-atj"; */
 "EIU-ZP-atj.normalTitle" = "123";
 
 /* Class = "UILabel"; text = "Tap the map to select the location"; ObjectID = "EIx-hT-DYj"; */
-"EIx-hT-DYj.text" = "לחץ/י על המפה כדי לבחור את מיקום בית העסק";
+"EIx-hT-DYj.text" = "לחץ/י על המפה כדי לבחור את המיקום";
 
 /* Class = "UILabel"; text = "Not Connected"; ObjectID = "Eev-cn-7Cc"; */
 "Eev-cn-7Cc.text" = "לא מחובר";
@@ -89,11 +131,20 @@
 /* Class = "UILabel"; text = "Expires on"; ObjectID = "EgK-1R-reI"; */
 "EgK-1R-reI.text" = "תאריך תפוגה";
 
+/* Class = "UIButton"; normalTitle = "Change Image"; ObjectID = "F7i-x7-rhc"; */
+"F7i-x7-rhc.normalTitle" = "שנה תמונה";
+
 /* Class = "UIButton"; normalTitle = "Add a Photo"; ObjectID = "FJ4-QR-iVH"; */
 "FJ4-QR-iVH.normalTitle" = "הוסף תמונה";
 
 /* Class = "UISearchBar"; placeholder = "Not there? Type store here"; ObjectID = "Fi2-0B-2sg"; */
-"Fi2-0B-2sg.placeholder" = "חפש בתי עסק";
+"Fi2-0B-2sg.placeholder" = "חפש בית עסק";
+
+/* Class = "UILabel"; text = "The basic rank"; ObjectID = "Fxw-Ol-2nT"; */
+"Fxw-Ol-2nT.text" = "הדרגה הבסיסית";
+
+/* Class = "UILabel"; text = "Likes"; ObjectID = "G7N-kM-XC7"; */
+"G7N-kM-XC7.text" = "לייקים";
 
 /* Class = "UILabel"; text = "Report a Problem"; ObjectID = "HVR-5y-fHw"; */
 "HVR-5y-fHw.text" = "דווח על תקלה";
@@ -101,20 +152,38 @@
 /* Class = "UITableViewSection"; headerTitle = "Title"; ObjectID = "I5w-lE-Fan"; */
 "I5w-lE-Fan.headerTitle" = "כותרת";
 
+/* Class = "UILabel"; text = "Adding a deal"; ObjectID = "IIZ-54-xJi"; */
+"IIZ-54-xJi.text" = "העלאת מבצע";
+
 /* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "IJq-BF-dfM"; */
 "IJq-BF-dfM.normalTitle" = "עריכה";
 
+/* Class = "UILabel"; text = "Gain 800 points"; ObjectID = "ITs-8W-1FG"; */
+"ITs-8W-1FG.text" = "צברו 800 נקודות";
+
 /* Class = "UITableViewSection"; headerTitle = "Private Information"; ObjectID = "Iug-XB-iRH"; */
-"Iug-XB-iRH.headerTitle" = "מידע פרטי";
+"Iug-XB-iRH.headerTitle" = "מידע אישי";
 
 /* Class = "UILabel"; text = "Store Title"; ObjectID = "IvY-kd-IcJ"; */
-"IvY-kd-IcJ.text" = "שם בית העסק";
+"IvY-kd-IcJ.text" = "שם החנות";
+
+/* Class = "UIButton"; normalTitle = "Share with Facebook"; ObjectID = "J1T-VD-aNG"; */
+"J1T-VD-aNG.normalTitle" = "שתף עם פייסבוק";
 
 /* Class = "UIButton"; normalTitle = "Sign up with email"; ObjectID = "J6F-ya-nxf"; */
-"J6F-ya-nxf.normalTitle" = "הירשם עם דוא״ל";
+"J6F-ya-nxf.normalTitle" = "הרשמה עם דוא״ל";
 
 /* Class = "UIButton"; normalTitle = "OK"; ObjectID = "JLd-kg-ck1"; */
 "JLd-kg-ck1.normalTitle" = "אישור";
+
+/* Class = "UILabel"; text = "Gain 5,000 points, and receive a total of 200 likes & shares for your deals"; ObjectID = "JTC-5a-6Fg"; */
+"JTC-5a-6Fg.text" = "צברו 5000 נקודות, וקבלו סך הכל 200 לייקים ושיתופים עבור המבצעים שלכם";
+
+/* Class = "UILabel"; text = "Master Dealer"; ObjectID = "Kho-cK-qpT"; */
+"Kho-cK-qpT.text" = "מאסטר דילר";
+
+/* Class = "UILabel"; text = "Tell us more (optional)"; ObjectID = "L4t-oh-Oh7"; */
+"L4t-oh-Oh7.text" = "ספר/י לנו עוד (אופציונלי)";
 
 /* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "LdJ-Yv-hMK"; */
 "LdJ-Yv-hMK.normalTitle" = "דלג וכנס";
@@ -131,14 +200,20 @@
 /* Class = "UIButton"; normalTitle = "Sign Up!"; ObjectID = "Muc-PO-MtV"; */
 "Muc-PO-MtV.normalTitle" = "הירשם!";
 
-/* Class = "UIButton"; normalTitle = "£"; ObjectID = "NHt-QW-jTa"; */
-"NHt-QW-jTa.normalTitle" = "£";
+/* Class = "UILabel"; text = "Deals"; ObjectID = "OaV-RZ-Kfy"; */
+"OaV-RZ-Kfy.text" = "מבצעים";
 
 /* Class = "UILabel"; text = "Edit Profile"; ObjectID = "Obg-zC-x4T"; */
-"Obg-zC-x4T.text" = "עריכת פרופיל";
+"Obg-zC-x4T.text" = "עריכת הפרופיל";
 
 /* Class = "UILabel"; text = "Gender (optional)"; ObjectID = "Oic-Fw-qy0"; */
 "Oic-Fw-qy0.text" = "מין (אופציונלי)";
+
+/* Class = "UILabel"; text = "What will earn you points?"; ObjectID = "PZE-8U-uYL"; */
+"PZE-8U-uYL.text" = "מה יוסיף לך נקודות?";
+
+/* Class = "UIButton"; normalTitle = "Score Guide"; ObjectID = "PZe-jt-G5O"; */
+"PZe-jt-G5O.normalTitle" = "מדריך הניקוד";
 
 /* Class = "UILabel"; text = "Store"; ObjectID = "QB8-SM-ot7"; */
 "QB8-SM-ot7.text" = "חנות";
@@ -155,23 +230,11 @@
 /* Class = "UIButton"; normalTitle = "%"; ObjectID = "RNL-kw-RsV"; */
 "RNL-kw-RsV.normalTitle" = "%";
 
-/* Class = "UIButton"; normalTitle = "$"; ObjectID = "RXh-7h-eXu"; */
-"RXh-7h-eXu.normalTitle" = "$";
+/* Class = "UILabel"; text = "Tell us about the deal..."; ObjectID = "S7j-hq-ppw"; */
+"S7j-hq-ppw.text" = "ספר/י לנו על המבצע...";
 
-/* Class = "UIButton"; normalTitle = "₪"; ObjectID = "S8i-ju-JWa"; */
-"S8i-ju-JWa.normalTitle" = "₪";
-
-/* Class = "UILabel"; text = "Description"; ObjectID = "U1W-BC-0Dc"; */
+/* Class = "UILabel"; text = "More about the deal"; ObjectID = "U1W-BC-0Dc"; */
 "U1W-BC-0Dc.text" = "עוד על המבצע";
-
-/* Class = "UISearchBar"; placeholder = "Not there? Type store here"; ObjectID = "U4o-rW-sgd"; */
-"U4o-rW-sgd.placeholder" = "חפש בתי עסק";
-
-/* Class = "UISearchBar"; U4o-rW-sgd.scopeButtonTitles[0] = "Title"; ObjectID = "U4o-rW-sgd"; */
-"U4o-rW-sgd.scopeButtonTitles[0]" = "כותרת";
-
-/* Class = "UISearchBar"; U4o-rW-sgd.scopeButtonTitles[1] = "Title"; ObjectID = "U4o-rW-sgd"; */
-"U4o-rW-sgd.scopeButtonTitles[1]" = "כותרת";
 
 /* Class = "UITextField"; placeholder = "Required"; ObjectID = "UGJ-ge-Vvk"; */
 "UGJ-ge-Vvk.placeholder" = "חובה";
@@ -188,9 +251,6 @@
 /* Class = "UILabel"; text = "Send Feedback"; ObjectID = "VnS-LD-ubr"; */
 "VnS-LD-ubr.text" = "שלח חוות דעת";
 
-/* Class = "UILabel"; text = "Locating businesses nearby..."; ObjectID = "XI9-sz-Xhp"; */
-"XI9-sz-Xhp.text" = "מאתר בתי עסק באזור";
-
 /* Class = "UITextField"; placeholder = "Your Full Name"; ObjectID = "XNh-qj-LOV"; */
 "XNh-qj-LOV.placeholder" = "שם מלא";
 
@@ -198,7 +258,7 @@
 "Y5N-45-UPA.text" = "הנחה";
 
 /* Class = "UILabel"; text = "Store Address"; ObjectID = "Y6A-Nz-Qlz"; */
-"Y6A-Nz-Qlz.text" = "כתובת בית העסק";
+"Y6A-Nz-Qlz.text" = "כתובת החנות";
 
 /* Class = "UILabel"; text = "Tutorial"; ObjectID = "YQ2-Bz-9jR"; */
 "YQ2-Bz-9jR.text" = "הדרכה";
@@ -206,11 +266,17 @@
 /* Class = "UIButton"; normalTitle = "No Date"; ObjectID = "Yt8-xb-A09"; */
 "Yt8-xb-A09.normalTitle" = "ללא תאריך";
 
+/* Class = "UILabel"; text = "Sharing other user's deal"; ObjectID = "Z7C-SL-b6c"; */
+"Z7C-SL-b6c.text" = "שיתןף מבצע של משתמש אחר";
+
 /* Class = "UILabel"; text = "You have no invitations left."; ObjectID = "ZXO-wv-Ke5"; */
 "ZXO-wv-Ke5.text" = "לא נשארו לך הזמנות.";
 
+/* Class = "UILabel"; text = "Personalize"; ObjectID = "ZbR-Dk-Fni"; */
+"ZbR-Dk-Fni.text" = "התאמה אישית";
+
 /* Class = "UITextField"; placeholder = "Enter Passcode Here"; ObjectID = "ZuB-OA-JQR"; */
-"ZuB-OA-JQR.placeholder" = "הקלד/י סיסמת כניסה כאן";
+"ZuB-OA-JQR.placeholder" = "הכנס/י קוד כניסה כאן";
 
 /* Class = "UILabel"; text = "If you're done, tap Next near the title."; ObjectID = "a7v-Vg-WPa"; */
 "a7v-Vg-WPa.text" = "אם סיימת, לחץ/י ׳הבא׳ על יד הכותרת";
@@ -228,10 +294,13 @@
 "dAo-J9-KJQ.text" = "קטגוריה";
 
 /* Class = "UITextView"; text = "Store Phone"; ObjectID = "dO6-KH-O9H"; */
-"dO6-KH-O9H.text" = "טלפון בית העסק";
+"dO6-KH-O9H.text" = "טלפון החנות";
 
 /* Class = "UITextField"; placeholder = "Location"; ObjectID = "da7-LK-I96"; */
 "da7-LK-I96.placeholder" = "מיקום";
+
+/* Class = "UILabel"; text = "Someone sharing you deal"; ObjectID = "e2I-ft-ONK"; */
+"e2I-ft-ONK.text" = "מישהו משתף מבצע שלך";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "e38-is-Vyi"; */
 "e38-is-Vyi.placeholder" = "סיסמה";
@@ -241,6 +310,9 @@
 
 /* Class = "UIButton"; normalTitle = "Got it"; ObjectID = "eqf-Ib-s5H"; */
 "eqf-Ib-s5H.normalTitle" = "הבנתי";
+
+/* Class = "UIButton"; normalTitle = "Share it with Facebook"; ObjectID = "f1H-pF-SBo"; */
+"f1H-pF-SBo.normalTitle" = "שתף את זה עם פייסבוק";
 
 /* Class = "UILabel"; text = "Date Of Birth (optional)"; ObjectID = "fgN-mQ-SKu"; */
 "fgN-mQ-SKu.text" = "תאריך לידה (אופציונלי)";
@@ -257,8 +329,17 @@
 /* Class = "UILabel"; text = "Discount"; ObjectID = "gNM-J3-Cgp"; */
 "gNM-J3-Cgp.text" = "הנחה";
 
+/* Class = "UILabel"; text = "Add one deal and your are officially a Dealer"; ObjectID = "hU7-3Z-26z"; */
+"hU7-3Z-26z.text" = "הוסיפו מבצע אחד ואתם רשמית דילר";
+
+/* Class = "UIButton"; normalTitle = "Request an invitation"; ObjectID = "haw-x4-sLR"; */
+"haw-x4-sLR.normalTitle" = "בקש הזמנה";
+
 /* Class = "UITextField"; placeholder = "Required"; ObjectID = "hcG-gf-ilK"; */
 "hcG-gf-ilK.placeholder" = "חובה";
+
+/* Class = "UILabel"; text = "54"; ObjectID = "hdr-JU-kMN"; */
+"hdr-JU-kMN.text" = "54";
 
 /* Class = "UILabel"; text = "Deal Title"; ObjectID = "iTj-h4-Ba9"; */
 "iTj-h4-Ba9.text" = "כותרת המבצע";
@@ -266,35 +347,56 @@
 /* Class = "UILabel"; text = "Deal Title"; ObjectID = "ihq-ya-eqI"; */
 "ihq-ya-eqI.text" = "כותרת המבצע";
 
+/* Class = "UILabel"; text = "Gain points, advance to the next rank and have more influence!"; ObjectID = "iqq-jd-yWF"; */
+"iqq-jd-yWF.text" = "צברו נקודות, התקדמו לדרגה הבאה וקבלו יותר השפעה!";
+
 /* Class = "UITableViewSection"; headerTitle = "Support"; ObjectID = "izp-6C-IGB"; */
 "izp-6C-IGB.headerTitle" = "תמיכה";
 
 /* Class = "UIBarButtonItem"; title = " "; ObjectID = "j9U-rO-k5m"; */
 "j9U-rO-k5m.title" = " ";
 
+/* Class = "UILabel"; text = "Shares"; ObjectID = "jSR-lA-uRJ"; */
+"jSR-lA-uRJ.text" = "שיתופים";
+
 /* Class = "UILabel"; text = "Price"; ObjectID = "jUX-q8-Fl7"; */
 "jUX-q8-Fl7.text" = "מחיר";
+
+/* Class = "UILabel"; text = "Senior Dealer"; ObjectID = "jfv-Lj-o5R"; */
+"jfv-Lj-o5R.text" = "דילר בכיר";
+
+/* Class = "UILabel"; text = "Inviting a friend to Dealers"; ObjectID = "kIt-nf-K6u"; */
+"kIt-nf-K6u.text" = "הזמנת חברים לדילרס";
 
 /* Class = "UILabel"; text = "Locating businesses nearby"; ObjectID = "kd8-5z-apc"; */
 "kd8-5z-apc.text" = "מאתר בתי עסק באזור";
 
-/* Class = "UILabel"; text = "Description"; ObjectID = "lhU-ze-ciP"; */
-"lhU-ze-ciP.text" = "תאור נוסף";
+/* Class = "UILabel"; text = "9"; ObjectID = "keC-cb-f2g"; */
+"keC-cb-f2g.text" = "9";
 
 /* Class = "UITableViewSection"; headerTitle = "Account Settings"; ObjectID = "mOx-g3-9VW"; */
 "mOx-g3-9VW.headerTitle" = "הגדרות חשבון";
 
-/* Class = "UILabel"; text = "Thank You\nGilad Lumbroso!"; ObjectID = "o1f-xS-WBu"; */
-"o1f-xS-WBu.text" = "תודה רבה\nגלעד לומברוזו!";
+/* Class = "UILabel"; text = "Tip: if you copy a valid URL, it will automatically be pasted in the address field."; ObjectID = "nnp-1h-IWz"; */
+"nnp-1h-IWz.text" = "עצה: אם מעתיקים כתובת חוקית, היא תודבק באופן אוטומטי לתוך שדה ה-URL";
+
+/* Class = "UILabel"; text = "Thank You!"; ObjectID = "o1f-xS-WBu"; */
+"o1f-xS-WBu.text" = "תודה!";
 
 /* Class = "UIButton"; normalTitle = "Email"; ObjectID = "o6q-Yt-XP1"; */
 "o6q-Yt-XP1.normalTitle" = "דוא״ל";
 
+/* Class = "UILabel"; text = "12"; ObjectID = "ogU-bk-qjf"; */
+"ogU-bk-qjf.text" = "12";
+
 /* Class = "UITextView"; text = "Store Website"; ObjectID = "ohc-rg-2J3"; */
-"ohc-rg-2J3.text" = "אתר בית העסק";
+"ohc-rg-2J3.text" = "אתר החנות";
 
 /* Class = "UIButton"; normalTitle = "Got It"; ObjectID = "pnD-u3-gou"; */
 "pnD-u3-gou.normalTitle" = "הבנתי";
+
+/* Class = "UILabel"; text = "Choose categories to get more personalized deals in your feed"; ObjectID = "rhk-MS-b2L"; */
+"rhk-MS-b2L.text" = "בחר/י קטגוריות כדי לקבל מבצעים מותאמים אישית בפיד שלך";
 
 /* Class = "UILabel"; text = "Log Out"; ObjectID = "s1Q-4C-gyo"; */
 "s1Q-4C-gyo.text" = "התנתק";
@@ -309,10 +411,13 @@
 "snO-jV-gUI.headerTitle" = "פרטים בסיסיים";
 
 /* Class = "UILabel"; text = "Incorrect Passcode"; ObjectID = "uL2-6C-Y1i"; */
-"uL2-6C-Y1i.text" = "סיסמה שגוייה";
+"uL2-6C-Y1i.text" = "סיסמה שגויה";
 
 /* Class = "UITextField"; placeholder = "Current Password"; ObjectID = "uew-eV-t89"; */
 "uew-eV-t89.placeholder" = "סיסמה נוכחית";
+
+/* Class = "UILabel"; text = "2,304"; ObjectID = "v5g-Cs-pSP"; */
+"v5g-Cs-pSP.text" = "2,304";
 
 /* Class = "UILabel"; text = "Category"; ObjectID = "vBb-b4-OrV"; */
 "vBb-b4-OrV.text" = "קטגוריה";
@@ -320,14 +425,20 @@
 /* Class = "UILabel"; text = "Expiration Date"; ObjectID = "vE1-c8-xdw"; */
 "vE1-c8-xdw.text" = "תאריך תפוגה";
 
+/* Class = "UIButton"; normalTitle = "Read More"; ObjectID = "vJI-2D-uD2"; */
+"vJI-2D-uD2.normalTitle" = "קרא/י עוד";
+
+/* Class = "UILabel"; text = "You're not only active, but you also share information that people find super valuable. Way to go!"; ObjectID = "vZP-vF-woI"; */
+"vZP-vF-woI.text" = "You're not only active, but you also share information that people find super valuable. Way to go!";
+
+/* Class = "UILabel"; text = "The Ranks"; ObjectID = "vfb-0f-3c3"; */
+"vfb-0f-3c3.text" = "הדרגות";
+
 /* Class = "UILabel"; text = "Dealers is an invite-only network. You must be invited by an existing member in order to get a passcode."; ObjectID = "w90-e5-O6q"; */
-"w90-e5-O6q.text" = "דילרס היא רשת של מוזמנים בלבד. יש לקבל הזמנה ממשתמש קיים על מנת לקבל סיסמת כניסה.";
+"w90-e5-O6q.text" = "דילרס היא רשת של מוזמנים בלבד. יש לקבל הזמנה ממשתמש קיים על מנת לקבל קוד כניסה.";
 
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "wDP-qs-CQ9"; */
 "wDP-qs-CQ9.placeholder" = "דוא״ל";
-
-/* Class = "UILabel"; text = "Share with Facebook"; ObjectID = "wGd-Ve-qMr"; */
-"wGd-Ve-qMr.text" = "שתף עם פייסבוק";
 
 /* Class = "UIButton"; normalTitle = "Navigate via Waze"; ObjectID = "wUG-hq-C0F"; */
 "wUG-hq-C0F.normalTitle" = "נווט עם Waze";
@@ -335,5 +446,14 @@
 /* Class = "UILabel"; text = "Price"; ObjectID = "waY-z6-dpa"; */
 "waY-z6-dpa.text" = "מחיר";
 
-/* Class = "UILabel"; text = "Share with WhatsApp"; ObjectID = "ziO-YV-MgH"; */
-"ziO-YV-MgH.text" = "שתף עם וואטסאפ";
+/* Class = "UIButton"; normalTitle = "Share with WhatsApp"; ObjectID = "wxe-aF-cXK"; */
+"wxe-aF-cXK.normalTitle" = "שתף עם וואטסאפ";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "xAb-6X-gmn"; */
+"xAb-6X-gmn.title" = " ";
+
+/* Class = "UILabel"; text = "Go to the deal's page at the store URL (Amazon.com, Ebay.com), and then tap Next."; ObjectID = "xTR-ue-bc8"; */
+"xTR-ue-bc8.text" = "מצא/י את עמוד המבצע באתר החנות )amazon.com, aliexpress.com(, ולחץ/י הבא.";
+
+/* Class = "UIButton"; normalTitle = "Share it with WhatsApp"; ObjectID = "yfF-ps-yBm"; */
+"yfF-ps-yBm.normalTitle" = "שתף עם וואטסאפ";

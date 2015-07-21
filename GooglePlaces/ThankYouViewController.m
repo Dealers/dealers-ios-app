@@ -163,7 +163,7 @@
 
 - (void)whatsAppShareWithLink:(NSString *)url
 {
-    NSString *text = [NSString stringWithFormat:NSLocalizedString(@"%@:\n%@", nil), self.deal.title, url];
+    NSString *text = [NSString stringWithFormat:NSLocalizedString(@"Found this deal at Dealers. Check it out: %@\n%@", nil), self.deal.title, url];
     NSString *urlWhats = [NSString stringWithFormat:@"whatsapp://send?text=%@", text];
     NSURL *whatsappURL = [NSURL URLWithString:[urlWhats stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
@@ -184,6 +184,7 @@
 - (IBAction)okay:(id)sender {
 
     [self dismissViewControllerAnimated:YES completion:nil];
+    [appDelegate exitAddDealState];
 }
 
 

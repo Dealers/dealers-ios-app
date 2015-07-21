@@ -51,7 +51,10 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
 }
 
 - (IBAction)dismiss:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    appDelegate.addDealState = NO;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [appDelegate exitAddDealState];
+    }];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
