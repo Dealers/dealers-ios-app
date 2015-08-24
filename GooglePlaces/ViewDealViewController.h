@@ -66,6 +66,7 @@
 
 @property (weak, nonatomic) IBOutlet ElasticLabel *dealTitle;
 @property (weak, nonatomic) IBOutlet ElasticLabel *store;
+@property (weak, nonatomic) IBOutlet UIImageView *storeChevron;
 @property (weak, nonatomic) IBOutlet UIButton *linkToStore;
 @property (weak, nonatomic) IBOutlet UIImageView *priceIcon;
 @property (weak, nonatomic) IBOutlet UILabel *price;

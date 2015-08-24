@@ -10,6 +10,7 @@
 
 @class DealerAttrib;
 @class Device;
+@class ScreenCounters;
 
 @interface Dealer : NSObject
 
@@ -47,6 +48,8 @@
 @property NSNumber *invitationCounter;
 
 @property NSArray *devices;
+
+@property ScreenCounters *screenCounters;
 
 @property NSMutableArray *notifications;
 

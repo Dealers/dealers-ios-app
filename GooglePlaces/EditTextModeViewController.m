@@ -37,9 +37,11 @@
             edtvc.dealPrice.text = NSLocalizedString(@"Price", nil);
             edtvc.dealPrice.textColor = placeholderColor;
         } else {
-            self.selectedCurrency = newCurrency;
-            NSInteger floatValue = [self.textView.text floatValue];
-            edtvc.dealPrice.text = [self.selectedCurrency stringByAppendingString:[[NSNumber numberWithFloat:floatValue] stringValue]];
+            if (newCurrency) {
+                self.selectedCurrency = newCurrency;
+            }
+            double doubleValue = [self.textView.text doubleValue];
+            edtvc.dealPrice.text = [self.selectedCurrency stringByAppendingString:[[NSNumber numberWithDouble:doubleValue] stringValue]];
             edtvc.selectedCurrency = self.selectedCurrency;
             edtvc.dealPrice.textColor = [UIColor blackColor];
         }
@@ -52,14 +54,14 @@
             edtvc.dealDiscount.textColor = placeholderColor;
         } else {
             NSString *discountType;
-            NSInteger floatValue = [self.textView.text floatValue];
+            double doubleValue = [self.textView.text doubleValue];
             if (self.percentage.selected) {
                 discountType = @"%";
-                edtvc.dealDiscount.text = [[[NSNumber numberWithFloat:floatValue] stringValue] stringByAppendingString:discountType];
+                edtvc.dealDiscount.text = [[[NSNumber numberWithDouble:doubleValue] stringValue] stringByAppendingString:discountType];
             } else if (self.lastPrice.selected) {
                 discountType = @"lastPrice";
                 NSDictionary* attributes = @{ NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle] };
-                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:[[NSNumber numberWithFloat:floatValue] stringValue] attributes:attributes];
+                NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:[[NSNumber numberWithDouble:doubleValue] stringValue] attributes:attributes];
                 edtvc.dealDiscount.attributedText = attrText;
             }
             edtvc.selectedDiscountType = discountType;

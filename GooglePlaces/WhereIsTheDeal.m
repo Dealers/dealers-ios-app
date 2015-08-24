@@ -42,6 +42,9 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     
     [self.nearbyTableView deselectRowAtIndexPath:self.nearbyTableView.indexPathForSelectedRow animated:YES];
     [self.searchTableView deselectRowAtIndexPath:self.searchTableView.indexPathForSelectedRow animated:YES];
+    if ([self.cameFrom isEqualToString:@"Add Deal"]) {
+        [self updateWhereIsTheDealLocalCounter];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -87,6 +90,25 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     NSDictionary *keyboardInfo = [notification userInfo];
     NSValue *keyboardFrame = [keyboardInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
     [self updateSearchTableViewInsetsForKeyboardHeight:[keyboardFrame CGRectValue].size.height];
+}
+
+- (void)updateWhereIsTheDealLocalCounter
+{
+    if (appDelegate.dealer.screenCounters) {
+        ScreenCounters *counters = appDelegate.dealer.screenCounters;
+        counters.whereIsTheDealLocal = @(counters.whereIsTheDealLocal.intValue + 1);
+        NSString *path = [NSString stringWithFormat:@"/screen_counters/%@/", counters.screenCountersID];
+        [[RKObjectManager sharedManager] patchObject:counters
+                                                path:path
+                                          parameters:nil
+                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                 appDelegate.dealer.screenCounters = mappingResult.firstObject;
+                                                 [appDelegate saveScreenCountersOnDevice];
+                                             }
+                                             failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Failed to patch the screen counters.");
+                                             }];
+    }
 }
 
 
@@ -373,6 +395,15 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([tableView isEqual:self.searchTableView] && indexPath.row == 0) {
+        return 44.0;
+    } else {
+        return tableView.rowHeight;
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     StoreTableViewCell *cell = [self storeCellForIndexPath:indexPath tableView:tableView];
@@ -386,10 +417,16 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
             return [self configureStoreCell:cell store:store];
         }
     } else {
-        if (indexPath.row == self.storesSearched.count && self.storesSearched) {
-            return [self configureAddStoreCell:cell];
+        if (indexPath.row == 0) {
+            if (self.customStoreCell) {
+                return self.customStoreCell;
+            } else {
+                self.customStoreCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"customStoreCell"];
+                return [self configureCustomStoreCell];
+            }
         } else {
-            store = [self.storesSearched objectAtIndex:indexPath.row];
+            long i = indexPath.row - 1;
+            store = [self.storesSearched objectAtIndex:i];
             return [self configureStoreCell:cell store:store];
         }
     }
@@ -444,10 +481,15 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
             store = [self.storesNearby objectAtIndex:indexPath.row];
         }
     } else {
-        if (indexPath.row == self.storesSearched.count) {
-            [self pushAddStoreView];
-            return;
-        } else {
+        if (indexPath.row == 0) {
+            store = [[Store alloc] init];
+            store.name = self.customStoreCell.textLabel.text;
+            store.added = YES;
+        }
+//        if (indexPath.row == self.storesSearched.count) {
+//            [self pushAddStoreView];
+//            return;
+        else {
             store = [self.storesSearched objectAtIndex:indexPath.row];
         }
     }
@@ -478,6 +520,15 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
     edtvc.dealStore.text = edtvc.store.name;
     edtvc.didChangeOriginalDeal = YES;
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (UITableViewCell *)configureCustomStoreCell
+{
+    self.customStoreCell.textLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:15.0];
+    self.customStoreCell.textLabel.textColor = [appDelegate ourPurple];
+    self.customStoreCell.imageView.image = [UIImage imageNamed:@"Add Store Icon Small"];
+//    self.customStoreCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    return self.customStoreCell;
 }
 
 - (StoreTableViewCell *)configureTrySearchCell:(StoreTableViewCell *)cell
@@ -539,6 +590,9 @@ static NSString * const storeCellIdentifier = @"StoreTableViewCell";
             self.searchTableView.hidden = NO;
             self.searchTableView.alpha = 0;
             [UIView animateWithDuration:0.2 animations:^{ self.searchTableView.alpha = 0.85; }];
+        }
+        if (self.customStoreCell) {
+            self.customStoreCell.textLabel.text = searchText;
         }
         [self downloadStoresSearched:searchText];
         searchTextEmpty = NO;

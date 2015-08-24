@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import <AWSiOSSDKv2/S3.h>
 #import <AWSiOSSDKv2/AWSCore.h>
+#import <Intercom/Intercom.h>
 #import "DealersTabBarController.h"
 #import "DealsTableViewController.h"
 #import "ViewDealViewController.h"
@@ -119,6 +120,9 @@
     [GAI sharedInstance].dispatchInterval = 20;
     [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelError];
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-62425106-1"];
+    
+    // Initialize Intercom
+    [Intercom setApiKey:@"ios_sdk-883445c2173ecd332b3f61c6c62b8496e888c48b" forAppId:@"z1b3ijln"];
     
     return YES;
 }
@@ -555,16 +559,19 @@
         // App was launched with push notificaiton
         if ([type isEqualToString:@"New Rank"]) {
             if (userInfoForActive[@"rank"]) {
+                [self logPSEvent:@"new_rank"];
                 cashedRank = userInfoForActive[@"rank"];
                 [self presentNotificationOfType:@"newRank"];
             }
         } else if ([type isEqualToString:@"Weekly Deals"]) {
             if (userInfoForActive[@"weekly_deals_id"]) {
+                [self logPSEvent:@"weekly_deals"];
                 weeklyDealsID = userInfoForActive[@"weekly_deals_id"];
                 [self presentNotificationOfType:@"dealsList"];
             }
         } else {
             if (userInfoForActive[@"deal"]) {
+                [self logPSEvent:@"deal_notification"];
                 pushedDealID = userInfoForActive[@"deal"];
                 [self presentNotificationOfType:@"deal"];
             }
@@ -736,13 +743,33 @@
         [defaults setObject:self.dealer.reliability forKey:@"reliability"];
         [defaults setObject:self.dealer.facebookPseudoUserID forKey:@"facebookPseudoUserID"];
         [defaults setObject:self.dealer.invitationCounter forKey:@"invitationCounter"];
-        
+        [self saveScreenCountersOnDevice];
+
         [defaults synchronize];
         
         if (self.dealer.photoURL.length > 1 && ![self.dealer.photoURL isEqualToString:@"None"]) {
             [self saveProfilePic:self.dealer.photo];
         }
     }
+}
+
+- (void)saveScreenCountersOnDevice
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:self.dealer.screenCounters.screenCountersID forKey:@"screenCountersID"];
+    [defaults setObject:self.dealer.screenCounters.myFeed forKey:@"myFeedCounter"];
+    [defaults setObject:self.dealer.screenCounters.explore forKey:@"exploreCounter"];
+    [defaults setObject:self.dealer.screenCounters.activity forKey:@"activityCounter"];
+    [defaults setObject:self.dealer.screenCounters.profile forKey:@"profileCounter"];
+    [defaults setObject:self.dealer.screenCounters.whereIsTheDealLocal forKey:@"whereIsTheDealLocalCounter"];
+    [defaults setObject:self.dealer.screenCounters.whereIsTheDealOnline forKey:@"whereIsTheDealOnlineCounter"];
+    [defaults setObject:self.dealer.screenCounters.whatIsTheDealLocal forKey:@"whatIsTheDealLocalCounter"];
+    [defaults setObject:self.dealer.screenCounters.whatIsTheDealOnline forKey:@"whatIsTheDealOnlineCounter"];
+    [defaults setObject:self.dealer.screenCounters.haveMoreDetails forKey:@"haveMoreDetailsCounter"];
+    [defaults setObject:self.dealer.screenCounters.viewDeal forKey:@"viewDealCounter"];
+    
+    [defaults synchronize];
 }
 
 - (void)removeUserDetailsFromDevice
@@ -770,6 +797,16 @@
     [defaults removeObjectForKey:@"reliability"];
     [defaults removeObjectForKey:@"facebookPseudoUserID"];
     [defaults removeObjectForKey:@"invitationCounter"];
+    [defaults removeObjectForKey:@"screenCountersID"];
+    [defaults removeObjectForKey:@"myFeedCounter"];
+    [defaults removeObjectForKey:@"exploreCounter"];
+    [defaults removeObjectForKey:@"activityCounter"];
+    [defaults removeObjectForKey:@"whereIsTheDealLocalCounter"];
+    [defaults removeObjectForKey:@"whereIsTheDealOnlineCounter"];
+    [defaults removeObjectForKey:@"whatIsTheDealLocalCounter"];
+    [defaults removeObjectForKey:@"whatIsTheDealOnlineCounter"];
+    [defaults removeObjectForKey:@"haveMoreDetailsCounter"];
+    [defaults removeObjectForKey:@"viewDealCounter"];
     [defaults removeObjectForKey:@"authorized"];
     
     [defaults synchronize];
@@ -1365,13 +1402,13 @@
 
 - (NSString *)baseURL
 {
-    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
-//    return @"http://www.dealers-web.com";
+//    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
+    return @"http://www.dealers-web.com";
 }
 
 - (NSString *)currentVersion
 {
-    return @"version 2.0";
+    return @"version 2.41";
 }
 
 - (RKObjectMapping *)dealMapping
@@ -1507,8 +1544,11 @@
                                                          }];
     
     RKObjectMapping *deviceMapping = [self deviceMapping];
-    
     [dealerMapping addRelationshipMappingWithSourceKeyPath:@"devices" mapping:deviceMapping];
+    
+    [dealerMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"screen_counters"
+                                                                                   toKeyPath:@"screenCounters"
+                                                                                 withMapping:[self screenCountersMapping]]];
     
     return dealerMapping;
 }
@@ -1710,6 +1750,28 @@
                                                             }];
     
     return paginationMapping;
+}
+
+- (RKObjectMapping *)screenCountersMapping
+{
+    RKObjectMapping *screenCounterMapping = [RKObjectMapping mappingForClass:[ScreenCounters class]];
+    
+    [screenCounterMapping addAttributeMappingsFromDictionary:@{
+                                                            @"id": @"screenCountersID",
+                                                            @"dealer": @"dealerID",
+                                                            @"my_feed": @"myFeed",
+                                                            @"explore": @"explore",
+                                                            @"profile": @"profile",
+                                                            @"activity": @"activity",
+                                                            @"where_is_the_deal_local": @"whereIsTheDealLocal",
+                                                            @"where_is_the_deal_online": @"whereIsTheDealOnline",
+                                                            @"what_is_the_deal_local": @"whatIsTheDealLocal",
+                                                            @"what_is_the_deal_online": @"whatIsTheDealOnline",
+                                                            @"have_more_details": @"haveMoreDetails",
+                                                            @"view_deal": @"viewDeal"
+                                                            }];
+    
+    return screenCounterMapping;
 }
 
 - (RKObjectMapping *)scoreGuideMapping
@@ -1993,6 +2055,20 @@
                                                 keyPath:@"results"
                                             statusCodes:statusCodes];
     
+    RKResponseDescriptor *screenCountersPostResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self screenCountersMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/screen_counters/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
+    RKResponseDescriptor *screenCountersResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:[self screenCountersMapping]
+                                                 method:RKRequestMethodAny
+                                            pathPattern:@"/screen_counters/:screen_counterID/"
+                                                keyPath:nil
+                                            statusCodes:statusCodes];
+    
     RKResponseDescriptor *scoreGuideResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:[self scoreGuideMapping]
                                                  method:RKRequestMethodAny
@@ -2071,6 +2147,13 @@
                                           objectClass:[Device class]
                                           rootKeyPath:nil
                                                method:RKRequestMethodAny];
+
+    // for Screen Counters post & update
+    RKRequestDescriptor *screenCountersRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:[[self screenCountersMapping] inverseMapping]
+                                          objectClass:[ScreenCounters class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodAny];
     
     // for Category update
     RKRequestDescriptor *categoryRequestDescriptor =
@@ -2118,6 +2201,8 @@
                                                categoryResponseDescriptor,
                                                categoryDeleteResponseDescriptor,
                                                specificDeviceResponseDescriptor,
+                                               screenCountersPostResponseDescriptor,
+                                               screenCountersResponseDescriptor,
                                                scoreGuideResponseDescriptor,
                                                signUpErrorResponseDescriptor,
                                                reportResponseDescriptor
@@ -2132,6 +2217,7 @@
                                               userRequestDescriptor,
                                               invitationRequestDescriptor,
                                               deviceRequestDescriptor,
+                                              screenCountersRequestDescriptor,
                                               categoryRequestDescriptor,
                                               reportRequestDescriptor
                                               ]];
@@ -2318,7 +2404,9 @@
     }
 }
 
-#pragma mark - Google Analytics
+#pragma mark - 3rt Party Frameworks
+
+// Google Analytics
 
 - (void)logButtonPress:(NSString *)eventLabel
 {
@@ -2328,6 +2416,29 @@
                                                           action:@"button_press"  // Event action (required)
                                                            label:eventLabel       // Event label
                                                            value:nil] build]];    // Event value
+}
+
+- (void)logPSEvent:(NSString *)eventLabel
+{
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"app_action"     // Event category (required)
+                                                          action:@"push_notification_press"  // Event action (required)
+                                                           label:eventLabel       // Event label
+                                                           value:nil] build]];    // Event value
+}
+
+// Intercom
+
+- (void)intercomSuccessfulLogin {
+    // Registering with Intercom is easy. For best results, use a unique user_id if you have one.
+    NSString *userID = [NSString stringWithFormat:@"%@", self.dealer.dealerID];
+    [Intercom registerUserWithUserId:userID];
+}
+
+- (void)intercomLogout {
+    // This reset's the Intercom SDK's cache of your user's identity and wipes the slate clean.
+    [Intercom reset];
 }
 
 

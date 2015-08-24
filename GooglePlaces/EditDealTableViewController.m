@@ -413,17 +413,38 @@
 
 - (IBAction)dateChanged:(UIDatePicker *)sender {
     
-    NSDate *date = sender.date;
-    
-    while ([date timeIntervalSinceNow] < -86400) {
-        date = [date dateByAddingTimeInterval: (31536000)];
-    }
-    
-    [sender setDate:date animated:YES];
-    
     if (!self.didCancelDate) {
-        self.dealExpirationDate.text = [self.dateFormatter stringFromDate:sender.date];
+        if (!(self.dealExpirationDate.text.length > 0) || [self.dealExpirationDate.text isEqualToString:NSLocalizedString(@"Expiration Date", nil)]) {
+            [self animateDateAppearance:sender.date];
+        } else {
+            self.dealExpirationDate.text = [self.dateFormatter stringFromDate:sender.date];
+        }
     }
+}
+
+- (void)animateDateAppearance:(NSDate *)date
+{
+    self.dealExpirationDate.alpha = 0.0f;
+    self.dealExpirationDate.text = [self.dateFormatter stringFromDate:date];
+    [UIView animateWithDuration:0.4 animations:^{
+        self.dealExpirationDate.alpha = 1.0f;
+    } completion:^(BOOL finished){
+        [UIView animateWithDuration:0.4 animations:^{
+            self.dealExpirationDate.alpha = 0.0f;
+        } completion:^(BOOL finished){
+            [UIView animateWithDuration:0.4 animations:^{
+                self.dealExpirationDate.alpha = 1.0f;
+            } completion:^(BOOL finished){
+                [UIView animateWithDuration:0.4 animations:^{
+                    self.dealExpirationDate.alpha = 0.0f;
+                } completion:^(BOOL finished){
+                    [UIView animateWithDuration:0.4 animations:^{
+                        self.dealExpirationDate.alpha = 1.0f;
+                    }];
+                }];
+            }];
+        }];
+    }];
 }
 
 - (IBAction)noDate:(id)sender {

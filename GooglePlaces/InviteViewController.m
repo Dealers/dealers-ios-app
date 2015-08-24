@@ -9,7 +9,7 @@
 #import "InviteViewController.h"
 
 #define PASSCODE_LENGTH 4
-#define APPSTORE_LINK @"https://appsto.re/il/12CB5.i"
+#define APPSTORE_LINK @"https://bnc.lt/dealers-invite"
 
 @interface InviteViewController ()
 
@@ -24,8 +24,8 @@
     
     self.title = NSLocalizedString(@"Invite", nil);
     
-    appDelegate = [[UIApplication sharedApplication] delegate];
     
+    [self initialize];
     [self setInvitationMessageAndPasscode];
     [self setButtons];
     [self setProgressIndicator];
@@ -38,7 +38,6 @@
     
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     [self setInvitationIcons];
-    [self setScreenName:@"Invite Screen"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -46,6 +45,21 @@
     [super viewWillDisappear:animated];
     
     self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"Navigation Bar Shade"];
+}
+
+- (void)initialize
+{
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    if (!self.popUp) {
+        [self setScreenName:@"Invite Screen"];
+        self.notNow.hidden = YES;
+    } else {
+        [self setScreenName:@"Invite Screen (pop-up)"];
+        self.notNow.hidden = NO;
+        [self.notNow setTitle:NSLocalizedString(@"Not now", nil) forState:UIControlStateNormal];
+        self.explanationLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Love Dealers? Invite a friend to join the fun!\n(You have %@ more invitations you can send)", nil), appDelegate.dealer.invitationCounter];
+        self.explanationLabel.font = [UIFont fontWithName:@"Avenir-Roman" size:20.0];
+    }
 }
 
 - (void)setInvitationMessageAndPasscode
@@ -56,6 +70,9 @@
 
 - (void)setInvitationIcons
 {
+    if (self.popUp) {
+        self.explanationLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Love Dealers? Invite a friend to join the fun!\n(You have %@ more invitations you can send)", nil), appDelegate.dealer.invitationCounter];
+    }
     for (NSInteger i = 5; i > 0; i--) {
         
         if (i == appDelegate.dealer.invitationCounter.integerValue) {
@@ -186,6 +203,11 @@
                                                otherButtonTitles:nil];
         [alert show];
     }
+}
+
+- (IBAction)dismiss:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSString *)generateCode {
@@ -388,7 +410,7 @@
 
 - (void)setProgressIndicator
 {
-    invitationSent = [[MBProgressHUD alloc]initWithView:self.tabBarController.view];
+    invitationSent = [[MBProgressHUD alloc]initWithView:self.view];
     invitationSent.delegate = self;
     invitationSent.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Complete"]];
     invitationSent.mode = MBProgressHUDModeCustomView;

@@ -726,6 +726,7 @@
 - (void)enterDealers
 {
     // First ask the user for his favorite categories
+    [appDelegate intercomSuccessfulLogin];
     PersonalizeTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Personalize"];
     ptvc.afterSignUp = YES;
     [self.navigationController pushViewController:ptvc animated:YES];

@@ -187,6 +187,8 @@
 "View all %@ comments" = "הראה את כל %@ התגובות";
 "I found a great deal at Dealers, check it out" = "מצאתי מבצע שווה בדילרס";
 "Check out this deal at Dealers" = "מצא/י את המבצע הזה בדילרס";
+"Find more great deals at Dealers" = "מצא/י את המבצע הזה ועוד בדילרס";
+"Deal has Expired" = "פג תוקף המבצע";
 "Report as Spam" = "דווח כתוכן פוגעני";
 "Be the first to comment..." = "היה/י הראשון/ה להגיב";
 "Add a comment..." = "הוסף תגובה...";
@@ -255,6 +257,8 @@
 "Skip" = "דלג וכנס";
 "Score Screenshot" = "ניקוד";
 
+"Report as Expired" = "דיווח על תפוגת המבצע";
+"Are you sure this deal has expired?" = "האם את/ה בטוח/ה שפג תוקפו של המבצע?";
 "Report as Spam?" = "לדווח על פרסום זה?";
 "Does this post includes inappropriate content?" = "האם פרסום זה מכיל תוכן לא ראוי?";
 "Report" = "דווח";
@@ -329,3 +333,5 @@
 "Score Guide" = "מדריך הניקוד";
 
 "Weekly Deals" = "המבצעים של השבוע";
+"Love Dealers? Invite a friend to join the fun!\n(You have %@ more invitations you can send)" = "אהבת את דילרס? שלח/י הזמנה לחבר/ה שיצטרפו לכיף!\n(יש לך עוד %@ הזמנות לשלוח)";
+"Not now" = "לא עכשיו";

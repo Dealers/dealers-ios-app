@@ -641,6 +641,7 @@
                         <outlet property="scrollView" destination="IF1-eK-jao" id="UPJ-jk-RyV"/>
                         <outlet property="store" destination="QB8-SM-ot7" id="4C8-J2-HjW"/>
                         <outlet property="storeAddress" destination="Y6A-Nz-Qlz" id="fxo-8k-2zV"/>
+                        <outlet property="storeChevron" destination="f9Q-F6-bbD" id="4Xn-0n-u2W"/>
                         <outlet property="storeContainer" destination="mXy-E9-57L" id="NqH-i8-Ewu"/>
                         <outlet property="storePhone" destination="dO6-KH-O9H" id="U5h-iR-BLO"/>
                         <outlet property="storePhoneIconHeightConstraint" destination="b8Q-qa-nsX" id="Fef-Dq-XDF"/>
@@ -2604,7 +2605,7 @@
         <!--Where Is The Deal Online-->
         <scene sceneID="58x-94-mjq">
             <objects>
-                <viewController storyboardIdentifier="WhereIsTheDealOnline" id="vxM-B3-Adp" customClass="WhereIsTheDealOnline" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WhereIsTheDealOnline" automaticallyAdjustsScrollViewInsets="NO" id="vxM-B3-Adp" customClass="WhereIsTheDealOnline" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LY8-TP-Eox"/>
                         <viewControllerLayoutGuide type="bottom" id="kau-bb-CCa"/>
@@ -5103,13 +5104,13 @@ Privacy Policy</string>
                                 </constraints>
                             </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no invitations left." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXO-wv-Ke5" userLabel="No Invitations Left Label">
-                                <rect key="frame" x="195" y="398" width="210" height="24"/>
+                                <rect key="frame" x="195" y="374" width="210" height="24"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="0.56862747669219971" green="0.56862747669219971" blue="0.62745100259780884" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94q-E9-SpN" userLabel="Invite By Text Message">
-                                <rect key="frame" x="160" y="388" width="280" height="44"/>
+                                <rect key="frame" x="160" y="364" width="280" height="44"/>
                                 <color key="backgroundColor" red="0.16862745098039217" green="0.8666666666666667" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="0u2-eE-LtP"/>
@@ -5124,10 +5125,10 @@ Privacy Policy</string>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Text Message White Button Icon" translatesAutoresizingMaskIntoConstraints="NO" id="cma-V3-ceS">
-                                <rect key="frame" x="164" y="388" width="44" height="44"/>
+                                <rect key="frame" x="164" y="364" width="44" height="44"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6q-Yt-XP1" userLabel="Invite By Email">
-                                <rect key="frame" x="160" y="452" width="280" height="44"/>
+                                <rect key="frame" x="160" y="428" width="280" height="44"/>
                                 <color key="backgroundColor" red="0.26666666666666666" green="0.56470588235294117" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="9Qb-PV-mRF"/>
@@ -5143,10 +5144,10 @@ Privacy Policy</string>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Email White Button Icon" translatesAutoresizingMaskIntoConstraints="NO" id="QDL-Uq-Vcy">
-                                <rect key="frame" x="164" y="452" width="44" height="44"/>
+                                <rect key="frame" x="164" y="428" width="44" height="44"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MEV-oA-mWE" userLabel="Invite By WhatsApp">
-                                <rect key="frame" x="160" y="516" width="280" height="44"/>
+                                <rect key="frame" x="160" y="492" width="280" height="44"/>
                                 <color key="backgroundColor" red="0.16862745100000001" green="0.86666666670000003" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="RM4-xF-Lwc"/>
@@ -5161,8 +5162,21 @@ Privacy Policy</string>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WhatsApp White Button Icon" translatesAutoresizingMaskIntoConstraints="NO" id="CHS-b4-Pnk">
-                                <rect key="frame" x="164" y="516" width="44" height="44"/>
+                                <rect key="frame" x="164" y="492" width="44" height="44"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HbW-uI-nd3">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="rZJ-Gf-HBo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="20"/>
+                                <state key="normal" title="Not now"/>
+                                <connections>
+                                    <action selector="dismiss:" destination="wQE-nz-MPO" eventType="touchUpInside" id="iBS-Nd-OAZ"/>
+                                    <action selector="dismiss:" destination="FYD-p6-TvB" eventType="touchUpInside" id="nPO-o7-VM2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -5174,15 +5188,18 @@ Privacy Policy</string>
                             <constraint firstItem="o6q-Yt-XP1" firstAttribute="centerY" secondItem="QDL-Uq-Vcy" secondAttribute="centerY" id="9Wj-Lu-4hw"/>
                             <constraint firstItem="XBm-4o-qbT" firstAttribute="top" secondItem="D5y-Sk-Zbd" secondAttribute="bottom" constant="20" id="9ZG-Lm-EfB"/>
                             <constraint firstAttribute="centerX" secondItem="MEV-oA-mWE" secondAttribute="centerX" id="AIC-k7-mJM"/>
+                            <constraint firstAttribute="right" secondItem="HbW-uI-nd3" secondAttribute="right" id="Ioh-4Y-mJZ"/>
                             <constraint firstItem="94q-E9-SpN" firstAttribute="top" relation="greaterThanOrEqual" secondItem="XBm-4o-qbT" secondAttribute="bottom" constant="20" id="Jgv-4F-iFm"/>
                             <constraint firstItem="MEV-oA-mWE" firstAttribute="top" secondItem="o6q-Yt-XP1" secondAttribute="bottom" priority="999" constant="20" id="OQO-gR-NnG"/>
+                            <constraint firstItem="HbW-uI-nd3" firstAttribute="top" secondItem="MEV-oA-mWE" secondAttribute="bottom" constant="20" id="Pbz-4I-Urs"/>
                             <constraint firstItem="o6q-Yt-XP1" firstAttribute="top" secondItem="QDL-Uq-Vcy" secondAttribute="bottom" constant="-3" id="QOW-Eg-QXX"/>
                             <constraint firstItem="o6q-Yt-XP1" firstAttribute="leading" secondItem="QDL-Uq-Vcy" secondAttribute="leading" constant="-4" id="TNE-0S-y7d"/>
                             <constraint firstAttribute="centerX" secondItem="XBm-4o-qbT" secondAttribute="centerX" id="V8a-lg-UAE"/>
                             <constraint firstItem="D5y-Sk-Zbd" firstAttribute="top" secondItem="wqP-W3-TYz" secondAttribute="bottom" constant="20" id="Wfl-q4-cnn"/>
                             <constraint firstItem="CHS-b4-Pnk" firstAttribute="centerY" secondItem="MEV-oA-mWE" secondAttribute="centerY" id="duO-9h-jQi"/>
-                            <constraint firstItem="Uww-Lk-KBj" firstAttribute="top" secondItem="MEV-oA-mWE" secondAttribute="bottom" constant="40" id="feg-P3-bdW"/>
+                            <constraint firstItem="Uww-Lk-KBj" firstAttribute="top" secondItem="HbW-uI-nd3" secondAttribute="bottom" id="eBf-Wl-AdP"/>
                             <constraint firstItem="cma-V3-ceS" firstAttribute="leading" secondItem="94q-E9-SpN" secondAttribute="leading" constant="4" id="lGF-ed-gkD"/>
+                            <constraint firstItem="HbW-uI-nd3" firstAttribute="left" secondItem="9ak-FB-dDW" secondAttribute="left" id="mrT-TS-oZj"/>
                             <constraint firstAttribute="centerX" secondItem="ZXO-wv-Ke5" secondAttribute="centerX" id="rj4-kU-rEK"/>
                             <constraint firstItem="cma-V3-ceS" firstAttribute="centerY" secondItem="94q-E9-SpN" secondAttribute="centerY" id="ugc-x6-LdH"/>
                             <constraint firstItem="o6q-Yt-XP1" firstAttribute="top" secondItem="94q-E9-SpN" secondAttribute="bottom" priority="999" constant="20" id="yng-kh-87h"/>
@@ -5207,6 +5224,7 @@ Privacy Policy</string>
                         <outlet property="invitationIcon4" destination="nlr-hz-dcg" id="hLL-ee-MoK"/>
                         <outlet property="invitationIcon5" destination="Mbc-lT-aUx" id="Q6T-4s-zaX"/>
                         <outlet property="noInvitationsLeft" destination="ZXO-wv-Ke5" id="Vfc-9P-H1p"/>
+                        <outlet property="notNow" destination="HbW-uI-nd3" id="QFy-G1-Eb9"/>
                         <outlet property="textMessage" destination="94q-E9-SpN" id="vJO-C8-5s7"/>
                         <outlet property="whatsAppButton" destination="MEV-oA-mWE" id="puf-TH-3fm"/>
                     </connections>

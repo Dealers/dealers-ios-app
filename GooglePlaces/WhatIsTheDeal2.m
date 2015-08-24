@@ -202,7 +202,7 @@
             if ([self.expirationDateLabel.text isEqualToString:NSLocalizedString(@"Choose Date", nil)] || !(self.expirationDateLabel.text.length > 0)) {
                 
                 [self showDatePickerCell];
-                [self performSelector:@selector(dateChanged:) withObject:self.datePicker];
+//                [self performSelector:@selector(dateChanged:) withObject:self.datePicker];
                 
             } else {
                 
@@ -343,8 +343,37 @@
     [sender setDate:date animated:YES];
     
     if (!self.didCancelDate) {
-        self.expirationDateLabel.text = [self.dateFormatter stringFromDate:sender.date];
+        if (!(self.expirationDateLabel.text.length > 0)) {
+            [self animateDateAppearance:sender.date];
+        } else {
+            self.expirationDateLabel.text = [self.dateFormatter stringFromDate:sender.date];
+        }
     }
+}
+
+- (void)animateDateAppearance:(NSDate *)date
+{
+    self.expirationDateLabel.alpha = 0.0f;
+    self.expirationDateLabel.text = [self.dateFormatter stringFromDate:date];
+    [UIView animateWithDuration:0.4 animations:^{
+        self.expirationDateLabel.alpha = 1.0f;
+    } completion:^(BOOL finished){
+        [UIView animateWithDuration:0.4 animations:^{
+            self.expirationDateLabel.alpha = 0.0f;
+        } completion:^(BOOL finished){
+            [UIView animateWithDuration:0.4 animations:^{
+                self.expirationDateLabel.alpha = 1.0f;
+            } completion:^(BOOL finished){
+                [UIView animateWithDuration:0.4 animations:^{
+                    self.expirationDateLabel.alpha = 0.0f;
+                } completion:^(BOOL finished){
+                    [UIView animateWithDuration:0.4 animations:^{
+                        self.expirationDateLabel.alpha = 1.0f;
+                    }];
+                }];
+            }];
+        }];
+    }];
 }
 
 - (void)noDate {
@@ -941,9 +970,9 @@
 {
     if (textField == self.priceTextField) {
         
-        if (textField.text.length > 0 && textField.text.floatValue != 0) {
+        if (textField.text.length > 0 && textField.text.doubleValue != 0) {
             
-            self.priceValue = [self.priceTextField.text floatValue];
+            self.priceValue = [self.priceTextField.text doubleValue];
             
             self.priceTextField.text = [self.selectedCurrency stringByAppendingString:[[NSNumber numberWithFloat:self.priceValue] stringValue]];
             
@@ -955,9 +984,9 @@
         
     } else if (textField == self.discountTextField ) {
         
-        if (textField.text.length > 0 && textField.text.floatValue != 0) {
+        if (textField.text.length > 0 && textField.text.doubleValue != 0) {
             
-            self.discountValue = [self.discountTextField.text floatValue];
+            self.discountValue = [self.discountTextField.text doubleValue];
             
             if (percentage.selected) {
                 
@@ -1144,6 +1173,22 @@
     return YES;
 }
 
+- (void)sendAnalyticsData
+{
+    NSString *addedOrSelected;
+    if (self.deal.store.added) {
+        addedOrSelected = @"added store";
+    } else {
+        addedOrSelected = @"selected store";
+    }
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"add_deal"     // Event category (required)
+                                                          action:@"store_type"  // Event action (required)
+                                                           label:addedOrSelected       // Event label
+                                                           value:nil] build]];    // Event value
+}
+
 - (void)uploadDeal
 {
     // Posting the deal
@@ -1154,9 +1199,9 @@
                                             
                                             NSLog(@"Deal was uploaded successfuly!");
                                             didUploadDealData = YES;
-                                            
+                                            [self sendAnalyticsData];
+
                                             self.deal = mappingResult.firstObject;
-                                            
                                             if (self.deal.photoSum.intValue > 0) {
                                                 
                                                 if (didDealPhotosFinishedUploading) {

@@ -42,6 +42,8 @@
 @property (strong, nonatomic) NSMutableArray *storesNearby;
 @property (strong, nonatomic) NSMutableArray *storesSearched;
 
+@property UITableViewCell *customStoreCell;
+
 @property (weak, nonatomic) IBOutlet UITableView *nearbyTableView;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightNearByTableViewConstraint;

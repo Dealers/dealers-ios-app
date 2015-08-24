@@ -364,8 +364,13 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
     
     if ([self.deal.type isEqualToString:@"Online"]) {
         [self.storeContainer removeFromSuperview];
-    } else {
+        self.storeChevron.hidden = NO;
+    } else if (self.deal.store.latitude && self.deal.store.longitude) {
         [self setMapAndStoreDetails];
+        self.storeChevron.hidden = NO;
+    } else {
+        self.storeChevron.hidden = YES;
+        [self.storeContainer removeFromSuperview];
     }
     
     [self.view layoutIfNeeded];

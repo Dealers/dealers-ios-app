@@ -37,18 +37,7 @@
     [self setNavBarConstraints];
     [self configureExplanationView];
     [self setProgressBar];
-    
-    if ([self.cameFrom isEqualToString:@"Add Deal"]) {
-        self.screenName = @"Add Deal - Where Is The Deal Online Screen";
-        [self putClipboardURLIfValid:YES];
-    } else {
-        self.screenName = @"Edit Deal - Where Is The Deal Online Screen";
-        if (self.urlToLoad.length > 0) {
-            [self loadRequestFromString:self.urlToLoad];
-        } else {
-            NSLog(@"Unvalid URL :(");
-        }
-    }
+    [self manageURL];
     
     if ([self.cameFrom isEqualToString:@"Add Deal"] && !(urlField.text.length > 0)) {
         [self loadRequestFromString:@"http://google.com"];
@@ -119,6 +108,22 @@
         }
     }
 }
+
+- (void)manageURL
+{
+    if ([self.cameFrom isEqualToString:@"Add Deal"]) {
+        self.screenName = @"Add Deal - Where Is The Deal Online Screen";
+//        [self putClipboardURLIfValid:YES];
+    } else {
+        self.screenName = @"Edit Deal - Where Is The Deal Online Screen";
+        if (self.urlToLoad.length > 0) {
+            [self loadRequestFromString:self.urlToLoad];
+        } else {
+            NSLog(@"Unvalid URL :(");
+        }
+    }
+}
+
 
 - (void)putClipboardURLIfValid:(BOOL)andGO
 {

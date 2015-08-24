@@ -88,6 +88,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
         [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     }
     
+    [self updateProfileCounter];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -938,6 +939,24 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     }
 }
 
+- (void)updateProfileCounter
+{
+    if (appDelegate.dealer.screenCounters) {
+        ScreenCounters *counters = appDelegate.dealer.screenCounters;
+        counters.profile = @(counters.profile.intValue + 1);
+        NSString *path = [NSString stringWithFormat:@"/screen_counters/%@/", counters.screenCountersID];
+        [[RKObjectManager sharedManager] patchObject:counters
+                                                path:path
+                                          parameters:nil
+                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                 appDelegate.dealer.screenCounters = mappingResult.firstObject;
+                                                 [appDelegate saveScreenCountersOnDevice];
+                                             }
+                                             failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Failed to patch the screen counters.");
+                                             }];
+    }
+}
 
 #pragma mark - Table view data source
 

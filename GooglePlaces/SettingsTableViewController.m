@@ -321,6 +321,7 @@
     
     appDelegate.screenShot = [appDelegate.window snapshotViewAfterScreenUpdates:NO];
     [[Branch getInstance] logout];
+    [appDelegate intercomLogout];
     [appDelegate updateDeviceAfterLogOut];
     [appDelegate removeUserDetailsFromDevice];
     [appDelegate removeDeviceDetailsFromDevice];

@@ -306,6 +306,7 @@
 
 - (void)enterDealers
 {
+    [appDelegate intercomSuccessfulLogin];
     [appDelegate setTabBarController];
     [appDelegate saveUserDetailsOnDevice];
 }

@@ -195,6 +195,7 @@
             break;
             
         case MFMailComposeResultSent:   {
+            [appDelegate logButtonPress:@"Requested Invitation"];
             [progressIndicator show:YES];
             [progressIndicator hide:YES afterDelay:2.5];
             [self dismiss];

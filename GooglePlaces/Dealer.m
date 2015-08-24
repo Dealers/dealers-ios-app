@@ -7,6 +7,7 @@
 //
 
 #import "Dealer.h"
+#import "ScreenCounter.h"
 
 @implementation Dealer
 
@@ -28,6 +29,7 @@
         _totalShares = [NSNumber numberWithInt:0];
         
         _invitationCounter = [NSNumber numberWithInteger:5];
+        _screenCounters = [[ScreenCounters alloc] init];
     }
     return self;
 }

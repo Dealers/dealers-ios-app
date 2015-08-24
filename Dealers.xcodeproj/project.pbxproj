@@ -69,6 +69,14 @@
 		C848B66D19ADB92A000F138D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B66C19ADB92A000F138D /* Comment.m */; };
 		C848B67819B4AB76000F138D /* StoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C848B67719B4AB76000F138D /* StoreTableViewCell.m */; };
 		C848B67A19B4ACA4000F138D /* StoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C848B67919B4ACA4000F138D /* StoreTableViewCell.xib */; };
+		C84FF0AD1B84F6E80001FEF4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C84FF0AC1B84F6E80001FEF4 /* AudioToolbox.framework */; };
+		C84FF0AF1B84F6F10001FEF4 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C84FF0AE1B84F6F10001FEF4 /* ImageIO.framework */; };
+		C84FF0B11B84F72B0001FEF4 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C84FF0B01B84F72B0001FEF4 /* AssetsLibrary.framework */; };
+		C84FF0B31B84F7490001FEF4 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C84FF0B21B84F7490001FEF4 /* libxml2.dylib */; };
+		C84FF0B51B84F7620001FEF4 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C84FF0B41B84F7620001FEF4 /* libicucore.dylib */; };
+		C84FF0B91B84F8CD0001FEF4 /* Intercom.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C84FF0B81B84F8CD0001FEF4 /* Intercom.bundle */; };
+		C84FF0BB1B84FFB10001FEF4 /* Intercom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C84FF0BA1B84FFB10001FEF4 /* Intercom.framework */; };
+		C84FF0BE1B8629BE0001FEF4 /* ScreenCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = C84FF0BD1B8629BE0001FEF4 /* ScreenCounter.m */; };
 		C8561DDB1AF1183C00B257BA /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8561DDA1AF1183C00B257BA /* libGoogleAnalyticsServices.a */; };
 		C862AF2B1A2E0B5F00352831 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C862AF2A1A2E0B5F00352831 /* ProfileTableViewController.m */; };
 		C863A6631A776A4300D74479 /* StoreCategoriesOrganizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C863A6621A776A4300D74479 /* StoreCategoriesOrganizer.m */; };
@@ -309,6 +317,16 @@
 		C848B67619B4AB76000F138D /* StoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreTableViewCell.h; sourceTree = "<group>"; };
 		C848B67719B4AB76000F138D /* StoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreTableViewCell.m; sourceTree = "<group>"; };
 		C848B67919B4ACA4000F138D /* StoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreTableViewCell.xib; sourceTree = "<group>"; };
+		C84FF0AA1B84F6960001FEF4 /* Intercom.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intercom.framework; path = ../Intercom.framework; sourceTree = "<group>"; };
+		C84FF0AC1B84F6E80001FEF4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		C84FF0AE1B84F6F10001FEF4 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		C84FF0B01B84F72B0001FEF4 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		C84FF0B21B84F7490001FEF4 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		C84FF0B41B84F7620001FEF4 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		C84FF0B81B84F8CD0001FEF4 /* Intercom.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Intercom.bundle; sourceTree = "<group>"; };
+		C84FF0BA1B84FFB10001FEF4 /* Intercom.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intercom.framework; path = "../../Downloads/intercom-ios-master/Intercom.framework"; sourceTree = "<group>"; };
+		C84FF0BC1B8629BE0001FEF4 /* ScreenCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenCounter.h; sourceTree = "<group>"; };
+		C84FF0BD1B8629BE0001FEF4 /* ScreenCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenCounter.m; sourceTree = "<group>"; };
 		C8561DD01AF115C600B257BA /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		C8561DD11AF115C600B257BA /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		C8561DD21AF115C600B257BA /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
@@ -497,6 +515,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C84FF0B51B84F7620001FEF4 /* libicucore.dylib in Frameworks */,
+				C84FF0B31B84F7490001FEF4 /* libxml2.dylib in Frameworks */,
+				C84FF0B11B84F72B0001FEF4 /* AssetsLibrary.framework in Frameworks */,
+				C84FF0AF1B84F6F10001FEF4 /* ImageIO.framework in Frameworks */,
+				C84FF0AD1B84F6E80001FEF4 /* AudioToolbox.framework in Frameworks */,
 				C8561DDB1AF1183C00B257BA /* libGoogleAnalyticsServices.a in Frameworks */,
 				C8A9EE0B1A221196002EE682 /* libz.dylib in Frameworks */,
 				C8A9EE151A2212F7002EE682 /* Mantle.framework in Frameworks */,
@@ -523,6 +546,7 @@
 				C8A9EE181A2212F7002EE682 /* UICKeyChainStore.framework in Frameworks */,
 				56849782154C00BF001601A2 /* UIKit.framework in Frameworks */,
 				56849784154C00BF001601A2 /* Foundation.framework in Frameworks */,
+				C84FF0BB1B84FFB10001FEF4 /* Intercom.framework in Frameworks */,
 				C8A9EE191A2212F7002EE682 /* XMLDictionary.framework in Frameworks */,
 				56849786154C00BF001601A2 /* CoreGraphics.framework in Frameworks */,
 				C8A9EE3C1A221ABA002EE682 /* Reachability.framework in Frameworks */,
@@ -535,6 +559,7 @@
 		56849772154C00BF001601A2 = {
 			isa = PBXGroup;
 			children = (
+				C84FF0B81B84F8CD0001FEF4 /* Intercom.bundle */,
 				C898FE5319A6098A00F1C11A /* RestKit.xcodeproj */,
 				B08A3667187B3C82005B72D8 /* Images.xcassets */,
 				C8DBD98B1B0E02270025BA93 /* Assets */,
@@ -557,6 +582,12 @@
 		56849780154C00BF001601A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C84FF0BA1B84FFB10001FEF4 /* Intercom.framework */,
+				C84FF0B41B84F7620001FEF4 /* libicucore.dylib */,
+				C84FF0B21B84F7490001FEF4 /* libxml2.dylib */,
+				C84FF0B01B84F72B0001FEF4 /* AssetsLibrary.framework */,
+				C84FF0AE1B84F6F10001FEF4 /* ImageIO.framework */,
+				C84FF0AC1B84F6E80001FEF4 /* AudioToolbox.framework */,
 				C8A9EE0A1A221196002EE682 /* libz.dylib */,
 				C8A9EE3B1A221ABA002EE682 /* Reachability.framework */,
 				C8A9EE0E1A2212F6002EE682 /* GZIP.framework */,
@@ -699,6 +730,7 @@
 		C8561DCE1AF1150D00B257BA /* 3rd Party Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C84FF0AA1B84F6960001FEF4 /* Intercom.framework */,
 				C8D0207E1B0E231C0028B222 /* Branch-SDK */,
 				C8561DCF1AF115C600B257BA /* Google Analytics Library */,
 				C8A9EE051A221034002EE682 /* AWSiOSSDKv2.framework */,
@@ -936,6 +968,8 @@
 				C80810C31A6EA0890034D8B1 /* Device.m */,
 				C86462671AF3DB9100F02433 /* Category.h */,
 				C86462681AF3DB9100F02433 /* Category.m */,
+				C84FF0BC1B8629BE0001FEF4 /* ScreenCounter.h */,
+				C84FF0BD1B8629BE0001FEF4 /* ScreenCounter.m */,
 				C819F89A1A43352E00908726 /* Error.h */,
 				C819F89B1A43352E00908726 /* Error.m */,
 				C8F6EF201A8E16CC009C18CD /* Report.h */,
@@ -1227,6 +1261,7 @@
 				C8DBD98F1B0E02ED0025BA93 /* Logo (high resolution).png in Resources */,
 				B0274806186B291B005A52F0 /* PLCameraSheetDoneButtonPressed@2x.png in Resources */,
 				C8A9EE2C1A2213B9002EE682 /* css-2014-06-30.json in Resources */,
+				C84FF0B91B84F8CD0001FEF4 /* Intercom.bundle in Resources */,
 				C8DBD9901B0E02ED0025BA93 /* Logo White Background (high resolution).png in Resources */,
 				B0274804186B291B005A52F0 /* PLCameraSheetDoneButton@2x.png in Resources */,
 				C8A9EE2F1A2213B9002EE682 /* elasticloadbalancing-2012-06-01.json in Resources */,
@@ -1256,6 +1291,7 @@
 				B0274816186B2A2B005A52F0 /* GKImageCropView.m in Sources */,
 				C8AF2ABF1B4EB3E700C8593E /* ScoreGuideViewController.m in Sources */,
 				C8C260D81A7E957500960D96 /* TutorialChildViewController.m in Sources */,
+				C84FF0BE1B8629BE0001FEF4 /* ScreenCounter.m in Sources */,
 				C891902019FE57D9005E85FB /* AddDealNavigationController.m in Sources */,
 				C86462691AF3DB9100F02433 /* Category.m in Sources */,
 				C8C2E5261A63B39E000F305F /* EnterPasscodeViewController.m in Sources */,
@@ -1520,6 +1556,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"/Users/gullumbroso/Downloads/aws-ios-sdk-2.0.12/third-party",
+					"$(PROJECT_DIR)/GooglePlaces",
+					"/Users/gullumbroso/Downloads/intercom-ios-master",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";
@@ -1558,6 +1596,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"/Users/gullumbroso/Downloads/aws-ios-sdk-2.0.12/third-party",
+					"$(PROJECT_DIR)/GooglePlaces",
+					"/Users/gullumbroso/Downloads/intercom-ios-master",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GooglePlaces/DB2-Prefix.pch";

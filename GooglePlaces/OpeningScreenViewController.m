@@ -275,11 +275,13 @@
         appDelegate.dealer.reliability = [userDefaults objectForKey:@"reliability"];
         appDelegate.dealer.facebookPseudoUserID = [userDefaults objectForKey:@"facebookPseudoUserID"];
         appDelegate.dealer.invitationCounter = [userDefaults objectForKey:@"invitationCounter"];
+        appDelegate.dealer.screenCounters = [self screenCounters:userDefaults];
         
         if (appDelegate.dealer.photoURL.length > 1 && ![appDelegate.dealer.photoURL isEqualToString:@"None"]) {
             appDelegate.dealer.photo = [appDelegate loadProfilePic];
         }
         
+        [appDelegate intercomSuccessfulLogin];
         [appDelegate setTabBarController];
         
         return YES;
@@ -294,6 +296,24 @@
         
         return NO;
     }
+}
+
+- (ScreenCounters *)screenCounters:(NSUserDefaults *)userDefaults
+{
+    ScreenCounters *counters = [[ScreenCounters alloc] initWithDealer:appDelegate.dealer.dealerID];
+    counters.screenCountersID = [userDefaults objectForKey:@"screenCountersID"];
+    counters.myFeed = [userDefaults objectForKey:@"myFeedCounter"];
+    counters.explore = [userDefaults objectForKey:@"exploreCounter"];
+    counters.profile = [userDefaults objectForKey:@"profileCounter"];
+    counters.activity = [userDefaults objectForKey:@"activityCounter"];
+    counters.whereIsTheDealLocal = [userDefaults objectForKey:@"whereIsTheDealLocalCounter"];
+    counters.whereIsTheDealOnline = [userDefaults objectForKey:@"whereIsTheDealOnlineCounter"];
+    counters.whatIsTheDealLocal = [userDefaults objectForKey:@"whatIsTheDealLocalCounter"];
+    counters.whatIsTheDealOnline = [userDefaults objectForKey:@"whatIsTheDealOnlineCounter"];
+    counters.haveMoreDetails = [userDefaults objectForKey:@"haveMoreDetailsCounter"];
+    counters.viewDeal = [userDefaults objectForKey:@"viewDealCounter"];
+    
+    return counters;
 }
 
 
@@ -682,6 +702,7 @@
 - (void)enterDealers
 {
     [loggingInFacebook hide:YES];
+    [appDelegate intercomSuccessfulLogin];
     
     if (signedUp) {
         PersonalizeTableViewController *ptvc = [self.storyboard instantiateViewControllerWithIdentifier:@"Personalize"];

@@ -189,6 +189,8 @@
 "View all %@ comments" = "View all %@ comments";
 "I found a great deal at Dealers, check it out" = "I found a great deal at Dealers, check it out";
 "Check out this deal at Dealers" = "Check out this deal at Dealers";
+"Find more great deals at Dealers" = "Find more great deals at Dealers";
+"Deal has Expired" = "Deal has Expired";
 "Report as Spam" = "Report as Spam";
 "Be the first to comment..." = "  Be the first to comment...";
 "Add a comment..." = "  Add a comment...";
@@ -256,6 +258,8 @@
 "Skip" = "Skip";
 "Score Screenshot" = "Score Screenshot";
 
+"Report as Expired" = "Report as Expired";
+"Are you sure this deal has expired?" = "Are you sure this deal has expired?";
 "Report as Spam?" = "Report as Spam?";
 "Does this post includes inappropriate content?" = "Does this post includes inappropriate content?";
 "Report" = "Report";
@@ -323,3 +327,5 @@
 "Score Guide" = "Score Guide";
 
 "Weekly Deals" = "Weekly Deals";
+"Love Dealers? Invite a friend to join the fun!\n(You have %@ more invitations you can send)" = "Love Dealers? Invite a friend to join the fun!\n(You have %@ more invitations you can send)";
+"Not now" = "Not now";

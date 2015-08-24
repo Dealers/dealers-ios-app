@@ -19,6 +19,7 @@
 #import "Invitation.h"
 #import "Device.h"
 #import "Category.h"
+#import "screenCounter.h"
 #import "ScoreGuide.h"
 #import "Error.h"
 #import "Report.h"
@@ -66,6 +67,7 @@
 - (void)updateDeviceAfterLogOut;
 
 - (void)saveUserDetailsOnDevice;
+- (void)saveScreenCountersOnDevice;
 - (void)removeUserDetailsFromDevice;
 - (void)removeDeviceDetailsFromDevice;
 - (NSData *)loadProfilePic;
@@ -123,6 +125,8 @@
 - (BOOL)isFacebookConnected;
 
 - (void)logButtonPress:(NSString *)eventLabel;
+- (void)intercomSuccessfulLogin;
+- (void)intercomLogout;
 
 
 @end

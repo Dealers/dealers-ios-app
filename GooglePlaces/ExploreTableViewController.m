@@ -39,6 +39,7 @@
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Explore Screen"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    [self updateExploreCounter];
 }
 
 - (void)initialize
@@ -110,6 +111,7 @@
 {
     [UIView animateWithDuration:0.3 animations:^{self.exitSearchModeButton.alpha = 0.65;}];
     [self.searchBar setShowsCancelButton:YES animated:YES];
+    
 }
 
 - (void)exitSearchMode
@@ -151,6 +153,25 @@
     dtvc.categoryFromExplore = [self.categories objectAtIndex:indexPath.row];
     dtvc.searchTermFromExplore = nil;
     [self.navigationController pushViewController:dtvc animated:YES];
+}
+
+- (void)updateExploreCounter
+{
+    if (appDelegate.dealer.screenCounters) {
+        ScreenCounters *counters = appDelegate.dealer.screenCounters;
+        counters.explore = @(counters.explore.intValue + 1);
+        NSString *path = [NSString stringWithFormat:@"/screen_counters/%@/", counters.screenCountersID];
+        [[RKObjectManager sharedManager] patchObject:counters
+                                                path:path
+                                          parameters:nil
+                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                 appDelegate.dealer.screenCounters = mappingResult.firstObject;
+                                                 [appDelegate saveScreenCountersOnDevice];
+                                             }
+                                             failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Failed to patch the screen counters.");
+                                             }];
+    }
 }
 
 

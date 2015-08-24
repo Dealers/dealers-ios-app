@@ -53,7 +53,7 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     [[self transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"Navigation Bar Shade"]];
     } completion:nil];
-
+    
     
     if (appDelegate.shouldUpdateMyFeed) {
         [self.tableView setContentOffset:CGPointMake(0, -64)];
@@ -61,12 +61,18 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
         [self refresh];
         appDelegate.shouldUpdateMyFeed = NO;
     }
-
+    
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-
+    
     if ([selfViewController isEqualToString:NSLocalizedString(@"My Feed", nil)]) {
-        [tracker set:kGAIScreenName value:@"My Feed Screen"];
-        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+        if (appDelegate.dealer.screenCounters.myFeed.intValue == 0) {
+            [tracker set:kGAIScreenName value:@"My Feed Screen (after sign up)"];
+            [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+        } else {
+            [tracker set:kGAIScreenName value:@"My Feed Screen"];
+            [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+        }
+        [self updateMyFeedCounter];
     } else if ([selfViewController isEqualToString:NSLocalizedString(@"Category", nil)]) {
         [tracker set:kGAIScreenName value:@"Category Screen"];
         [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
@@ -543,6 +549,43 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
     if (fabs(howRecent) < 60.0) {
         // If the event is recent, do something with it.
         [self.locationManager stopMonitoringSignificantLocationChanges];
+    }
+}
+
+- (void)updateMyFeedCounter
+{
+    if (appDelegate.dealer.screenCounters) {
+        ScreenCounters *counters = appDelegate.dealer.screenCounters;
+        counters.myFeed = @(counters.myFeed.intValue + 1);
+        NSString *path = [NSString stringWithFormat:@"/screen_counters/%@/", counters.screenCountersID];
+        [[RKObjectManager sharedManager] patchObject:counters
+                                                path:path
+                                          parameters:nil
+                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                 appDelegate.dealer.screenCounters = mappingResult.firstObject;
+                                                 [appDelegate saveScreenCountersOnDevice];
+                                             }
+                                             failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                 NSLog(@"Failed to patch the screen counters.");
+                                             }];
+        if (counters.myFeed.intValue == 3) {
+            InviteViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"Invite"];
+            ivc.popUp = YES;
+            [self presentViewController:ivc animated:YES completion:nil];
+        }
+    } else {
+        ScreenCounters *counters = [[ScreenCounters alloc] initWithDealer:appDelegate.dealer.dealerID];
+        counters.myFeed = @(1);
+        [[RKObjectManager sharedManager] postObject:counters
+                                               path:@"/screen_counters/"
+                                         parameters:nil
+                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                appDelegate.dealer.screenCounters = mappingResult.firstObject;
+                                                [appDelegate saveScreenCountersOnDevice];
+                                            }
+                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                NSLog(@"Failed to post the screen counters.");
+                                            }];
     }
 }
 

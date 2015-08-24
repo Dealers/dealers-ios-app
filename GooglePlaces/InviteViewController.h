@@ -25,6 +25,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 
+@property BOOL popUp;
+
 @property (weak, nonatomic) IBOutlet UIView *invitationContainerView;
 @property (weak, nonatomic) IBOutlet UIImageView *invitationIcon1;
 @property (weak, nonatomic) IBOutlet UIImageView *invitationIcon2;
@@ -39,11 +41,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *noInvitationsLeft;
 
 @property UIButton *addInvitationSecretButton;
+@property (weak, nonatomic) IBOutlet UIButton *notNow;
 
 
 - (IBAction)inviteWithTextMessage:(id)sender;
 - (IBAction)inviteWithEmail:(id)sender;
 - (IBAction)inviteWithWhatsApp:(id)sender;
+- (IBAction)dismiss:(id)sender;
 
 
 @end
