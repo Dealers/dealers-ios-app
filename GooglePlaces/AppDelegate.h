@@ -19,7 +19,7 @@
 #import "Invitation.h"
 #import "Device.h"
 #import "Category.h"
-#import "screenCounter.h"
+#import "ScreenCounter.h"
 #import "ScoreGuide.h"
 #import "Error.h"
 #import "Report.h"

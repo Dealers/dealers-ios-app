@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9EB3395511730CEF56B8E07717D9BC10A1056BAE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9EB3395511730CEF56B8E07717D9BC10A1056BAE" : 0,
+    "D78740BB5B159EA13C82AB5AF1D92A0F3C627237" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "49662524-0CD5-4D49-B2DF-EB664C7FFDA4",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9EB3395511730CEF56B8E07717D9BC10A1056BAE" : "dealers_beta\/",
+    "D78740BB5B159EA13C82AB5AF1D92A0F3C627237" : "dealers_beta\/RestKit\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Dealers",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Dealers.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Dealers\/dealers_beta.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9EB3395511730CEF56B8E07717D9BC10A1056BAE"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/RestKit\/RestKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D78740BB5B159EA13C82AB5AF1D92A0F3C627237"
+    }
+  ]
+}
