@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AWSiOSSDKv2/S3.h>
 #import "AppDelegate.h"
+#import <AWSS3/AWSS3.h>
 #import "KeychainItemWrapper.h"
 #import "MBProgressHUD.h"
 #import "GAI.h"

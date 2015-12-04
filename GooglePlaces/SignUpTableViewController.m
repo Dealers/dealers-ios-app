@@ -651,8 +651,8 @@
     uploadRequest.key = key;
     uploadRequest.body = fileURL;
     
-    [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
-                                                       withBlock:^id(BFTask *task) {
+    [[transferManager upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                       withBlock:^id(AWSTask *task) {
                                                            if (task.error) {
                                                                if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
                                                                    switch (task.error.code) {

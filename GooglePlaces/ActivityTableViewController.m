@@ -27,7 +27,6 @@ static NSString * const NotificationCellIdentifier = @"NotificationTableViewCell
                                                                style:UIBarButtonItemStyleBordered
                                                               target:self
                                                               action:@selector(pushInviteViewController:)];
-    [invite setImageInsets:UIEdgeInsetsMake(1, -3, -1, 3)];
     self.navigationItem.rightBarButtonItem = invite;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     

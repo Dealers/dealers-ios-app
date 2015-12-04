@@ -163,14 +163,12 @@ static NSString * const DealCellIdentifier = @"DealTableViewCell";
                                                                      style:UIBarButtonItemStyleBordered
                                                                     target:self
                                                                     action:@selector(pushSettingsView:)];
-        [settings setImageInsets:UIEdgeInsetsMake(1, -5, -1, 5)];
         self.navigationItem.leftBarButtonItem = settings;
         
         UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Invite Button"]
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(pushInviteViewController:)];
-        [invite setImageInsets:UIEdgeInsetsMake(1, -3, -1, 3)];
         
         UIBarButtonItem *personalize = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Personalize Button"]
                                                                    style:UIBarButtonItemStyleBordered

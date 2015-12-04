@@ -9,8 +9,8 @@
 //itzikb
 
 #import "AppDelegate.h"
-#import <AWSiOSSDKv2/S3.h>
-#import <AWSiOSSDKv2/AWSCore.h>
+#import <AWSS3/AWSS3.h>
+#import <AWSCore/AWSCore.h>
 #import <Intercom/Intercom.h>
 #import "DealersTabBarController.h"
 #import "DealsTableViewController.h"
@@ -916,7 +916,7 @@
         downloadRequest.key = dealer.photoURL;
         downloadRequest.downloadingFileURL = downloadingFileURL;
         
-        [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
+        [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor] withBlock:^id(AWSTask *task) {
             
             if (task.error) {
                 if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
@@ -998,7 +998,7 @@
     downloadRequest.key = deal.photoURL1;
     downloadRequest.downloadingFileURL = downloadingFileURL;
     
-    [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
+    [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor] withBlock:^id(AWSTask *task) {
         
         if (task.error) {
             if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
@@ -1402,8 +1402,8 @@
 
 - (NSString *)baseURL
 {
-//    return @"http://d-web-tier-elb-113029594.eu-west-1.elb.amazonaws.com";
-    return @"http://www.dealers-web.com";
+    return @"http://api.dealers-app.com";
+//    return @"http://api.dealers-web.com";
 }
 
 - (NSString *)currentVersion

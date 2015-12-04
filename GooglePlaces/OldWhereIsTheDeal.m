@@ -10,7 +10,6 @@
 #import "WhatIsTheDeal1.h"
 #import "StoreTableViewCell.h"
 #import <mach/mach.h>
-#import "CheckConnection.h"
 #import "EditDealTableViewController.h"
 
 #define CLIENTID @"JK4EFCX00FOCQX5TKMCFDTGX2J03IAAG1NQM2SZN4G5FXG4O"

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <MapKit/MapKit.h>
-#import <AWSiOSSDKv2/S3.h>
 #import "Deal.h"
 #import "Dealer.h"
 #import "Store.h"

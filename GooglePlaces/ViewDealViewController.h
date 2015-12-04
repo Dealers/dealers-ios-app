@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import <AWSiOSSDKv2/S3.h>
+#import <AWSS3/AWSS3.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"

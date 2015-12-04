@@ -1225,7 +1225,7 @@
                                             
                                             [self stopLoading];
                                             
-                                            [[[AWSS3TransferManager defaultS3TransferManager] cancelAll] continueWithBlock:^id(BFTask *task) {
+                                            [[[AWSS3TransferManager defaultS3TransferManager] cancelAll] continueWithBlock:^id(AWSTask *task) {
                                                 if (task.error) {
                                                     NSLog(@"Error with cancelling uploads: %@",task.error);
                                                 } else {
@@ -1272,8 +1272,8 @@
         uploadRequest.body = fileURL;
         uploadRequest.contentLength = [NSNumber numberWithUnsignedLongLong:photoData.length];
         
-        [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
-                                                           withBlock:^id(BFTask *task) {
+        [[transferManager upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                           withBlock:^id(AWSTask *task) {
                                                                if (task.error) {
                                                                    if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
                                                                        switch (task.error.code) {

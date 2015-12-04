@@ -555,8 +555,8 @@
     uploadRequest.key = key;
     uploadRequest.body = fileURL;
     
-    [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
-                                                       withBlock:^id(BFTask *task) {
+    [[transferManager upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                       withBlock:^id(AWSTask *task) {
                                                            if (task.error) {
                                                                if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
                                                                    switch (task.error.code) {
@@ -607,8 +607,8 @@
     downloadRequest.key = appDelegate.dealer.photoURL;
     downloadRequest.downloadingFileURL = downloadingFileURL;
     
-    [[[AWSS3TransferManager defaultS3TransferManager] download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
-                                                                                           withBlock:^id(BFTask *task) {
+    [[[AWSS3TransferManager defaultS3TransferManager] download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                                                           withBlock:^id(AWSTask *task) {
                                                                                                
                                                                                                if (task.error){
                                                                                                    if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {

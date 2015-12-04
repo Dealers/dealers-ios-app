@@ -477,8 +477,8 @@ static NSString * const commentCellIdentifier = @"CommentTableViewCell";
             downloadRequest.key = key;
             downloadRequest.downloadingFileURL = downloadingFileURL;
             
-            [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
-                                                                   withBlock:^id(BFTask *task) {
+            [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                                   withBlock:^id(AWSTask *task) {
                                                                        if (task.error){
                                                                            if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
                                                                                switch (task.error.code) {

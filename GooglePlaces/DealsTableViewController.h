@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AWSiOSSDKv2/S3.h>
+#import <AWSS3/AWSS3.h>
 #import <CoreLocation/CoreLocation.h>
 #import "AppDelegate.h"
 #import "ViewDealViewController.h"

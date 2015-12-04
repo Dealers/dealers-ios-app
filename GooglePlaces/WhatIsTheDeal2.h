@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import <AWSiOSSDKv2/S3.h>
+#import <AWSS3/AWSS3.h>
 #import "ChooseCategoryTableViewController.h"
 #import "ThankYouViewController.h"
 #import "DealTableViewCell.h"
