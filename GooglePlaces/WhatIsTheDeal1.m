@@ -153,7 +153,6 @@
 - (void)setTextViewSettings
 {
     self.titlePlaceholder.text = NSLocalizedString(@"Tell us about the deal...", nil);
-    
     if ([UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         [self.dealTitle setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
         [self.dealTitle setTextAlignment:NSTextAlignmentRight];
@@ -800,9 +799,34 @@
     }
 }
 
+- (void)setKeyboardDirection: (NSString *)text
+{
+    NSUInteger len = text.length;
+    NSString *language;
+    if (len == 1) {
+        language = (NSString *)CFBridgingRelease(CFStringTokenizerCopyBestStringLanguage((CFStringRef)text, CFRangeMake(0, len)));
+    } else {
+        language = (NSString *)CFBridgingRelease(CFStringTokenizerCopyBestStringLanguage((CFStringRef)text, CFRangeMake(0, 100)));
+    }
+    if ([language isEqualToString:@"he"]) {
+        [self.dealTitle setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:nil];
+        [self.dealTitle setTextAlignment:NSTextAlignmentRight];
+        [self.titlePlaceholder setTextAlignment:NSTextAlignmentRight];
+    } else {
+        [self.dealTitle setBaseWritingDirection:UITextWritingDirectionLeftToRight forRange:nil];
+        [self.dealTitle setTextAlignment:NSTextAlignmentLeft];
+        [self.titlePlaceholder setTextAlignment:NSTextAlignmentLeft];
+    }
+}
+
 - (void)textViewDidChange:(UITextView *)textView
 {
     if (textView == self.dealTitle) {
+        if (textView.text.length == 1) {
+            // Check the language and set the keyboard direction accordingly.
+            [self setKeyboardDirection:textView.text];
+        }
+        
         int maxLength = 190;
         
         NSString *stringlength = [NSString stringWithString:self.dealTitle.text];

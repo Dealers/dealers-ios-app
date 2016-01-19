@@ -39,7 +39,7 @@
                                                  name:@"SessionStateChangeNotification"
                                                object:nil];
     
-    self.authorized = [self isAuthorized];
+//    self.authorized = [self isAuthorized];
     [self setProgressIndicator];
     [self styleButtons];
     [self setCenterYConstraint];
@@ -163,7 +163,10 @@
 - (IBAction)signUpWithEmail:(id)sender
 {
     SignUpTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SignUpID"];
+    [self.navigationController pushViewController:controller animated:YES];
     
+    // The code below is for the passcode process. Disabled for now.
+    /*
     if (self.authorized) {
         [self.navigationController pushViewController:controller animated:YES];
         
@@ -173,6 +176,7 @@
         epvc.signUp = YES;
         [self.navigationController presentViewController:epvc animated:YES completion:nil];
     }
+     */
 }
 
 - (IBAction)signIn:(id)sender
@@ -411,6 +415,11 @@
                           } else {
                               
                               // User does not exist. Check if he is authorized, if so sign him up.
+                              [self signUpUser];
+                              
+                              
+                              // The code below is for the passcode process. Disabled for now.
+                              /*
                               if (self.authorized) {
                                   [self signUpUser];
                               } else {
@@ -419,6 +428,7 @@
                                   epvc.facebook = YES;
                                   [self.navigationController presentViewController:epvc animated:YES completion:nil];
                               }
+                               */
                           }
                       }
                       failure:^(RKObjectRequestOperation *operation, NSError *error) {

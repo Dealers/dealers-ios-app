@@ -64,8 +64,13 @@
 
 - (void)setInvitationMessageAndPasscode
 {
+    invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"Download Dealers, an app for sharing deals:\n%@", nil), APPSTORE_LINK];
+    
+    // The code below is for inviting with a passcode. Disabled for now.
+    /*
     passcode = [self generateCode];
     invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"I'm sending you a passcode for Dealers, an app for sharing deals:\n%@\n\nDownload Dealers here:\n%@", nil), passcode, APPSTORE_LINK];
+     */
 }
 
 - (void)setInvitationIcons

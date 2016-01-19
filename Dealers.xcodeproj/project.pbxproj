@@ -836,7 +836,6 @@
 				56849779154C00BF001601A2 /* Sources */,
 				5684977A154C00BF001601A2 /* Frameworks */,
 				5684977B154C00BF001601A2 /* Resources */,
-				88DB7028957074DEB2EFC5B5 /* Embed Pods Frameworks */,
 				60BF16B3127836D287DA6079 /* Copy Pods Resources */,
 			);
 			buildRules = (
@@ -860,6 +859,9 @@
 						DevelopmentTeam = KRLZZN4NG9;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -943,21 +945,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		88DB7028957074DEB2EFC5B5 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1254,6 +1241,7 @@
 				INFOPLIST_FILE = "GooglePlaces/Dealers_beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-all_load",

@@ -577,7 +577,7 @@
 
 - (void)addImage:(UIImage *)image
 {
-    if (image.size.width >= 100.0 && image.size.height > 90.0) {
+    if (image.size.width >= 80.0 && image.size.height >= 50.0) {
         [self.images addObject:image];
     }
 }

@@ -1,69 +1,7 @@
 PODS:
   - AFNetworking (1.3.4)
-  - AWSAutoScaling (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSCloudWatch (2.3.1):
-    - AWSCore (= 2.3.1)
   - AWSCore (2.3.1)
-  - AWSDynamoDB (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSEC2 (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSElasticLoadBalancing (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSiOSSDKv2 (2.3.1):
-    - AWSiOSSDKv2/AutoScaling (= 2.3.1)
-    - AWSiOSSDKv2/AWSCore (= 2.3.1)
-    - AWSiOSSDKv2/CloudWatch (= 2.3.1)
-    - AWSiOSSDKv2/DynamoDB (= 2.3.1)
-    - AWSiOSSDKv2/EC2 (= 2.3.1)
-    - AWSiOSSDKv2/ElasticLoadBalancing (= 2.3.1)
-    - AWSiOSSDKv2/Kinesis (= 2.3.1)
-    - AWSiOSSDKv2/MobileAnalytics (= 2.3.1)
-    - AWSiOSSDKv2/S3 (= 2.3.1)
-    - AWSiOSSDKv2/SES (= 2.3.1)
-    - AWSiOSSDKv2/SimpleDB (= 2.3.1)
-    - AWSiOSSDKv2/SNS (= 2.3.1)
-    - AWSiOSSDKv2/SQS (= 2.3.1)
-  - AWSiOSSDKv2/AutoScaling (2.3.1):
-    - AWSAutoScaling (= 2.3.1)
-  - AWSiOSSDKv2/AWSCore (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSiOSSDKv2/CloudWatch (2.3.1):
-    - AWSCloudWatch (= 2.3.1)
-  - AWSiOSSDKv2/DynamoDB (2.3.1):
-    - AWSDynamoDB (= 2.3.1)
-  - AWSiOSSDKv2/EC2 (2.3.1):
-    - AWSEC2 (= 2.3.1)
-  - AWSiOSSDKv2/ElasticLoadBalancing (2.3.1):
-    - AWSElasticLoadBalancing (= 2.3.1)
-  - AWSiOSSDKv2/Kinesis (2.3.1):
-    - AWSKinesis (= 2.3.1)
-  - AWSiOSSDKv2/MobileAnalytics (2.3.1):
-    - AWSMobileAnalytics (= 2.3.1)
-  - AWSiOSSDKv2/S3 (2.3.1):
-    - AWSS3 (= 2.3.1)
-  - AWSiOSSDKv2/SES (2.3.1):
-    - AWSSES (= 2.3.1)
-  - AWSiOSSDKv2/SimpleDB (2.3.1):
-    - AWSSimpleDB (= 2.3.1)
-  - AWSiOSSDKv2/SNS (2.3.1):
-    - AWSSNS (= 2.3.1)
-  - AWSiOSSDKv2/SQS (2.3.1):
-    - AWSSQS (= 2.3.1)
-  - AWSKinesis (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSMobileAnalytics (2.3.1):
-    - AWSCore (= 2.3.1)
   - AWSS3 (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSSES (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSSimpleDB (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSSNS (2.3.1):
-    - AWSCore (= 2.3.1)
-  - AWSSQS (2.3.1):
     - AWSCore (= 2.3.1)
   - Bolts (1.5.0):
     - Bolts/AppLinks (= 1.5.0)
@@ -102,7 +40,7 @@ PODS:
   - TransitionKit (2.1.1)
 
 DEPENDENCIES:
-  - AWSiOSSDKv2
+  - AWSS3
   - Branch
   - Facebook-iOS-SDK (~> 3.x)
   - GoogleAnalytics
@@ -111,20 +49,8 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
-  AWSAutoScaling: ab30422b13df024a2faaea40d11126b96abbcdcd
-  AWSCloudWatch: b79c78cbf06d07180a05f265c9145f2e189ead4a
   AWSCore: 7ad34b4bc285b778a3df699cb6f00aad3d1c446f
-  AWSDynamoDB: cdeef8c3b7dd62e29f68b4242b47746b47b34b78
-  AWSEC2: 771f0fc10c3e839fe4c7433430df7ea8ba845c62
-  AWSElasticLoadBalancing: 637ae9b2a531325f6cf63a7e6ab6cc6fb28d5206
-  AWSiOSSDKv2: 6ac31daaf5fc358ec4a55fa29761c709f8874176
-  AWSKinesis: 32e7fbdf60b2fd0f785cef67228b4ab70b5a46bf
-  AWSMobileAnalytics: 82692a5bb718a8b5c9441ae8db62e2f3c5f7fa7c
   AWSS3: b7f4a0ad4da6dcc172e757dcb2b2423d26b32325
-  AWSSES: f96c74e0eadec09bb29cc91f282dc4ec55857215
-  AWSSimpleDB: 54487559d9064abe025ff633e7327b00ff871e0d
-  AWSSNS: efa66ce4b1d604730b2388848f21c249bcc36f6e
-  AWSSQS: ad83d16ca96785f51cd34772864fb37318658089
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   Branch: 71b1180c49d75e0d849e2611ecf3016de7572eac
   Facebook-iOS-SDK: 08689c2690dc4e087b9c8e171e48667608b72a2a
@@ -136,4 +62,4 @@ SPEC CHECKSUMS:
   SOCKit: c7376ac262bea9115b8f749358f762522a47d392
   TransitionKit: 3a14b6acc7cf2d1dd3e454e24dbad1cfab9a1ef1
 
-COCOAPODS: 0.39.0
+COCOAPODS: 0.38.2
